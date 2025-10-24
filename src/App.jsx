@@ -1,18 +1,25 @@
-import './App.css';
-import {useState} from 'react';
-import RockScissorsPaper from './RockScissorsPaper/RockScissorsPaper';
+import "./App.css";
+import { useState } from "react";
+import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
 
 function App() {
   const [totalPoint, setTotalPoint] = useState(0);
-  const updateTotalPoint = (score) => {
-    setTotalPoint(currTotalPoint => 
-      currTotalPoint + score
-    )
-  }
+  const [score, setScore] = useState(0);
+  const updateScore = (i) => {
+    setScore((currScore) => currScore + i);
+  };
+  const updateTotalPoint = (i) => {
+    setTotalPoint((currTotalPoint) => currTotalPoint + i);
+  };
   return (
     <div className="App">
-      Pejman MERN Wonderland
-      <RockScissorsPaper totalPoint={totalPoint} updateTotalPoint={updateTotalPoint} />
+      <h1>Pejman MERN Wonderland</h1>
+      <RockScissorsPaper
+        score={score}
+        updateScore={updateScore}
+        totalPoint={totalPoint}
+        updateTotalPoint={updateTotalPoint}
+      />
     </div>
   );
 }

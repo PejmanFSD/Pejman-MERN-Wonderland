@@ -5,10 +5,16 @@ import Paper from "./Paper.png";
 import { getRand } from "../utils";
 const optionsArray = ["Rock", "Scissors", "Paper"];
 
-export default function RockScissorsPaper({totalPoint, updateTotalPoint}) {
+export default function RockScissorsPaper({
+  score,
+  updateScore,
+  totalPoint,
+  updateTotalPoint,
+}) {
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
   const [gameResult, setGameResult] = useState("");
+  const [tripleScore, setTripleScore] = useState(0);
 
   const announcingTheWinner = (user, pejman) => {
     if (user === "" || pejman === "") return;
@@ -16,28 +22,45 @@ export default function RockScissorsPaper({totalPoint, updateTotalPoint}) {
       setGameResult("No winner, try again");
     } else if (user === "Rock" && pejman === "Scissors") {
       setGameResult("You win!");
+      updateScore(1);
+      setTripleScore((currTripleScore) => currTripleScore + 1);
     } else if (user === "Scissors" && pejman === "Paper") {
       setGameResult("You win!");
+      updateScore(1);
+      setTripleScore((currTripleScore) => currTripleScore + 1);
     } else if (user === "Paper" && pejman === "Rock") {
       setGameResult("You win!");
+      updateScore(1);
+      setTripleScore((currTripleScore) => currTripleScore + 1);
     } else {
       setGameResult("Pejman wins!");
+      updateScore(-1);
+      setTripleScore((currTripleScore) => currTripleScore - 1);
     }
   };
 
   const handleUserChoice = (input) => {
     setUserChoice(input);
-    setPejmanChoice(optionsArray[getRand(3)-1]);
+    setPejmanChoice(optionsArray[getRand(1) - 1]);
+  };
+
+  const handleTotalPoint = () => {
+    if (tripleScore === 3) {
+      updateTotalPoint(1);
+      setTripleScore(0);
+    }
   };
 
   useEffect(
     function () {
+      handleTotalPoint();
       announcingTheWinner(userChoice, pejmanChoice);
     },
     [userChoice, pejmanChoice]
   );
   return (
     <div>
+      <h2>Rock - Scissors - Paper</h2>
       <img
         src={Rock}
         width="150px"
@@ -58,7 +81,9 @@ export default function RockScissorsPaper({totalPoint, updateTotalPoint}) {
       />
       <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
       <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
-      <h1>{gameResult}</h1>
+      <h2>{gameResult}</h2>
+      <h2>Your score: {score}</h2>
+      <h3>Your Total Point: {totalPoint}</h3>
     </div>
   );
 }
