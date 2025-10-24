@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       Pejman MERN Wonderland
-      <RokScissorsPaper updateTotalPoint={updateTotalPoint} totalPoint={totalPoint} />
+      <RokScissorsPaper totalPoint={totalPoint} updateTotalPoint={updateTotalPoint} />
     </div>
   );
 }
