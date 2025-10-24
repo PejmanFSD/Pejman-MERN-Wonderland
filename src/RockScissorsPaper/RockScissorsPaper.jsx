@@ -46,7 +46,6 @@ export default function RockScissorsPaper({
   };
   const handleTotalPoint = () => {
     if (tripleScore === 3) {
-      updateTotalPoint(1);
       setTripleScore(0);
     }
   };
@@ -59,7 +58,14 @@ export default function RockScissorsPaper({
   const backToHomepage = () => {
     setShowRockScissorsPaper(false);
   };
-
+  const handleOk = () => {
+    updateTotalPoint(1);
+    setTripleScore(0);
+    setTripleScore(0);
+    setUserChoice("");
+    setPejmanChoice("");
+    setGameResult("");
+  };
   useEffect(
     function () {
       handleTotalPoint();
@@ -88,19 +94,20 @@ export default function RockScissorsPaper({
         alt="Paper"
         onClick={() => handleUserChoice("Paper")}
       />
-      <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
-      <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
-      <h2>{gameResult}</h2>
-      {gameResult && <button onClick={() => reset()}>Reset</button>}
-      {tripleScore !== 3 ? (
-        <div>
-          <h2>Your score: {score}</h2>
-          <h3>Your Total Point: {totalPoint}</h3>
-        </div>
-      ) : (
+      {tripleScore === 3 ? (
         <div>
           <h3>Excellent! You just beat Pejman three times in a row</h3>
           <h3>Your total point increases by one</h3>
+          <button onClick={() => handleOk()}>OK</button>
+        </div>
+      ) : (
+        <div>
+          <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
+          <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
+          <h2>{gameResult}</h2>
+          <h2>Your score: {score}</h2>
+          <h3>Your Total Point: {totalPoint}</h3>
+          {gameResult && <button onClick={() => reset()}>Reset</button>}
         </div>
       )}
       <button onClick={() => backToHomepage()}>Back to the home page</button>
