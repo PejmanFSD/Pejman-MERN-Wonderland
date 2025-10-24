@@ -11,6 +11,7 @@ export default function RockScissorsPaper({
   updateScore,
   totalPoint,
   updateTotalPoint,
+  setShowRockScissorsPaper,
 }) {
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
@@ -39,24 +40,24 @@ export default function RockScissorsPaper({
       setTripleScore((currTripleScore) => currTripleScore - 1);
     }
   };
-
   const handleUserChoice = (input) => {
     setUserChoice(input);
     setPejmanChoice(optionsArray[getRand(3) - 1]);
   };
-
   const handleTotalPoint = () => {
     if (tripleScore === 3) {
       updateTotalPoint(1);
       setTripleScore(0);
     }
   };
-
   const reset = () => {
     setScore(0);
     setUserChoice("");
     setPejmanChoice("");
     setGameResult("");
+  };
+  const backToHomepage = () => {
+    setShowRockScissorsPaper(false);
   };
 
   useEffect(
@@ -102,6 +103,7 @@ export default function RockScissorsPaper({
           <h3>Your total point increases by one</h3>
         </div>
       )}
+      <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
   );
 }

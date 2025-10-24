@@ -29,6 +29,7 @@ function App() {
           updateScore={updateScore}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
+          setShowRockScissorsPaper={setShowRockScissorsPaper}
         />
       ) : (
         <button onClick={() => toggleRockScissorsPaper()}>
