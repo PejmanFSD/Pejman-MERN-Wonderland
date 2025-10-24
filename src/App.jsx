@@ -1,6 +1,6 @@
 import './App.css';
 import {useState} from 'react';
-import RokScissorsPaper from './RokScissorsPaper/RokScissorsPaper';
+import RockScissorsPaper from './RockScissorsPaper/RockScissorsPaper';
 
 function App() {
   const [totalPoint, setTotalPoint] = useState(0);
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       Pejman MERN Wonderland
-      <RokScissorsPaper totalPoint={totalPoint} updateTotalPoint={updateTotalPoint} />
+      <RockScissorsPaper totalPoint={totalPoint} updateTotalPoint={updateTotalPoint} />
     </div>
   );
 }

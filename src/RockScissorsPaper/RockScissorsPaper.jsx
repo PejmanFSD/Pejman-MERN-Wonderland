@@ -3,8 +3,9 @@ import Rock from "./Rok.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
 import { getRand } from "../utils";
+const optionsArray = ["Rock", "Scissors", "Paper"];
 
-export default function RokScissorsPaper({totalPoint, updateTotalPoint}) {
+export default function RockScissorsPaper({totalPoint, updateTotalPoint}) {
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
   const [gameResult, setGameResult] = useState("");
@@ -13,11 +14,11 @@ export default function RokScissorsPaper({totalPoint, updateTotalPoint}) {
     if (user === "" || pejman === "") return;
     else if (user === pejman) {
       setGameResult("No winner, try again");
-    } else if (user === 1 && pejman === 2) {
+    } else if (user === "Rock" && pejman === "Scissors") {
       setGameResult("You win!");
-    } else if (user === 2 && pejman === 3) {
+    } else if (user === "Scissors" && pejman === "Paper") {
       setGameResult("You win!");
-    } else if (user === 3 && pejman === 1) {
+    } else if (user === "Paper" && pejman === "Rock") {
       setGameResult("You win!");
     } else {
       setGameResult("Pejman wins!");
@@ -26,7 +27,7 @@ export default function RokScissorsPaper({totalPoint, updateTotalPoint}) {
 
   const handleUserChoice = (input) => {
     setUserChoice(input);
-    setPejmanChoice(getRand(3));
+    setPejmanChoice(optionsArray[getRand(3)-1]);
   };
 
   useEffect(
@@ -41,21 +42,22 @@ export default function RokScissorsPaper({totalPoint, updateTotalPoint}) {
         src={Rock}
         width="150px"
         alt="Rock"
-        onClick={() => handleUserChoice(1)}
+        onClick={() => handleUserChoice("Rock")}
       />
       <img
         src={Scissors}
         width="150px"
         alt="Scissors"
-        onClick={() => handleUserChoice(2)}
+        onClick={() => handleUserChoice("Scissors")}
       />
       <img
         src={Paper}
         width="150px"
         alt="Paper"
-        onClick={() => handleUserChoice(3)}
+        onClick={() => handleUserChoice("Paper")}
       />
-      {userChoice} - {pejmanChoice}
+      <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
+      <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
       <h1>{gameResult}</h1>
     </div>
   );
