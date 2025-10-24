@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import Star from "./Star.png";
 import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
 
 function App() {
@@ -14,6 +15,15 @@ function App() {
   return (
     <div className="App">
       <h1>Pejman MERN Wonderland</h1>
+      {
+      new Array(totalPoint).fill(null).map((t) => (
+        <img
+        src={Star}
+        width="30px"
+        alt="Star"
+      />
+      ))
+      }
       <RockScissorsPaper
         score={score}
         updateScore={updateScore}

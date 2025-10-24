@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Rock from "./Rok.png";
+import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
 import { getRand } from "../utils";
@@ -41,7 +41,7 @@ export default function RockScissorsPaper({
 
   const handleUserChoice = (input) => {
     setUserChoice(input);
-    setPejmanChoice(optionsArray[getRand(1) - 1]);
+    setPejmanChoice(optionsArray[getRand(3) - 1]);
   };
 
   const handleTotalPoint = () => {
@@ -82,8 +82,17 @@ export default function RockScissorsPaper({
       <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
       <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
       <h2>{gameResult}</h2>
-      <h2>Your score: {score}</h2>
-      <h3>Your Total Point: {totalPoint}</h3>
+      {tripleScore !== 3 ? (
+        <div>
+          <h2>Your score: {score}</h2>
+          <h3>Your Total Point: {totalPoint}</h3>
+        </div>
+      ) : (
+        <div>
+          <h3>Excellent! You just beat Pejman three times in a row</h3>
+          <h3>Your total point increases by one</h3>
+        </div>
+      )}
     </div>
   );
 }
