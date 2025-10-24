@@ -7,6 +7,7 @@ const optionsArray = ["Rock", "Scissors", "Paper"];
 
 export default function RockScissorsPaper({
   score,
+  setScore,
   updateScore,
   totalPoint,
   updateTotalPoint,
@@ -51,6 +52,13 @@ export default function RockScissorsPaper({
     }
   };
 
+  const reset = () => {
+    setScore(0);
+    setUserChoice("");
+    setPejmanChoice("");
+    setGameResult("");
+  };
+
   useEffect(
     function () {
       handleTotalPoint();
@@ -82,6 +90,7 @@ export default function RockScissorsPaper({
       <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
       <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
       <h2>{gameResult}</h2>
+      {gameResult && <button onClick={() => reset()}>Reset</button>}
       {tripleScore !== 3 ? (
         <div>
           <h2>Your score: {score}</h2>

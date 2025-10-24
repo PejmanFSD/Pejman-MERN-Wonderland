@@ -15,17 +15,12 @@ function App() {
   return (
     <div className="App">
       <h1>Pejman MERN Wonderland</h1>
-      {
-      new Array(totalPoint).fill(null).map((t) => (
-        <img
-        src={Star}
-        width="30px"
-        alt="Star"
-      />
-      ))
-      }
+      {new Array(totalPoint).fill(null).map((t) => (
+        <img src={Star} width="30px" alt="Star" />
+      ))}
       <RockScissorsPaper
         score={score}
+        setScore={setScore}
         updateScore={updateScore}
         totalPoint={totalPoint}
         updateTotalPoint={updateTotalPoint}
