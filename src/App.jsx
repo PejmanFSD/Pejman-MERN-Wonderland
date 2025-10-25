@@ -2,11 +2,13 @@ import "./App.css";
 import { useState } from "react";
 import Star from "./Star.png";
 import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
+import GuessNumber from "./GuessNumber/GuessNumber";
 
 function App() {
   const [totalPoint, setTotalPoint] = useState(0);
   const [score, setScore] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
+  const [showGuessNumber, setShowGuessNumber] = useState(false);
   const updateScore = (i) => {
     setScore((currScore) => currScore + i);
   };
@@ -15,6 +17,9 @@ function App() {
   };
   const toggleRockScissorsPaper = () => {
     setShowRockScissorsPaper(true);
+  };
+  const toggleGuessNumber = () => {
+    setShowGuessNumber(true);
   };
   return (
     <div className="App">
@@ -42,6 +47,18 @@ function App() {
         <button onClick={() => toggleRockScissorsPaper()}>
           Rock - Scissors - Paper
         </button>
+      )}
+      {showGuessNumber ? (
+        <GuessNumber
+          score={score}
+          setScore={setScore}
+          updateScore={updateScore}
+          totalPoint={totalPoint}
+          updateTotalPoint={updateTotalPoint}
+          setShowGuessNumber={setShowGuessNumber}
+        />
+      ) : (
+        <button onClick={() => toggleGuessNumber()}>Guess Number</button>
       )}
     </div>
   );

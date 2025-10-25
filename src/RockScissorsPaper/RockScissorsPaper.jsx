@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
-import { getRand } from "../utils";
+import { getRandNum } from "../utils";
 const optionsArray = ["Rock", "Scissors", "Paper"];
 
 export default function RockScissorsPaper({
@@ -42,7 +42,7 @@ export default function RockScissorsPaper({
   };
   const handleUserChoice = (input) => {
     setUserChoice(input);
-    setPejmanChoice(optionsArray[getRand(3) - 1]);
+    setPejmanChoice(optionsArray[getRandNum(3) - 1]);
   };
   const handleTotalPoint = () => {
     if (tripleScore === 3) {

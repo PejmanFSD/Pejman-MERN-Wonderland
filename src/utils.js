@@ -1,5 +1,9 @@
-function getRand(maxNum) {
+function getRandNum(maxNum) {
     return Math.floor(Math.random() * maxNum) + 1;
 }
 
-export { getRand };
+function getRandArr(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export { getRandNum, getRandArr };
