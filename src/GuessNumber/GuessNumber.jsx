@@ -72,12 +72,12 @@ export default function GuessNumber() {
     } else {
       setSecondGuessStatus("Wrong");
     }
-    if (parseInt(firstGuess) === parseInt(num[0])) {
+    if (parseInt(thirdGuess) === parseInt(num[2])) {
       setThirdGuessStatus("Correct");
     } else {
       setThirdGuessStatus("Wrong");
     }
-    if (parseInt(firstGuess) === parseInt(num[0])) {
+    if (parseInt(fourthGuess) === parseInt(num[3])) {
       setFourthGuessStatus("Correct");
     } else {
       setFourthGuessStatus("Wrong");
