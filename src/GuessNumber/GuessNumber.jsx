@@ -4,8 +4,14 @@ import { getRandArr } from "../utils";
 export default function GuessNumber() {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [firstGuessStatus, setFirstGuessStatus] = useState("");
   const [firstGuess, setFirstGuess] = useState("");
+  const [firstGuessStatus, setFirstGuessStatus] = useState("");
+  const [secondGuess, setSecondGuess] = useState("");
+  const [secondGuessStatus, setSecondGuessStatus] = useState("");
+  const [thirdGuess, setThirdGuess] = useState("");
+  const [thirdGuessStatus, setThirdGuessStatus] = useState("");
+  const [fourthGuess, setFourthGuess] = useState("");
+  const [fourthGuessStatus, setFourthGuessStatus] = useState("");
   const generateRandNum = () => {
     setIsGameStarted(true);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -30,20 +36,51 @@ export default function GuessNumber() {
     }
     setNum(generatedRandNum);
   };
-  const handleChange = (e) => {
+  const firstHandleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
     }
-    // const changedField = e.target.name;
-    // const newValue = e.target.value;
     setFirstGuess(e.target.value);
+  };
+  const secondHandleChange = (e) => {
+    if (e.target.value.length === 0) {
+      return;
+    }
+    setSecondGuess(e.target.value);
+  };
+  const thirdHandleChange = (e) => {
+    if (e.target.value.length === 0) {
+      return;
+    }
+    setThirdGuess(e.target.value);
+  };
+  const fourthHandleChange = (e) => {
+    if (e.target.value.length === 0) {
+      return;
+    }
+    setFourthGuess(e.target.value);
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
     if (parseInt(firstGuess) === parseInt(num[0])) {
-      setFirstGuessStatus("Welldone");
+      setFirstGuessStatus("Correct");
     } else {
-      setFirstGuessStatus("Wrong Guess");
+      setFirstGuessStatus("Wrong");
+    }
+    if (parseInt(secondGuess) === parseInt(num[1])) {
+      setSecondGuessStatus("Correct");
+    } else {
+      setSecondGuessStatus("Wrong");
+    }
+    if (parseInt(firstGuess) === parseInt(num[0])) {
+      setThirdGuessStatus("Correct");
+    } else {
+      setThirdGuessStatus("Wrong");
+    }
+    if (parseInt(firstGuess) === parseInt(num[0])) {
+      setFourthGuessStatus("Correct");
+    } else {
+      setFourthGuessStatus("Wrong");
     }
   };
   return (
@@ -63,12 +100,36 @@ export default function GuessNumber() {
             placeholder="First Digit"
             name="First Digit"
             id="First Digit"
-            onChange={handleChange}
+            onChange={firstHandleChange}
+          />
+          <input
+            type="text"
+            placeholder="Second Digit"
+            name="Second Digit"
+            id="Second Digit"
+            onChange={secondHandleChange}
+          />
+          <input
+            type="text"
+            placeholder="Third Digit"
+            name="Third Digit"
+            id="Third Digit"
+            onChange={thirdHandleChange}
+          />
+          <input
+            type="text"
+            placeholder="Fourth Digit"
+            name="Fourth Digit"
+            id="Fourth Digit"
+            onChange={fourthHandleChange}
           />
           <button>Done</button>
         </form>
       )}
-      {firstGuessStatus && firstGuessStatus}
+      {firstGuessStatus && firstGuessStatus}-
+      {secondGuessStatus && secondGuessStatus}-
+      {thirdGuessStatus && thirdGuessStatus}-
+      {fourthGuessStatus && fourthGuessStatus}
     </div>
   );
 }
