@@ -4,14 +4,8 @@ import { getRandArr } from "../utils";
 export default function GuessNumber() {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [firstGuess, setFirstGuess] = useState("");
-  const [firstGuessStatus, setFirstGuessStatus] = useState("");
-  const [secondGuess, setSecondGuess] = useState("");
-  const [secondGuessStatus, setSecondGuessStatus] = useState("");
-  const [thirdGuess, setThirdGuess] = useState("");
-  const [thirdGuessStatus, setThirdGuessStatus] = useState("");
-  const [fourthGuess, setFourthGuess] = useState("");
-  const [fourthGuessStatus, setFourthGuessStatus] = useState("");
+  const [userGuess, setUserGuess] = useState([null, null, null, null]);
+  const [userGuessStatus, setUserGuessStatus] = useState([null, null, null, null]);
   const generateRandNum = () => {
     setIsGameStarted(true);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -40,47 +34,95 @@ export default function GuessNumber() {
     if (e.target.value.length === 0) {
       return;
     }
-    setFirstGuess(e.target.value);
+    setUserGuess((currUserGuess) =>
+      currUserGuess.map((userGuess, i) =>
+        i === 0 ? e.target.value : userGuess
+      )
+    );
   };
   const secondHandleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
     }
-    setSecondGuess(e.target.value);
+    setUserGuess((currUserGuess) =>
+      currUserGuess.map((userGuess, i) =>
+        i === 1 ? e.target.value : userGuess
+      )
+    );
   };
   const thirdHandleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
     }
-    setThirdGuess(e.target.value);
+    setUserGuess((currUserGuess) =>
+      currUserGuess.map((userGuess, i) =>
+        i === 2 ? e.target.value : userGuess
+      )
+    );
   };
   const fourthHandleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
     }
-    setFourthGuess(e.target.value);
+    setUserGuess((currUserGuess) =>
+      currUserGuess.map((userGuess, i) =>
+        i === 3 ? e.target.value : userGuess
+      )
+    );
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
-    if (parseInt(firstGuess) === parseInt(num[0])) {
-      setFirstGuessStatus("Correct");
+    if (parseInt(userGuess[0]) === parseInt(num[0])) {
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 0 ? "Correct" : userGuessStatus
+        )
+      );
     } else {
-      setFirstGuessStatus("Wrong");
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 0 ? "Wrong" : userGuessStatus
+        )
+      );
     }
-    if (parseInt(secondGuess) === parseInt(num[1])) {
-      setSecondGuessStatus("Correct");
+    if (parseInt(userGuess[1]) === parseInt(num[1])) {
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 1 ? "Correct" : userGuessStatus
+        )
+      );
     } else {
-      setSecondGuessStatus("Wrong");
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 1 ? "Wrong" : userGuessStatus
+        )
+      );
     }
-    if (parseInt(thirdGuess) === parseInt(num[2])) {
-      setThirdGuessStatus("Correct");
+    if (parseInt(userGuess[2]) === parseInt(num[2])) {
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 2 ? "Correct" : userGuessStatus
+        )
+      );
     } else {
-      setThirdGuessStatus("Wrong");
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 2 ? "Wrong" : userGuessStatus
+        )
+      );
     }
-    if (parseInt(fourthGuess) === parseInt(num[3])) {
-      setFourthGuessStatus("Correct");
+    if (parseInt(userGuess[3]) === parseInt(num[3])) {
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 3 ? "Correct" : userGuessStatus
+        )
+      );
     } else {
-      setFourthGuessStatus("Wrong");
+      setUserGuessStatus((currUserGuessStatus) =>
+        currUserGuessStatus.map((userGuessStatus, i) =>
+          i === 3 ? "Wrong" : userGuessStatus
+        )
+      );
     }
   };
   return (
@@ -95,41 +137,43 @@ export default function GuessNumber() {
       <button onClick={() => generateRandNum()}>Start the game</button>
       {isGameStarted && (
         <form onSubmit={checkTheNumber}>
+          <label htmlFor="FirstDigit"></label>
           <input
             type="text"
             placeholder="First Digit"
-            name="First Digit"
-            id="First Digit"
+            name="FirstDigit"
+            id="FirstDigit"
             onChange={firstHandleChange}
           />
+          <label htmlFor="SecondDigit"></label>
           <input
             type="text"
             placeholder="Second Digit"
-            name="Second Digit"
-            id="Second Digit"
+            name="SecondDigit"
+            id="SecondDigit"
             onChange={secondHandleChange}
           />
+          <label htmlFor="ThirdDigit"></label>
           <input
             type="text"
             placeholder="Third Digit"
-            name="Third Digit"
-            id="Third Digit"
+            name="ThirdDigit"
+            id="ThirdDigit"
             onChange={thirdHandleChange}
           />
+          <label htmlFor="FourthDigit"></label>
           <input
             type="text"
             placeholder="Fourth Digit"
-            name="Fourth Digit"
-            id="Fourth Digit"
+            name="FourthDigit"
+            id="FourthDigit"
             onChange={fourthHandleChange}
           />
           <button>Done</button>
         </form>
       )}
-      {firstGuessStatus && firstGuessStatus}-
-      {secondGuessStatus && secondGuessStatus}-
-      {thirdGuessStatus && thirdGuessStatus}-
-      {fourthGuessStatus && fourthGuessStatus}
+      {userGuess}
+      {userGuessStatus && userGuessStatus}
     </div>
   );
 }
