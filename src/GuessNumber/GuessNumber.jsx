@@ -4,12 +4,11 @@ import { getRandArr } from "../utils";
 export default function GuessNumber() {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [userGuess, setUserGuess] = useState([null, null, null, null]);
-  const [userGuessStatus, setUserGuessStatus] = useState([
-    null,
-    null,
-    null,
-    null,
+  const [userGuess, setUserGuess] = useState([
+    { guess: null, status: null },
+    { guess: null, status: null },
+    { guess: null, status: null },
+    { guess: null, status: null },
   ]);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const generateRandNum = () => {
@@ -20,19 +19,14 @@ export default function GuessNumber() {
     const generatedRandNum = [];
     while (generatedRandNum.length < 4) {
       const randDigit = getRandArr(digits);
-      console.log("randDigit: ", randDigit);
       generatedRandNum.push(randDigit);
       digits.splice(digits.indexOf(randDigit), 1);
-      console.log("digits: ", digits);
-      console.log("generatedRandNum: ", generatedRandNum);
     }
     // The first digit shouldn't be "0"
     if (generatedRandNum[0] === "0") {
       // If the first digit is "0", then we don't have "0" in digits
       const fixedFirstDigit = getRandArr(digits);
-      console.log("fixedFirstDigit: ", fixedFirstDigit);
       generatedRandNum[0] = fixedFirstDigit;
-      console.log("fixedRandNum: ", generatedRandNum);
     }
     setNum(generatedRandNum);
   };
@@ -41,8 +35,10 @@ export default function GuessNumber() {
       return;
     }
     setUserGuess((currUserGuess) =>
-      currUserGuess.map((userGuess, i) =>
-        i === 0 ? e.target.value : userGuess
+      currUserGuess.map((item, index) =>
+        index === 0
+          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          : item
       )
     );
   };
@@ -51,8 +47,10 @@ export default function GuessNumber() {
       return;
     }
     setUserGuess((currUserGuess) =>
-      currUserGuess.map((userGuess, i) =>
-        i === 1 ? e.target.value : userGuess
+      currUserGuess.map((item, index) =>
+        index === 1
+          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          : item
       )
     );
   };
@@ -61,8 +59,10 @@ export default function GuessNumber() {
       return;
     }
     setUserGuess((currUserGuess) =>
-      currUserGuess.map((userGuess, i) =>
-        i === 2 ? e.target.value : userGuess
+      currUserGuess.map((item, index) =>
+        index === 2
+          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          : item
       )
     );
   };
@@ -71,68 +71,37 @@ export default function GuessNumber() {
       return;
     }
     setUserGuess((currUserGuess) =>
-      currUserGuess.map((userGuess, i) =>
-        i === 3 ? e.target.value : userGuess
+      currUserGuess.map((item, index) =>
+        index === 3
+          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          : item
       )
     );
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
-    if (parseInt(userGuess[0]) === parseInt(num[0])) {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 0 ? "Correct" : userGuessStatus
-        )
-      );
-    } else {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 0 ? "Wrong" : userGuessStatus
-        )
-      );
-    }
-    if (parseInt(userGuess[1]) === parseInt(num[1])) {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 1 ? "Correct" : userGuessStatus
-        )
-      );
-    } else {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 1 ? "Wrong" : userGuessStatus
-        )
-      );
-    }
-    if (parseInt(userGuess[2]) === parseInt(num[2])) {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 2 ? "Correct" : userGuessStatus
-        )
-      );
-    } else {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 2 ? "Wrong" : userGuessStatus
-        )
-      );
-    }
-    if (parseInt(userGuess[3]) === parseInt(num[3])) {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 3 ? "Correct" : userGuessStatus
-        )
-      );
-    } else {
-      setUserGuessStatus((currUserGuessStatus) =>
-        currUserGuessStatus.map((userGuessStatus, i) =>
-          i === 3 ? "Wrong" : userGuessStatus
-        )
-      );
+    for (let i = 0; i < 4; i++) {
+      if (parseInt(userGuess[i].guess) === parseInt(num[i])) {
+        setUserGuess((currUserGuess) =>
+          currUserGuess.map((item, index) =>
+            index === i
+              ? { ...item, guess: currUserGuess[i].guess, status: "Correct" }
+              : item
+          )
+        );
+      } else {
+        setUserGuess((currUserGuess) =>
+          currUserGuess.map((item, index) =>
+            index === i
+              ? { ...item, guess: currUserGuess[i].guess, status: "Wrong" }
+              : item
+          )
+        );
+      }
     }
     setAllUserGuesses((currAllUserGuesses) => [
       ...currAllUserGuesses,
-      userGuess,
+      { guess: userGuess.guess, status: userGuess.status },
     ]);
   };
   return (
@@ -182,13 +151,16 @@ export default function GuessNumber() {
           <button>Done</button>
         </form>
       )}
-      {userGuess}
-      {/* {userGuessStatus && userGuessStatus} */}
-      {allUserGuesses.map((g) => (
-        <div>
-          {g} - {userGuessStatus}
-        </div>
-      ))}
+      {userGuess[0].guess !== null &&
+        userGuess[1].guess !== null &&
+        userGuess[2].guess !== null &&
+        userGuess[3].guess !== null &&
+        userGuess.map((item, index) => (
+          <div key={index}>
+            <p>Guess: {item.guess}</p>
+            <p>Status: {item.status}</p>
+          </div>
+        ))}
     </div>
   );
 }
