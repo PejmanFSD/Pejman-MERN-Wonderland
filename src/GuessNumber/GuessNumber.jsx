@@ -5,7 +5,13 @@ export default function GuessNumber() {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userGuess, setUserGuess] = useState([null, null, null, null]);
-  const [userGuessStatus, setUserGuessStatus] = useState([null, null, null, null]);
+  const [userGuessStatus, setUserGuessStatus] = useState([
+    null,
+    null,
+    null,
+    null,
+  ]);
+  const [allUserGuesses, setAllUserGuesses] = useState([]);
   const generateRandNum = () => {
     setIsGameStarted(true);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -124,6 +130,10 @@ export default function GuessNumber() {
         )
       );
     }
+    setAllUserGuesses((currAllUserGuesses) => [
+      ...currAllUserGuesses,
+      userGuess,
+    ]);
   };
   return (
     <div>
@@ -173,7 +183,12 @@ export default function GuessNumber() {
         </form>
       )}
       {userGuess}
-      {userGuessStatus && userGuessStatus}
+      {/* {userGuessStatus && userGuessStatus} */}
+      {allUserGuesses.map((g) => (
+        <div>
+          {g} - {userGuessStatus}
+        </div>
+      ))}
     </div>
   );
 }
