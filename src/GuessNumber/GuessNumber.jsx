@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getRandArr } from "../utils";
 
 export default function GuessNumber() {
@@ -107,11 +107,13 @@ export default function GuessNumber() {
         );
       }
     }
-    setAllUserGuesses((currAllUserGuesses) => [
-      ...currAllUserGuesses,
-      { guess: userGuess.guess, status: userGuess.status },
-    ]);
   };
+  useEffect(
+    function () {
+      setAllUserGuesses(userGuess.map((u) => u.status));
+    },
+    [userGuess]
+  );
   return (
     <div>
       {num && (
@@ -159,20 +161,17 @@ export default function GuessNumber() {
           <button>Done</button>
         </form>
       )}
-      {userGuess[0].guess !== null &&
-        userGuess[0].status !== null &&
-        userGuess[1].guess !== null &&
-        userGuess[1].status !== null &&
-        userGuess[2].guess !== null &&
-        userGuess[2].status !== null &&
-        userGuess[3].guess !== null &&
-        userGuess[3].status !== null &&
-        userGuess.map((item, index) => (
-          <div key={index}>
-            <p>Guess: {item.guess}</p>
-            <p>Status: {item.status}</p>
-          </div>
-        ))}
+      {userGuess.map((digitGuess, index) => (
+        <div key={index} style={{ display: "inline" }}>
+          {digitGuess.guess}
+        </div>
+      ))}
+      -
+      {allUserGuesses.map((guessStatus, index) => (
+        <div key={index} style={{ display: "inline" }}>
+          {guessStatus}
+        </div>
+      ))}
     </div>
   );
 }
