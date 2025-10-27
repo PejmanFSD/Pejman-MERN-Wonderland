@@ -10,6 +10,7 @@ export default function GuessNumber() {
     { guess: null, status: null },
     { guess: null, status: null },
   ]);
+  const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const generateRandNum = () => {
     setIsGameStarted(true);
@@ -107,6 +108,7 @@ export default function GuessNumber() {
         );
       }
     }
+    setShowResult(true);
   };
   useEffect(
     function () {
@@ -161,11 +163,12 @@ export default function GuessNumber() {
           <button>Done</button>
         </form>
       )}
-      {userGuess.map((digitGuess, index) => (
-        <div key={index} style={{ display: "inline" }}>
-          {digitGuess.guess}
-        </div>
-      ))}
+      {showResult &&
+        userGuess.map((digitGuess, index) => (
+          <div key={index} style={{ display: "inline" }}>
+            {digitGuess.guess}
+          </div>
+        ))}
       -
       {allUserGuesses.map((guessStatus, index) => (
         <div key={index} style={{ display: "inline" }}>
