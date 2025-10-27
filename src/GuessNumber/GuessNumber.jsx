@@ -85,7 +85,15 @@ export default function GuessNumber() {
         setUserGuess((currUserGuess) =>
           currUserGuess.map((item, index) =>
             index === i
-              ? { ...item, guess: currUserGuess[i].guess, status: "Correct" }
+              ? { ...item, guess: currUserGuess[i].guess, status: "A" }
+              : item
+          )
+        );
+      } else if (num.includes(userGuess[i].guess)) {
+        setUserGuess((currUserGuess) =>
+          currUserGuess.map((item, index) =>
+            index === i
+              ? { ...item, guess: currUserGuess[i].guess, status: "B" }
               : item
           )
         );
@@ -93,7 +101,7 @@ export default function GuessNumber() {
         setUserGuess((currUserGuess) =>
           currUserGuess.map((item, index) =>
             index === i
-              ? { ...item, guess: currUserGuess[i].guess, status: "Wrong" }
+              ? { ...item, guess: currUserGuess[i].guess, status: "C" }
               : item
           )
         );
@@ -152,9 +160,13 @@ export default function GuessNumber() {
         </form>
       )}
       {userGuess[0].guess !== null &&
+        userGuess[0].status !== null &&
         userGuess[1].guess !== null &&
+        userGuess[1].status !== null &&
         userGuess[2].guess !== null &&
+        userGuess[2].status !== null &&
         userGuess[3].guess !== null &&
+        userGuess[3].status !== null &&
         userGuess.map((item, index) => (
           <div key={index}>
             <p>Guess: {item.guess}</p>
