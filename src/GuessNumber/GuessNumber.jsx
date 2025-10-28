@@ -127,16 +127,18 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   );
   return (
     <div>
-      {num && (
-        <h3>
-          Guess the chosen four digits unrepetitive number correctly and win the
-          game
-        </h3>
+      <h2>Guess Number</h2>
+      {!isGameStarted ? (
+        <button onClick={() => generateRandNum()}>Start the Game</button>
+      ) : (
+        num && (
+          <h3>
+            Guess the chosen four digits unrepetitive number correctly and win
+            the game
+          </h3>
+        )
       )}
       {num}
-      {!isGameStarted && (
-        <button onClick={() => generateRandNum()}>Start the Game</button>
-      )}
       {isGameStarted && (
         <form onSubmit={checkTheNumber}>
           <label htmlFor="FirstDigit"></label>
