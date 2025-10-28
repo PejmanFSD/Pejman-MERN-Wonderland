@@ -14,7 +14,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     { guess: null, status: null },
   ]);
   const [showResult, setShowResult] = useState(false);
-  const [userFinalGuess, setUserFinalGuess] = useState([]);
   // const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
@@ -116,44 +115,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
-    for (let i = 0; i < 4; i++) {
-      if (parseInt(userGuess[i].guess) === parseInt(num[i])) {
-        setUserGuess((currUserGuess) =>
-          currUserGuess.map((item, index) =>
-            index === i
-              ? { ...item, guess: currUserGuess[i].guess, status: "A" }
-              : item
-          )
-        );
-      } else if (num.includes(userGuess[i].guess)) {
-        setUserGuess((currUserGuess) =>
-          currUserGuess.map((item, index) =>
-            index === i
-              ? { ...item, guess: currUserGuess[i].guess, status: "B" }
-              : item
-          )
-        );
-      } else {
-        setUserGuess((currUserGuess) =>
-          currUserGuess.map((item, index) =>
-            index === i
-              ? { ...item, guess: currUserGuess[i].guess, status: "C" }
-              : item
-          )
-        );
-      }
-    }
-    console.log("userGuess: ", userGuess);
     setShowResult(true);
   };
-
-  useEffect(
-    function () {
-      setUserFinalGuess(userGuess.map((u) => [u.guess, u.status]));
-      console.log("userFinalGuess: ", userFinalGuess);
-    },
-    [userGuess]
-  );
   return (
     <div>
       <h2>Guess Number</h2>
@@ -220,19 +183,20 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {showResult && (
         <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
       )}
-      {userFinalGuess.map((guessStatus, index) => (
-        <div key={index} style={{ display: "inline" }}>
-          {guessStatus[1] === "A" ? (
-            <img src={A} width="25px" alt="GreenCircle" />
-          ) : guessStatus[1] === "B" ? (
-            <img src={B} width="25px" alt="YellowCircle" />
-          ) : (
-            guessStatus[1] === "C" && (
-              <img src={C} width="25px" alt="RedCircle" />
-            )
-          )}
-        </div>
-      ))}
+      {showResult &&
+        userGuess.map((currUserGuess, index) => (
+          <div key={index} style={{ display: "inline" }}>
+            {currUserGuess.status === "A" ? (
+              <img src={A} width="25px" alt="GreenCircle" />
+            ) : currUserGuess.status === "B" ? (
+              <img src={B} width="25px" alt="YellowCircle" />
+            ) : (
+              currUserGuess.status === "C" && (
+                <img src={C} width="25px" alt="RedCircle" />
+              )
+            )}
+          </div>
+        ))}
       <br></br>
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
