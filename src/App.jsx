@@ -5,6 +5,7 @@ import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./GuessNumber/GuessNumber";
 
 function App() {
+  const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [score, setScore] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -16,9 +17,11 @@ function App() {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
   const toggleRockScissorsPaper = () => {
+    setShowGameTitles(false);
     setShowRockScissorsPaper(true);
   };
   const toggleGuessNumber = () => {
+    setShowGameTitles(false);
     setShowGuessNumber(true);
   };
   return (
@@ -34,8 +37,9 @@ function App() {
           ? "You don't have any stars yet, play the interesting games and win some!"
           : `You have ${totalPoint} star${totalPoint > 1 ? "s" : ""}`}
       </div>
-      {showRockScissorsPaper ? (
+      {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
+          setShowGameTitles={setShowGameTitles}
           score={score}
           setScore={setScore}
           updateScore={updateScore}
@@ -44,12 +48,16 @@ function App() {
           setShowRockScissorsPaper={setShowRockScissorsPaper}
         />
       ) : (
-        <button onClick={() => toggleRockScissorsPaper()}>
-          Rock - Scissors - Paper
-        </button>
+        showGameTitles &&
+        !showRockScissorsPaper && (
+          <button onClick={() => toggleRockScissorsPaper()}>
+            Rock - Scissors - Paper
+          </button>
+        )
       )}
-      {showGuessNumber ? (
+      {!showGameTitles && showGuessNumber ? (
         <GuessNumber
+          setShowGameTitles={setShowGameTitles}
           score={score}
           setScore={setScore}
           updateScore={updateScore}
@@ -58,7 +66,10 @@ function App() {
           setShowGuessNumber={setShowGuessNumber}
         />
       ) : (
-        <button onClick={() => toggleGuessNumber()}>Guess Number</button>
+        showGameTitles &&
+        !showGuessNumber && (
+          <button onClick={() => toggleGuessNumber()}>Guess Number</button>
+        )
       )}
     </div>
   );

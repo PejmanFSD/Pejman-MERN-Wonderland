@@ -6,6 +6,7 @@ import { getRandNum } from "../utils";
 const optionsArray = ["Rock", "Scissors", "Paper"];
 
 export default function RockScissorsPaper({
+  setShowGameTitles,
   score,
   setScore,
   updateScore,
@@ -57,6 +58,7 @@ export default function RockScissorsPaper({
   };
   const backToHomepage = () => {
     setShowRockScissorsPaper(false);
+    setShowGameTitles(true);
   };
   const handleOk = () => {
     updateTotalPoint(1);

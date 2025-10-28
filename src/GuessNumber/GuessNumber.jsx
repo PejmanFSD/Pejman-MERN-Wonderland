@@ -4,7 +4,7 @@ import A from "./A.png";
 import B from "./B.png";
 import C from "./C.png";
 
-export default function GuessNumber({ setShowGuessNumber }) {
+export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userGuess, setUserGuess] = useState([
@@ -20,6 +20,7 @@ export default function GuessNumber({ setShowGuessNumber }) {
     if (isGameStarted) {
       setIsGameStarted(false);
       setShowGuessNumber(false);
+      setShowGameTitles(true);
     }
     if (!isGameStarted) {
       setIsGameStarted(true);
