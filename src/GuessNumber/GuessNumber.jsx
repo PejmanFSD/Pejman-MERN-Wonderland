@@ -16,19 +16,13 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
-  const handleGame = () => {
-    if (isGameStarted) {
-      setIsGameStarted(false);
-      setShowGuessNumber(false);
-      setShowGameTitles(true);
-    }
-    if (!isGameStarted) {
-      setIsGameStarted(true);
-      generateRandNum();
-    }
+  const backToHomepage = () => {
+    setIsGameStarted(false);
+    setShowGuessNumber(false);
+    setShowGameTitles(true);
   };
   const generateRandNum = () => {
-    // setIsGameStarted(true);
+    setIsGameStarted(true);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     // We can't update the state variable multiple times in one render
     // So we create a separate variable, then assign it to the state variable
@@ -140,9 +134,9 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         </h3>
       )}
       {num}
-      <button onClick={() => handleGame()}>
-        {isGameStarted ? "Back to Home Page" : "Start the Game"}
-      </button>
+      {!isGameStarted && (
+        <button onClick={() => generateRandNum()}>Start the Game</button>
+      )}
       {isGameStarted && (
         <form onSubmit={checkTheNumber}>
           <label htmlFor="FirstDigit"></label>
@@ -206,6 +200,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           )}
         </div>
       ))}
+      <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
   );
 }
