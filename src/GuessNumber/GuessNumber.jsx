@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { getRandArr } from "../utils";
+import A from "./A.png";
+import B from "./B.png";
+import C from "./C.png";
 
 export default function GuessNumber() {
   const [num, setNum] = useState([]);
@@ -12,6 +15,7 @@ export default function GuessNumber() {
   ]);
   const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
+  const [chancesNum, setChancesNum] = useState(10);
   const generateRandNum = () => {
     setIsGameStarted(true);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -163,16 +167,30 @@ export default function GuessNumber() {
           <button>Done</button>
         </form>
       )}
+      {showResult && (
+        <div style={{ display: "inline" }}>{`Guess number ${
+          11 - chancesNum
+        }: `}</div>
+      )}
       {showResult &&
         userGuess.map((digitGuess, index) => (
           <div key={index} style={{ display: "inline" }}>
             {digitGuess.guess}
           </div>
         ))}
-      -
+      <br></br>
+      {showResult && (
+        <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
+      )}
       {allUserGuesses.map((guessStatus, index) => (
         <div key={index} style={{ display: "inline" }}>
-          {guessStatus}
+          {guessStatus === "A" ? (
+            <img src={A} width="35px" alt="GreenCircle" />
+          ) : guessStatus === "B" ? (
+            <img src={B} width="35px" alt="YellowCircle" />
+          ) : (
+            guessStatus === "C" && <img src={C} width="35px" alt="RedCircle" />
+          )}
         </div>
       ))}
     </div>
