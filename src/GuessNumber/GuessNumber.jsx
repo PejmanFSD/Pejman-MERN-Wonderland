@@ -4,7 +4,7 @@ import A from "./A.png";
 import B from "./B.png";
 import C from "./C.png";
 
-export default function GuessNumber() {
+export default function GuessNumber({ setShowGuessNumber }) {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userGuess, setUserGuess] = useState([
@@ -16,8 +16,18 @@ export default function GuessNumber() {
   const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
+  const handleGame = () => {
+    if (isGameStarted) {
+      setIsGameStarted(false);
+      setShowGuessNumber(false);
+    }
+    if (!isGameStarted) {
+      setIsGameStarted(true);
+      generateRandNum();
+    }
+  };
   const generateRandNum = () => {
-    setIsGameStarted(true);
+    // setIsGameStarted(true);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     // We can't update the state variable multiple times in one render
     // So we create a separate variable, then assign it to the state variable
@@ -129,7 +139,9 @@ export default function GuessNumber() {
         </h3>
       )}
       {num}
-      <button onClick={() => generateRandNum()}>Start the game</button>
+      <button onClick={() => handleGame()}>
+        {isGameStarted ? "Back to Home Page" : "Start the Game"}
+      </button>
       {isGameStarted && (
         <form onSubmit={checkTheNumber}>
           <label htmlFor="FirstDigit"></label>
