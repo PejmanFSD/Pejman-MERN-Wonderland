@@ -38,12 +38,12 @@ export default function RockScissorsPaper({
     } else {
       setGameResult("Pejman wins!");
       updateScore(-1);
-      setTripleScore((currTripleScore) => currTripleScore - 1);
+      setTripleScore(0);
     }
   };
   const handleUserChoice = (input) => {
     setUserChoice(input);
-    setPejmanChoice(optionsArray[getRandNum(3) - 1]);
+    setPejmanChoice(optionsArray[getRandNum(1) - 1]);
   };
   const handleTotalPoint = () => {
     if (tripleScore === 3) {
@@ -62,7 +62,6 @@ export default function RockScissorsPaper({
   };
   const handleOk = () => {
     updateTotalPoint(1);
-    setTripleScore(0);
     setTripleScore(0);
     setUserChoice("");
     setPejmanChoice("");
