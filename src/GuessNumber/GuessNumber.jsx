@@ -14,7 +14,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     { guess: null, status: null },
   ]);
   const [showResult, setShowResult] = useState(false);
-  const [allUserGuesses, setAllUserGuesses] = useState([]);
+  const [userFinalGuess, setUserFinalGuess] = useState([]);
+  // const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
     setIsGameStarted(false);
@@ -47,7 +48,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     setUserGuess((currUserGuess) =>
       currUserGuess.map((item, index) =>
         index === 0
-          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          ? {
+              ...item,
+              guess: e.target.value,
+              status: checkStatus(num, 0, e.target.value),
+            }
           : item
       )
     );
@@ -59,7 +64,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     setUserGuess((currUserGuess) =>
       currUserGuess.map((item, index) =>
         index === 1
-          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          ? {
+              ...item,
+              guess: e.target.value,
+              status: checkStatus(num, 1, e.target.value),
+            }
           : item
       )
     );
@@ -71,7 +80,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     setUserGuess((currUserGuess) =>
       currUserGuess.map((item, index) =>
         index === 2
-          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          ? {
+              ...item,
+              guess: e.target.value,
+              status: checkStatus(num, 2, e.target.value),
+            }
           : item
       )
     );
@@ -83,10 +96,23 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     setUserGuess((currUserGuess) =>
       currUserGuess.map((item, index) =>
         index === 3
-          ? { ...item, guess: e.target.value, status: currUserGuess[0].status }
+          ? {
+              ...item,
+              guess: e.target.value,
+              status: checkStatus(num, 3, e.target.value),
+            }
           : item
       )
     );
+  };
+  const checkStatus = (arr, idx, el) => {
+    if (arr[idx].toString() === el.toString()) {
+      return "A";
+    } else if (arr.includes(el.toString())) {
+      return "B";
+    } else {
+      return "C";
+    }
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
@@ -117,11 +143,14 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         );
       }
     }
+    console.log("userGuess: ", userGuess);
     setShowResult(true);
   };
+
   useEffect(
     function () {
-      setAllUserGuesses(userGuess.map((u) => u.status));
+      setUserFinalGuess(userGuess.map((u) => [u.guess, u.status]));
+      console.log("userFinalGuess: ", userFinalGuess);
     },
     [userGuess]
   );
@@ -191,17 +220,20 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {showResult && (
         <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
       )}
-      {allUserGuesses.map((guessStatus, index) => (
+      {userFinalGuess.map((guessStatus, index) => (
         <div key={index} style={{ display: "inline" }}>
-          {guessStatus === "A" ? (
-            <img src={A} width="35px" alt="GreenCircle" />
-          ) : guessStatus === "B" ? (
-            <img src={B} width="35px" alt="YellowCircle" />
+          {guessStatus[1] === "A" ? (
+            <img src={A} width="25px" alt="GreenCircle" />
+          ) : guessStatus[1] === "B" ? (
+            <img src={B} width="25px" alt="YellowCircle" />
           ) : (
-            guessStatus === "C" && <img src={C} width="35px" alt="RedCircle" />
+            guessStatus[1] === "C" && (
+              <img src={C} width="25px" alt="RedCircle" />
+            )
           )}
         </div>
       ))}
+      <br></br>
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
   );
