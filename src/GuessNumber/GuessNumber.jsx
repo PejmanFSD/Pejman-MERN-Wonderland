@@ -15,7 +15,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   ]);
   const [showTempResult, setShowTempResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([...userGuess]);
-  // const [chancesNum, setChancesNum] = useState(10);
+  const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
     setIsGameStarted(false);
     setShowGuessNumber(false);
@@ -119,6 +119,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
+    setChancesNum((currChanceNum) => currChanceNum - 1);
     setShowTempResult(true);
   };
   useEffect(
@@ -180,6 +181,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           />
           <button>Done</button>
         </form>
+      )}
+      {isGameStarted && (
+        <div
+          style={{ color: "blue" }}
+        >{`You have ${chancesNum} chances left`}</div>
       )}
       {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
