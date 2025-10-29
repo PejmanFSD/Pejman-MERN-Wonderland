@@ -182,14 +182,12 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           <button>Done</button>
         </form>
       )}
-      {showTempResult && (
-        <div style={{ display: "inline" }}>{`Guess number ${
-          11 - chancesNum
-        }: `}</div>
-      )}
       {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
+            <div style={{ display: "inline" }}>{`Guess number ${
+              11 - chancesNum
+            }: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
                 {digitGuess.guess}
@@ -197,12 +195,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
             ))}
           </div>
         ))}
-      {showTempResult && (
-        <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
-      )}
       {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
+            <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
                 {digitGuess.status === "A" ? (
