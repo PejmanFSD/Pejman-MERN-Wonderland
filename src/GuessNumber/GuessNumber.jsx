@@ -119,7 +119,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
-    console.log(allUserGuesses.slice(9));
+    // console.log(allUserGuesses.slice(9));
+    setChancesNum((currChancesNum) => currChancesNum - 1);
     setShowTempResult(true);
   };
   useEffect(
@@ -186,7 +187,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`Guess number ${
-              11 - chancesNum
+              10 - chancesNum
             }: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
@@ -199,7 +200,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`The result of guess number ${
-              11 - chancesNum
+              10 - chancesNum
             } is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
