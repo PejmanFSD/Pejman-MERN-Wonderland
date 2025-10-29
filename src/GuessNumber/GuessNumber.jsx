@@ -15,7 +15,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   ]);
   const [showTempResult, setShowTempResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([...userGuess]);
-  const [chancesNum, setChancesNum] = useState(10);
+  // const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
     setIsGameStarted(false);
     setShowGuessNumber(false);
@@ -119,8 +119,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
-    // console.log(allUserGuesses.slice(9));
-    setChancesNum((currChancesNum) => currChancesNum - 1);
     setShowTempResult(true);
   };
   useEffect(
@@ -186,9 +184,9 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
-            <div style={{ display: "inline" }}>{`Guess number ${
-              10 - chancesNum
-            }: `}</div>
+            <div style={{ display: "inline" }}>{`You guess number ${
+              allUserGuesses.indexOf(arrayGuess) - 8
+            } is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
                 {digitGuess.guess}
@@ -200,7 +198,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`The result of guess number ${
-              10 - chancesNum
+              allUserGuesses.indexOf(arrayGuess) - 8
             } is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
