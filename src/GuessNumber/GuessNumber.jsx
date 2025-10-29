@@ -13,7 +13,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     { guess: null, status: null },
     { guess: null, status: null },
   ]);
-  const [showResult, setShowResult] = useState(false);
+  const [showTempResult, setShowTempResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([...userGuess]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
@@ -55,6 +55,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
+    setShowTempResult(false);
   };
   const secondHandleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -71,6 +72,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
+    setShowTempResult(false);
   };
   const thirdHandleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -87,6 +89,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
+    setShowTempResult(false);
   };
   const fourthHandleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -103,6 +106,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
+    setShowTempResult(false);
   };
   const checkStatus = (arr, idx, el) => {
     if (arr[idx].toString() === el.toString()) {
@@ -116,7 +120,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const checkTheNumber = (e) => {
     e.preventDefault();
     console.log(allUserGuesses.slice(9));
-    setShowResult(true);
+    setShowTempResult(true);
   };
   useEffect(
     function () {
@@ -178,12 +182,12 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           <button>Done</button>
         </form>
       )}
-      {showResult && (
+      {showTempResult && (
         <div style={{ display: "inline" }}>{`Guess number ${
           11 - chancesNum
         }: `}</div>
       )}
-      {showResult &&
+      {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             {arrayGuess.map((digitGuess, digitIndex) => (
@@ -193,10 +197,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
             ))}
           </div>
         ))}
-      {showResult && (
+      {showTempResult && (
         <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
       )}
-      {showResult &&
+      {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             {arrayGuess.map((digitGuess, digitIndex) => (
