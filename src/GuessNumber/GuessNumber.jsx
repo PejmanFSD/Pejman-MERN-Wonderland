@@ -14,7 +14,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     { guess: null, status: null },
   ]);
   const [showResult, setShowResult] = useState(false);
-  // const [allUserGuesses, setAllUserGuesses] = useState([]);
+  const [allUserGuesses, setAllUserGuesses] = useState([...userGuess]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
     setIsGameStarted(false);
@@ -115,8 +115,18 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const checkTheNumber = (e) => {
     e.preventDefault();
+    console.log(allUserGuesses.slice(9));
     setShowResult(true);
   };
+  useEffect(
+    function () {
+      setAllUserGuesses((currAllUserGuesses) => [
+        ...currAllUserGuesses,
+        userGuess,
+      ]);
+    },
+    [userGuess]
+  );
   return (
     <div>
       <h2>Guess Number</h2>
@@ -174,27 +184,32 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         }: `}</div>
       )}
       {showResult &&
-        userGuess.map((digitGuess, index) => (
-          <div key={index} style={{ display: "inline" }}>
-            {digitGuess.guess}
+        allUserGuesses.slice(9).map((arrayGuess) => (
+          <div>
+            {arrayGuess.map((digitGuess, digitIndex) => (
+              <div key={digitIndex} style={{ display: "inline" }}>
+                {digitGuess.guess}
+              </div>
+            ))}
           </div>
         ))}
-      <br></br>
       {showResult && (
         <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
       )}
       {showResult &&
-        userGuess.map((currUserGuess, index) => (
-          <div key={index} style={{ display: "inline" }}>
-            {currUserGuess.status === "A" ? (
-              <img src={A} width="25px" alt="GreenCircle" />
-            ) : currUserGuess.status === "B" ? (
-              <img src={B} width="25px" alt="YellowCircle" />
-            ) : (
-              currUserGuess.status === "C" && (
-                <img src={C} width="25px" alt="RedCircle" />
-              )
-            )}
+        allUserGuesses.slice(9).map((arrayGuess) => (
+          <div>
+            {arrayGuess.map((digitGuess, digitIndex) => (
+              <div key={digitIndex} style={{ display: "inline" }}>
+                {digitGuess.status === "A" ? (
+                  <img src={A} width="25px" alt="GreenCircle" />
+                ) : digitGuess.status === "B" ? (
+                  <img src={B} width="25px" alt="YellowCircle" />
+                ) : (
+                  <img src={C} width="25px" alt="RedCircle" />
+                )}
+              </div>
+            ))}
           </div>
         ))}
       <br></br>
