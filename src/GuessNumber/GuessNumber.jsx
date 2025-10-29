@@ -198,15 +198,32 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {showTempResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
-            <div>{`The result of guess number ${11 - chancesNum} is: `}</div>
+            <div style={{ display: "inline" }}>{`The result of guess number ${
+              11 - chancesNum
+            } is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
                 {digitGuess.status === "A" ? (
-                  <img src={A} width="25px" alt="GreenCircle" />
+                  <img
+                    src={A}
+                    width="20px"
+                    alt="GreenCircle"
+                    style={{ position: "relative", top: "6px" }}
+                  />
                 ) : digitGuess.status === "B" ? (
-                  <img src={B} width="25px" alt="YellowCircle" />
+                  <img
+                    src={B}
+                    width="20px"
+                    alt="YellowCircle"
+                    style={{ position: "relative", top: "6px" }}
+                  />
                 ) : (
-                  <img src={C} width="25px" alt="RedCircle" />
+                  <img
+                    src={C}
+                    width="20px"
+                    alt="RedCircle"
+                    style={{ position: "relative", top: "6px" }}
+                  />
                 )}
               </div>
             ))}
