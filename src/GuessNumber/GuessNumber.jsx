@@ -13,7 +13,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     { guess: null, status: null },
     { guess: null, status: null },
   ]);
-  const [showTempResult, setShowTempResult] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([...userGuess]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
@@ -55,7 +55,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
-    setShowTempResult(false);
+    setShowResult(false);
   };
   const secondHandleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -72,7 +72,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
-    setShowTempResult(false);
+    setShowResult(false);
   };
   const thirdHandleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -89,7 +89,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
-    setShowTempResult(false);
+    setShowResult(false);
   };
   const fourthHandleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -106,7 +106,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           : item
       )
     );
-    setShowTempResult(false);
+    setShowResult(false);
   };
   const checkStatus = (arr, idx, el) => {
     if (arr[idx].toString() === el.toString()) {
@@ -117,10 +117,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       return "C";
     }
   };
-  const checkTheNumber = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setChancesNum((currChanceNum) => currChanceNum - 1);
-    setShowTempResult(true);
+    setShowResult(true);
   };
   useEffect(
     function () {
@@ -146,7 +146,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       )}
       {num}
       {isGameStarted && (
-        <form onSubmit={checkTheNumber}>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="FirstDigit"></label>
           <input
             type="text"
@@ -187,7 +187,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           style={{ color: "blue" }}
         >{`You have ${chancesNum} chances left`}</div>
       )}
-      {showTempResult &&
+      {showResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`You guess number ${
@@ -200,7 +200,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
             ))}
           </div>
         ))}
-      {showTempResult &&
+      {showResult &&
         allUserGuesses.slice(9).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`The result of guess number ${
