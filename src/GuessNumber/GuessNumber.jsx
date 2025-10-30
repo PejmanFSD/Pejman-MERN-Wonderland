@@ -14,7 +14,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     { guess: null, status: null },
   ]);
   const [showResult, setShowResult] = useState(false);
-  const [allUserGuesses, setAllUserGuesses] = useState([...userGuess]);
+  const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
     setIsGameStarted(false);
@@ -119,8 +119,13 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    // setAllUserGuesses((currAllUserGuesses) => [
+    //     ...currAllUserGuesses,
+    //     userGuess,
+    //   ]);
     setChancesNum((currChanceNum) => currChanceNum - 1);
     setShowResult(true);
+    console.log(allUserGuesses);
   };
   useEffect(
     function () {
@@ -188,10 +193,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         >{`You have ${chancesNum} chances left`}</div>
       )}
       {showResult &&
-        allUserGuesses.slice(9).map((arrayGuess) => (
+        allUserGuesses.slice(5).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`You guess number ${
-              allUserGuesses.indexOf(arrayGuess) - 8
+              allUserGuesses.indexOf(arrayGuess) - 4
             } is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
@@ -201,10 +206,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           </div>
         ))}
       {showResult &&
-        allUserGuesses.slice(9).map((arrayGuess) => (
+        allUserGuesses.slice(5).map((arrayGuess) => (
           <div>
             <div style={{ display: "inline" }}>{`The result of guess number ${
-              allUserGuesses.indexOf(arrayGuess) - 8
+              allUserGuesses.indexOf(arrayGuess) - 4
             } is: `}</div>
             {arrayGuess.map((digitGuess, digitIndex) => (
               <div key={digitIndex} style={{ display: "inline" }}>
