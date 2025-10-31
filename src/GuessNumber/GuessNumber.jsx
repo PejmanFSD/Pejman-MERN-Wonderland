@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Form from "./Form";
 import { getRandArr } from "../utils";
 import A from "./A.png";
 import B from "./B.png";
@@ -119,10 +120,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setAllUserGuesses((currAllUserGuesses) => [
-    //     ...currAllUserGuesses,
-    //     userGuess,
-    //   ]);
     setChancesNum((currChanceNum) => currChanceNum - 1);
     setShowResult(true);
     console.log(allUserGuesses);
@@ -151,41 +148,13 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       )}
       {num}
       {isGameStarted && (
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="FirstDigit"></label>
-          <input
-            type="text"
-            placeholder="First Digit"
-            name="FirstDigit"
-            id="FirstDigit"
-            onChange={firstHandleChange}
-          />
-          <label htmlFor="SecondDigit"></label>
-          <input
-            type="text"
-            placeholder="Second Digit"
-            name="SecondDigit"
-            id="SecondDigit"
-            onChange={secondHandleChange}
-          />
-          <label htmlFor="ThirdDigit"></label>
-          <input
-            type="text"
-            placeholder="Third Digit"
-            name="ThirdDigit"
-            id="ThirdDigit"
-            onChange={thirdHandleChange}
-          />
-          <label htmlFor="FourthDigit"></label>
-          <input
-            type="text"
-            placeholder="Fourth Digit"
-            name="FourthDigit"
-            id="FourthDigit"
-            onChange={fourthHandleChange}
-          />
-          <button>Done</button>
-        </form>
+        <Form
+          handleSubmit={handleSubmit}
+          firstHandleChange={firstHandleChange}
+          secondHandleChange={secondHandleChange}
+          thirdHandleChange={thirdHandleChange}
+          fourthHandleChange={fourthHandleChange}
+        />
       )}
       {isGameStarted && (
         <div
