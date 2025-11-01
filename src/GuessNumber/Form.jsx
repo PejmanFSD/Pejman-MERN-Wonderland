@@ -1,4 +1,11 @@
-export default function Form({ inputs, setInputs }) {
+export default function Form({
+  inputs,
+  setInputs,
+  setChancesNum,
+  setShowResult,
+  userGuess,
+  updateUserGuess,
+}) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
@@ -12,7 +19,12 @@ export default function Form({ inputs, setInputs }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted!");
+    setChancesNum((currChanceNum) => currChanceNum - 1);
+    updateUserGuess(Object.values(inputs)[0]);
+    updateUserGuess(Object.values(inputs)[1]);
+    updateUserGuess(Object.values(inputs)[2]);
+    updateUserGuess(Object.values(inputs)[3]);
+    setShowResult(true);
   };
   return (
     <form onSubmit={handleSubmit}>

@@ -15,10 +15,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     input4: "",
   });
   const [userGuess, setUserGuess] = useState([
-    { guess: null, status: null },
-    { guess: null, status: null },
-    { guess: null, status: null },
-    { guess: null, status: null },
+    // { guess: null, status: null },
+    // { guess: null, status: null },
+    // { guess: null, status: null },
+    // { guess: null, status: null },
   ]);
   const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
@@ -47,6 +47,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     }
     setNum(generatedRandNum);
   };
+  const updateUserGuess = (item) => {
+    setUserGuess((currUserGuess) => {
+      return [...currUserGuess, item];
+    });
+  };
   // const checkStatus = (arr, idx, el) => {
   //   if (arr[idx].toString() === el.toString()) {
   //     return "A";
@@ -55,12 +60,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   //   } else {
   //     return "C";
   //   }
-  // };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setChancesNum((currChanceNum) => currChanceNum - 1);
-  //   setShowResult(true);
-  //   console.log(allUserGuesses);
   // };
   useEffect(
     function () {
@@ -84,8 +83,18 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           </h3>
         )
       )}
-      {num}
-      {isGameStarted && <Form inputs={inputs} setInputs={setInputs} />}
+      <div>num: {num}</div>
+      <div>userGuess: {userGuess}</div>
+      {isGameStarted && (
+        <Form
+          inputs={inputs}
+          setInputs={setInputs}
+          setChancesNum={setChancesNum}
+          setShowResult={setShowResult}
+          setUserGuess={setUserGuess}
+          updateUserGuess={updateUserGuess}
+        />
+      )}
       {isGameStarted && <Chances chancesNum={chancesNum} />}
       {showResult && <UserGuess allUserGuesses={allUserGuesses} />}
       {showResult && <GuessStatus allUserGuesses={allUserGuesses} />}
