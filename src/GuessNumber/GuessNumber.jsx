@@ -8,6 +8,12 @@ import { getRandArr } from "../utils";
 export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [inputs, setInputs] = useState({
+    input1: "",
+    input2: "",
+    input3: "",
+    input4: "",
+  });
   const [userGuess, setUserGuess] = useState([
     { guess: null, status: null },
     { guess: null, status: null },
@@ -41,89 +47,21 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     }
     setNum(generatedRandNum);
   };
-  const firstHandleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
-    setUserGuess((currUserGuess) =>
-      currUserGuess.map((item, index) =>
-        index === 0
-          ? {
-              ...item,
-              guess: e.target.value,
-              status: checkStatus(num, 0, e.target.value),
-            }
-          : item
-      )
-    );
-    setShowResult(false);
-  };
-  const secondHandleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
-    setUserGuess((currUserGuess) =>
-      currUserGuess.map((item, index) =>
-        index === 1
-          ? {
-              ...item,
-              guess: e.target.value,
-              status: checkStatus(num, 1, e.target.value),
-            }
-          : item
-      )
-    );
-    setShowResult(false);
-  };
-  const thirdHandleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
-    setUserGuess((currUserGuess) =>
-      currUserGuess.map((item, index) =>
-        index === 2
-          ? {
-              ...item,
-              guess: e.target.value,
-              status: checkStatus(num, 2, e.target.value),
-            }
-          : item
-      )
-    );
-    setShowResult(false);
-  };
-  const fourthHandleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
-    setUserGuess((currUserGuess) =>
-      currUserGuess.map((item, index) =>
-        index === 3
-          ? {
-              ...item,
-              guess: e.target.value,
-              status: checkStatus(num, 3, e.target.value),
-            }
-          : item
-      )
-    );
-    setShowResult(false);
-  };
-  const checkStatus = (arr, idx, el) => {
-    if (arr[idx].toString() === el.toString()) {
-      return "A";
-    } else if (arr.includes(el.toString())) {
-      return "B";
-    } else {
-      return "C";
-    }
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setChancesNum((currChanceNum) => currChanceNum - 1);
-    setShowResult(true);
-    console.log(allUserGuesses);
-  };
+  // const checkStatus = (arr, idx, el) => {
+  //   if (arr[idx].toString() === el.toString()) {
+  //     return "A";
+  //   } else if (arr.includes(el.toString())) {
+  //     return "B";
+  //   } else {
+  //     return "C";
+  //   }
+  // };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setChancesNum((currChanceNum) => currChanceNum - 1);
+  //   setShowResult(true);
+  //   console.log(allUserGuesses);
+  // };
   useEffect(
     function () {
       setAllUserGuesses((currAllUserGuesses) => [
@@ -147,15 +85,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         )
       )}
       {num}
-      {isGameStarted && (
-        <Form
-          handleSubmit={handleSubmit}
-          firstHandleChange={firstHandleChange}
-          secondHandleChange={secondHandleChange}
-          thirdHandleChange={thirdHandleChange}
-          fourthHandleChange={fourthHandleChange}
-        />
-      )}
+      {isGameStarted && <Form inputs={inputs} setInputs={setInputs} />}
       {isGameStarted && <Chances chancesNum={chancesNum} />}
       {showResult && <UserGuess allUserGuesses={allUserGuesses} />}
       {showResult && <GuessStatus allUserGuesses={allUserGuesses} />}

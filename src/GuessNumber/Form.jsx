@@ -1,43 +1,53 @@
-export default function Form({
-  handleSubmit,
-  firstHandleChange,
-  secondHandleChange,
-  thirdHandleChange,
-  fourthHandleChange,
-}) {
+export default function Form({ inputs, setInputs }) {
+  const handleChange = (e) => {
+    if (e.target.value.length === 0) {
+      return;
+    }
+    const { name, value } = e.target;
+    setInputs((currInputs) => {
+      currInputs[name] = value;
+      return { ...currInputs };
+    });
+    console.log("inputs: ", inputs);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted!");
+  };
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="FirstDigit"></label>
+      <label htmlFor="input1"></label>
       <input
         type="text"
         placeholder="First Digit"
-        name="FirstDigit"
-        id="FirstDigit"
-        onChange={firstHandleChange}
+        name="input1"
+        id="input1"
+        value={inputs.input1}
+        onChange={handleChange}
       />
-      <label htmlFor="SecondDigit"></label>
+      <label htmlFor="input2"></label>
       <input
         type="text"
         placeholder="Second Digit"
-        name="SecondDigit"
-        id="SecondDigit"
-        onChange={secondHandleChange}
+        name="input2"
+        id="input2"
+        onChange={handleChange}
       />
-      <label htmlFor="ThirdDigit"></label>
+      <label htmlFor="input3"></label>
       <input
         type="text"
         placeholder="Third Digit"
-        name="ThirdDigit"
-        id="ThirdDigit"
-        onChange={thirdHandleChange}
+        name="input3"
+        id="input3"
+        onChange={handleChange}
       />
-      <label htmlFor="FourthDigit"></label>
+      <label htmlFor="input4"></label>
       <input
         type="text"
         placeholder="Fourth Digit"
-        name="FourthDigit"
-        id="FourthDigit"
-        onChange={fourthHandleChange}
+        name="input4"
+        id="input4"
+        onChange={handleChange}
       />
       <button>Done</button>
     </form>
