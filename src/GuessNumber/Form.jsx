@@ -3,8 +3,8 @@ export default function Form({
   setInputs,
   setChancesNum,
   setShowResult,
-  userGuess,
   updateUserGuess,
+  updateUserGuessStatus,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -20,10 +20,16 @@ export default function Form({
   const handleSubmit = (e) => {
     e.preventDefault();
     setChancesNum((currChanceNum) => currChanceNum - 1);
-    updateUserGuess(Object.values(inputs)[0]);
-    updateUserGuess(Object.values(inputs)[1]);
-    updateUserGuess(Object.values(inputs)[2]);
-    updateUserGuess(Object.values(inputs)[3]);
+    for (let i = 0; i < 4; i++) {
+      updateUserGuess(Object.values(inputs)[i]);
+    }
+    // updateUserGuess(Object.values(inputs)[0]);
+    // updateUserGuess(Object.values(inputs)[1]);
+    // updateUserGuess(Object.values(inputs)[2]);
+    // updateUserGuess(Object.values(inputs)[3]);
+    for (let i = 0; i < 4; i++) {
+      updateUserGuessStatus(i);
+    }
     setShowResult(true);
   };
   return (

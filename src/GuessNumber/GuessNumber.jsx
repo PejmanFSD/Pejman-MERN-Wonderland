@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Form from "./Form";
 import Chances from "./Chances";
 import UserGuess from "./UserGuess";
@@ -20,6 +20,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     // { guess: null, status: null },
     // { guess: null, status: null },
   ]);
+  const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
@@ -52,24 +53,32 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       return [...currUserGuess, item];
     });
   };
-  // const checkStatus = (arr, idx, el) => {
-  //   if (arr[idx].toString() === el.toString()) {
-  //     return "A";
-  //   } else if (arr.includes(el.toString())) {
-  //     return "B";
-  //   } else {
-  //     return "C";
-  //   }
-  // };
-  useEffect(
-    function () {
-      setAllUserGuesses((currAllUserGuesses) => [
-        ...currAllUserGuesses,
-        userGuess,
-      ]);
-    },
-    [userGuess]
-  );
+  const updateUserGuessStatus = (i) => {
+    setUserGuessStatus((currUserGuessStatus) => {
+      return [
+        ...currUserGuessStatus,
+        checkStatus(num, i, Object.values(inputs)[i]),
+      ];
+    });
+  };
+  const checkStatus = (arr, idx, el) => {
+    if (arr[idx].toString() === el.toString()) {
+      return "A";
+    } else if (arr.includes(el.toString())) {
+      return "B";
+    } else {
+      return "C";
+    }
+  };
+  // useEffect(
+  //   function () {
+  //     setAllUserGuesses((currAllUserGuesses) => [
+  //       ...currAllUserGuesses,
+  //       userGuess,
+  //     ]);
+  //   },
+  //   [userGuess]
+  // );
   return (
     <div>
       <h2>Guess Number</h2>
@@ -85,6 +94,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       )}
       <div>num: {num}</div>
       <div>userGuess: {userGuess}</div>
+      <div>userGuessStatus: {userGuessStatus}</div>
       {isGameStarted && (
         <Form
           inputs={inputs}
@@ -93,6 +103,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           setShowResult={setShowResult}
           setUserGuess={setUserGuess}
           updateUserGuess={updateUserGuess}
+          updateUserGuessStatus={updateUserGuessStatus}
         />
       )}
       {isGameStarted && <Chances chancesNum={chancesNum} />}
