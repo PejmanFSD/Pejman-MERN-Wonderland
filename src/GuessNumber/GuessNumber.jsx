@@ -16,7 +16,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   });
   const [userGuess, setUserGuess] = useState([]);
   const [userGuessStatus, setUserGuessStatus] = useState([]);
-  const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
@@ -95,29 +94,36 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         )
       )}
       <div>num: {num}</div>
-      {new Array(10).fill(null).map((el, i) => (
-        <div>
-          <p style={{ display: "inline" }}>
-            {`userGuess-${i + 1}: ${userGuess
-              .slice(4 * i, 4 * i + 4)
-              .toString()
-              .replaceAll(",", "")}`}
-          </p>
-          <p style={{ display: "inline" }}> - </p>
-          <p style={{ display: "inline" }}>
-            {`userGuessStatus: ${userGuessStatus
-              .slice(4 * i, 4 * i + 4)
-              .toString()
-              .replaceAll(",", "")}`}
-          </p>
-        </div>
-      ))}
+      {isGameStarted &&
+        new Array(10).fill(null).map((el, i) => (
+          <div>
+            <p style={{ display: "inline" }}>
+              {userGuess
+                .slice(4 * i, 4 * i + 4)
+                .toString()
+                .replaceAll(",", "")}
+            </p>
+            <p style={{ display: "inline" }}>
+              {userGuessStatus
+                .slice(4 * i, 4 * i + 4)
+                .toString()
+                .replaceAll(",", "")}
+            </p>
+          </div>
+        ))}
+      <div>
+        {isGameStarted &&
+          userGuess
+            .slice(userGuessStatus.length - 4, userGuessStatus.length4)
+            .toString()
+            .replaceAll(",", "") === convertArrayToString(num) &&
+          "Well Done!"}
+      </div>
       {isGameStarted && (
         <Form
           inputs={inputs}
           setInputs={setInputs}
           setChancesNum={setChancesNum}
-          setShowResult={setShowResult}
           setUserGuess={setUserGuess}
           updateUserGuess={updateUserGuess}
           updateUserGuessStatus={updateUserGuessStatus}

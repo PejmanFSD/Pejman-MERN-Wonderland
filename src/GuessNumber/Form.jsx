@@ -2,7 +2,6 @@ export default function Form({
   inputs,
   setInputs,
   setChancesNum,
-  setShowResult,
   updateUserGuess,
   updateUserGuessStatus,
   updateAllUserGuesses,
@@ -30,7 +29,6 @@ export default function Form({
       updateUserGuessStatus(i);
     }
     updateAllUserGuesses(userGuess, userGuessStatus);
-    setShowResult(true);
   };
   return (
     <form onSubmit={handleSubmit}>
