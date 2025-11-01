@@ -1,4 +1,26 @@
-export default function chances({ chancesNum }) {
+export default function chances({
+  chancesNum,
+  setChancesNum,
+  num,
+  setNum,
+  setInputs,
+  setUserGuess,
+  setUserGuessStatus,
+  generateRandNum,
+}) {
+  const reset = () => {
+    setChancesNum(10);
+    setNum([]);
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+    });
+    setUserGuess([]);
+    setUserGuessStatus([]);
+    generateRandNum();
+  };
   return (
     <div>
       {chancesNum === 10 && (
@@ -17,7 +39,13 @@ export default function chances({ chancesNum }) {
         </div>
       )}
       {chancesNum === 0 && (
-        <div style={{ color: "gray" }}>Sorry! You loose!</div>
+        <div>
+          <div style={{ color: "gray" }}>Sorry! You loose!</div>
+          <div style={{ color: "gray" }}>{`The number is: ${num
+            .toString()
+            .replaceAll(",", "")}`}</div>
+          <button onClick={() => reset()}>Try again</button>
+        </div>
       )}
     </div>
   );

@@ -95,6 +95,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       )}
       <div>num: {num}</div>
       {isGameStarted &&
+        chancesNum > 0 &&
         new Array(10).fill(null).map((el, i) => (
           <div>
             <p style={{ display: "inline" }}>
@@ -113,13 +114,15 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         ))}
       <div>
         {isGameStarted &&
+          chancesNum > 0 &&
+          userGuess.length !== 0 &&
           userGuess
             .slice(userGuessStatus.length - 4, userGuessStatus.length4)
             .toString()
             .replaceAll(",", "") === convertArrayToString(num) &&
           "Well Done!"}
       </div>
-      {isGameStarted && (
+      {isGameStarted && chancesNum > 0 && (
         <Form
           inputs={inputs}
           setInputs={setInputs}
@@ -133,7 +136,18 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           allUserGuesses={allUserGuesses}
         />
       )}
-      {isGameStarted && <Chances chancesNum={chancesNum} />}
+      {isGameStarted && (
+        <Chances
+          chancesNum={chancesNum}
+          setChancesNum={setChancesNum}
+          num={num}
+          setNum={setNum}
+          setInputs={setInputs}
+          setUserGuess={setUserGuess}
+          setUserGuessStatus={setUserGuessStatus}
+          generateRandNum={generateRandNum}
+        />
+      )}
       <UserGuess allUserGuesses={allUserGuesses} />
       <GuessStatus allUserGuesses={allUserGuesses} />
       <br></br>
