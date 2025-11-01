@@ -16,7 +16,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   });
   const [userGuess, setUserGuess] = useState([]);
   const [userGuessStatus, setUserGuessStatus] = useState([]);
-  const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const backToHomepage = () => {
     setIsGameStarted(false);
@@ -61,15 +60,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       str += arr[i].toString();
     }
     return str;
-  };
-  const updateAllUserGuesses = (i, j) => {
-    const newGuess = {
-      [convertArrayToString(i)]: convertArrayToString(j),
-    };
-    setAllUserGuesses((currAllUserGuesses) => {
-      return [...currAllUserGuesses, newGuess];
-    });
-    console.log("allUserGuesses: ", allUserGuesses);
   };
   const checkStatus = (arr, idx, el) => {
     if (arr[idx].toString() === el.toString()) {
@@ -130,10 +120,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           setUserGuess={setUserGuess}
           updateUserGuess={updateUserGuess}
           updateUserGuessStatus={updateUserGuessStatus}
-          updateAllUserGuesses={updateAllUserGuesses}
           userGuess={userGuess}
           userGuessStatus={userGuessStatus}
-          allUserGuesses={allUserGuesses}
         />
       )}
       {isGameStarted && (
@@ -148,8 +136,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           generateRandNum={generateRandNum}
         />
       )}
-      <UserGuess allUserGuesses={allUserGuesses} />
-      <GuessStatus allUserGuesses={allUserGuesses} />
+      <UserGuess />
+      <GuessStatus />
       <br></br>
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>

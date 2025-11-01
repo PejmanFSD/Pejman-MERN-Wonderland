@@ -4,9 +4,6 @@ export default function Form({
   setChancesNum,
   updateUserGuess,
   updateUserGuessStatus,
-  updateAllUserGuesses,
-  userGuess,
-  userGuessStatus,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -28,7 +25,6 @@ export default function Form({
     for (let i = 0; i < 4; i++) {
       updateUserGuessStatus(i);
     }
-    updateAllUserGuesses(userGuess, userGuessStatus);
   };
   return (
     <form onSubmit={handleSubmit}>
