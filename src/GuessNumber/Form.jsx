@@ -29,7 +29,7 @@ export default function Form({
     for (let i = 0; i < 4; i++) {
       updateUserGuessStatus(i);
     }
-    updateAllUserGuesses(userGuess, userGuessStatus)
+    updateAllUserGuesses(userGuess, userGuessStatus);
     setShowResult(true);
   };
   return (
