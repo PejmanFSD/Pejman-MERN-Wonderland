@@ -1,7 +1,14 @@
 export default function UserGuess({allUserGuesses}) {
   return (
     <>
-      {allUserGuesses.slice(5).map((arrayGuess) => (
+      {
+      allUserGuesses.map((g) => (
+        <div>
+
+        </div>
+      ))
+      }
+      {/* {allUserGuesses.slice(5).map((arrayGuess) => (
         <div>
           <div style={{ display: "inline" }}>{`You guess number ${
             allUserGuesses.indexOf(arrayGuess) - 4
@@ -12,7 +19,7 @@ export default function UserGuess({allUserGuesses}) {
             </div>
           ))}
         </div>
-      ))}
+      ))} */}
     </>
   );
 }

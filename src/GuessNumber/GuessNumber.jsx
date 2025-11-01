@@ -14,12 +14,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     input3: "",
     input4: "",
   });
-  const [userGuess, setUserGuess] = useState([
-    // { guess: null, status: null },
-    // { guess: null, status: null },
-    // { guess: null, status: null },
-    // { guess: null, status: null },
-  ]);
+  const [userGuess, setUserGuess] = useState([]);
   const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
@@ -61,6 +56,22 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       ];
     });
   };
+  const convertArrayToString = (arr) => {
+    let str = "";
+    for (let i = 0; i < arr.length; i++) {
+      str += arr[i];
+    }
+    return str;
+  };
+  const updateAllUserGuesses = (i, j) => {
+    const newGuess = {
+      [i]: j,
+    };
+    setAllUserGuesses((currAllUserGuesses) => {
+      return [...currAllUserGuesses, newGuess];
+    });
+    console.log("allUserGuesses: ", allUserGuesses);
+  };
   const checkStatus = (arr, idx, el) => {
     if (arr[idx].toString() === el.toString()) {
       return "A";
@@ -70,15 +81,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       return "C";
     }
   };
-  // useEffect(
-  //   function () {
-  //     setAllUserGuesses((currAllUserGuesses) => [
-  //       ...currAllUserGuesses,
-  //       userGuess,
-  //     ]);
-  //   },
-  //   [userGuess]
-  // );
   return (
     <div>
       <h2>Guess Number</h2>
@@ -95,6 +97,26 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       <div>num: {num}</div>
       <div>userGuess: {userGuess}</div>
       <div>userGuessStatus: {userGuessStatus}</div>
+      <div>
+        allUserGuesses:{" "}
+        {
+          <div>
+            <p>
+              {allUserGuesses.map((obj, index) => {
+                const key = Object.keys(obj)[0]; // extract the single key
+                return <li key={index}>{key}</li>;
+              })}
+            </p>
+
+            <p>
+              {allUserGuesses.map((obj, index) => {
+                const value = Object.values(obj)[0]; // extract the single value
+                return <li key={index}>{value}</li>;
+              })}
+            </p>
+          </div>
+        }
+      </div>
       {isGameStarted && (
         <Form
           inputs={inputs}
@@ -104,11 +126,15 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           setUserGuess={setUserGuess}
           updateUserGuess={updateUserGuess}
           updateUserGuessStatus={updateUserGuessStatus}
+          updateAllUserGuesses={updateAllUserGuesses}
+          userGuess={userGuess}
+          userGuessStatus={userGuessStatus}
+          allUserGuesses={allUserGuesses}
         />
       )}
       {isGameStarted && <Chances chancesNum={chancesNum} />}
-      {showResult && <UserGuess allUserGuesses={allUserGuesses} />}
-      {showResult && <GuessStatus allUserGuesses={allUserGuesses} />}
+      <UserGuess allUserGuesses={allUserGuesses} />
+      <GuessStatus allUserGuesses={allUserGuesses} />
       <br></br>
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>

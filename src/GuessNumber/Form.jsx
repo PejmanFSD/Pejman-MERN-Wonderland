@@ -5,6 +5,10 @@ export default function Form({
   setShowResult,
   updateUserGuess,
   updateUserGuessStatus,
+  updateAllUserGuesses,
+  userGuess,
+  userGuessStatus,
+  allUserGuesses
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -30,6 +34,9 @@ export default function Form({
     for (let i = 0; i < 4; i++) {
       updateUserGuessStatus(i);
     }
+    // updateAllUserGuesses(userGuess, userGuessStatus)
+    updateAllUserGuesses("x","Z")
+    // console.log(allUserGuesses)
     setShowResult(true);
   };
   return (
