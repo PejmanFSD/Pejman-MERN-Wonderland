@@ -8,7 +8,6 @@ export default function Form({
   updateAllUserGuesses,
   userGuess,
   userGuessStatus,
-  allUserGuesses
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -27,16 +26,10 @@ export default function Form({
     for (let i = 0; i < 4; i++) {
       updateUserGuess(Object.values(inputs)[i]);
     }
-    // updateUserGuess(Object.values(inputs)[0]);
-    // updateUserGuess(Object.values(inputs)[1]);
-    // updateUserGuess(Object.values(inputs)[2]);
-    // updateUserGuess(Object.values(inputs)[3]);
     for (let i = 0; i < 4; i++) {
       updateUserGuessStatus(i);
     }
-    // updateAllUserGuesses(userGuess, userGuessStatus)
-    updateAllUserGuesses("x","Z")
-    // console.log(allUserGuesses)
+    updateAllUserGuesses(userGuess, userGuessStatus)
     setShowResult(true);
   };
   return (

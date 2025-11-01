@@ -59,13 +59,13 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const convertArrayToString = (arr) => {
     let str = "";
     for (let i = 0; i < arr.length; i++) {
-      str += arr[i];
+      str += arr[i].toString();
     }
     return str;
   };
   const updateAllUserGuesses = (i, j) => {
     const newGuess = {
-      [i]: j,
+      [convertArrayToString(i)]: convertArrayToString(j),
     };
     setAllUserGuesses((currAllUserGuesses) => {
       return [...currAllUserGuesses, newGuess];
@@ -95,27 +95,95 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         )
       )}
       <div>num: {num}</div>
-      <div>userGuess: {userGuess}</div>
-      <div>userGuessStatus: {userGuessStatus}</div>
       <div>
-        allUserGuesses:{" "}
-        {
-          <div>
-            <p>
-              {allUserGuesses.map((obj, index) => {
-                const key = Object.keys(obj)[0]; // extract the single key
-                return <li key={index}>{key}</li>;
-              })}
-            </p>
-
-            <p>
-              {allUserGuesses.map((obj, index) => {
-                const value = Object.values(obj)[0]; // extract the single value
-                return <li key={index}>{value}</li>;
-              })}
-            </p>
-          </div>
-        }
+        <p style={{ display: "inline" }}>
+          userGuess-1: {userGuess.slice(0, 4)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(0, 4)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-2: {userGuess.slice(4, 8)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(4, 8)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-3: {userGuess.slice(8, 12)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(8, 12)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-4: {userGuess.slice(12, 16)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(12, 16)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-5: {userGuess.slice(16, 20)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(16, 20)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-6: {userGuess.slice(20, 24)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(20, 24)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-7: {userGuess.slice(24, 28)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(24, 28)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-8: {userGuess.slice(28, 32)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(28, 32)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-9: {userGuess.slice(32, 36)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(32, 36)}
+        </p>
+      </div>
+      <div>
+        <p style={{ display: "inline" }}>
+          userGuess-10: {userGuess.slice(36, 40)}
+        </p>
+        <p style={{ display: "inline" }}> - </p>
+        <p style={{ display: "inline" }}>
+          userGuessStatus: {userGuessStatus.slice(36, 40)}
+        </p>
       </div>
       {isGameStarted && (
         <Form
