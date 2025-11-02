@@ -107,6 +107,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
             <h5>1- The first digit can't be 0</h5>
             <h5>2- None of the digits can be greater than 9</h5>
             <h5>3- None of the digits can be negative</h5>
+            <h5>4- None of the digits can be decimal</h5>
           </div>
         )
       )}
