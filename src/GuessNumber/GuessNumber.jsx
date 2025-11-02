@@ -15,6 +15,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     input4: "",
   });
   const [userGuess, setUserGuess] = useState([]);
+  const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const [isWin, setIsWin] = useState(false);
@@ -74,6 +75,13 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   useEffect(
     function () {
       const handleWin = () => {
+        setAllUserGuesses((currAllUserGuesses) => [
+          ...currAllUserGuesses,
+          userGuess
+            .slice(userGuess.length - 4, userGuess.length)
+            .toString()
+            .replaceAll(",", ""),
+        ]);
         if (
           chancesNum > 0 &&
           userGuess.length !== 0 &&
@@ -143,6 +151,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           convertArrayToString={convertArrayToString}
           setIsWin={setIsWin}
           isWin={isWin}
+          allUserGuesses={allUserGuesses}
+          setAllUserGuesses={setAllUserGuesses}
         />
       )}
       {isGameStarted && (
