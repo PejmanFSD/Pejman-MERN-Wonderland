@@ -24,12 +24,12 @@ export default function Form({
       return;
     }
     const { name, value } = e.target;
-    if (value > 9 || value.length > 1) {
-      setIsOneDigit(false);
-    } else if (value < 0) {
+    if (value === "-") {
       setIsDigitNegative(true);
     } else if (value.toString().includes(".")) {
       setIsDigitDecimal(true);
+    } else if (value > 9 || value.length > 1) {
+      setIsOneDigit(false);
     } else if (name === "input1" && value === "0") {
       setIsFirstDigitZero(true);
     } else if (value.charCodeAt(0) > 57 || value.charCodeAt(0) < 48) {
@@ -41,7 +41,6 @@ export default function Form({
       currInputs[name] = value;
       return { ...currInputs };
     });
-    console.log("inputs: ", inputs);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +83,6 @@ export default function Form({
           return [key, value];
         })
       );
-
       return updatedInputs;
     });
     setIsOneDigit(true);
@@ -93,13 +91,12 @@ export default function Form({
     setInputs((currInputs) => {
       const updatedInputs = Object.fromEntries(
         Object.entries(currInputs).map(([key, value]) => {
-          if (value < 0) {
+          if (value === "-") {
             return [key, ""];
           }
           return [key, value];
         })
       );
-
       return updatedInputs;
     });
     setIsDigitNegative(false);
@@ -149,7 +146,10 @@ export default function Form({
     setInputs((currInputs) => {
       const updatedInputs = Object.fromEntries(
         Object.entries(currInputs).map(([key, value]) => {
-          if (value.charCodeAt(0) > 57 || value.charCodeAt(0) < 48) {
+          if (
+            (value.charCodeAt(0) > 57 || value.charCodeAt(0) < 48) &&
+            value !== "-"
+          ) {
             return [key, ""];
           }
           return [key, value];
