@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "./Form";
 import Chances from "./Chances";
 import UserGuess from "./UserGuess";
@@ -17,6 +17,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [userGuess, setUserGuess] = useState([]);
   const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
+  const [isWin, setIsWin] = useState(false);
   const backToHomepage = () => {
     setIsGameStarted(false);
     setShowGuessNumber(false);
@@ -70,6 +71,24 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       return "🔴";
     }
   };
+  useEffect(
+    function () {
+      const handleWin = () => {
+        if (
+          chancesNum > 0 &&
+          userGuess.length !== 0 &&
+          userGuess
+            .slice(userGuessStatus.length - 4, userGuessStatus.length4)
+            .toString()
+            .replaceAll(",", "") === convertArrayToString(num)
+        ) {
+          setIsWin(true);
+        }
+      };
+      handleWin();
+    },
+    [num, userGuess, userGuessStatus, chancesNum]
+  );
   return (
     <div>
       <h2>Guess Number</h2>
@@ -103,14 +122,14 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           </div>
         ))}
       <div>
-        {isGameStarted &&
+        {/* {isGameStarted &&
           chancesNum > 0 &&
           userGuess.length !== 0 &&
           userGuess
             .slice(userGuessStatus.length - 4, userGuessStatus.length4)
             .toString()
             .replaceAll(",", "") === convertArrayToString(num) &&
-          "Well Done!"}
+          "Well Done!"} */}
       </div>
       {isGameStarted && chancesNum > 0 && (
         <Form
@@ -122,6 +141,9 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           updateUserGuessStatus={updateUserGuessStatus}
           userGuess={userGuess}
           userGuessStatus={userGuessStatus}
+          num={num}
+          convertArrayToString={convertArrayToString}
+          setIsWin={setIsWin}
         />
       )}
       {isGameStarted && (
@@ -134,6 +156,9 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           setUserGuess={setUserGuess}
           setUserGuessStatus={setUserGuessStatus}
           generateRandNum={generateRandNum}
+          isWin={isWin}
+          userGuess={userGuess}
+          setIsWin={setIsWin}
         />
       )}
       <UserGuess />

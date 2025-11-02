@@ -2,8 +2,13 @@ export default function Form({
   inputs,
   setInputs,
   setChancesNum,
+  userGuess,
+  userGuessStatus,
   updateUserGuess,
   updateUserGuessStatus,
+  num,
+  convertArrayToString,
+  setIsWin
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -18,6 +23,14 @@ export default function Form({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+        if (
+      userGuess
+        .slice(userGuessStatus.length - 4, userGuessStatus.length4)
+        .toString()
+        .replaceAll(",", "") === convertArrayToString(num)
+    ) {
+        setIsWin(true);
+    }
     setChancesNum((currChanceNum) => currChanceNum - 1);
     for (let i = 0; i < 4; i++) {
       updateUserGuess(Object.values(inputs)[i]);
