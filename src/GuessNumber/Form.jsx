@@ -10,6 +10,7 @@ export default function Form({
   updateUserGuessStatus,
   num,
   convertArrayToString,
+  isWin,
   setIsWin,
 }) {
   const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
@@ -60,49 +61,51 @@ export default function Form({
   };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="input1"></label>
-        <input
-          disabled={isFirstDigitZero}
-          type="text"
-          placeholder="First Digit"
-          name="input1"
-          id="input1"
-          value={inputs.input1}
-          onChange={handleChange}
-        />
-        <label htmlFor="input2"></label>
-        <input
-          disabled={isFirstDigitZero}
-          type="text"
-          placeholder={!isFirstDigitZero && "Second Digit"}
-          name="input2"
-          id="input2"
-          value={inputs.input2}
-          onChange={handleChange}
-        />
-        <label htmlFor="input3"></label>
-        <input
-          disabled={isFirstDigitZero}
-          type="text"
-          placeholder={!isFirstDigitZero && "Third Digit"}
-          name="input3"
-          id="input3"
-          value={inputs.input3}
-          onChange={handleChange}
-        />
-        <label htmlFor="input4"></label>
-        <input
-          disabled={isFirstDigitZero}
-          type="text"
-          placeholder={!isFirstDigitZero && "Fourth Digit"}
-          name="input4"
-          id="input4"
-          value={inputs.input4}
-          onChange={handleChange}
-        />
-        <button disabled={isFirstDigitZero}>Done</button>
-      </form>
+      {!isWin && (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="input1"></label>
+          <input
+            disabled={isFirstDigitZero}
+            type="text"
+            placeholder="First Digit"
+            name="input1"
+            id="input1"
+            value={inputs.input1}
+            onChange={handleChange}
+          />
+          <label htmlFor="input2"></label>
+          <input
+            disabled={isFirstDigitZero}
+            type="text"
+            placeholder={!isFirstDigitZero && "Second Digit"}
+            name="input2"
+            id="input2"
+            value={inputs.input2}
+            onChange={handleChange}
+          />
+          <label htmlFor="input3"></label>
+          <input
+            disabled={isFirstDigitZero}
+            type="text"
+            placeholder={!isFirstDigitZero && "Third Digit"}
+            name="input3"
+            id="input3"
+            value={inputs.input3}
+            onChange={handleChange}
+          />
+          <label htmlFor="input4"></label>
+          <input
+            disabled={isFirstDigitZero}
+            type="text"
+            placeholder={!isFirstDigitZero && "Fourth Digit"}
+            name="input4"
+            id="input4"
+            value={inputs.input4}
+            onChange={handleChange}
+          />
+          <button disabled={isFirstDigitZero}>Done</button>
+        </form>
+      )}
       {isFirstDigitZero && (
         <div>
           <p>The first digit can't be 0!</p>

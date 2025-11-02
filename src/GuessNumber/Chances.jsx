@@ -53,7 +53,7 @@ export default function chances({
       {isWin && (
         <div>
           <div style={{ color: "green" }}>Well Done!</div>
-          <button onClick={() => reset()}>Try again</button>
+          <button onClick={() => reset()}>Play again</button>
         </div>
       )}
     </div>

@@ -95,18 +95,16 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {!isGameStarted ? (
         <button onClick={() => generateRandNum()}>Start the Game</button>
       ) : (
-        num && (
+        num &&
+        !isWin &&
+        chancesNum !== 0 && (
           <div>
-          <h5>
-            Guess the chosen four digits unrepetitive number correctly and win
-            the game
-          </h5>
-          <h5>
-            Rules:
-          </h5>
-          <h5>
-            1- The first digit can't be 0
-          </h5>
+            <h5>
+              Guess the chosen four digits unrepetitive number correctly and win
+              the game
+            </h5>
+            <h5>Rules:</h5>
+            <h5>1- The first digit can't be 0</h5>
           </div>
         )
       )}
@@ -133,6 +131,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         <Form
           inputs={inputs}
           setInputs={setInputs}
+          chancesNum={chancesNum}
           setChancesNum={setChancesNum}
           setUserGuess={setUserGuess}
           updateUserGuess={updateUserGuess}
@@ -142,6 +141,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           num={num}
           convertArrayToString={convertArrayToString}
           setIsWin={setIsWin}
+          isWin={isWin}
         />
       )}
       {isGameStarted && (
