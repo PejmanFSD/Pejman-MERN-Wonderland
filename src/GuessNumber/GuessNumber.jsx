@@ -96,10 +96,18 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         <button onClick={() => generateRandNum()}>Start the Game</button>
       ) : (
         num && (
-          <h3>
+          <div>
+          <h5>
             Guess the chosen four digits unrepetitive number correctly and win
             the game
-          </h3>
+          </h5>
+          <h5>
+            Rules:
+          </h5>
+          <h5>
+            1- The first digit can't be 0
+          </h5>
+          </div>
         )
       )}
       <div>num: {num}</div>
@@ -121,16 +129,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
             </p>
           </div>
         ))}
-      <div>
-        {/* {isGameStarted &&
-          chancesNum > 0 &&
-          userGuess.length !== 0 &&
-          userGuess
-            .slice(userGuessStatus.length - 4, userGuessStatus.length4)
-            .toString()
-            .replaceAll(",", "") === convertArrayToString(num) &&
-          "Well Done!"} */}
-      </div>
       {isGameStarted && chancesNum > 0 && (
         <Form
           inputs={inputs}
