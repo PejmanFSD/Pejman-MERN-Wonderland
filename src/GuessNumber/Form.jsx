@@ -15,6 +15,7 @@ export default function Form({
 }) {
   const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
   const [isOneDigit, setIsOneDigit] = useState(true);
+  const [isDigitNegative, setIsDigitNegative] = useState(false);
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
@@ -22,6 +23,9 @@ export default function Form({
     const { name, value } = e.target;
     if (value > 9) {
       setIsOneDigit(false);
+    }
+    if (value < 0) {
+      setIsDigitNegative(true);
     }
     if (name === "input1" && value === "0") {
       setIsFirstDigitZero(true);
@@ -78,15 +82,30 @@ export default function Form({
     });
     setIsOneDigit(true);
   };
+  const handleIsDigitNegative = () => {
+    setInputs((currInputs) => {
+      const updatedInputs = Object.fromEntries(
+        Object.entries(currInputs).map(([key, value]) => {
+          if (value < 0) {
+            return [key, ""];
+          }
+          return [key, value];
+        })
+      );
+
+      return updatedInputs;
+    });
+    setIsDigitNegative(false);
+  };
   return (
     <div>
       {!isWin && (
         <form onSubmit={handleSubmit}>
           <label htmlFor="input1"></label>
           <input
-            disabled={isFirstDigitZero || !isOneDigit}
+            disabled={isFirstDigitZero || !isOneDigit || isDigitNegative}
             type="text"
-            placeholder={isOneDigit && "First Digit"}
+            placeholder={isOneDigit && !isDigitNegative && "First Digit"}
             name="input1"
             id="input1"
             value={inputs.input1}
@@ -94,9 +113,14 @@ export default function Form({
           />
           <label htmlFor="input2"></label>
           <input
-            disabled={isFirstDigitZero || !isOneDigit}
+            disabled={isFirstDigitZero || !isOneDigit || isDigitNegative}
             type="text"
-            placeholder={!isFirstDigitZero && isOneDigit && "Second Digit"}
+            placeholder={
+              !isFirstDigitZero &&
+              isOneDigit &&
+              !isDigitNegative &&
+              "Second Digit"
+            }
             name="input2"
             id="input2"
             value={inputs.input2}
@@ -104,9 +128,14 @@ export default function Form({
           />
           <label htmlFor="input3"></label>
           <input
-            disabled={isFirstDigitZero || !isOneDigit}
+            disabled={isFirstDigitZero || !isOneDigit || isDigitNegative}
             type="text"
-            placeholder={!isFirstDigitZero && isOneDigit && "Third Digit"}
+            placeholder={
+              !isFirstDigitZero &&
+              isOneDigit &&
+              !isDigitNegative &&
+              "Third Digit"
+            }
             name="input3"
             id="input3"
             value={inputs.input3}
@@ -114,15 +143,22 @@ export default function Form({
           />
           <label htmlFor="input4"></label>
           <input
-            disabled={isFirstDigitZero || !isOneDigit}
+            disabled={isFirstDigitZero || !isOneDigit || isDigitNegative}
             type="text"
-            placeholder={!isFirstDigitZero && isOneDigit && "Fourth Digit"}
+            placeholder={
+              !isFirstDigitZero &&
+              isOneDigit &&
+              !isDigitNegative &&
+              "Fourth Digit"
+            }
             name="input4"
             id="input4"
             value={inputs.input4}
             onChange={handleChange}
           />
-          <button disabled={isFirstDigitZero || !isOneDigit}>Done</button>
+          <button disabled={isFirstDigitZero || !isOneDigit || isDigitNegative}>
+            Done
+          </button>
         </form>
       )}
       {isFirstDigitZero && (
@@ -133,8 +169,14 @@ export default function Form({
       )}
       {!isOneDigit && (
         <div>
-          <p>None of the digits can be greater than 9</p>
+          <p>None of the digits can be greater than 9!</p>
           <button onClick={handleIsOneDigit}>OK</button>
+        </div>
+      )}
+      {isDigitNegative && (
+        <div>
+          <p>None of the digits can be negative!</p>
+          <button onClick={handleIsDigitNegative}>OK</button>
         </div>
       )}
     </div>
