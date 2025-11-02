@@ -99,15 +99,13 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         !isWin &&
         chancesNum !== 0 && (
           <div>
-            <h5>
-              Guess the chosen four digits unrepetitive number correctly and win
-              the game
-            </h5>
+            <h5>Guess the chosen four-digits number</h5>
             <h5>Rules:</h5>
             <h5>1- The first digit can't be 0</h5>
             <h5>2- None of the digits can be greater than 9</h5>
             <h5>3- None of the digits can be negative</h5>
             <h5>4- None of the digits can be decimal</h5>
+            <h5>5- The digits can't be repetitive</h5>
           </div>
         )
       )}

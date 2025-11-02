@@ -17,6 +17,7 @@ export default function Form({
   const [isOneDigit, setIsOneDigit] = useState(true);
   const [isDigitNegative, setIsDigitNegative] = useState(false);
   const [isDigitDecimal, setIsDigitDecimal] = useState(false);
+  const [isDigitRepetitive, setIsDigitRepetitive] = useState(false);
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
@@ -24,15 +25,15 @@ export default function Form({
     const { name, value } = e.target;
     if (value > 9) {
       setIsOneDigit(false);
-    }
-    else if (value < 0) {
+    } else if (value < 0) {
       setIsDigitNegative(true);
-    }
-    else if (value.toString().includes(".")) {
+    } else if (value.toString().includes(".")) {
       setIsDigitDecimal(true);
-    }
-    else if (name === "input1" && value === "0") {
+    } else if (name === "input1" && value === "0") {
       setIsFirstDigitZero(true);
+    }
+    if (evaluateRepetitive(name, value)) {
+      setIsDigitRepetitive(true);
     }
     setInputs((currInputs) => {
       currInputs[name] = value;
@@ -115,6 +116,33 @@ export default function Form({
     });
     setIsDigitDecimal(false);
   };
+  const evaluateRepetitive = (name, value) => {
+    if (value === inputs.input1 && name !== inputs.input1) {
+      return true;
+    } else if (value === inputs.input2 && name !== inputs.input2) {
+      return true;
+    } else if (value === inputs.input3 && name !== inputs.input3) {
+      return true;
+    } else if (value === inputs.input4 && name !== inputs.input4) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const handleIsDigitRepetitive = () => {
+    setInputs((currInputs) => {
+      const updatedInputs = Object.fromEntries(
+        Object.entries(currInputs).map(([key, value]) => {
+          if (!evaluateRepetitive(value)) {
+            return [key, ""];
+          }
+          return [key, value];
+        })
+      );
+      return updatedInputs;
+    });
+    setIsDigitRepetitive(false);
+  };
   return (
     <div>
       {!isWin && (
@@ -125,11 +153,16 @@ export default function Form({
               isFirstDigitZero ||
               !isOneDigit ||
               isDigitNegative ||
-              isDigitDecimal
+              isDigitDecimal ||
+              isDigitRepetitive
             }
             type="text"
             placeholder={
-              isOneDigit && !isDigitNegative && !isDigitDecimal && "First Digit"
+              isOneDigit &&
+              !isDigitNegative &&
+              !isDigitDecimal &&
+              !isDigitRepetitive &&
+              "First Digit"
             }
             name="input1"
             id="input1"
@@ -142,7 +175,8 @@ export default function Form({
               isFirstDigitZero ||
               !isOneDigit ||
               isDigitNegative ||
-              isDigitDecimal
+              isDigitDecimal ||
+              isDigitRepetitive
             }
             type="text"
             placeholder={
@@ -150,6 +184,7 @@ export default function Form({
               isOneDigit &&
               !isDigitNegative &&
               !isDigitDecimal &&
+              !isDigitRepetitive &&
               "Second Digit"
             }
             name="input2"
@@ -163,7 +198,8 @@ export default function Form({
               isFirstDigitZero ||
               !isOneDigit ||
               isDigitNegative ||
-              isDigitDecimal
+              isDigitDecimal ||
+              isDigitRepetitive
             }
             type="text"
             placeholder={
@@ -171,6 +207,7 @@ export default function Form({
               isOneDigit &&
               !isDigitNegative &&
               !isDigitDecimal &&
+              !isDigitRepetitive &&
               "Third Digit"
             }
             name="input3"
@@ -184,7 +221,8 @@ export default function Form({
               isFirstDigitZero ||
               !isOneDigit ||
               isDigitNegative ||
-              isDigitDecimal
+              isDigitDecimal ||
+              isDigitRepetitive
             }
             type="text"
             placeholder={
@@ -192,6 +230,7 @@ export default function Form({
               isOneDigit &&
               !isDigitNegative &&
               !isDigitDecimal &&
+              !isDigitRepetitive &&
               "Fourth Digit"
             }
             name="input4"
@@ -204,7 +243,8 @@ export default function Form({
               isFirstDigitZero ||
               !isOneDigit ||
               isDigitNegative ||
-              isDigitDecimal
+              isDigitDecimal ||
+              isDigitRepetitive
             }
           >
             Done
@@ -233,6 +273,12 @@ export default function Form({
         <div>
           <p>None of the digits can be decimal!</p>
           <button onClick={handleIsDigitDecimal}>OK</button>
+        </div>
+      )}
+      {isDigitRepetitive && (
+        <div>
+          <p>The digits can't be repetitive!</p>
+          <button onClick={handleIsDigitRepetitive}>OK</button>
         </div>
       )}
     </div>
