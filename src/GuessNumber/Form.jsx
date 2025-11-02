@@ -21,6 +21,7 @@ export default function Form({
   const [isDigitRepetitive, setIsDigitRepetitive] = useState(false);
   const [isInt, setIsInt] = useState(true);
   const [isAlreadyGuessed, setIsAlreadyGuessed] = useState(false);
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
@@ -46,6 +47,12 @@ export default function Form({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    for (let i = 0; i < 4; i++) {
+      if (Object.values(inputs)[i] === "") {
+        setIsInputEmpty(true);
+        return;
+      }
+    }
     if (
       allUserGuesses.includes(
         Object.values(inputs).toString().replaceAll(",", "")
@@ -184,6 +191,9 @@ export default function Form({
     });
     setIsAlreadyGuessed(false);
   };
+  const handleIsInputEmpty = () => {
+    setIsInputEmpty(false);
+  };
   return (
     <div>
       {!isWin && (
@@ -197,7 +207,8 @@ export default function Form({
               isDigitDecimal ||
               isDigitRepetitive ||
               !isInt ||
-              isAlreadyGuessed
+              isAlreadyGuessed ||
+              isInputEmpty
             }
             type="text"
             placeholder={
@@ -207,6 +218,7 @@ export default function Form({
               !isDigitRepetitive &&
               isInt &&
               !isAlreadyGuessed &&
+              !isInputEmpty &&
               "First Digit"
             }
             name="input1"
@@ -223,7 +235,8 @@ export default function Form({
               isDigitDecimal ||
               isDigitRepetitive ||
               !isInt ||
-              isAlreadyGuessed
+              isAlreadyGuessed ||
+              isInputEmpty
             }
             type="text"
             placeholder={
@@ -234,6 +247,7 @@ export default function Form({
               !isDigitRepetitive &&
               isInt &&
               !isAlreadyGuessed &&
+              !isInputEmpty &&
               "Second Digit"
             }
             name="input2"
@@ -250,7 +264,8 @@ export default function Form({
               isDigitDecimal ||
               isDigitRepetitive ||
               !isInt ||
-              isAlreadyGuessed
+              isAlreadyGuessed ||
+              isInputEmpty
             }
             type="text"
             placeholder={
@@ -261,6 +276,7 @@ export default function Form({
               !isDigitRepetitive &&
               isInt &&
               !isAlreadyGuessed &&
+              !isInputEmpty &&
               "Third Digit"
             }
             name="input3"
@@ -277,7 +293,8 @@ export default function Form({
               isDigitDecimal ||
               isDigitRepetitive ||
               !isInt ||
-              isAlreadyGuessed
+              isAlreadyGuessed ||
+              isInputEmpty
             }
             type="text"
             placeholder={
@@ -288,6 +305,7 @@ export default function Form({
               !isDigitRepetitive &&
               isInt &&
               !isAlreadyGuessed &&
+              !isInputEmpty &&
               "Fourth Digit"
             }
             name="input4"
@@ -303,7 +321,8 @@ export default function Form({
               isDigitDecimal ||
               isDigitRepetitive ||
               !isInt ||
-              isAlreadyGuessed
+              isAlreadyGuessed ||
+              isInputEmpty
             }
           >
             Done
@@ -350,6 +369,12 @@ export default function Form({
         <div>
           <p>You've already tried this number!</p>
           <button onClick={handleIsAlreadyGuessed}>OK</button>
+        </div>
+      )}
+      {isInputEmpty && (
+        <div>
+          <p>You shouldn't leave any box empty!</p>
+          <button onClick={handleIsInputEmpty}>OK</button>
         </div>
       )}
     </div>
