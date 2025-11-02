@@ -25,13 +25,13 @@ export default function Form({
     if (value > 9) {
       setIsOneDigit(false);
     }
-    if (value < 0) {
+    else if (value < 0) {
       setIsDigitNegative(true);
     }
-    if (value.toString().includes(".")) {
+    else if (value.toString().includes(".")) {
       setIsDigitDecimal(true);
     }
-    if (name === "input1" && value === "0") {
+    else if (name === "input1" && value === "0") {
       setIsFirstDigitZero(true);
     }
     setInputs((currInputs) => {
