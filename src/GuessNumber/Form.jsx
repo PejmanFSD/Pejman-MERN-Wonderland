@@ -14,11 +14,15 @@ export default function Form({
   setIsWin,
 }) {
   const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
+  const [isOneDigit, setIsOneDigit] = useState(true);
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
     }
     const { name, value } = e.target;
+    if (value > 9) {
+      setIsOneDigit(false);
+    }
     if (name === "input1" && value === "0") {
       setIsFirstDigitZero(true);
     }
@@ -52,12 +56,27 @@ export default function Form({
       input4: "",
     });
   };
-  const handleOk = () => {
+  const handleIsFirstDigitZero = () => {
     setInputs((currInputs) => ({
       ...currInputs,
       input1: "",
     }));
     setIsFirstDigitZero(false);
+  };
+  const handleIsOneDigit = () => {
+    setInputs((currInputs) => {
+      const updatedInputs = Object.fromEntries(
+        Object.entries(currInputs).map(([key, value]) => {
+          if (value > 9) {
+            return [key, ""];
+          }
+          return [key, value];
+        })
+      );
+
+      return updatedInputs;
+    });
+    setIsOneDigit(true);
   };
   return (
     <div>
@@ -65,9 +84,9 @@ export default function Form({
         <form onSubmit={handleSubmit}>
           <label htmlFor="input1"></label>
           <input
-            disabled={isFirstDigitZero}
+            disabled={isFirstDigitZero || !isOneDigit}
             type="text"
-            placeholder="First Digit"
+            placeholder={isOneDigit && "First Digit"}
             name="input1"
             id="input1"
             value={inputs.input1}
@@ -75,9 +94,9 @@ export default function Form({
           />
           <label htmlFor="input2"></label>
           <input
-            disabled={isFirstDigitZero}
+            disabled={isFirstDigitZero || !isOneDigit}
             type="text"
-            placeholder={!isFirstDigitZero && "Second Digit"}
+            placeholder={!isFirstDigitZero && isOneDigit && "Second Digit"}
             name="input2"
             id="input2"
             value={inputs.input2}
@@ -85,9 +104,9 @@ export default function Form({
           />
           <label htmlFor="input3"></label>
           <input
-            disabled={isFirstDigitZero}
+            disabled={isFirstDigitZero || !isOneDigit}
             type="text"
-            placeholder={!isFirstDigitZero && "Third Digit"}
+            placeholder={!isFirstDigitZero && isOneDigit && "Third Digit"}
             name="input3"
             id="input3"
             value={inputs.input3}
@@ -95,21 +114,27 @@ export default function Form({
           />
           <label htmlFor="input4"></label>
           <input
-            disabled={isFirstDigitZero}
+            disabled={isFirstDigitZero || !isOneDigit}
             type="text"
-            placeholder={!isFirstDigitZero && "Fourth Digit"}
+            placeholder={!isFirstDigitZero && isOneDigit && "Fourth Digit"}
             name="input4"
             id="input4"
             value={inputs.input4}
             onChange={handleChange}
           />
-          <button disabled={isFirstDigitZero}>Done</button>
+          <button disabled={isFirstDigitZero || !isOneDigit}>Done</button>
         </form>
       )}
       {isFirstDigitZero && (
         <div>
           <p>The first digit can't be 0!</p>
-          <button onClick={handleOk}>OK</button>
+          <button onClick={handleIsFirstDigitZero}>OK</button>
+        </div>
+      )}
+      {!isOneDigit && (
+        <div>
+          <p>None of the digits can be greater than 9</p>
+          <button onClick={handleIsOneDigit}>OK</button>
         </div>
       )}
     </div>
