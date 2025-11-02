@@ -8,7 +8,7 @@ export default function Form({
   updateUserGuessStatus,
   num,
   convertArrayToString,
-  setIsWin
+  setIsWin,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -23,13 +23,13 @@ export default function Form({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-        if (
+    if (
       userGuess
         .slice(userGuessStatus.length - 4, userGuessStatus.length4)
         .toString()
         .replaceAll(",", "") === convertArrayToString(num)
     ) {
-        setIsWin(true);
+      setIsWin(true);
     }
     setChancesNum((currChanceNum) => currChanceNum - 1);
     for (let i = 0; i < 4; i++) {
@@ -38,6 +38,12 @@ export default function Form({
     for (let i = 0; i < 4; i++) {
       updateUserGuessStatus(i);
     }
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+    });
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -56,6 +62,7 @@ export default function Form({
         placeholder="Second Digit"
         name="input2"
         id="input2"
+        value={inputs.input2}
         onChange={handleChange}
       />
       <label htmlFor="input3"></label>
@@ -64,6 +71,7 @@ export default function Form({
         placeholder="Third Digit"
         name="input3"
         id="input3"
+        value={inputs.input3}
         onChange={handleChange}
       />
       <label htmlFor="input4"></label>
@@ -72,6 +80,7 @@ export default function Form({
         placeholder="Fourth Digit"
         name="input4"
         id="input4"
+        value={inputs.input4}
         onChange={handleChange}
       />
       <button>Done</button>
