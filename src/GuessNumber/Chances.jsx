@@ -6,6 +6,7 @@ export default function chances({
   setInputs,
   setUserGuess,
   setUserGuessStatus,
+  setAllUserGuesses,
   generateRandNum,
   isWin,
   setIsWin,
@@ -20,6 +21,7 @@ export default function chances({
       input4: "",
     });
     setUserGuess([]);
+    setAllUserGuesses([]);
     setUserGuessStatus([]);
     generateRandNum();
     setIsWin(false);

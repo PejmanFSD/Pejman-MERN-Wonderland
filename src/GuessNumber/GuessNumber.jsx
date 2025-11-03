@@ -82,6 +82,29 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       return "🔴";
     }
   };
+  const toggleLevel = () => {
+    setIsGameStarted(false);
+    setChancesNum(10);
+    setNum([]);
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+    });
+    setUserGuess([]);
+    setAllUserGuesses([]);
+    setUserGuessStatus([]);
+    generateRandNum();
+    setIsWin(false);
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+    }
+  };
   useEffect(
     function () {
       const handleWin = () => {
@@ -130,17 +153,21 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => generateRandNum()}>Start the Game</button>
       )}
-      {isGameStarted && num && !isWin && chancesNum !== 0 && (
-        <div>
-          <h5>Guess the chosen four-digits number</h5>
-          <h5>Rules:</h5>
-          <h5>1- The first digit can't be 0</h5>
-          <h5>2- None of the digits can be greater than 9</h5>
-          <h5>3- None of the digits can be negative</h5>
-          <h5>4- None of the digits can be decimal</h5>
-          <h5>5- The digits can't be repetitive</h5>
-        </div>
-      )}
+      {isGameStarted &&
+        num &&
+        !isWin &&
+        chancesNum !== 0 &&
+        (easyMode || normalMode) && (
+          <div>
+            <h5>Guess the chosen four-digits number</h5>
+            <h5>Rules:</h5>
+            <h5>1- The first digit can't be 0</h5>
+            <h5>2- None of the digits can be greater than 9</h5>
+            <h5>3- None of the digits can be negative</h5>
+            <h5>4- None of the digits can be decimal</h5>
+            <h5>5- The digits can't be repetitive</h5>
+          </div>
+        )}
       {/* <div>num: {num}</div> */}
       {isGameStarted &&
         chancesNum > 0 &&
@@ -190,6 +217,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           setInputs={setInputs}
           setUserGuess={setUserGuess}
           setUserGuessStatus={setUserGuessStatus}
+          setAllUserGuesses={setAllUserGuesses}
           generateRandNum={generateRandNum}
           isWin={isWin}
           userGuess={userGuess}
@@ -199,6 +227,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       <UserGuess />
       <GuessStatus />
       <br></br>
+      {isGameStarted && (easyMode || normalMode) && (
+        <button onClick={() => toggleLevel()}>{`Switch to ${
+          easyMode ? "Normal Mode" : "Easy Mode"
+        }`}</button>
+      )}
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
   );
