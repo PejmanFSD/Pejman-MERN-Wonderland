@@ -8,6 +8,7 @@ import { getRandArr } from "../utils";
 export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [inputs, setInputs] = useState({
@@ -83,6 +84,9 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     }
   };
   const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
     setIsGameStarted(false);
     setChancesNum(10);
     setNum([]);
@@ -104,6 +108,10 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       setNormalMode(false);
       setEasyMode(true);
     }
+    setIsTogglingLevel(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
   };
   useEffect(
     function () {
@@ -231,6 +239,15 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         <button onClick={() => toggleLevel()}>{`Switch to ${
           easyMode ? "Normal Mode" : "Easy Mode"
         }`}</button>
+      )}
+      {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+        <div>
+          <div>{`Are you sure you want to switch to ${
+            easyMode ? "Normal Mode" : "Easy Mode"
+          }`}</div>
+          <button onClick={() => toggleLevelYes()}>Yes</button>
+          <button onClick={() => toggleLevelCancel()}>Cancel</button>
+        </div>
       )}
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
