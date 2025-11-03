@@ -7,12 +7,8 @@ import GuessNumber from "./GuessNumber/GuessNumber";
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
-  const [score, setScore] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
   const [showGuessNumber, setShowGuessNumber] = useState(false);
-  const updateScore = (i) => {
-    setScore((currScore) => currScore + i);
-  };
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -40,9 +36,6 @@ function App() {
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
-          score={score}
-          setScore={setScore}
-          updateScore={updateScore}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
           setShowRockScissorsPaper={setShowRockScissorsPaper}
@@ -58,9 +51,6 @@ function App() {
       {!showGameTitles && showGuessNumber ? (
         <GuessNumber
           setShowGameTitles={setShowGameTitles}
-          score={score}
-          setScore={setScore}
-          updateScore={updateScore}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
           setShowGuessNumber={setShowGuessNumber}

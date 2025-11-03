@@ -7,9 +7,6 @@ const optionsArray = ["Rock", "Scissors", "Paper"];
 
 export default function RockScissorsPaper({
   setShowGameTitles,
-  score,
-  setScore,
-  updateScore,
   totalPoint,
   updateTotalPoint,
   setShowRockScissorsPaper,
@@ -17,6 +14,7 @@ export default function RockScissorsPaper({
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
   const [gameResult, setGameResult] = useState("");
+  const [score, setScore] = useState(0);
   const [tripleScore, setTripleScore] = useState(0);
 
   const announcingTheWinner = (user, pejman) => {
@@ -40,6 +38,9 @@ export default function RockScissorsPaper({
       updateScore(-1);
       setTripleScore(0);
     }
+  };
+  const updateScore = (i) => {
+    setScore((currScore) => currScore + i);
   };
   const handleUserChoice = (input) => {
     setUserChoice(input);
