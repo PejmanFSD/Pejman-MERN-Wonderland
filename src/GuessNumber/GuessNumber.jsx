@@ -116,8 +116,17 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           <button onClick={() => runNormalMode()}>Normal</button>
         </div>
       )}
-      {easyMode && <h3 style={{ color: "lightblue" }}>Easy Mode</h3>}
-      {normalMode && <h3 style={{ color: "lightblue" }}>Normal Mode</h3>}
+      {easyMode && (
+        <h3 style={{ color: "lightblue" }}>
+          Easy Mode: The colorful circles appear in the exact order of each
+          digit
+        </h3>
+      )}
+      {normalMode && (
+        <h3 style={{ color: "lightblue" }}>
+          Normal Mode: The colorful circles don't appear in the order of digits
+        </h3>
+      )}
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => generateRandNum()}>Start the Game</button>
       )}
@@ -132,7 +141,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           <h5>5- The digits can't be repetitive</h5>
         </div>
       )}
-      <div>num: {num}</div>
+      {/* <div>num: {num}</div> */}
       {isGameStarted &&
         chancesNum > 0 &&
         new Array(10).fill(null).map((el, i) => (
@@ -144,10 +153,12 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
                 .replaceAll(",", "")}
             </p>
             <p style={{ display: "inline" }}>
-              {userGuessStatus
-                .slice(4 * i, 4 * i + 4)
-                .toString()
-                .replaceAll(",", "")}
+              {easyMode && userGuessStatus.slice(4 * i, 4 * i + 4)}
+              {normalMode &&
+                userGuessStatus
+                  .slice(4 * i, 4 * i + 4)
+                  .sort()
+                  .reverse()}
             </p>
           </div>
         ))}
