@@ -6,6 +6,8 @@ import GuessStatus from "./GuessStatus";
 import { getRandArr } from "../utils";
 
 export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [inputs, setInputs] = useState({
@@ -19,6 +21,14 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [chancesNum, setChancesNum] = useState(10);
   const [isWin, setIsWin] = useState(false);
+  const runEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const runNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const backToHomepage = () => {
     setIsGameStarted(false);
     setShowGuessNumber(false);
@@ -100,22 +110,27 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   return (
     <div>
       <h2>Guess Number</h2>
-      {!isGameStarted ? (
+      {!easyMode && !normalMode && (
+        <div>
+          <button onClick={() => runEasyMode()}>Easy</button>
+          <button onClick={() => runNormalMode()}>Normal</button>
+        </div>
+      )}
+      {easyMode && <h3 style={{ color: "lightblue" }}>Easy Mode</h3>}
+      {normalMode && <h3 style={{ color: "lightblue" }}>Normal Mode</h3>}
+      {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => generateRandNum()}>Start the Game</button>
-      ) : (
-        num &&
-        !isWin &&
-        chancesNum !== 0 && (
-          <div>
-            <h5>Guess the chosen four-digits number</h5>
-            <h5>Rules:</h5>
-            <h5>1- The first digit can't be 0</h5>
-            <h5>2- None of the digits can be greater than 9</h5>
-            <h5>3- None of the digits can be negative</h5>
-            <h5>4- None of the digits can be decimal</h5>
-            <h5>5- The digits can't be repetitive</h5>
-          </div>
-        )
+      )}
+      {isGameStarted && num && !isWin && chancesNum !== 0 && (
+        <div>
+          <h5>Guess the chosen four-digits number</h5>
+          <h5>Rules:</h5>
+          <h5>1- The first digit can't be 0</h5>
+          <h5>2- None of the digits can be greater than 9</h5>
+          <h5>3- None of the digits can be negative</h5>
+          <h5>4- None of the digits can be decimal</h5>
+          <h5>5- The digits can't be repetitive</h5>
+        </div>
       )}
       <div>num: {num}</div>
       {isGameStarted &&
