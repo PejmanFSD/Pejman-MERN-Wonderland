@@ -36,9 +36,9 @@ function App() {
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
+          setShowRockScissorsPaper={setShowRockScissorsPaper}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
-          setShowRockScissorsPaper={setShowRockScissorsPaper}
         />
       ) : (
         showGameTitles &&
@@ -51,9 +51,9 @@ function App() {
       {!showGameTitles && showGuessNumber ? (
         <GuessNumber
           setShowGameTitles={setShowGameTitles}
+          setShowGuessNumber={setShowGuessNumber}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
-          setShowGuessNumber={setShowGuessNumber}
         />
       ) : (
         showGameTitles &&

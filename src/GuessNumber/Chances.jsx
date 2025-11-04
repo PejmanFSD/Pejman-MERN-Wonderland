@@ -12,6 +12,7 @@ export default function chances({
   setIsWin,
   easyMode,
   normalMode,
+  updateTotalPoint,
 }) {
   const reset = () => {
     setChancesNum(easyMode ? 5 : 10);
@@ -27,6 +28,14 @@ export default function chances({
     setUserGuessStatus([]);
     generateRandNum();
     setIsWin(false);
+  };
+  const handleOk = () => {
+    if (easyMode) {
+      updateTotalPoint(1);
+    } else if (normalMode) {
+      updateTotalPoint(3);
+    }
+    reset();
   };
   return (
     <div>
@@ -66,8 +75,15 @@ export default function chances({
       )}
       {isWin && (
         <div>
-          <div style={{ color: "green" }}>Well Done!</div>
-          <button onClick={() => reset()}>Play again</button>
+          <div style={{ color: "green" }}>
+            Well Done! You won the {easyMode ? "Easy" : normalMode && "Normal"}{" "}
+            Mode.
+          </div>
+          <div style={{ color: "green" }}>
+            Your total point increases by{" "}
+            {easyMode ? "one" : normalMode && "three"}.
+          </div>
+          <button onClick={() => handleOk()}>Ok</button>
         </div>
       )}
     </div>

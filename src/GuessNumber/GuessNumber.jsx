@@ -7,7 +7,12 @@ import SwitchingAlarm from "./SwitchingAlarm";
 import Chances from "./Chances";
 import { getRandArr } from "../utils";
 
-export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
+export default function GuessNumber({
+  setShowGameTitles,
+  setShowGuessNumber,
+  totalPoint,
+  updateTotalPoint,
+}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -147,10 +152,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       <h2>Guess Number</h2>
       {!easyMode && !normalMode && (
         <GameLevel runEasyMode={runEasyMode} runNormalMode={runNormalMode} />
-        // <div>
-        //   <button onClick={() => runEasyMode()}>Easy</button>
-        //   <button onClick={() => runNormalMode()}>Normal</button>
-        // </div>
       )}
       {easyMode && !normalMode ? (
         <ModeExplaination
@@ -162,9 +163,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         normalMode && (
           <ModeExplaination message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances." />
         )
-        // <h3 style={{ color: "lightblue" }}>
-        //   Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances.
-        // </h3>
       )}
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => generateRandNum()}>Start the Game</button>
@@ -193,7 +191,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           normalMode={normalMode}
         />
       )}
-
       {isGameStarted && chancesNum > 0 && (
         <Form
           inputs={inputs}
@@ -229,10 +226,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           setIsWin={setIsWin}
           easyMode={easyMode}
           normalMode={normalMode}
+          updateTotalPoint={updateTotalPoint}
         />
       )}
       <br></br>
-      {isGameStarted && (easyMode || normalMode) && (
+      {isGameStarted && (easyMode || normalMode) && !isWin && (
         <button onClick={() => toggleLevel()}>{`Switch to ${
           easyMode ? "Normal Mode" : "Easy Mode"
         }`}</button>
@@ -244,7 +242,9 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           easyMode={easyMode}
         />
       )}
-      <button onClick={() => backToHomepage()}>Back to the home page</button>
+      {!isWin && (
+        <button onClick={() => backToHomepage()}>Back to the home page</button>
+      )}
     </div>
   );
 }
