@@ -57,7 +57,7 @@ export default function Chances({
       {chancesNum === 0 && !isWin && !isTogglingLevel && !isTogglingReset && (
         <div>
           <div style={{ color: "gray" }}>Sorry! You loose!</div>
-          <div style={{ color: "gray" }}>{`The number is: ${num
+          <div style={{ color: "gray" }}>{`The number was: ${num
             .toString()
             .replaceAll(",", "")}`}</div>
           <button onClick={() => reset()}>Try again</button>

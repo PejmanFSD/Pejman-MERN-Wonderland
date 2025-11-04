@@ -204,9 +204,9 @@ export default function GuessNumber({
             <h5>5- The digits can't be repetitive</h5>
           </div>
         )}
-      <div>num: {num}</div>
+      {/* <div>num: {num}</div> */}
       {isGameStarted &&
-        chancesNum > 0 &&
+        // chancesNum > 0 &&
         !isTogglingReset &&
         !isTogglingLevel && (
           <UserGuess
