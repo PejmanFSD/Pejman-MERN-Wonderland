@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
-import Chances from "./Chances";
+import GameLevel from "./GameLevel";
+import ModeExplaination from "./ModeExplaination";
 import UserGuess from "./UserGuess";
-import GuessStatus from "./GuessStatus";
+import SwitchingAlarm from "./SwitchingAlarm";
+import Chances from "./Chances";
 import { getRandArr } from "../utils";
 
 export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
@@ -144,21 +146,25 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     <div>
       <h2>Guess Number</h2>
       {!easyMode && !normalMode && (
-        <div>
-          <button onClick={() => runEasyMode()}>Easy</button>
-          <button onClick={() => runNormalMode()}>Normal</button>
-        </div>
+        <GameLevel runEasyMode={runEasyMode} runNormalMode={runNormalMode} />
+        // <div>
+        //   <button onClick={() => runEasyMode()}>Easy</button>
+        //   <button onClick={() => runNormalMode()}>Normal</button>
+        // </div>
       )}
-      {easyMode && (
-        <h3 style={{ color: "lightblue" }}>
-          Easy Mode: The colorful circles appear in the exact order of each
-          digit
-        </h3>
-      )}
-      {normalMode && (
-        <h3 style={{ color: "lightblue" }}>
-          Normal Mode: The colorful circles don't appear in the order of digits
-        </h3>
+      {easyMode && !normalMode ? (
+        <ModeExplaination
+          message="Easy Mode: The colorful circles appear in the exact order of each
+          digit. You have 5 chances."
+        />
+      ) : (
+        !easyMode &&
+        normalMode && (
+          <ModeExplaination message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances." />
+        )
+        // <h3 style={{ color: "lightblue" }}>
+        //   Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances.
+        // </h3>
       )}
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => generateRandNum()}>Start the Game</button>
@@ -179,26 +185,15 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           </div>
         )}
       {/* <div>num: {num}</div> */}
-      {isGameStarted &&
-        chancesNum > 0 &&
-        new Array(easyMode ? 5 : 10).fill(null).map((el, i) => (
-          <div>
-            <p style={{ display: "inline" }}>
-              {userGuess
-                .slice(4 * i, 4 * i + 4)
-                .toString()
-                .replaceAll(",", "")}
-            </p>
-            <p style={{ display: "inline" }}>
-              {easyMode && userGuessStatus.slice(4 * i, 4 * i + 4)}
-              {normalMode &&
-                userGuessStatus
-                  .slice(4 * i, 4 * i + 4)
-                  .sort()
-                  .reverse()}
-            </p>
-          </div>
-        ))}
+      {isGameStarted && chancesNum > 0 && (
+        <UserGuess
+          userGuess={userGuess}
+          userGuessStatus={userGuessStatus}
+          easyMode={easyMode}
+          normalMode={normalMode}
+        />
+      )}
+
       {isGameStarted && chancesNum > 0 && (
         <Form
           inputs={inputs}
@@ -236,8 +231,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           normalMode={normalMode}
         />
       )}
-      <UserGuess />
-      <GuessStatus />
       <br></br>
       {isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => toggleLevel()}>{`Switch to ${
@@ -245,13 +238,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         }`}</button>
       )}
       {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-        <div>
-          <div>{`Are you sure you want to switch to ${
-            easyMode ? "Normal Mode" : "Easy Mode"
-          }?`}</div>
-          <button onClick={() => toggleLevelYes()}>Yes</button>
-          <button onClick={() => toggleLevelCancel()}>Cancel</button>
-        </div>
+        <SwitchingAlarm
+          toggleLevelYes={toggleLevelYes}
+          toggleLevelCancel={toggleLevelCancel}
+          easyMode={easyMode}
+        />
       )}
       <button onClick={() => backToHomepage()}>Back to the home page</button>
     </div>
