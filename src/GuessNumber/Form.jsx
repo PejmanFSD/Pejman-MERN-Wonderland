@@ -13,6 +13,8 @@ export default function Form({
   isWin,
   setIsWin,
   allUserGuesses,
+  isTogglingLevel,
+  isTogglingReset
 }) {
   const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
   const [isOneDigit, setIsOneDigit] = useState(true);
@@ -196,7 +198,7 @@ export default function Form({
   };
   return (
     <div>
-      {!isWin && (
+      {!isWin && !isTogglingLevel && !isTogglingReset && (
         <form onSubmit={handleSubmit}>
           <label htmlFor="input1"></label>
           <input

@@ -1,33 +1,23 @@
-export default function chances({
+import ResetingAlarm from "./ResetingAlarm";
+
+export default function Chances({
   chancesNum,
-  setChancesNum,
   num,
-  setNum,
-  setInputs,
-  setUserGuess,
-  setUserGuessStatus,
-  setAllUserGuesses,
-  generateRandNum,
   isWin,
-  setIsWin,
+  reset,
   easyMode,
   normalMode,
   updateTotalPoint,
+  isGameStarted,
+  userGuess,
+  isTogglingLevel,
+  isTogglingReset,
+  setIsTogglingReset,
+  toggleResetYes,
+  toggleResetCancel,
 }) {
-  const reset = () => {
-    setChancesNum(easyMode ? 5 : 10);
-    setNum([]);
-    setInputs({
-      input1: "",
-      input2: "",
-      input3: "",
-      input4: "",
-    });
-    setUserGuess([]);
-    setAllUserGuesses([]);
-    setUserGuessStatus([]);
-    generateRandNum();
-    setIsWin(false);
+  const toggleReset = () => {
+    setIsTogglingReset(true);
   };
   const handleOk = () => {
     if (easyMode) {
@@ -39,32 +29,32 @@ export default function chances({
   };
   return (
     <div>
-      {chancesNum === 10 && !isWin && normalMode && (
+      {chancesNum === 10 && !isWin && normalMode && !isTogglingLevel && !isTogglingReset && (
         <div style={{ color: "blue" }}>
           You have 10 chances to find the number
         </div>
       )}
-      {chancesNum === 5 && !isWin && easyMode && (
+      {chancesNum === 5 && !isWin && easyMode && !isTogglingLevel && !isTogglingReset && (
         <div style={{ color: "blue" }}>
           You have 5 chances to find the number
         </div>
       )}
-      {chancesNum > 1 && chancesNum < 10 && !isWin && normalMode && (
+      {chancesNum > 1 && chancesNum < 10 && !isWin && normalMode && !isTogglingLevel && !isTogglingReset && (
         <div
           style={{ color: "blue" }}
         >{`You have ${chancesNum} chances left`}</div>
       )}
-      {chancesNum > 1 && chancesNum < 5 && !isWin && easyMode && (
+      {chancesNum > 1 && chancesNum < 5 && !isWin && easyMode && !isTogglingLevel && !isTogglingReset && (
         <div
           style={{ color: "blue" }}
         >{`You have ${chancesNum} chances left`}</div>
       )}
-      {chancesNum === 1 && !isWin && (
+      {chancesNum === 1 && !isWin && !isTogglingLevel && !isTogglingReset && (
         <div style={{ color: "red" }}>
           Warning! You only have one chane left!
         </div>
       )}
-      {chancesNum === 0 && !isWin && (
+      {chancesNum === 0 && !isWin && !isTogglingLevel && !isTogglingReset && (
         <div>
           <div style={{ color: "gray" }}>Sorry! You loose!</div>
           <div style={{ color: "gray" }}>{`The number is: ${num
@@ -85,6 +75,17 @@ export default function chances({
           </div>
           <button onClick={() => handleOk()}>Ok</button>
         </div>
+      )}
+      {!isWin && userGuess[0] && chancesNum !== 0 && !isTogglingLevel && !isTogglingReset && (
+        <button onClick={() => toggleReset()} disabled={isTogglingLevel}>
+          Reset the Game
+        </button>
+      )}
+      {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
+        <ResetingAlarm
+          toggleResetYes={toggleResetYes}
+          toggleResetCancel={toggleResetCancel}
+        />
       )}
     </div>
   );

@@ -10,12 +10,12 @@ import { getRandArr } from "../utils";
 export default function GuessNumber({
   setShowGameTitles,
   setShowGuessNumber,
-  totalPoint,
   updateTotalPoint,
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [inputs, setInputs] = useState({
@@ -91,6 +91,21 @@ export default function GuessNumber({
       return "🔴";
     }
   };
+  const reset = () => {
+    setChancesNum(easyMode ? 5 : 10);
+    setNum([]);
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+    });
+    setUserGuess([]);
+    setAllUserGuesses([]);
+    setUserGuessStatus([]);
+    generateRandNum();
+    setIsWin(false);
+  };
   const toggleLevel = () => {
     setIsTogglingLevel(true);
   };
@@ -119,8 +134,15 @@ export default function GuessNumber({
     }
     setIsTogglingLevel(false);
   };
+  const toggleResetYes = () => {
+    reset();
+    setIsTogglingReset(false);
+  };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(
     function () {
@@ -182,15 +204,18 @@ export default function GuessNumber({
             <h5>5- The digits can't be repetitive</h5>
           </div>
         )}
-      {/* <div>num: {num}</div> */}
-      {isGameStarted && chancesNum > 0 && (
-        <UserGuess
-          userGuess={userGuess}
-          userGuessStatus={userGuessStatus}
-          easyMode={easyMode}
-          normalMode={normalMode}
-        />
-      )}
+      <div>num: {num}</div>
+      {isGameStarted &&
+        chancesNum > 0 &&
+        !isTogglingReset &&
+        !isTogglingLevel && (
+          <UserGuess
+            userGuess={userGuess}
+            userGuessStatus={userGuessStatus}
+            easyMode={easyMode}
+            normalMode={normalMode}
+          />
+        )}
       {isGameStarted && chancesNum > 0 && (
         <Form
           inputs={inputs}
@@ -208,6 +233,8 @@ export default function GuessNumber({
           isWin={isWin}
           allUserGuesses={allUserGuesses}
           setAllUserGuesses={setAllUserGuesses}
+          isTogglingLevel={isTogglingLevel}
+          isTogglingReset={isTogglingReset}
         />
       )}
       {isGameStarted && (
@@ -221,20 +248,31 @@ export default function GuessNumber({
           setUserGuessStatus={setUserGuessStatus}
           setAllUserGuesses={setAllUserGuesses}
           generateRandNum={generateRandNum}
+          reset={reset}
           isWin={isWin}
           userGuess={userGuess}
           setIsWin={setIsWin}
           easyMode={easyMode}
           normalMode={normalMode}
           updateTotalPoint={updateTotalPoint}
+          isGameStarted={isGameStarted}
+          toggleResetYes={toggleResetYes}
+          toggleResetCancel={toggleResetCancel}
+          isTogglingLevel={isTogglingLevel}
+          isTogglingReset={isTogglingReset}
+          setIsTogglingReset={setIsTogglingReset}
         />
       )}
       <br></br>
-      {isGameStarted && (easyMode || normalMode) && !isWin && (
-        <button onClick={() => toggleLevel()}>{`Switch to ${
-          easyMode ? "Normal Mode" : "Easy Mode"
-        }`}</button>
-      )}
+      {isGameStarted &&
+        (easyMode || normalMode) &&
+        !isWin &&
+        !isTogglingLevel &&
+        !isTogglingReset && (
+          <button onClick={() => toggleLevel()}>{`Switch to ${
+            easyMode ? "Normal Mode" : "Easy Mode"
+          }`}</button>
+        )}
       {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
         <SwitchingAlarm
           toggleLevelYes={toggleLevelYes}
@@ -242,7 +280,7 @@ export default function GuessNumber({
           easyMode={easyMode}
         />
       )}
-      {!isWin && (
+      {!isWin && !isTogglingLevel && !isTogglingReset && (
         <button onClick={() => backToHomepage()}>Back to the home page</button>
       )}
     </div>
