@@ -20,7 +20,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   const [userGuess, setUserGuess] = useState([]);
   const [allUserGuesses, setAllUserGuesses] = useState([]);
   const [userGuessStatus, setUserGuessStatus] = useState([]);
-  const [chancesNum, setChancesNum] = useState(10);
+  const [chancesNum, setChancesNum] = useState(0);
   const [isWin, setIsWin] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
@@ -37,6 +37,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const generateRandNum = () => {
     setIsGameStarted(true);
+    setChancesNum(easyMode ? 5 : 10);
     const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     // We can't update the state variable multiple times in one render
     // So we create a separate variable, then assign it to the state variable
@@ -88,7 +89,6 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
   };
   const toggleLevelYes = () => {
     setIsGameStarted(false);
-    setChancesNum(10);
     setNum([]);
     setInputs({
       input1: "",
@@ -104,9 +104,11 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
     if (easyMode) {
       setEasyMode(false);
       setNormalMode(true);
+      setChancesNum(10);
     } else if (normalMode) {
       setNormalMode(false);
       setEasyMode(true);
+      setChancesNum(5);
     }
     setIsTogglingLevel(false);
   };
@@ -179,7 +181,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
       {/* <div>num: {num}</div> */}
       {isGameStarted &&
         chancesNum > 0 &&
-        new Array(10).fill(null).map((el, i) => (
+        new Array(easyMode ? 5 : 10).fill(null).map((el, i) => (
           <div>
             <p style={{ display: "inline" }}>
               {userGuess
@@ -230,6 +232,8 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
           isWin={isWin}
           userGuess={userGuess}
           setIsWin={setIsWin}
+          easyMode={easyMode}
+          normalMode={normalMode}
         />
       )}
       <UserGuess />
@@ -244,7 +248,7 @@ export default function GuessNumber({ setShowGameTitles, setShowGuessNumber }) {
         <div>
           <div>{`Are you sure you want to switch to ${
             easyMode ? "Normal Mode" : "Easy Mode"
-          }`}</div>
+          }?`}</div>
           <button onClick={() => toggleLevelYes()}>Yes</button>
           <button onClick={() => toggleLevelCancel()}>Cancel</button>
         </div>

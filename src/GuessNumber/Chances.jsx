@@ -10,9 +10,11 @@ export default function chances({
   generateRandNum,
   isWin,
   setIsWin,
+  easyMode,
+  normalMode,
 }) {
   const reset = () => {
-    setChancesNum(10);
+    setChancesNum(easyMode ? 5 : 10);
     setNum([]);
     setInputs({
       input1: "",
@@ -28,12 +30,22 @@ export default function chances({
   };
   return (
     <div>
-      {chancesNum === 10 && !isWin && (
+      {chancesNum === 10 && !isWin && normalMode && (
         <div style={{ color: "blue" }}>
           You have 10 chances to find the number
         </div>
       )}
-      {chancesNum > 1 && chancesNum < 10 && !isWin && (
+      {chancesNum === 5 && !isWin && easyMode && (
+        <div style={{ color: "blue" }}>
+          You have 5 chances to find the number
+        </div>
+      )}
+      {chancesNum > 1 && chancesNum < 10 && !isWin && normalMode && (
+        <div
+          style={{ color: "blue" }}
+        >{`You have ${chancesNum} chances left`}</div>
+      )}
+      {chancesNum > 1 && chancesNum < 5 && !isWin && easyMode && (
         <div
           style={{ color: "blue" }}
         >{`You have ${chancesNum} chances left`}</div>
