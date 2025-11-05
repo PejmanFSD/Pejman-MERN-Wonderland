@@ -1,4 +1,4 @@
-import ConfirmationBox from "./ConfirmationBox";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function Chances({
   chancesNum,

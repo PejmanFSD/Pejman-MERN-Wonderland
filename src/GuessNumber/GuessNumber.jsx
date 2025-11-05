@@ -3,7 +3,7 @@ import Form from "./Form";
 import GameLevel from "./GameLevel";
 import ModeExplaination from "./ModeExplaination";
 import UserGuess from "./UserGuess";
-import ConfirmationBox from "./ConfirmationBox";
+import ConfirmationBox from "../ConfirmationBox";
 import Chances from "./Chances";
 import { getRandArr } from "../utils";
 

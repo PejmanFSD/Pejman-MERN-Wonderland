@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ConfirmationBox from "./ConfirmationBox";
+import ConfirmationBox from "../ConfirmationBox";
 import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
@@ -78,6 +78,7 @@ export default function RockScissorsPaper({
   };
   const toggleResetYes = () => {
     setScore(0);
+    setTripleScore(0);
     setUserChoice("");
     setPejmanChoice("");
     setGameResult("");
@@ -158,7 +159,7 @@ export default function RockScissorsPaper({
       )}
       {isTogglingReset && (
         <ConfirmationBox
-          question="Are you sure you want to reset the game?"
+          question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
           toggleYes={toggleResetYes}
           toggleCancel={toggleResetCancel}
         />
