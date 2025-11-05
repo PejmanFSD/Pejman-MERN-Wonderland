@@ -14,7 +14,8 @@ export default function Form({
   setIsWin,
   allUserGuesses,
   isTogglingLevel,
-  isTogglingReset
+  isTogglingReset,
+  isTogglingHomePage,
 }) {
   const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
   const [isOneDigit, setIsOneDigit] = useState(true);
@@ -198,139 +199,142 @@ export default function Form({
   };
   return (
     <div>
-      {!isWin && !isTogglingLevel && !isTogglingReset && (
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="input1"></label>
-          <input
-            disabled={
-              isFirstDigitZero ||
-              !isOneDigit ||
-              isDigitNegative ||
-              isDigitDecimal ||
-              isDigitRepetitive ||
-              !isInt ||
-              isAlreadyGuessed ||
-              isInputEmpty
-            }
-            type="text"
-            placeholder={
-              isOneDigit &&
-              !isDigitNegative &&
-              !isDigitDecimal &&
-              !isDigitRepetitive &&
-              isInt &&
-              !isAlreadyGuessed &&
-              !isInputEmpty &&
-              "First Digit"
-            }
-            name="input1"
-            id="input1"
-            value={inputs.input1}
-            onChange={handleChange}
-          />
-          <label htmlFor="input2"></label>
-          <input
-            disabled={
-              isFirstDigitZero ||
-              !isOneDigit ||
-              isDigitNegative ||
-              isDigitDecimal ||
-              isDigitRepetitive ||
-              !isInt ||
-              isAlreadyGuessed ||
-              isInputEmpty
-            }
-            type="text"
-            placeholder={
-              !isFirstDigitZero &&
-              isOneDigit &&
-              !isDigitNegative &&
-              !isDigitDecimal &&
-              !isDigitRepetitive &&
-              isInt &&
-              !isAlreadyGuessed &&
-              !isInputEmpty &&
-              "Second Digit"
-            }
-            name="input2"
-            id="input2"
-            value={inputs.input2}
-            onChange={handleChange}
-          />
-          <label htmlFor="input3"></label>
-          <input
-            disabled={
-              isFirstDigitZero ||
-              !isOneDigit ||
-              isDigitNegative ||
-              isDigitDecimal ||
-              isDigitRepetitive ||
-              !isInt ||
-              isAlreadyGuessed ||
-              isInputEmpty
-            }
-            type="text"
-            placeholder={
-              !isFirstDigitZero &&
-              isOneDigit &&
-              !isDigitNegative &&
-              !isDigitDecimal &&
-              !isDigitRepetitive &&
-              isInt &&
-              !isAlreadyGuessed &&
-              !isInputEmpty &&
-              "Third Digit"
-            }
-            name="input3"
-            id="input3"
-            value={inputs.input3}
-            onChange={handleChange}
-          />
-          <label htmlFor="input4"></label>
-          <input
-            disabled={
-              isFirstDigitZero ||
-              !isOneDigit ||
-              isDigitNegative ||
-              isDigitDecimal ||
-              isDigitRepetitive ||
-              !isInt ||
-              isAlreadyGuessed ||
-              isInputEmpty
-            }
-            type="text"
-            placeholder={
-              !isFirstDigitZero &&
-              isOneDigit &&
-              !isDigitNegative &&
-              !isDigitDecimal &&
-              !isDigitRepetitive &&
-              isInt &&
-              !isAlreadyGuessed &&
-              !isInputEmpty &&
-              "Fourth Digit"
-            }
-            name="input4"
-            id="input4"
-            value={inputs.input4}
-            onChange={handleChange}
-          />
-          <button
-            disabled={
-              isFirstDigitZero ||
-              !isOneDigit ||
-              isDigitNegative ||
-              isDigitDecimal ||
-              isDigitRepetitive ||
-              !isInt ||
-              isAlreadyGuessed ||
-              isInputEmpty
-            }
-          >
-            Done
-          </button>
-        </form>
-      )}
+      {!isWin &&
+        !isTogglingLevel &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="input1"></label>
+            <input
+              disabled={
+                isFirstDigitZero ||
+                !isOneDigit ||
+                isDigitNegative ||
+                isDigitDecimal ||
+                isDigitRepetitive ||
+                !isInt ||
+                isAlreadyGuessed ||
+                isInputEmpty
+              }
+              type="text"
+              placeholder={
+                isOneDigit &&
+                !isDigitNegative &&
+                !isDigitDecimal &&
+                !isDigitRepetitive &&
+                isInt &&
+                !isAlreadyGuessed &&
+                !isInputEmpty &&
+                "First Digit"
+              }
+              name="input1"
+              id="input1"
+              value={inputs.input1}
+              onChange={handleChange}
+            />
+            <label htmlFor="input2"></label>
+            <input
+              disabled={
+                isFirstDigitZero ||
+                !isOneDigit ||
+                isDigitNegative ||
+                isDigitDecimal ||
+                isDigitRepetitive ||
+                !isInt ||
+                isAlreadyGuessed ||
+                isInputEmpty
+              }
+              type="text"
+              placeholder={
+                !isFirstDigitZero &&
+                isOneDigit &&
+                !isDigitNegative &&
+                !isDigitDecimal &&
+                !isDigitRepetitive &&
+                isInt &&
+                !isAlreadyGuessed &&
+                !isInputEmpty &&
+                "Second Digit"
+              }
+              name="input2"
+              id="input2"
+              value={inputs.input2}
+              onChange={handleChange}
+            />
+            <label htmlFor="input3"></label>
+            <input
+              disabled={
+                isFirstDigitZero ||
+                !isOneDigit ||
+                isDigitNegative ||
+                isDigitDecimal ||
+                isDigitRepetitive ||
+                !isInt ||
+                isAlreadyGuessed ||
+                isInputEmpty
+              }
+              type="text"
+              placeholder={
+                !isFirstDigitZero &&
+                isOneDigit &&
+                !isDigitNegative &&
+                !isDigitDecimal &&
+                !isDigitRepetitive &&
+                isInt &&
+                !isAlreadyGuessed &&
+                !isInputEmpty &&
+                "Third Digit"
+              }
+              name="input3"
+              id="input3"
+              value={inputs.input3}
+              onChange={handleChange}
+            />
+            <label htmlFor="input4"></label>
+            <input
+              disabled={
+                isFirstDigitZero ||
+                !isOneDigit ||
+                isDigitNegative ||
+                isDigitDecimal ||
+                isDigitRepetitive ||
+                !isInt ||
+                isAlreadyGuessed ||
+                isInputEmpty
+              }
+              type="text"
+              placeholder={
+                !isFirstDigitZero &&
+                isOneDigit &&
+                !isDigitNegative &&
+                !isDigitDecimal &&
+                !isDigitRepetitive &&
+                isInt &&
+                !isAlreadyGuessed &&
+                !isInputEmpty &&
+                "Fourth Digit"
+              }
+              name="input4"
+              id="input4"
+              value={inputs.input4}
+              onChange={handleChange}
+            />
+            <button
+              disabled={
+                isFirstDigitZero ||
+                !isOneDigit ||
+                isDigitNegative ||
+                isDigitDecimal ||
+                isDigitRepetitive ||
+                !isInt ||
+                isAlreadyGuessed ||
+                isInputEmpty
+              }
+            >
+              Done
+            </button>
+          </form>
+        )}
       {isFirstDigitZero && (
         <div>
           <p>The first digit can't be 0!</p>

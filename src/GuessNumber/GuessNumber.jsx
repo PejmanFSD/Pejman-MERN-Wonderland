@@ -3,7 +3,7 @@ import Form from "./Form";
 import GameLevel from "./GameLevel";
 import ModeExplaination from "./ModeExplaination";
 import UserGuess from "./UserGuess";
-import SwitchingAlarm from "./SwitchingAlarm";
+import ConfirmationBox from "./ConfirmationBox";
 import Chances from "./Chances";
 import { getRandArr } from "../utils";
 
@@ -16,6 +16,7 @@ export default function GuessNumber({
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [num, setNum] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [inputs, setInputs] = useState({
@@ -36,11 +37,6 @@ export default function GuessNumber({
   const runNormalMode = () => {
     setNormalMode(true);
     setEasyMode(false);
-  };
-  const backToHomepage = () => {
-    setIsGameStarted(false);
-    setShowGuessNumber(false);
-    setShowGameTitles(true);
   };
   const generateRandNum = () => {
     setIsGameStarted(true);
@@ -109,6 +105,9 @@ export default function GuessNumber({
   const toggleLevel = () => {
     setIsTogglingLevel(true);
   };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
   const toggleLevelYes = () => {
     setIsGameStarted(false);
     setNum([]);
@@ -137,6 +136,14 @@ export default function GuessNumber({
   const toggleResetYes = () => {
     reset();
     setIsTogglingReset(false);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowGuessNumber(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
@@ -206,9 +213,9 @@ export default function GuessNumber({
         )}
       {/* <div>num: {num}</div> */}
       {isGameStarted &&
-        // chancesNum > 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <UserGuess
             userGuess={userGuess}
             userGuessStatus={userGuessStatus}
@@ -235,6 +242,7 @@ export default function GuessNumber({
           setAllUserGuesses={setAllUserGuesses}
           isTogglingLevel={isTogglingLevel}
           isTogglingReset={isTogglingReset}
+          isTogglingHomePage={isTogglingHomePage}
         />
       )}
       {isGameStarted && (
@@ -261,6 +269,7 @@ export default function GuessNumber({
           isTogglingLevel={isTogglingLevel}
           isTogglingReset={isTogglingReset}
           setIsTogglingReset={setIsTogglingReset}
+          isTogglingHomePage={isTogglingHomePage}
         />
       )}
       <br></br>
@@ -268,20 +277,36 @@ export default function GuessNumber({
         (easyMode || normalMode) &&
         !isWin &&
         !isTogglingLevel &&
-        !isTogglingReset && (
+        !isTogglingReset &&
+        !isTogglingHomePage && (
           <button onClick={() => toggleLevel()}>{`Switch to ${
             easyMode ? "Normal Mode" : "Easy Mode"
           }`}</button>
         )}
       {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-        <SwitchingAlarm
-          toggleLevelYes={toggleLevelYes}
-          toggleLevelCancel={toggleLevelCancel}
+        <ConfirmationBox
+          areYouSureQuestion={`Are you sure you want to switch to ${
+            easyMode ? "Normal Mode" : "Easy Mode"
+          }?`}
+          toggleYes={toggleLevelYes}
+          toggleCancel={toggleLevelCancel}
           easyMode={easyMode}
         />
       )}
-      {!isWin && !isTogglingLevel && !isTogglingReset && (
-        <button onClick={() => backToHomepage()}>Back to the home page</button>
+      {!isWin &&
+        !isTogglingLevel &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        )}
+      {isGameStarted && isTogglingHomePage && (
+        <ConfirmationBox
+          areYouSureQuestion="Are you sure you want to go back to Home Page?"
+          toggleYes={toggleHomePageYes}
+          toggleCancel={toggleHomePageCancel}
+        />
       )}
     </div>
   );
