@@ -130,7 +130,7 @@ export default function RockScissorsPaper({
   return (
     <div>
       <h2>Rock - Scissors - Paper</h2>
-      {!normalMode && !extremelySuperDifficultMode && (
+      {!normalMode && !extremelySuperDifficultMode && !isTogglingHomePage && (
         <GameLevel
           runNormalMode={runNormalMode}
           runExtremelySuperDifficultMode={runExtremelySuperDifficultMode}
@@ -142,7 +142,7 @@ export default function RockScissorsPaper({
       ) : (
         extremelySuperDifficultMode &&
         !normalMode && (
-          <ModeExplaination message="Extremely-Super-Difficult Mode: You will never win this mode, if you do, you'll get 1,000,000 stars." />
+          <ModeExplaination message="Extremely-Super-Difficult Mode: If you beat Pejman, you'll get 1,000,000 stars!" />
         )
       )}
 
@@ -206,7 +206,7 @@ export default function RockScissorsPaper({
       {!isTogglingHomePage &&
         !isTogglingReset &&
         showImages &&
-        (normalMode || extremelySuperDifficultMode) && (
+        (normalMode || extremelySuperDifficultMode) && score !== 0 && (
           <button onClick={() => toggleReset()}>Reset</button>
         )}
       {isTogglingReset && (

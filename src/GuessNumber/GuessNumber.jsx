@@ -179,7 +179,7 @@ export default function GuessNumber({
   return (
     <div>
       <h2>Guess Number</h2>
-      {!easyMode && !normalMode && (
+      {!easyMode && !normalMode && !isTogglingHomePage && (
         <GameLevel runEasyMode={runEasyMode} runNormalMode={runNormalMode} />
       )}
       {easyMode && !normalMode ? (
@@ -193,7 +193,7 @@ export default function GuessNumber({
           <ModeExplaination message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances." />
         )
       )}
-      {!isGameStarted && (easyMode || normalMode) && (
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingHomePage && (
         <button onClick={() => generateRandNum()}>Start the Game</button>
       )}
       {isGameStarted &&
