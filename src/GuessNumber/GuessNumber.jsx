@@ -301,13 +301,14 @@ export default function GuessNumber({
             Back to the home page
           </button>
         )}
-      {isGameStarted && isTogglingHomePage && (
-        <ConfirmationBox
-          question="Are you sure you want to go back to Home Page?"
-          toggleYes={toggleHomePageYes}
-          toggleCancel={toggleHomePageCancel}
-        />
-      )}
+      {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+        isTogglingHomePage && (
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        )}
     </div>
   );
 }
