@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
+import GameLevel from "./GameLevel";
+import ModeExplaination from "./ModeExplaination";
 import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
@@ -20,7 +22,18 @@ export default function RockScissorsPaper({
   const [showImages, setShowImages] = useState(true);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
+  const [extremelySuperDifficultMode, setExtremelySuperDifficultMode] =
+    useState(false);
 
+  const runNormalMode = () => {
+    setNormalMode(true);
+    setExtremelySuperDifficultMode(false);
+  };
+  const runExtremelySuperDifficultMode = () => {
+    setExtremelySuperDifficultMode(true);
+    setNormalMode(false);
+  };
   const announcingTheWinner = (user, pejman) => {
     if (user === "" || pejman === "") return;
     else if (user === pejman) {
@@ -48,7 +61,17 @@ export default function RockScissorsPaper({
   };
   const handleUserChoice = (input) => {
     setUserChoice(input);
-    setPejmanChoice(optionsArray[getRandNum(1) - 1]);
+    if (normalMode) {
+      setPejmanChoice(optionsArray[getRandNum(3) - 1]);
+    } else if (extremelySuperDifficultMode) {
+      if (input === "Rock") {
+        setPejmanChoice("Paper");
+      } else if (input === "Paper") {
+        setPejmanChoice("Scissors");
+      } else if (input === "Scissors") {
+        setPejmanChoice("Rock");
+      }
+    }
     setShowImages(false);
   };
   const handleTotalPoint = () => {
@@ -107,29 +130,51 @@ export default function RockScissorsPaper({
   return (
     <div>
       <h2>Rock - Scissors - Paper</h2>
-      {!isTogglingHomePage && !isTogglingReset && showImages && (
-        <div>
-          <img
-            src={Rock}
-            width="150px"
-            alt="Rock"
-            onClick={() => handleUserChoice("Rock")}
-          />
-          <img
-            src={Scissors}
-            width="150px"
-            alt="Scissors"
-            onClick={() => handleUserChoice("Scissors")}
-          />
-          <img
-            src={Paper}
-            width="150px"
-            alt="Paper"
-            onClick={() => handleUserChoice("Paper")}
-          />
-        </div>
+      {!normalMode && !extremelySuperDifficultMode && (
+        <GameLevel
+          runNormalMode={runNormalMode}
+          runExtremelySuperDifficultMode={runExtremelySuperDifficultMode}
+        />
       )}
-      {tripleScore === 3 && !isTogglingHomePage && !isTogglingReset ? (
+
+      {normalMode && !extremelySuperDifficultMode ? (
+        <ModeExplaination message="Normal Mode: If you win Pejman 3 times in a row, you'll get one star." />
+      ) : (
+        extremelySuperDifficultMode &&
+        !normalMode && (
+          <ModeExplaination message="Extremely-Super-Difficult Mode: You will never win this mode, if you do, you'll get 1,000,000 stars." />
+        )
+      )}
+
+      {!isTogglingHomePage &&
+        !isTogglingReset &&
+        showImages &&
+        (normalMode || extremelySuperDifficultMode) && (
+          <div>
+            <img
+              src={Rock}
+              width="150px"
+              alt="Rock"
+              onClick={() => handleUserChoice("Rock")}
+            />
+            <img
+              src={Scissors}
+              width="150px"
+              alt="Scissors"
+              onClick={() => handleUserChoice("Scissors")}
+            />
+            <img
+              src={Paper}
+              width="150px"
+              alt="Paper"
+              onClick={() => handleUserChoice("Paper")}
+            />
+          </div>
+        )}
+      {tripleScore === 3 &&
+      !isTogglingHomePage &&
+      !isTogglingReset &&
+      (normalMode || extremelySuperDifficultMode) ? (
         <div>
           <h3>Excellent! You just beat Pejman three times in a row</h3>
           <h3>Your total point increases by one</h3>
@@ -137,7 +182,8 @@ export default function RockScissorsPaper({
         </div>
       ) : (
         !isTogglingHomePage &&
-        !isTogglingReset && (
+        !isTogglingReset &&
+        (normalMode || extremelySuperDifficultMode) && (
           <div>
             <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
             <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
@@ -147,16 +193,22 @@ export default function RockScissorsPaper({
           </div>
         )
       )}
-      {!showImages && !isTogglingHomePage && tripleScore !== 3 && (
-        <ConfirmationBox
-          question="Play again?"
-          toggleYes={togglePlayAgainYes}
-          toggleCancel={togglePlayAgainCancel}
-        />
-      )}
-      {!isTogglingHomePage && !isTogglingReset && showImages && (
-        <button onClick={() => toggleReset()}>Reset</button>
-      )}
+      {!showImages &&
+        !isTogglingHomePage &&
+        tripleScore !== 3 &&
+        (normalMode || extremelySuperDifficultMode) && (
+          <ConfirmationBox
+            question="Play again?"
+            toggleYes={togglePlayAgainYes}
+            toggleCancel={togglePlayAgainCancel}
+          />
+        )}
+      {!isTogglingHomePage &&
+        !isTogglingReset &&
+        showImages &&
+        (normalMode || extremelySuperDifficultMode) && (
+          <button onClick={() => toggleReset()}>Reset</button>
+        )}
       {isTogglingReset && (
         <ConfirmationBox
           question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
