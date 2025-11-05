@@ -17,6 +17,7 @@ export default function RockScissorsPaper({
   const [gameResult, setGameResult] = useState("");
   const [score, setScore] = useState(0);
   const [tripleScore, setTripleScore] = useState(0);
+  const [showImages, setShowImages] = useState(true);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
@@ -48,18 +49,13 @@ export default function RockScissorsPaper({
   const handleUserChoice = (input) => {
     setUserChoice(input);
     setPejmanChoice(optionsArray[getRandNum(1) - 1]);
+    setShowImages(false);
   };
   const handleTotalPoint = () => {
     if (tripleScore === 3) {
       setTripleScore(0);
     }
   };
-  // const reset = () => {
-  //   setScore(0);
-  //   setUserChoice("");
-  //   setPejmanChoice("");
-  //   setGameResult("");
-  // };
   const handleOk = () => {
     updateTotalPoint(1);
     setTripleScore(0);
@@ -69,6 +65,13 @@ export default function RockScissorsPaper({
   };
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setShowRockScissorsPaper(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -83,12 +86,15 @@ export default function RockScissorsPaper({
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
-  const toggleHomePageYes = () => {
-    setShowRockScissorsPaper(false);
-    setShowGameTitles(true);
+
+  const togglePlayAgainYes = () => {
+    setUserChoice("");
+    setPejmanChoice("");
+    setGameResult("");
+    setShowImages(true);
   };
-  const toggleHomePageCancel = () => {
-    setIsTogglingHomePage(false);
+  const togglePlayAgainCancel = () => {
+    setIsTogglingHomePage(true);
   };
   useEffect(
     function () {
@@ -100,7 +106,7 @@ export default function RockScissorsPaper({
   return (
     <div>
       <h2>Rock - Scissors - Paper</h2>
-      {!isTogglingHomePage && !isTogglingReset && (
+      {!isTogglingHomePage && !isTogglingReset && showImages && (
         <div>
           <img
             src={Rock}
@@ -137,26 +143,32 @@ export default function RockScissorsPaper({
             <h2>{gameResult}</h2>
             <h2>Your score: {score}</h2>
             <h3>Your Total Point: {totalPoint}</h3>
-            {/* {gameResult && <button onClick={() => reset()}>Reset</button>} */}
           </div>
         )
       )}
-      {!isTogglingHomePage && !isTogglingReset && (
+      {!showImages && !isTogglingHomePage && tripleScore !== 3 && (
+        <ConfirmationBox
+          question="Play again?"
+          toggleYes={togglePlayAgainYes}
+          toggleCancel={togglePlayAgainCancel}
+        />
+      )}
+      {!isTogglingHomePage && !isTogglingReset && showImages && (
         <button onClick={() => toggleReset()}>Reset</button>
       )}
       {isTogglingReset && (
         <ConfirmationBox
-          areYouSureQuestion="Are you sure you want to reset the game?"
+          question="Are you sure you want to reset the game?"
           toggleYes={toggleResetYes}
           toggleCancel={toggleResetCancel}
         />
       )}
-      {!isTogglingHomePage && !isTogglingReset && (
+      {!isTogglingHomePage && !isTogglingReset && showImages && (
         <button onClick={() => toggleHomePage()}>Back to the home page</button>
       )}
       {isTogglingHomePage && (
         <ConfirmationBox
-          areYouSureQuestion="Are you sure you want to go back to Home Page?"
+          question="Are you sure you want to go back to Home Page?"
           toggleYes={toggleHomePageYes}
           toggleCancel={toggleHomePageCancel}
         />

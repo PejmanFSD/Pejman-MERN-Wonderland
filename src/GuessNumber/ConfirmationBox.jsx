@@ -1,11 +1,11 @@
 export default function ConfirmationBox({
-  areYouSureQuestion,
+  question,
   toggleYes,
   toggleCancel,
 }) {
   return (
     <div>
-      <div>{areYouSureQuestion}</div>
+      <div>{question}</div>
       <button onClick={() => toggleYes()}>Yes</button>
       <button onClick={() => toggleCancel()}>Cancel</button>
     </div>

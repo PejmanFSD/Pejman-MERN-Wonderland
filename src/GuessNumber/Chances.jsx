@@ -119,7 +119,7 @@ export default function Chances({
         )}
       {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
         <ConfirmationBox
-          areYouSureQuestion="Are you sure you want to reset the game?"
+          question="Are you sure you want to reset the game?"
           toggleYes={toggleResetYes}
           toggleCancel={toggleResetCancel}
         />

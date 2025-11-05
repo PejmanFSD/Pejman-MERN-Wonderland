@@ -285,7 +285,7 @@ export default function GuessNumber({
         )}
       {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
         <ConfirmationBox
-          areYouSureQuestion={`Are you sure you want to switch to ${
+          question={`Are you sure you want to switch to ${
             easyMode ? "Normal Mode" : "Easy Mode"
           }?`}
           toggleYes={toggleLevelYes}
@@ -303,7 +303,7 @@ export default function GuessNumber({
         )}
       {isGameStarted && isTogglingHomePage && (
         <ConfirmationBox
-          areYouSureQuestion="Are you sure you want to go back to Home Page?"
+          question="Are you sure you want to go back to Home Page?"
           toggleYes={toggleHomePageYes}
           toggleCancel={toggleHomePageCancel}
         />
