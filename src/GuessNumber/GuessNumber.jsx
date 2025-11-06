@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
-import GameLevel from "./GameLevel";
-import ModeExplaination from "./ModeExplaination";
+import GameLevel from "../GameLevel";
+import ModeExplaination from "../ModeExplaination";
 import UserGuess from "./UserGuess";
 import ConfirmationBox from "../ConfirmationBox";
 import Chances from "./Chances";
@@ -180,7 +180,14 @@ export default function GuessNumber({
     <div>
       <h2>Guess Number</h2>
       {!easyMode && !normalMode && !isTogglingHomePage && (
-        <GameLevel runEasyMode={runEasyMode} runNormalMode={runNormalMode} />
+        <GameLevel
+          mode1="Easy"
+          mode1Function={runEasyMode}
+          mode2="Normal"
+          mode2Function={runNormalMode}
+          runEasyMode={runEasyMode}
+          runNormalMode={runNormalMode}
+        />
       )}
       {easyMode && !normalMode ? (
         <ModeExplaination

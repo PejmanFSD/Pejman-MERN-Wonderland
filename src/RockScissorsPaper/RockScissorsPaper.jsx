@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
-import GameLevel from "./GameLevel";
-import ModeExplaination from "./ModeExplaination";
+import GameLevel from "../GameLevel";
+import ModeExplaination from "../ModeExplaination";
 import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
@@ -129,7 +129,6 @@ export default function RockScissorsPaper({
     setScore(0);
     setTripleScore(0);
     setGameResult("");
-
     if (normalMode) {
       setNormalMode(false);
       setExtremelySuperDifficultMode(true);
@@ -154,11 +153,12 @@ export default function RockScissorsPaper({
       <h2>Rock - Scissors - Paper</h2>
       {!normalMode && !extremelySuperDifficultMode && !isTogglingHomePage && (
         <GameLevel
-          runNormalMode={runNormalMode}
-          runExtremelySuperDifficultMode={runExtremelySuperDifficultMode}
+          mode1="Normal"
+          mode1Function={runNormalMode}
+          mode2="Extremely Super Difficult"
+          mode2Function={runExtremelySuperDifficultMode}
         />
       )}
-
       {normalMode && !extremelySuperDifficultMode ? (
         <ModeExplaination message="Normal Mode: If you win Pejman 3 times in a row, you'll get one star." />
       ) : (
