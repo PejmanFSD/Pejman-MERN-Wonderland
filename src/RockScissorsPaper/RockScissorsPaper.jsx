@@ -25,6 +25,7 @@ export default function RockScissorsPaper({
   const [normalMode, setNormalMode] = useState(false);
   const [extremelySuperDifficultMode, setExtremelySuperDifficultMode] =
     useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
   const runNormalMode = () => {
     setNormalMode(true);
@@ -62,7 +63,7 @@ export default function RockScissorsPaper({
   const handleUserChoice = (input) => {
     setUserChoice(input);
     if (normalMode) {
-      setPejmanChoice(optionsArray[getRandNum(3) - 1]);
+      setPejmanChoice(optionsArray[getRandNum(1) - 1]);
     } else if (extremelySuperDifficultMode) {
       if (input === "Rock") {
         setPejmanChoice("Paper");
@@ -110,7 +111,6 @@ export default function RockScissorsPaper({
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
-
   const togglePlayAgainYes = () => {
     setUserChoice("");
     setPejmanChoice("");
@@ -119,6 +119,28 @@ export default function RockScissorsPaper({
   };
   const togglePlayAgainCancel = () => {
     setIsTogglingHomePage(true);
+  };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    setUserChoice("");
+    setPejmanChoice("");
+    setScore(0);
+    setTripleScore(0);
+    setGameResult("");
+
+    if (normalMode) {
+      setNormalMode(false);
+      setExtremelySuperDifficultMode(true);
+    } else if (extremelySuperDifficultMode) {
+      setExtremelySuperDifficultMode(false);
+      setNormalMode(true);
+    }
+    setIsTogglingLevel(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
   };
   useEffect(
     function () {
@@ -145,9 +167,9 @@ export default function RockScissorsPaper({
           <ModeExplaination message="Extremely-Super-Difficult Mode: If you beat Pejman, you'll get 1,000,000 stars!" />
         )
       )}
-
       {!isTogglingHomePage &&
         !isTogglingReset &&
+        !isTogglingLevel &&
         showImages &&
         (normalMode || extremelySuperDifficultMode) && (
           <div>
@@ -174,6 +196,7 @@ export default function RockScissorsPaper({
       {tripleScore === 3 &&
       !isTogglingHomePage &&
       !isTogglingReset &&
+      !isTogglingLevel &&
       (normalMode || extremelySuperDifficultMode) ? (
         <div>
           <h3>Excellent! You just beat Pejman three times in a row</h3>
@@ -183,6 +206,7 @@ export default function RockScissorsPaper({
       ) : (
         !isTogglingHomePage &&
         !isTogglingReset &&
+        !isTogglingLevel &&
         (normalMode || extremelySuperDifficultMode) && (
           <div>
             <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
@@ -206,9 +230,9 @@ export default function RockScissorsPaper({
       {!isTogglingHomePage &&
         !isTogglingReset &&
         showImages &&
-        (normalMode || extremelySuperDifficultMode) && score !== 0 && (
-          <button onClick={() => toggleReset()}>Reset</button>
-        )}
+        (normalMode || extremelySuperDifficultMode) &&
+        !isTogglingLevel &&
+        score !== 0 && <button onClick={() => toggleReset()}>Reset</button>}
       {isTogglingReset && (
         <ConfirmationBox
           question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
@@ -216,9 +240,36 @@ export default function RockScissorsPaper({
           toggleCancel={toggleResetCancel}
         />
       )}
-      {!isTogglingHomePage && !isTogglingReset && showImages && (
-        <button onClick={() => toggleHomePage()}>Back to the home page</button>
+      {!isTogglingLevel &&
+        (normalMode || extremelySuperDifficultMode) &&
+        !isTogglingHomePage &&
+        showImages &&
+        !isTogglingReset && (
+          <button onClick={() => toggleLevel()}>{`Switch to ${
+            extremelySuperDifficultMode
+              ? "Normal Mode"
+              : "extremely-Super-Difficult Mode"
+          }`}</button>
+        )}
+      {isTogglingLevel && (
+        <ConfirmationBox
+          question={`Are you sure you want to switch to ${
+            extremelySuperDifficultMode
+              ? "Normal Mode"
+              : "extremely-Super-Difficult Mode"
+          }?`}
+          toggleYes={toggleLevelYes}
+          toggleCancel={toggleLevelCancel}
+        />
       )}
+      {!isTogglingHomePage &&
+        !isTogglingReset &&
+        showImages &&
+        !isTogglingLevel && (
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        )}
       {isTogglingHomePage && (
         <ConfirmationBox
           question="Are you sure you want to go back to Home Page?"
