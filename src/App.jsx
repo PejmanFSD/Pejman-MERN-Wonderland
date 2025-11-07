@@ -3,6 +3,7 @@ import { useState } from "react";
 import Star from "./Star.png";
 import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./GuessNumber/GuessNumber";
+import Capitals from "./Capitals/Capitals";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -33,6 +34,7 @@ function App() {
           ? "You don't have any stars yet, play the interesting games and win some!"
           : `You have ${totalPoint} star${totalPoint > 1 ? "s" : ""}`}
       </div>
+      <Capitals />
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
