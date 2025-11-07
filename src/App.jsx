@@ -10,6 +10,7 @@ function App() {
   const [totalPoint, setTotalPoint] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
   const [showGuessNumber, setShowGuessNumber] = useState(false);
+  const [showCapitals, setShowCapitals] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -20,6 +21,10 @@ function App() {
   const toggleGuessNumber = () => {
     setShowGameTitles(false);
     setShowGuessNumber(true);
+  };
+  const toggleCapitals = () => {
+    setShowGameTitles(false);
+    setShowCapitals(true);
   };
   return (
     <div className="App">
@@ -34,7 +39,6 @@ function App() {
           ? "You don't have any stars yet, play the interesting games and win some!"
           : `You have ${totalPoint} star${totalPoint > 1 ? "s" : ""}`}
       </div>
-      <Capitals />
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
@@ -61,6 +65,21 @@ function App() {
         showGameTitles &&
         !showGuessNumber && (
           <button onClick={() => toggleGuessNumber()}>Guess Number</button>
+        )
+      )}
+      {!showGameTitles && showCapitals ? (
+        <Capitals
+          setShowGameTitles={setShowGameTitles}
+          setShowCapitals={setShowCapitals}
+          totalPoint={totalPoint}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showCapitals && (
+          <button onClick={() => toggleCapitals()}>
+            Capitals
+          </button>
         )
       )}
     </div>
