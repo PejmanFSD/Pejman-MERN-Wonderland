@@ -8,7 +8,8 @@ export default function Capitals() {
   const [questionCapitals, setQuestionCapitals] = useState(capitalNames);
   //   const [answerCountries, setAnswerCountries] = useState([]);
   //   const [answerCapitals, setAnswerCapitals] = useState([]);
-  const [showQuestion, setShowQuestion] = useState(false);
+  const [showCountries, setShowCountries] = useState(false);
+  const [showCapitals, setShowCapitals] = useState(false);
   const shuffleArray = (array) => {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -18,45 +19,60 @@ export default function Capitals() {
     return arr;
   };
   const handleStart = () => {
-    setPack((prev) => shuffleArray(prev));
+    setPack((currPack) => shuffleArray(currPack));
     setQuestionCountries(pack.map((c) => c.country).slice(1, 31));
     // setAnswerCountries(questionCountries);
     setQuestionCapitals(pack.map((c) => c.capital).slice(1, 31));
-    setShowQuestion(true);
+    setShowCountries(true);
+  };
+  const handleShowCapitals = () => {
+    setQuestionCapitals((currQuestionCapitals) =>
+      shuffleArray(currQuestionCapitals)
+    );
+    setShowCapitals(true);
   };
   useEffect(function () {
-    setPack((prev) => shuffleArray(prev));
+    setPack((currPack) => shuffleArray(currPack));
   }, []);
   return (
     <div>
       <button onClick={() => handleStart()}>Start</button>
-      {showQuestion && (
+      {showCountries && (
         <div>
-          <div>
-            <h3>Question Countries</h3>
-            {questionCountries.map((qc, i) => (
-              <div>
-                {i + 1} - {qc}
-              </div>
+          <h3>Question Countries</h3>
+          {questionCountries.map((qc, i) => (
+            <div>
+              {i + 1} - {qc}
+            </div>
+          ))}
+        </div>
+      )}
+      {!showCapitals && showCountries && (
+        <div>
+          <h4>
+            30 countries are chosen for you, guess their capitals correctly and
+            win the game
+          </h4>
+          <button onClick={() => handleShowCapitals()}>Ok</button>
+        </div>
+      )}
+      {showCapitals && (
+        <div>
+          <h3>Question Capitals</h3>
+          {questionCapitals.map((qc, i) => (
+            <div>
+              {i + 1} - {qc}
+            </div>
+          ))}
+        </div>
+      )}
+      {showCapitals && (
+        <div>
+          <form>
+            {questionCountries.map((el) => (
+              <input type="number" placeholder={`Capital of ${el}`} />
             ))}
-          </div>
-
-          <div>
-            <h3>Question Capitals</h3>
-            {questionCapitals.map((qc, i) => (
-              <div>
-                {i + 1} - {qc}
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <form>
-              {questionCountries.map((el) => (
-                <input type="number" placeholder={`Capital of ${el}`} />
-              ))}
-            </form>
-          </div>
+          </form>
         </div>
       )}
     </div>
