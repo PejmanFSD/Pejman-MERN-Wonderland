@@ -6,10 +6,19 @@ export default function Capitals() {
   const [pack, setPack] = useState(countries);
   const [questionCountries, setQuestionCountries] = useState(countryNames);
   const [questionCapitals, setQuestionCapitals] = useState(capitalNames);
-  //   const [answerCountries, setAnswerCountries] = useState([]);
-  //   const [answerCapitals, setAnswerCapitals] = useState([]);
+  const [inputs, setInputs] = useState([]);
   const [showCountries, setShowCountries] = useState(false);
   const [showCapitals, setShowCapitals] = useState(false);
+  const handleChange = (e) => {
+    if (e.target.value.length === 0) {
+      return;
+    }
+    const { name, value } = e.target;
+    setInputs((currInputs) => {
+      currInputs[name] = value;
+      return [...currInputs, value];
+    });
+  };
   const shuffleArray = (array) => {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -21,7 +30,6 @@ export default function Capitals() {
   const handleStart = () => {
     setPack((currPack) => shuffleArray(currPack));
     setQuestionCountries(pack.map((c) => c.country).slice(1, 31));
-    // setAnswerCountries(questionCountries);
     setQuestionCapitals(pack.map((c) => c.capital).slice(1, 31));
     setShowCountries(true);
   };
@@ -37,6 +45,10 @@ export default function Capitals() {
   return (
     <div>
       <button onClick={() => handleStart()}>Start</button>
+      <h3>inputs:</h3>
+      {inputs.map((i) => (
+        <div>{i}</div>
+      ))}
       {showCountries && (
         <div>
           <h3>Question Countries</h3>
@@ -70,7 +82,16 @@ export default function Capitals() {
         <div>
           <form>
             {questionCountries.map((el) => (
-              <input type="number" placeholder={`Capital of ${el}`} />
+              <div>
+                <label htmlFor={`${el}`}></label>
+                <input
+                  type="number"
+                  placeholder={`Capital of ${el}`}
+                  name={`${el}`}
+                  id={`${el}`}
+                  onChange={handleChange}
+                />
+              </div>
             ))}
           </form>
         </div>
