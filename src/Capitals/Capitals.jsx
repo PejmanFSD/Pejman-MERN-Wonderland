@@ -6,6 +6,8 @@ export default function Capitals() {
   const [pack, setPack] = useState(countries);
   const [questionCountries, setQuestionCountries] = useState(countryNames);
   const [questionCapitals, setQuestionCapitals] = useState(capitalNames);
+  //   const [answerCountries, setAnswerCountries] = useState([]);
+  //   const [answerCapitals, setAnswerCapitals] = useState([]);
   const [showQuestion, setShowQuestion] = useState(false);
   const shuffleArray = (array) => {
     const arr = [...array];
@@ -18,6 +20,7 @@ export default function Capitals() {
   const handleStart = () => {
     setPack((prev) => shuffleArray(prev));
     setQuestionCountries(pack.map((c) => c.country).slice(1, 31));
+    // setAnswerCountries(questionCountries);
     setQuestionCapitals(pack.map((c) => c.capital).slice(1, 31));
     setShowQuestion(true);
   };
@@ -30,24 +33,29 @@ export default function Capitals() {
       {showQuestion && (
         <div>
           <div>
-            <h3>Countries</h3>
-            <div>
-              {questionCountries.map((qc, i) => (
-                <div>
-                  {i + 1} - {qc}
-                </div>
-              ))}
-            </div>
+            <h3>Question Countries</h3>
+            {questionCountries.map((qc, i) => (
+              <div>
+                {i + 1} - {qc}
+              </div>
+            ))}
           </div>
+
           <div>
-            <h3>Capitals</h3>
-            <div>
-              {questionCapitals.map((qc, i) => (
-                <div>
-                  {i + 1} - {qc}
-                </div>
+            <h3>Question Capitals</h3>
+            {questionCapitals.map((qc, i) => (
+              <div>
+                {i + 1} - {qc}
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <form>
+              {questionCountries.map((el) => (
+                <input type="number" placeholder={`Capital of ${el}`} />
               ))}
-            </div>
+            </form>
           </div>
         </div>
       )}
