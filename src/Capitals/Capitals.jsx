@@ -47,6 +47,26 @@ export default function Capitals() {
   };
   const handleReset = () => {
     setIsGameStarted(false);
+    setIsWin("");
+    setPack(countries);
+    setQuestionCountries(countryNames);
+    setQuestionCapitals(capitalNames);
+    setAnswer([]);
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+      input5: "",
+      // input6: "",
+      // input7: "",
+      // input8: "",
+      // input9: "",
+      // input10: "",
+    });
+    setShowCountries(false);
+    setShowCapitals(false);
+    setPack((currPack) => shuffleArray(currPack));
   };
   const shuffleArray = (array) => {
     const arr = [...array];
