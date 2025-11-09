@@ -21,6 +21,10 @@ export default function Capitals() {
   });
   const [showCountries, setShowCountries] = useState(false);
   const [showCapitals, setShowCapitals] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitted!");
+  }
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
@@ -58,11 +62,11 @@ export default function Capitals() {
     <div>
       <button onClick={() => handleStart()}>Start</button>
       <h3>inputs:</h3>
-      {Object.values(inputs).map((value) => (
+      {/* {Object.values(inputs).map((value) => (
         <p key={value} style={{ display: "inline" }}>
           {value}
         </p>
-      ))}
+      ))} */}
       {showCountries && (
         <div>
           <h3>Question Countries</h3>
@@ -94,7 +98,7 @@ export default function Capitals() {
       )}
       {showCapitals && (
         <div>
-          <form>
+          <form onSubmit={handleSubmit}>
             {questionCountries.map((el, i) => (
               <div>
                 <label htmlFor={`input${i + 1}`}></label>
@@ -109,6 +113,7 @@ export default function Capitals() {
                 />
               </div>
             ))}
+            <button>Done</button>
           </form>
         </div>
       )}
