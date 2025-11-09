@@ -9,6 +9,7 @@ export default function Capitals() {
   const [questionCountries, setQuestionCountries] = useState(countryNames);
   const [questionCapitals, setQuestionCapitals] = useState(capitalNames);
   const [answer, setAnswer] = useState([]);
+  const [userGuess, setUserGuess] = useState([]);
   const [inputs, setInputs] = useState({
     input1: "",
     input2: "",
@@ -25,8 +26,10 @@ export default function Capitals() {
   const [showCapitals, setShowCapitals] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted!");
-  }
+    Object.values(inputs).map((i) =>
+      setUserGuess((currUserGuess) => [...currUserGuess, i])
+    );
+  };
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
       return;
@@ -39,7 +42,7 @@ export default function Capitals() {
   };
   const handleReset = () => {
     setIsGameStarted(false);
-  }
+  };
   const shuffleArray = (array) => {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -59,11 +62,9 @@ export default function Capitals() {
     setQuestionCapitals((currQuestionCapitals) =>
       shuffleArray(currQuestionCapitals)
     );
-    questionCapitals.map((el) => (
-      setAnswer((currAnswer) =>
-      [...currAnswer, el]
-      )
-    ));
+    questionCapitals.map((el) =>
+      setAnswer((currAnswer) => [...currAnswer, el])
+    );
     setShowCapitals(true);
   };
   useEffect(function () {
@@ -74,18 +75,17 @@ export default function Capitals() {
       {!isGameStarted && <button onClick={() => handleStart()}>Start</button>}
       <h3>Answer:</h3>
       {answer.map((el) => (
-        <div>
-          {el}
-        </div>
+        <div>{el}</div>
       ))}
-
+      <h3>User's Guess:</h3>
+      {userGuess.map((g) => (
+        <div>{g}</div>
+      ))}
       {isGameStarted && showCountries && (
         <div>
           <h3>Countries</h3>
           {questionCountries.map((qc) => (
-            <div>
-              {qc}
-            </div>
+            <div>{qc}</div>
           ))}
         </div>
       )}
