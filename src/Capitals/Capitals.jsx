@@ -5,30 +5,38 @@ const capitalNames = countries.map((c) => c.capital);
 
 export default function Capitals() {
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isWin, setIsWin] = useState("");
   const [pack, setPack] = useState(countries);
   const [questionCountries, setQuestionCountries] = useState(countryNames);
   const [questionCapitals, setQuestionCapitals] = useState(capitalNames);
   const [answer, setAnswer] = useState([]);
-  const [userGuess, setUserGuess] = useState([]);
   const [inputs, setInputs] = useState({
     input1: "",
     input2: "",
     input3: "",
     input4: "",
     input5: "",
-    input6: "",
-    input7: "",
-    input8: "",
-    input9: "",
-    input10: "",
+    // input6: "",
+    // input7: "",
+    // input8: "",
+    // input9: "",
+    // input10: "",
   });
   const [showCountries, setShowCountries] = useState(false);
   const [showCapitals, setShowCapitals] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    Object.values(inputs).map((i) =>
-      setUserGuess((currUserGuess) => [...currUserGuess, i])
-    );
+    let misMatch = 0;
+    for (let i = 0; i < 5; i++) {
+      if (Object.values(inputs)[i] !== answer[i]) {
+        misMatch += 1;
+      }
+    }
+    if (misMatch === 0) {
+      setIsWin(true);
+    } else {
+      setIsWin(false);
+    }
   };
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -54,8 +62,8 @@ export default function Capitals() {
   const handleStart = () => {
     setIsGameStarted(true);
     setPack((currPack) => shuffleArray(currPack));
-    setQuestionCountries(pack.map((c) => c.country).slice(1, 11));
-    setQuestionCapitals(pack.map((c) => c.capital).slice(1, 11));
+    setQuestionCountries(pack.map((c) => c.country).slice(1, 6));
+    setQuestionCapitals(pack.map((c) => c.capital).slice(1, 6));
     setShowCountries(true);
   };
   const handleShowCapitals = () => {
@@ -72,14 +80,12 @@ export default function Capitals() {
   }, []);
   return (
     <div>
+      {isWin === true && <h1>You Win</h1>}
+      {isWin === false && <h1>You Loose</h1>}
       {!isGameStarted && <button onClick={() => handleStart()}>Start</button>}
       <h3>Answer:</h3>
       {answer.map((el) => (
         <div>{el}</div>
-      ))}
-      <h3>User's Guess:</h3>
-      {userGuess.map((g) => (
-        <div>{g}</div>
       ))}
       {isGameStarted && showCountries && (
         <div>
@@ -92,7 +98,7 @@ export default function Capitals() {
       {isGameStarted && !showCapitals && showCountries && (
         <div>
           <h4>
-            10 countries are chosen for you, guess their capitals correctly and
+            5 countries are chosen for you, guess their capitals correctly and
             win the game
           </h4>
           <button onClick={() => handleShowCapitals()}>Ok</button>
