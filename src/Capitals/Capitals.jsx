@@ -95,106 +95,20 @@ export default function Capitals() {
       {showCapitals && (
         <div>
           <form>
-            <label htmlFor="input1"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[0]}`}
-              name="input1"
-              id="input1"
-              value={inputs.input1}
-              onChange={handleChange}
-            />
-            <label htmlFor="input2"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[1]}`}
-              name="input2"
-              id="input2"
-              value={inputs.input2}
-              onChange={handleChange}
-            />
-            <label htmlFor="input3"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[2]}`}
-              name="input3"
-              id="input3"
-              value={inputs.input3}
-              onChange={handleChange}
-            />
-            <label htmlFor="input4"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[3]}`}
-              name="input4"
-              id="input4"
-              value={inputs.input4}
-              onChange={handleChange}
-            />
-            <label htmlFor="input5"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[4]}`}
-              name="input5"
-              id="input5"
-              value={inputs.input5}
-              onChange={handleChange}
-            />
-            <label htmlFor="input6"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[5]}`}
-              name="input6"
-              id="input6"
-              value={inputs.input6}
-              onChange={handleChange}
-            />
-            <label htmlFor="input7"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[6]}`}
-              name="input7"
-              id="input7"
-              value={inputs.input7}
-              onChange={handleChange}
-            />
-            <label htmlFor="input8"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[7]}`}
-              name="input8"
-              id="input8"
-              value={inputs.input8}
-              onChange={handleChange}
-            />
-            <label htmlFor="input9"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[8]}`}
-              name="input9"
-              id="input9"
-              value={inputs.input9}
-              onChange={handleChange}
-            />
-            <label htmlFor="input10"></label>
-            <input
-              style={{ display: "block" }}
-              type="text"
-              placeholder={`Capital of ${questionCountries[9]}`}
-              name="input10"
-              id="input10"
-              value={inputs.input10}
-              onChange={handleChange}
-            />
+            {questionCountries.map((el, i) => (
+              <div>
+                <label htmlFor={`input${i + 1}`}></label>
+                <input
+                  style={{ display: "block" }}
+                  type="text"
+                  placeholder={`Capital of ${questionCountries[i]}`}
+                  name={`input${i + 1}`}
+                  id={`input${i + 1}`}
+                  value={Object.values(inputs)[i]}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
           </form>
         </div>
       )}
