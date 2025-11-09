@@ -39,9 +39,6 @@ export default function Capitals() {
     }
   };
   const handleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
     const { name, value } = e.target;
     setInputs((currInputs) => {
       currInputs[name] = value;
@@ -120,15 +117,18 @@ export default function Capitals() {
             {questionCountries.map((el, i) => (
               <div>
                 <label htmlFor={`input${i + 1}`}></label>
-                <input
-                  style={{ display: "block" }}
-                  type="text"
-                  placeholder={`Capital of ${questionCountries[i]}`}
+                <select
+                  onChange={handleChange}
                   name={`input${i + 1}`}
                   id={`input${i + 1}`}
-                  value={Object.values(inputs)[i]}
-                  onChange={handleChange}
-                />
+                >
+                  <option value={Object.values(inputs)[i]} disabled selected>
+                    {`Select the Capital of ${questionCountries[i]}`}
+                  </option>
+                  {questionCapitals.map((c) => (
+                    <option>{c}</option>
+                  ))}
+                </select>
               </div>
             ))}
             <button>Done</button>
