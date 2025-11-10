@@ -27,6 +27,8 @@ export default function Capitals({ updateTotalPoint }) {
     // input10: "",
   });
   const [show, setShow] = useState(false);
+  const [seconds, setSeconds] = useState(6);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -51,6 +53,7 @@ export default function Capitals({ updateTotalPoint }) {
     } else {
       setIsWin(false);
     }
+    handleStopTimer();
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,13 +106,35 @@ export default function Capitals({ updateTotalPoint }) {
       setAnswer((currAnswer) => [...currAnswer, el])
     );
     setShow(true);
+    handleResetTimer();
+    if (normalMode) {
+      handleStartTimer();
+    }
   };
-  useEffect(function () {
-    setPack((currPack) => shuffleArray(currPack));
-  }, []);
+  const handleStartTimer = () => setIsTimerRunning(true);
+  const handleStopTimer = () => setIsTimerRunning(false);
+  const handleResetTimer = () => {
+    setIsTimerRunning(false);
+    setSeconds(6);
+  };
+  useEffect(
+    function () {
+      setPack((currPack) => shuffleArray(currPack));
+      const startTimer = () => {
+        if (isTimerRunning) {
+          setInterval(() => {
+            setSeconds((prev) => prev > 1 && prev - 1);
+          }, 1000);
+        }
+      };
+      startTimer();
+    },
+    [isTimerRunning]
+  );
   return (
     <div>
       <h2>Capitals</h2>
+      {isGameStarted && show && normalMode && <h3>{seconds}</h3>}
       {!easyMode && !normalMode && (
         <GameLevel
           mode1="Easy"
@@ -128,8 +153,9 @@ export default function Capitals({ updateTotalPoint }) {
           <ModeExplaination message="Normal Mode: You will get one star if you win." />
         )
       )}
-      {isWin === true && <h1>You Win</h1>}
-      {isWin === false && <h1>You Loose</h1>}
+      {isWin === true && seconds > 0 && <h1>You Win</h1>}
+      {isWin === false && seconds < 1 && <h1>You Loose</h1>}
+      {seconds < 1 && <h1>Time's up!</h1>}
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => handleStart()}>Start the Game</button>
       )}
@@ -174,7 +200,7 @@ export default function Capitals({ updateTotalPoint }) {
                 </select>
               </div>
             ))}
-            {isWin === "" && <button>Done</button>}
+            {isWin === "" && seconds > 0 && <button>Done</button>}
           </form>
         </div>
       )}
@@ -191,7 +217,7 @@ export default function Capitals({ updateTotalPoint }) {
         ))}
       {isGameStarted && show && (easyMode || normalMode) && (
         <button onClick={() => handleReset()}>
-          {isWin === "" ? "Reset" : "Play Again"}
+          {isWin === "" && seconds > 0 ? "Reset" : "Play Again"}
         </button>
       )}
     </div>
