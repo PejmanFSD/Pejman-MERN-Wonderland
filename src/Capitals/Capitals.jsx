@@ -22,8 +22,7 @@ export default function Capitals() {
     // input9: "",
     // input10: "",
   });
-  const [showCountries, setShowCountries] = useState(false);
-  const [showCapitals, setShowCapitals] = useState(false);
+  const [show, setShow] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     let misMatch = 0;
@@ -64,8 +63,7 @@ export default function Capitals() {
       // input9: "",
       // input10: "",
     });
-    setShowCountries(false);
-    setShowCapitals(false);
+    setShow(false);
     setPack((currPack) => shuffleArray(currPack));
   };
   const shuffleArray = (array) => {
@@ -81,16 +79,15 @@ export default function Capitals() {
     setPack((currPack) => shuffleArray(currPack));
     setQuestionCountries(pack.map((c) => c.country).slice(1, 6));
     setQuestionCapitals(pack.map((c) => c.capital).slice(1, 6));
-    setShowCountries(true);
   };
-  const handleShowCapitals = () => {
+  const handleShow = () => {
     setQuestionCapitals((currQuestionCapitals) =>
       shuffleArray(currQuestionCapitals)
     );
     questionCapitals.map((el) =>
       setAnswer((currAnswer) => [...currAnswer, el])
     );
-    setShowCapitals(true);
+    setShow(true);
   };
   useEffect(function () {
     setPack((currPack) => shuffleArray(currPack));
@@ -104,7 +101,7 @@ export default function Capitals() {
       {answer.map((el) => (
         <div>{el}</div>
       ))}
-      {isGameStarted && showCountries && (
+      {isGameStarted && show && (
         <div>
           <h3>Countries</h3>
           {questionCountries.map((qc) => (
@@ -112,26 +109,16 @@ export default function Capitals() {
           ))}
         </div>
       )}
-      {isGameStarted && !showCapitals && showCountries && (
+      {isGameStarted && !show && (
         <div>
           <h4>
             5 countries are chosen for you, guess their capitals correctly and
             win the game
           </h4>
-          <button onClick={() => handleShowCapitals()}>Ok</button>
+          <button onClick={() => handleShow()}>Ok</button>
         </div>
       )}
-      {isGameStarted && showCapitals && (
-        <div>
-          <h3>Capitals</h3>
-          {questionCapitals.map((qc, i) => (
-            <div>
-              {i + 1} - {qc}
-            </div>
-          ))}
-        </div>
-      )}
-      {isGameStarted && showCapitals && (
+      {isGameStarted && show && (
         <div>
           <form onSubmit={handleSubmit}>
             {questionCountries.map((el, i) => (
@@ -163,7 +150,7 @@ export default function Capitals() {
             }`}{" "}
             {Object.values(inputs)[i] === answer[i]
               ? "✅"
-              : `❌ The correct answer is: ${answer[i]}`}
+              : `❌ -> The correct answer is: ${answer[i]}`}
           </h3>
         ))}
       <button onClick={() => handleReset()}>Reset</button>
