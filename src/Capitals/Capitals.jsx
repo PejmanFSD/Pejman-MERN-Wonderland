@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+import GameLevel from "../GameLevel";
+import ModeExplaination from "../ModeExplaination";
 import countries from "./countries";
 const countryNames = countries.map((c) => c.country);
 const capitalNames = countries.map((c) => c.capital);
 
-export default function Capitals() {
+export default function Capitals({ updateTotalPoint }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
   const [isWin, setIsWin] = useState("");
   const [pack, setPack] = useState(countries);
   const [questionCountries, setQuestionCountries] = useState(countryNames);
@@ -23,6 +27,14 @@ export default function Capitals() {
     // input10: "",
   });
   const [show, setShow] = useState(false);
+  const runEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const runNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     let misMatch = 0;
@@ -33,6 +45,9 @@ export default function Capitals() {
     }
     if (misMatch === 0) {
       setIsWin(true);
+      if (normalMode) {
+        updateTotalPoint(1);
+      }
     } else {
       setIsWin(false);
     }
@@ -94,9 +109,30 @@ export default function Capitals() {
   }, []);
   return (
     <div>
+      <h2>Capitals</h2>
+      {!easyMode && !normalMode && (
+        <GameLevel
+          mode1="Easy"
+          mode1Function={runEasyMode}
+          mode2="Normal"
+          mode2Function={runNormalMode}
+          runEasyMode={runEasyMode}
+          runNormalMode={runNormalMode}
+        />
+      )}
+      {easyMode && !normalMode ? (
+        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+      ) : (
+        !easyMode &&
+        normalMode && (
+          <ModeExplaination message="Normal Mode: You will get one star if you win." />
+        )
+      )}
       {isWin === true && <h1>You Win</h1>}
       {isWin === false && <h1>You Loose</h1>}
-      {!isGameStarted && <button onClick={() => handleStart()}>Start</button>}
+      {!isGameStarted && (easyMode || normalMode) && (
+        <button onClick={() => handleStart()}>Start the Game</button>
+      )}
       <h3>Answer:</h3>
       {answer.map((el) => (
         <div>{el}</div>
@@ -109,7 +145,7 @@ export default function Capitals() {
           ))}
         </div>
       )}
-      {isGameStarted && !show && (
+      {isGameStarted && !show && (easyMode || normalMode) && (
         <div>
           <h4>
             5 countries are chosen for you, guess their capitals correctly and
@@ -138,7 +174,7 @@ export default function Capitals() {
                 </select>
               </div>
             ))}
-            <button>Done</button>
+            {isWin === "" && <button>Done</button>}
           </form>
         </div>
       )}
@@ -153,7 +189,11 @@ export default function Capitals() {
               : `❌ -> The correct answer is: ${answer[i]}`}
           </h3>
         ))}
-      <button onClick={() => handleReset()}>Reset</button>
+      {isGameStarted && show && (easyMode || normalMode) && (
+        <button onClick={() => handleReset()}>
+          {isWin === "" ? "Reset" : "Play Again"}
+        </button>
+      )}
     </div>
   );
 }
