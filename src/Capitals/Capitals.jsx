@@ -155,6 +155,17 @@ export default function Capitals() {
           </form>
         </div>
       )}
+      {isWin !== "" &&
+        questionCountries.map((c, i) => (
+          <h3>
+            {`You chose ${Object.values(inputs)[i]} as the capital of ${
+              questionCountries[i]
+            }`}{" "}
+            {Object.values(inputs)[i] === answer[i]
+              ? "✅"
+              : `❌ The correct answer is: ${answer[i]}`}
+          </h3>
+        ))}
       <button onClick={() => handleReset()}>Reset</button>
     </div>
   );
