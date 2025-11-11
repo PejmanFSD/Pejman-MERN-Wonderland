@@ -83,6 +83,7 @@ export default function Capitals({ updateTotalPoint }) {
     });
     setShow(false);
     setPack((currPack) => shuffleArray(currPack));
+    handleResetTimer();
   };
   const shuffleArray = (array) => {
     const arr = [...array];
@@ -130,7 +131,11 @@ export default function Capitals({ updateTotalPoint }) {
   return (
     <div>
       <h2>Capitals</h2>
-      {isGameStarted && show && normalMode && <h3>{seconds}</h3>}
+      {isGameStarted && show && normalMode && (
+        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+          {seconds}
+        </h3>
+      )}
       {!easyMode && !normalMode && (
         <GameLevel
           mode1="Easy"
@@ -150,7 +155,7 @@ export default function Capitals({ updateTotalPoint }) {
         )
       )}
       {isWin === true && seconds > 0 && <h1>You Win</h1>}
-      {isWin === false && seconds < 1 && <h1>You Loose</h1>}
+      {isWin === false && seconds > 0 && <h1>You Loose</h1>}
       {seconds < 1 && <h1>Time's up!</h1>}
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={() => handleStart()}>Start the Game</button>
@@ -200,17 +205,21 @@ export default function Capitals({ updateTotalPoint }) {
           </form>
         </div>
       )}
-      {isWin !== "" &&
-        questionCountries.map((c, i) => (
-          <h3>
-            {`You chose ${Object.values(inputs)[i]} as the capital of ${
-              questionCountries[i]
-            }`}{" "}
-            {Object.values(inputs)[i] === answer[i]
-              ? "✅"
-              : `❌ -> The correct answer is: ${answer[i]}`}
-          </h3>
-        ))}
+      {(isWin !== "" || seconds < 1) &&
+        questionCountries.map((c, i) =>
+          Object.values(inputs)[i] ? (
+            <h3>
+              {`You chose ${Object.values(inputs)[i]} as the capital of ${
+                questionCountries[i]
+              }`}{" "}
+              {Object.values(inputs)[i] === answer[i]
+                ? "✅"
+                : `❌ -> The correct answer is: ${answer[i]}`}
+            </h3>
+          ) : (
+            <h3>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
+          )
+        )}
       {isGameStarted && show && (easyMode || normalMode) && (
         <button onClick={() => handleReset()}>
           {isWin === "" && seconds > 0 ? "Reset" : "Play Again"}
