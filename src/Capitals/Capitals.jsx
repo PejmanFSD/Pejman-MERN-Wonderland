@@ -27,7 +27,7 @@ export default function Capitals({ updateTotalPoint }) {
     // input10: "",
   });
   const [show, setShow] = useState(false);
-  const [seconds, setSeconds] = useState(6);
+  const [seconds, setSeconds] = useState(26);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
@@ -114,23 +114,19 @@ export default function Capitals({ updateTotalPoint }) {
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
+    setSeconds(26);
     setIsTimerRunning(false);
-    setSeconds(6);
   };
-  useEffect(
-    function () {
-      setPack((currPack) => shuffleArray(currPack));
-      const startTimer = () => {
-        if (isTimerRunning) {
-          setInterval(() => {
-            setSeconds((prev) => prev > 1 && prev - 1);
-          }, 1000);
-        }
-      };
-      startTimer();
-    },
-    [isTimerRunning]
-  );
+  useEffect(() => {
+    setPack((currPack) => shuffleArray(currPack));
+    let interval;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev > 1 && prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
   return (
     <div>
       <h2>Capitals</h2>
