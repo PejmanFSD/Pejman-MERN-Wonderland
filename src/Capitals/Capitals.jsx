@@ -244,7 +244,11 @@ export default function Capitals({ updateTotalPoint }) {
         )}
       {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
         <ConfirmationBox
-          question="Are you sure you want to reset the game?"
+          question={
+            isWin === "" && seconds > 0
+              ? "Are you sure you want to reset the game?"
+              : "Play again?"
+          }
           toggleYes={toggleResetYes}
           toggleCancel={toggleResetCancel}
         />
