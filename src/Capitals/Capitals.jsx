@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import GameLevel from "../GameLevel";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 import countries from "./countries";
 const countryNames = countries.map((c) => c.country);
 const capitalNames = countries.map((c) => c.capital);
@@ -29,6 +30,7 @@ export default function Capitals({ updateTotalPoint }) {
   const [show, setShow] = useState(false);
   const [seconds, setSeconds] = useState(26);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -62,7 +64,10 @@ export default function Capitals({ updateTotalPoint }) {
       return { ...currInputs };
     });
   };
-  const handleReset = () => {
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
     setIsGameStarted(false);
     setIsWin("");
     setPack(countries);
@@ -83,7 +88,11 @@ export default function Capitals({ updateTotalPoint }) {
     });
     setShow(false);
     setPack((currPack) => shuffleArray(currPack));
+    setIsTogglingReset(false);
     handleResetTimer();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   const shuffleArray = (array) => {
     const arr = [...array];
@@ -146,11 +155,12 @@ export default function Capitals({ updateTotalPoint }) {
           runNormalMode={runNormalMode}
         />
       )}
-      {easyMode && !normalMode ? (
+      {easyMode && !normalMode && !isTogglingReset ? (
         <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
       ) : (
         !easyMode &&
-        normalMode && (
+        normalMode &&
+        !isTogglingReset && (
           <ModeExplaination message="Normal Mode: You will get one star if you win." />
         )
       )}
@@ -164,7 +174,7 @@ export default function Capitals({ updateTotalPoint }) {
       {answer.map((el) => (
         <div>{el}</div>
       ))}
-      {isGameStarted && show && (
+      {isGameStarted && show && !isTogglingReset && (
         <div>
           <h3>Countries</h3>
           {questionCountries.map((qc) => (
@@ -172,16 +182,19 @@ export default function Capitals({ updateTotalPoint }) {
           ))}
         </div>
       )}
-      {isGameStarted && !show && (easyMode || normalMode) && (
-        <div>
-          <h4>
-            5 countries are chosen for you, guess their capitals correctly and
-            win the game
-          </h4>
-          <button onClick={() => handleShow()}>Ok</button>
-        </div>
-      )}
-      {isGameStarted && show && (
+      {isGameStarted &&
+        !show &&
+        (easyMode || normalMode) &&
+        !isTogglingReset && (
+          <div>
+            <h4>
+              5 countries are chosen for you, guess their capitals correctly and
+              win the game
+            </h4>
+            <button onClick={() => handleShow()}>Ok</button>
+          </div>
+        )}
+      {isGameStarted && show && !isTogglingReset && (
         <div>
           <form onSubmit={handleSubmit}>
             {questionCountries.map((el, i) => (
@@ -206,6 +219,7 @@ export default function Capitals({ updateTotalPoint }) {
         </div>
       )}
       {(isWin !== "" || seconds < 1) &&
+        !isTogglingReset &&
         questionCountries.map((c, i) =>
           Object.values(inputs)[i] ? (
             <h3>
@@ -220,10 +234,20 @@ export default function Capitals({ updateTotalPoint }) {
             <h3>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
           )
         )}
-      {isGameStarted && show && (easyMode || normalMode) && (
-        <button onClick={() => handleReset()}>
-          {isWin === "" && seconds > 0 ? "Reset" : "Play Again"}
-        </button>
+      {isGameStarted &&
+        show &&
+        (easyMode || normalMode) &&
+        !isTogglingReset && (
+          <button onClick={() => toggleReset()}>
+            {isWin === "" && seconds > 0 ? "Reset" : "Play Again"}
+          </button>
+        )}
+      {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
+        <ConfirmationBox
+          question="Are you sure you want to reset the game?"
+          toggleYes={toggleResetYes}
+          toggleCancel={toggleResetCancel}
+        />
       )}
     </div>
   );
