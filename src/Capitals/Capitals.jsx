@@ -37,6 +37,7 @@ export default function Capitals({
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -49,6 +50,10 @@ export default function Capitals({
     e.preventDefault();
     let misMatch = 0;
     for (let i = 0; i < 5; i++) {
+      if (Object.values(inputs)[i] === "") {
+        setIsInputEmpty(true);
+        return;
+      }
       if (Object.values(inputs)[i] !== answer[i]) {
         misMatch += 1;
       }
@@ -181,6 +186,9 @@ export default function Capitals({
     setSeconds(26);
     setIsTimerRunning(false);
   };
+  const handleIsInputEmpty = () => {
+    setIsInputEmpty(false);
+  };
   useEffect(() => {
     setPack((currPack) => shuffleArray(currPack));
     let interval;
@@ -293,6 +301,7 @@ export default function Capitals({
                     onChange={handleChange}
                     name={`input${i + 1}`}
                     id={`input${i + 1}`}
+                    disabled={isInputEmpty}
                   >
                     <option value={Object.values(inputs)[i]} disabled selected>
                       {`Select the Capital of ${questionCountries[i]}`}
@@ -303,10 +312,18 @@ export default function Capitals({
                   </select>
                 </div>
               ))}
-              {isWin === "" && seconds > 0 && <button>Done</button>}
+              {isWin === "" && seconds > 0 && !isInputEmpty && (
+                <button>Done</button>
+              )}
             </form>
           </div>
         )}
+      {isInputEmpty && (
+        <div>
+          <p>You shouldn't leave any dropdown unselected!</p>
+          <button onClick={handleIsInputEmpty}>OK</button>
+        </div>
+      )}
       {(isWin !== "" || seconds < 1) &&
         !isTogglingReset &&
         !isTogglingHomePage &&
@@ -330,7 +347,8 @@ export default function Capitals({
         (easyMode || normalMode) &&
         !isTogglingReset &&
         !isTogglingHomePage &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isInputEmpty && (
           <button onClick={() => toggleReset()}>
             {isWin === "" && seconds > 0 ? "Reset" : "Play Again"}
           </button>
@@ -354,7 +372,8 @@ export default function Capitals({
         (easyMode || normalMode) &&
         !isTogglingLevel &&
         !isTogglingReset &&
-        !isTogglingHomePage && (
+        !isTogglingHomePage &&
+        !isInputEmpty && (
           <button onClick={() => toggleLevel()}>{`Switch to ${
             easyMode ? "Normal Mode" : "Easy Mode"
           }`}</button>
@@ -369,9 +388,14 @@ export default function Capitals({
           easyMode={easyMode}
         />
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
-        <button onClick={() => toggleHomePage()}>Back to the home page</button>
-      )}
+      {!isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
+        !isInputEmpty && (
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        )}
       {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
         !isTogglingLevel &&
         isTogglingHomePage && (
