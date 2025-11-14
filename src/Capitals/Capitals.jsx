@@ -25,14 +25,11 @@ export default function Capitals({
     input3: "",
     input4: "",
     input5: "",
-    // input6: "",
-    // input7: "",
-    // input8: "",
-    // input9: "",
-    // input10: "",
+    input6: "",
+    input7: ""
   });
   const [show, setShow] = useState(false);
-  const [seconds, setSeconds] = useState(26);
+  const [seconds, setSeconds] = useState(45);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
@@ -49,7 +46,7 @@ export default function Capitals({
   const handleSubmit = (e) => {
     e.preventDefault();
     let misMatch = 0;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       if (Object.values(inputs)[i] === "") {
         setIsInputEmpty(true);
         return;
@@ -91,11 +88,8 @@ export default function Capitals({
       input3: "",
       input4: "",
       input5: "",
-      // input6: "",
-      // input7: "",
-      // input8: "",
-      // input9: "",
-      // input10: "",
+      input6: "",
+      input7: ""
     });
     setShow(false);
     setPack((currPack) => shuffleArray(currPack));
@@ -132,11 +126,8 @@ export default function Capitals({
       input3: "",
       input4: "",
       input5: "",
-      // input6: "",
-      // input7: "",
-      // input8: "",
-      // input9: "",
-      // input10: "",
+      input6: "",
+      input7: ""
     });
     setShow(false);
     if (easyMode) {
@@ -164,8 +155,8 @@ export default function Capitals({
   const handleStart = () => {
     setIsGameStarted(true);
     setPack((currPack) => shuffleArray(currPack));
-    setQuestionCountries(pack.map((c) => c.country).slice(1, 6));
-    setQuestionCapitals(pack.map((c) => c.capital).slice(1, 6));
+    setQuestionCountries(pack.map((c) => c.country).slice(1, 8));
+    setQuestionCapitals(pack.map((c) => c.capital).slice(1, 8));
   };
   const handleShow = () => {
     setQuestionCapitals((currQuestionCapitals) =>
@@ -183,7 +174,7 @@ export default function Capitals({
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(26);
+    setSeconds(45);
     setIsTimerRunning(false);
   };
   const handleIsInputEmpty = () => {
@@ -234,7 +225,7 @@ export default function Capitals({
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: You will get one star if you win." />
+          <ModeExplaination message="Normal Mode: You will get one star if you win in 45 seconds." />
         )
       )}
       {isWin === true &&
@@ -258,9 +249,9 @@ export default function Capitals({
           <button onClick={() => handleStart()}>Start the Game</button>
         )}
       <h3>Answer:</h3>
-      {answer.map((el) => (
+      {/* {answer.map((el) => (
         <div>{el}</div>
-      ))}
+      ))} */}
       {isGameStarted &&
         show &&
         !isTogglingReset &&
@@ -281,7 +272,7 @@ export default function Capitals({
         !isTogglingLevel && (
           <div>
             <h4>
-              5 countries are chosen for you, guess their capitals correctly and
+              7 countries are chosen for you, guess their capitals correctly and
               win the game
             </h4>
             <button onClick={() => handleShow()}>Ok</button>
