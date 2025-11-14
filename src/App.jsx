@@ -12,6 +12,7 @@ function App() {
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
   const [showGuessNumber, setShowGuessNumber] = useState(false);
   const [showCapitals, setShowCapitals] = useState(false);
+  const [showCryptogram, setShowCryptogram] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -26,6 +27,10 @@ function App() {
   const toggleCapitals = () => {
     setShowGameTitles(false);
     setShowCapitals(true);
+  };
+  const toggleCryptogram = () => {
+    setShowGameTitles(false);
+    setShowCryptogram(true);
   };
   return (
     <div className="App">
@@ -83,7 +88,21 @@ function App() {
           </button>
         )
       )}
-      <Cryptogram />
+      {!showGameTitles && showCryptogram ? (
+        <Cryptogram
+          setShowGameTitles={setShowGameTitles}
+          setShowCryptogram={setShowCryptogram}
+          totalPoint={totalPoint}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showCryptogram && (
+          <button onClick={() => toggleCryptogram()}>
+            Cryptogram
+          </button>
+        )
+      )}
     </div>
   );
 }
