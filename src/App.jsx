@@ -4,6 +4,7 @@ import Star from "./Star.png";
 import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./GuessNumber/GuessNumber";
 import Capitals from "./Capitals/Capitals";
+import Cryptogram from "./Cryptogram/Cryptogram";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -82,6 +83,7 @@ function App() {
           </button>
         )
       )}
+      <Cryptogram />
     </div>
   );
 }
