@@ -71,6 +71,15 @@ export default function Cryptogram() {
         ))}
       </div>
       <div>
+        {adviceArray.map((a) => (
+          <h2 style={{ display: "inline" }}>
+            {Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase())
+              ? "-"
+              : a}
+          </h2>
+        ))}
+      </div>
+      <div>
         {Object.entries(resultObj).map(([key, value]) => (
           <div key={key}>
             {key}: {value}
