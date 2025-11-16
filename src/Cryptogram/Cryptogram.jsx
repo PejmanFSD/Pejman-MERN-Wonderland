@@ -36,6 +36,8 @@ export default function Cryptogram() {
     input3: "",
     input4: "",
   });
+  const [resultMessageStatus, setResultMessageStatus] = useState([]);
+  const [isWin, setIsWin] = useState("");
   async function getAdvice() {
     const res = await fetch("https://api.adviceslip.com/advice");
     const data = await res.json();
@@ -58,12 +60,27 @@ export default function Cryptogram() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setInputs({
-      input1: "",
-      input2: "",
-      input3: "",
-      input4: "",
-    });
+    let misMatch = 0;
+    for (let i = 0; i < 4; i++) {
+      if (Object.values(inputs)[i] === Object.keys(resultObj)[i]) {
+        setResultMessageStatus((currResultMessageStatus) => [
+          ...currResultMessageStatus,
+          true,
+        ]);
+      } else {
+        setResultMessageStatus((currResultMessageStatus) => [
+          ...currResultMessageStatus,
+          false,
+        ]);
+        misMatch += 1;
+      }
+    }
+    if (misMatch === 0) {
+      setIsWin(true);
+    }
+    if (misMatch !== 0) {
+      setIsWin(false);
+    }
   };
   useEffect(
     function () {
@@ -90,6 +107,19 @@ export default function Cryptogram() {
   );
   return (
     <div>
+      {isWin === true && <h1>You Win</h1>}
+      {isWin === false && <h1>You Loose</h1>}
+      {resultMessageStatus.map((r, idx) =>
+        r === true ? (
+          <p>{`For code ${idx + 1}, you chose ${
+            Object.values(inputs)[idx]
+          } ✅`}</p>
+        ) : (
+          <p>{`For code ${idx + 1}, you chose ${
+            Object.values(inputs)[idx]
+          } ❌. The correct answer is: ${Object.keys(resultObj)[idx]}`}</p>
+        )
+      )}
       <div>
         {adviceArray.map((a) => (
           <h2 style={{ display: "inline" }}>{a}</h2>
