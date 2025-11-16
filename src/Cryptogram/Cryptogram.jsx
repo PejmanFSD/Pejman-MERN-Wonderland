@@ -70,15 +70,17 @@ export default function Cryptogram() {
           <h2 style={{ display: "inline" }}>{a}</h2>
         ))}
       </div>
-      <div>
+      <form>
         {adviceArray.map((a) => (
-          <h2 style={{ display: "inline" }}>
-            {Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase())
-              ? "-"
-              : a}
-          </h2>
+            Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ?
+            (Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) === 0 ? (<h2 style={{ display: "inline", color: "red" }}>1</h2>) :
+            (Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) === 1 ? (<h2 style={{ display: "inline", color: "red" }}>2</h2>) :
+            (Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) === 2 ? (<h2 style={{ display: "inline", color: "red" }}>3</h2>) :
+            (Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) === 3 && (<h2 style={{ display: "inline", color: "red" }}>4</h2>)
+          )))) :
+          <h2 style={{ display: "inline" }}>{a}</h2>
         ))}
-      </div>
+      </form>
       <div>
         {Object.entries(resultObj).map(([key, value]) => (
           <div key={key}>
