@@ -30,6 +30,12 @@ export default function Cryptogram() {
     y: 0,
     z: 0,
   });
+  const [inputs, setInputs] = useState({
+    input1: "",
+    input2: "",
+    input3: "",
+    input4: "",
+  });
   async function getAdvice() {
     const res = await fetch("https://api.adviceslip.com/advice");
     const data = await res.json();
@@ -39,6 +45,25 @@ export default function Cryptogram() {
     for (let i = 0; i < str.length; i++) {
       setAdviceArray((currAdviceArray) => [...currAdviceArray, str[i]]);
     }
+  };
+  const handleChange = (e) => {
+    if (e.target.value.length === 0) {
+      return;
+    }
+    const { name, value } = e.target;
+    setInputs((currInputs) => {
+      currInputs[name] = value;
+      return { ...currInputs };
+    });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+    });
   };
   useEffect(
     function () {
@@ -70,7 +95,7 @@ export default function Cryptogram() {
           <h2 style={{ display: "inline" }}>{a}</h2>
         ))}
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         {adviceArray.map((a) =>
           Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
             Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -82,8 +107,8 @@ export default function Cryptogram() {
                   placeholder="1"
                   name="input1"
                   id="input1"
-                  // value={inputs.input1}
-                  // onChange={handleChange}
+                  value={inputs.input1}
+                  onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
                 />
               </div>
@@ -96,8 +121,8 @@ export default function Cryptogram() {
                   placeholder="2"
                   name="input2"
                   id="input2"
-                  // value={inputs.input2}
-                  // onChange={handleChange}
+                  value={inputs.input2}
+                  onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
                 />
               </div>
@@ -110,8 +135,8 @@ export default function Cryptogram() {
                   placeholder="3"
                   name="input3"
                   id="input3"
-                  // value={inputs.input3}
-                  // onChange={handleChange}
+                  value={inputs.input3}
+                  onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
                 />
               </div>
@@ -125,8 +150,8 @@ export default function Cryptogram() {
                     placeholder="4"
                     name="input4"
                     id="input4"
-                    // value={inputs.input4}
-                    // onChange={handleChange}
+                    value={inputs.input4}
+                    onChange={handleChange}
                     style={{ width: "15px", height: "30px" }}
                   />
                 </div>
@@ -136,7 +161,13 @@ export default function Cryptogram() {
             <h2 style={{ display: "inline" }}>{a}</h2>
           )
         )}
+        <button>Done</button>
       </form>
+      <div>
+        {Object.values(inputs).map((value, index) => (
+          <div key={index}>{`input${index + 1}: ${value}`}</div>
+        ))}
+      </div>
       <div>
         {Object.entries(resultObj).map(([key, value]) => (
           <div key={key}>
