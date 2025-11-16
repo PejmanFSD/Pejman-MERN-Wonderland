@@ -53,6 +53,11 @@ export default function Cryptogram() {
           });
           return updated;
         });
+        setResultObj((currResultObj) => {
+          return Object.fromEntries(
+            Object.entries(currResultObj).sort(([, v1], [, v2]) => v2 - v1)
+          );
+        });
       }
       generateResult();
     },
