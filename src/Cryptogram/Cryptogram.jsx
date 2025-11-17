@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function Cryptogram() {
+export default function Cryptogram({ setShowCryptogram, setShowGameTitles }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [adviceArray, setAdviceArray] = useState([]);
   const [resultObj, setResultObj] = useState({
@@ -41,6 +41,7 @@ export default function Cryptogram() {
   const [resultMessageStatus, setResultMessageStatus] = useState([]);
   const [isWin, setIsWin] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   async function getAdvice() {
     setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
@@ -134,6 +135,17 @@ export default function Cryptogram() {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowCryptogram(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
+  };
   useEffect(
     function () {
       function generateResult() {
@@ -159,109 +171,130 @@ export default function Cryptogram() {
   );
   return (
     <div>
-      {isWin === true && <h1>You Win</h1>}
-      {isWin === false && <h1>You Loose</h1>}
-      {resultMessageStatus.map((r, idx) =>
-        r === true ? (
-          <p>{`For code ${idx + 1}, you chose ${
-            Object.values(inputs)[idx]
-          } ✅`}</p>
-        ) : (
-          <p>{`For code ${idx + 1}, you chose ${
-            Object.values(inputs)[idx]
-          } ❌. The correct answer is: ${Object.keys(resultObj)[idx]}`}</p>
-        )
+      {!isTogglingReset && !isTogglingHomePage && isWin === true && (
+        <h1>You Win</h1>
       )}
-      <div>
-        {adviceArray.map((a) => (
-          <h2 style={{ display: "inline" }}>{a}</h2>
-        ))}
-      </div>
-      <form onSubmit={handleSubmit}>
-        {adviceArray.map((a) =>
-          Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
-            Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-            0 ? (
-              <div style={{ display: "inline" }}>
-                <label htmlFor="input1"></label>
-                <input
-                  type="text"
-                  placeholder="1"
-                  name="input1"
-                  id="input1"
-                  value={inputs.input1}
-                  onChange={handleChange}
-                  style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted}
-                />
-              </div>
-            ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-              1 ? (
-              <div style={{ display: "inline" }}>
-                <label htmlFor="input2"></label>
-                <input
-                  type="text"
-                  placeholder="2"
-                  name="input2"
-                  id="input2"
-                  value={inputs.input2}
-                  onChange={handleChange}
-                  style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted}
-                />
-              </div>
-            ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-              2 ? (
-              <div style={{ display: "inline" }}>
-                <label htmlFor="input3"></label>
-                <input
-                  type="text"
-                  placeholder="3"
-                  name="input3"
-                  id="input3"
-                  value={inputs.input3}
-                  onChange={handleChange}
-                  style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted}
-                />
-              </div>
-            ) : (
+      {!isTogglingReset && !isTogglingHomePage && isWin === false && (
+        <h1>You Loose</h1>
+      )}
+      {!isTogglingReset &&
+        !isTogglingHomePage &&
+        resultMessageStatus.map((r, idx) =>
+          r === true ? (
+            <p>{`For code ${idx + 1}, you chose ${
+              Object.values(inputs)[idx]
+            } ✅`}</p>
+          ) : (
+            <p>{`For code ${idx + 1}, you chose ${
+              Object.values(inputs)[idx]
+            } ❌. The correct answer is: ${Object.keys(resultObj)[idx]}`}</p>
+          )
+        )}
+      {!isTogglingReset && !isTogglingHomePage && (
+        <div>
+          {adviceArray.map((a) => (
+            <h2 style={{ display: "inline" }}>{a}</h2>
+          ))}
+        </div>
+      )}
+      {!isTogglingReset && !isTogglingHomePage && (
+        <form onSubmit={handleSubmit}>
+          {adviceArray.map((a) =>
+            Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
               Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-                3 && (
+              0 ? (
                 <div style={{ display: "inline" }}>
-                  <label htmlFor="input4"></label>
+                  <label htmlFor="input1"></label>
                   <input
                     type="text"
-                    placeholder="4"
-                    name="input4"
-                    id="input4"
-                    value={inputs.input4}
+                    placeholder="1"
+                    name="input1"
+                    id="input1"
+                    value={inputs.input1}
                     onChange={handleChange}
                     style={{ width: "15px", height: "30px" }}
                     disabled={!isGameStarted}
                   />
                 </div>
+              ) : Object.keys(resultObj)
+                  .slice(0, 4)
+                  .indexOf(a.toLowerCase()) === 1 ? (
+                <div style={{ display: "inline" }}>
+                  <label htmlFor="input2"></label>
+                  <input
+                    type="text"
+                    placeholder="2"
+                    name="input2"
+                    id="input2"
+                    value={inputs.input2}
+                    onChange={handleChange}
+                    style={{ width: "15px", height: "30px" }}
+                    disabled={!isGameStarted}
+                  />
+                </div>
+              ) : Object.keys(resultObj)
+                  .slice(0, 4)
+                  .indexOf(a.toLowerCase()) === 2 ? (
+                <div style={{ display: "inline" }}>
+                  <label htmlFor="input3"></label>
+                  <input
+                    type="text"
+                    placeholder="3"
+                    name="input3"
+                    id="input3"
+                    value={inputs.input3}
+                    onChange={handleChange}
+                    style={{ width: "15px", height: "30px" }}
+                    disabled={!isGameStarted}
+                  />
+                </div>
+              ) : (
+                Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
+                  3 && (
+                  <div style={{ display: "inline" }}>
+                    <label htmlFor="input4"></label>
+                    <input
+                      type="text"
+                      placeholder="4"
+                      name="input4"
+                      id="input4"
+                      value={inputs.input4}
+                      onChange={handleChange}
+                      style={{ width: "15px", height: "30px" }}
+                      disabled={!isGameStarted}
+                    />
+                  </div>
+                )
               )
+            ) : (
+              <h2 style={{ display: "inline" }}>{a}</h2>
             )
-          ) : (
-            <h2 style={{ display: "inline" }}>{a}</h2>
-          )
-        )}
-        <div>
-          {isGameStarted && isWin === "" && !isTogglingReset && (
-            <button>Done</button>
           )}
-        </div>
-      </form>
-      {isGameStarted && !isTogglingReset && isWin === "" && (
-        <button onClick={() => toggleReset()}>Reset the Game</button>
+          {isGameStarted && isWin === "" && (
+            <div>
+              <button>Done</button>
+            </div>
+          )}
+        </form>
       )}
-      {!isGameStarted && !isTogglingReset && isWin === true && (
-        <button onClick={() => toggleReset()}>Play Again</button>
-      )}
-      {!isGameStarted && !isTogglingReset && isWin === false && (
-        <button onClick={() => toggleReset()}>Try Again</button>
-      )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        isWin === "" &&
+        !isTogglingHomePage && (
+          <button onClick={() => toggleReset()}>Reset the Game</button>
+        )}
+      {!isGameStarted &&
+        !isTogglingReset &&
+        isWin === true &&
+        !isTogglingHomePage && (
+          <button onClick={() => toggleReset()}>Play Again</button>
+        )}
+      {!isGameStarted &&
+        !isTogglingReset &&
+        isWin === false &&
+        !isTogglingHomePage && (
+          <button onClick={() => toggleReset()}>Try Again</button>
+        )}
       {isTogglingReset && (
         <ConfirmationBox
           question={
@@ -277,18 +310,30 @@ export default function Cryptogram() {
       )}
       <div>
         {Object.values(inputs).map((value, index) => (
-          <div key={index}>{`input${index + 1}: ${value}`}</div>
+          <div style={{ color: "gray" }} key={index}>{`input${
+            index + 1
+          }: ${value}`}</div>
         ))}
       </div>
       <div>
         {Object.entries(resultObj).map(([key, value]) => (
-          <div key={key}>
+          <div style={{ color: "gray" }} key={key}>
             {key}: {value}
           </div>
         ))}
       </div>
-      {!isGameStarted && isWin === "" && (
+      {!isGameStarted && isWin === "" && !isTogglingHomePage && (
         <button onClick={getAdvice}>Start</button>
+      )}
+      {!isTogglingReset && !isTogglingHomePage && (
+        <button onClick={() => toggleHomePage()}>Back to the home page</button>
+      )}
+      {isTogglingHomePage && (
+        <ConfirmationBox
+          question="Are you sure you want to go back to Home Page?"
+          toggleYes={toggleHomePageYes}
+          toggleCancel={toggleHomePageCancel}
+        />
       )}
     </div>
   );
