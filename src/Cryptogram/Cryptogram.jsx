@@ -85,6 +85,7 @@ export default function Cryptogram() {
     if (misMatch !== 0) {
       setIsWin(false);
     }
+    setIsGameStarted(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -191,6 +192,7 @@ export default function Cryptogram() {
                   value={inputs.input1}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
+                  disabled={!isGameStarted}
                 />
               </div>
             ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -205,6 +207,7 @@ export default function Cryptogram() {
                   value={inputs.input2}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
+                  disabled={!isGameStarted}
                 />
               </div>
             ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -219,6 +222,7 @@ export default function Cryptogram() {
                   value={inputs.input3}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
+                  disabled={!isGameStarted}
                 />
               </div>
             ) : (
@@ -234,6 +238,7 @@ export default function Cryptogram() {
                     value={inputs.input4}
                     onChange={handleChange}
                     style={{ width: "15px", height: "30px" }}
+                    disabled={!isGameStarted}
                   />
                 </div>
               )
@@ -242,24 +247,34 @@ export default function Cryptogram() {
             <h2 style={{ display: "inline" }}>{a}</h2>
           )
         )}
-        <div>{isGameStarted && isWin === "" && <button>Done</button>}</div>
-        {isGameStarted && !isTogglingReset && (
-          <button onClick={() => toggleReset()}>
-            {isWin === "" ? "Reset the Game" : "Play Again"}
-          </button>
-        )}
-        {isGameStarted && isTogglingReset && (
-          <ConfirmationBox
-            question={
-              isWin === ""
-                ? "Are you sure you want to reset the game?"
-                : "Play again?"
-            }
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        )}
+        <div>
+          {isGameStarted && isWin === "" && !isTogglingReset && (
+            <button>Done</button>
+          )}
+        </div>
       </form>
+      {isGameStarted && !isTogglingReset && isWin === "" && (
+        <button onClick={() => toggleReset()}>Reset the Game</button>
+      )}
+      {!isGameStarted && !isTogglingReset && isWin === true && (
+        <button onClick={() => toggleReset()}>Play Again</button>
+      )}
+      {!isGameStarted && !isTogglingReset && isWin === false && (
+        <button onClick={() => toggleReset()}>Try Again</button>
+      )}
+      {isTogglingReset && (
+        <ConfirmationBox
+          question={
+            isGameStarted
+              ? "Are you sure you want to reset the game?"
+              : isWin === true
+              ? "Play again?"
+              : "Try again?"
+          }
+          toggleYes={toggleResetYes}
+          toggleCancel={toggleResetCancel}
+        />
+      )}
       <div>
         {Object.values(inputs).map((value, index) => (
           <div key={index}>{`input${index + 1}: ${value}`}</div>
@@ -272,7 +287,9 @@ export default function Cryptogram() {
           </div>
         ))}
       </div>
-      {!isGameStarted && <button onClick={getAdvice}>Start</button>}
+      {!isGameStarted && isWin === "" && (
+        <button onClick={getAdvice}>Start</button>
+      )}
     </div>
   );
 }
