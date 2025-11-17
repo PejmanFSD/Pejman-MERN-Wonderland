@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function Cryptogram() {
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [adviceArray, setAdviceArray] = useState([]);
   const [resultObj, setResultObj] = useState({
     a: 0,
@@ -38,7 +40,9 @@ export default function Cryptogram() {
   });
   const [resultMessageStatus, setResultMessageStatus] = useState([]);
   const [isWin, setIsWin] = useState("");
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   async function getAdvice() {
+    setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
     const data = await res.json();
     convertStringIntoArray(data.slip.advice);
@@ -81,6 +85,53 @@ export default function Cryptogram() {
     if (misMatch !== 0) {
       setIsWin(false);
     }
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    setIsGameStarted(false);
+    setAdviceArray([]);
+    setResultObj({
+      a: 0,
+      b: 0,
+      c: 0,
+      d: 0,
+      e: 0,
+      f: 0,
+      g: 0,
+      h: 0,
+      i: 0,
+      j: 0,
+      k: 0,
+      l: 0,
+      m: 0,
+      n: 0,
+      o: 0,
+      p: 0,
+      q: 0,
+      r: 0,
+      s: 0,
+      t: 0,
+      u: 0,
+      v: 0,
+      w: 0,
+      x: 0,
+      y: 0,
+      z: 0,
+    });
+    setInputs({
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+    });
+    setResultMessageStatus([]);
+    setIsWin("");
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(
     function () {
@@ -191,7 +242,23 @@ export default function Cryptogram() {
             <h2 style={{ display: "inline" }}>{a}</h2>
           )
         )}
-        <button>Done</button>
+        <div>{isGameStarted && isWin === "" && <button>Done</button>}</div>
+        {isGameStarted && !isTogglingReset && (
+          <button onClick={() => toggleReset()}>
+            {isWin === "" ? "Reset the Game" : "Play Again"}
+          </button>
+        )}
+        {isGameStarted && isTogglingReset && (
+          <ConfirmationBox
+            question={
+              isWin === ""
+                ? "Are you sure you want to reset the game?"
+                : "Play again?"
+            }
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
+        )}
       </form>
       <div>
         {Object.values(inputs).map((value, index) => (
@@ -205,7 +272,7 @@ export default function Cryptogram() {
           </div>
         ))}
       </div>
-      <button onClick={getAdvice}>Get Advice</button>
+      {!isGameStarted && <button onClick={getAdvice}>Start</button>}
     </div>
   );
 }
