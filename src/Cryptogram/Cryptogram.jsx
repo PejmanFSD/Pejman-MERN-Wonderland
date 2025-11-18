@@ -52,6 +52,7 @@ export default function Cryptogram({
   const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [isOneChar, setIsOneChar] = useState(true);
   const [isAlreadyExist, setIsAlreadyExist] = useState(false);
+  const [acceptedAsRepetition, setAcceptedAsRepetition] = useState([]);
   async function getAdvice() {
     setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
@@ -186,6 +187,8 @@ export default function Cryptogram({
           setIsOneChar={setIsOneChar}
           isAlreadyExist={isAlreadyExist}
           setIsAlreadyExist={setIsAlreadyExist}
+          acceptedAsRepetition={acceptedAsRepetition}
+          setAcceptedAsRepetition={setAcceptedAsRepetition}
         />
       )}
       {isGameStarted &&

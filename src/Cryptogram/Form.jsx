@@ -17,6 +17,8 @@ export default function Form({
   setIsOneChar,
   isAlreadyExist,
   setIsAlreadyExist,
+  acceptedAsRepetition,
+  setAcceptedAsRepetition,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -95,6 +97,9 @@ export default function Form({
       return updatedInputs;
     });
     setIsCharRepetitive(false);
+    if (isAlreadyExist) {
+      setIsAlreadyExist(false);
+    }
   };
   const handleIsInputEmpty = () => {
     setIsInputEmpty(false);
@@ -114,13 +119,28 @@ export default function Form({
     setIsOneChar(true);
   };
   const handleIsAlreadyExistYes = () => {
+    // setAcceptedAsRepetition((currAcceptedAsRepetition) => [...currAcceptedAsRepetition, ])
+    for (let i = 0; i < 4; i++) {
+      if (
+        Object.keys(resultObj).slice(4).includes(Object.values(inputs)[i]) &&
+        !acceptedAsRepetition.includes(Object.values(inputs)[i])
+      ) {
+        setAcceptedAsRepetition((currAcceptedAsRepetition) => [
+          ...currAcceptedAsRepetition,
+          Object.values(inputs)[i],
+        ]);
+      }
+    }
     setIsAlreadyExist(false);
   };
   const handleIsAlreadyExistCancel = () => {
     setInputs((currInputs) => {
       const updatedInputs = Object.fromEntries(
         Object.entries(currInputs).map(([key, value]) => {
-          if (Object.keys(resultObj).slice(4).includes(value)) {
+          if (
+            Object.keys(resultObj).slice(4).includes(value) &&
+            !acceptedAsRepetition.includes(value)
+          ) {
             return [key, ""];
           }
           return [key, value];
@@ -251,7 +271,7 @@ export default function Form({
           <button onClick={handleIsOneChar}>OK</button>
         </div>
       )}
-      {isAlreadyExist && (
+      {isAlreadyExist && !isCharRepetitive && (
         <div>
           <p>The visible letters are not the ones that you should guess!</p>
           <p>
