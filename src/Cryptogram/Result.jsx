@@ -16,7 +16,6 @@ export default function Result({
       {!isTogglingReset && !isTogglingHomePage && isWin === false && (
         <h1>You Loose</h1>
       )}
-
       {!isTogglingReset &&
         !isTogglingHomePage &&
         resultMessageStatus.map((r, idx) =>
@@ -30,18 +29,39 @@ export default function Result({
                 Object.values(inputs)[idx]
               } ❌. The correct answer is: ${Object.keys(resultObj)[idx]}.`}</p>
               {acceptedAsRepetition.includes(Object.values(inputs)[idx]) && (
-                <p>{`(You had been informed that "${
-                  Object.values(inputs)[idx]
-                }" is a visible letter!)`}</p>
+                <div>
+                  <p style={{ display: "inline" }}>
+                    (You had been informed that{" "}
+                  </p>
+                  <span
+                    style={{
+                      display: "inline",
+                      color: "red",
+                      fontWeight: "bold",
+                      textDecoration: "red underline",
+                    }}
+                  >
+                    {Object.values(inputs)[idx]}
+                  </span>
+                  <p style={{ display: "inline" }}> is a visible letter!)</p>
+                </div>
               )}
             </div>
           )
         )}
-
       {!isTogglingReset && !isTogglingHomePage && isWin !== "" && (
         <div>
           {adviceArray.map((a) => (
-            <h2 style={{ display: "inline" }}>{a}</h2>
+            <h2
+              style={{
+                display: "inline",
+                color: acceptedAsRepetition.includes(a) && "red",
+                textDecoration:
+                  acceptedAsRepetition.includes(a) && "red underline",
+              }}
+            >
+              {a}
+            </h2>
           ))}
         </div>
       )}
