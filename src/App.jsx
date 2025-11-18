@@ -5,6 +5,7 @@ import RockScissorsPaper from "./RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./GuessNumber/GuessNumber";
 import Capitals from "./Capitals/Capitals";
 import Cryptogram from "./Cryptogram/Cryptogram";
+import Crazy100 from "./Crazy100/Crazy100";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -13,6 +14,7 @@ function App() {
   const [showGuessNumber, setShowGuessNumber] = useState(false);
   const [showCapitals, setShowCapitals] = useState(false);
   const [showCryptogram, setShowCryptogram] = useState(false);
+  const [showCrazy100, setShowCrazy100] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -31,6 +33,10 @@ function App() {
   const toggleCryptogram = () => {
     setShowGameTitles(false);
     setShowCryptogram(true);
+  };
+  const toggleCrazy100 = () => {
+    setShowGameTitles(false);
+    setShowCrazy100(true);
   };
   return (
     <div className="App">
@@ -83,9 +89,7 @@ function App() {
       ) : (
         showGameTitles &&
         !showCapitals && (
-          <button onClick={() => toggleCapitals()}>
-            Capitals
-          </button>
+          <button onClick={() => toggleCapitals()}>Capitals</button>
         )
       )}
       {!showGameTitles && showCryptogram ? (
@@ -98,9 +102,20 @@ function App() {
       ) : (
         showGameTitles &&
         !showCryptogram && (
-          <button onClick={() => toggleCryptogram()}>
-            Cryptogram
-          </button>
+          <button onClick={() => toggleCryptogram()}>Cryptogram</button>
+        )
+      )}
+      {!showGameTitles && showCrazy100 ? (
+        <Crazy100
+          setShowGameTitles={setShowGameTitles}
+          setShowCrazy100={setShowCrazy100}
+          totalPoint={totalPoint}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showCrazy100 && (
+          <button onClick={() => toggleCrazy100()}>Crazy100</button>
         )
       )}
     </div>

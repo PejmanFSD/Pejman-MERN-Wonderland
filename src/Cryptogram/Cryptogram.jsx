@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
+import ModeExplaination from "../ModeExplaination";
 import Form from "./Form";
 import Result from "./Result";
 
@@ -157,6 +158,9 @@ export default function Cryptogram({
   );
   return (
     <div>
+      {isWin === "" && !isTogglingReset && !isTogglingHomePage && (
+        <ModeExplaination message="Find the 4 missing letters of the advice, win the game and get one star." />
+      )}
       <Result
         adviceArray={adviceArray}
         inputs={inputs}
