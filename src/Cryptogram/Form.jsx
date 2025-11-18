@@ -13,6 +13,8 @@ export default function Form({
   setIsCharRepetitive,
   isInputEmpty,
   setIsInputEmpty,
+  isOneChar,
+  setIsOneChar,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -21,6 +23,9 @@ export default function Form({
     const { name, value } = e.target;
     if (evaluateRepetitive(name, value)) {
       setIsCharRepetitive(true);
+    }
+    if (value.length > 1) {
+      setIsOneChar(false);
     }
     setInputs((currInputs) => {
       currInputs[name] = value;
@@ -89,6 +94,20 @@ export default function Form({
   const handleIsInputEmpty = () => {
     setIsInputEmpty(false);
   };
+  const handleIsOneChar = () => {
+    setInputs((currInputs) => {
+      const updatedInputs = Object.fromEntries(
+        Object.entries(currInputs).map(([key, value]) => {
+          if (value.length > 1) {
+            return [key, ""];
+          }
+          return [key, value];
+        })
+      );
+      return updatedInputs;
+    });
+    setIsOneChar(true);
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -106,7 +125,12 @@ export default function Form({
                   value={inputs.input1}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted || isCharRepetitive || isInputEmpty}
+                  disabled={
+                    !isGameStarted ||
+                    isCharRepetitive ||
+                    isInputEmpty ||
+                    !isOneChar
+                  }
                 />
               </div>
             ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -121,7 +145,12 @@ export default function Form({
                   value={inputs.input2}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted || isCharRepetitive || isInputEmpty}
+                  disabled={
+                    !isGameStarted ||
+                    isCharRepetitive ||
+                    isInputEmpty ||
+                    !isOneChar
+                  }
                 />
               </div>
             ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -136,7 +165,12 @@ export default function Form({
                   value={inputs.input3}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted || isCharRepetitive || isInputEmpty}
+                  disabled={
+                    !isGameStarted ||
+                    isCharRepetitive ||
+                    isInputEmpty ||
+                    !isOneChar
+                  }
                 />
               </div>
             ) : (
@@ -153,7 +187,10 @@ export default function Form({
                     onChange={handleChange}
                     style={{ width: "15px", height: "30px" }}
                     disabled={
-                      !isGameStarted || isCharRepetitive || isInputEmpty
+                      !isGameStarted ||
+                      isCharRepetitive ||
+                      isInputEmpty ||
+                      !isOneChar
                     }
                   />
                 </div>
@@ -166,7 +203,8 @@ export default function Form({
         {isGameStarted &&
           isWin === "" &&
           !isCharRepetitive &&
-          !isInputEmpty && (
+          !isInputEmpty &&
+          isOneChar && (
             <div>
               <button>Done</button>
             </div>
@@ -182,6 +220,12 @@ export default function Form({
         <div>
           <p>You shouldn't leave any box empty!</p>
           <button onClick={handleIsInputEmpty}>OK</button>
+        </div>
+      )}
+      {!isOneChar && (
+        <div>
+          <p>Each box should have only one character!</p>
+          <button onClick={handleIsOneChar}>OK</button>
         </div>
       )}
     </div>
