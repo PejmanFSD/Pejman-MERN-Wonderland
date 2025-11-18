@@ -49,6 +49,7 @@ export default function Cryptogram({
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isCharRepetitive, setIsCharRepetitive] = useState(false);
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
   async function getAdvice() {
     setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
@@ -69,32 +70,6 @@ export default function Cryptogram({
       currInputs[name] = value;
       return { ...currInputs };
     });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let misMatch = 0;
-    for (let i = 0; i < 4; i++) {
-      if (Object.values(inputs)[i] === Object.keys(resultObj)[i]) {
-        setResultMessageStatus((currResultMessageStatus) => [
-          ...currResultMessageStatus,
-          true,
-        ]);
-      } else {
-        setResultMessageStatus((currResultMessageStatus) => [
-          ...currResultMessageStatus,
-          false,
-        ]);
-        misMatch += 1;
-      }
-    }
-    if (misMatch === 0) {
-      setIsWin(true);
-      updateTotalPoint(1);
-    }
-    if (misMatch !== 0) {
-      setIsWin(false);
-    }
-    setIsGameStarted(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -190,23 +165,29 @@ export default function Cryptogram({
       />
       {!isTogglingReset && !isTogglingHomePage && (
         <Form
-          handleSubmit={handleSubmit}
           handleChange={handleChange}
           isGameStarted={isGameStarted}
+          setIsGameStarted={setIsGameStarted}
           isWin={isWin}
+          setIsWin={setIsWin}
           adviceArray={adviceArray}
           resultObj={resultObj}
+          setResultMessageStatus={setResultMessageStatus}
           inputs={inputs}
           setInputs={setInputs}
           isCharRepetitive={isCharRepetitive}
           setIsCharRepetitive={setIsCharRepetitive}
+          isInputEmpty={isInputEmpty}
+          setIsInputEmpty={setIsInputEmpty}
+          updateTotalPoint={updateTotalPoint}
         />
       )}
       {isGameStarted &&
         !isTogglingReset &&
         isWin === "" &&
         !isTogglingHomePage &&
-        !isCharRepetitive && (
+        !isCharRepetitive &&
+        !isInputEmpty && (
           <button onClick={() => toggleReset()}>Reset the Game</button>
         )}
       {!isGameStarted &&
@@ -251,9 +232,14 @@ export default function Cryptogram({
       {!isGameStarted && isWin === "" && !isTogglingHomePage && (
         <button onClick={getAdvice}>Start</button>
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isCharRepetitive && (
-        <button onClick={() => toggleHomePage()}>Back to the home page</button>
-      )}
+      {!isTogglingReset &&
+        !isTogglingHomePage &&
+        !isCharRepetitive &&
+        !isInputEmpty && (
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        )}
       {isTogglingHomePage && (
         <ConfirmationBox
           question="Are you sure you want to go back to Home Page?"

@@ -1,13 +1,18 @@
 export default function Form({
-  handleSubmit,
+  updateTotalPoint,
   isGameStarted,
+  setIsGameStarted,
   isWin,
+  setIsWin,
   adviceArray,
   resultObj,
+  setResultMessageStatus,
   inputs,
   setInputs,
   isCharRepetitive,
   setIsCharRepetitive,
+  isInputEmpty,
+  setIsInputEmpty,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -21,6 +26,38 @@ export default function Form({
       currInputs[name] = value;
       return { ...currInputs };
     });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    for (let i = 0; i < 4; i++) {
+      if (Object.values(inputs)[i] === "") {
+        setIsInputEmpty(true);
+        return;
+      }
+    }
+    let misMatch = 0;
+    for (let i = 0; i < 4; i++) {
+      if (Object.values(inputs)[i] === Object.keys(resultObj)[i]) {
+        setResultMessageStatus((currResultMessageStatus) => [
+          ...currResultMessageStatus,
+          true,
+        ]);
+      } else {
+        setResultMessageStatus((currResultMessageStatus) => [
+          ...currResultMessageStatus,
+          false,
+        ]);
+        misMatch += 1;
+      }
+    }
+    if (misMatch === 0) {
+      setIsWin(true);
+      updateTotalPoint(1);
+    }
+    if (misMatch !== 0) {
+      setIsWin(false);
+    }
+    setIsGameStarted(false);
   };
   const evaluateRepetitive = (name, value) => {
     if (value === inputs.input1 && name !== "input1") {
@@ -49,6 +86,9 @@ export default function Form({
     });
     setIsCharRepetitive(false);
   };
+  const handleIsInputEmpty = () => {
+    setIsInputEmpty(false);
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -66,7 +106,7 @@ export default function Form({
                   value={inputs.input1}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted || isCharRepetitive}
+                  disabled={!isGameStarted || isCharRepetitive || isInputEmpty}
                 />
               </div>
             ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -81,7 +121,7 @@ export default function Form({
                   value={inputs.input2}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted || isCharRepetitive}
+                  disabled={!isGameStarted || isCharRepetitive || isInputEmpty}
                 />
               </div>
             ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
@@ -96,7 +136,7 @@ export default function Form({
                   value={inputs.input3}
                   onChange={handleChange}
                   style={{ width: "15px", height: "30px" }}
-                  disabled={!isGameStarted || isCharRepetitive}
+                  disabled={!isGameStarted || isCharRepetitive || isInputEmpty}
                 />
               </div>
             ) : (
@@ -112,7 +152,9 @@ export default function Form({
                     value={inputs.input4}
                     onChange={handleChange}
                     style={{ width: "15px", height: "30px" }}
-                    disabled={!isGameStarted || isCharRepetitive}
+                    disabled={
+                      !isGameStarted || isCharRepetitive || isInputEmpty
+                    }
                   />
                 </div>
               )
@@ -121,16 +163,25 @@ export default function Form({
             <h2 style={{ display: "inline" }}>{a}</h2>
           )
         )}
-        {isGameStarted && isWin === "" && !isCharRepetitive && (
-          <div>
-            <button>Done</button>
-          </div>
-        )}
+        {isGameStarted &&
+          isWin === "" &&
+          !isCharRepetitive &&
+          !isInputEmpty && (
+            <div>
+              <button>Done</button>
+            </div>
+          )}
       </form>
       {isCharRepetitive && (
         <div>
           <p>The values can't be repetitive!</p>
           <button onClick={handleIsCharRepetitive}>OK</button>
+        </div>
+      )}
+      {isInputEmpty && (
+        <div>
+          <p>You shouldn't leave any box empty!</p>
+          <button onClick={handleIsInputEmpty}>OK</button>
         </div>
       )}
     </div>
