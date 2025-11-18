@@ -31,7 +31,11 @@ export default function Form({
     if (value.length > 1) {
       setIsOneChar(false);
     }
-    if (Object.keys(resultObj).slice(4).includes(value)) {
+    if (
+      Object.keys(resultObj)
+        .slice(4, Object.values(resultObj).indexOf(0))
+        .includes(value)
+    ) {
       setIsAlreadyExist(true);
     }
     setInputs((currInputs) => {
@@ -119,10 +123,11 @@ export default function Form({
     setIsOneChar(true);
   };
   const handleIsAlreadyExistYes = () => {
-    // setAcceptedAsRepetition((currAcceptedAsRepetition) => [...currAcceptedAsRepetition, ])
     for (let i = 0; i < 4; i++) {
       if (
-        Object.keys(resultObj).slice(4).includes(Object.values(inputs)[i]) &&
+        Object.keys(resultObj)
+          .slice(4, Object.values(resultObj).indexOf(0))
+          .includes(Object.values(inputs)[i]) &&
         !acceptedAsRepetition.includes(Object.values(inputs)[i])
       ) {
         setAcceptedAsRepetition((currAcceptedAsRepetition) => [
@@ -273,10 +278,10 @@ export default function Form({
       )}
       {isAlreadyExist && !isCharRepetitive && (
         <div>
-          <p>The visible letters are not the ones that you should guess!</p>
-          <p>
+          <div>The visible letters are not the ones that you should guess!</div>
+          <div>
             Are you sure you want to guess the letter that is already visible?
-          </p>
+          </div>
           <button onClick={handleIsAlreadyExistYes}>Yes</button>
           <button onClick={handleIsAlreadyExistCancel}>Cancel</button>
         </div>

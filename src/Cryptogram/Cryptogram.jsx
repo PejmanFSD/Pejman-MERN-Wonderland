@@ -165,6 +165,7 @@ export default function Cryptogram({
         isWin={isWin}
         isTogglingReset={isTogglingReset}
         isTogglingHomePage={isTogglingHomePage}
+        acceptedAsRepetition={acceptedAsRepetition}
       />
       {!isTogglingReset && !isTogglingHomePage && (
         <Form
