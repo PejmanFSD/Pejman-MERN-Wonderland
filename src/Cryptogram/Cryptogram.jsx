@@ -51,6 +51,7 @@ export default function Cryptogram({
   const [isCharRepetitive, setIsCharRepetitive] = useState(false);
   const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [isOneChar, setIsOneChar] = useState(true);
+  const [isAlreadyExist, setIsAlreadyExist] = useState(false);
   async function getAdvice() {
     setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
@@ -183,6 +184,8 @@ export default function Cryptogram({
           updateTotalPoint={updateTotalPoint}
           isOneChar={isOneChar}
           setIsOneChar={setIsOneChar}
+          isAlreadyExist={isAlreadyExist}
+          setIsAlreadyExist={setIsAlreadyExist}
         />
       )}
       {isGameStarted &&
@@ -191,7 +194,8 @@ export default function Cryptogram({
         !isTogglingHomePage &&
         !isCharRepetitive &&
         !isInputEmpty &&
-        isOneChar && (
+        isOneChar &&
+        !isAlreadyExist && (
           <button onClick={() => toggleReset()}>Reset the Game</button>
         )}
       {!isGameStarted &&
@@ -240,7 +244,8 @@ export default function Cryptogram({
         !isTogglingHomePage &&
         !isCharRepetitive &&
         !isInputEmpty &&
-        isOneChar && (
+        isOneChar &&
+        !isAlreadyExist && (
           <button onClick={() => toggleHomePage()}>
             Back to the home page
           </button>

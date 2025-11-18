@@ -15,6 +15,8 @@ export default function Form({
   setIsInputEmpty,
   isOneChar,
   setIsOneChar,
+  isAlreadyExist,
+  setIsAlreadyExist,
 }) {
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
@@ -26,6 +28,9 @@ export default function Form({
     }
     if (value.length > 1) {
       setIsOneChar(false);
+    }
+    if (Object.keys(resultObj).slice(4).includes(value)) {
+      setIsAlreadyExist(true);
     }
     setInputs((currInputs) => {
       currInputs[name] = value;
@@ -107,6 +112,23 @@ export default function Form({
       return updatedInputs;
     });
     setIsOneChar(true);
+  };
+  const handleIsAlreadyExistYes = () => {
+    setIsAlreadyExist(false);
+  };
+  const handleIsAlreadyExistCancel = () => {
+    setInputs((currInputs) => {
+      const updatedInputs = Object.fromEntries(
+        Object.entries(currInputs).map(([key, value]) => {
+          if (Object.keys(resultObj).slice(4).includes(value)) {
+            return [key, ""];
+          }
+          return [key, value];
+        })
+      );
+      return updatedInputs;
+    });
+    setIsAlreadyExist(false);
   };
   return (
     <div>
@@ -204,7 +226,8 @@ export default function Form({
           isWin === "" &&
           !isCharRepetitive &&
           !isInputEmpty &&
-          isOneChar && (
+          isOneChar &&
+          !isAlreadyExist && (
             <div>
               <button>Done</button>
             </div>
@@ -226,6 +249,16 @@ export default function Form({
         <div>
           <p>Each box should have only one character!</p>
           <button onClick={handleIsOneChar}>OK</button>
+        </div>
+      )}
+      {isAlreadyExist && (
+        <div>
+          <p>The visible letters are not the ones that you should guess!</p>
+          <p>
+            Are you sure you want to guess the letter that is already visible?
+          </p>
+          <button onClick={handleIsAlreadyExistYes}>Yes</button>
+          <button onClick={handleIsAlreadyExistCancel}>Cancel</button>
         </div>
       )}
     </div>
