@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function Cryptogram({ setShowCryptogram, setShowGameTitles }) {
+export default function Cryptogram({
+  setShowCryptogram,
+  setShowGameTitles,
+  updateTotalPoint,
+}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [adviceArray, setAdviceArray] = useState([]);
   const [resultObj, setResultObj] = useState({
@@ -82,6 +86,7 @@ export default function Cryptogram({ setShowCryptogram, setShowGameTitles }) {
     }
     if (misMatch === 0) {
       setIsWin(true);
+      updateTotalPoint(1);
     }
     if (misMatch !== 0) {
       setIsWin(false);
