@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { getRandArr } from "../utils";
 
+const table = Array.from({ length: 16 }, (_, i) => i);
 export default function Crazy100() {
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
@@ -10,7 +12,9 @@ export default function Crazy100() {
   const [allNums, setAllNums] = useState(
     Array.from({ length: 33 }, (_, i) => i + 1)
   );
-  const [extraNums, setExtraNums] = useState(Array.from({ length: 99 }, (_, i) => i + 1));
+  const [extraNums, setExtraNums] = useState(
+    Array.from({ length: 99 }, (_, i) => i + 1)
+  );
   const [blockNums, setBlockNums] = useState(
     Array.from({ length: 16 }, (_, i) => i)
   );
@@ -53,6 +57,13 @@ export default function Crazy100() {
     setBlockNums(copyblockNums);
     setExtraNums(copyExtraNums);
   };
+  // const generateExtraNum = () => {
+  //   const extraNum = getRandArr(extraNums);
+  //   setExtraNums((currExtraNums) =>
+  //     currExtraNums.filter((x) => x !== extraNum)
+  //   );
+  //   return extraNum;
+  // };
   return (
     <div>
       <div>
@@ -80,6 +91,15 @@ export default function Crazy100() {
         ))}
       </div>
       <button onClick={() => generateNums()}>Generate Numbers</button>
+      {table.map((t) =>
+        blockNums.includes(t) ? (
+          <div>{getRandArr(extraNums)}</div>
+        ) : (
+          <div style={{ color: "red" }}>
+            {nums.find((obj) => obj.blockNum === t)?.number}
+          </div>
+        )
+      )}
     </div>
   );
 }
