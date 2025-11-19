@@ -15,6 +15,7 @@ export default function Crazy100() {
   const [extraNums, setExtraNums] = useState(
     Array.from({ length: 99 }, (_, i) => i + 1)
   );
+  const [chosenExtraNums, setChosenExtraNums] = useState([]);
   const [blockNums, setBlockNums] = useState(
     Array.from({ length: 16 }, (_, i) => i)
   );
@@ -53,17 +54,23 @@ export default function Crazy100() {
         return copyNums;
       });
     }
+    let pickedChosenExtraNums = [];
+    for (let i = 0; i < 16; i++) {
+      let newNum = getRandArr(copyExtraNums);
+      pickedChosenExtraNums.push(newNum);
+      copyExtraNums = copyExtraNums.filter((e) => e !== newNum);
+    }
+    for (let i = 0; i < 16; i++) {
+      setChosenExtraNums((currChosenExtraNums) => {
+        const copyChosenExtraNums = [...currChosenExtraNums];
+        copyChosenExtraNums[i] = pickedChosenExtraNums[i];
+        return copyChosenExtraNums;
+      });
+    }
     setAllNums(copyAllNums);
     setBlockNums(copyblockNums);
     setExtraNums(copyExtraNums);
   };
-  // const generateExtraNum = () => {
-  //   const extraNum = getRandArr(extraNums);
-  //   setExtraNums((currExtraNums) =>
-  //     currExtraNums.filter((x) => x !== extraNum)
-  //   );
-  //   return extraNum;
-  // };
   return (
     <div>
       <div>
@@ -90,10 +97,16 @@ export default function Crazy100() {
           <div style={{ display: "inline" }}>{b}-</div>
         ))}
       </div>
+      <div>
+        Extra Numbers:{" "}
+        {chosenExtraNums.map((x) => (
+          <div style={{ display: "inline" }}>{x}-</div>
+        ))}
+      </div>
       <button onClick={() => generateNums()}>Generate Numbers</button>
       {table.map((t) =>
         blockNums.includes(t) ? (
-          <div>{getRandArr(extraNums)}</div>
+          <div>{chosenExtraNums[t]}</div>
         ) : (
           <div style={{ color: "red" }}>
             {nums.find((obj) => obj.blockNum === t)?.number}
