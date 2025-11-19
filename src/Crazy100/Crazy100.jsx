@@ -2,20 +2,20 @@ import { useState } from "react";
 
 export default function Crazy100() {
   const [nums, setNums] = useState([
-    { number: "", row: "", col: "" },
-    { number: "", row: "", col: "" },
-    { number: "", row: "", col: "" },
-    { number: "", row: "", col: "" },
+    { number: "", blockNum: "" },
+    { number: "", blockNum: "" },
+    { number: "", blockNum: "" },
+    { number: "", blockNum: "" },
   ]);
   const [allNums, setAllNums] = useState(
     Array.from({ length: 33 }, (_, i) => i + 1)
   );
-  const [rows, setRows] = useState(Array.from({ length: 16 }, (_, i) => i));
-  const [cols, setCols] = useState(Array.from({ length: 16 }, (_, i) => i));
+  const [blockNums, setBlockNums] = useState(
+    Array.from({ length: 16 }, (_, i) => i)
+  );
   const generateNums = () => {
     let copyAllNums = [...allNums];
-    let copyRows = [...rows];
-    let copyCols = [...cols];
+    let copyblockNums = [...blockNums];
     let pickedNums = [];
     for (let i = 0; i < 4; i++) {
       let newNum;
@@ -29,12 +29,11 @@ export default function Crazy100() {
           pickedNums[1].number -
           pickedNums[2].number;
       }
-      const newRow = copyRows[Math.floor(Math.random() * copyRows.length)];
-      const newCol = copyCols[Math.floor(Math.random() * copyCols.length)];
-      pickedNums.push({ number: newNum, row: newRow, col: newCol });
+      const newBlockNums =
+        copyblockNums[Math.floor(Math.random() * copyblockNums.length)];
+      pickedNums.push({ number: newNum, blockNum: newBlockNums });
       copyAllNums = copyAllNums.filter((n) => n !== newNum);
-      copyRows = copyRows.filter((r) => r !== newRow);
-      copyCols = copyCols.filter((c) => c !== newCol);
+      copyblockNums = copyblockNums.filter((r) => r !== newBlockNums);
     }
     for (let i = 0; i < 4; i++) {
       setNums((currNums) => {
@@ -42,46 +41,38 @@ export default function Crazy100() {
         copyNums[i] = {
           ...copyNums[i],
           number: pickedNums[i].number,
-          row: pickedNums[i].row,
-          col: pickedNums[i].col,
+          blockNum: pickedNums[i].blockNum,
         };
         return copyNums;
       });
     }
     setAllNums(copyAllNums);
-    setRows(copyRows);
-    setCols(copyCols);
+    setBlockNums(copyblockNums);
   };
   return (
     <div>
       <div>
-        Number1: {nums[0].number} - Row1: {nums[0].row} - Col1: {nums[0].col}
+        Number1: {nums[0].number} - BlockNum1: {nums[0].blockNum}
       </div>
       <div>
-        Number2: {nums[1].number} - Row2: {nums[1].row} - Col2: {nums[1].col}
+        Number2: {nums[1].number} - BlockNum2: {nums[1].blockNum}
       </div>
       <div>
-        Number3: {nums[2].number} - Row3: {nums[2].row} - Col3: {nums[2].col}
+        Number3: {nums[2].number} - BlockNum3: {nums[2].blockNum}
       </div>
       <div>
-        Number4: {nums[3].number} - Row4: {nums[3].row} - Col4: {nums[3].col}
+        Number4: {nums[3].number} - BlockNum4: {nums[3].blockNum}
       </div>
       <div>
         All Numbers:{" "}
-        {allNums.map((an) => (
-          <div style={{ display: "inline" }}>{an}-</div>
+        {allNums.map((n) => (
+          <div style={{ display: "inline" }}>{n}-</div>
         ))}
       </div>
       <div>
-        Rows:{" "}
-        {rows.map((r) => (
-          <div style={{ display: "inline" }}>{r}-</div>
-        ))}
-      </div>
-      <div>
-        Cols:{" "}
-        {cols.map((c) => (
-          <div style={{ display: "inline" }}>{c}-</div>
+        BlockNums:{" "}
+        {blockNums.map((b) => (
+          <div style={{ display: "inline" }}>{b}-</div>
         ))}
       </div>
       <button onClick={() => generateNums()}>Generate Numbers</button>
