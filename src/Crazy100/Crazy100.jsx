@@ -10,12 +10,14 @@ export default function Crazy100() {
   const [allNums, setAllNums] = useState(
     Array.from({ length: 33 }, (_, i) => i + 1)
   );
+  const [extraNums, setExtraNums] = useState(Array.from({ length: 99 }, (_, i) => i + 1));
   const [blockNums, setBlockNums] = useState(
     Array.from({ length: 16 }, (_, i) => i)
   );
   const generateNums = () => {
     let copyAllNums = [...allNums];
     let copyblockNums = [...blockNums];
+    let copyExtraNums = [...extraNums];
     let pickedNums = [];
     for (let i = 0; i < 4; i++) {
       let newNum;
@@ -34,6 +36,7 @@ export default function Crazy100() {
       pickedNums.push({ number: newNum, blockNum: newBlockNums });
       copyAllNums = copyAllNums.filter((n) => n !== newNum);
       copyblockNums = copyblockNums.filter((r) => r !== newBlockNums);
+      copyExtraNums = copyExtraNums.filter((e) => e !== newNum);
     }
     for (let i = 0; i < 4; i++) {
       setNums((currNums) => {
@@ -48,6 +51,7 @@ export default function Crazy100() {
     }
     setAllNums(copyAllNums);
     setBlockNums(copyblockNums);
+    setExtraNums(copyExtraNums);
   };
   return (
     <div>
