@@ -18,8 +18,17 @@ export default function Crazy100() {
     let copyCols = [...cols];
     let pickedNums = [];
     for (let i = 0; i < 4; i++) {
-      const newNum =
-        copyAllNums[Math.floor(Math.random() * copyAllNums.length)];
+      let newNum;
+      if (i !== 3) {
+        newNum = copyAllNums[Math.floor(Math.random() * copyAllNums.length)];
+      }
+      if (i === 3) {
+        newNum =
+          100 -
+          pickedNums[0].number -
+          pickedNums[1].number -
+          pickedNums[2].number;
+      }
       const newRow = copyRows[Math.floor(Math.random() * copyRows.length)];
       const newCol = copyCols[Math.floor(Math.random() * copyCols.length)];
       pickedNums.push({ number: newNum, row: newRow, col: newCol });
