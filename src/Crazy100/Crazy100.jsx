@@ -74,7 +74,11 @@ export default function Crazy100() {
     setExtraNums(copyExtraNums);
   };
   const handleClick = (e) => {
-    setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
+    if (!answer.includes(e.target.innerText)) {
+      setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
+    } else {
+      setAnswer(answer.filter(num => num !== e.target.innerText))
+    }
   };
   const handleSubmit = () => {
     let sum = 0;
