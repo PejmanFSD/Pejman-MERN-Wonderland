@@ -19,6 +19,7 @@ export default function Crazy100() {
   const [blockNums, setBlockNums] = useState(
     Array.from({ length: 16 }, (_, i) => i)
   );
+  const [answer, setAnswer] = useState([]);
   const generateNums = () => {
     let copyAllNums = [...allNums];
     let copyblockNums = [...blockNums];
@@ -71,44 +72,42 @@ export default function Crazy100() {
     setBlockNums(copyblockNums);
     setExtraNums(copyExtraNums);
   };
+  const handleClick = (e) => {
+    setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
+  };
   return (
     <div>
       <div>
-        Number1: {nums[0].number} - BlockNum1: {nums[0].blockNum}
+        <button onClick={() => generateNums()}>Start</button>
       </div>
-      <div>
-        Number2: {nums[1].number} - BlockNum2: {nums[1].blockNum}
-      </div>
-      <div>
-        Number3: {nums[2].number} - BlockNum3: {nums[2].blockNum}
-      </div>
-      <div>
-        Number4: {nums[3].number} - BlockNum4: {nums[3].blockNum}
-      </div>
-      <div>
-        All Numbers:{" "}
-        {allNums.map((n) => (
-          <div style={{ display: "inline" }}>{n}-</div>
-        ))}
-      </div>
-      <div>
-        BlockNums:{" "}
-        {blockNums.map((b) => (
-          <div style={{ display: "inline" }}>{b}-</div>
-        ))}
-      </div>
-      <div>
-        Extra Numbers:{" "}
-        {chosenExtraNums.map((x) => (
-          <div style={{ display: "inline" }}>{x}-</div>
-        ))}
-      </div>
-      <button onClick={() => generateNums()}>Generate Numbers</button>
       {table.map((t) =>
         blockNums.includes(t) ? (
-          <div>{chosenExtraNums[t]}</div>
+          <div
+            style={{
+              border: "1px solid black",
+              padding: "5px",
+              width: "70px",
+              display: "inline",
+              position: "relative",
+              top: "20px",
+            }}
+            onClick={handleClick}
+          >
+            {chosenExtraNums[t]}
+          </div>
         ) : (
-          <div style={{ color: "red" }}>
+          <div
+            style={{
+              border: "1px solid black",
+              padding: "5px",
+              width: "70px",
+              display: "inline",
+              position: "relative",
+              top: "20px",
+              color: "red",
+            }}
+            onClick={handleClick}
+          >
             {nums.find((obj) => obj.blockNum === t)?.number}
           </div>
         )
