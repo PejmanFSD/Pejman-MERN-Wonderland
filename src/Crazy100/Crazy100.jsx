@@ -52,6 +52,7 @@ export default function Crazy100() {
           ...copyNums[i],
           number: pickedNums[i].number,
           blockNum: pickedNums[i].blockNum,
+          clicked: false,
         };
         return copyNums;
       });
@@ -65,7 +66,10 @@ export default function Crazy100() {
     for (let i = 0; i < 16; i++) {
       setChosenExtraNums((currChosenExtraNums) => {
         const copyChosenExtraNums = [...currChosenExtraNums];
-        copyChosenExtraNums[i] = pickedChosenExtraNums[i];
+        copyChosenExtraNums[i] = {
+          number: pickedChosenExtraNums[i],
+          clicked: false,
+        };
         return copyChosenExtraNums;
       });
     }
@@ -73,11 +77,49 @@ export default function Crazy100() {
     setBlockNums(copyblockNums);
     setExtraNums(copyExtraNums);
   };
-  const handleClick = (e) => {
+  const toggleClicked = (el) => {
+    if (el.clicked) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const handleClickChosenExtraNum = (e) => {
     if (!answer.includes(e.target.innerText)) {
       setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
     } else {
-      setAnswer(answer.filter(num => num !== e.target.innerText))
+      setAnswer(answer.filter((num) => num !== e.target.innerText));
+    }
+    for (let chosenExtraNum of chosenExtraNums) {
+      if (e.target.innerText.toString() === chosenExtraNum.number.toString()) {
+        setChosenExtraNums((currChosenExtraNum) =>
+          currChosenExtraNum.map(
+            (chosenNum) =>
+              chosenNum.number.toString() === e.target.innerText.toString()
+                ? { ...chosenNum, clicked: toggleClicked(chosenExtraNum) } // update only this object
+                : chosenNum // leave the other objects unchanged
+          )
+        );
+      }
+    }
+  };
+  const handleClickNum = (e) => {
+    if (!answer.includes(e.target.innerText)) {
+      setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
+    } else {
+      setAnswer(answer.filter((num) => num !== e.target.innerText));
+    }
+    for (let num of nums) {
+      if (e.target.innerText.toString() === num.number.toString()) {
+        setNums((currNum) =>
+          currNum.map(
+            (num) =>
+              num.number.toString() === e.target.innerText.toString()
+                ? { ...num, clicked: toggleClicked(num) } // update only this object
+                : num // leave the other objects unchanged
+          )
+        );
+      }
     }
   };
   const handleSubmit = () => {
@@ -105,34 +147,37 @@ export default function Crazy100() {
       </div>
       {table.map((t) =>
         blockNums.includes(t) ? (
-          <div
+          <button
             style={{
               border: "1px solid black",
               padding: "5px",
-              width: "70px",
+              width: "30px",
               display: "inline",
               position: "relative",
               top: "20px",
+              background: chosenExtraNums[t]?.clicked && "gray",
             }}
-            onClick={handleClick}
+            onClick={handleClickChosenExtraNum}
           >
-            {chosenExtraNums[t]}
-          </div>
+            {chosenExtraNums[t]?.number}
+          </button>
         ) : (
-          <div
+          <button
             style={{
               border: "1px solid black",
               padding: "5px",
-              width: "70px",
+              width: "30px",
               display: "inline",
               position: "relative",
               top: "20px",
+              background:
+                nums.find((obj) => obj.blockNum === t)?.clicked && "gray",
               color: "red",
             }}
-            onClick={handleClick}
+            onClick={handleClickNum}
           >
             {nums.find((obj) => obj.blockNum === t)?.number}
-          </div>
+          </button>
         )
       )}
       <div>
