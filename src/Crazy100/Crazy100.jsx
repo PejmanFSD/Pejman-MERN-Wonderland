@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getRandArr } from "../utils";
+import ModeExplaination from "../ModeExplaination";
 
 const table = Array.from({ length: 16 }, (_, i) => i);
 export default function Crazy100() {
@@ -21,7 +22,9 @@ export default function Crazy100() {
   );
   const [answer, setAnswer] = useState([]);
   const [isWin, setIsWin] = useState("");
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const generateNums = () => {
+    setIsGameStarted(true);
     let copyAllNums = [...allNums];
     let copyblockNums = [...blockNums];
     let copyExtraNums = [...extraNums];
@@ -122,9 +125,12 @@ export default function Crazy100() {
       }
     }
   };
+  const handleReset = () => {
+
+  }
   const handleSubmit = () => {
     let sum = 0;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < answer.length; i++) {
       sum += Number(answer[i]);
     }
     if (sum === 100) {
@@ -134,60 +140,78 @@ export default function Crazy100() {
       setIsWin(false);
     }
     console.log(sum);
+    // setIsGameStarted(false);
   };
   return (
     <div>
+      <h2>Crazy-100</h2>
+      <ModeExplaination message="Among the 16 numbers, choose 4 of them whose sum equals 100." />
       {isWin === true && <h1>You Win!</h1>}
       {isWin === false && <h1>You Loose!</h1>}
       {answer.map((a) => (
         <div>{a}</div>
       ))}
-      <div>
-        <button onClick={() => generateNums()}>Start</button>
-      </div>
-      {table.map((t) =>
-        blockNums.includes(t) ? (
-          <button
-            style={{
-              border: "1px solid black",
-              padding: "5px",
-              width: "30px",
-              display: "inline",
-              position: "relative",
-              top: "20px",
-              background: chosenExtraNums[t]?.clicked && "gray",
-            }}
-            onClick={handleClickChosenExtraNum}
-          >
-            {chosenExtraNums[t]?.number}
-          </button>
-        ) : (
-          <button
-            style={{
-              border: "1px solid black",
-              padding: "5px",
-              width: "30px",
-              display: "inline",
-              position: "relative",
-              top: "20px",
-              background:
-                nums.find((obj) => obj.blockNum === t)?.clicked && "gray",
-              color: "red",
-            }}
-            onClick={handleClickNum}
-          >
-            {nums.find((obj) => obj.blockNum === t)?.number}
-          </button>
-        )
+      {!isGameStarted && (
+        <div>
+          <button onClick={() => generateNums()}>Start</button>
+        </div>
       )}
-      <div>
-        <button
-          onClick={handleSubmit}
-          style={{ position: "relative", top: "30px" }}
-        >
-          Done
-        </button>
-      </div>
+      {isGameStarted &&
+        table.map((t) =>
+          blockNums.includes(t) ? (
+            <button
+              style={{
+                border: "1px solid black",
+                padding: "5px",
+                width: "30px",
+                display: "inline",
+                position: "relative",
+                top: "20px",
+                background: chosenExtraNums[t]?.clicked && "gray",
+              }}
+              onClick={handleClickChosenExtraNum}
+            >
+              {chosenExtraNums[t]?.number}
+            </button>
+          ) : (
+            <button
+              style={{
+                border: "1px solid black",
+                padding: "5px",
+                width: "30px",
+                display: "inline",
+                position: "relative",
+                top: "20px",
+                background:
+                  nums.find((obj) => obj.blockNum === t)?.clicked && "gray",
+                color: "red",
+              }}
+              onClick={handleClickNum}
+            >
+              {nums.find((obj) => obj.blockNum === t)?.number}
+            </button>
+          )
+        )}
+      {isGameStarted && isWin === "" && (
+        <div>
+          <button
+            onClick={handleSubmit}
+            style={{ position: "relative", top: "30px" }}
+          >
+            Done
+          </button>
+        </div>
+      )}
+      {isWin !== "" && (
+        <div>
+          <button
+            onClick={handleReset}
+            style={{ position: "relative", top: "30px" }}
+          >
+            {isWin ? "Play Again" : "Try Again"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

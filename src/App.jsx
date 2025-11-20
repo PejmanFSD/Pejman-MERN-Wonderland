@@ -115,7 +115,7 @@ function App() {
       ) : (
         showGameTitles &&
         !showCrazy100 && (
-          <button onClick={() => toggleCrazy100()}>Crazy100</button>
+          <button onClick={() => toggleCrazy100()}>Crazy-100</button>
         )
       )}
     </div>

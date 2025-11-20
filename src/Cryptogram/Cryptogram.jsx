@@ -158,6 +158,7 @@ export default function Cryptogram({
   );
   return (
     <div>
+      <h2>Cryptogram</h2>
       {isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <ModeExplaination message="Find the 4 missing letters of the advice, win the game and get one star." />
       )}
