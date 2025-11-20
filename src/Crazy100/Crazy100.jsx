@@ -20,6 +20,7 @@ export default function Crazy100() {
     Array.from({ length: 16 }, (_, i) => i)
   );
   const [answer, setAnswer] = useState([]);
+  const [isWin, setIsWin] = useState("");
   const generateNums = () => {
     let copyAllNums = [...allNums];
     let copyblockNums = [...blockNums];
@@ -75,8 +76,26 @@ export default function Crazy100() {
   const handleClick = (e) => {
     setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
   };
+  const handleSubmit = () => {
+    let sum = 0;
+    for (let i = 0; i < 4; i++) {
+      sum += Number(answer[i]);
+    }
+    if (sum === 100) {
+      setIsWin(true);
+    }
+    if (sum !== 100) {
+      setIsWin(false);
+    }
+    console.log(sum);
+  };
   return (
     <div>
+      {isWin === true && <h1>You Win!</h1>}
+      {isWin === false && <h1>You Loose!</h1>}
+      {answer.map((a) => (
+        <div>{a}</div>
+      ))}
       <div>
         <button onClick={() => generateNums()}>Start</button>
       </div>
@@ -112,6 +131,14 @@ export default function Crazy100() {
           </div>
         )
       )}
+      <div>
+        <button
+          onClick={handleSubmit}
+          style={{ position: "relative", top: "30px" }}
+        >
+          Done
+        </button>
+      </div>
     </div>
   );
 }
