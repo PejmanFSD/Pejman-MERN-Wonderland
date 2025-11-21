@@ -4,7 +4,7 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
 const table = Array.from({ length: 16 }, (_, i) => i);
-export default function Crazy100() {
+export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
@@ -25,6 +25,7 @@ export default function Crazy100() {
   const [isWin, setIsWin] = useState("");
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -149,6 +150,17 @@ export default function Crazy100() {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowCrazy100(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
+  };
   const handleSubmit = () => {
     let sum = 0;
     for (let i = 0; i < answer.length; i++) {
@@ -171,7 +183,7 @@ export default function Crazy100() {
       {answer.map((a) => (
         <div>{a}</div>
       ))}
-      {!isGameStarted && !isTogglingReset && (
+      {!isGameStarted && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <button onClick={() => generateNums()}>Start</button>
         </div>
@@ -190,7 +202,7 @@ export default function Crazy100() {
                 background: chosenExtraNums[t]?.clicked && "gray",
               }}
               onClick={handleClickChosenExtraNum}
-              disabled={isTogglingReset || isWin !== ""}
+              disabled={isTogglingReset || isWin !== "" || isTogglingHomePage}
             >
               {chosenExtraNums[t]?.number}
             </button>
@@ -208,23 +220,26 @@ export default function Crazy100() {
                 color: "red",
               }}
               onClick={handleClickNum}
-              disabled={isTogglingReset || isWin !== ""}
+              disabled={isTogglingReset || isWin !== "" || isTogglingHomePage}
             >
               {nums.find((obj) => obj.blockNum === t)?.number}
             </button>
           )
         )}
-      {isGameStarted && isWin === "" && !isTogglingReset && (
-        <div>
-          <button
-            onClick={handleSubmit}
-            style={{ position: "relative", top: "30px" }}
-          >
-            Done
-          </button>
-        </div>
-      )}
-      {isWin !== "" && !isTogglingReset && (
+      {isGameStarted &&
+        isWin === "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <div>
+            <button
+              onClick={handleSubmit}
+              style={{ position: "relative", top: "30px" }}
+            >
+              Done
+            </button>
+          </div>
+        )}
+      {isWin !== "" && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <button
             onClick={toggleResetYes}
@@ -234,16 +249,19 @@ export default function Crazy100() {
           </button>
         </div>
       )}
-      {isGameStarted && isWin === "" && !isTogglingReset && (
-        <div>
-          <button
-            onClick={toggleReset}
-            style={{ position: "relative", top: "30px" }}
-          >
-            Reset the Game
-          </button>
-        </div>
-      )}
+      {isGameStarted &&
+        isWin === "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <div>
+            <button
+              onClick={toggleReset}
+              style={{ position: "relative", top: "30px" }}
+            >
+              Reset the Game
+            </button>
+          </div>
+        )}
       {isTogglingReset && (
         <div
           style={{
@@ -255,6 +273,31 @@ export default function Crazy100() {
             question="Are you sure you want to reset the game?"
             toggleYes={toggleResetYes}
             toggleCancel={toggleResetCancel}
+          />
+        </div>
+      )}
+      {!isTogglingReset && !isTogglingHomePage && (
+        <button
+          style={{
+            position: "relative",
+            top: "30px",
+          }}
+          onClick={() => toggleHomePage()}
+        >
+          Back to the home page
+        </button>
+      )}
+      {isTogglingHomePage && (
+        <div
+          style={{
+            position: "relative",
+            top: "30px",
+          }}
+        >
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
           />
         </div>
       )}
