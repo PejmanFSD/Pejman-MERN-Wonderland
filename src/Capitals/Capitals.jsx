@@ -362,7 +362,6 @@ export default function Capitals({
           }?`}
           toggleYes={toggleLevelYes}
           toggleCancel={toggleLevelCancel}
-          easyMode={easyMode}
         />
       )}
       {!isTogglingReset &&

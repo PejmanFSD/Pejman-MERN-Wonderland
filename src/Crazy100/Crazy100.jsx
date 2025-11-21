@@ -29,6 +29,7 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -185,6 +186,35 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
     }
     console.log(sum);
   };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    setIsGameStarted(false);
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+    }
+    setNums([
+      { number: "", blockNum: "" },
+      { number: "", blockNum: "" },
+      { number: "", blockNum: "" },
+      { number: "", blockNum: "" },
+    ]);
+    setAllNums(Array.from({ length: 33 }, (_, i) => i + 1));
+    setExtraNums(Array.from({ length: 99 }, (_, i) => i + 1));
+    setChosenExtraNums([]);
+    setBlockNums(Array.from({ length: 16 }, (_, i) => i));
+    setAnswer([]);
+    setIsWin("");
+    setIsTogglingLevel(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
+  };
   return (
     <div>
       <h2>Crazy-100</h2>
@@ -201,10 +231,15 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
       {isGameStarted &&
         (easyMode || normalMode) &&
         !isTogglingReset &&
-        !isTogglingHomePage && (
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <h3>Among the 16 numbers, choose 4 of them whose sum equals 100.</h3>
         )}
-      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
+      {easyMode &&
+      !normalMode &&
+      !isTogglingReset &&
+      !isTogglingHomePage &&
+      !isTogglingLevel ? (
         <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
       ) : (
         !easyMode &&
@@ -222,12 +257,14 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
       {!isGameStarted &&
         !isTogglingReset &&
         !isTogglingHomePage &&
-        (easyMode || normalMode) && (
+        (easyMode || normalMode) &&
+        !isTogglingLevel && (
           <div>
             <button onClick={() => generateNums()}>Start</button>
           </div>
         )}
       {isGameStarted &&
+        !isTogglingLevel &&
         table.map((t) =>
           blockNums.includes(t) ? (
             <button
@@ -268,7 +305,8 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
       {isGameStarted &&
         isWin === "" &&
         !isTogglingReset &&
-        !isTogglingHomePage && (
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <div>
             <button
               onClick={handleSubmit}
@@ -281,7 +319,8 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
       {isWin !== "" &&
         !isTogglingReset &&
         !isTogglingHomePage &&
-        (easyMode || normalMode) && (
+        (easyMode || normalMode) &&
+        !isTogglingLevel && (
           <div>
             <button
               onClick={toggleResetYes}
@@ -295,7 +334,8 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
         isWin === "" &&
         !isTogglingReset &&
         !isTogglingHomePage &&
-        (easyMode || normalMode) && (
+        (easyMode || normalMode) &&
+        !isTogglingLevel && (
           <div>
             <button
               onClick={toggleReset}
@@ -319,16 +359,48 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && (
-        <button
-          style={{
-            position: "relative",
-            top: "30px",
-          }}
-          onClick={() => toggleHomePage()}
-        >
-          Back to the home page
-        </button>
+      {isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingLevel &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <button
+              style={{
+                display: "inline",
+                position: "relative",
+                top: "30px",
+              }}
+              onClick={() => toggleLevel()}
+            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+          </div>
+        )}
+      {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+        <div>
+          <ConfirmationBox
+            question={`Are you sure you want to switch to ${
+              easyMode ? "Normal Mode" : "Easy Mode"
+            }?`}
+            toggleYes={toggleLevelYes}
+            toggleCancel={toggleLevelCancel}
+            easyMode={easyMode}
+          />
+        </div>
+      )}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
+        <div>
+          <button
+            style={{
+              display: "inline",
+              position: "relative",
+              top: "30px",
+            }}
+            onClick={() => toggleHomePage()}
+          >
+            Back to the home page
+          </button>
+        </div>
       )}
       {isTogglingHomePage && (
         <div
