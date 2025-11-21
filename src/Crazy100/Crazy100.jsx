@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getRandArr } from "../utils";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import GameLevel from "../GameLevel";
 
 const table = Array.from({ length: 16 }, (_, i) => i);
 export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
@@ -26,6 +27,8 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -161,6 +164,14 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  const runEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const runNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const handleSubmit = () => {
     let sum = 0;
     for (let i = 0; i < answer.length; i++) {
@@ -177,17 +188,45 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
   return (
     <div>
       <h2>Crazy-100</h2>
-      <ModeExplaination message="Among the 16 numbers, choose 4 of them whose sum equals 100." />
+      {!easyMode && !normalMode && !isTogglingHomePage && (
+        <GameLevel
+          mode1="Easy"
+          mode1Function={runEasyMode}
+          mode2="Normal"
+          mode2Function={runNormalMode}
+          runEasyMode={runEasyMode}
+          runNormalMode={runNormalMode}
+        />
+      )}
+      {isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <h3>Among the 16 numbers, choose 4 of them whose sum equals 100.</h3>
+        )}
+      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
+        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+      ) : (
+        !easyMode &&
+        normalMode &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <ModeExplaination message="Normal Mode: You will get one star if you win in 45 seconds." />
+        )
+      )}
       {isWin === true && <h1>You Win!</h1>}
       {isWin === false && <h1>You Loose!</h1>}
       {answer.map((a) => (
         <div>{a}</div>
       ))}
-      {!isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <button onClick={() => generateNums()}>Start</button>
-        </div>
-      )}
+      {!isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        (easyMode || normalMode) && (
+          <div>
+            <button onClick={() => generateNums()}>Start</button>
+          </div>
+        )}
       {isGameStarted &&
         table.map((t) =>
           blockNums.includes(t) ? (
@@ -239,20 +278,24 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
             </button>
           </div>
         )}
-      {isWin !== "" && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <button
-            onClick={toggleResetYes}
-            style={{ position: "relative", top: "30px" }}
-          >
-            {isWin ? "Play Again" : "Try Again"}
-          </button>
-        </div>
-      )}
+      {isWin !== "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        (easyMode || normalMode) && (
+          <div>
+            <button
+              onClick={toggleResetYes}
+              style={{ position: "relative", top: "30px" }}
+            >
+              {isWin ? "Play Again" : "Try Again"}
+            </button>
+          </div>
+        )}
       {isGameStarted &&
         isWin === "" &&
         !isTogglingReset &&
-        !isTogglingHomePage && (
+        !isTogglingHomePage &&
+        (easyMode || normalMode) && (
           <div>
             <button
               onClick={toggleReset}
