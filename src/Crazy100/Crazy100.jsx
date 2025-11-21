@@ -126,8 +126,20 @@ export default function Crazy100() {
     }
   };
   const handleReset = () => {
-
-  }
+    setIsGameStarted(false);
+    setNums([
+      { number: "", blockNum: "" },
+      { number: "", blockNum: "" },
+      { number: "", blockNum: "" },
+      { number: "", blockNum: "" },
+    ]);
+    setAllNums(Array.from({ length: 33 }, (_, i) => i + 1));
+    setExtraNums(Array.from({ length: 99 }, (_, i) => i + 1));
+    setChosenExtraNums([]);
+    setBlockNums(Array.from({ length: 16 }, (_, i) => i));
+    setAnswer([]);
+    setIsWin("");
+  };
   const handleSubmit = () => {
     let sum = 0;
     for (let i = 0; i < answer.length; i++) {
@@ -209,6 +221,16 @@ export default function Crazy100() {
             style={{ position: "relative", top: "30px" }}
           >
             {isWin ? "Play Again" : "Try Again"}
+          </button>
+        </div>
+      )}
+      {isGameStarted && isWin === "" && (
+        <div>
+          <button
+            onClick={handleReset}
+            style={{ position: "relative", top: "30px" }}
+          >
+            Reset the Game
           </button>
         </div>
       )}
