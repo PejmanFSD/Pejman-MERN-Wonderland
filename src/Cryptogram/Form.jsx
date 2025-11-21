@@ -176,7 +176,8 @@ export default function Form({
                     !isGameStarted ||
                     isCharRepetitive ||
                     isInputEmpty ||
-                    !isOneChar
+                    !isOneChar ||
+                    isAlreadyExist
                   }
                 />
               </div>
@@ -196,7 +197,8 @@ export default function Form({
                     !isGameStarted ||
                     isCharRepetitive ||
                     isInputEmpty ||
-                    !isOneChar
+                    !isOneChar ||
+                    isAlreadyExist
                   }
                 />
               </div>
@@ -216,7 +218,8 @@ export default function Form({
                     !isGameStarted ||
                     isCharRepetitive ||
                     isInputEmpty ||
-                    !isOneChar
+                    !isOneChar ||
+                    isAlreadyExist
                   }
                 />
               </div>
@@ -237,7 +240,8 @@ export default function Form({
                       !isGameStarted ||
                       isCharRepetitive ||
                       isInputEmpty ||
-                      !isOneChar
+                      !isOneChar ||
+                      isAlreadyExist
                     }
                   />
                 </div>
