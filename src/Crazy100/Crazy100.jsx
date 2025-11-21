@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getRandArr } from "../utils";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
 const table = Array.from({ length: 16 }, (_, i) => i);
 export default function Crazy100() {
@@ -23,6 +24,7 @@ export default function Crazy100() {
   const [answer, setAnswer] = useState([]);
   const [isWin, setIsWin] = useState("");
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -125,7 +127,10 @@ export default function Crazy100() {
       }
     }
   };
-  const handleReset = () => {
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
     setIsGameStarted(false);
     setNums([
       { number: "", blockNum: "" },
@@ -139,6 +144,10 @@ export default function Crazy100() {
     setBlockNums(Array.from({ length: 16 }, (_, i) => i));
     setAnswer([]);
     setIsWin("");
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   const handleSubmit = () => {
     let sum = 0;
@@ -152,7 +161,6 @@ export default function Crazy100() {
       setIsWin(false);
     }
     console.log(sum);
-    // setIsGameStarted(false);
   };
   return (
     <div>
@@ -163,7 +171,7 @@ export default function Crazy100() {
       {answer.map((a) => (
         <div>{a}</div>
       ))}
-      {!isGameStarted && (
+      {!isGameStarted && !isTogglingReset && (
         <div>
           <button onClick={() => generateNums()}>Start</button>
         </div>
@@ -182,6 +190,7 @@ export default function Crazy100() {
                 background: chosenExtraNums[t]?.clicked && "gray",
               }}
               onClick={handleClickChosenExtraNum}
+              disabled={isTogglingReset || isWin !== ""}
             >
               {chosenExtraNums[t]?.number}
             </button>
@@ -199,12 +208,13 @@ export default function Crazy100() {
                 color: "red",
               }}
               onClick={handleClickNum}
+              disabled={isTogglingReset || isWin !== ""}
             >
               {nums.find((obj) => obj.blockNum === t)?.number}
             </button>
           )
         )}
-      {isGameStarted && isWin === "" && (
+      {isGameStarted && isWin === "" && !isTogglingReset && (
         <div>
           <button
             onClick={handleSubmit}
@@ -214,24 +224,38 @@ export default function Crazy100() {
           </button>
         </div>
       )}
-      {isWin !== "" && (
+      {isWin !== "" && !isTogglingReset && (
         <div>
           <button
-            onClick={handleReset}
+            onClick={toggleResetYes}
             style={{ position: "relative", top: "30px" }}
           >
             {isWin ? "Play Again" : "Try Again"}
           </button>
         </div>
       )}
-      {isGameStarted && isWin === "" && (
+      {isGameStarted && isWin === "" && !isTogglingReset && (
         <div>
           <button
-            onClick={handleReset}
+            onClick={toggleReset}
             style={{ position: "relative", top: "30px" }}
           >
             Reset the Game
           </button>
+        </div>
+      )}
+      {isTogglingReset && (
+        <div
+          style={{
+            position: "relative",
+            top: "20px",
+          }}
+        >
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
         </div>
       )}
     </div>
