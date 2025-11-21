@@ -5,7 +5,11 @@ import ConfirmationBox from "../ConfirmationBox";
 import GameLevel from "../GameLevel";
 
 const table = Array.from({ length: 16 }, (_, i) => i);
-export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
+export default function Crazy100({
+  setShowGameTitles,
+  setShowCrazy100,
+  updateTotalPoint,
+}) {
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
@@ -180,6 +184,9 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
     }
     if (sum === 100) {
       setIsWin(true);
+      if (normalMode) {
+        updateTotalPoint(1);
+      }
     }
     if (sum !== 100) {
       setIsWin(false);
@@ -292,7 +299,10 @@ export default function Crazy100({ setShowGameTitles, setShowCrazy100 }) {
                 position: "relative",
                 top: "20px",
                 background:
-                  nums.find((obj) => obj.blockNum === t)?.clicked && "gray",
+                  nums.find((obj) => obj.blockNum === t)?.clicked &&
+                  isWin === ""
+                    ? "gray"
+                    : isWin !== "" && "lightblue",
                 color: "red",
               }}
               onClick={handleClickNum}
