@@ -36,6 +36,7 @@ export default function Crazy100({
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [seconds, setSeconds] = useState(50);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [is4Blocks, setIs4Blocks] = useState(true);
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -184,6 +185,10 @@ export default function Crazy100({
     setEasyMode(false);
   };
   const handleSubmit = () => {
+    if (answer.length !== 4) {
+      setIs4Blocks(false);
+      return;
+    }
     let sum = 0;
     for (let i = 0; i < answer.length; i++) {
       sum += Number(answer[i]);
@@ -234,6 +239,9 @@ export default function Crazy100({
   const handleResetTimer = () => {
     setSeconds(50);
     setIsTimerRunning(false);
+  };
+  const handle4Blocks = () => {
+    setIs4Blocks(true);
   };
   useEffect(() => {
     let interval;
@@ -367,11 +375,13 @@ export default function Crazy100({
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel &&
-        seconds > 0 && (
+        seconds > 0 &&
+        is4Blocks && (
           <div>
             <button
               onClick={handleSubmit}
               style={{ position: "relative", top: "30px" }}
+              disabled={answer.length === 0}
             >
               Done
             </button>
@@ -411,7 +421,8 @@ export default function Crazy100({
         !isTogglingHomePage &&
         (easyMode || normalMode) &&
         !isTogglingLevel &&
-        seconds > 0 && (
+        seconds > 0 &&
+        is4Blocks && (
           <div>
             <button
               onClick={toggleReset}
@@ -439,7 +450,8 @@ export default function Crazy100({
         (easyMode || normalMode) &&
         !isTogglingReset &&
         !isTogglingHomePage &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        is4Blocks && (
           <div>
             <button
               style={{
@@ -463,20 +475,23 @@ export default function Crazy100({
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
-        <div>
-          <button
-            style={{
-              display: "inline",
-              position: "relative",
-              top: "30px",
-            }}
-            onClick={() => toggleHomePage()}
-          >
-            Back to the home page
-          </button>
-        </div>
-      )}
+      {!isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
+        is4Blocks && (
+          <div>
+            <button
+              style={{
+                display: "inline",
+                position: "relative",
+                top: "30px",
+              }}
+              onClick={() => toggleHomePage()}
+            >
+              Back to the home page
+            </button>
+          </div>
+        )}
       {isTogglingHomePage && (
         <div
           style={{
@@ -489,6 +504,21 @@ export default function Crazy100({
             toggleYes={toggleHomePageYes}
             toggleCancel={toggleHomePageCancel}
           />
+        </div>
+      )}
+      {!is4Blocks && (
+        <div
+          style={{
+            position: "relative",
+            top: "30px",
+          }}
+        >
+          {`You chose ${answer.length} number${
+            answer.length > 1 ? "s" : ""
+          }, you should choose only 4 numbers, no more no less!`}
+          <div>
+            <button onClick={handle4Blocks}>Ok</button>
+          </div>
         </div>
       )}
     </div>
