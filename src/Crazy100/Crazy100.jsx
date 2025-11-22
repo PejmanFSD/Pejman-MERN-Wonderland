@@ -358,9 +358,9 @@ export default function Crazy100({
                 top: "20px",
                 background:
                   nums.find((obj) => obj.blockNum === t)?.clicked &&
-                  isWin === ""
+                  (isWin === "" || isWin === true)
                     ? "gray"
-                    : isWin !== "" && "lightblue",
+                    : isWin === false && "lightblue",
                 color: "red",
               }}
               onClick={handleClickNum}
