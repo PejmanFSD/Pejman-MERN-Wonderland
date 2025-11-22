@@ -343,7 +343,7 @@ export default function Crazy100({
                 background: chosenExtraNums[t]?.clicked && "gray",
               }}
               onClick={handleClickChosenExtraNum}
-              disabled={isTogglingReset || isWin !== "" || isTogglingHomePage}
+              disabled={isWin !== "" || seconds < 1}
             >
               {chosenExtraNums[t]?.number}
             </button>
@@ -364,7 +364,7 @@ export default function Crazy100({
                 color: "red",
               }}
               onClick={handleClickNum}
-              disabled={isTogglingReset || isWin !== "" || isTogglingHomePage}
+              disabled={isWin !== "" || seconds < 1}
             >
               {nums.find((obj) => obj.blockNum === t)?.number}
             </button>
