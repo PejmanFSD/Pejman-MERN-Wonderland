@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getRandArr } from "../utils";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
@@ -34,6 +34,8 @@ export default function Crazy100({
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [seconds, setSeconds] = useState(50);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -90,6 +92,9 @@ export default function Crazy100({
     setAllNums(copyAllNums);
     setBlockNums(copyblockNums);
     setExtraNums(copyExtraNums);
+    if (normalMode) {
+      handleStartTimer();
+    }
   };
   const toggleClicked = (el) => {
     if (el.clicked) {
@@ -153,6 +158,7 @@ export default function Crazy100({
     setBlockNums(Array.from({ length: 16 }, (_, i) => i));
     setAnswer([]);
     setIsWin("");
+    handleResetTimer();
     setIsTogglingReset(false);
   };
   const toggleResetCancel = () => {
@@ -191,7 +197,7 @@ export default function Crazy100({
     if (sum !== 100) {
       setIsWin(false);
     }
-    console.log(sum);
+    handleStopTimer();
   };
   const toggleLevel = () => {
     setIsTogglingLevel(true);
@@ -217,11 +223,27 @@ export default function Crazy100({
     setBlockNums(Array.from({ length: 16 }, (_, i) => i));
     setAnswer([]);
     setIsWin("");
+    handleResetTimer();
     setIsTogglingLevel(false);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
+  const handleStartTimer = () => setIsTimerRunning(true);
+  const handleStopTimer = () => setIsTimerRunning(false);
+  const handleResetTimer = () => {
+    setSeconds(50);
+    setIsTimerRunning(false);
+  };
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev > 1 && prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
   return (
     <div>
       <h2>Crazy-100</h2>
@@ -236,14 +258,25 @@ export default function Crazy100({
         />
       )}
       {isGameStarted &&
+        isWin === "" &&
         (easyMode || normalMode) &&
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
           <h3>Among the 16 numbers, choose 4 of them whose sum equals 100.</h3>
         )}
+      {isGameStarted &&
+        normalMode &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            {seconds}
+          </h3>
+        )}
       {easyMode &&
       !normalMode &&
+      isWin === "" &&
       !isTogglingReset &&
       !isTogglingHomePage &&
       !isTogglingLevel ? (
@@ -251,16 +284,31 @@ export default function Crazy100({
       ) : (
         !easyMode &&
         normalMode &&
+        isWin === "" &&
         !isTogglingReset &&
-        !isTogglingHomePage && (
-          <ModeExplaination message="Normal Mode: You will get one star if you win in 45 seconds." />
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <ModeExplaination message="Normal Mode: You will get one star if you win in 50 seconds." />
         )
       )}
-      {isWin === true && <h1>You Win!</h1>}
-      {isWin === false && <h1>You Loose!</h1>}
-      {answer.map((a) => (
-        <div>{a}</div>
-      ))}
+      {isWin === true &&
+        seconds > 0 &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && <h1>You Win</h1>}
+      {isWin === false &&
+        seconds > 0 &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && <h1>You Loose</h1>}
+      {seconds < 1 &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && <h1>Time's up!</h1>}
+      {!isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
+        answer.map((a) => <div>{a}</div>)}
       {!isGameStarted &&
         !isTogglingReset &&
         !isTogglingHomePage &&
@@ -272,6 +320,8 @@ export default function Crazy100({
         )}
       {isGameStarted &&
         !isTogglingLevel &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
         table.map((t) =>
           blockNums.includes(t) ? (
             <button
@@ -316,7 +366,8 @@ export default function Crazy100({
         isWin === "" &&
         !isTogglingReset &&
         !isTogglingHomePage &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        seconds > 0 && (
           <div>
             <button
               onClick={handleSubmit}
@@ -340,12 +391,27 @@ export default function Crazy100({
             </button>
           </div>
         )}
+      {seconds < 1 &&
+        normalMode &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <button
+              onClick={toggleResetYes}
+              style={{ position: "relative", top: "30px" }}
+            >
+              Try Again
+            </button>
+          </div>
+        )}
       {isGameStarted &&
         isWin === "" &&
         !isTogglingReset &&
         !isTogglingHomePage &&
         (easyMode || normalMode) &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        seconds > 0 && (
           <div>
             <button
               onClick={toggleReset}
@@ -371,7 +437,6 @@ export default function Crazy100({
       )}
       {isGameStarted &&
         (easyMode || normalMode) &&
-        !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
