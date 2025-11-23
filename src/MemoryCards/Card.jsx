@@ -3,9 +3,8 @@ export default function Card({ image }) {
     <img
       src={image}
       style={{
-        width:"50px",
-        display: "inline",
-        border: "1px solid black",
+        width:"40px",
+        border: "2px solid black",
         margin: "3px"
       }}
       alt=""
