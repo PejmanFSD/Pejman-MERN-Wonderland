@@ -5,16 +5,12 @@ import Hide from "./hide.jpg";
 
 export default function Board({ nrows, ncols }) {
   const [board, setBoard] = useState([]);
-  const [visibleCards, setVisibleCards] = useState([
-    // [4, 4],
-    // [5, 6],
-  ]);
+  const [visibleCards, setVisibleCards] = useState([]);
   const generateBoard = () => {
     for (let b = 0; b < nrows; b++) {
       let row = [];
       for (let a = 0; a < ncols; a++) {
         row.push([a, b]);
-        console.log(row);
       }
       setBoard((currBoard) => [...currBoard, row]);
     }
