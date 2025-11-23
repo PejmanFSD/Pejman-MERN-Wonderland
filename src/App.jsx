@@ -6,6 +6,7 @@ import GuessNumber from "./GuessNumber/GuessNumber";
 import Capitals from "./Capitals/Capitals";
 import Cryptogram from "./Cryptogram/Cryptogram";
 import Crazy100 from "./Crazy100/Crazy100";
+import MemoryCards from "./MemoryCards/MemoryCards";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -15,6 +16,7 @@ function App() {
   const [showCapitals, setShowCapitals] = useState(false);
   const [showCryptogram, setShowCryptogram] = useState(false);
   const [showCrazy100, setShowCrazy100] = useState(false);
+  const [showMemoryCards, setShowMemoryCards] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -37,6 +39,10 @@ function App() {
   const toggleCrazy100 = () => {
     setShowGameTitles(false);
     setShowCrazy100(true);
+  };
+  const toggleMemoryCards = () => {
+    setShowGameTitles(false);
+    setShowMemoryCards(true);
   };
   return (
     <div className="App">
@@ -70,7 +76,6 @@ function App() {
         <GuessNumber
           setShowGameTitles={setShowGameTitles}
           setShowGuessNumber={setShowGuessNumber}
-          totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -83,7 +88,6 @@ function App() {
         <Capitals
           setShowGameTitles={setShowGameTitles}
           setShowCapitals={setShowCapitals}
-          totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -96,7 +100,6 @@ function App() {
         <Cryptogram
           setShowGameTitles={setShowGameTitles}
           setShowCryptogram={setShowCryptogram}
-          totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -109,13 +112,24 @@ function App() {
         <Crazy100
           setShowGameTitles={setShowGameTitles}
           setShowCrazy100={setShowCrazy100}
-          totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
         showGameTitles &&
         !showCrazy100 && (
           <button onClick={() => toggleCrazy100()}>Crazy-100</button>
+        )
+      )}
+      {!showGameTitles && showMemoryCards ? (
+        <MemoryCards
+          setShowGameTitles={setShowGameTitles}
+          setShowMemoryCards={setShowMemoryCards}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showMemoryCards && (
+          <button onClick={() => toggleMemoryCards()}>Memory Cards</button>
         )
       )}
     </div>
