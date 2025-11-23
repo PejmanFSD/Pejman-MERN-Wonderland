@@ -27,18 +27,50 @@ export default function Board({ nrows, ncols }) {
             (pair) => pair[0] === card[0] && pair[1] === card[1]
           ) ? (
             card[0] !== ncols - 1 ? (
-              <div style={{ display: "inline" }}>{<Card image={Emoji1} />}</div>
+              <div style={{ display: "inline" }}>
+                {
+                  <Card
+                    setVisibleCards={setVisibleCards}
+                    x={card[0]}
+                    y={card[1]}
+                    image={Emoji1}
+                  />
+                }
+              </div>
             ) : (
               <div style={{ display: "inline" }}>
-                {<Card image={Emoji1} />}
+                {
+                  <Card
+                    setVisibleCards={setVisibleCards}
+                    x={card[0]}
+                    y={card[1]}
+                    image={Emoji1}
+                  />
+                }
                 <br></br>
               </div>
             )
           ) : card[0] !== ncols - 1 ? (
-            <div style={{ display: "inline" }}>{<Card image={Hide} />}</div>
+            <div style={{ display: "inline" }}>
+              {
+                <Card
+                  setVisibleCards={setVisibleCards}
+                  x={card[0]}
+                  y={card[1]}
+                  image={Hide}
+                />
+              }
+            </div>
           ) : (
             <div style={{ display: "inline" }}>
-              {<Card image={Hide} />}
+              {
+                <Card
+                  setVisibleCards={setVisibleCards}
+                  x={card[0]}
+                  y={card[1]}
+                  image={Hide}
+                />
+              }
               <br></br>
             </div>
           )
