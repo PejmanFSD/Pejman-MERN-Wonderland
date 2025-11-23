@@ -3,8 +3,8 @@ import { getRandArr } from "../utils";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import GameLevel from "../GameLevel";
+import Blocks from "./Blocks";
 
-const table = Array.from({ length: 16 }, (_, i) => i);
 export default function Crazy100({
   setShowGameTitles,
   setShowCrazy100,
@@ -329,46 +329,16 @@ export default function Crazy100({
       {isGameStarted &&
         !isTogglingLevel &&
         !isTogglingReset &&
-        !isTogglingHomePage &&
-        table.map((t) =>
-          blockNums.includes(t) ? (
-            <button
-              style={{
-                border: "1px solid black",
-                padding: "5px",
-                width: "30px",
-                display: "inline",
-                position: "relative",
-                top: "20px",
-                background: chosenExtraNums[t]?.clicked && "gray",
-              }}
-              onClick={handleClickChosenExtraNum}
-              disabled={isWin !== "" || seconds < 1}
-            >
-              {chosenExtraNums[t]?.number}
-            </button>
-          ) : (
-            <button
-              style={{
-                border: "1px solid black",
-                padding: "5px",
-                width: "30px",
-                display: "inline",
-                position: "relative",
-                top: "20px",
-                background:
-                  nums.find((obj) => obj.blockNum === t)?.clicked &&
-                  (isWin === "" || isWin === true)
-                    ? "gray"
-                    : isWin === false && "lightblue",
-                color: "red",
-              }}
-              onClick={handleClickNum}
-              disabled={isWin !== "" || seconds < 1}
-            >
-              {nums.find((obj) => obj.blockNum === t)?.number}
-            </button>
-          )
+        !isTogglingHomePage && (
+          <Blocks
+            nums={nums}
+            chosenExtraNums={chosenExtraNums}
+            blockNums={blockNums}
+            isWin={isWin}
+            seconds={seconds}
+            handleClickNum={handleClickNum}
+            handleClickChosenExtraNum={handleClickChosenExtraNum}
+          />
         )}
       {isGameStarted &&
         isWin === "" &&
