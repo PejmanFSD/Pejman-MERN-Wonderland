@@ -30,6 +30,7 @@ export default function Board({ nrows, ncols }) {
               <div style={{ display: "inline" }}>
                 {
                   <Card
+                    visibleCards={visibleCards}
                     setVisibleCards={setVisibleCards}
                     x={card[0]}
                     y={card[1]}
@@ -41,6 +42,7 @@ export default function Board({ nrows, ncols }) {
               <div style={{ display: "inline" }}>
                 {
                   <Card
+                    visibleCards={visibleCards}
                     setVisibleCards={setVisibleCards}
                     x={card[0]}
                     y={card[1]}
@@ -54,6 +56,7 @@ export default function Board({ nrows, ncols }) {
             <div style={{ display: "inline" }}>
               {
                 <Card
+                  visibleCards={visibleCards}
                   setVisibleCards={setVisibleCards}
                   x={card[0]}
                   y={card[1]}
@@ -65,6 +68,7 @@ export default function Board({ nrows, ncols }) {
             <div style={{ display: "inline" }}>
               {
                 <Card
+                  visibleCards={visibleCards}
                   setVisibleCards={setVisibleCards}
                   x={card[0]}
                   y={card[1]}

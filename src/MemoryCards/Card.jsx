@@ -1,6 +1,11 @@
-export default function Card({ setVisibleCards, x, y, image }) {
+export default function Card({ visibleCards, setVisibleCards, x, y, image }) {
   const toggleCard = () => {
-    setVisibleCards((currVisibleCards) => [...currVisibleCards, [x, y]]);
+    if (visibleCards.length < 2) {
+      setVisibleCards((currVisibleCards) => [...currVisibleCards, [x, y]]);
+    } else if (visibleCards.length === 2) {
+      setVisibleCards([]);
+      setVisibleCards((currVisibleCards) => [...currVisibleCards, [x, y]]);
+    }
   };
   return (
     <img
