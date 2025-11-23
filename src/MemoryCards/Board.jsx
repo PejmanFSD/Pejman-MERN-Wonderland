@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from "./Card";
+import Emoji1 from "./emoji1.jpg";
 
 export default function Board({ nrows, ncols }) {
   const [board, setBoard] = useState([]);
@@ -7,7 +8,7 @@ export default function Board({ nrows, ncols }) {
     for (let y = 0; y < nrows; y++) {
       let row = [];
       for (let x = 0; x < ncols; x++) {
-        row.push(<Card image={Math.floor(Math.random() * 9) + 1} />);
+        row.push(<Card image={Emoji1} />);
       }
       setBoard((currBoard) => [...currBoard, row]);
     }
