@@ -1,4 +1,13 @@
-export default function Card({ visibleCards, setVisibleCards, x, y, image }) {
+import Pejman from "./images/Pejman.jpg";
+
+export default function Card({
+  visibleCards,
+  setVisibleCards,
+  x,
+  y,
+  images,
+  imageIndex,
+}) {
   const toggleCard = () => {
     if (
       visibleCards.length === 1 &&
@@ -21,17 +30,22 @@ export default function Card({ visibleCards, setVisibleCards, x, y, image }) {
     ) {
       setVisibleCards((currVisibleCards) => currVisibleCards.slice(0, 1));
       return;
-    }
-    if (visibleCards.length < 2) {
-      setVisibleCards((currVisibleCards) => [...currVisibleCards, [x, y]]);
+    } else if (visibleCards.length < 2) {
+      setVisibleCards((currVisibleCards) => [
+        ...currVisibleCards,
+        [x, y, imageIndex],
+      ]);
     } else if (visibleCards.length === 2) {
       setVisibleCards([]);
-      setVisibleCards((currVisibleCards) => [...currVisibleCards, [x, y]]);
+      setVisibleCards((currVisibleCards) => [
+        ...currVisibleCards,
+        [x, y, imageIndex],
+      ]);
     }
   };
   return (
     <img
-      src={image}
+      src={imageIndex === "" ? Pejman : images[imageIndex]}
       style={{
         width: "40px",
         border: "2px solid black",
