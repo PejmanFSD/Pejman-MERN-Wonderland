@@ -26,7 +26,7 @@ export default function Board({ nrows, ncols }) {
     for (let b = 0; b < nrows; b++) {
       let row = [];
       for (let a = 0; a < ncols; a++) {
-        row.push([a, b, shuffledIndexes[finalIndex]]);
+        row.push([a, b, shuffledIndexes[finalIndex], 0]);
         finalIndex++;
       }
       setBoard((currBoard) => [...currBoard, row]);
@@ -69,6 +69,9 @@ export default function Board({ nrows, ncols }) {
                     y={card[1]}
                     images={images}
                     imageIndex={card[2]}
+                    status={card[3]}
+                    board={board}
+                    setBoard={setBoard}
                   />
                 }
               </div>
@@ -82,6 +85,9 @@ export default function Board({ nrows, ncols }) {
                     y={card[1]}
                     images={images}
                     imageIndex={card[2]}
+                    status={card[3]}
+                    board={board}
+                    setBoard={setBoard}
                   />
                 }
                 <br></br>
@@ -96,7 +102,10 @@ export default function Board({ nrows, ncols }) {
                   x={card[0]}
                   y={card[1]}
                   images={images}
-                  imageIndex=""
+                  imageIndex={card[2]}
+                  status={card[3]}
+                  board={board}
+                  setBoard={setBoard}
                 />
               }
             </div>
@@ -109,7 +118,10 @@ export default function Board({ nrows, ncols }) {
                   x={card[0]}
                   y={card[1]}
                   images={images}
-                  imageIndex=""
+                  imageIndex={card[2]}
+                  status={card[3]}
+                  board={board}
+                  setBoard={setBoard}
                 />
               }
               <br></br>
@@ -141,10 +153,18 @@ export default function Board({ nrows, ncols }) {
         {board.map((row) =>
           row.map((card) => (
             <div>
-              {card[0]} - {card[1]} - {card[2]}
+              {card[0]} - {card[1]} - {card[2]} - {card[3]}
             </div>
           ))
         )}
+      </div>
+      <div>
+        visible Cards:
+        {visibleCards.map((card) => (
+          <div>
+            {card[0]} - {card[1]} - {card[2]} - {card[3]}
+          </div>
+        ))}
       </div>
     </div>
   );
