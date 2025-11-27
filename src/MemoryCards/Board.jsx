@@ -5,11 +5,7 @@ import A1 from "./images/A1.jpg";
 import A2 from "./images/A2.jpg";
 import A3 from "./images/A3.jpg";
 import A4 from "./images/A4.jpg";
-import A5 from "./images/A5.jpg";
-import A6 from "./images/A6.jpg";
-import A7 from "./images/A7.jpg";
-import A8 from "./images/A8.jpg";
-const images = [A1, A1, A2, A2, A3, A3, A4, A4, A5, A5, A6, A6, A7, A7, A8, A8];
+const images = [A1, A2, A3, A4].flatMap(n => [n, n, n, n]);
 
 export default function Board({ nrows, ncols }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -56,44 +52,7 @@ export default function Board({ nrows, ncols }) {
     <div>
       {board.map((row) =>
         row.map((card) =>
-          visibleCards.some(
-            (pair) => pair[0] === card[0] && pair[1] === card[1]
-          ) ? (
-            card[0] !== ncols - 1 ? (
-              <div style={{ display: "inline" }}>
-                {
-                  <Card
-                    visibleCards={visibleCards}
-                    setVisibleCards={setVisibleCards}
-                    x={card[0]}
-                    y={card[1]}
-                    images={images}
-                    imageIndex={card[2]}
-                    status={card[3]}
-                    board={board}
-                    setBoard={setBoard}
-                  />
-                }
-              </div>
-            ) : (
-              <div style={{ display: "inline" }}>
-                {
-                  <Card
-                    visibleCards={visibleCards}
-                    setVisibleCards={setVisibleCards}
-                    x={card[0]}
-                    y={card[1]}
-                    images={images}
-                    imageIndex={card[2]}
-                    status={card[3]}
-                    board={board}
-                    setBoard={setBoard}
-                  />
-                }
-                <br></br>
-              </div>
-            )
-          ) : card[0] !== ncols - 1 ? (
+          card[0] !== ncols - 1 ? (
             <div style={{ display: "inline" }}>
               {
                 <Card
