@@ -1,22 +1,12 @@
 import { useState, useEffect } from "react";
 import Card from "./Card";
 import { getRandArr } from "../utils";
-import A1 from "./images/A1.jpg";
-import A2 from "./images/A2.jpg";
-import A3 from "./images/A3.jpg";
-import A4 from "./images/A4.jpg";
-const images = [A1, A2, A3, A4].flatMap(n => [n, n, n, n]);
 
-export default function Board({ nrows, ncols }) {
-  const [isGameStarted, setIsGameStarted] = useState(false);
+export default function Board({ images, nrows, ncols, isImagesGroupChosen }) {
   const [board, setBoard] = useState([]);
-  const [imageIndexes, setImageIndexes] = useState(
-    Array.from({ length: images.length }, (_, i) => i)
-  );
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
   const [visibleCards, setVisibleCards] = useState([]);
   const generateBoard = () => {
-    setIsGameStarted(true);
     console.log(shuffledIndexes);
     let finalIndex = 0;
     for (let b = 0; b < nrows; b++) {
@@ -31,22 +21,21 @@ export default function Board({ nrows, ncols }) {
   useEffect(
     function () {
       function pickIndexes() {
-        let copyImageIndexes = [...imageIndexes];
+        let copyImageIndexes = images.map((item) => item.imageIndex);
         let copyShuffledIndexes = [...shuffledIndexes];
         for (let i = 0; i < images.length; i++) {
-          const randomIndex = getRandArr(imageIndexes);
+          const randomIndex = getRandArr(copyImageIndexes);
           const randomElement = copyImageIndexes.splice(
             copyImageIndexes.indexOf(randomIndex),
             1
           )[0];
           copyShuffledIndexes.push(randomElement);
         }
-        setImageIndexes(copyImageIndexes);
         setShuffledIndexes(copyShuffledIndexes);
       }
       pickIndexes();
     },
-    [isGameStarted]
+    [images]
   );
   return (
     <div>
@@ -60,7 +49,7 @@ export default function Board({ nrows, ncols }) {
                   setVisibleCards={setVisibleCards}
                   x={card[0]}
                   y={card[1]}
-                  images={images}
+                  images={images.map((item) => item.image)}
                   imageIndex={card[2]}
                   status={card[3]}
                   board={board}
@@ -76,7 +65,7 @@ export default function Board({ nrows, ncols }) {
                   setVisibleCards={setVisibleCards}
                   x={card[0]}
                   y={card[1]}
-                  images={images}
+                  images={images.map((item) => item.image)}
                   imageIndex={card[2]}
                   status={card[3]}
                   board={board}
@@ -88,18 +77,22 @@ export default function Board({ nrows, ncols }) {
           )
         )
       )}
-      <button onClick={generateBoard}>generate Board</button>
+      {isImagesGroupChosen && <button onClick={generateBoard}>Start</button>}
       <div>
         images:
-        {images.map((i) => (
-          <div>{i}</div>
-        ))}
+        {images
+          .map((item) => item.image)
+          .map((i) => (
+            <div>{i}</div>
+          ))}
       </div>
       <div>
         imageIndexes:
-        {imageIndexes.map((i) => (
-          <div>{i}</div>
-        ))}
+        {images
+          .map((item) => item.imageIndex)
+          .map((i) => (
+            <div>{i}</div>
+          ))}
       </div>
       <div>
         shuffledIndexes:
