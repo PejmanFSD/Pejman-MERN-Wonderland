@@ -82,7 +82,7 @@ export default function Card({
           : Pejman
       }
       style={{
-        width: "40px",
+        width: "100px",
         border: "2px solid black",
         margin: "3px",
         pointerEvents: status === 1 && "none",
