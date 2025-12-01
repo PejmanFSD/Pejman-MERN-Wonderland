@@ -10,6 +10,8 @@ export default function Card({
   images,
   imageIndex,
   setBoard,
+  easy,
+  normal,
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {
@@ -82,7 +84,7 @@ export default function Card({
           : Pejman
       }
       style={{
-        width: "100px",
+        width: easy ? "150px" : normal ? "75px" : "60px",
         border: "2px solid black",
         margin: "3px",
         pointerEvents: status === 1 && "none",

@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import Card from "./Card";
 import { getRandArr } from "../utils";
 
-export default function Board({ images, nrows, ncols, isImagesGroupChosen }) {
+export default function Board({
+  images,
+  nrows,
+  ncols,
+  isImagesGroupChosen,
+  easy,
+  normal,
+}) {
   const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
   const [visibleCards, setVisibleCards] = useState([]);
@@ -54,6 +61,8 @@ export default function Board({ images, nrows, ncols, isImagesGroupChosen }) {
                   status={card[3]}
                   board={board}
                   setBoard={setBoard}
+                  easy={easy}
+                  normal={normal}
                 />
               }
             </div>
@@ -70,6 +79,8 @@ export default function Board({ images, nrows, ncols, isImagesGroupChosen }) {
                   status={card[3]}
                   board={board}
                   setBoard={setBoard}
+                  easy={easy}
+                  normal={normal}
                 />
               }
               <br></br>

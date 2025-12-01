@@ -6,11 +6,38 @@ const imagesGroup = ["Emojis", "Animals", "Fruits", "Cars", "Movie Characters"];
 export default function MemoryCards() {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [easy, setEasy] = useState(false);
+  const [normal, setNormal] = useState(false);
+  const [hard, setHard] = useState(false);
+  const handleEasy = () => {
+    setEasy(true);
+    setNormal(false);
+    setHard(false);
+    setIsGameStarted(true);
+  };
+  const handleNormal = () => {
+    setEasy(false);
+    setNormal(true);
+    setHard(false);
+    setIsGameStarted(true);
+  };
+  const handleHard = () => {
+    setEasy(false);
+    setNormal(false);
+    setHard(true);
+    setIsGameStarted(true);
+  };
   const handleChangeImages = (e) => {
     if (e.target.value === "Fruits") {
-      const initialImagesArray = fruits
-        .slice(0, 4)
-        .flatMap((n) => [n, n, n, n]);
+      let initialImagesArray;
+      if (easy) {
+        initialImagesArray = fruits.slice(0, 4).flatMap((n) => [n, n, n, n]);
+      } else if (normal) {
+        initialImagesArray = fruits.slice(0, 16).flatMap((n) => [n, n, n, n]);
+      } else if (hard) {
+        initialImagesArray = fruits.flatMap((n) => [n, n, n, n]);
+      }
       let copyImages = [...images];
       for (let i = 0; i < initialImagesArray.length; i++) {
         copyImages.push({ image: initialImagesArray[i], imageIndex: i });
@@ -18,9 +45,18 @@ export default function MemoryCards() {
       setImages(copyImages);
     }
     if (e.target.value === "Movie Characters") {
-      const initialImagesArray = characters
-        .slice(0, 4)
-        .flatMap((n) => [n, n, n, n]);
+      let initialImagesArray;
+      if (easy) {
+        initialImagesArray = characters
+          .slice(0, 4)
+          .flatMap((n) => [n, n, n, n]);
+      } else if (normal) {
+        initialImagesArray = characters
+          .slice(0, 16)
+          .flatMap((n) => [n, n, n, n]);
+      } else if (hard) {
+        initialImagesArray = characters.flatMap((n) => [n, n, n, n]);
+      }
       let copyImages = [...images];
       for (let i = 0; i < initialImagesArray.length; i++) {
         copyImages.push({ image: initialImagesArray[i], imageIndex: i });
@@ -28,9 +64,14 @@ export default function MemoryCards() {
       setImages(copyImages);
     }
     if (e.target.value === "Animals") {
-      const initialImagesArray = animals
-        .slice(0, 4)
-        .flatMap((n) => [n, n, n, n]);
+      let initialImagesArray;
+      if (easy) {
+        initialImagesArray = animals.slice(0, 4).flatMap((n) => [n, n, n, n]);
+      } else if (normal) {
+        initialImagesArray = animals.slice(0, 16).flatMap((n) => [n, n, n, n]);
+      } else if (hard) {
+        initialImagesArray = animals.flatMap((n) => [n, n, n, n]);
+      }
       let copyImages = [...images];
       for (let i = 0; i < initialImagesArray.length; i++) {
         copyImages.push({ image: initialImagesArray[i], imageIndex: i });
@@ -38,7 +79,14 @@ export default function MemoryCards() {
       setImages(copyImages);
     }
     if (e.target.value === "Cars") {
-      const initialImagesArray = cars.slice(0, 4).flatMap((n) => [n, n, n, n]);
+      let initialImagesArray;
+      if (easy) {
+        initialImagesArray = cars.slice(0, 4).flatMap((n) => [n, n, n, n]);
+      } else if (normal) {
+        initialImagesArray = cars.slice(0, 16).flatMap((n) => [n, n, n, n]);
+      } else if (hard) {
+        initialImagesArray = cars.flatMap((n) => [n, n, n, n]);
+      }
       let copyImages = [...images];
       for (let i = 0; i < initialImagesArray.length; i++) {
         copyImages.push({ image: initialImagesArray[i], imageIndex: i });
@@ -46,9 +94,14 @@ export default function MemoryCards() {
       setImages(copyImages);
     }
     if (e.target.value === "Emojis") {
-      const initialImagesArray = emojis
-        .slice(0, 4)
-        .flatMap((n) => [n, n, n, n]);
+      let initialImagesArray;
+      if (easy) {
+        initialImagesArray = emojis.slice(0, 4).flatMap((n) => [n, n, n, n]);
+      } else if (normal) {
+        initialImagesArray = emojis.slice(0, 16).flatMap((n) => [n, n, n, n]);
+      } else if (hard) {
+        initialImagesArray = emojis.flatMap((n) => [n, n, n, n]);
+      }
       let copyImages = [...images];
       for (let i = 0; i < initialImagesArray.length; i++) {
         copyImages.push({ image: initialImagesArray[i], imageIndex: i });
@@ -60,21 +113,39 @@ export default function MemoryCards() {
 
   return (
     <div>
-      <label htmlFor="images">Select the images Group</label>
-      <select onChange={handleChangeImages} name="images" id="images">
-        <option value="" disabled selected>
-          Select the images Group
-        </option>
-        {imagesGroup.map((group) => (
-          <option>{group}</option>
-        ))}
-      </select>
-      <Board
-        images={images}
-        nrows={4}
-        ncols={4}
-        isImagesGroupChosen={isImagesGroupChosen}
-      />
+      {!isGameStarted && <button onClick={handleEasy}>Easy</button>}
+      {!isGameStarted && <button onClick={handleNormal}>Normal</button>}
+      {!isGameStarted && <button onClick={handleHard}>Hard</button>}
+      {isGameStarted && (
+        <div>
+          {!isImagesGroupChosen && (
+            <label htmlFor="images">Select the images Group</label>
+          )}
+          <select
+            onChange={handleChangeImages}
+            name="images"
+            id="images"
+            disabled={isImagesGroupChosen}
+          >
+            <option value="" disabled selected>
+              Select the images Group
+            </option>
+            {imagesGroup.map((group) => (
+              <option>{group}</option>
+            ))}
+          </select>
+        </div>
+      )}
+      {isGameStarted && (
+        <Board
+          images={images}
+          nrows={easy ? 4 : normal ? 8 : 10}
+          ncols={easy ? 4 : normal ? 8 : 10}
+          isImagesGroupChosen={isImagesGroupChosen}
+          easy={easy}
+          normal={normal}
+        />
+      )}
     </div>
   );
 }
