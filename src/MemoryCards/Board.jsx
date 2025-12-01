@@ -7,8 +7,13 @@ export default function Board({
   nrows,
   ncols,
   isImagesGroupChosen,
-  easy,
-  normal,
+  easyMode,
+  normalMode,
+  hardMode,
+  setSeconds,
+  handleStartTimer,
+  handleStopTimer,
+  handleResetTimer,
 }) {
   const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
@@ -23,6 +28,14 @@ export default function Board({
         finalIndex++;
       }
       setBoard((currBoard) => [...currBoard, row]);
+    }
+    if (normalMode) {
+      setSeconds(180);
+      handleStartTimer();
+    }
+    if (hardMode) {
+      setSeconds(270);
+      handleStartTimer();
     }
   };
   useEffect(
@@ -61,8 +74,8 @@ export default function Board({
                   status={card[3]}
                   board={board}
                   setBoard={setBoard}
-                  easy={easy}
-                  normal={normal}
+                  easyMode={easyMode}
+                  normalMode={normalMode}
                 />
               }
             </div>
@@ -79,8 +92,8 @@ export default function Board({
                   status={card[3]}
                   board={board}
                   setBoard={setBoard}
-                  easy={easy}
-                  normal={normal}
+                  easyMode={easyMode}
+                  normalMode={normalMode}
                 />
               }
               <br></br>

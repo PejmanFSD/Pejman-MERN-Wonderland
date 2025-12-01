@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Board from "./Board";
 import { fruits, characters, animals, cars, emojis } from "./imagesGroup";
 
@@ -7,35 +7,37 @@ export default function MemoryCards() {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [easy, setEasy] = useState(false);
-  const [normal, setNormal] = useState(false);
-  const [hard, setHard] = useState(false);
-  const handleEasy = () => {
-    setEasy(true);
-    setNormal(false);
-    setHard(false);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
+  const [hardMode, setHardMode] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [seconds, setSeconds] = useState(50);
+  const handleEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+    setHardMode(false);
     setIsGameStarted(true);
   };
-  const handleNormal = () => {
-    setEasy(false);
-    setNormal(true);
-    setHard(false);
+  const handleNormalMode = () => {
+    setEasyMode(false);
+    setNormalMode(true);
+    setHardMode(false);
     setIsGameStarted(true);
   };
-  const handleHard = () => {
-    setEasy(false);
-    setNormal(false);
-    setHard(true);
+  const handleHardMode = () => {
+    setEasyMode(false);
+    setNormalMode(false);
+    setHardMode(true);
     setIsGameStarted(true);
   };
   const handleChangeImages = (e) => {
     if (e.target.value === "Fruits") {
       let initialImagesArray;
-      if (easy) {
+      if (easyMode) {
         initialImagesArray = fruits.slice(0, 4).flatMap((n) => [n, n, n, n]);
-      } else if (normal) {
+      } else if (normalMode) {
         initialImagesArray = fruits.slice(0, 16).flatMap((n) => [n, n, n, n]);
-      } else if (hard) {
+      } else if (hardMode) {
         initialImagesArray = fruits.flatMap((n) => [n, n, n, n]);
       }
       let copyImages = [...images];
@@ -46,15 +48,15 @@ export default function MemoryCards() {
     }
     if (e.target.value === "Movie Characters") {
       let initialImagesArray;
-      if (easy) {
+      if (easyMode) {
         initialImagesArray = characters
           .slice(0, 4)
           .flatMap((n) => [n, n, n, n]);
-      } else if (normal) {
+      } else if (normalMode) {
         initialImagesArray = characters
           .slice(0, 16)
           .flatMap((n) => [n, n, n, n]);
-      } else if (hard) {
+      } else if (hardMode) {
         initialImagesArray = characters.flatMap((n) => [n, n, n, n]);
       }
       let copyImages = [...images];
@@ -65,11 +67,11 @@ export default function MemoryCards() {
     }
     if (e.target.value === "Animals") {
       let initialImagesArray;
-      if (easy) {
+      if (easyMode) {
         initialImagesArray = animals.slice(0, 4).flatMap((n) => [n, n, n, n]);
-      } else if (normal) {
+      } else if (normalMode) {
         initialImagesArray = animals.slice(0, 16).flatMap((n) => [n, n, n, n]);
-      } else if (hard) {
+      } else if (hardMode) {
         initialImagesArray = animals.flatMap((n) => [n, n, n, n]);
       }
       let copyImages = [...images];
@@ -80,11 +82,11 @@ export default function MemoryCards() {
     }
     if (e.target.value === "Cars") {
       let initialImagesArray;
-      if (easy) {
+      if (easyMode) {
         initialImagesArray = cars.slice(0, 4).flatMap((n) => [n, n, n, n]);
-      } else if (normal) {
+      } else if (normalMode) {
         initialImagesArray = cars.slice(0, 16).flatMap((n) => [n, n, n, n]);
-      } else if (hard) {
+      } else if (hardMode) {
         initialImagesArray = cars.flatMap((n) => [n, n, n, n]);
       }
       let copyImages = [...images];
@@ -95,11 +97,11 @@ export default function MemoryCards() {
     }
     if (e.target.value === "Emojis") {
       let initialImagesArray;
-      if (easy) {
+      if (easyMode) {
         initialImagesArray = emojis.slice(0, 4).flatMap((n) => [n, n, n, n]);
-      } else if (normal) {
+      } else if (normalMode) {
         initialImagesArray = emojis.slice(0, 16).flatMap((n) => [n, n, n, n]);
-      } else if (hard) {
+      } else if (hardMode) {
         initialImagesArray = emojis.flatMap((n) => [n, n, n, n]);
       }
       let copyImages = [...images];
@@ -110,12 +112,26 @@ export default function MemoryCards() {
     }
     setIsImagesGroupChosen(true);
   };
-
+  const handleStartTimer = () => setIsTimerRunning(true);
+  const handleStopTimer = () => setIsTimerRunning(false);
+  const handleResetTimer = () => {
+    setSeconds(50);
+    setIsTimerRunning(false);
+  };
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev > 1 && prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
   return (
     <div>
-      {!isGameStarted && <button onClick={handleEasy}>Easy</button>}
-      {!isGameStarted && <button onClick={handleNormal}>Normal</button>}
-      {!isGameStarted && <button onClick={handleHard}>Hard</button>}
+      {!isGameStarted && <button onClick={handleEasyMode}>Easy</button>}
+      {!isGameStarted && <button onClick={handleNormalMode}>Normal</button>}
+      {!isGameStarted && <button onClick={handleHardMode}>Hard</button>}
       {isGameStarted && (
         <div>
           {!isImagesGroupChosen && (
@@ -136,14 +152,24 @@ export default function MemoryCards() {
           </select>
         </div>
       )}
+      {isTimerRunning && (
+        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+          {seconds}
+        </h3>
+      )}
       {isGameStarted && (
         <Board
           images={images}
-          nrows={easy ? 4 : normal ? 8 : 10}
-          ncols={easy ? 4 : normal ? 8 : 10}
+          nrows={easyMode ? 4 : normalMode ? 8 : 10}
+          ncols={easyMode ? 4 : normalMode ? 8 : 10}
           isImagesGroupChosen={isImagesGroupChosen}
-          easy={easy}
-          normal={normal}
+          easyMode={easyMode}
+          normalMode={normalMode}
+          hardMode={hardMode}
+          setSeconds={setSeconds}
+          handleStartTimer={handleStartTimer}
+          handleStopTimer={handleStopTimer}
+          handleResetTimer={handleResetTimer}
         />
       )}
     </div>
