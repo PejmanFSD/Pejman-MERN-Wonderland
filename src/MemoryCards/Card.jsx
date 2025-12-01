@@ -10,8 +10,11 @@ export default function Card({
   images,
   imageIndex,
   setBoard,
+  setIsWin,
   easyMode,
   normalMode,
+  pair,
+  setPair,
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {
@@ -55,6 +58,7 @@ export default function Card({
           )
         )
       );
+      setPair((pair) => pair + 2);
       setVisibleCards([]);
       return;
     } else if (
@@ -72,6 +76,9 @@ export default function Card({
         ...currVisibleCards,
         [x, y, imageIndex, 0],
       ]);
+    }
+    if (pair === images.length) {
+      setIsWin(true);
     }
   };
   return (

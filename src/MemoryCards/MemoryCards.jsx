@@ -11,7 +11,9 @@ export default function MemoryCards() {
   const [normalMode, setNormalMode] = useState(false);
   const [hardMode, setHardMode] = useState(false);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [seconds, setSeconds] = useState(50);
+  const [seconds, setSeconds] = useState(5);
+  const [pair, setPair] = useState(0);
+  const [isWin, setIsWin] = useState("");
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -127,6 +129,16 @@ export default function MemoryCards() {
     }
     return () => clearInterval(interval);
   }, [isTimerRunning]);
+  useEffect(() => {
+    if (pair === images.length && seconds > 0 && pair !== 0) {
+      setIsWin(true);
+    }
+  }, [pair]);
+  useEffect(() => {
+    if (seconds < 1) {
+      setIsWin(false);
+    }
+  }, [seconds]);
   return (
     <div>
       {!isGameStarted && <button onClick={handleEasyMode}>Easy</button>}
@@ -152,11 +164,13 @@ export default function MemoryCards() {
           </select>
         </div>
       )}
-      {isTimerRunning && (
+      {isTimerRunning && (normalMode || hardMode) && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
           {seconds}
         </h3>
       )}
+      <h2>{isWin === true && "You Win!"}</h2>
+      <h2>{isWin === false && "Time's Up!"}</h2>
       {isGameStarted && (
         <Board
           images={images}
@@ -166,10 +180,14 @@ export default function MemoryCards() {
           easyMode={easyMode}
           normalMode={normalMode}
           hardMode={hardMode}
+          setIsWin={setIsWin}
+          seconds={seconds}
           setSeconds={setSeconds}
           handleStartTimer={handleStartTimer}
           handleStopTimer={handleStopTimer}
           handleResetTimer={handleResetTimer}
+          pair={pair}
+          setPair={setPair}
         />
       )}
     </div>

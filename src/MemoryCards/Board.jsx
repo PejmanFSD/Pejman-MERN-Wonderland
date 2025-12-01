@@ -10,10 +10,12 @@ export default function Board({
   easyMode,
   normalMode,
   hardMode,
+  setIsWin,
+  seconds,
   setSeconds,
   handleStartTimer,
-  handleStopTimer,
-  handleResetTimer,
+  pair,
+  setPair,
 }) {
   const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
@@ -74,8 +76,14 @@ export default function Board({
                   status={card[3]}
                   board={board}
                   setBoard={setBoard}
+                  setIsWin={setIsWin}
+                  seconds={seconds}
                   easyMode={easyMode}
                   normalMode={normalMode}
+                  nrows={nrows}
+                  ncols={ncols}
+                  pair={pair}
+                  setPair={setPair}
                 />
               }
             </div>
@@ -92,8 +100,14 @@ export default function Board({
                   status={card[3]}
                   board={board}
                   setBoard={setBoard}
+                  setIsWin={setIsWin}
+                  seconds={seconds}
                   easyMode={easyMode}
                   normalMode={normalMode}
+                  nrows={nrows}
+                  ncols={ncols}
+                  pair={pair}
+                  setPair={setPair}
                 />
               }
               <br></br>
