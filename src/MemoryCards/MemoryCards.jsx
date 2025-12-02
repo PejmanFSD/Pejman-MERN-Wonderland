@@ -14,8 +14,10 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [seconds, setSeconds] = useState(5);
   const [pair, setPair] = useState(0);
+  const [showBoard, setShowBoard] = useState(false);
   const [isWin, setIsWin] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -119,7 +121,11 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(50);
+    if (normalMode) {
+      setSeconds(180);
+    } else if (hardMode) {
+      setSeconds(270);
+    }
     setIsTimerRunning(false);
   };
   const toggleHomePage = () => {
@@ -132,6 +138,27 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    setIsGameStarted(false);
+    setShowBoard(false);
+    setImages([]);
+    setIsImagesGroupChosen(false);
+    setEasyMode(false);
+    setNormalMode(false);
+    setHardMode(false);
+    setIsTimerRunning(false);
+    setSeconds(5);
+    setPair(0);
+    setIsWin("");
+    handleResetTimer();
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(() => {
     let interval;
@@ -165,37 +192,76 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
       {!isGameStarted && !isTogglingHomePage && (
         <button onClick={handleHardMode}>Hard</button>
       )}
-      {isGameStarted && !isTogglingHomePage && isWin === "" && (
+      {isGameStarted &&
+        !isTogglingHomePage &&
+        !isTogglingReset &&
+        !showBoard && (
+          <div>
+            {!isImagesGroupChosen && (
+              <label htmlFor="images">Select the images Group</label>
+            )}
+            <select
+              onChange={handleChangeImages}
+              name="images"
+              id="images"
+              disabled={isImagesGroupChosen}
+            >
+              <option value="" disabled selected>
+                Select the images Group
+              </option>
+              {imagesGroup.map((group) => (
+                <option>{group}</option>
+              ))}
+            </select>
+          </div>
+        )}
+      {isTimerRunning && (normalMode || hardMode) && isWin === "" && (
+        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+          {seconds}
+        </h3>
+      )}
+      {!isTogglingHomePage && !isTogglingReset && (
+        <h2>{isWin === true && "You Win!"}</h2>
+      )}
+      {!isTogglingHomePage && !isTogglingReset && (
+        <h2>{isWin === false && "Time's Up!"}</h2>
+      )}
+      {isWin &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        (easyMode || normalMode || hardMode) && (
+          <div>
+            <button onClick={toggleResetYes}>Play Again</button>
+          </div>
+        )}
+      {seconds < 1 &&
+        (normalMode || hardMode) &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <div>
+            <button onClick={toggleResetYes}>Try Again</button>
+          </div>
+        )}
+      {showBoard &&
+        isWin === "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        (easyMode || normalMode || hardMode) &&
+        seconds > 0 && (
+          <div>
+            <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+        )}
+      {isTogglingReset && (
         <div>
-          {!isImagesGroupChosen && (
-            <label htmlFor="images">Select the images Group</label>
-          )}
-          <select
-            onChange={handleChangeImages}
-            name="images"
-            id="images"
-            disabled={isImagesGroupChosen}
-          >
-            <option value="" disabled selected>
-              Select the images Group
-            </option>
-            {imagesGroup.map((group) => (
-              <option>{group}</option>
-            ))}
-          </select>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
         </div>
       )}
-      {isTimerRunning &&
-        (normalMode || hardMode) &&
-        !isTogglingHomePage &&
-        isWin === "" && (
-          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-            {seconds}
-          </h3>
-        )}
-      {!isTogglingHomePage && <h2>{isWin === true && "You Win!"}</h2>}
-      {!isTogglingHomePage && <h2>{isWin === false && "Time's Up!"}</h2>}
-      {!isTogglingHomePage && (
+      {!isTogglingHomePage && !isTogglingReset && (
         <div>
           <button onClick={() => toggleHomePage()}>
             Back to the home page
@@ -220,15 +286,17 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
           easyMode={easyMode}
           normalMode={normalMode}
           hardMode={hardMode}
+          showBoard={showBoard}
+          setShowBoard={setShowBoard}
           setIsWin={setIsWin}
           seconds={seconds}
           setSeconds={setSeconds}
           handleStartTimer={handleStartTimer}
           handleStopTimer={handleStopTimer}
-          handleResetTimer={handleResetTimer}
           pair={pair}
           setPair={setPair}
           isTogglingHomePage={isTogglingHomePage}
+          isTogglingReset={isTogglingReset}
         />
       )}
     </div>

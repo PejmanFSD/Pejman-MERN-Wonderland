@@ -10,6 +10,8 @@ export default function Board({
   easyMode,
   normalMode,
   hardMode,
+  showBoard,
+  setShowBoard,
   setIsWin,
   seconds,
   setSeconds,
@@ -18,11 +20,11 @@ export default function Board({
   pair,
   setPair,
   isTogglingHomePage,
+  isTogglingReset,
 }) {
   const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
   const [visibleCards, setVisibleCards] = useState([]);
-  const [showBoard, setShowBoard] = useState(false);
   const generateBoard = () => {
     let finalIndex = 0;
     for (let b = 0; b < nrows; b++) {
@@ -38,7 +40,7 @@ export default function Board({
       handleStartTimer();
     }
     if (hardMode) {
-      setSeconds(4); // 270
+      setSeconds(270); // 270
       handleStartTimer();
     }
     setShowBoard(true);
@@ -64,63 +66,66 @@ export default function Board({
   );
   return (
     <div>
-      {!isTogglingHomePage &&
-        board.map((row) =>
-          row.map((card) =>
-            card[0] !== ncols - 1 ? (
-              <div style={{ display: "inline" }}>
-                {
-                  <Card
-                    visibleCards={visibleCards}
-                    setVisibleCards={setVisibleCards}
-                    x={card[0]}
-                    y={card[1]}
-                    images={images.map((item) => item.image)}
-                    imageIndex={card[2]}
-                    status={card[3]}
-                    board={board}
-                    setBoard={setBoard}
-                    setIsWin={setIsWin}
-                    seconds={seconds}
-                    easyMode={easyMode}
-                    normalMode={normalMode}
-                    nrows={nrows}
-                    ncols={ncols}
-                    pair={pair}
-                    setPair={setPair}
-                    handleStopTimer={handleStopTimer}
-                  />
-                }
-              </div>
-            ) : (
-              <div style={{ display: "inline" }}>
-                {
-                  <Card
-                    visibleCards={visibleCards}
-                    setVisibleCards={setVisibleCards}
-                    x={card[0]}
-                    y={card[1]}
-                    images={images.map((item) => item.image)}
-                    imageIndex={card[2]}
-                    status={card[3]}
-                    board={board}
-                    setBoard={setBoard}
-                    setIsWin={setIsWin}
-                    seconds={seconds}
-                    easyMode={easyMode}
-                    normalMode={normalMode}
-                    nrows={nrows}
-                    ncols={ncols}
-                    pair={pair}
-                    setPair={setPair}
-                    handleStopTimer={handleStopTimer}
-                  />
-                }
-                <br></br>
-              </div>
-            )
+      {board.map((row) =>
+        row.map((card) =>
+          card[0] !== ncols - 1 ? (
+            <div style={{ display: "inline" }}>
+              {
+                <Card
+                  visibleCards={visibleCards}
+                  setVisibleCards={setVisibleCards}
+                  x={card[0]}
+                  y={card[1]}
+                  images={images.map((item) => item.image)}
+                  imageIndex={card[2]}
+                  status={card[3]}
+                  board={board}
+                  setBoard={setBoard}
+                  setIsWin={setIsWin}
+                  seconds={seconds}
+                  easyMode={easyMode}
+                  normalMode={normalMode}
+                  nrows={nrows}
+                  ncols={ncols}
+                  pair={pair}
+                  setPair={setPair}
+                  handleStopTimer={handleStopTimer}
+                  isTogglingReset={isTogglingReset}
+                  isTogglingHomePage={isTogglingHomePage}
+                />
+              }
+            </div>
+          ) : (
+            <div style={{ display: "inline" }}>
+              {
+                <Card
+                  visibleCards={visibleCards}
+                  setVisibleCards={setVisibleCards}
+                  x={card[0]}
+                  y={card[1]}
+                  images={images.map((item) => item.image)}
+                  imageIndex={card[2]}
+                  status={card[3]}
+                  board={board}
+                  setBoard={setBoard}
+                  setIsWin={setIsWin}
+                  seconds={seconds}
+                  easyMode={easyMode}
+                  normalMode={normalMode}
+                  nrows={nrows}
+                  ncols={ncols}
+                  pair={pair}
+                  setPair={setPair}
+                  handleStopTimer={handleStopTimer}
+                  isTogglingReset={isTogglingReset}
+                  isTogglingHomePage={isTogglingHomePage}
+                />
+              }
+              <br></br>
+            </div>
           )
-        )}
+        )
+      )}
       {isImagesGroupChosen && !showBoard && !isTogglingHomePage && (
         <button onClick={generateBoard}>Start</button>
       )}

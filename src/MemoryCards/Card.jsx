@@ -11,11 +11,14 @@ export default function Card({
   imageIndex,
   setBoard,
   setIsWin,
+  seconds,
   easyMode,
   normalMode,
   pair,
   setPair,
   handleStopTimer,
+  isTogglingReset,
+  isTogglingHomePage,
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {
@@ -96,7 +99,16 @@ export default function Card({
         width: easyMode ? "150px" : normalMode ? "75px" : "60px",
         border: "2px solid black",
         margin: "3px",
-        pointerEvents: status === 1 && "none",
+        pointerEvents:
+          (seconds < 1 ||
+            status === 1 ||
+            isTogglingReset ||
+            isTogglingHomePage) &&
+          "none",
+        opacity:
+          (seconds < 1 || isTogglingReset || isTogglingHomePage) && status === 0
+            ? 0.4
+            : 1,
       }}
       alt=""
       onClick={toggleCard}
