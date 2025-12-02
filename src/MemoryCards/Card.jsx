@@ -15,6 +15,7 @@ export default function Card({
   normalMode,
   pair,
   setPair,
+  handleStopTimer,
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {
@@ -79,6 +80,7 @@ export default function Card({
     }
     if (pair === images.length) {
       setIsWin(true);
+      handleStopTimer();
     }
   };
   return (

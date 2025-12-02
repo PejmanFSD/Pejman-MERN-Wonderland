@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Board from "./Board";
+import ConfirmationBox from "../ConfirmationBox";
 import { fruits, characters, animals, cars, emojis } from "./imagesGroup";
 
 const imagesGroup = ["Emojis", "Animals", "Fruits", "Cars", "Movie Characters"];
-export default function MemoryCards() {
+export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -14,6 +15,7 @@ export default function MemoryCards() {
   const [seconds, setSeconds] = useState(5);
   const [pair, setPair] = useState(0);
   const [isWin, setIsWin] = useState("");
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -120,6 +122,17 @@ export default function MemoryCards() {
     setSeconds(50);
     setIsTimerRunning(false);
   };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowMemoryCards(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
+  };
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -132,19 +145,27 @@ export default function MemoryCards() {
   useEffect(() => {
     if (pair === images.length && seconds > 0 && pair !== 0) {
       setIsWin(true);
+      handleStopTimer();
     }
   }, [pair]);
   useEffect(() => {
     if (seconds < 1) {
       setIsWin(false);
+      handleStopTimer();
     }
   }, [seconds]);
   return (
     <div>
-      {!isGameStarted && <button onClick={handleEasyMode}>Easy</button>}
-      {!isGameStarted && <button onClick={handleNormalMode}>Normal</button>}
-      {!isGameStarted && <button onClick={handleHardMode}>Hard</button>}
-      {isGameStarted && (
+      {!isGameStarted && !isTogglingHomePage && (
+        <button onClick={handleEasyMode}>Easy</button>
+      )}
+      {!isGameStarted && !isTogglingHomePage && (
+        <button onClick={handleNormalMode}>Normal</button>
+      )}
+      {!isGameStarted && !isTogglingHomePage && (
+        <button onClick={handleHardMode}>Hard</button>
+      )}
+      {isGameStarted && !isTogglingHomePage && isWin === "" && (
         <div>
           {!isImagesGroupChosen && (
             <label htmlFor="images">Select the images Group</label>
@@ -164,13 +185,32 @@ export default function MemoryCards() {
           </select>
         </div>
       )}
-      {isTimerRunning && (normalMode || hardMode) && (
-        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-          {seconds}
-        </h3>
+      {isTimerRunning &&
+        (normalMode || hardMode) &&
+        !isTogglingHomePage &&
+        isWin === "" && (
+          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            {seconds}
+          </h3>
+        )}
+      {!isTogglingHomePage && <h2>{isWin === true && "You Win!"}</h2>}
+      {!isTogglingHomePage && <h2>{isWin === false && "Time's Up!"}</h2>}
+      {!isTogglingHomePage && (
+        <div>
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        </div>
       )}
-      <h2>{isWin === true && "You Win!"}</h2>
-      <h2>{isWin === false && "Time's Up!"}</h2>
+      {isTogglingHomePage && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        </div>
+      )}
       {isGameStarted && (
         <Board
           images={images}
@@ -188,6 +228,7 @@ export default function MemoryCards() {
           handleResetTimer={handleResetTimer}
           pair={pair}
           setPair={setPair}
+          isTogglingHomePage={isTogglingHomePage}
         />
       )}
     </div>
