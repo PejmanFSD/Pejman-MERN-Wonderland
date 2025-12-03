@@ -23,6 +23,7 @@ export default function MemoryCards({
   const [isWin, setIsWin] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [addSecondsChance, setAddSecondsChance] = useState(true);
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -165,6 +166,10 @@ export default function MemoryCards({
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  const add15Seconds = () => {
+    setSeconds((seconds) => seconds + 15);
+    setAddSecondsChance(false);
+  };
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -205,9 +210,12 @@ export default function MemoryCards({
       {easyMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
       )}
-      {normalMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
-        <ModeExplaination message="Normal Mode: You'll get 1 star if you win." />
-      )}
+      {normalMode &&
+        isWin === "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <ModeExplaination message="Normal Mode: You'll get 1 star if you win." />
+        )}
       {hardMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <ModeExplaination message="Hard Mode: You'll get 2 stars if you win." />
       )}
@@ -296,6 +304,15 @@ export default function MemoryCards({
           />
         </div>
       )}
+      {isGameStarted &&
+        isWin === "" &&
+        isTimerRunning &&
+        !isTogglingHomePage &&
+        !isTogglingReset && (
+          <button onClick={add15Seconds} disabled={!addSecondsChance}>
+            Add 15 seconds
+          </button>
+        )}
       {isGameStarted && (
         <Board
           images={images}
