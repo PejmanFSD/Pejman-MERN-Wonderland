@@ -24,6 +24,8 @@ export default function MemoryCards({
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [addSecondsChance, setAddSecondsChance] = useState(true);
+  const [seeAllCardsChanceTemp, setSeeAllCardsChanceTemp] = useState(true);
+  const [seeAllCardsChancePer, setSeeAllCardsChancePer] = useState(true);
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -170,6 +172,13 @@ export default function MemoryCards({
     setSeconds((seconds) => seconds + 15);
     setAddSecondsChance(false);
   };
+  const seeAllCards = () => {
+    setSeeAllCardsChanceTemp(false);
+    setTimeout(() => {
+    setSeeAllCardsChanceTemp(true);
+  }, 3000);
+    setSeeAllCardsChancePer(false);
+  }
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -313,6 +322,15 @@ export default function MemoryCards({
             Add 15 seconds
           </button>
         )}
+        {isGameStarted &&
+        isWin === "" &&
+        showBoard &&
+        !isTogglingHomePage &&
+        !isTogglingReset && (
+          <button onClick={seeAllCards} disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}>
+            See all cards for 3 seconds
+          </button>
+        )}
       {isGameStarted && (
         <Board
           images={images}
@@ -334,6 +352,8 @@ export default function MemoryCards({
           isTogglingHomePage={isTogglingHomePage}
           isTogglingReset={isTogglingReset}
           updateTotalPoint={updateTotalPoint}
+          seeAllCardsChanceTemp={seeAllCardsChanceTemp}
+          seeAllCardsChancePer={seeAllCardsChancePer}
         />
       )}
     </div>

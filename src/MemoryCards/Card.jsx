@@ -21,6 +21,8 @@ export default function Card({
   isTogglingReset,
   isTogglingHomePage,
   updateTotalPoint,
+  seeAllCardsChanceTemp,
+  seeAllCardsChancePer
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {
@@ -95,12 +97,12 @@ export default function Card({
   };
   return (
     <img
-      src={
-        status === 1
+      src={!seeAllCardsChanceTemp && !seeAllCardsChancePer ? images[imageIndex] :
+        (status === 1
           ? Tick
           : visibleCards.some((pair) => pair[0] === x && pair[1] === y)
           ? images[imageIndex]
-          : Pejman
+          : Pejman)
       }
       style={{
         width: easyMode ? "150px" : normalMode ? "75px" : "60px",

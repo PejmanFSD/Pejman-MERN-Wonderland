@@ -22,6 +22,8 @@ export default function Board({
   isTogglingHomePage,
   isTogglingReset,
   updateTotalPoint,
+  seeAllCardsChanceTemp,
+  seeAllCardsChancePer
 }) {
   const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
@@ -95,6 +97,8 @@ export default function Board({
                   isTogglingReset={isTogglingReset}
                   isTogglingHomePage={isTogglingHomePage}
                   updateTotalPoint={updateTotalPoint}
+                  seeAllCardsChanceTemp={seeAllCardsChanceTemp}
+                  seeAllCardsChancePer={seeAllCardsChancePer}
                 />
               }
             </div>
@@ -124,6 +128,8 @@ export default function Board({
                   isTogglingReset={isTogglingReset}
                   isTogglingHomePage={isTogglingHomePage}
                   updateTotalPoint={updateTotalPoint}
+                  seeAllCardsChanceTemp={seeAllCardsChanceTemp}
+                  seeAllCardsChancePer={seeAllCardsChancePer}
                 />
               }
               <br></br>
