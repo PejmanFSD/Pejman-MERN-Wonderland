@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Board from "./Board";
 import ConfirmationBox from "../ConfirmationBox";
+import ModeExplaination from "../ModeExplaination";
 import { fruits, characters, animals, cars, emojis } from "./imagesGroup";
 
 const imagesGroup = ["Emojis", "Animals", "Fruits", "Cars", "Movie Characters"];
@@ -200,6 +201,15 @@ export default function MemoryCards({
       )}
       {!isGameStarted && !isTogglingHomePage && (
         <button onClick={handleHardMode}>Hard</button>
+      )}
+      {easyMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
+        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+      )}
+      {normalMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
+        <ModeExplaination message="Normal Mode: You'll get 1 star if you win." />
+      )}
+      {hardMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
+        <ModeExplaination message="Hard Mode: You'll get 2 stars if you win." />
       )}
       {isGameStarted &&
         !isTogglingHomePage &&
