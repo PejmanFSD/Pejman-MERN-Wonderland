@@ -1,5 +1,6 @@
 import Pejman from "./images/Pejman.jpg";
 import Tick from "./images/Tick.jpg";
+import BlueTick from "./images/BlueTick.jpg";
 
 export default function Card({
   visibleCards,
@@ -97,12 +98,16 @@ export default function Card({
   };
   return (
     <img
-      src={!seeAllCardsChanceTemp && !seeAllCardsChancePer ? images[imageIndex] :
-        (status === 1
+      src={
+        status === 2
+          ? BlueTick
+          : !seeAllCardsChanceTemp && !seeAllCardsChancePer
+          ? images[imageIndex]
+          : status === 1
           ? Tick
           : visibleCards.some((pair) => pair[0] === x && pair[1] === y)
           ? images[imageIndex]
-          : Pejman)
+          : Pejman
       }
       style={{
         width: easyMode ? "150px" : normalMode ? "75px" : "60px",

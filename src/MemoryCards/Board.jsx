@@ -4,6 +4,8 @@ import { getRandArr } from "../utils";
 
 export default function Board({
   images,
+  board,
+  setBoard,
   nrows,
   ncols,
   isImagesGroupChosen,
@@ -11,6 +13,8 @@ export default function Board({
   normalMode,
   hardMode,
   showBoard,
+  visibleCards,
+  setVisibleCards,
   setShowBoard,
   setIsWin,
   seconds,
@@ -25,9 +29,7 @@ export default function Board({
   seeAllCardsChanceTemp,
   seeAllCardsChancePer
 }) {
-  const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
-  const [visibleCards, setVisibleCards] = useState([]);
   const generateBoard = () => {
     let finalIndex = 0;
     for (let b = 0; b < nrows; b++) {

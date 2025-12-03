@@ -12,6 +12,7 @@ export default function MemoryCards({
 }) {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
+  const [board, setBoard] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -20,12 +21,15 @@ export default function MemoryCards({
   const [seconds, setSeconds] = useState(5);
   const [pair, setPair] = useState(0);
   const [showBoard, setShowBoard] = useState(false);
+  const [visibleCards, setVisibleCards] = useState([]);
   const [isWin, setIsWin] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [addSecondsChance, setAddSecondsChance] = useState(true);
   const [seeAllCardsChanceTemp, setSeeAllCardsChanceTemp] = useState(true);
   const [seeAllCardsChancePer, setSeeAllCardsChancePer] = useState(true);
+  const [findMatchChance, setFindMatchChance] = useState(true);
+  const [identicalIndexArray, setIdenticalIndexArray] = useState([]);
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -175,10 +179,29 @@ export default function MemoryCards({
   const seeAllCards = () => {
     setSeeAllCardsChanceTemp(false);
     setTimeout(() => {
-    setSeeAllCardsChanceTemp(true);
-  }, 3000);
+      setSeeAllCardsChanceTemp(true);
+    }, 3000);
     setSeeAllCardsChancePer(false);
-  }
+  };
+  const findMatch = () => {
+    setIdenticalIndexArray([]);
+    for (const row of board) {
+      for (const card of row) {
+        if (
+          Math.floor(card[2] / 4) === Math.floor(visibleCards[0][2] / 4) &&
+          card[3] === 0 &&
+          [card[0], card[1]].toString() !==
+            [visibleCards[0][0], visibleCards[0][1]].toString()
+        ) {
+          setIdenticalIndexArray((currIdenticalIndexArray) => [
+            ...currIdenticalIndexArray,
+            card,
+          ]);
+        }
+      }
+    }
+    setFindMatchChance(false);
+  };
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -205,8 +228,33 @@ export default function MemoryCards({
       handleStopTimer();
     }
   }, [seconds]);
+  useEffect(() => {
+    if (identicalIndexArray.length !== 0) {
+      setBoard((currBoard) =>
+        currBoard.map((row) =>
+          row.map((card) =>
+            [card[0], card[1]].toString() ===
+              [visibleCards[0][0], visibleCards[0][1]].toString() ||
+            [card[0], card[1]].toString() ===
+              [identicalIndexArray[0][0], identicalIndexArray[0][1]].toString()
+              ? [...card.slice(0, -1), 2]
+              : card
+          )
+        )
+      );
+      setVisibleCards([]);
+    }
+  }, [identicalIndexArray]);
   return (
     <div>
+      <div>
+        identicalIndexArray:{" "}
+        {identicalIndexArray.map((i) => (
+          <div>
+            {i[0]} - {i[1]} - {i[2]} - {i[3]}
+          </div>
+        ))}
+      </div>
       {!isGameStarted && !isTogglingHomePage && (
         <button onClick={handleEasyMode}>Easy</button>
       )}
@@ -322,13 +370,28 @@ export default function MemoryCards({
             Add 15 seconds
           </button>
         )}
-        {isGameStarted &&
+      {isGameStarted &&
         isWin === "" &&
         showBoard &&
         !isTogglingHomePage &&
         !isTogglingReset && (
-          <button onClick={seeAllCards} disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}>
+          <button
+            onClick={seeAllCards}
+            disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}
+          >
             See all cards for 3 seconds
+          </button>
+        )}
+      {isGameStarted &&
+        isWin === "" &&
+        showBoard &&
+        !isTogglingHomePage &&
+        !isTogglingReset && (
+          <button
+            onClick={findMatch}
+            disabled={!findMatchChance || visibleCards.length !== 1}
+          >
+            Reveil the identical card
           </button>
         )}
       {isGameStarted && (
@@ -337,10 +400,14 @@ export default function MemoryCards({
           nrows={easyMode ? 4 : normalMode ? 8 : 10}
           ncols={easyMode ? 4 : normalMode ? 8 : 10}
           isImagesGroupChosen={isImagesGroupChosen}
+          board={board}
+          setBoard={setBoard}
           easyMode={easyMode}
           normalMode={normalMode}
           hardMode={hardMode}
           showBoard={showBoard}
+          visibleCards={visibleCards}
+          setVisibleCards={setVisibleCards}
           setShowBoard={setShowBoard}
           setIsWin={setIsWin}
           seconds={seconds}
