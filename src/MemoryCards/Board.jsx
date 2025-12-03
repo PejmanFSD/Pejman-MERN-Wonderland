@@ -21,6 +21,7 @@ export default function Board({
   setPair,
   isTogglingHomePage,
   isTogglingReset,
+  updateTotalPoint,
 }) {
   const [board, setBoard] = useState([]);
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
@@ -85,6 +86,7 @@ export default function Board({
                   seconds={seconds}
                   easyMode={easyMode}
                   normalMode={normalMode}
+                  hardMode={hardMode}
                   nrows={nrows}
                   ncols={ncols}
                   pair={pair}
@@ -92,6 +94,7 @@ export default function Board({
                   handleStopTimer={handleStopTimer}
                   isTogglingReset={isTogglingReset}
                   isTogglingHomePage={isTogglingHomePage}
+                  updateTotalPoint={updateTotalPoint}
                 />
               }
             </div>
@@ -112,6 +115,7 @@ export default function Board({
                   seconds={seconds}
                   easyMode={easyMode}
                   normalMode={normalMode}
+                  hardMode={hardMode}
                   nrows={nrows}
                   ncols={ncols}
                   pair={pair}
@@ -119,6 +123,7 @@ export default function Board({
                   handleStopTimer={handleStopTimer}
                   isTogglingReset={isTogglingReset}
                   isTogglingHomePage={isTogglingHomePage}
+                  updateTotalPoint={updateTotalPoint}
                 />
               }
               <br></br>

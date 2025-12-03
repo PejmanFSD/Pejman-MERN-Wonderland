@@ -14,11 +14,13 @@ export default function Card({
   seconds,
   easyMode,
   normalMode,
+  hardMode,
   pair,
   setPair,
   handleStopTimer,
   isTogglingReset,
   isTogglingHomePage,
+  updateTotalPoint,
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {
@@ -83,6 +85,11 @@ export default function Card({
     }
     if (pair === images.length) {
       setIsWin(true);
+      if (normalMode) {
+        updateTotalPoint(1);
+      } else if (hardMode) {
+        updateTotalPoint(2);
+      }
       handleStopTimer();
     }
   };

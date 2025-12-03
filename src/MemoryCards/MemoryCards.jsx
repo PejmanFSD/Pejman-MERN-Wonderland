@@ -4,7 +4,11 @@ import ConfirmationBox from "../ConfirmationBox";
 import { fruits, characters, animals, cars, emojis } from "./imagesGroup";
 
 const imagesGroup = ["Emojis", "Animals", "Fruits", "Cars", "Movie Characters"];
-export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
+export default function MemoryCards({
+  setShowMemoryCards,
+  setShowGameTitles,
+  updateTotalPoint,
+}) {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -172,6 +176,11 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
   useEffect(() => {
     if (pair === images.length && seconds > 0 && pair !== 0) {
       setIsWin(true);
+      if (normalMode) {
+        updateTotalPoint(1);
+      } else if (hardMode) {
+        updateTotalPoint(2);
+      }
       handleStopTimer();
     }
   }, [pair]);
@@ -297,6 +306,7 @@ export default function MemoryCards({ setShowMemoryCards, setShowGameTitles }) {
           setPair={setPair}
           isTogglingHomePage={isTogglingHomePage}
           isTogglingReset={isTogglingReset}
+          updateTotalPoint={updateTotalPoint}
         />
       )}
     </div>
