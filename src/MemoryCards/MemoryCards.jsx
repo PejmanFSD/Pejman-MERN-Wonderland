@@ -263,15 +263,6 @@ export default function MemoryCards({
   }, [identicalIndexArray]);
   return (
     <div>
-      <div>pair: {pair}</div>
-      <div>
-        identicalIndexArray:{" "}
-        {identicalIndexArray.map((i) => (
-          <div>
-            {i[0]} - {i[1]} - {i[2]} - {i[3]}
-          </div>
-        ))}
-      </div>
       {!isGameStarted && !isTogglingHomePage && (
         <button onClick={handleEasyMode}>Easy</button>
       )}
@@ -408,7 +399,7 @@ export default function MemoryCards({
             onClick={findMatch1}
             disabled={!findMatchChance1 || visibleCards.length !== 1}
           >
-            Reveil the identical card
+            Reveal the identical card
           </button>
         )}
       {isGameStarted &&
@@ -420,7 +411,7 @@ export default function MemoryCards({
             onClick={findMatch2}
             disabled={!findMatchChance2 || visibleCards.length !== 1}
           >
-            Reveil the identical card
+            Reveal the identical card
           </button>
         )}
       {isGameStarted && (

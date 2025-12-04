@@ -142,46 +142,6 @@ export default function Board({
       {isImagesGroupChosen && !showBoard && !isTogglingHomePage && (
         <button onClick={generateBoard}>Start</button>
       )}
-      <div>
-        images:
-        {images
-          .map((item) => item.image)
-          .map((i) => (
-            <div>{i}</div>
-          ))}
-      </div>
-      <div>
-        imageIndexes:
-        {images
-          .map((item) => item.imageIndex)
-          .map((i) => (
-            <div>{i}</div>
-          ))}
-      </div>
-      <div>
-        shuffledIndexes:
-        {shuffledIndexes.map((i) => (
-          <div>{i}</div>
-        ))}
-      </div>
-      <div>
-        Board:
-        {board.map((row) =>
-          row.map((card) => (
-            <div>
-              {card[0]} - {card[1]} - {card[2]} - {card[3]}
-            </div>
-          ))
-        )}
-      </div>
-      <div>
-        visible Cards:
-        {visibleCards.map((card) => (
-          <div>
-            {card[0]} - {card[1]} - {card[2]} - {card[3]}
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
