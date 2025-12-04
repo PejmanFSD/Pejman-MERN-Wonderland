@@ -23,7 +23,7 @@ export default function Card({
   isTogglingHomePage,
   updateTotalPoint,
   seeAllCardsChanceTemp,
-  seeAllCardsChancePer
+  seeAllCardsChancePer,
 }) {
   const toggleCard = () => {
     if (visibleCards.length === 0) {

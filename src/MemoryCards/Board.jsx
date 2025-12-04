@@ -27,7 +27,7 @@ export default function Board({
   isTogglingReset,
   updateTotalPoint,
   seeAllCardsChanceTemp,
-  seeAllCardsChancePer
+  seeAllCardsChancePer,
 }) {
   const [shuffledIndexes, setShuffledIndexes] = useState([]);
   const generateBoard = () => {

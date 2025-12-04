@@ -28,7 +28,8 @@ export default function MemoryCards({
   const [addSecondsChance, setAddSecondsChance] = useState(true);
   const [seeAllCardsChanceTemp, setSeeAllCardsChanceTemp] = useState(true);
   const [seeAllCardsChancePer, setSeeAllCardsChancePer] = useState(true);
-  const [findMatchChance, setFindMatchChance] = useState(true);
+  const [findMatchChance1, setFindMatchChance1] = useState(true);
+  const [findMatchChance2, setFindMatchChance2] = useState(true);
   const [identicalIndexArray, setIdenticalIndexArray] = useState([]);
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -200,7 +201,14 @@ export default function MemoryCards({
         }
       }
     }
-    setFindMatchChance(false);
+  };
+  const findMatch1 = () => {
+    findMatch();
+    setFindMatchChance1(false);
+  };
+  const findMatch2 = () => {
+    findMatch();
+    setFindMatchChance2(false);
   };
   useEffect(() => {
     let interval;
@@ -242,11 +250,13 @@ export default function MemoryCards({
           )
         )
       );
+      setPair((pair) => pair + 2);
       setVisibleCards([]);
     }
   }, [identicalIndexArray]);
   return (
     <div>
+      <div>pair: {pair}</div>
       <div>
         identicalIndexArray:{" "}
         {identicalIndexArray.map((i) => (
@@ -388,8 +398,20 @@ export default function MemoryCards({
         !isTogglingHomePage &&
         !isTogglingReset && (
           <button
-            onClick={findMatch}
-            disabled={!findMatchChance || visibleCards.length !== 1}
+            onClick={findMatch1}
+            disabled={!findMatchChance1 || visibleCards.length !== 1}
+          >
+            Reveil the identical card
+          </button>
+        )}
+      {isGameStarted &&
+        isWin === "" &&
+        showBoard &&
+        !isTogglingHomePage &&
+        !isTogglingReset && (
+          <button
+            onClick={findMatch2}
+            disabled={!findMatchChance2 || visibleCards.length !== 1}
           >
             Reveil the identical card
           </button>
