@@ -101,7 +101,7 @@ export default function Card({
       src={
         status === 2
           ? BlueTick
-          : !seeAllCardsChanceTemp && !seeAllCardsChancePer
+          : !seeAllCardsChanceTemp && !seeAllCardsChancePer && status === 0
           ? images[imageIndex]
           : status === 1
           ? Tick

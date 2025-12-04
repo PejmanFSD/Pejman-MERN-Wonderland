@@ -158,6 +158,8 @@ export default function MemoryCards({
   const toggleResetYes = () => {
     setIsGameStarted(false);
     setShowBoard(false);
+    setBoard([]);
+    setVisibleCards([]);
     setImages([]);
     setIsImagesGroupChosen(false);
     setEasyMode(false);
@@ -167,6 +169,11 @@ export default function MemoryCards({
     setSeconds(5);
     setPair(0);
     setIsWin("");
+    setIdenticalIndexArray([]);
+    setSeeAllCardsChancePer(true);
+    setFindMatchChance1(true);
+    setFindMatchChance2(true);
+    setAddSecondsChance(true);
     handleResetTimer();
     setIsTogglingReset(false);
   };
