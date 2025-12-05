@@ -1,15 +1,61 @@
 import { useState } from "react";
 import Bowls from "./Bowls";
+import ModeExplaination from "../ModeExplaination";
 
 export default function Nim() {
+  const [standard, setStandard] = useState(false);
+  const [misere, setMisere] = useState(false);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
   const [isFillingTheBowlsStarted, setIsFillingTheBowlsStarted] =
     useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const handleStandeardNim = () => {
+    setStandard(true);
+    setMisere(false);
+  };
+  const handleMisereNim = () => {
+    setMisere(true);
+    setStandard(false);
+  };
+  const handleEasy = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const handleNormal = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const startFillingBowls = () => {
     setIsFillingTheBowlsStarted(true);
   };
   return (
     <div>
-      {!isFillingTheBowlsStarted && (
+      {standard && (
+        <ModeExplaination message="Standard Nim: Get the last ball and win." />
+      )}
+      {misere && (
+        <ModeExplaination message="Misere Nim: Get the last ball and loose!" />
+      )}
+      {easyMode && (
+        <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly." />
+      )}
+      {normalMode && (
+        <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy!" />
+      )}
+      {!standard && !misere && (
+        <div>
+          <button onClick={handleStandeardNim}>Standeard Nim</button>
+          <button onClick={handleMisereNim}>Misère Nim</button>
+        </div>
+      )}
+      {(standard || misere) && !easyMode && !normalMode && (
+        <div>
+          <button onClick={handleEasy}>Easy</button>
+          <button onClick={handleNormal}>Normal</button>
+        </div>
+      )}
+      {!isFillingTheBowlsStarted && (easyMode || normalMode) && (
         <button onClick={startFillingBowls}>
           Start Filling the Bowls with balls
         </button>
