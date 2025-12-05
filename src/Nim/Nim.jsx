@@ -7,8 +7,18 @@ export default function Nim() {
   const [misere, setMisere] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
-  const [isFillingTheBowlsStarted, setIsFillingTheBowlsStarted] =
+  const [isFillingTheBowlsByUserStarted, setIsFillingTheBowlsByUserStarted] =
     useState(false);
+  const [isFillingTheBowlsByUserFinished, setIsFillingTheBowlsByUserFinished] =
+    useState(false);
+  const [
+    isFillingTheBowlsByPejmanStarted,
+    setIsFillingTheBowlsByPejmanStarted,
+  ] = useState(false);
+  const [
+    isFillingTheBowlsByPejmanFinished,
+    setIsFillingTheBowlsByPejmanFinished,
+  ] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const handleStandeardNim = () => {
     setStandard(true);
@@ -26,8 +36,8 @@ export default function Nim() {
     setNormalMode(true);
     setEasyMode(false);
   };
-  const startFillingBowls = () => {
-    setIsFillingTheBowlsStarted(true);
+  const startFillingUserBowls = () => {
+    setIsFillingTheBowlsByUserStarted(true);
   };
   return (
     <div>
@@ -55,12 +65,27 @@ export default function Nim() {
           <button onClick={handleNormal}>Normal</button>
         </div>
       )}
-      {!isFillingTheBowlsStarted && (easyMode || normalMode) && (
-        <button onClick={startFillingBowls}>
-          Start Filling the Bowls with balls
+      {!isFillingTheBowlsByUserStarted && (easyMode || normalMode) && (
+        <button onClick={startFillingUserBowls}>
+          Start Filling your Bowls with balls
         </button>
       )}
-      {isFillingTheBowlsStarted && <Bowls />}
+      {isFillingTheBowlsByUserStarted && (
+        <Bowls
+          isFillingTheBowlsByUserFinished={isFillingTheBowlsByUserFinished}
+          setIsFillingTheBowlsByUserFinished={
+            setIsFillingTheBowlsByUserFinished
+          }
+          isFillingTheBowlsByPejmanStarted={isFillingTheBowlsByPejmanStarted}
+          setIsFillingTheBowlsByPejmanStarted={
+            setIsFillingTheBowlsByPejmanStarted
+          }
+          isFillingTheBowlsByPejmanFinished={isFillingTheBowlsByPejmanFinished}
+          setIsFillingTheBowlsByPejmanFinished={
+            setIsFillingTheBowlsByPejmanFinished
+          }
+        />
+      )}
     </div>
   );
 }
