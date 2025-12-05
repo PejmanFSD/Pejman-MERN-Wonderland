@@ -7,7 +7,7 @@ import Capitals from "./Capitals/Capitals";
 import Cryptogram from "./Cryptogram/Cryptogram";
 import Crazy100 from "./Crazy100/Crazy100";
 import MemoryCards from "./MemoryCards/MemoryCards";
-import MisereNim from "./MisereNim/MisereNim";
+import Nim from "./Nim/Nim";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -18,7 +18,7 @@ function App() {
   const [showCryptogram, setShowCryptogram] = useState(false);
   const [showCrazy100, setShowCrazy100] = useState(false);
   const [showMemoryCards, setShowMemoryCards] = useState(false);
-  const [showMisereNim, setShowMisereNim] = useState(false);
+  const [showNim, setShowNim] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -46,9 +46,9 @@ function App() {
     setShowGameTitles(false);
     setShowMemoryCards(true);
   };
-  const toggleMisereNim = () => {
+  const toggleNim = () => {
     setShowGameTitles(false);
-    setShowMisereNim(true);
+    setShowNim(true);
   };
   return (
     <div className="App">
@@ -138,16 +138,16 @@ function App() {
           <button onClick={() => toggleMemoryCards()}>Memory Cards</button>
         )
       )}
-      {!showGameTitles && showMisereNim ? (
-        <MisereNim
+      {!showGameTitles && showNim ? (
+        <Nim
           setShowGameTitles={setShowGameTitles}
-          setShowMisereNim={setShowMisereNim}
+          setShowNim={setShowNim}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
         showGameTitles &&
-        !showMisereNim && (
-          <button onClick={() => toggleMisereNim()}>Misere Nim</button>
+        !showNim && (
+          <button onClick={() => toggleNim()}>Nim</button>
         )
       )}
     </div>
