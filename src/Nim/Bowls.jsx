@@ -21,6 +21,7 @@ export default function Bowls({
     { bowlId: 9, bowlName: "bowl9", ballsNum: 0, isBowlSelected: false },
     { bowlId: 10, bowlName: "bowl10", ballsNum: 0, isBowlSelected: false },
   ]);
+  const [selectedBowl, setSelectedBowl] = useState(0);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBowls((currBowls) =>
@@ -77,6 +78,9 @@ export default function Bowls({
               ballsNum={bowl.ballsNum}
               isBowlSelected={bowl.isBowlSelected}
               isGameStarted={isGameStarted}
+              setBowls={setBowls}
+              selectedBowl={selectedBowl}
+              setSelectedBowl={setSelectedBowl}
             />
           )
       )}
@@ -90,6 +94,9 @@ export default function Bowls({
               ballsNum={bowl.ballsNum}
               isBowlSelected={bowl.isBowlSelected}
               isGameStarted={isGameStarted}
+              setBowls={setBowls}
+              selectedBowl={selectedBowl}
+              setSelectedBowl={setSelectedBowl}
             />
           )
       )}
