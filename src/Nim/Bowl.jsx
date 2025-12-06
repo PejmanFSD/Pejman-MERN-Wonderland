@@ -1,3 +1,4 @@
+// import { useState } from "react";
 import Bowl0 from "./Images/Bowl-0.jpg";
 import Bowl1 from "./Images/Bowl-1.jpg";
 import Bowl2 from "./Images/Bowl-2.jpg";
@@ -7,7 +8,14 @@ import Bowl5 from "./Images/Bowl-5.jpg";
 import Bowl6 from "./Images/Bowl-6.jpg";
 import Bowl7 from "./Images/Bowl-7.jpg";
 
-export default function Bowl({ title, ballsNum }) {
+export default function Bowl({
+  bowlId,
+  bowlName,
+  ballsNum,
+  isBowlSelected,
+  isGameStarted,
+}) {
+  // const [isABowlChosen, setIsABowlChosen] = useState(false);
   return (
     <div
       style={{
@@ -17,7 +25,7 @@ export default function Bowl({ title, ballsNum }) {
         margin: "10px",
       }}
     >
-      {title}
+      Bowl {bowlId}
       <img
         style={{
           width: "100px",
@@ -48,6 +56,13 @@ export default function Bowl({ title, ballsNum }) {
           ? "1 ball"
           : ballsNum > 1 && `${ballsNum} balls`}
       </p>
+      {isGameStarted && (
+        <input
+          type="checkbox"
+          // value={isBowlSelected}
+          // onChange={() => toggleBowl(bowlId)}
+        />
+      )}
     </div>
   );
 }

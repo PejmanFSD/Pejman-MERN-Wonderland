@@ -7,39 +7,38 @@ export default function Bowls({
   setIsFillingTheBowlsByUserFinished,
   isFillingTheBowlsByPejmanFinished,
   setIsFillingTheBowlsByPejmanFinished,
+  isGameStarted,
 }) {
-  const [bowls, setBowls] = useState({
-    bowl1: 0,
-    bowl2: 0,
-    bowl3: 0,
-    bowl4: 0,
-    bowl5: 0,
-    bowl6: 0,
-    bowl7: 0,
-    bowl8: 0,
-    bowl9: 0,
-    bowl10: 0,
-  });
+  const [bowls, setBowls] = useState([
+    { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 2, bowlName: "bowl2", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 3, bowlName: "bowl3", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 4, bowlName: "bowl4", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 5, bowlName: "bowl5", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 6, bowlName: "bowl6", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 7, bowlName: "bowl7", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 8, bowlName: "bowl8", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 9, bowlName: "bowl9", ballsNum: 0, isBowlSelected: false },
+    { bowlId: 10, bowlName: "bowl10", ballsNum: 0, isBowlSelected: false },
+  ]);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setBowls((currBowls) => {
-      currBowls[name] = Number(value);
-      return { ...currBowls };
-    });
+    setBowls((currBowls) =>
+      currBowls.map((bowl) =>
+        bowl.bowlName === name ? { ...bowl, ballsNum: Number(value) } : bowl
+      )
+    );
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsFillingTheBowlsByUserFinished(true);
   };
   const startFillingPejmanBowls = () => {
-    setBowls((currBowls) => {
-      currBowls["bowl6"] = getRandNum(7);
-      currBowls["bowl7"] = getRandNum(7);
-      currBowls["bowl8"] = getRandNum(7);
-      currBowls["bowl9"] = getRandNum(7);
-      currBowls["bowl10"] = getRandNum(7);
-      return { ...currBowls };
-    });
+    setBowls((currBowls) =>
+      currBowls.map((bowl, idx) =>
+        idx > 4 ? { ...bowl, ballsNum: getRandNum(7) } : bowl
+      )
+    );
     setIsFillingTheBowlsByPejmanFinished(true);
   };
   return (
@@ -57,7 +56,7 @@ export default function Bowls({
                   name={`bowl${idx + 1}`}
                   id={`bowl${idx + 1}`}
                 >
-                  <option value={Object.values(bowls)[idx]} disabled selected>
+                  <option value={bowls[idx].ballsNum} disabled selected>
                     {`bowl ${idx + 1}`}
                   </option>
                   {Array.from({ length: 7 }, (_, i) => i + 1).map((o) => (
@@ -69,11 +68,31 @@ export default function Bowls({
           <button>Done</button>
         </form>
       )}
-      <Bowl title="Bowl 01" ballsNum={bowls.bowl1} />
-      <Bowl title="Bowl 02" ballsNum={bowls.bowl2} />
-      <Bowl title="Bowl 03" ballsNum={bowls.bowl3} />
-      <Bowl title="Bowl 04" ballsNum={bowls.bowl4} />
-      <Bowl title="Bowl 05" ballsNum={bowls.bowl5} />
+      {bowls.map(
+        (bowl, idx) =>
+          idx < 5 && (
+            <Bowl
+              bowlId={bowl.bowlId}
+              bowlName={bowl.bowlName}
+              ballsNum={bowl.ballsNum}
+              isBowlSelected={bowl.isBowlSelected}
+              isGameStarted={isGameStarted}
+            />
+          )
+      )}
+      {bowls.map(
+        (bowl, idx) =>
+          idx >= 5 &&
+          isFillingTheBowlsByPejmanFinished && (
+            <Bowl
+              bowlId={bowl.bowlId}
+              bowlName={bowl.bowlName}
+              ballsNum={bowl.ballsNum}
+              isBowlSelected={bowl.isBowlSelected}
+              isGameStarted={isGameStarted}
+            />
+          )
+      )}
       <br></br>
       {isFillingTheBowlsByUserFinished &&
         !isFillingTheBowlsByPejmanFinished && (
@@ -81,22 +100,6 @@ export default function Bowls({
             See how Pejman fills his bowls
           </button>
         )}
-      <br></br>
-      {isFillingTheBowlsByPejmanFinished && (
-        <Bowl title="Bowl 06" ballsNum={bowls.bowl6} />
-      )}
-      {isFillingTheBowlsByPejmanFinished && (
-        <Bowl title="Bowl 07" ballsNum={bowls.bowl7} />
-      )}
-      {isFillingTheBowlsByPejmanFinished && (
-        <Bowl title="Bowl 08" ballsNum={bowls.bowl8} />
-      )}
-      {isFillingTheBowlsByPejmanFinished && (
-        <Bowl title="Bowl 09" ballsNum={bowls.bowl9} />
-      )}
-      {isFillingTheBowlsByPejmanFinished && (
-        <Bowl title="Bowl 10" ballsNum={bowls.bowl10} />
-      )}
     </div>
   );
 }

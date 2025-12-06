@@ -41,7 +41,6 @@ export default function Nim() {
   };
   const startTheGame = () => {
     setIsGameStarted(true);
-    console.log("The game starts!");
   };
   return (
     <div>
@@ -88,9 +87,10 @@ export default function Nim() {
           setIsFillingTheBowlsByPejmanFinished={
             setIsFillingTheBowlsByPejmanFinished
           }
+          isGameStarted={isGameStarted}
         />
       )}
-      {isFillingTheBowlsByPejmanFinished && (
+      {isFillingTheBowlsByPejmanFinished && !isGameStarted && (
         <button onClick={startTheGame}>Start the Game</button>
       )}
     </div>
