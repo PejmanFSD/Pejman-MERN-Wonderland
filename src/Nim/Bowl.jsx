@@ -7,7 +7,7 @@ import Bowl5 from "./Images/Bowl-5.jpg";
 import Bowl6 from "./Images/Bowl-6.jpg";
 import Bowl7 from "./Images/Bowl-7.jpg";
 
-export default function Bowl({ ballsNum }) {
+export default function Bowl({ title, ballsNum }) {
   return (
     <div
       style={{
@@ -17,6 +17,7 @@ export default function Bowl({ ballsNum }) {
         margin: "10px",
       }}
     >
+      {title}
       <img
         style={{
           width: "100px",

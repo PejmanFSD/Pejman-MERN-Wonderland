@@ -9,16 +9,16 @@ export default function Bowls({
   setIsFillingTheBowlsByPejmanFinished,
 }) {
   const [bowls, setBowls] = useState({
-    bowl1: "",
-    bowl2: "",
-    bowl3: "",
-    bowl4: "",
-    bowl5: "",
-    bowl6: "",
-    bowl7: "",
-    bowl8: "",
-    bowl9: "",
-    bowl10: "",
+    bowl1: 0,
+    bowl2: 0,
+    bowl3: 0,
+    bowl4: 0,
+    bowl5: 0,
+    bowl6: 0,
+    bowl7: 0,
+    bowl8: 0,
+    bowl9: 0,
+    bowl10: 0,
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,24 +69,34 @@ export default function Bowls({
           <button>Done</button>
         </form>
       )}
-      <Bowl ballsNum={bowls.bowl1} />
-      <Bowl ballsNum={bowls.bowl2} />
-      <Bowl ballsNum={bowls.bowl3} />
-      <Bowl ballsNum={bowls.bowl4} />
-      <Bowl ballsNum={bowls.bowl5} />
+      <Bowl title="Bowl 01" ballsNum={bowls.bowl1} />
+      <Bowl title="Bowl 02" ballsNum={bowls.bowl2} />
+      <Bowl title="Bowl 03" ballsNum={bowls.bowl3} />
+      <Bowl title="Bowl 04" ballsNum={bowls.bowl4} />
+      <Bowl title="Bowl 05" ballsNum={bowls.bowl5} />
       <br></br>
       {isFillingTheBowlsByUserFinished &&
         !isFillingTheBowlsByPejmanFinished && (
           <button onClick={startFillingPejmanBowls}>
-            See how Pejman has filled his bowls
+            See how Pejman fills his bowls
           </button>
         )}
       <br></br>
-      <Bowl ballsNum={bowls.bowl6} />
-      <Bowl ballsNum={bowls.bowl7} />
-      <Bowl ballsNum={bowls.bowl8} />
-      <Bowl ballsNum={bowls.bowl9} />
-      <Bowl ballsNum={bowls.bowl10} />
+      {isFillingTheBowlsByPejmanFinished && (
+        <Bowl title="Bowl 06" ballsNum={bowls.bowl6} />
+      )}
+      {isFillingTheBowlsByPejmanFinished && (
+        <Bowl title="Bowl 07" ballsNum={bowls.bowl7} />
+      )}
+      {isFillingTheBowlsByPejmanFinished && (
+        <Bowl title="Bowl 08" ballsNum={bowls.bowl8} />
+      )}
+      {isFillingTheBowlsByPejmanFinished && (
+        <Bowl title="Bowl 09" ballsNum={bowls.bowl9} />
+      )}
+      {isFillingTheBowlsByPejmanFinished && (
+        <Bowl title="Bowl 10" ballsNum={bowls.bowl10} />
+      )}
     </div>
   );
 }

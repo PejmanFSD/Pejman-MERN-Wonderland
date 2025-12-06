@@ -39,6 +39,10 @@ export default function Nim() {
   const startFillingUserBowls = () => {
     setIsFillingTheBowlsByUserStarted(true);
   };
+  const startTheGame = () => {
+    setIsGameStarted(true);
+    console.log("The game starts!");
+  };
   return (
     <div>
       {standard && (
@@ -67,7 +71,7 @@ export default function Nim() {
       )}
       {!isFillingTheBowlsByUserStarted && (easyMode || normalMode) && (
         <button onClick={startFillingUserBowls}>
-          Start Filling your Bowls with balls
+          Start Filling your Bowls with Balls
         </button>
       )}
       {isFillingTheBowlsByUserStarted && (
@@ -85,6 +89,9 @@ export default function Nim() {
             setIsFillingTheBowlsByPejmanFinished
           }
         />
+      )}
+      {isFillingTheBowlsByPejmanFinished && (
+        <button onClick={startTheGame}>Start the Game</button>
       )}
     </div>
   );
