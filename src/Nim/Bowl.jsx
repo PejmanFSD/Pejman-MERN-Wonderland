@@ -72,7 +72,7 @@ export default function Bowl({
           type="checkbox"
           value={isBowlSelected}
           onChange={() => toggleBowl(bowlId)}
-          disabled={selectedBowl !== bowlId && selectedBowl !== 0}
+          disabled={(selectedBowl !== bowlId && selectedBowl !== 0) || ballsNum === 0}
         />
       )}
     </div>
