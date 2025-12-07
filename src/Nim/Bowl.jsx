@@ -36,7 +36,7 @@ export default function Bowl({
         margin: "10px",
       }}
     >
-      Bowl {bowlId} - selectedBowl: {selectedBowl}
+      Bowl {bowlId}
       <img
         style={{
           width: "100px",

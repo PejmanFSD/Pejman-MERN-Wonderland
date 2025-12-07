@@ -22,6 +22,7 @@ export default function Bowls({
     { bowlId: 10, bowlName: "bowl10", ballsNum: 0, isBowlSelected: false },
   ]);
   const [selectedBowl, setSelectedBowl] = useState(0);
+  const [pickNum, setPickNum] = useState(0);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBowls((currBowls) =>
@@ -41,6 +42,19 @@ export default function Bowls({
       )
     );
     setIsFillingTheBowlsByPejmanFinished(true);
+  };
+  const handleChangeSelectedBowl = (e) => {
+    setPickNum(e.target.value);
+  };
+  const handleSubmitSelectedBowl = (e) => {
+    e.preventDefault();
+    setBowls((currBowls) =>
+      currBowls.map((bowl) =>
+        bowl.bowlId === selectedBowl
+          ? { ...bowl, ballsNum: bowl.ballsNum - pickNum }
+          : bowl
+      )
+    );
   };
   return (
     <div>
@@ -69,37 +83,41 @@ export default function Bowls({
           <button>Done</button>
         </form>
       )}
-      {bowls.map(
-        (bowl, idx) =>
-          idx < 5 && (
-            <Bowl
-              bowlId={bowl.bowlId}
-              bowlName={bowl.bowlName}
-              ballsNum={bowl.ballsNum}
-              isBowlSelected={bowl.isBowlSelected}
-              isGameStarted={isGameStarted}
-              setBowls={setBowls}
-              selectedBowl={selectedBowl}
-              setSelectedBowl={setSelectedBowl}
-            />
-          )
-      )}
-      {bowls.map(
-        (bowl, idx) =>
-          idx >= 5 &&
-          isFillingTheBowlsByPejmanFinished && (
-            <Bowl
-              bowlId={bowl.bowlId}
-              bowlName={bowl.bowlName}
-              ballsNum={bowl.ballsNum}
-              isBowlSelected={bowl.isBowlSelected}
-              isGameStarted={isGameStarted}
-              setBowls={setBowls}
-              selectedBowl={selectedBowl}
-              setSelectedBowl={setSelectedBowl}
-            />
-          )
-      )}
+      <div>
+        {bowls.map(
+          (bowl, idx) =>
+            idx < 5 && (
+              <Bowl
+                bowlId={bowl.bowlId}
+                bowlName={bowl.bowlName}
+                ballsNum={bowl.ballsNum}
+                isBowlSelected={bowl.isBowlSelected}
+                isGameStarted={isGameStarted}
+                setBowls={setBowls}
+                selectedBowl={selectedBowl}
+                setSelectedBowl={setSelectedBowl}
+              />
+            )
+        )}
+      </div>
+      <div>
+        {bowls.map(
+          (bowl, idx) =>
+            idx >= 5 &&
+            isFillingTheBowlsByPejmanFinished && (
+              <Bowl
+                bowlId={bowl.bowlId}
+                bowlName={bowl.bowlName}
+                ballsNum={bowl.ballsNum}
+                isBowlSelected={bowl.isBowlSelected}
+                isGameStarted={isGameStarted}
+                setBowls={setBowls}
+                selectedBowl={selectedBowl}
+                setSelectedBowl={setSelectedBowl}
+              />
+            )
+        )}
+      </div>
       <br></br>
       {isFillingTheBowlsByUserFinished &&
         !isFillingTheBowlsByPejmanFinished && (
@@ -107,6 +125,39 @@ export default function Bowls({
             See how Pejman fills his bowls
           </button>
         )}
+      {selectedBowl !== 0 && (
+        <form onSubmit={handleSubmitSelectedBowl}>
+          <label htmlFor={selectedBowl.toString()}></label>
+          {`How many balls do you want to pick from bowl ${selectedBowl}?`}
+          <select
+            onChange={handleChangeSelectedBowl}
+            name={selectedBowl.toString()}
+            id={selectedBowl.toString()}
+          >
+            <option
+              value={
+                bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum
+              }
+              disabled
+              selected
+            >
+              How many balls?
+            </option>
+            {Array.from(
+              {
+                length: bowls.find((bowl) => bowl.bowlId === selectedBowl)
+                  .ballsNum,
+              },
+              (_, i) => i + 1
+            ).map((o) => (
+              <option>{o}</option>
+            ))}
+          </select>
+          <br></br>
+          <button>Done</button>
+        </form>
+      )}
+      <div>PickNum: {pickNum}</div>
     </div>
   );
 }
