@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Bowl from "./Bowl";
-import { getRandNum } from "../utils";
+import { getRandNum, getRandArr } from "../utils";
 
 export default function Bowls({
   isFillingTheBowlsByUserFinished,
@@ -8,6 +8,9 @@ export default function Bowls({
   isFillingTheBowlsByPejmanFinished,
   setIsFillingTheBowlsByPejmanFinished,
   isGameStarted,
+  easyMode,
+  isUserTurn,
+  toggleUserTurn,
 }) {
   const [bowls, setBowls] = useState([
     { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
@@ -21,8 +24,11 @@ export default function Bowls({
     { bowlId: 9, bowlName: "bowl9", ballsNum: 0, isBowlSelected: false },
     { bowlId: 10, bowlName: "bowl10", ballsNum: 0, isBowlSelected: false },
   ]);
+  const [unEmptyBowlsIndexes, setUnEmptyBowlsIndexes] = useState([]);
   const [selectedBowl, setSelectedBowl] = useState(0);
   const [pickNum, setPickNum] = useState(0);
+  const [pejmanBowl, setPejmanBowl] = useState(0);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBowls((currBowls) =>
@@ -57,6 +63,20 @@ export default function Bowls({
           : bowl
       )
     );
+    toggleUserTurn();
+  };
+  const allowPejman = () => {
+    toggleUserTurn();
+    if (easyMode) {
+      let copyUnEmptyBowlsIndexes = [...unEmptyBowlsIndexes];
+      for (const bowl of bowls) {
+        if (bowl.ballsNum > 0) {
+          copyUnEmptyBowlsIndexes.push(bowls.indexOf(bowl));
+        }
+      }
+      setUnEmptyBowlsIndexes(copyUnEmptyBowlsIndexes);
+      setPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
+    }
   };
   return (
     <div>
@@ -108,6 +128,7 @@ export default function Bowls({
                 setBowls={setBowls}
                 selectedBowl={selectedBowl}
                 setSelectedBowl={setSelectedBowl}
+                isUserTurn={isUserTurn}
               />
             )
         )}
@@ -126,6 +147,7 @@ export default function Bowls({
                 setBowls={setBowls}
                 selectedBowl={selectedBowl}
                 setSelectedBowl={setSelectedBowl}
+                isUserTurn={isUserTurn}
               />
             )
         )}
@@ -137,7 +159,7 @@ export default function Bowls({
             Allow Pejman fills his bowls
           </button>
         )}
-      {selectedBowl !== 0 && (
+      {selectedBowl !== 0 && isUserTurn && (
         <form onSubmit={handleSubmitSelectedBowl}>
           <label htmlFor={selectedBowl.toString()}></label>
           {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum !== 1 &&
@@ -173,21 +195,36 @@ export default function Bowls({
               </select>
             )}
           <br></br>
-          {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum > 0 && (
-            <button>
-              {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum >
-                1 && "Done"}
-              {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum ===
-                1 &&
-                `Pick the last single remaining ball of bowl ${selectedBowl}`}
-            </button>
-          )}
+          {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum > 0 &&
+            isUserTurn && (
+              <button>
+                {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum >
+                  1 && "Done"}
+                {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum ===
+                  1 &&
+                  `Pick the last single remaining ball of bowl ${selectedBowl}`}
+              </button>
+            )}
         </form>
       )}
-      {!selectedBowl && isGameStarted && (
+      {!selectedBowl && isGameStarted && isUserTurn && (
         <div>Choose one of the un-empty bowls and pick ball(s) from it</div>
       )}
+      {isGameStarted && !isUserTurn && (
+        <div>
+          Allow Pejman to choose one of the un-empty bowls and pick ball(s) from
+          it
+          <button onClick={allowPejman}>Ok</button>
+        </div>
+      )}
       <div>PickNum: {pickNum}</div>
+      <div>
+        UnEmptyBowlsIndexes:{" "}
+        {unEmptyBowlsIndexes.map((b) => (
+          <div>{b}</div>
+        ))}
+      </div>
+      <div>PejmanBowl: {pejmanBowl}</div>
     </div>
   );
 }

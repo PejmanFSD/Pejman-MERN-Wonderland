@@ -20,6 +20,8 @@ export default function Nim() {
     setIsFillingTheBowlsByPejmanFinished,
   ] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isUserTurn, setIsUserTurn] = useState(false);
+
   const handleStandeardNim = () => {
     setStandard(true);
     setMisere(false);
@@ -36,11 +38,15 @@ export default function Nim() {
     setNormalMode(true);
     setEasyMode(false);
   };
+  const toggleUserTurn = () => {
+    setIsUserTurn((currIsUserTurn) => !currIsUserTurn);
+  };
   const startFillingUserBowls = () => {
     setIsFillingTheBowlsByUserStarted(true);
   };
   const startTheGame = () => {
     setIsGameStarted(true);
+    toggleUserTurn();
   };
   return (
     <div>
@@ -88,6 +94,9 @@ export default function Nim() {
             setIsFillingTheBowlsByPejmanFinished
           }
           isGameStarted={isGameStarted}
+          easyMode={easyMode}
+          isUserTurn={isUserTurn}
+          toggleUserTurn={toggleUserTurn}
         />
       )}
       {isFillingTheBowlsByPejmanFinished && !isGameStarted && (

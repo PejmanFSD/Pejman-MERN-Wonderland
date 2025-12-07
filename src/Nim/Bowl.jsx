@@ -16,6 +16,7 @@ export default function Bowl({
   setBowls,
   selectedBowl,
   setSelectedBowl,
+  isUserTurn,
 }) {
   const toggleBowl = (id) => {
     setBowls((currentBowls) =>
@@ -67,12 +68,14 @@ export default function Bowl({
           ? "1 ball"
           : ballsNum > 1 && `${ballsNum} balls`}
       </p>
-      {isGameStarted && (
+      {isGameStarted && isUserTurn && (
         <input
           type="checkbox"
           value={isBowlSelected}
           onChange={() => toggleBowl(bowlId)}
-          disabled={(selectedBowl !== bowlId && selectedBowl !== 0) || ballsNum === 0}
+          disabled={
+            (selectedBowl !== bowlId && selectedBowl !== 0) || ballsNum === 0
+          }
         />
       )}
     </div>
