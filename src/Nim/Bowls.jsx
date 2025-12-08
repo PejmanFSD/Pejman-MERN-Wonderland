@@ -28,6 +28,7 @@ export default function Bowls({
   const [selectedBowl, setSelectedBowl] = useState(0);
   const [pickNum, setPickNum] = useState(0);
   const [pejmanBowl, setPejmanBowl] = useState(0);
+  const [allBalls, setAllBalls] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +53,7 @@ export default function Bowls({
   const handleChangeSelectedBowl = (e) => {
     setPickNum(e.target.value);
   };
-  const handleSubmitSelectedBowl = (e) => {
+  const handleUserMove = (e) => {
     e.preventDefault();
     setBowls((currBowls) =>
       currBowls.map((bowl) =>
@@ -63,10 +64,13 @@ export default function Bowls({
           : bowl
       )
     );
+    setAllBalls((currAllBalls) => [
+      ...currAllBalls,
+      { side: "user", num: pickNum },
+    ]);
     toggleUserTurn();
   };
-  const allowPejman = () => {
-    toggleUserTurn();
+  const handlePejmanMove = () => {
     if (easyMode) {
       let copyUnEmptyBowlsIndexes = [...unEmptyBowlsIndexes];
       for (const bowl of bowls) {
@@ -77,6 +81,7 @@ export default function Bowls({
       setUnEmptyBowlsIndexes(copyUnEmptyBowlsIndexes);
       setPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
     }
+    toggleUserTurn();
   };
   return (
     <div>
@@ -160,51 +165,35 @@ export default function Bowls({
           </button>
         )}
       {selectedBowl !== 0 && isUserTurn && (
-        <form onSubmit={handleSubmitSelectedBowl}>
+        <form onSubmit={handleUserMove}>
           <label htmlFor={selectedBowl.toString()}></label>
-          {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum !== 1 &&
-            bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum > 0 &&
-            `You chose bowl ${selectedBowl}, How many balls do you want to pick from it?`}
-          {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum === 1 &&
-            `You chose bowl ${selectedBowl}, which has only one ball in it!`}
-          {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum !== 1 &&
-            bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum > 0 && (
-              <select
-                onChange={handleChangeSelectedBowl}
-                name={selectedBowl.toString()}
-                id={selectedBowl.toString()}
-              >
-                <option
-                  value={
-                    bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum
-                  }
-                  disabled
-                  selected
-                >
-                  ⬇️
-                </option>
-                {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum !==
-                  1 &&
-                  Array.from(
-                    {
-                      length: bowls.find((bowl) => bowl.bowlId === selectedBowl)
-                        .ballsNum,
-                    },
-                    (_, i) => i + 1
-                  ).map((o) => <option>{o}</option>)}
-              </select>
-            )}
+          {`You chose bowl ${selectedBowl}, How many balls do you want to pick from it?`}
+          <select
+            onChange={handleChangeSelectedBowl}
+            name={selectedBowl.toString()}
+            id={selectedBowl.toString()}
+          >
+            <option
+              value={
+                bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum
+              }
+              disabled
+              selected
+            >
+              ⬇️
+            </option>
+            {Array.from(
+              {
+                length: bowls.find((bowl) => bowl.bowlId === selectedBowl)
+                  .ballsNum,
+              },
+              (_, i) => i + 1
+            ).map((o) => (
+              <option value={o > 1 ? o : 1}>{o}</option>
+            ))}
+          </select>
           <br></br>
-          {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum > 0 &&
-            isUserTurn && (
-              <button>
-                {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum >
-                  1 && "Done"}
-                {bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum ===
-                  1 &&
-                  `Pick the last single remaining ball of bowl ${selectedBowl}`}
-              </button>
-            )}
+          {isUserTurn && pickNum > 0 && <button>Done</button>}
         </form>
       )}
       {!selectedBowl && isGameStarted && isUserTurn && (
@@ -214,7 +203,7 @@ export default function Bowls({
         <div>
           Allow Pejman to choose one of the un-empty bowls and pick ball(s) from
           it
-          <button onClick={allowPejman}>Ok</button>
+          <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
       <div>PickNum: {pickNum}</div>
@@ -225,6 +214,14 @@ export default function Bowls({
         ))}
       </div>
       <div>PejmanBowl: {pejmanBowl}</div>
+      <div>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
+      <div>
+        {allBalls.map((b) => (
+          <div>
+            {b.side} - {b.num}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
