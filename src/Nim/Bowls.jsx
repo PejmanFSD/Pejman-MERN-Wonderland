@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Bowl from "./Bowl";
 import { getRandNum, getRandArr } from "../utils";
 
@@ -27,7 +27,8 @@ export default function Bowls({
   const [unEmptyBowlsIndexes, setUnEmptyBowlsIndexes] = useState([]);
   const [selectedBowl, setSelectedBowl] = useState(0);
   const [pickNum, setPickNum] = useState(0);
-  const [pejmanBowl, setPejmanBowl] = useState(0);
+  const [pejmanBowl, setPejmanBowl] = useState(-1);
+  const [pejmanPickNum, setPejmanPickNum] = useState(0);
   const [allBalls, setAllBalls] = useState([]);
 
   const handleChange = (e) => {
@@ -57,9 +58,7 @@ export default function Bowls({
     e.preventDefault();
     setBowls((currBowls) =>
       currBowls.map((bowl) =>
-        bowl.bowlId === selectedBowl && bowl.ballsNum === 1
-          ? { ...bowl, ballsNum: bowl.ballsNum - 1 }
-          : bowl.bowlId === selectedBowl && bowl.ballsNum > 1
+        bowl.bowlId === selectedBowl
           ? { ...bowl, ballsNum: bowl.ballsNum - pickNum }
           : bowl
       )
@@ -68,6 +67,8 @@ export default function Bowls({
       ...currAllBalls,
       { side: "user", num: pickNum },
     ]);
+    setSelectedBowl(0);
+    setPickNum(0);
     toggleUserTurn();
   };
   const handlePejmanMove = () => {
@@ -81,8 +82,23 @@ export default function Bowls({
       setUnEmptyBowlsIndexes(copyUnEmptyBowlsIndexes);
       setPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
     }
-    toggleUserTurn();
+    // toggleUserTurn();
   };
+  useEffect(() => {
+    if (pejmanBowl !== -1) {
+      const currPejmanPickNum = getRandNum(
+        bowls.find((b) => b.bowlId === pejmanBowl + 1).ballsNum
+      );
+      setPejmanPickNum(currPejmanPickNum);
+      setBowls((currBowls) =>
+        currBowls.map((bowl) =>
+          bowl.bowlId === pejmanBowl + 1
+            ? { ...bowl, ballsNum: bowl.ballsNum - currPejmanPickNum }
+            : bowl
+        )
+      );
+    }
+  }, [pejmanBowl]);
   return (
     <div>
       {!isFillingTheBowlsByUserFinished && (
@@ -201,8 +217,7 @@ export default function Bowls({
       )}
       {isGameStarted && !isUserTurn && (
         <div>
-          Allow Pejman to choose one of the un-empty bowls and pick ball(s) from
-          it
+          Allow Pejman to choose one of the un-empty bowls
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
@@ -214,6 +229,7 @@ export default function Bowls({
         ))}
       </div>
       <div>PejmanBowl: {pejmanBowl}</div>
+      <div>PejmanPickNum: {pejmanPickNum}</div>
       <div>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
       <div>
         {allBalls.map((b) => (
