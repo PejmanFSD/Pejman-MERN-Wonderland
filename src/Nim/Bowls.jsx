@@ -56,6 +56,9 @@ export default function Bowls({
   };
   const handleUserMove = (e) => {
     e.preventDefault();
+    setUnEmptyBowlsIndexes([]);
+    setSelectedPejmanBowl(-1);
+    setPejmanPickNum(0);
     setBowls((currBowls) =>
       currBowls.map((bowl) =>
         bowl.bowlId === selectedUserBowl
@@ -65,7 +68,7 @@ export default function Bowls({
     );
     setAllTurns((currAllTurns) => [
       ...currAllTurns,
-      { side: "user", num: userPickNum },
+      { side: "User", num: userPickNum },
     ]);
     setSelectedUserBowl(0);
     setUserPickNum(0);
@@ -82,7 +85,7 @@ export default function Bowls({
       setUnEmptyBowlsIndexes(copyUnEmptyBowlsIndexes);
       setSelectedPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
     }
-    // toggleUserTurn();
+    toggleUserTurn();
   };
   useEffect(() => {
     if (selectedPejmanBowl !== -1) {
@@ -97,6 +100,10 @@ export default function Bowls({
             : bowl
         )
       );
+      setAllTurns((currAllTurns) => [
+        ...currAllTurns,
+        { side: "Pejman", num: currPejmanPickNum },
+      ]);
     }
   }, [selectedPejmanBowl]);
   return (
