@@ -124,10 +124,38 @@ import E23 from "./images/Emojis/E-23.jpg";
 import E24 from "./images/Emojis/E-24.jpg";
 import E25 from "./images/Emojis/E-25.jpg";
 
+import N01 from "./images/Animations/N-01.jpg";
+import N02 from "./images/Animations/N-02.jpg";
+import N03 from "./images/Animations/N-03.jpg";
+import N04 from "./images/Animations/N-04.jpg";
+import N05 from "./images/Animations/N-05.jpg";
+import N06 from "./images/Animations/N-06.jpg";
+import N07 from "./images/Animations/N-07.jpg";
+import N08 from "./images/Animations/N-08.jpg";
+import N09 from "./images/Animations/N-09.jpg";
+import N10 from "./images/Animations/N-10.jpg";
+import N11 from "./images/Animations/N-11.jpg";
+import N12 from "./images/Animations/N-12.jpg";
+import N13 from "./images/Animations/N-13.jpg";
+import N14 from "./images/Animations/N-14.jpg";
+import N15 from "./images/Animations/N-15.jpg";
+import N16 from "./images/Animations/N-16.jpg";
+import N17 from "./images/Animations/N-17.jpg";
+import N18 from "./images/Animations/N-18.jpg";
+import N19 from "./images/Animations/N-19.jpg";
+import N20 from "./images/Animations/N-20.jpg";
+import N21 from "./images/Animations/N-21.jpg";
+import N22 from "./images/Animations/N-22.jpg";
+import N23 from "./images/Animations/N-23.jpg";
+import N24 from "./images/Animations/N-24.jpg";
+import N25 from "./images/Animations/N-25.jpg";
+
 const fruits = [F01, F02, F03, F04, F05, F06, F07, F08, F09, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21, F22, F23, F24, F25];
 const characters = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25];
 const animals = [A01, A02, A03, A04, A05, A06, A07, A08, A09, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, A23, A24, A25];
 const cars = [K01, K02, K03, K04, K05, K06, K07, K08, K09, K10, K11, K12, K13, K14, K15, K16, K17, K18, K19, K20, K21, K22, K23, K24, K25];
 const emojis = [E01, E02, E03, E04, E05, E06, E07, E08, E09, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20, E21, E22, E23, E24, E25];
+const animations = [N01, N02, N03, N04, N05, N06, N07, N08, N09, N10, N11, N12, N13, N14, N15, N16, N17, N18, N19, N20, N21, N22, N23, N24, N25];
 
-export {fruits, characters, animals, cars, emojis};
+
+export {fruits, characters, animals, cars, emojis, animations};

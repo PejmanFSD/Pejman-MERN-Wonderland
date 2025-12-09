@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import Board from "./Board";
 import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
-import { fruits, characters, animals, cars, emojis } from "./imagesGroup";
+import { fruits, characters, animals, cars, emojis, animations } from "./imagesGroup";
 
-const imagesGroup = ["Emojis", "Animals", "Fruits", "Cars", "Movie Characters"];
+const imagesGroup = ["Animals", "Fruits", "Animation Characters", "Cars", "Movie Characters", "Emojis"];
 export default function MemoryCards({
   setShowMemoryCards,
   setShowGameTitles,
@@ -122,6 +122,21 @@ export default function MemoryCards({
         initialImagesArray = emojis.slice(0, 16).flatMap((n) => [n, n, n, n]);
       } else if (hardMode) {
         initialImagesArray = emojis.flatMap((n) => [n, n, n, n]);
+      }
+      let copyImages = [...images];
+      for (let i = 0; i < initialImagesArray.length; i++) {
+        copyImages.push({ image: initialImagesArray[i], imageIndex: i });
+      }
+      setImages(copyImages);
+    }
+    if (e.target.value === "Animation Characters") {
+      let initialImagesArray;
+      if (easyMode) {
+        initialImagesArray = animations.slice(0, 4).flatMap((n) => [n, n, n, n]);
+      } else if (normalMode) {
+        initialImagesArray = animations.slice(0, 16).flatMap((n) => [n, n, n, n]);
+      } else if (hardMode) {
+        initialImagesArray = animations.flatMap((n) => [n, n, n, n]);
       }
       let copyImages = [...images];
       for (let i = 0; i < initialImagesArray.length; i++) {
