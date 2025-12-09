@@ -14,8 +14,8 @@ export default function Bowl({
   isBowlSelected,
   isGameStarted,
   setBowls,
-  selectedBowl,
-  setSelectedBowl,
+  selectedUserBowl,
+  setSelectedUserBowl,
   isUserTurn,
 }) {
   const toggleBowl = (id) => {
@@ -26,7 +26,7 @@ export default function Bowl({
           : bowl
       )
     );
-    setSelectedBowl(!isBowlSelected ? id : 0);
+    setSelectedUserBowl(!isBowlSelected ? id : 0);
   };
   return (
     <div
@@ -74,7 +74,8 @@ export default function Bowl({
           value={isBowlSelected}
           onChange={() => toggleBowl(bowlId)}
           disabled={
-            (selectedBowl !== bowlId && selectedBowl !== 0) || ballsNum === 0
+            (selectedUserBowl !== bowlId && selectedUserBowl !== 0) ||
+            ballsNum === 0
           }
         />
       )}

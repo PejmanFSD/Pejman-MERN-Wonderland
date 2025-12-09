@@ -25,11 +25,11 @@ export default function Bowls({
     { bowlId: 10, bowlName: "bowl10", ballsNum: 0, isBowlSelected: false },
   ]);
   const [unEmptyBowlsIndexes, setUnEmptyBowlsIndexes] = useState([]);
-  const [selectedBowl, setSelectedBowl] = useState(0);
-  const [pickNum, setPickNum] = useState(0);
-  const [pejmanBowl, setPejmanBowl] = useState(-1);
+  const [selectedUserBowl, setSelectedUserBowl] = useState(0);
+  const [userPickNum, setUserPickNum] = useState(0);
+  const [selectedPejmanBowl, setSelectedPejmanBowl] = useState(-1);
   const [pejmanPickNum, setPejmanPickNum] = useState(0);
-  const [allBalls, setAllBalls] = useState([]);
+  const [allTurns, setAllTurns] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,24 +51,24 @@ export default function Bowls({
     );
     setIsFillingTheBowlsByPejmanFinished(true);
   };
-  const handleChangeSelectedBowl = (e) => {
-    setPickNum(e.target.value);
+  const handleChangeSelectedUserBowl = (e) => {
+    setUserPickNum(e.target.value);
   };
   const handleUserMove = (e) => {
     e.preventDefault();
     setBowls((currBowls) =>
       currBowls.map((bowl) =>
-        bowl.bowlId === selectedBowl
-          ? { ...bowl, ballsNum: bowl.ballsNum - pickNum }
+        bowl.bowlId === selectedUserBowl
+          ? { ...bowl, ballsNum: bowl.ballsNum - userPickNum }
           : bowl
       )
     );
-    setAllBalls((currAllBalls) => [
-      ...currAllBalls,
-      { side: "user", num: pickNum },
+    setAllTurns((currAllTurns) => [
+      ...currAllTurns,
+      { side: "user", num: userPickNum },
     ]);
-    setSelectedBowl(0);
-    setPickNum(0);
+    setSelectedUserBowl(0);
+    setUserPickNum(0);
     toggleUserTurn();
   };
   const handlePejmanMove = () => {
@@ -80,25 +80,25 @@ export default function Bowls({
         }
       }
       setUnEmptyBowlsIndexes(copyUnEmptyBowlsIndexes);
-      setPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
+      setSelectedPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
     }
     // toggleUserTurn();
   };
   useEffect(() => {
-    if (pejmanBowl !== -1) {
+    if (selectedPejmanBowl !== -1) {
       const currPejmanPickNum = getRandNum(
-        bowls.find((b) => b.bowlId === pejmanBowl + 1).ballsNum
+        bowls.find((b) => b.bowlId === selectedPejmanBowl + 1).ballsNum
       );
       setPejmanPickNum(currPejmanPickNum);
       setBowls((currBowls) =>
         currBowls.map((bowl) =>
-          bowl.bowlId === pejmanBowl + 1
+          bowl.bowlId === selectedPejmanBowl + 1
             ? { ...bowl, ballsNum: bowl.ballsNum - currPejmanPickNum }
             : bowl
         )
       );
     }
-  }, [pejmanBowl]);
+  }, [selectedPejmanBowl]);
   return (
     <div>
       {!isFillingTheBowlsByUserFinished && (
@@ -147,8 +147,8 @@ export default function Bowls({
                 isBowlSelected={bowl.isBowlSelected}
                 isGameStarted={isGameStarted}
                 setBowls={setBowls}
-                selectedBowl={selectedBowl}
-                setSelectedBowl={setSelectedBowl}
+                selectedUserBowl={selectedUserBowl}
+                setSelectedUserBowl={setSelectedUserBowl}
                 isUserTurn={isUserTurn}
               />
             )
@@ -166,8 +166,8 @@ export default function Bowls({
                 isBowlSelected={bowl.isBowlSelected}
                 isGameStarted={isGameStarted}
                 setBowls={setBowls}
-                selectedBowl={selectedBowl}
-                setSelectedBowl={setSelectedBowl}
+                selectedUserBowl={selectedUserBowl}
+                setSelectedUserBowl={setSelectedUserBowl}
                 isUserTurn={isUserTurn}
               />
             )
@@ -180,18 +180,18 @@ export default function Bowls({
             Allow Pejman fills his bowls
           </button>
         )}
-      {selectedBowl !== 0 && isUserTurn && (
+      {selectedUserBowl !== 0 && isUserTurn && (
         <form onSubmit={handleUserMove}>
-          <label htmlFor={selectedBowl.toString()}></label>
-          {`You chose bowl ${selectedBowl}, How many balls do you want to pick from it?`}
+          <label htmlFor={selectedUserBowl.toString()}></label>
+          {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it?`}
           <select
-            onChange={handleChangeSelectedBowl}
-            name={selectedBowl.toString()}
-            id={selectedBowl.toString()}
+            onChange={handleChangeSelectedUserBowl}
+            name={selectedUserBowl.toString()}
+            id={selectedUserBowl.toString()}
           >
             <option
               value={
-                bowls.find((bowl) => bowl.bowlId === selectedBowl).ballsNum
+                bowls.find((bowl) => bowl.bowlId === selectedUserBowl).ballsNum
               }
               disabled
               selected
@@ -200,7 +200,7 @@ export default function Bowls({
             </option>
             {Array.from(
               {
-                length: bowls.find((bowl) => bowl.bowlId === selectedBowl)
+                length: bowls.find((bowl) => bowl.bowlId === selectedUserBowl)
                   .ballsNum,
               },
               (_, i) => i + 1
@@ -209,10 +209,10 @@ export default function Bowls({
             ))}
           </select>
           <br></br>
-          {isUserTurn && pickNum > 0 && <button>Done</button>}
+          {isUserTurn && userPickNum > 0 && <button>Done</button>}
         </form>
       )}
-      {!selectedBowl && isGameStarted && isUserTurn && (
+      {!selectedUserBowl && isGameStarted && isUserTurn && (
         <div>Choose one of the un-empty bowls and pick ball(s) from it</div>
       )}
       {isGameStarted && !isUserTurn && (
@@ -221,18 +221,18 @@ export default function Bowls({
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
-      <div>PickNum: {pickNum}</div>
+      <div>User PickNum: {userPickNum}</div>
       <div>
         UnEmptyBowlsIndexes:{" "}
         {unEmptyBowlsIndexes.map((b) => (
           <div>{b}</div>
         ))}
       </div>
-      <div>PejmanBowl: {pejmanBowl}</div>
+      <div>PejmanBowl: {selectedPejmanBowl}</div>
       <div>PejmanPickNum: {pejmanPickNum}</div>
       <div>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
       <div>
-        {allBalls.map((b) => (
+        {allTurns.map((b) => (
           <div>
             {b.side} - {b.num}
           </div>
