@@ -30,6 +30,7 @@ export default function Bowls({
   const [selectedPejmanBowl, setSelectedPejmanBowl] = useState(-1);
   const [pejmanPickNum, setPejmanPickNum] = useState(0);
   const [allTurns, setAllTurns] = useState([]);
+  const [allBallsNum, setAllBallsNum] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,11 +45,16 @@ export default function Bowls({
     setIsFillingTheBowlsByUserFinished(true);
   };
   const startFillingPejmanBowls = () => {
-    setBowls((currBowls) =>
-      currBowls.map((bowl, idx) =>
-        idx > 4 ? { ...bowl, ballsNum: getRandNum(7) } : bowl
-      )
-    );
+    setBowls((currBowls) => {
+      const copyBowls = [...currBowls];
+      for (let i = 5; i < 10; i++) {
+        copyBowls[i] = {
+          ...copyBowls[i],
+          ballsNum: getRandNum(7),
+        };
+      }
+      return copyBowls;
+    });
     setIsFillingTheBowlsByPejmanFinished(true);
   };
   const handleChangeSelectedUserBowl = (e) => {
@@ -106,6 +112,13 @@ export default function Bowls({
       ]);
     }
   }, [selectedPejmanBowl]);
+
+  useEffect(() => {
+    setAllBallsNum(0);
+    for (let i = 0; i < 10; i++) {
+      setAllBallsNum((currAllBallsNum) => currAllBallsNum + bowls[i].ballsNum);
+    }
+  }, [bowls]);
   return (
     <div>
       {!isFillingTheBowlsByUserFinished && (
@@ -245,6 +258,7 @@ export default function Bowls({
           </div>
         ))}
       </div>
+      <div>All Balls Num: {allBallsNum}</div>
     </div>
   );
 }
