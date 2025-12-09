@@ -95,6 +95,9 @@ export default function Nim() {
           }
           isGameStarted={isGameStarted}
           easyMode={easyMode}
+          normalMode={normalMode}
+          standard={standard}
+          misere={misere}
           isUserTurn={isUserTurn}
           toggleUserTurn={toggleUserTurn}
         />

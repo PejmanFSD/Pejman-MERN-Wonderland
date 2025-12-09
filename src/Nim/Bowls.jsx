@@ -9,6 +9,9 @@ export default function Bowls({
   setIsFillingTheBowlsByPejmanFinished,
   isGameStarted,
   easyMode,
+  normalMode,
+  standard,
+  misere,
   isUserTurn,
   toggleUserTurn,
 }) {
@@ -31,6 +34,7 @@ export default function Bowls({
   const [pejmanPickNum, setPejmanPickNum] = useState(0);
   const [allTurns, setAllTurns] = useState([]);
   const [allBallsNum, setAllBallsNum] = useState(0);
+  const [isWin, setIsWin] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -112,13 +116,45 @@ export default function Bowls({
       ]);
     }
   }, [selectedPejmanBowl]);
-
   useEffect(() => {
     setAllBallsNum(0);
     for (let i = 0; i < 10; i++) {
       setAllBallsNum((currAllBallsNum) => currAllBallsNum + bowls[i].ballsNum);
     }
   }, [bowls]);
+  useEffect(() => {
+    if (allBallsNum === 0 && allTurns.length > 0) {
+      if (easyMode) {
+        if (standard) {
+          if (allTurns[allTurns.length - 1].side === "User") {
+            setIsWin(true);
+          } else {
+            setIsWin(false);
+          }
+        } else if (misere) {
+          if (allTurns[allTurns.length - 1].side === "User") {
+            setIsWin(false);
+          } else {
+            setIsWin(true);
+          }
+        }
+      } else if (normalMode) {
+        if (standard) {
+          if (allTurns[allTurns.length - 1].side === "User") {
+            setIsWin(true);
+          } else {
+            setIsWin(false);
+          }
+        } else if (misere) {
+          if (allTurns[allTurns.length - 1].side === "User") {
+            setIsWin(false);
+          } else {
+            setIsWin(true);
+          }
+        }
+      }
+    }
+  }, [allBallsNum]);
   return (
     <div>
       {!isFillingTheBowlsByUserFinished && (
@@ -194,6 +230,8 @@ export default function Bowls({
         )}
       </div>
       <br></br>
+      {isWin === true && <h2>You Win!</h2>}
+      {isWin === false && <h2>You Loose!</h2>}
       {isFillingTheBowlsByUserFinished &&
         !isFillingTheBowlsByPejmanFinished && (
           <button onClick={startFillingPejmanBowls}>
