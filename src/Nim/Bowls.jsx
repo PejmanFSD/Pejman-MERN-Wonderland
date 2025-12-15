@@ -95,6 +95,86 @@ export default function Bowls({
       }
       setUnEmptyBowlsIndexes(copyUnEmptyBowlsIndexes);
       setSelectedPejmanBowl(getRandArr(copyUnEmptyBowlsIndexes));
+    } else if (normalMode) {
+      let minFourBalls = 0;
+      let minThreeBalls = 0;
+      let minTwoBalls = 0;
+      let oneBall = 0;
+      for (const bowl of bowls) {
+        if (bowl.ballsNum === 1) {
+          oneBall += 1;
+        }
+        if (bowl.ballsNum >= 2 || bowl.ballsNum >= 3 || bowl.ballsNum >= 4) {
+          minTwoBalls += 1;
+        }
+        if (bowl.ballsNum >= 3 || bowl.ballsNum >= 4) {
+          minThreeBalls += 1;
+        }
+        if (bowl.ballsNum >= 4) {
+          minFourBalls += 1;
+        }
+      }
+      console.log("minFourBalls: ", minFourBalls);
+      console.log("minThreeBalls: ", minThreeBalls);
+      console.log("minTwoBalls: ", minTwoBalls);
+      console.log("oneBall: ", oneBall);
+      if (minFourBalls >= 2) { // 1
+        console.log("1");
+      } else if (minFourBalls === 1 && minThreeBalls >= 2) { // 2
+        console.log("2");
+      } else if (
+        (minFourBalls === 1 && minThreeBalls === 2) ||
+        (minFourBalls === 0 && minThreeBalls >= 2) ||
+        (minFourBalls === 0 && minThreeBalls === 1) ||
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall > 2)
+      ) { // 3
+        console.log("3");
+      } else if (
+        (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls > 2) ||
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 2 && oneBall <= 2) ||
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls >= 2 && oneBall <= 2)
+      ) { // 4
+        console.log("4");
+      } else if (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 2) { // 5
+        console.log("5");
+      } else if (
+        (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 1 && standard) ||
+        (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 0 && misere)
+      ) { // 6
+        console.log("6");
+      } else if (
+        (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 1 && misere) ||
+        (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 0 && standard)
+      ) { // 7
+        console.log("7");
+      } else if (
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls > 2 && oneBall > 0) ||
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 2 && oneBall > 2) ||
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls >= 2 && oneBall > 2) ||
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 0)
+      ) { // 8
+        console.log("8");
+      } else if (
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && (oneBall === 2 || oneBall === 0) && standard) ||
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall === 1 && misere)
+      ) { // 9
+        console.log("9");
+      } else if (
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && (oneBall === 2 || oneBall === 0) && misere) ||
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall === 1 && standard)
+      ) { // 10
+        console.log("10");
+      } else if (
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && standard && oneBall % 2 === 0) ||
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && misere && oneBall % 2 === 1)
+      ) { // 11
+        console.log("11");
+      } else if (
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && misere && oneBall % 2 === 0) ||
+        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && standard && oneBall % 2 === 1)
+      ) { // 12
+        console.log("12");
+      }
     }
     toggleUserTurn();
   };
