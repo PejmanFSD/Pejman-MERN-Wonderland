@@ -26,7 +26,8 @@ export default function Bowl({
           : bowl
       )
     );
-    setSelectedUserBowl(!isBowlSelected ? id : 0);
+    // setSelectedUserBowl(!isBowlSelected ? id : 0);
+    setSelectedUserBowl(id);
   };
   return (
     <div

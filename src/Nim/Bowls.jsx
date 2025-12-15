@@ -14,6 +14,7 @@ export default function Bowls({
   misere,
   isUserTurn,
   toggleUserTurn,
+  updateTotalPoint
 }) {
   const [bowls, setBowls] = useState([
     { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
@@ -128,6 +129,7 @@ export default function Bowls({
         if (standard) {
           if (allTurns[allTurns.length - 1].side === "User") {
             setIsWin(true);
+            updateTotalPoint(1);
           } else {
             setIsWin(false);
           }
@@ -136,12 +138,14 @@ export default function Bowls({
             setIsWin(false);
           } else {
             setIsWin(true);
+            updateTotalPoint(1);
           }
         }
       } else if (normalMode) {
         if (standard) {
           if (allTurns[allTurns.length - 1].side === "User") {
             setIsWin(true);
+            updateTotalPoint(2);
           } else {
             setIsWin(false);
           }
@@ -150,6 +154,7 @@ export default function Bowls({
             setIsWin(false);
           } else {
             setIsWin(true);
+            updateTotalPoint(2);
           }
         }
       }
@@ -273,15 +278,16 @@ export default function Bowls({
       {!selectedUserBowl && isGameStarted && isUserTurn && (
         <div>Choose one of the un-empty bowls and pick ball(s) from it</div>
       )}
-      {isGameStarted && !isUserTurn && (
+      {isGameStarted && !isUserTurn && isWin === "" && (
         <div>
-          Allow Pejman to choose one of the un-empty bowls
+          <div>Allow Pejman to choose one of the un-empty bowls</div>
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
+      <div style={{ color: "gray" }}>User Bowl: {selectedUserBowl}</div>
       <div style={{ color: "gray" }}>User PickNum: {userPickNum}</div>
-      <div style={{ color: "gray" }}>PejmanBowl: {selectedPejmanBowl}</div>
-      <div style={{ color: "gray" }}>PejmanPickNum: {pejmanPickNum}</div>
+      <div style={{ color: "gray" }}>Pejman Bowl: {selectedPejmanBowl}</div>
+      <div style={{ color: "gray" }}>Pejman PickNum: {pejmanPickNum}</div>
       <div style={{ color: "gray" }}>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
       <div style={{ color: "gray" }}>All Balls Num: {allBallsNum}</div>
       <div>
@@ -289,7 +295,7 @@ export default function Bowls({
           <div>
             {`Move ${allTurns.indexOf(b) + 1}: `}
             {b.side === "User" ? "You" : "Pejman"}
-            {` took ${b.ballsNum} ball${b.ballsNum > 1 ? 's' : ''} from bowl ${b.bowlNum}`}
+            {` took ${b.ballsNum} ball${b.ballsNum > 1 ? 's' : ''} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}
           </div>
         ))}
       </div>
