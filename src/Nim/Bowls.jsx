@@ -78,7 +78,7 @@ export default function Bowls({
     );
     setAllTurns((currAllTurns) => [
       ...currAllTurns,
-      { side: "User", num: userPickNum },
+      { side: "User", bowlNum: selectedUserBowl, ballsNum: userPickNum },
     ]);
     setSelectedUserBowl(0);
     setUserPickNum(0);
@@ -112,7 +112,7 @@ export default function Bowls({
       );
       setAllTurns((currAllTurns) => [
         ...currAllTurns,
-        { side: "Pejman", num: currPejmanPickNum },
+        { side: "Pejman", bowlNum: selectedPejmanBowl, ballsNum: currPejmanPickNum },
       ]);
     }
   }, [selectedPejmanBowl]);
@@ -279,24 +279,20 @@ export default function Bowls({
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
-      <div>User PickNum: {userPickNum}</div>
-      <div>
-        UnEmptyBowlsIndexes:{" "}
-        {unEmptyBowlsIndexes.map((b) => (
-          <div>{b}</div>
-        ))}
-      </div>
-      <div>PejmanBowl: {selectedPejmanBowl}</div>
-      <div>PejmanPickNum: {pejmanPickNum}</div>
-      <div>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
+      <div style={{ color: "gray" }}>User PickNum: {userPickNum}</div>
+      <div style={{ color: "gray" }}>PejmanBowl: {selectedPejmanBowl}</div>
+      <div style={{ color: "gray" }}>PejmanPickNum: {pejmanPickNum}</div>
+      <div style={{ color: "gray" }}>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
+      <div style={{ color: "gray" }}>All Balls Num: {allBallsNum}</div>
       <div>
         {allTurns.map((b) => (
           <div>
-            {b.side} - {b.num}
+            {`Move ${allTurns.indexOf(b) + 1}: `}
+            {b.side === "User" ? "You" : "Pejman"}
+            {` took ${b.ballsNum} ball${b.ballsNum > 1 ? 's' : ''} from bowl ${b.bowlNum}`}
           </div>
         ))}
       </div>
-      <div>All Balls Num: {allBallsNum}</div>
     </div>
   );
 }
