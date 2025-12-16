@@ -132,14 +132,27 @@ export default function Bowls({
         const sortedpotentialBowls = [...potentialBowls].sort(
           (a, b) => a.ballsNum - b.ballsNum
         );
-        console.log("potentialBowls: ", potentialBowls);
-        console.log("sortedpotentialBowls: ", sortedpotentialBowls);
+        console.log("C1-potentialBowls: ", potentialBowls);
+        console.log("C1-sortedpotentialBowls: ", sortedpotentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
       } else if (minFourBalls === 1 && minThreeBalls >= 2) { // Condition 2
         setPejmanNormalModeCondition(2);
         console.log("Condition 2");
+        for (const bowl of bowls) {
+          if (bowl.ballsNum >= 3) {
+            potentialBowls.push(bowl);
+          }
+        }
+        const sortedpotentialBowls = [...potentialBowls].sort(
+          (a, b) => a.ballsNum - b.ballsNum
+        );
+        console.log("C2-potentialBowls: ", potentialBowls);
+        console.log("C2-sortedpotentialBowls: ", sortedpotentialBowls);
+        setSelectedPejmanBowl(
+          bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
+        )
       } else if (
         (minFourBalls === 1 && minThreeBalls === 2) ||
         (minFourBalls === 0 && minThreeBalls >= 2) ||
@@ -233,7 +246,15 @@ export default function Bowls({
             )
           );
         } else if (pejmanNormalModeCondition === 2) { // Condition 2
-
+          currPejmanPickNum = bowls[selectedPejmanBowl].ballsNum - 2;
+          setPejmanPickNum(currPejmanPickNum);
+          setBowls((currBowls) =>
+            currBowls.map((bowl) =>
+              bowl.bowlId === selectedPejmanBowl + 1
+                ? { ...bowl, ballsNum: bowl.ballsNum - currPejmanPickNum }
+                : bowl
+            )
+          );
         } else if (pejmanNormalModeCondition === 3) { // Condition 3
 
         } else if (pejmanNormalModeCondition === 4) { // Condition 4
