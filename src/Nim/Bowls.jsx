@@ -181,6 +181,19 @@ export default function Bowls({
       ) { // Condition 4
         setPejmanNormalModeCondition(4);
         console.log("Condition 4");
+        for (const bowl of bowls) {
+          if (bowl.ballsNum >= 2) {
+            potentialBowls.push(bowl);
+          }
+        }
+        const sortedpotentialBowls = [...potentialBowls].sort(
+          (a, b) => a.ballsNum - b.ballsNum
+        );
+        console.log("C4-potentialBowls: ", potentialBowls);
+        console.log("C4-sortedpotentialBowls: ", sortedpotentialBowls);
+        setSelectedPejmanBowl(
+          bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
+        )
       } else if (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 2) { // Condition 5
         setPejmanNormalModeCondition(5);
         console.log("Condition 5");
@@ -279,7 +292,15 @@ export default function Bowls({
             )
           );
         } else if (pejmanNormalModeCondition === 4) { // Condition 4
-
+          currPejmanPickNum = bowls[selectedPejmanBowl].ballsNum - 1;
+          setPejmanPickNum(currPejmanPickNum);
+          setBowls((currBowls) =>
+            currBowls.map((bowl) =>
+              bowl.bowlId === selectedPejmanBowl + 1
+                ? { ...bowl, ballsNum: bowl.ballsNum - currPejmanPickNum }
+                : bowl
+            )
+          );
         } else if (pejmanNormalModeCondition === 5) { // Condition 5
 
         } else if (pejmanNormalModeCondition === 6) { // Condition 6
