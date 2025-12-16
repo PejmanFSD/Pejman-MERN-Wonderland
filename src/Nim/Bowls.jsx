@@ -121,9 +121,9 @@ export default function Bowls({
       console.log("minTwoBalls: ", minTwoBalls);
       console.log("oneBall: ", oneBall);
       const potentialBowls = [];
-      if (minFourBalls >= 2) { // 1
+      if (minFourBalls >= 2) { // Condition 1
         setPejmanNormalModeCondition(1);
-        console.log("1");
+        console.log("Condition 1");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 4) {
             potentialBowls.push(bowl);
@@ -137,71 +137,71 @@ export default function Bowls({
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
-      } else if (minFourBalls === 1 && minThreeBalls >= 2) { // 2
+      } else if (minFourBalls === 1 && minThreeBalls >= 2) { // Condition 2
         setPejmanNormalModeCondition(2);
-        console.log("2");
+        console.log("Condition 2");
       } else if (
         (minFourBalls === 1 && minThreeBalls === 2) ||
         (minFourBalls === 0 && minThreeBalls >= 2) ||
         (minFourBalls === 0 && minThreeBalls === 1) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall > 2)
-      ) { // 3
+      ) { // Condition 3
         setPejmanNormalModeCondition(3);
-        console.log("3");
+        console.log("Condition 3");
       } else if (
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls > 2) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 2 && oneBall <= 2) ||
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls >= 2 && oneBall <= 2)
-      ) { // 4
+      ) { // Condition 4
         setPejmanNormalModeCondition(4);
-        console.log("4");
-      } else if (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 2) { // 5
+        console.log("Condition 4");
+      } else if (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 2) { // Condition 5
         setPejmanNormalModeCondition(5);
-        console.log("5");
+        console.log("Condition 5");
       } else if (
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 1 && standard) ||
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 0 && misere)
-      ) { // 6
+      ) { // Condition 6
         setPejmanNormalModeCondition(6);
-        console.log("6");
+        console.log("Condition 6");
       } else if (
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 1 && misere) ||
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 0 && standard)
-      ) { // 7
+      ) { // Condition 7
         setPejmanNormalModeCondition(7);
-        console.log("7");
+        console.log("Condition 7");
       } else if (
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls > 2 && oneBall > 0) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 2 && oneBall > 2) ||
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls >= 2 && oneBall > 2) ||
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 0)
-      ) { // 8
+      ) { // Condition 8
         setPejmanNormalModeCondition(8);
-        console.log("8");
+        console.log("Condition 8");
       } else if (
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && (oneBall === 2 || oneBall === 0) && standard) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall === 1 && misere)
-      ) { // 9
+      ) { // Condition 9
         setPejmanNormalModeCondition(9);
-        console.log("9");
+        console.log("Condition 9");
       } else if (
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && (oneBall === 2 || oneBall === 0) && misere) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall === 1 && standard)
-      ) { // 10
+      ) { // Condition 10
         setPejmanNormalModeCondition(10);
-        console.log("10");
+        console.log("Condition 10");
       } else if (
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && standard && oneBall % 2 === 0) ||
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && misere && oneBall % 2 === 1)
-      ) { // 11
+      ) { // Condition 11
         setPejmanNormalModeCondition(11);
-        console.log("11");
+        console.log("Condition 11");
       } else if (
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && misere && oneBall % 2 === 0) ||
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && standard && oneBall % 2 === 1)
-      ) { // 12
+      ) { // Condition 12
         setPejmanNormalModeCondition(12);
-        console.log("12");
+        console.log("Condition 12");
       }
     }
     toggleUserTurn();
@@ -222,7 +222,7 @@ export default function Bowls({
           )
         );
       } else if (normalMode) {
-        if (pejmanNormalModeCondition === 1) {
+        if (pejmanNormalModeCondition === 1) { // Condition 1
           currPejmanPickNum = bowls[selectedPejmanBowl].ballsNum - 3;
           setPejmanPickNum(currPejmanPickNum);
           setBowls((currBowls) =>
@@ -232,27 +232,27 @@ export default function Bowls({
                 : bowl
             )
           );
-        } else if (pejmanNormalModeCondition === 2) {
+        } else if (pejmanNormalModeCondition === 2) { // Condition 2
 
-        } else if (pejmanNormalModeCondition === 3) {
+        } else if (pejmanNormalModeCondition === 3) { // Condition 3
 
-        } else if (pejmanNormalModeCondition === 4) {
+        } else if (pejmanNormalModeCondition === 4) { // Condition 4
 
-        } else if (pejmanNormalModeCondition === 5) {
+        } else if (pejmanNormalModeCondition === 5) { // Condition 5
 
-        } else if (pejmanNormalModeCondition === 6) {
+        } else if (pejmanNormalModeCondition === 6) { // Condition 6
 
-        } else if (pejmanNormalModeCondition === 7) {
+        } else if (pejmanNormalModeCondition === 7) { // Condition 7
 
-        } else if (pejmanNormalModeCondition === 8) {
+        } else if (pejmanNormalModeCondition === 8) { // Condition 8
 
-        } else if (pejmanNormalModeCondition === 9) {
+        } else if (pejmanNormalModeCondition === 9) { // Condition 9
 
-        } else if (pejmanNormalModeCondition === 10) {
+        } else if (pejmanNormalModeCondition === 10) { // Condition 10
 
-        } else if (pejmanNormalModeCondition === 11) {
+        } else if (pejmanNormalModeCondition === 11) { // Condition 11
 
-        } else if (pejmanNormalModeCondition === 12) {
+        } else if (pejmanNormalModeCondition === 12) { // Condition 12
 
         }
       }
