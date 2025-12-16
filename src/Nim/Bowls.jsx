@@ -116,10 +116,10 @@ export default function Bowls({
           minFourBalls += 1;
         }
       }
-      console.log("minFourBalls: ", minFourBalls);
-      console.log("minThreeBalls: ", minThreeBalls);
-      console.log("minTwoBalls: ", minTwoBalls);
-      console.log("oneBall: ", oneBall);
+      // console.log("minFourBalls: ", minFourBalls);
+      // console.log("minThreeBalls: ", minThreeBalls);
+      // console.log("minTwoBalls: ", minTwoBalls);
+      // console.log("oneBall: ", oneBall);
       const potentialBowls = [];
       if (minFourBalls >= 2) { // Condition 1
         setPejmanNormalModeCondition(1);
@@ -161,6 +161,19 @@ export default function Bowls({
       ) { // Condition 3
         setPejmanNormalModeCondition(3);
         console.log("Condition 3");
+        for (const bowl of bowls) {
+          if (bowl.ballsNum >= 3) {
+            potentialBowls.push(bowl);
+          }
+        }
+        const sortedpotentialBowls = [...potentialBowls].sort(
+          (a, b) => a.ballsNum - b.ballsNum
+        );
+        console.log("C3-potentialBowls: ", potentialBowls);
+        console.log("C3-sortedpotentialBowls: ", sortedpotentialBowls);
+        setSelectedPejmanBowl(
+          bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
+        )
       } else if (
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls > 2) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 2 && oneBall <= 2) ||
@@ -256,7 +269,15 @@ export default function Bowls({
             )
           );
         } else if (pejmanNormalModeCondition === 3) { // Condition 3
-
+          currPejmanPickNum = 1;
+          setPejmanPickNum(currPejmanPickNum);
+          setBowls((currBowls) =>
+            currBowls.map((bowl) =>
+              bowl.bowlId === selectedPejmanBowl + 1
+                ? { ...bowl, ballsNum: bowl.ballsNum - currPejmanPickNum }
+                : bowl
+            )
+          );
         } else if (pejmanNormalModeCondition === 4) { // Condition 4
 
         } else if (pejmanNormalModeCondition === 5) { // Condition 5
