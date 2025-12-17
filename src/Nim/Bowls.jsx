@@ -298,12 +298,18 @@ export default function Bowls({
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
-      } else if (
-        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && misere && oneBall % 2 === 0) ||
-        (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && standard && oneBall % 2 === 1)
-      ) { // Condition 12
+      } else { // Condition 12
         setPejmanNormalModeCondition(12);
         console.log("Condition 12");
+        for (const bowl of bowls) {
+          if (bowl.ballsNum >= 2) {
+            potentialBowls.push(bowl);
+          }
+        }
+        console.log("C12-potentialBowls: ", potentialBowls);
+        setSelectedPejmanBowl(
+          bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
+        )
       }
     }
     toggleUserTurn();
@@ -435,7 +441,15 @@ export default function Bowls({
             )
           );
         } else if (pejmanNormalModeCondition === 12) { // Condition 12
-
+          currPejmanPickNum = bowls[selectedPejmanBowl].ballsNum - 1;
+          setPejmanPickNum(currPejmanPickNum);
+          setBowls((currBowls) =>
+            currBowls.map((bowl) =>
+              bowl.bowlId === selectedPejmanBowl + 1
+                ? { ...bowl, ballsNum: bowl.ballsNum - currPejmanPickNum }
+                : bowl
+            )
+          );
         }
       }
       setAllTurns((currAllTurns) => [
