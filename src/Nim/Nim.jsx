@@ -2,7 +2,7 @@ import { useState } from "react";
 import Bowls from "./Bowls";
 import ModeExplaination from "../ModeExplaination";
 
-export default function Nim({updateTotalPoint}) {
+export default function Nim({ updateTotalPoint }) {
   const [standard, setStandard] = useState(false);
   const [misere, setMisere] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
@@ -82,23 +82,23 @@ export default function Nim({updateTotalPoint}) {
       {isFillingTheBowlsByUserStarted && (
         <Bowls
           isFillingTheBowlsByUserFinished={isFillingTheBowlsByUserFinished}
-          setIsFillingTheBowlsByUserFinished={
-            setIsFillingTheBowlsByUserFinished
-          }
-          isFillingTheBowlsByPejmanStarted={isFillingTheBowlsByPejmanStarted}
-          setIsFillingTheBowlsByPejmanStarted={
-            setIsFillingTheBowlsByPejmanStarted
-          }
+          setIsFillingTheBowlsByUserFinished={setIsFillingTheBowlsByUserFinished}
           isFillingTheBowlsByPejmanFinished={isFillingTheBowlsByPejmanFinished}
-          setIsFillingTheBowlsByPejmanFinished={
-            setIsFillingTheBowlsByPejmanFinished
-          }
+          setIsFillingTheBowlsByPejmanFinished={setIsFillingTheBowlsByPejmanFinished}
+          setIsFillingTheBowlsByUserStarted={setIsFillingTheBowlsByUserStarted}
+          setIsFillingTheBowlsByPejmanStarted={setIsFillingTheBowlsByPejmanStarted}
           isGameStarted={isGameStarted}
+          setIsGameStarted={setIsGameStarted}
           easyMode={easyMode}
+          setEasyMode={setEasyMode}
           normalMode={normalMode}
+          setNormalMode={setNormalMode}
           standard={standard}
+          setStandard={setStandard}
           misere={misere}
+          setMisere={setMisere}
           isUserTurn={isUserTurn}
+          setIsUserTurn={setIsUserTurn}
           toggleUserTurn={toggleUserTurn}
           updateTotalPoint={updateTotalPoint}
         />

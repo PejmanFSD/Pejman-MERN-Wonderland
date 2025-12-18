@@ -7,12 +7,20 @@ export default function Bowls({
   setIsFillingTheBowlsByUserFinished,
   isFillingTheBowlsByPejmanFinished,
   setIsFillingTheBowlsByPejmanFinished,
+  setIsFillingTheBowlsByUserStarted,
+  setIsFillingTheBowlsByPejmanStarted,
   isGameStarted,
+  setIsGameStarted,
   easyMode,
+  setEasyMode,
   normalMode,
+  setNormalMode,
   standard,
+  setStandard,
   misere,
+  setMisere,
   isUserTurn,
+  setIsUserTurn,
   toggleUserTurn,
   updateTotalPoint
 }) {
@@ -50,6 +58,39 @@ export default function Bowls({
     e.preventDefault();
     setIsFillingTheBowlsByUserFinished(true);
   };
+  const handleReset = () => {
+    setStandard(false);
+    setMisere(false);
+    setEasyMode(false);
+    setNormalMode(false);
+    setIsFillingTheBowlsByUserStarted(false);
+    setIsFillingTheBowlsByUserFinished(false);
+    setIsFillingTheBowlsByPejmanStarted(false);
+    setIsFillingTheBowlsByPejmanFinished(false);
+    setIsGameStarted(false);
+    setIsUserTurn(false);
+    setBowls([
+      { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 2, bowlName: "bowl2", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 3, bowlName: "bowl3", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 4, bowlName: "bowl4", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 5, bowlName: "bowl5", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 6, bowlName: "bowl6", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 7, bowlName: "bowl7", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 8, bowlName: "bowl8", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 9, bowlName: "bowl9", ballsNum: 0, isBowlSelected: false },
+      { bowlId: 10, bowlName: "bowl10", ballsNum: 0, isBowlSelected: false },
+    ]);
+    setUnEmptyBowlsIndexes([]);
+    setSelectedUserBowl(0);
+    setUserPickNum(0);
+    setSelectedPejmanBowl(-1);
+    setPejmanPickNum(0);
+    setPejmanNormalModeCondition(0);
+    setAllTurns([]);
+    setAllBallsNum(0);
+    setIsWin("");
+  }
   const startFillingPejmanBowls = () => {
     setBowls((currBowls) => {
       const copyBowls = [...currBowls];
@@ -137,7 +178,7 @@ export default function Bowls({
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
-      } else if (minFourBalls === 1 && minThreeBalls >= 2) { // Condition 2
+      } else if (minFourBalls === 1 && minThreeBalls > 2) { // Condition 2
         setPejmanNormalModeCondition(2);
         console.log("Condition 2");
         for (const bowl of bowls) {
@@ -156,7 +197,7 @@ export default function Bowls({
       } else if (
         (minFourBalls === 1 && minThreeBalls === 2) ||
         (minFourBalls === 0 && minThreeBalls >= 2) ||
-        (minFourBalls === 0 && minThreeBalls === 1) ||
+        (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 2 && oneBall <= 2) ||
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall > 2)
       ) { // Condition 3
         setPejmanNormalModeCondition(3);
@@ -576,8 +617,10 @@ export default function Bowls({
         )}
       </div>
       <br></br>
-      {isWin === true && <h2>You Win!</h2>}
-      {isWin === false && <h2>You Loose!</h2>}
+      {isWin === true && <div><h2>You Win!</h2><h3>{`Because ${standard ? 'you' : 'Pejman'} picked the last ball`}</h3></div>}
+      {isWin === false && <div><h2>You Loose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
+      {isWin === true && <div><div>Play again?</div><button onClick={handleReset}>Ok</button></div>}
+      {isWin === false && <div><div>Try again?</div><button onClick={handleReset}>Ok</button></div>}
       {isFillingTheBowlsByUserFinished &&
         !isFillingTheBowlsByPejmanFinished && (
           <button onClick={startFillingPejmanBowls}>
@@ -625,6 +668,7 @@ export default function Bowls({
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
+      {isWin === "" && <button onClick={handleReset}>Reset the Game</button>}
       <div style={{ color: "gray" }}>User Bowl: {selectedUserBowl}</div>
       <div style={{ color: "gray" }}>User PickNum: {userPickNum}</div>
       <div style={{ color: "gray" }}>Pejman Bowl: {selectedPejmanBowl}</div>
