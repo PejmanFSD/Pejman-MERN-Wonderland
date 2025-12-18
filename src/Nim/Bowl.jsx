@@ -19,15 +19,19 @@ export default function Bowl({
   isUserTurn,
 }) {
   const toggleBowl = (id) => {
-    setBowls((currentBowls) =>
-      currentBowls.map((bowl) =>
-        bowl.bowlId === id
-          ? { ...bowl, isBowlSelected: !bowl.isBowlSelected }
-          : bowl
-      )
-    );
-    // setSelectedUserBowl(!isBowlSelected ? id : 0);
-    setSelectedUserBowl(id);
+    if (selectedUserBowl !== 0) {
+      setSelectedUserBowl(0);
+      return;
+    } else {
+      setBowls((currentBowls) =>
+        currentBowls.map((bowl) =>
+          bowl.bowlId === id
+            ? { ...bowl, isBowlSelected: !bowl.isBowlSelected }
+            : bowl
+        )
+      );
+      setSelectedUserBowl(id);
+    }
   };
   return (
     <div
@@ -42,23 +46,25 @@ export default function Bowl({
       <img
         style={{
           width: "100px",
+          border: "2px solid black",
+          opacity: (selectedUserBowl && selectedUserBowl !== bowlId) ? 0.3 : 1
         }}
         src={
           ballsNum === 0
             ? Bowl0
             : ballsNum === 1
-            ? Bowl1
-            : ballsNum === 2
-            ? Bowl2
-            : ballsNum === 3
-            ? Bowl3
-            : ballsNum === 4
-            ? Bowl4
-            : ballsNum === 5
-            ? Bowl5
-            : ballsNum === 6
-            ? Bowl6
-            : ballsNum === 7 && Bowl7
+              ? Bowl1
+              : ballsNum === 2
+                ? Bowl2
+                : ballsNum === 3
+                  ? Bowl3
+                  : ballsNum === 4
+                    ? Bowl4
+                    : ballsNum === 5
+                      ? Bowl5
+                      : ballsNum === 6
+                        ? Bowl6
+                        : ballsNum === 7 && Bowl7
         }
         alt=""
       />
@@ -66,8 +72,8 @@ export default function Bowl({
         {ballsNum === 0
           ? "Empty"
           : ballsNum === 1
-          ? "1 ball"
-          : ballsNum > 1 && `${ballsNum} balls`}
+            ? "1 ball"
+            : ballsNum > 1 && `${ballsNum} balls`}
       </p>
       {isGameStarted && isUserTurn && (
         <input
