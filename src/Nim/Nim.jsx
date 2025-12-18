@@ -21,6 +21,7 @@ export default function Nim({ updateTotalPoint }) {
   ] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isUserTurn, setIsUserTurn] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleStandeardNim = () => {
     setStandard(true);
@@ -57,10 +58,10 @@ export default function Nim({ updateTotalPoint }) {
         <ModeExplaination message="Misere Nim: Get the last ball and loose!" />
       )}
       {easyMode && (
-        <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly." />
+        <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly. You'll get 1 star if you win." />
       )}
       {normalMode && (
-        <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy!" />
+        <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy! You'll get 3 stars if you win." />
       )}
       {!standard && !misere && (
         <div>
@@ -78,6 +79,9 @@ export default function Nim({ updateTotalPoint }) {
         <button onClick={startFillingUserBowls}>
           Start Filling your Bowls with Balls
         </button>
+      )}
+      {isFillingTheBowlsByPejmanFinished && !isGameStarted && !isTogglingReset && (
+        <button onClick={startTheGame}>Start the Game</button>
       )}
       {isFillingTheBowlsByUserStarted && (
         <Bowls
@@ -101,10 +105,9 @@ export default function Nim({ updateTotalPoint }) {
           setIsUserTurn={setIsUserTurn}
           toggleUserTurn={toggleUserTurn}
           updateTotalPoint={updateTotalPoint}
+          isTogglingReset={isTogglingReset}
+          setIsTogglingReset={setIsTogglingReset}
         />
-      )}
-      {isFillingTheBowlsByPejmanFinished && !isGameStarted && (
-        <button onClick={startTheGame}>Start the Game</button>
       )}
     </div>
   );

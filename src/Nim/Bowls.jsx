@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Bowl from "./Bowl";
+import ConfirmationBox from "../ConfirmationBox";
 import { getRandNum, getRandArr } from "../utils";
 
 export default function Bowls({
@@ -22,7 +23,9 @@ export default function Bowls({
   isUserTurn,
   setIsUserTurn,
   toggleUserTurn,
-  updateTotalPoint
+  updateTotalPoint,
+  isTogglingReset,
+  setIsTogglingReset
 }) {
   const [bowls, setBowls] = useState([
     { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
@@ -126,6 +129,15 @@ export default function Bowls({
     setSelectedUserBowl(0);
     setUserPickNum(0);
     toggleUserTurn();
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handleReset();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   const handlePejmanMove = () => {
     if (easyMode) {
@@ -527,7 +539,7 @@ export default function Bowls({
         if (standard) {
           if (allTurns[allTurns.length - 1].side === "User") {
             setIsWin(true);
-            updateTotalPoint(2);
+            updateTotalPoint(3);
           } else {
             setIsWin(false);
           }
@@ -536,7 +548,7 @@ export default function Bowls({
             setIsWin(false);
           } else {
             setIsWin(true);
-            updateTotalPoint(2);
+            updateTotalPoint(3);
           }
         }
       }
@@ -593,6 +605,9 @@ export default function Bowls({
                 selectedUserBowl={selectedUserBowl}
                 setSelectedUserBowl={setSelectedUserBowl}
                 isUserTurn={isUserTurn}
+                isTogglingReset={isTogglingReset}
+                setIsTogglingReset={setIsTogglingReset}
+                isWin={isWin}
               />
             )
         )}
@@ -612,22 +627,24 @@ export default function Bowls({
                 selectedUserBowl={selectedUserBowl}
                 setSelectedUserBowl={setSelectedUserBowl}
                 isUserTurn={isUserTurn}
+                isTogglingReset={isTogglingReset}
+                setIsTogglingReset={setIsTogglingReset}
+                isWin={isWin}
               />
             )
         )}
       </div>
-      <br></br>
       {isWin === true && <div><h2>You Win!</h2><h3>{`Because ${standard ? 'you' : 'Pejman'} picked the last ball`}</h3></div>}
       {isWin === false && <div><h2>You Loose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
       {isWin === true && <div><div>Play again?</div><button onClick={handleReset}>Ok</button></div>}
       {isWin === false && <div><div>Try again?</div><button onClick={handleReset}>Ok</button></div>}
       {isFillingTheBowlsByUserFinished &&
-        !isFillingTheBowlsByPejmanFinished && (
+        !isFillingTheBowlsByPejmanFinished && !isTogglingReset && (
           <button onClick={startFillingPejmanBowls}>
             Allow Pejman fills his bowls
           </button>
         )}
-      {selectedUserBowl !== 0 && isUserTurn && (
+      {selectedUserBowl !== 0 && isUserTurn && !isTogglingReset && (
         <form onSubmit={handleUserMove}>
           <label htmlFor={selectedUserBowl.toString()}></label>
           {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it?`}
@@ -659,31 +676,44 @@ export default function Bowls({
           {isUserTurn && userPickNum > 0 && <button>Done</button>}
         </form>
       )}
-      {!selectedUserBowl && isGameStarted && isUserTurn && (
+      {!selectedUserBowl && isGameStarted && isUserTurn && isWin === "" && !isTogglingReset && (
         <div>Choose one of the un-empty bowls and pick ball(s) from it</div>
       )}
-      {isGameStarted && !isUserTurn && isWin === "" && (
+      {isGameStarted && !isUserTurn && isWin === "" && !isTogglingReset && (
         <div>
           <div>Allow Pejman to choose one of the un-empty bowls</div>
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
-      {isWin === "" && <button onClick={handleReset}>Reset the Game</button>}
+      {isFillingTheBowlsByUserFinished && (easyMode || normalMode) && (standard || misere) && isWin === "" && !isTogglingReset && <button onClick={() => toggleReset()}>Reset the Game</button>}
+
+      {isTogglingReset &&
+        // !isTogglingHomePage &&
+        (
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
+        )}
+
       <div style={{ color: "gray" }}>User Bowl: {selectedUserBowl}</div>
       <div style={{ color: "gray" }}>User PickNum: {userPickNum}</div>
       <div style={{ color: "gray" }}>Pejman Bowl: {selectedPejmanBowl}</div>
       <div style={{ color: "gray" }}>Pejman PickNum: {pejmanPickNum}</div>
       <div style={{ color: "gray" }}>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
       <div style={{ color: "gray" }}>All Balls Num: {allBallsNum}</div>
-      <div>
-        {allTurns.map((b) => (
-          <div>
-            {`Move ${allTurns.indexOf(b) + 1}: `}
-            {b.side === "User" ? "You" : "Pejman"}
-            {` took ${b.ballsNum} ball${b.ballsNum > 1 ? 's' : ''} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}
-          </div>
-        ))}
-      </div>
+      {!isTogglingReset &&
+        <div>
+          {allTurns.map((b) => (
+            <div>
+              {`Move ${allTurns.indexOf(b) + 1}: `}
+              {b.side === "User" ? "You" : "Pejman"}
+              {` took ${b.ballsNum} ball${b.ballsNum > 1 ? 's' : ''} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}
+            </div>
+          ))}
+        </div>
+      }
     </div>
   );
 }

@@ -9,7 +9,6 @@ import Bowl7 from "./Images/Bowl-7.jpg";
 
 export default function Bowl({
   bowlId,
-  bowlName,
   ballsNum,
   isBowlSelected,
   isGameStarted,
@@ -17,6 +16,8 @@ export default function Bowl({
   selectedUserBowl,
   setSelectedUserBowl,
   isUserTurn,
+  isTogglingReset,
+  isWin
 }) {
   const toggleBowl = (id) => {
     if (selectedUserBowl !== 0) {
@@ -45,9 +46,9 @@ export default function Bowl({
       Bowl {bowlId}
       <img
         style={{
-          width: "100px",
+          width: isWin === "" ? "100px" : "50px",
           border: "2px solid black",
-          opacity: (selectedUserBowl && selectedUserBowl !== bowlId) ? 0.3 : 1
+          opacity: (selectedUserBowl && selectedUserBowl !== bowlId) || isTogglingReset || isWin !== "" ? 0.3 : 1
         }}
         src={
           ballsNum === 0
