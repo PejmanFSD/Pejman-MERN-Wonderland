@@ -25,7 +25,11 @@ export default function Bowls({
   toggleUserTurn,
   updateTotalPoint,
   isTogglingReset,
-  setIsTogglingReset
+  setIsTogglingReset,
+  isTogglingHomePage,
+  setIsTogglingHomePage,
+  setShowNim,
+  setShowGameTitles
 }) {
   const [bowls, setBowls] = useState([
     { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
@@ -90,6 +94,7 @@ export default function Bowls({
     setSelectedPejmanBowl(-1);
     setPejmanPickNum(0);
     setPejmanNormalModeCondition(0);
+    setIsTogglingReset(false);
     setAllTurns([]);
     setAllBallsNum(0);
     setIsWin("");
@@ -169,14 +174,9 @@ export default function Bowls({
           minFourBalls += 1;
         }
       }
-      // console.log("minFourBalls: ", minFourBalls);
-      // console.log("minThreeBalls: ", minThreeBalls);
-      // console.log("minTwoBalls: ", minTwoBalls);
-      // console.log("oneBall: ", oneBall);
       const potentialBowls = [];
       if (minFourBalls >= 2) { // Condition 1
         setPejmanNormalModeCondition(1);
-        console.log("Condition 1");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 4) {
             potentialBowls.push(bowl);
@@ -185,14 +185,11 @@ export default function Bowls({
         const sortedpotentialBowls = [...potentialBowls].sort(
           (a, b) => a.ballsNum - b.ballsNum
         );
-        console.log("C1-potentialBowls: ", potentialBowls);
-        console.log("C1-sortedpotentialBowls: ", sortedpotentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
       } else if (minFourBalls === 1 && minThreeBalls > 2) { // Condition 2
         setPejmanNormalModeCondition(2);
-        console.log("Condition 2");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 3) {
             potentialBowls.push(bowl);
@@ -201,8 +198,6 @@ export default function Bowls({
         const sortedpotentialBowls = [...potentialBowls].sort(
           (a, b) => a.ballsNum - b.ballsNum
         );
-        console.log("C2-potentialBowls: ", potentialBowls);
-        console.log("C2-sortedpotentialBowls: ", sortedpotentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
@@ -213,7 +208,6 @@ export default function Bowls({
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall > 2)
       ) { // Condition 3
         setPejmanNormalModeCondition(3);
-        console.log("Condition 3");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 3) {
             potentialBowls.push(bowl);
@@ -222,8 +216,6 @@ export default function Bowls({
         const sortedpotentialBowls = [...potentialBowls].sort(
           (a, b) => a.ballsNum - b.ballsNum
         );
-        console.log("C3-potentialBowls: ", potentialBowls);
-        console.log("C3-sortedpotentialBowls: ", sortedpotentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
@@ -233,7 +225,6 @@ export default function Bowls({
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls >= 2 && oneBall <= 2)
       ) { // Condition 4
         setPejmanNormalModeCondition(4);
-        console.log("Condition 4");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 2) {
             potentialBowls.push(bowl);
@@ -242,20 +233,16 @@ export default function Bowls({
         const sortedpotentialBowls = [...potentialBowls].sort(
           (a, b) => a.ballsNum - b.ballsNum
         );
-        console.log("C4-potentialBowls: ", potentialBowls);
-        console.log("C4-sortedpotentialBowls: ", sortedpotentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === sortedpotentialBowls[0].bowlId))
         )
       } else if (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 2) { // Condition 5
         setPejmanNormalModeCondition(5);
-        console.log("Condition 5");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 4) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C5-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -264,13 +251,11 @@ export default function Bowls({
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 0 && misere)
       ) { // Condition 6
         setPejmanNormalModeCondition(6);
-        console.log("Condition 6");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 4) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C6-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -279,13 +264,11 @@ export default function Bowls({
         (minFourBalls === 1 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall % 2 === 0 && standard)
       ) { // Condition 7
         setPejmanNormalModeCondition(7);
-        console.log("Condition 7");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 4) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C7-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -296,13 +279,11 @@ export default function Bowls({
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 0)
       ) { // Condition 8
         setPejmanNormalModeCondition(8);
-        console.log("Condition 8");
         for (const bowl of bowls) {
           if (bowl.ballsNum === 1) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C8-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -311,13 +292,11 @@ export default function Bowls({
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall === 1 && misere)
       ) { // Condition 9
         setPejmanNormalModeCondition(9);
-        console.log("Condition 9");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 3) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C9-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -326,13 +305,11 @@ export default function Bowls({
         (minFourBalls === 0 && minThreeBalls === 1 && minTwoBalls === 1 && oneBall === 1 && standard)
       ) { // Condition 10
         setPejmanNormalModeCondition(10);
-        console.log("Condition 10");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 3) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C10-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -341,25 +318,21 @@ export default function Bowls({
         (minFourBalls === 0 && minThreeBalls === 0 && minTwoBalls === 1 && misere && oneBall % 2 === 1)
       ) { // Condition 11
         setPejmanNormalModeCondition(11);
-        console.log("Condition 11");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 2) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C11-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
       } else { // Condition 12
         setPejmanNormalModeCondition(12);
-        console.log("Condition 12");
         for (const bowl of bowls) {
           if (bowl.ballsNum >= 2) {
             potentialBowls.push(bowl);
           }
         }
-        console.log("C12-potentialBowls: ", potentialBowls);
         setSelectedPejmanBowl(
           bowls.indexOf(bowls.find(currBowl => currBowl.bowlId === potentialBowls[0].bowlId))
         )
@@ -556,7 +529,7 @@ export default function Bowls({
   }, [allBallsNum]);
   return (
     <div>
-      {!isFillingTheBowlsByUserFinished && (
+      {!isFillingTheBowlsByUserFinished && !isTogglingHomePage && (
         <form onSubmit={handleSubmit}>
           {Array(5)
             .fill(null)
@@ -607,6 +580,7 @@ export default function Bowls({
                 isUserTurn={isUserTurn}
                 isTogglingReset={isTogglingReset}
                 setIsTogglingReset={setIsTogglingReset}
+                isTogglingHomePage={isTogglingHomePage}
                 isWin={isWin}
               />
             )
@@ -629,22 +603,23 @@ export default function Bowls({
                 isUserTurn={isUserTurn}
                 isTogglingReset={isTogglingReset}
                 setIsTogglingReset={setIsTogglingReset}
+                isTogglingHomePage={isTogglingHomePage}
                 isWin={isWin}
               />
             )
         )}
       </div>
-      {isWin === true && <div><h2>You Win!</h2><h3>{`Because ${standard ? 'you' : 'Pejman'} picked the last ball`}</h3></div>}
-      {isWin === false && <div><h2>You Loose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
-      {isWin === true && <div><div>Play again?</div><button onClick={handleReset}>Ok</button></div>}
-      {isWin === false && <div><div>Try again?</div><button onClick={handleReset}>Ok</button></div>}
+      {isWin === true && !isTogglingHomePage && <div><h2>You Win!</h2><h3>{`Because ${standard ? 'you' : 'Pejman'} picked the last ball`}</h3></div>}
+      {isWin === false && !isTogglingHomePage && <div><h2>You Loose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
+      {isWin === true && !isTogglingHomePage && <div><div>Play again?</div><button onClick={handleReset}>Ok</button></div>}
+      {isWin === false && !isTogglingHomePage && <div><div>Try again?</div><button onClick={handleReset}>Ok</button></div>}
       {isFillingTheBowlsByUserFinished &&
-        !isFillingTheBowlsByPejmanFinished && !isTogglingReset && (
+        !isFillingTheBowlsByPejmanFinished && !isTogglingReset && !isTogglingHomePage && (
           <button onClick={startFillingPejmanBowls}>
             Allow Pejman fills his bowls
           </button>
         )}
-      {selectedUserBowl !== 0 && isUserTurn && !isTogglingReset && (
+      {selectedUserBowl !== 0 && isUserTurn && !isTogglingReset && !isTogglingHomePage && (
         <form onSubmit={handleUserMove}>
           <label htmlFor={selectedUserBowl.toString()}></label>
           {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it?`}
@@ -676,19 +651,26 @@ export default function Bowls({
           {isUserTurn && userPickNum > 0 && <button>Done</button>}
         </form>
       )}
-      {!selectedUserBowl && isGameStarted && isUserTurn && isWin === "" && !isTogglingReset && (
+      {!selectedUserBowl && isGameStarted && isUserTurn && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <div>Choose one of the un-empty bowls and pick ball(s) from it</div>
       )}
-      {isGameStarted && !isUserTurn && isWin === "" && !isTogglingReset && (
+      {isGameStarted && !isUserTurn && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <div>Allow Pejman to choose one of the un-empty bowls</div>
           <button onClick={handlePejmanMove}>Ok</button>
         </div>
       )}
-      {isFillingTheBowlsByUserFinished && (easyMode || normalMode) && (standard || misere) && isWin === "" && !isTogglingReset && <button onClick={() => toggleReset()}>Reset the Game</button>}
-
+      {isFillingTheBowlsByUserFinished &&
+        (easyMode || normalMode) &&
+        (standard || misere) &&
+        isWin === "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        <div>
+          <button onClick={() => toggleReset()}>Reset the Game</button>
+        </div>
+      }
       {isTogglingReset &&
-        // !isTogglingHomePage &&
         (
           <ConfirmationBox
             question="Are you sure you want to reset the game?"
@@ -696,14 +678,13 @@ export default function Bowls({
             toggleCancel={toggleResetCancel}
           />
         )}
-
       <div style={{ color: "gray" }}>User Bowl: {selectedUserBowl}</div>
       <div style={{ color: "gray" }}>User PickNum: {userPickNum}</div>
       <div style={{ color: "gray" }}>Pejman Bowl: {selectedPejmanBowl}</div>
       <div style={{ color: "gray" }}>Pejman PickNum: {pejmanPickNum}</div>
       <div style={{ color: "gray" }}>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
       <div style={{ color: "gray" }}>All Balls Num: {allBallsNum}</div>
-      {!isTogglingReset &&
+      {!isTogglingReset && !isTogglingHomePage &&
         <div>
           {allTurns.map((b) => (
             <div>

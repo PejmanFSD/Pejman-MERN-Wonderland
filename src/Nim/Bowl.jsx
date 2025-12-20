@@ -17,6 +17,7 @@ export default function Bowl({
   setSelectedUserBowl,
   isUserTurn,
   isTogglingReset,
+  isTogglingHomePage,
   isWin
 }) {
   const toggleBowl = (id) => {
@@ -48,7 +49,7 @@ export default function Bowl({
         style={{
           width: isWin === "" ? "100px" : "50px",
           border: "2px solid black",
-          opacity: (selectedUserBowl && selectedUserBowl !== bowlId) || isTogglingReset || isWin !== "" ? 0.3 : 1
+          opacity: (selectedUserBowl && selectedUserBowl !== bowlId) || isTogglingReset || isWin !== "" || isTogglingHomePage ? 0.3 : 1
         }}
         src={
           ballsNum === 0
@@ -83,7 +84,7 @@ export default function Bowl({
           onChange={() => toggleBowl(bowlId)}
           disabled={
             (selectedUserBowl !== bowlId && selectedUserBowl !== 0) ||
-            ballsNum === 0
+            ballsNum === 0 || isTogglingReset || isTogglingHomePage
           }
         />
       )}
