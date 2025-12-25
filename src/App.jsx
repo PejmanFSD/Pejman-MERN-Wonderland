@@ -8,6 +8,7 @@ import Cryptogram from "./Cryptogram/Cryptogram";
 import Crazy100 from "./Crazy100/Crazy100";
 import MemoryCards from "./MemoryCards/MemoryCards";
 import Nim from "./Nim/Nim";
+import Hangman from "./Hangman/Hangman";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -19,6 +20,7 @@ function App() {
   const [showCrazy100, setShowCrazy100] = useState(false);
   const [showMemoryCards, setShowMemoryCards] = useState(false);
   const [showNim, setShowNim] = useState(false);
+  const [showHangman, setShowHangman] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -49,6 +51,10 @@ function App() {
   const toggleNim = () => {
     setShowGameTitles(false);
     setShowNim(true);
+  };
+  const toggleHangman = () => {
+    setShowGameTitles(false);
+    setShowHangman(true);
   };
   return (
     <div className="App">
@@ -148,6 +154,18 @@ function App() {
         showGameTitles &&
         !showNim && (
           <button onClick={() => toggleNim()}>Nim</button>
+        )
+      )}
+      {!showGameTitles && showHangman ? (
+        <Hangman
+          setShowGameTitles={setShowGameTitles}
+          setShowHangman={setShowHangman}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showHangman && (
+          <button onClick={() => toggleHangman()}>Hangman</button>
         )
       )}
     </div>
