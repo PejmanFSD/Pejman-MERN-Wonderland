@@ -6,16 +6,17 @@ export default function Hangman() {
     const [title, setTitle] = useState("");
     const [word, setWord] = useState("");
     const [isGameStarted, setIsGameStarted] = useState(false);
+    const [userGuess, setUserGuess] = useState([]);
     return (
         <div>
             {!isGameStarted && <Form title={title} setTitle={setTitle} setWord={setWord} setIsGameStarted={setIsGameStarted} />}
-            {title} - {word} - {word.length}
-            {}
+            {title} - {word} - {word.length} - {userGuess}
+
             {isGameStarted &&
-            <div>
-                <div>{`Guess the name of the ${title}`}</div>
-                <GuessTable word={word} />
-            </div>
+                <div>
+                    <div>{`Guess the name of the ${title}`}</div>
+                    <GuessTable word={word} userGuess={userGuess} setUserGuess={setUserGuess} />
+                </div>
             }
         </div>
     )
