@@ -1,11 +1,35 @@
 const titles = ['Animal', 'Color', 'Car', 'Job', 'Book', 'Country', 'City'];
 
-export default function Form({setTitle}) {
+export default function Form({ faker, title, setTitle, setWord }) {
     const handleChange = (e) => {
         setTitle(e.target.value);
     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (title === titles[0]) {
+            setWord(faker.animal.type());
+        }
+        else if (title === titles[1]) {
+            setWord(faker.color.human());
+        }
+        else if (title === titles[2]) {
+            setWord(faker.vehicle.vehicle());
+        }
+        else if (title === titles[3]) {
+            setWord(faker.person.jobTitle());
+        }
+        else if (title === titles[4]) {
+            setWord(faker.book.title());
+        }
+        else if (title === titles[5]) {
+            setWord(faker.location.country());
+        }
+        else if (title === titles[6]) {
+            setWord(faker.location.city());
+        }
+    }
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="titles">Select one of the titles</label>
             <select
                 onChange={handleChange}
@@ -15,6 +39,7 @@ export default function Form({setTitle}) {
                     <option>{t}</option>
                 ))}
             </select>
+            <button>Done</button>
         </form>
     );
 }

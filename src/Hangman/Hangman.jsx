@@ -4,10 +4,11 @@ import Form from "./Form";
 
 export default function Hangman() {
     const [title, setTitle] = useState("");
+    const [word, setWord] = useState("");
     return (
         <div>
-            <Form setTitle={setTitle} />
-            {title}
+            <Form faker={faker} title={title} setTitle={setTitle} setWord={setWord} />
+            {title} - {word}
         </div>
     )
 }
