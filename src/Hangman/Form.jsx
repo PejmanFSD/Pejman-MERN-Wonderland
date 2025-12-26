@@ -1,6 +1,7 @@
+import { faker } from "@faker-js/faker";
 const titles = ['Animal', 'Color', 'Car', 'Job', 'Book', 'Country', 'City'];
 
-export default function Form({ faker, title, setTitle, setWord }) {
+export default function Form({ title, setTitle, setWord, setIsGameStarted }) {
     const handleChange = (e) => {
         setTitle(e.target.value);
     };
@@ -27,6 +28,7 @@ export default function Form({ faker, title, setTitle, setWord }) {
         else if (title === titles[6]) {
             setWord(faker.location.city());
         }
+        setIsGameStarted(true);
     }
     return (
         <form onSubmit={handleSubmit}>
