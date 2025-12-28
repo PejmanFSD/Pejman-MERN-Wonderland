@@ -28,7 +28,7 @@ export default function HappyFlower() {
     return (
         <div>
             {!isGameStarted && <Form title={title} setTitle={setTitle} setWord={setWord} setIsGameStarted={setIsGameStarted} />}
-            {title} - {word} - {word.length} - {userGuess} - {isWin}
+            {title} - {word} - {word.length} - {userGuess} - {isWin ? "T" : "F"}
             <div>
                 {isWin === false && <div><h2>You loose!</h2><h3>{`The name of the ${title} is ${word}`}</h3></div>}
                 {isWin === true && <h2>You Win!</h2>}

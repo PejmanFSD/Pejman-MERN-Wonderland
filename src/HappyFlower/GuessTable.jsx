@@ -40,7 +40,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -55,7 +55,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -70,7 +70,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -85,7 +85,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -100,7 +100,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -115,7 +115,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -130,7 +130,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
                         </button>
