@@ -1,13 +1,26 @@
-export default function GuessTable({ word, userGuess, setUserGuess }) {
+export default function GuessTable({ word, userGuess, setUserGuess, userMistakes, setUserMistakes }) {
     const addChar = (e) => {
-        setUserGuess(currUserGuess => [...currUserGuess, e.target.value]);
+        if (!word.includes(e.target.value)) {
+            setUserMistakes(currUserMistakes => [...currUserMistakes, e.target.value]);
+        } else {
+            setUserGuess(currUserGuess => [...currUserGuess, e.target.value]);
+        }
     }
     return (
         <div>
             <div>
                 {new Array(word.length).fill(null).map((letter, idx) =>
-                    <div style={{ width: "15px", display: "inline", border: word[idx] !== " " && "1px solid black", padding: "15px", position: "relative", top: "25px" }}>
-                        {word[idx]}
+                    <div
+                        style={{
+                            width: "25px",
+                            display: "inline",
+                            border: word[idx] !== " " && "1px solid black",
+                            padding: "15px",
+                            position: "relative",
+                            top: "25px"
+                        }}
+                    >
+                        {(userGuess.includes(word[idx]) || userGuess.includes(word[idx].toLowerCase())) && word[idx]}
                     </div>)
                 }
             </div>
@@ -19,7 +32,7 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -34,7 +47,7 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -49,7 +62,7 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -64,7 +77,7 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -79,7 +92,7 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -94,7 +107,7 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
@@ -109,11 +122,28 @@ export default function GuessTable({ word, userGuess, setUserGuess }) {
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
                             style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
-                            disabled={userGuess.includes(String.fromCharCode(b))}
+                            disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
                         </button>
                     )
+                }
+            </div>
+            <div>
+                {new Array(5).fill(null).map((letter, idx) =>
+                    <div
+                        style={{
+                            width: "25px",
+                            display: "inline",
+                            border: "1px solid black",
+                            padding: "20px",
+                            position: "relative",
+                            top: "80px",
+                            color: "red"
+                        }}
+                    >
+                        {userMistakes && userMistakes[idx]}
+                    </div>)
                 }
             </div>
         </div>
