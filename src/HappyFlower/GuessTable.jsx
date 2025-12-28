@@ -6,9 +6,9 @@ import Flower5 from "./Images/Flower-05.jpg";
 import Flower6 from "./Images/Flower-06.jpg";
 import Flower7 from "./Images/Flower-07.jpg";
 
-export default function GuessTable({ word, userGuess, setUserGuess, userMistakes, setUserMistakes }) {
+export default function GuessTable({ word, userGuess, setUserGuess, userMistakes, setUserMistakes, isWin }) {
     const addChar = (e) => {
-        if (!word.includes(e.target.value)) {
+        if (!word.includes(e.target.value) && !word.includes(e.target.value.toUpperCase())) {
             setUserMistakes(currUserMistakes => [...currUserMistakes, e.target.value]);
         } else {
             setUserGuess(currUserGuess => [...currUserGuess, e.target.value]);
@@ -162,18 +162,20 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                         width: "300px"
                     }}
                     src={
-                        userMistakes.length === 0 ?
-                        Flower1 :
-                        userMistakes.length === 1 ?
-                        Flower2 :
-                        userMistakes.length === 2 ?
-                        Flower3 :
-                        userMistakes.length === 3 ?
-                        Flower4 :
-                        userMistakes.length === 4 ?
-                        Flower5 :
-                        userMistakes.length === 5 ?
-                        Flower6 : Flower7
+                        isWin === true ?
+                            Flower7 :
+                            userMistakes.length === 0 ?
+                                Flower1 :
+                                userMistakes.length === 1 ?
+                                    Flower2 :
+                                    userMistakes.length === 2 ?
+                                        Flower3 :
+                                        userMistakes.length === 3 ?
+                                            Flower4 :
+                                            userMistakes.length === 4 ?
+                                                Flower5 :
+                                                userMistakes.length === 5 &&
+                                                Flower6
                     }
                 />
             </div>
