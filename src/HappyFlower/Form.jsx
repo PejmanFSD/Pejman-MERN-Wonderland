@@ -41,7 +41,7 @@ export default function Form({ title, setTitle, setWord, setIsGameStarted }) {
                     <option>{t}</option>
                 ))}
             </select>
-            <button>Done</button>
+            {title && <button>Done</button>}
         </form>
     );
 }

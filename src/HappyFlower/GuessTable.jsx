@@ -1,3 +1,11 @@
+import Flower1 from "./Images/Flower-01.jpg";
+import Flower2 from "./Images/Flower-02.jpg";
+import Flower3 from "./Images/Flower-03.jpg";
+import Flower4 from "./Images/Flower-04.jpg";
+import Flower5 from "./Images/Flower-05.jpg";
+import Flower6 from "./Images/Flower-06.jpg";
+import Flower7 from "./Images/Flower-07.jpg";
+
 export default function GuessTable({ word, userGuess, setUserGuess, userMistakes, setUserMistakes }) {
     const addChar = (e) => {
         if (!word.includes(e.target.value)) {
@@ -31,7 +39,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -46,7 +54,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -61,7 +69,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -76,7 +84,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -91,7 +99,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -106,7 +114,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -121,7 +129,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "40px", height: "40px" }}
+                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b))}
                         >
                             {String.fromCharCode(b)}
@@ -145,6 +153,29 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                         {userMistakes && userMistakes[idx]}
                     </div>)
                 }
+            </div>
+            <div>
+                <img
+                    style={{
+                        position: "relative",
+                        top: "110px",
+                        width: "300px"
+                    }}
+                    src={
+                        userMistakes.length === 0 ?
+                        Flower1 :
+                        userMistakes.length === 1 ?
+                        Flower2 :
+                        userMistakes.length === 2 ?
+                        Flower3 :
+                        userMistakes.length === 3 ?
+                        Flower4 :
+                        userMistakes.length === 4 ?
+                        Flower5 :
+                        userMistakes.length === 5 ?
+                        Flower6 : Flower7
+                    }
+                />
             </div>
         </div>
 

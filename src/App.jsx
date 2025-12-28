@@ -8,7 +8,7 @@ import Cryptogram from "./Cryptogram/Cryptogram";
 import Crazy100 from "./Crazy100/Crazy100";
 import MemoryCards from "./MemoryCards/MemoryCards";
 import Nim from "./Nim/Nim";
-import Hangman from "./Hangman/Hangman";
+import HappyFlower from "./HappyFlower/HappyFlower";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -20,7 +20,7 @@ function App() {
   const [showCrazy100, setShowCrazy100] = useState(false);
   const [showMemoryCards, setShowMemoryCards] = useState(false);
   const [showNim, setShowNim] = useState(false);
-  const [showHangman, setShowHangman] = useState(false);
+  const [showHappyFlower, setShowHappyFlower] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -52,9 +52,9 @@ function App() {
     setShowGameTitles(false);
     setShowNim(true);
   };
-  const toggleHangman = () => {
+  const toggleHappyFlower = () => {
     setShowGameTitles(false);
-    setShowHangman(true);
+    setShowHappyFlower(true);
   };
   return (
     <div className="App">
@@ -156,16 +156,16 @@ function App() {
           <button onClick={() => toggleNim()}>Nim</button>
         )
       )}
-      {!showGameTitles && showHangman ? (
-        <Hangman
+      {!showGameTitles && showHappyFlower ? (
+        <HappyFlower
           setShowGameTitles={setShowGameTitles}
-          setShowHangman={setShowHangman}
+          setShowHappyFlower={setShowHappyFlower}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
         showGameTitles &&
-        !showHangman && (
-          <button onClick={() => toggleHangman()}>Hangman</button>
+        !showHappyFlower && (
+          <button onClick={() => toggleHappyFlower()}>Happy Flower</button>
         )
       )}
     </div>

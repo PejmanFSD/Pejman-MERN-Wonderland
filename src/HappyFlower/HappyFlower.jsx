@@ -2,7 +2,7 @@ import { useState } from "react";
 import Form from "./Form";
 import GuessTable from "./GuessTable";
 
-export default function Hangman() {
+export default function HappyFlower() {
     const [title, setTitle] = useState("");
     const [word, setWord] = useState("");
     const [isGameStarted, setIsGameStarted] = useState(false);
