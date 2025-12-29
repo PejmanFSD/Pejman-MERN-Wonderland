@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 const titles = ['Animal', 'Color', 'Car', 'Job', 'Book', 'Country', 'City'];
 
-export default function Form({ title, setTitle, setWord, setIsGameStarted }) {
+export default function Form({ title, setTitle, word, setWord, setWordWithNoSpace, setIsGameStarted }) {
     const handleChange = (e) => {
         setTitle(e.target.value);
     };

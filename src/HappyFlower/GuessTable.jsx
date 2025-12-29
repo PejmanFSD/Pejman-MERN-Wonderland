@@ -23,7 +23,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             width: "25px",
                             display: "inline",
                             border: word[idx] !== " " && "1px solid black",
-                            padding: "15px",
+                            padding: "10px",
                             position: "relative",
                             top: "25px"
                         }}
@@ -39,7 +39,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -54,7 +54,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -69,7 +69,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -84,7 +84,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -99,7 +99,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -114,7 +114,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -129,7 +129,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             onClick={addChar}
                             name={String.fromCharCode(b)}
                             value={String.fromCharCode(b)}
-                            style={{ position: "relative", top: "50px", width: "30px", height: "30px" }}
+                            style={{ position: "relative", top: "50px", width: isWin === "" ? "30px" : "25px", height: isWin === "" ? "30px" : "25px" }}
                             disabled={userGuess.includes(String.fromCharCode(b)) || userMistakes.includes(String.fromCharCode(b)) || isWin !== ""}
                         >
                             {String.fromCharCode(b)}
@@ -144,7 +144,7 @@ export default function GuessTable({ word, userGuess, setUserGuess, userMistakes
                             width: "25px",
                             display: "inline",
                             border: "1px solid black",
-                            padding: "20px",
+                            padding: "10px",
                             position: "relative",
                             top: "80px",
                             color: "red"

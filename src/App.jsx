@@ -69,6 +69,7 @@ function App() {
           ? "You don't have any stars yet, play the interesting games and win some!"
           : `You have ${totalPoint} star${totalPoint > 1 ? "s" : ""}`}
       </div>
+      <hr></hr>
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
