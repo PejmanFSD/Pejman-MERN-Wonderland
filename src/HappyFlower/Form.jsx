@@ -16,19 +16,26 @@ export default function Form({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title === titles[0]) {
-      setWord(getRandArr(animals));
+      const animal = getRandArr(animals);
+      setWord(animal.slice(0, 1).toUpperCase().concat(animal.slice(1)));
     } else if (title === titles[1]) {
-      setWord(getRandArr(colors));
+      const color = getRandArr(colors);
+      setWord(color.slice(0, 1).toUpperCase().concat(color.slice(1)));
     } else if (title === titles[2]) {
-      setWord(getRandArr(cars));
+      const car = getRandArr(cars);
+      setWord(car.slice(0, 1).toUpperCase().concat(car.slice(1)));
     } else if (title === titles[3]) {
-      setWord(getRandArr(jobs));
+      const job = getRandArr(jobs);
+      setWord(job.slice(0, 1).toUpperCase().concat(job.slice(1)));
     } else if (title === titles[4]) {
-      setWord(getRandArr(books));
+      const book = getRandArr(books);
+      setWord(book.slice(0, 1).toUpperCase().concat(book.slice(1)));
     } else if (title === titles[5]) {
-      setWord(getRandArr(countries));
+      const country = getRandArr(countries);
+      setWord(country.slice(0, 1).toUpperCase().concat(country.slice(1)));
     } else if (title === titles[6]) {
-      setWord(getRandArr(cities));
+      const city = getRandArr(cities);
+      setWord(city.slice(0, 1).toUpperCase().concat(city.slice(1)));
     }
     setIsGameStarted(true);
   };
@@ -43,7 +50,7 @@ export default function Form({
           <option>{t}</option>
         ))}
       </select>
-      {title && <button>Done</button>}
+      <div>{title && <button>Done</button>}</div>
     </form>
   );
 }
