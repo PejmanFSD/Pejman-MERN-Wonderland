@@ -64,6 +64,7 @@ export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles })
   };
   return (
     <div>
+      <h2>Nim</h2>
       {standard && !isTogglingHomePage && (
         <ModeExplaination message="Standard Nim: Get the last ball and win." />
       )}

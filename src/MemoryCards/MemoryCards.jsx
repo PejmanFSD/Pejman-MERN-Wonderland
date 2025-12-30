@@ -278,6 +278,7 @@ export default function MemoryCards({
   }, [identicalIndexArray]);
   return (
     <div>
+      <h2>Memory Cards</h2>
       {!isGameStarted && !isTogglingHomePage && (
         <button onClick={handleEasyMode}>Easy</button>
       )}

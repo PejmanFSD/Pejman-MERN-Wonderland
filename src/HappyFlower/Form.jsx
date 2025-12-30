@@ -5,10 +5,10 @@ const titles = ["Animal", "Color", "Car", "Job", "Book", "Country", "City"];
 export default function Form({
   title,
   setTitle,
-  word,
   setWord,
-  setWordWithNoSpace,
   setIsGameStarted,
+  setSeconds,
+  handleStartTimer,
 }) {
   const handleChange = (e) => {
     setTitle(e.target.value);
@@ -38,6 +38,8 @@ export default function Form({
       setWord(city.slice(0, 1).toUpperCase().concat(city.slice(1)));
     }
     setIsGameStarted(true);
+    setSeconds(60);
+    handleStartTimer();
   };
   return (
     <form onSubmit={handleSubmit}>
