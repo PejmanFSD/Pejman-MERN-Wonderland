@@ -4,7 +4,7 @@ import GuessTable from "./GuessTable";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function HappyFlower({ updateTotalPoint }) {
+export default function HappyFlower({ updateTotalPoint, setShowHappyFlower, setShowGameTitles }) {
   const [title, setTitle] = useState("");
   const [word, setWord] = useState("");
   const [wordWithNoSpace, setWordWithNoSpace] = useState([]);
@@ -17,6 +17,7 @@ export default function HappyFlower({ updateTotalPoint }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const handleReset = () => {
     setTitle("");
@@ -54,6 +55,17 @@ export default function HappyFlower({ updateTotalPoint }) {
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowHappyFlower(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   useEffect(() => {
     let interval;
@@ -98,36 +110,47 @@ export default function HappyFlower({ updateTotalPoint }) {
   return (
     <div>
       <h2>Happy Flower</h2>
-      {!easyMode && !normalMode && (
+      {!easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={handleEasy}>Easy</button>
           <button onClick={handleNormal}>Normal</button>
         </div>
       )}
-      {easyMode && (
+      {easyMode && !isTogglingHomePage && (
         <ModeExplaination message="Easy Mode: You will not get any star if you win, because there's no time limitation." />
       )}
-      {normalMode && (
+      {normalMode && !isTogglingHomePage && (
         <ModeExplaination message="Normal Mode: You'll get a star if you guess the word in 60 seconds." />
       )}
-      {isTimerRunning && isWin === "" && normalMode && !isTogglingReset && (
+      {isTimerRunning && isWin === "" && normalMode && !isTogglingReset && !isTogglingHomePage && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
           {seconds}
         </h3>
       )}
-      {(easyMode || normalMode) && isWin === "" && !isTogglingReset && (
+      {(easyMode || normalMode) && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <button onClick={() => toggleReset()}>Reset the Game</button>
         </div>
       )}
-      {isTogglingReset && (
+      {isTogglingReset && !isTogglingHomePage && (
         <ConfirmationBox
           question="Are you sure you want to reset the game?"
           toggleYes={toggleResetYes}
           toggleCancel={toggleResetCancel}
         />
       )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingReset && (
+      {!isTogglingReset && !isTogglingHomePage && (
+        <button onClick={() => toggleHomePage()}>Back to the home page</button>
+      )}
+      {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+        isTogglingHomePage && (
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        )}
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingReset && !isTogglingHomePage && (
         <Form
           title={title}
           setTitle={setTitle}
@@ -144,8 +167,8 @@ export default function HappyFlower({ updateTotalPoint }) {
         {isWin ? "T" : "F"}
       </div>
       <div>
-        {normalMode && seconds < 1 && !isTogglingReset && <h2>Time's Up!</h2>}
-        {isWin === false && (
+        {normalMode && seconds < 1 && !isTogglingReset && !isTogglingHomePage && <h2>Time's Up!</h2>}
+        {isWin === false && !isTogglingHomePage && (
           <div>
             <h2>You loose!</h2>
             <h3>{`The name of the ${title} is "${word}"`}</h3>
@@ -153,7 +176,7 @@ export default function HappyFlower({ updateTotalPoint }) {
             <button onClick={handleReset}>Ok</button>
           </div>
         )}
-        {isWin === true && (
+        {isWin === true && !isTogglingHomePage && (
           <div>
             <h2>You Win!</h2>
             <div>Play again?</div>
@@ -161,7 +184,7 @@ export default function HappyFlower({ updateTotalPoint }) {
           </div>
         )}
       </div>
-      {isGameStarted && !isTogglingReset && (
+      {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
         <div>
           {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
           <GuessTable
