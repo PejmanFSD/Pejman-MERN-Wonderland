@@ -16,6 +16,7 @@ export default function HappyFlower({ updateTotalPoint }) {
   const [seconds, setSeconds] = useState(60);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleReset = () => {
     setTitle("");
@@ -29,6 +30,7 @@ export default function HappyFlower({ updateTotalPoint }) {
     setNormalMode(false);
     setIsTimerRunning(false);
     handleResetTimer();
+    setIsTogglingReset(false);
   };
   const handleEasy = () => {
     setEasyMode(true);
@@ -43,6 +45,15 @@ export default function HappyFlower({ updateTotalPoint }) {
   const handleResetTimer = () => {
     setSeconds(60);
     setIsTimerRunning(false);
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handleReset();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(() => {
     let interval;
@@ -99,12 +110,24 @@ export default function HappyFlower({ updateTotalPoint }) {
       {normalMode && (
         <ModeExplaination message="Normal Mode: You'll get a star if you guess the word in 60 seconds." />
       )}
-      {isTimerRunning && isWin === "" && normalMode && (
+      {isTimerRunning && isWin === "" && normalMode && !isTogglingReset && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
           {seconds}
         </h3>
       )}
-      {!isGameStarted && (easyMode || normalMode) && (
+      {(easyMode || normalMode) && isWin === "" && !isTogglingReset && (
+        <div>
+          <button onClick={() => toggleReset()}>Reset the Game</button>
+        </div>
+      )}
+      {isTogglingReset && (
+        <ConfirmationBox
+          question="Are you sure you want to reset the game?"
+          toggleYes={toggleResetYes}
+          toggleCancel={toggleResetCancel}
+        />
+      )}
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingReset && (
         <Form
           title={title}
           setTitle={setTitle}
@@ -121,7 +144,7 @@ export default function HappyFlower({ updateTotalPoint }) {
         {isWin ? "T" : "F"}
       </div>
       <div>
-        {normalMode && seconds < 1 && <h2>Time's Up!</h2>}
+        {normalMode && seconds < 1 && !isTogglingReset && <h2>Time's Up!</h2>}
         {isWin === false && (
           <div>
             <h2>You loose!</h2>
@@ -138,7 +161,7 @@ export default function HappyFlower({ updateTotalPoint }) {
           </div>
         )}
       </div>
-      {isGameStarted && (
+      {isGameStarted && !isTogglingReset && (
         <div>
           {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
           <GuessTable
