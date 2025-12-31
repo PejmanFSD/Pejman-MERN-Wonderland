@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import GuessTable from "./GuessTable";
+import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function HappyFlower({ updateTotalPoint }) {
   const [title, setTitle] = useState("");
@@ -12,6 +14,8 @@ export default function HappyFlower({ updateTotalPoint }) {
   const [isWin, setIsWin] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [seconds, setSeconds] = useState(60);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
 
   const handleReset = () => {
     setTitle("");
@@ -21,10 +25,19 @@ export default function HappyFlower({ updateTotalPoint }) {
     setUserGuess([]);
     setUserMistakes([]);
     setIsWin("");
+    setEasyMode(false);
+    setNormalMode(false);
     setIsTimerRunning(false);
     handleResetTimer();
   };
-
+  const handleEasy = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const handleNormal = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
@@ -33,7 +46,7 @@ export default function HappyFlower({ updateTotalPoint }) {
   };
   useEffect(() => {
     let interval;
-    if (isTimerRunning) {
+    if (isTimerRunning && normalMode) {
       interval = setInterval(() => {
         setSeconds((prev) => prev > 1 && prev - 1);
       }, 1000);
@@ -47,10 +60,11 @@ export default function HappyFlower({ updateTotalPoint }) {
   useEffect(() => {
     if (userMistakes.length === 5) {
       setIsWin(false);
+      handleStopTimer();
     }
   }, [userMistakes]);
   useEffect(() => {
-    if (seconds < 1) {
+    if (seconds < 1 && normalMode) {
       setIsWin(false);
       handleStopTimer();
     }
@@ -64,18 +78,33 @@ export default function HappyFlower({ updateTotalPoint }) {
     }
     if (mistakesNum === 0 && userGuess.length > 0) {
       setIsWin(true);
-      updateTotalPoint(1);
+      handleStopTimer();
+      if (normalMode) {
+        updateTotalPoint(1);
+      }
     }
   }, [userGuess]);
   return (
     <div>
       <h2>Happy Flower</h2>
-      {isTimerRunning && isWin === "" && (
+      {!easyMode && !normalMode && (
+        <div>
+          <button onClick={handleEasy}>Easy</button>
+          <button onClick={handleNormal}>Normal</button>
+        </div>
+      )}
+      {easyMode && (
+        <ModeExplaination message="Easy Mode: You will not get any star if you win, because there's no time limitation." />
+      )}
+      {normalMode && (
+        <ModeExplaination message="Normal Mode: You'll get a star if you guess the word in 60 seconds." />
+      )}
+      {isTimerRunning && isWin === "" && normalMode && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
           {seconds}
         </h3>
       )}
-      {!isGameStarted && (
+      {!isGameStarted && (easyMode || normalMode) && (
         <Form
           title={title}
           setTitle={setTitle}
@@ -92,7 +121,7 @@ export default function HappyFlower({ updateTotalPoint }) {
         {isWin ? "T" : "F"}
       </div>
       <div>
-        {seconds < 1 && <h2>Time's Up!</h2>}
+        {normalMode && seconds < 1 && <h2>Time's Up!</h2>}
         {isWin === false && (
           <div>
             <h2>You loose!</h2>
