@@ -9,6 +9,7 @@ import Crazy100 from "./Crazy100/Crazy100";
 import MemoryCards from "./MemoryCards/MemoryCards";
 import Nim from "./Nim/Nim";
 import HappyFlower from "./HappyFlower/HappyFlower";
+import XO from "./XO/XO";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -21,6 +22,7 @@ function App() {
   const [showMemoryCards, setShowMemoryCards] = useState(false);
   const [showNim, setShowNim] = useState(false);
   const [showHappyFlower, setShowHappyFlower] = useState(false);
+  const [showXO, setShowXO] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -55,6 +57,10 @@ function App() {
   const toggleHappyFlower = () => {
     setShowGameTitles(false);
     setShowHappyFlower(true);
+  };
+  const toggleXO = () => {
+    setShowGameTitles(false);
+    setShowXO(true);
   };
   return (
     <div className="App">
@@ -167,6 +173,18 @@ function App() {
         showGameTitles &&
         !showHappyFlower && (
           <button onClick={() => toggleHappyFlower()}>Happy Flower</button>
+        )
+      )}
+      {!showGameTitles && showXO ? (
+        <XO
+          setShowGameTitles={setShowGameTitles}
+          setShowXO={setShowXO}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showXO && (
+          <button onClick={() => toggleXO()}>X-O</button>
         )
       )}
     </div>
