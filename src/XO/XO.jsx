@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Square from "./Square";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
@@ -10,6 +10,7 @@ export default function XO() {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [userSign, setUserSign] = useState("");
+  const [pejmanSign, setPejmanSign] = useState("");
   const [squares, setSquares] = useState([
     { id: 0, owner: "", imgSrc: signs[0] },
     { id: 1, owner: "", imgSrc: signs[0] },
@@ -37,12 +38,15 @@ export default function XO() {
     { id: 23, owner: "", imgSrc: signs[0] },
     { id: 24, owner: "", imgSrc: signs[0] },
   ]);
+  const [availableSquares, setAvailableSquares] = useState([]);
   const [isUserTurn, setIsUserTurn] = useState(false);
   const userX = () => {
     setUserSign("X");
+    setPejmanSign("O");
   };
   const userO = () => {
     setUserSign("O");
+    setPejmanSign("X");
   };
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -57,6 +61,14 @@ export default function XO() {
   const handleStart = () => {
     setIsGameStarted(true);
   };
+  useEffect(() => {
+    setAvailableSquares(squares.filter((s) => s.owner === ""));
+  }, [squares]);
+  //   useEffect(() => {
+  //     if (!isUserTurn) {
+
+  //     }
+  //   }, []);
   return (
     <div>
       {!easyMode && !normalMode && (
@@ -79,6 +91,12 @@ export default function XO() {
       )}
       <div style={{ color: "gray" }}>User's Sign: {userSign}</div>
       <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
+      <div style={{ color: "gray" }}>
+        Available Squares:{" "}
+        {availableSquares.map((s) => (
+          <div style={{ display: "inline" }}>{s.id}-</div>
+        ))}
+      </div>
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
