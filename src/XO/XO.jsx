@@ -44,6 +44,8 @@ export default function XO() {
   const [isPejmanTurn, setIsPejmanTurn] = useState(false);
   const [userChoices, setUserChoices] = useState([]);
   const [pejmanChoices, setPejmanChoices] = useState([]);
+  const [userPoint, setUserPoint] = useState(0);
+  const [pejmanPoint, setPejmanPoint] = useState(0);
   const userX = () => {
     setUserSign(signs[1]);
     setPejmanSign(signs[2]);
@@ -76,7 +78,7 @@ export default function XO() {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
-    if (isPejmanTurn && userChoices.length > 0) {
+    if (isPejmanTurn && ((easyMode && userChoices.length) || normalMode) > 0) {
       const newPejmanChoice = getRandArr(availableSquares.map(item => item.id));
       console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
@@ -111,6 +113,7 @@ export default function XO() {
       )}
       <div style={{ color: "gray" }}>User's Sign: {userSign}</div>
       <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
+      <div style={{ color: "gray" }}>isPejmanTurn: {isPejmanTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         Available Squares:{" "}
         {availableSquares.map((s) => (
@@ -166,7 +169,7 @@ export default function XO() {
         )}
         {isGameStarted && !isUserTurn &&
             <div>
-            <div>Allow Pejman to make a move</div>
+            <div>{`Allow Pejman to ${normalMode && pejmanChoices.length === 0 ? "start the game" : "make his move"}`}</div>
             <button onClick={allowPejman}>Ok</button>
         </div>
         }
