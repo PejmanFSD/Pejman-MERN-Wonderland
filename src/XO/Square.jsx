@@ -1,6 +1,7 @@
 export default function Square({
   imgSrc,
   idx,
+  signs,
   userSign,
   setSquares,
   isUserTurn,
@@ -22,7 +23,7 @@ export default function Square({
       src={imgSrc}
       width="50px"
       alt="Square"
-      style={{ display: "inline", pointerEvents: !isUserTurn && "none" }}
+      style={{ display: "inline", pointerEvents: (!isUserTurn || imgSrc === signs[1] || imgSrc === signs[2]) && "none" }}
       onClick={handleClickSquare}
     />
   );

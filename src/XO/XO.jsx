@@ -78,7 +78,7 @@ export default function XO() {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
-    if (isPejmanTurn && ((easyMode && userChoices.length) || normalMode) > 0) {
+    if (isPejmanTurn && ((easyMode && userChoices.length > 0) || normalMode)) {
       const newPejmanChoice = getRandArr(availableSquares.map(item => item.id));
       console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
@@ -140,6 +140,7 @@ export default function XO() {
                 <Square
                   imgSrc={squares[idx].imgSrc}
                   idx={squares[idx].id}
+                  signs={signs}
                   userSign={userSign}
                   setSquares={setSquares}
                   isUserTurn={isUserTurn}
@@ -155,6 +156,7 @@ export default function XO() {
                 <Square
                   imgSrc={squares[idx].imgSrc}
                   idx={squares[idx].id}
+                  signs={signs}
                   userSign={userSign}
                   setSquares={setSquares}
                   isUserTurn={isUserTurn}
