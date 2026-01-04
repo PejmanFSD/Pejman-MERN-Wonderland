@@ -81,7 +81,7 @@ export default function XO() {
       console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
         currSquares.map((s) =>
-          s.id === newPejmanChoice ? { ...s, imgSrc: signs[2], owner: "Pejman" } : s
+          s.id === newPejmanChoice ? { ...s, imgSrc: pejmanSign === "X" ? signs[1] : signs[2], owner: "Pejman" } : s
         )
       );
       setIsUserTurn(true);
