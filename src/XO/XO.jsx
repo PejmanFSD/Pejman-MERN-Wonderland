@@ -45,12 +45,12 @@ export default function XO() {
   const [userChoices, setUserChoices] = useState([]);
   const [pejmanChoices, setPejmanChoices] = useState([]);
   const userX = () => {
-    setUserSign("X");
-    setPejmanSign("O");
+    setUserSign(signs[1]);
+    setPejmanSign(signs[2]);
   };
   const userO = () => {
-    setUserSign("O");
-    setPejmanSign("X");
+    setUserSign(signs[2]);
+    setPejmanSign(signs[1]);
   };
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -81,7 +81,7 @@ export default function XO() {
       console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
         currSquares.map((s) =>
-          s.id === newPejmanChoice ? { ...s, imgSrc: pejmanSign === "X" ? signs[1] : signs[2], owner: "Pejman" } : s
+          s.id === newPejmanChoice ? { ...s, imgSrc: pejmanSign, owner: "Pejman" } : s
         )
       );
       setIsUserTurn(true);
@@ -137,7 +137,6 @@ export default function XO() {
                 <Square
                   imgSrc={squares[idx].imgSrc}
                   idx={squares[idx].id}
-                  signs={signs}
                   userSign={userSign}
                   setSquares={setSquares}
                   isUserTurn={isUserTurn}
@@ -153,7 +152,6 @@ export default function XO() {
                 <Square
                   imgSrc={squares[idx].imgSrc}
                   idx={squares[idx].id}
-                  signs={signs}
                   userSign={userSign}
                   setSquares={setSquares}
                   isUserTurn={isUserTurn}
