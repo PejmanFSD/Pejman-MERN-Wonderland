@@ -3,6 +3,7 @@ import Square from "./Square";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
 import O from "./Images/O.jpg";
+import { getRandArr } from "../utils";
 const signs = [S, X, O];
 
 export default function XO() {
@@ -40,6 +41,8 @@ export default function XO() {
   ]);
   const [availableSquares, setAvailableSquares] = useState([]);
   const [isUserTurn, setIsUserTurn] = useState(false);
+  const [userChoices, setUserChoices] = useState([]);
+  const [pejmanChoices, setPejmanChoices] = useState([]);
   const userX = () => {
     setUserSign("X");
     setPejmanSign("O");
@@ -64,11 +67,20 @@ export default function XO() {
   useEffect(() => {
     setAvailableSquares(squares.filter((s) => s.owner === ""));
   }, [squares]);
-  //   useEffect(() => {
-  //     if (!isUserTurn) {
-
-  //     }
-  //   }, []);
+  useEffect(() => {
+    setUserChoices(squares.filter((s) => s.owner === "User"));
+  }, [squares]);
+  useEffect(() => {
+    if (!isUserTurn && userChoices.length > 0) {
+    //   const newPejmanChoice = getRandArr(availableSquares);
+      setSquares((currSquares) =>
+        currSquares.map((s) =>
+          s.id === 11 ? { ...s, imgSrc: signs[2], owner: "Pejman" } : s
+        )
+      );
+    }
+    setPejmanChoices(squares.filter((s) => s.owner === "Pejman"));
+  }, [isUserTurn, userChoices]);
   return (
     <div>
       {!easyMode && !normalMode && (
@@ -94,6 +106,18 @@ export default function XO() {
       <div style={{ color: "gray" }}>
         Available Squares:{" "}
         {availableSquares.map((s) => (
+          <div style={{ display: "inline" }}>{s.id}-</div>
+        ))}
+      </div>
+      <div style={{ color: "gray" }}>
+        User Choices:{" "}
+        {userChoices.map((s) => (
+          <div style={{ display: "inline" }}>{s.id}-</div>
+        ))}
+      </div>
+      <div style={{ color: "gray" }}>
+        Pejman Choices:{" "}
+        {pejmanChoices.map((s) => (
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div>
