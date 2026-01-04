@@ -65,15 +65,16 @@ export default function XO() {
     setIsGameStarted(true);
   };
   useEffect(() => {
-    setAvailableSquares(squares.map((s) =>
-          s.owner === "" && s.id))
+    setAvailableSquares(squares.filter((s) =>
+          s.owner === ""))
   }, [squares]);
   useEffect(() => {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
     if (!isUserTurn && userChoices.length > 0) {
-      const newPejmanChoice = getRandArr(availableSquares);
+      const newPejmanChoice = getRandArr(availableSquares.map(item => item.id));
+      console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
         currSquares.map((s) =>
           s.id === newPejmanChoice ? { ...s, imgSrc: signs[2], owner: "Pejman" } : s
@@ -108,7 +109,7 @@ export default function XO() {
       <div style={{ color: "gray" }}>
         Available Squares:{" "}
         {availableSquares.map((s) => (
-          <div style={{ display: "inline" }}>{s}-</div>
+          <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div>
       <div style={{ color: "gray" }}>
