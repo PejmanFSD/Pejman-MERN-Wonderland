@@ -6,6 +6,8 @@ export default function Square({
   setSquares,
   isUserTurn,
   setIsUserTurn,
+  squares,
+  setAvailableSquares
 }) {
   const handleClickSquare = () => {
     if (userSign === "X") {
@@ -14,6 +16,7 @@ export default function Square({
           s.id === idx ? { ...s, imgSrc: signs[1], owner: "User" } : s
         )
       );
+      setAvailableSquares(squares.filter((s) => s.owner === ""));
       setIsUserTurn(false);
     } else if (userSign === "O") {
       setSquares((currSquares) =>
@@ -21,6 +24,7 @@ export default function Square({
           s.id === idx ? { ...s, imgSrc: signs[2], owner: "User" } : s
         )
       );
+      setAvailableSquares(squares.filter((s) => s.owner === ""));
       setIsUserTurn(false);
     }
   };

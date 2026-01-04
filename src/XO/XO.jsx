@@ -41,6 +41,7 @@ export default function XO() {
   ]);
   const [availableSquares, setAvailableSquares] = useState([]);
   const [isUserTurn, setIsUserTurn] = useState(false);
+  const [isPejmanTurn, setIsPejmanTurn] = useState(false);
   const [userChoices, setUserChoices] = useState([]);
   const [pejmanChoices, setPejmanChoices] = useState([]);
   const userX = () => {
@@ -64,6 +65,9 @@ export default function XO() {
   const handleStart = () => {
     setIsGameStarted(true);
   };
+  const allowPejman = () => {
+    setIsPejmanTurn(true);
+  }
   useEffect(() => {
     setAvailableSquares(squares.filter((s) =>
           s.owner === ""))
@@ -72,7 +76,7 @@ export default function XO() {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
-    if (!isUserTurn && userChoices.length > 0) {
+    if (isPejmanTurn && userChoices.length > 0) {
       const newPejmanChoice = getRandArr(availableSquares.map(item => item.id));
       console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
@@ -83,7 +87,8 @@ export default function XO() {
       setIsUserTurn(true);
     }
     setPejmanChoices(squares.filter((s) => s.owner === "Pejman"));
-  }, [isUserTurn, userChoices]);
+    setIsPejmanTurn(false);
+  }, [isPejmanTurn]);
   return (
     <div>
       {!easyMode && !normalMode && (
@@ -137,6 +142,8 @@ export default function XO() {
                   setSquares={setSquares}
                   isUserTurn={isUserTurn}
                   setIsUserTurn={setIsUserTurn}
+                  squares={squares}
+                  setAvailableSquares={setAvailableSquares}
                 />
               }
             </div>
@@ -151,12 +158,20 @@ export default function XO() {
                   setSquares={setSquares}
                   isUserTurn={isUserTurn}
                   setIsUserTurn={setIsUserTurn}
+                  squares={squares}
+                  setAvailableSquares={setAvailableSquares}
                 />
               }
               <br></br>
             </div>
           )
         )}
+        {isGameStarted && !isUserTurn &&
+            <div>
+            <div>Allow Pejman to make a move</div>
+            <button onClick={allowPejman}>Ok</button>
+        </div>
+        }
     </div>
   );
 }
