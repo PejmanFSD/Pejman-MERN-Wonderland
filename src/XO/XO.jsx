@@ -69,21 +69,24 @@ export default function XO() {
   };
   const allowPejman = () => {
     setIsPejmanTurn(true);
-  }
+  };
   useEffect(() => {
-    setAvailableSquares(squares.filter((s) =>
-          s.owner === ""))
+    setAvailableSquares(squares.filter((s) => s.owner === ""));
   }, [squares]);
   useEffect(() => {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
     if (isPejmanTurn && ((easyMode && userChoices.length > 0) || normalMode)) {
-      const newPejmanChoice = getRandArr(availableSquares.map(item => item.id));
+      const newPejmanChoice = getRandArr(
+        availableSquares.map((item) => item.id)
+      );
       console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
         currSquares.map((s) =>
-          s.id === newPejmanChoice ? { ...s, imgSrc: pejmanSign, owner: "Pejman" } : s
+          s.id === newPejmanChoice
+            ? { ...s, imgSrc: pejmanSign, owner: "Pejman" }
+            : s
         )
       );
       setIsUserTurn(true);
@@ -91,6 +94,17 @@ export default function XO() {
     setPejmanChoices(squares.filter((s) => s.owner === "Pejman"));
     setIsPejmanTurn(false);
   }, [isPejmanTurn]);
+  useEffect(() => {
+    const userChoicesIndexes = userChoices.map((item) => item.id);
+    console.log("userChoicesIndexes: ", userChoicesIndexes);
+    if (
+      userChoicesIndexes.includes(0) &&
+      userChoicesIndexes.includes(1) &&
+      userChoicesIndexes.includes(2)
+    ) {
+      setUserPoint((currUserPoint) => currUserPoint + 1);
+    }
+  }, [userChoices]);
   return (
     <div>
       {!easyMode && !normalMode && (
@@ -113,7 +127,9 @@ export default function XO() {
       )}
       <div style={{ color: "gray" }}>User's Sign: {userSign}</div>
       <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
-      <div style={{ color: "gray" }}>isPejmanTurn: {isPejmanTurn ? "T" : "F"}</div>
+      <div style={{ color: "gray" }}>
+        isPejmanTurn: {isPejmanTurn ? "T" : "F"}
+      </div>
       <div style={{ color: "gray" }}>
         Available Squares:{" "}
         {availableSquares.map((s) => (
@@ -132,6 +148,7 @@ export default function XO() {
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div>
+      <div>Your Point: {userPoint}</div>
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -169,12 +186,16 @@ export default function XO() {
             </div>
           )
         )}
-        {isGameStarted && !isUserTurn &&
-            <div>
-            <div>{`Allow Pejman to ${normalMode && pejmanChoices.length === 0 ? "start the game" : "make his move"}`}</div>
-            <button onClick={allowPejman}>Ok</button>
+      {isGameStarted && !isUserTurn && (
+        <div>
+          <div>{`Allow Pejman to ${
+            normalMode && pejmanChoices.length === 0
+              ? "start the game"
+              : "make his move"
+          }`}</div>
+          <button onClick={allowPejman}>Ok</button>
         </div>
-        }
+      )}
     </div>
   );
 }
