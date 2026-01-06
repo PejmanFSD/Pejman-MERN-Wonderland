@@ -2,9 +2,13 @@ import { useState, useEffect } from "react";
 import Square from "./Square";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
+import XU from "./Images/XU.jpg";
+import XP from "./Images/XP.jpg";
 import O from "./Images/O.jpg";
+import OU from "./Images/OU.jpg";
+import OP from "./Images/OP.jpg";
 import { getRandArr } from "../utils";
-const signs = [S, X, O];
+const signs = [S, X, O, XU, XP, OU, OP];
 
 export default function XO() {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -97,13 +101,24 @@ export default function XO() {
   useEffect(() => {
     const userChoicesIndexes = userChoices.map((item) => item.id);
     console.log("userChoicesIndexes: ", userChoicesIndexes);
+    let up = 0;
     if (
       userChoicesIndexes.includes(0) &&
       userChoicesIndexes.includes(1) &&
       userChoicesIndexes.includes(2)
     ) {
-      setUserPoint((currUserPoint) => currUserPoint + 1);
+      setSquares((currSquares) =>
+        currSquares.map((s) =>
+          userChoicesIndexes.includes(s.id) && userSign === signs[1]
+            ? { ...s, imgSrc: XU }
+            : userChoicesIndexes.includes(s.id) && userSign === signs[2]
+            ? { ...s, imgSrc: OU }
+            : s
+        )
+      );
+      up++;
     }
+    setUserPoint(up);
   }, [userChoices]);
   return (
     <div>
