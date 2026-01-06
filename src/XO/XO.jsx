@@ -99,27 +99,83 @@ export default function XO() {
     setIsPejmanTurn(false);
   }, [isPejmanTurn]);
   useEffect(() => {
+    if (isUserTurn) {
     const userChoicesIndexes = userChoices.map((item) => item.id);
-    console.log("userChoicesIndexes: ", userChoicesIndexes);
-    let up = 0;
-    if (
-      userChoicesIndexes.includes(0) &&
-      userChoicesIndexes.includes(1) &&
-      userChoicesIndexes.includes(2)
-    ) {
-      setSquares((currSquares) =>
-        currSquares.map((s) =>
-          userChoicesIndexes.includes(s.id) && userSign === signs[1]
+    // console.log("userChoicesIndexes: ", userChoicesIndexes);
+    const userGreenSquares = [];
+    for (const i of userChoicesIndexes) {
+        if (6 <= i <= 18) {
+            if (
+                userChoicesIndexes.includes(i-6) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+6)
+                ) {
+                    userGreenSquares.push(i-6);
+                    userGreenSquares.push(i);
+                    userGreenSquares.push(i+6);
+                    console.log('userGreenSquares: ', userGreenSquares);
+                }
+            if (
+                userChoicesIndexes.includes(i-4) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+4)
+                ) {
+                    userGreenSquares.push(i-4);
+                    userGreenSquares.push(i);
+                    userGreenSquares.push(i+4);
+                    console.log('userGreenSquares: ', userGreenSquares);
+                }
+            if (
+                userChoicesIndexes.includes(i-1) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+1)
+                ) {
+                    userGreenSquares.push(i-1);
+                    userGreenSquares.push(i);
+                    userGreenSquares.push(i+1);
+                    console.log('userGreenSquares: ', userGreenSquares);
+                }
+            if (
+                userChoicesIndexes.includes(i-5) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+5)
+                ) {
+                    userGreenSquares.push(i-5);
+                    userGreenSquares.push(i);
+                    userGreenSquares.push(i+5);
+                    console.log('userGreenSquares: ', userGreenSquares);
+                }
+        }
+        // else if (1 <= i <= 3) {
+
+        // }
+        // else if (21 <= i <= 23) {
+
+        // }
+        // else if (i === 5 || i === 10 || i === 15) {
+
+        // }
+        // else if (i === 9 || i === 14 || i === 19) {
+
+        // }
+        // else if (i === 0) {
+
+        // }
+        // else if (i === 4) {
+
+        // }
+        // else if (i === 20) {
+
+        // }
+        // else if (i === 24) {
+
+        // }
+    }
+        
+            setSquares((currSquares) =>
+                currSquares.map((s) =>
+                    userGreenSquares.includes(s.id) && userSign === signs[1]
             ? { ...s, imgSrc: XU }
-            : userChoicesIndexes.includes(s.id) && userSign === signs[2]
+            : userGreenSquares.includes(s.id) && userSign === signs[2]
             ? { ...s, imgSrc: OU }
             : s
         )
-      );
-      up++;
+    );
+    setUserPoint(userGreenSquares.length / 3);
     }
-    setUserPoint(up);
-  }, [userChoices]);
+  }, [isUserTurn]);
   return (
     <div>
       {!easyMode && !normalMode && (
