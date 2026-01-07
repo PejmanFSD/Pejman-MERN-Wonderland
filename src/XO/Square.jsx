@@ -26,7 +26,7 @@ export default function Square({
       style={{
         display: "inline",
         pointerEvents:
-          (!isUserTurn || imgSrc === signs[1] || imgSrc === signs[2]) && "none",
+          (!isUserTurn || imgSrc !== signs[0]) && "none",
       }}
       onClick={handleClickSquare}
     />

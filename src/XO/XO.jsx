@@ -50,6 +50,7 @@ export default function XO() {
   const [pejmanChoices, setPejmanChoices] = useState([]);
   const [userPoint, setUserPoint] = useState(0);
   const [pejmanPoint, setPejmanPoint] = useState(0);
+  const [filledSquaresByUser, setFilledSquaresByUser] = useState([]);
   const userX = () => {
     setUserSign(signs[1]);
     setPejmanSign(signs[2]);
@@ -99,44 +100,81 @@ export default function XO() {
     setIsPejmanTurn(false);
   }, [isPejmanTurn]);
   useEffect(() => {
+    setFilledSquaresByUser([]);
     if (isUserTurn) {
-    const userChoicesIndexes = userChoices.map((item) => item.id);
-    // console.log("userChoicesIndexes: ", userChoicesIndexes);
-    const userGreenSquares = [];
-    for (const i of userChoicesIndexes) {
-        if (6 <= i <= 18) {
-            if (
-                userChoicesIndexes.includes(i-6) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+6)
-                ) {
-                    userGreenSquares.push(i-6);
-                    userGreenSquares.push(i);
-                    userGreenSquares.push(i+6);
-                    console.log('userGreenSquares: ', userGreenSquares);
-                }
-            if (
-                userChoicesIndexes.includes(i-4) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+4)
-                ) {
-                    userGreenSquares.push(i-4);
-                    userGreenSquares.push(i);
-                    userGreenSquares.push(i+4);
-                    console.log('userGreenSquares: ', userGreenSquares);
-                }
-            if (
-                userChoicesIndexes.includes(i-1) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+1)
-                ) {
-                    userGreenSquares.push(i-1);
-                    userGreenSquares.push(i);
-                    userGreenSquares.push(i+1);
-                    console.log('userGreenSquares: ', userGreenSquares);
-                }
-            if (
-                userChoicesIndexes.includes(i-5) && userChoicesIndexes.includes(i) && userChoicesIndexes.includes(i+5)
-                ) {
-                    userGreenSquares.push(i-5);
-                    userGreenSquares.push(i);
-                    userGreenSquares.push(i+5);
-                    console.log('userGreenSquares: ', userGreenSquares);
-                }
+      const userChoicesIndexes = userChoices.map((item) => item.id);
+      console.log("userChoicesIndexes: ", userChoicesIndexes);
+      const userGreenSquares = [];
+      for (const i of userChoicesIndexes) {
+        if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
+          if (
+            userChoicesIndexes.includes(i - 6) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 6)
+          ) {
+            userGreenSquares.push(i - 6);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 6);
+            console.log("i-1: ", i);
+            console.log("userGreenSquares-1: ", userGreenSquares);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 6,
+              i,
+              i + 6,
+            ]);
+          }
+          if (
+            userChoicesIndexes.includes(i - 4) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 4)
+          ) {
+            userGreenSquares.push(i - 4);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 4);
+            console.log("i-2: ", i);
+            console.log("userGreenSquares-2: ", userGreenSquares);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 4,
+              i,
+              i + 4,
+            ]);
+          }
+          if (
+            userChoicesIndexes.includes(i - 1) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 1)
+          ) {
+            userGreenSquares.push(i - 1);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 1);
+            console.log("i-3: ", i);
+            console.log("userGreenSquares-3: ", userGreenSquares);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 1,
+              i,
+              i + 1,
+            ]);
+          }
+          if (
+            userChoicesIndexes.includes(i - 5) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 5)
+          ) {
+            userGreenSquares.push(i - 5);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 5);
+            console.log("i-4: ", i);
+            console.log("userGreenSquares-4: ", userGreenSquares);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 5,
+              i,
+              i + 5,
+            ]);
+          }
         }
         // else if (1 <= i <= 3) {
 
@@ -162,18 +200,18 @@ export default function XO() {
         // else if (i === 24) {
 
         // }
-    }
-        
-            setSquares((currSquares) =>
-                currSquares.map((s) =>
-                    userGreenSquares.includes(s.id) && userSign === signs[1]
+      }
+
+      setSquares((currSquares) =>
+        currSquares.map((s) =>
+          userGreenSquares.includes(s.id) && userSign === signs[1]
             ? { ...s, imgSrc: XU }
             : userGreenSquares.includes(s.id) && userSign === signs[2]
             ? { ...s, imgSrc: OU }
             : s
         )
-    );
-    setUserPoint(userGreenSquares.length / 3);
+      );
+      setUserPoint(userGreenSquares.length / 3);
     }
   }, [isUserTurn]);
   return (
@@ -196,7 +234,6 @@ export default function XO() {
       {userSign !== "" && !isGameStarted && (
         <button onClick={handleStart}>Start the Game</button>
       )}
-      <div style={{ color: "gray" }}>User's Sign: {userSign}</div>
       <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         isPejmanTurn: {isPejmanTurn ? "T" : "F"}
@@ -219,6 +256,23 @@ export default function XO() {
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div>
+      {userPoint > 0 && (
+        <div>
+          {`You have ${userPoint} point${
+            userPoint > 1 ? "s" : ""
+          } for having the following match${userPoint > 1 ? "es" : ""}: `}
+          {filledSquaresByUser.map(
+            (f, i) =>
+              i % 3 === 0 && (
+                <div>
+                  {filledSquaresByUser[i] + 1} -{" "}
+                  {filledSquaresByUser[i + 1] + 1} -{" "}
+                  {filledSquaresByUser[i + 2] + 1}
+                </div>
+              )
+          )}
+        </div>
+      )}
       <div>Your Point: {userPoint}</div>
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
