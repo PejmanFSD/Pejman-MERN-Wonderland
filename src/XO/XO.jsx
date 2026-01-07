@@ -115,8 +115,6 @@ export default function XO() {
             userGreenSquares.push(i - 6);
             userGreenSquares.push(i);
             userGreenSquares.push(i + 6);
-            console.log("i-1: ", i);
-            console.log("userGreenSquares-1: ", userGreenSquares);
             setFilledSquaresByUser((currFilledSquaresByUser) => [
               ...currFilledSquaresByUser,
               i - 6,
@@ -132,8 +130,6 @@ export default function XO() {
             userGreenSquares.push(i - 4);
             userGreenSquares.push(i);
             userGreenSquares.push(i + 4);
-            console.log("i-2: ", i);
-            console.log("userGreenSquares-2: ", userGreenSquares);
             setFilledSquaresByUser((currFilledSquaresByUser) => [
               ...currFilledSquaresByUser,
               i - 4,
@@ -149,8 +145,6 @@ export default function XO() {
             userGreenSquares.push(i - 1);
             userGreenSquares.push(i);
             userGreenSquares.push(i + 1);
-            console.log("i-3: ", i);
-            console.log("userGreenSquares-3: ", userGreenSquares);
             setFilledSquaresByUser((currFilledSquaresByUser) => [
               ...currFilledSquaresByUser,
               i - 1,
@@ -166,8 +160,6 @@ export default function XO() {
             userGreenSquares.push(i - 5);
             userGreenSquares.push(i);
             userGreenSquares.push(i + 5);
-            console.log("i-4: ", i);
-            console.log("userGreenSquares-4: ", userGreenSquares);
             setFilledSquaresByUser((currFilledSquaresByUser) => [
               ...currFilledSquaresByUser,
               i - 5,
@@ -176,28 +168,28 @@ export default function XO() {
             ]);
           }
         }
-        // else if (1 <= i <= 3) {
+        // else if ([1,2,3].includes(i)) {
 
         // }
-        // else if (21 <= i <= 23) {
+        // else if ([21,22,23].includes(i)) {
 
         // }
-        // else if (i === 5 || i === 10 || i === 15) {
+        // else if ([5, 10, 15].includes(i)) {
 
         // }
-        // else if (i === 9 || i === 14 || i === 19) {
+        // else if ([9, 14, 19].includes(i)) {
 
         // }
-        // else if (i === 0) {
+        // else if ([0].includes(i)) {
 
         // }
-        // else if (i === 4) {
+        // else if ([4].includes(i)) {
 
         // }
-        // else if (i === 20) {
+        // else if ([20].includes(i)) {
 
         // }
-        // else if (i === 24) {
+        // else if ([24].includes(i)) {
 
         // }
       }
@@ -212,6 +204,10 @@ export default function XO() {
         )
       );
       setUserPoint(userGreenSquares.length / 3);
+    }
+    // The "clean-up" function:
+    return function() {
+
     }
   }, [isUserTurn]);
   return (
@@ -256,7 +252,8 @@ export default function XO() {
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div>
-      {userPoint > 0 && (
+      <div>Your Point: {userPoint}</div>
+      {userPoint > 0 && isUserTurn && (
         <div>
           {`You have ${userPoint} point${
             userPoint > 1 ? "s" : ""
@@ -273,7 +270,6 @@ export default function XO() {
           )}
         </div>
       )}
-      <div>Your Point: {userPoint}</div>
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
