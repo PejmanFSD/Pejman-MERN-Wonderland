@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Square from "./Square";
+import SquareDetails from "./SquareDetails";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
 import XU from "./Images/XU.jpg";
@@ -167,33 +168,72 @@ export default function XO() {
               i + 5,
             ]);
           }
+        } else if ([1, 2, 3].includes(i)) {
+          if (
+            userChoicesIndexes.includes(i - 1) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 1)
+          ) {
+            userGreenSquares.push(i - 1);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 1);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 1,
+              i,
+              i + 1,
+            ]);
+          }
+        } else if ([21, 22, 23].includes(i)) {
+          if (
+            userChoicesIndexes.includes(i - 1) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 1)
+          ) {
+            userGreenSquares.push(i - 1);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 1);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 1,
+              i,
+              i + 1,
+            ]);
+          }
+        } else if ([5, 10, 15].includes(i)) {
+          if (
+            userChoicesIndexes.includes(i - 5) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 5)
+          ) {
+            userGreenSquares.push(i - 5);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 5);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 5,
+              i,
+              i + 5,
+            ]);
+          }
+        } else if ([9, 14, 19].includes(i)) {
+          if (
+            userChoicesIndexes.includes(i - 5) &&
+            userChoicesIndexes.includes(i) &&
+            userChoicesIndexes.includes(i + 5)
+          ) {
+            userGreenSquares.push(i - 5);
+            userGreenSquares.push(i);
+            userGreenSquares.push(i + 5);
+            setFilledSquaresByUser((currFilledSquaresByUser) => [
+              ...currFilledSquaresByUser,
+              i - 5,
+              i,
+              i + 5,
+            ]);
+          }
         }
-        // else if ([1,2,3].includes(i)) {
-
-        // }
-        // else if ([21,22,23].includes(i)) {
-
-        // }
-        // else if ([5, 10, 15].includes(i)) {
-
-        // }
-        // else if ([9, 14, 19].includes(i)) {
-
-        // }
-        // else if ([0].includes(i)) {
-
-        // }
-        // else if ([4].includes(i)) {
-
-        // }
-        // else if ([20].includes(i)) {
-
-        // }
-        // else if ([24].includes(i)) {
-
-        // }
       }
-
       setSquares((currSquares) =>
         currSquares.map((s) =>
           userGreenSquares.includes(s.id) && userSign === signs[1]
@@ -204,10 +244,6 @@ export default function XO() {
         )
       );
       setUserPoint(userGreenSquares.length / 3);
-    }
-    // The "clean-up" function:
-    return function() {
-
     }
   }, [isUserTurn]);
   return (
@@ -253,23 +289,6 @@ export default function XO() {
         ))}
       </div>
       <div>Your Point: {userPoint}</div>
-      {userPoint > 0 && isUserTurn && (
-        <div>
-          {`You have ${userPoint} point${
-            userPoint > 1 ? "s" : ""
-          } for having the following match${userPoint > 1 ? "es" : ""}: `}
-          {filledSquaresByUser.map(
-            (f, i) =>
-              i % 3 === 0 && (
-                <div>
-                  {filledSquaresByUser[i] + 1} -{" "}
-                  {filledSquaresByUser[i + 1] + 1} -{" "}
-                  {filledSquaresByUser[i + 2] + 1}
-                </div>
-              )
-          )}
-        </div>
-      )}
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -315,6 +334,46 @@ export default function XO() {
               : "make his move"
           }`}</div>
           <button onClick={allowPejman}>Ok</button>
+        </div>
+      )}
+      {userPoint > 0 && isUserTurn && (
+        <div>
+          <div>
+            {`You have ${userPoint} point${
+              userPoint > 1 ? "s" : ""
+            } for having the following match${userPoint > 1 ? "es" : ""}: `}
+          </div>
+          {filledSquaresByUser.map(
+            (f, i) =>
+              i % 3 === 0 && (
+                <div
+                  style={{
+                    display: "inline-block",
+                    border: "1px solid black",
+                    margin: "5px",
+                    color:"lightblue"
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color:"lightblue"
+                    }}
+                  >
+                    <SquareDetails
+                      filledSquares={[
+                        filledSquaresByUser[i],
+                        filledSquaresByUser[i + 1],
+                        filledSquaresByUser[i + 2],
+                      ]}
+                      style={{color:"lightblue"}}
+                    />
+                  </div>
+                </div>
+              )
+          )}
         </div>
       )}
     </div>
