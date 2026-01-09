@@ -52,6 +52,7 @@ export default function XO() {
   const [userPoint, setUserPoint] = useState(0);
   const [pejmanPoint, setPejmanPoint] = useState(0);
   const [filledSquaresByUser, setFilledSquaresByUser] = useState([]);
+  const [filledSquaresByPejman, setFilledSquaresByPejman] = useState([]);
   const userX = () => {
     setUserSign(signs[1]);
     setPejmanSign(signs[2]);
@@ -87,7 +88,6 @@ export default function XO() {
       const newPejmanChoice = getRandArr(
         availableSquares.map((item) => item.id)
       );
-      console.log("newPejmanChoice: ", newPejmanChoice);
       setSquares((currSquares) =>
         currSquares.map((s) =>
           s.id === newPejmanChoice
@@ -100,152 +100,176 @@ export default function XO() {
     setPejmanChoices(squares.filter((s) => s.owner === "Pejman"));
     setIsPejmanTurn(false);
   }, [isPejmanTurn]);
-  useEffect(() => {
-    setFilledSquaresByUser([]);
-    if (isUserTurn) {
-      const userChoicesIndexes = userChoices.map((item) => item.id);
-      console.log("userChoicesIndexes: ", userChoicesIndexes);
-      const userGreenSquares = [];
-      for (const i of userChoicesIndexes) {
-        if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
-          if (
-            userChoicesIndexes.includes(i - 6) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 6)
-          ) {
-            userGreenSquares.push(i - 6);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 6);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 6,
-              i,
-              i + 6,
-            ]);
-          }
-          if (
-            userChoicesIndexes.includes(i - 4) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 4)
-          ) {
-            userGreenSquares.push(i - 4);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 4);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 4,
-              i,
-              i + 4,
-            ]);
-          }
-          if (
-            userChoicesIndexes.includes(i - 1) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 1)
-          ) {
-            userGreenSquares.push(i - 1);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 1);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 1,
-              i,
-              i + 1,
-            ]);
-          }
-          if (
-            userChoicesIndexes.includes(i - 5) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 5)
-          ) {
-            userGreenSquares.push(i - 5);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 5);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 5,
-              i,
-              i + 5,
-            ]);
-          }
-        } else if ([1, 2, 3].includes(i)) {
-          if (
-            userChoicesIndexes.includes(i - 1) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 1)
-          ) {
-            userGreenSquares.push(i - 1);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 1);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 1,
-              i,
-              i + 1,
-            ]);
-          }
-        } else if ([21, 22, 23].includes(i)) {
-          if (
-            userChoicesIndexes.includes(i - 1) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 1)
-          ) {
-            userGreenSquares.push(i - 1);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 1);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 1,
-              i,
-              i + 1,
-            ]);
-          }
-        } else if ([5, 10, 15].includes(i)) {
-          if (
-            userChoicesIndexes.includes(i - 5) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 5)
-          ) {
-            userGreenSquares.push(i - 5);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 5);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 5,
-              i,
-              i + 5,
-            ]);
-          }
-        } else if ([9, 14, 19].includes(i)) {
-          if (
-            userChoicesIndexes.includes(i - 5) &&
-            userChoicesIndexes.includes(i) &&
-            userChoicesIndexes.includes(i + 5)
-          ) {
-            userGreenSquares.push(i - 5);
-            userGreenSquares.push(i);
-            userGreenSquares.push(i + 5);
-            setFilledSquaresByUser((currFilledSquaresByUser) => [
-              ...currFilledSquaresByUser,
-              i - 5,
-              i,
-              i + 5,
-            ]);
-          }
+  const handlePlayerPoints = (
+    filledSquareFunction,
+    choicesArray,
+    sign,
+    setPointFunction
+  ) => {
+    filledSquareFunction([]);
+    const choicesIndexes = choicesArray.map((item) => item.id);
+    const greenSquares = [];
+    for (const i of choicesIndexes) {
+      if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
+        if (
+          choicesIndexes.includes(i - 6) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 6)
+        ) {
+          greenSquares.push(i - 6);
+          greenSquares.push(i);
+          greenSquares.push(i + 6);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 6,
+            i,
+            i + 6,
+          ]);
+        }
+        if (
+          choicesIndexes.includes(i - 4) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 4)
+        ) {
+          greenSquares.push(i - 4);
+          greenSquares.push(i);
+          greenSquares.push(i + 4);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 4,
+            i,
+            i + 4,
+          ]);
+        }
+        if (
+          choicesIndexes.includes(i - 1) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 1)
+        ) {
+          greenSquares.push(i - 1);
+          greenSquares.push(i);
+          greenSquares.push(i + 1);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 1,
+            i,
+            i + 1,
+          ]);
+        }
+        if (
+          choicesIndexes.includes(i - 5) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 5)
+        ) {
+          greenSquares.push(i - 5);
+          greenSquares.push(i);
+          greenSquares.push(i + 5);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 5,
+            i,
+            i + 5,
+          ]);
+        }
+      } else if ([1, 2, 3].includes(i)) {
+        if (
+          choicesIndexes.includes(i - 1) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 1)
+        ) {
+          greenSquares.push(i - 1);
+          greenSquares.push(i);
+          greenSquares.push(i + 1);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 1,
+            i,
+            i + 1,
+          ]);
+        }
+      } else if ([21, 22, 23].includes(i)) {
+        if (
+          choicesIndexes.includes(i - 1) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 1)
+        ) {
+          greenSquares.push(i - 1);
+          greenSquares.push(i);
+          greenSquares.push(i + 1);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 1,
+            i,
+            i + 1,
+          ]);
+        }
+      } else if ([5, 10, 15].includes(i)) {
+        if (
+          choicesIndexes.includes(i - 5) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 5)
+        ) {
+          greenSquares.push(i - 5);
+          greenSquares.push(i);
+          greenSquares.push(i + 5);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 5,
+            i,
+            i + 5,
+          ]);
+        }
+      } else if ([9, 14, 19].includes(i)) {
+        if (
+          choicesIndexes.includes(i - 5) &&
+          choicesIndexes.includes(i) &&
+          choicesIndexes.includes(i + 5)
+        ) {
+          greenSquares.push(i - 5);
+          greenSquares.push(i);
+          greenSquares.push(i + 5);
+          filledSquareFunction((currFilledSquares) => [
+            ...currFilledSquares,
+            i - 5,
+            i,
+            i + 5,
+          ]);
         }
       }
-      setSquares((currSquares) =>
-        currSquares.map((s) =>
-          userGreenSquares.includes(s.id) && userSign === signs[1]
-            ? { ...s, imgSrc: XU }
-            : userGreenSquares.includes(s.id) && userSign === signs[2]
-            ? { ...s, imgSrc: OU }
-            : s
-        )
-      );
-      setUserPoint(userGreenSquares.length / 3);
     }
-  }, [isUserTurn]);
+    setSquares((currSquares) =>
+      currSquares.map((s) =>
+        greenSquares.includes(s.id) && isUserTurn && sign === signs[1]
+          ? { ...s, imgSrc: signs[3] }
+          : greenSquares.includes(s.id) && isUserTurn && sign === signs[2]
+          ? { ...s, imgSrc: signs[5] }
+          : greenSquares.includes(s.id) && isPejmanTurn && sign === signs[1]
+          ? { ...s, imgSrc: signs[4] }
+          : greenSquares.includes(s.id) && isPejmanTurn && sign === signs[2]
+          ? { ...s, imgSrc: signs[6] }
+          : s
+      )
+    );
+    console.log(`${isUserTurn ? "User" : "Pejman"}: ${greenSquares}`);
+    setPointFunction(greenSquares.length / 3);
+  };
+  useEffect(() => {
+    if (isUserTurn) {
+      handlePlayerPoints(
+        setFilledSquaresByUser,
+        userChoices,
+        userSign,
+        setUserPoint
+      );
+    } else if (isPejmanTurn) {
+      handlePlayerPoints(
+        setFilledSquaresByPejman,
+        pejmanChoices,
+        pejmanSign,
+        setPejmanPoint
+      );
+    }
+  }, [isUserTurn, isPejmanTurn]);
   return (
     <div>
       {!easyMode && !normalMode && (
@@ -289,6 +313,7 @@ export default function XO() {
         ))}
       </div>
       <div>Your Point: {userPoint}</div>
+      <div>Pejman's Point: {pejmanPoint}</div>
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -336,7 +361,7 @@ export default function XO() {
           <button onClick={allowPejman}>Ok</button>
         </div>
       )}
-      {userPoint > 0 && isUserTurn && (
+      {userPoint > 0 && (
         <div>
           <div>
             {`You have ${userPoint} point${
@@ -351,7 +376,7 @@ export default function XO() {
                     display: "inline-block",
                     border: "1px solid black",
                     margin: "5px",
-                    color:"lightblue"
+                    color: "lightblue",
                   }}
                 >
                   <div
@@ -359,7 +384,7 @@ export default function XO() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      color:"lightblue"
+                      color: "lightblue",
                     }}
                   >
                     <SquareDetails
@@ -368,7 +393,49 @@ export default function XO() {
                         filledSquaresByUser[i + 1],
                         filledSquaresByUser[i + 2],
                       ]}
-                      style={{color:"lightblue"}}
+                      color="green"
+                      style={{ color: "lightblue" }}
+                    />
+                  </div>
+                </div>
+              )
+          )}
+        </div>
+      )}
+      {pejmanPoint > 0 && (
+        <div>
+          <div>
+            {`Pejman has ${pejmanPoint} point${
+              pejmanPoint > 1 ? "s" : ""
+            } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
+          </div>
+          {filledSquaresByPejman.map(
+            (f, i) =>
+              i % 3 === 0 && (
+                <div
+                  style={{
+                    display: "inline-block",
+                    border: "1px solid black",
+                    margin: "5px",
+                    color: "lightblue",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "lightblue",
+                    }}
+                  >
+                    <SquareDetails
+                      filledSquares={[
+                        filledSquaresByPejman[i],
+                        filledSquaresByPejman[i + 1],
+                        filledSquaresByPejman[i + 2],
+                      ]}
+                      color="brown"
+                      style={{ color: "lightblue" }}
                     />
                   </div>
                 </div>

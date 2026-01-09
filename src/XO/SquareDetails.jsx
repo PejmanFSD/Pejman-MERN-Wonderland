@@ -1,4 +1,4 @@
-export default function ({ filledSquares }) {
+export default function ({ filledSquares, color }) {
   return (
     <div style={{ display: "center", backgroundColor: "lightblue" }}>
       <table style={{ margin: "5px" }}>
@@ -17,10 +17,10 @@ export default function ({ filledSquares }) {
                     backgroundColor: filledSquares.includes(
                       rowIndex * 5 + colIndex
                     )
-                      ? "green"
+                      ? color
                       : "yellow",
                     color: filledSquares.includes(rowIndex * 5 + colIndex)
-                      ? "green"
+                      ? color
                       : "yellow",
                   }}
                 >
