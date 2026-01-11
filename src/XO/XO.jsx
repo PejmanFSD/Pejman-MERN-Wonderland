@@ -293,7 +293,7 @@ export default function XO() {
         setPejmanPoint
       );
     }
-  }, [isUserTurn, isPejmanTurn, availableSquares]);
+  }, [isUserTurn, isPejmanTurn]);
   return (
     <div>
       {!easyMode && !normalMode && (
