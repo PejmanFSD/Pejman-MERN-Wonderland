@@ -53,6 +53,7 @@ export default function XO() {
   const [pejmanPoint, setPejmanPoint] = useState(0);
   const [filledSquaresByUser, setFilledSquaresByUser] = useState([]);
   const [filledSquaresByPejman, setFilledSquaresByPejman] = useState([]);
+  const [isWin, setIsWin] = useState("");
   const userX = () => {
     setUserSign(signs[1]);
     setPejmanSign(signs[2]);
@@ -76,6 +77,29 @@ export default function XO() {
   };
   const allowPejman = () => {
     setIsPejmanTurn(true);
+  };
+  const announcingTheGameResult = () => {
+    handlePlayerPoints(
+      setFilledSquaresByUser,
+      userChoices,
+      userSign,
+      setUserPoint
+    );
+    handlePlayerPoints(
+      setFilledSquaresByPejman,
+      pejmanChoices,
+      pejmanSign,
+      setPejmanPoint
+    );
+    if (userPoint > pejmanPoint) {
+      setIsWin(true);
+    } else if (pejmanPoint > userPoint) {
+      setIsWin(false);
+    }
+    // else if (pejmanPoint === userPoint) {
+    //   setIsWin("Equal");
+    // }
+    setIsGameStarted(false);
   };
   useEffect(() => {
     setAvailableSquares(squares.filter((s) => s.owner === ""));
@@ -269,7 +293,7 @@ export default function XO() {
         setPejmanPoint
       );
     }
-  }, [isUserTurn, isPejmanTurn]);
+  }, [isUserTurn, isPejmanTurn, availableSquares]);
   return (
     <div>
       {!easyMode && !normalMode && (
@@ -314,6 +338,8 @@ export default function XO() {
       </div>
       <div>Your Point: {userPoint}</div>
       <div>Pejman's Point: {pejmanPoint}</div>
+      {isWin === true && <h2>You Win!</h2>}
+      {isWin === false && <h2>You Loose!</h2>}
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -351,16 +377,23 @@ export default function XO() {
             </div>
           )
         )}
-      {isGameStarted && !isUserTurn && (
-        <div>
-          <div>{`Allow Pejman to ${
-            normalMode && pejmanChoices.length === 0
-              ? "start the game"
-              : "make his move"
-          }`}</div>
-          <button onClick={allowPejman}>Ok</button>
-        </div>
-      )}
+      {isGameStarted &&
+        !isUserTurn &&
+        (availableSquares.length !== 0 ? (
+          <div>
+            <div>{`Allow Pejman to ${
+              normalMode && pejmanChoices.length === 0
+                ? "start the game"
+                : "make his move"
+            }`}</div>
+            <button onClick={allowPejman}>Ok</button>
+          </div>
+        ) : (
+          <div>
+            <div>The game is finished. Let's see who is the winner.</div>
+            <button onClick={announcingTheGameResult}>Ok</button>
+          </div>
+        ))}
       {userPoint > 0 && (
         <div>
           <div>
