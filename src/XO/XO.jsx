@@ -75,6 +75,50 @@ export default function XO() {
   const handleStart = () => {
     setIsGameStarted(true);
   };
+  const handleReset = () => {
+    setIsGameStarted(false);
+    setEasyMode(false);
+    setNormalMode(false);
+    setUserSign("");
+    setPejmanSign("");
+    setSquares([
+      { id: 0, owner: "", imgSrc: signs[0] },
+      { id: 1, owner: "", imgSrc: signs[0] },
+      { id: 2, owner: "", imgSrc: signs[0] },
+      { id: 3, owner: "", imgSrc: signs[0] },
+      { id: 4, owner: "", imgSrc: signs[0] },
+      { id: 5, owner: "", imgSrc: signs[0] },
+      { id: 6, owner: "", imgSrc: signs[0] },
+      { id: 7, owner: "", imgSrc: signs[0] },
+      { id: 8, owner: "", imgSrc: signs[0] },
+      { id: 9, owner: "", imgSrc: signs[0] },
+      { id: 10, owner: "", imgSrc: signs[0] },
+      { id: 11, owner: "", imgSrc: signs[0] },
+      { id: 12, owner: "", imgSrc: signs[0] },
+      { id: 13, owner: "", imgSrc: signs[0] },
+      { id: 14, owner: "", imgSrc: signs[0] },
+      { id: 15, owner: "", imgSrc: signs[0] },
+      { id: 16, owner: "", imgSrc: signs[0] },
+      { id: 17, owner: "", imgSrc: signs[0] },
+      { id: 18, owner: "", imgSrc: signs[0] },
+      { id: 19, owner: "", imgSrc: signs[0] },
+      { id: 20, owner: "", imgSrc: signs[0] },
+      { id: 21, owner: "", imgSrc: signs[0] },
+      { id: 22, owner: "", imgSrc: signs[0] },
+      { id: 23, owner: "", imgSrc: signs[0] },
+      { id: 24, owner: "", imgSrc: signs[0] },
+    ]);
+    setAvailableSquares([]);
+    setIsUserTurn(false);
+    setIsPejmanTurn(false);
+    setUserChoices([]);
+    setPejmanChoices([]);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setFilledSquaresByUser([]);
+    setFilledSquaresByPejman([]);
+    setIsWin("");
+  };
   const allowPejman = () => {
     setIsPejmanTurn(true);
   };
@@ -311,7 +355,7 @@ export default function XO() {
           </div>
         </div>
       )}
-      {userSign !== "" && !isGameStarted && (
+      {userSign !== "" && !isGameStarted && isWin === "" && (
         <button onClick={handleStart}>Start the Game</button>
       )}
       <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
@@ -336,10 +380,40 @@ export default function XO() {
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div>
-      <div>Your Point: {userPoint}</div>
-      <div>Pejman's Point: {pejmanPoint}</div>
-      {isWin === true && <h2>You Win!</h2>}
-      {isWin === false && <h2>You Loose!</h2>}
+      {isWin === "" && isGameStarted && (
+        <div
+          style={{
+            opacity: !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
+          }}
+        >
+          Your Point: {userPoint}
+        </div>
+      )}
+      {isWin === "" && isGameStarted && (
+        <div
+          style={{
+            opacity: !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
+          }}
+        >
+          Pejman's Point: {pejmanPoint}
+        </div>
+      )}
+      {isWin === true && (
+        <div>
+          <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
+          <h2>You Win!</h2>
+          <div>Play Again?</div>
+          <button onClick={handleReset}>Ok</button>
+        </div>
+      )}
+      {isWin === false && (
+        <div>
+          <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
+          <h2>Pejman Wins!</h2>
+          <div>Try Again?</div>
+          <button onClick={handleReset}>Ok</button>
+        </div>
+      )}
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -354,7 +428,11 @@ export default function XO() {
                   isUserTurn={isUserTurn}
                   setIsUserTurn={setIsUserTurn}
                   squares={squares}
+                  userChoices={userChoices}
+                  pejmanChoices={pejmanChoices}
+                  availableSquares={availableSquares}
                   setAvailableSquares={setAvailableSquares}
+                  normalMode={normalMode}
                 />
               }
             </div>
@@ -370,7 +448,11 @@ export default function XO() {
                   isUserTurn={isUserTurn}
                   setIsUserTurn={setIsUserTurn}
                   squares={squares}
+                  userChoices={userChoices}
+                  pejmanChoices={pejmanChoices}
+                  availableSquares={availableSquares}
                   setAvailableSquares={setAvailableSquares}
+                  normalMode={normalMode}
                 />
               }
               <br></br>
@@ -394,10 +476,16 @@ export default function XO() {
             <button onClick={announcingTheGameResult}>Ok</button>
           </div>
         ))}
+      {isGameStarted && isUserTurn && availableSquares.length === 0 && (
+        <div>
+          <div>The game is finished. Let's see who is the winner.</div>
+          <button onClick={announcingTheGameResult}>Ok</button>
+        </div>
+      )}
       {userPoint > 0 && (
         <div>
           <div>
-            {`You have ${userPoint} point${
+            {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
               userPoint > 1 ? "s" : ""
             } for having the following match${userPoint > 1 ? "es" : ""}: `}
           </div>
@@ -438,7 +526,7 @@ export default function XO() {
       {pejmanPoint > 0 && (
         <div>
           <div>
-            {`Pejman has ${pejmanPoint} point${
+            {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
               pejmanPoint > 1 ? "s" : ""
             } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
           </div>

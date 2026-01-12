@@ -7,7 +7,11 @@ export default function Square({
   isUserTurn,
   setIsUserTurn,
   squares,
+  userChoices,
+  pejmanChoices,
+  availableSquares,
   setAvailableSquares,
+  normalMode,
 }) {
   const handleClickSquare = () => {
     setSquares((currSquares) =>
@@ -21,11 +25,21 @@ export default function Square({
   return (
     <img
       src={imgSrc}
-      width="50px"
+      width={isUserTurn && availableSquares.length !== 0 ? "50px" : "10px"}
       alt="Square"
       style={{
         display: "inline",
         pointerEvents: (!isUserTurn || imgSrc !== signs[0]) && "none",
+        opacity:
+          (!isUserTurn && userChoices.length !== 0) ||
+          availableSquares.length === 0
+            ? 0.2
+            : 1,
+        border:
+          userChoices.length === 0 &&
+          pejmanChoices.length === 0 &&
+          normalMode &&
+          "1px solid black",
       }}
       onClick={handleClickSquare}
     />
