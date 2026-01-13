@@ -11,6 +11,7 @@ export default function Square({
   availableSquares,
   setAvailableSquares,
   isTogglingReset,
+  isTogglingHomePage,
 }) {
   const handleClickSquare = () => {
     setSquares((currSquares) =>
@@ -29,11 +30,16 @@ export default function Square({
       style={{
         display: "inline",
         pointerEvents:
-          (!isUserTurn || imgSrc !== signs[0] || isTogglingReset) && "none",
+          (!isUserTurn ||
+            imgSrc !== signs[0] ||
+            isTogglingReset ||
+            isTogglingHomePage) &&
+          "none",
         opacity:
           (!isUserTurn && userChoices.length !== 0) ||
           availableSquares.length === 0 ||
-          isTogglingReset
+          isTogglingReset ||
+          isTogglingHomePage
             ? 0.2
             : 1,
         border: "1px solid black",
