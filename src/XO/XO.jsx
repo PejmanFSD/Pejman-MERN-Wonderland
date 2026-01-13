@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Square from "./Square";
 import SquareDetails from "./SquareDetails";
+import ConfirmationBox from "../ConfirmationBox";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
 import XU from "./Images/XU.jpg";
@@ -54,6 +55,8 @@ export default function XO() {
   const [filledSquaresByUser, setFilledSquaresByUser] = useState([]);
   const [filledSquaresByPejman, setFilledSquaresByPejman] = useState([]);
   const [isWin, setIsWin] = useState("");
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
+
   const userX = () => {
     setUserSign(signs[1]);
     setPejmanSign(signs[2]);
@@ -144,6 +147,58 @@ export default function XO() {
     //   setIsWin("Equal");
     // }
     setIsGameStarted(false);
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    setIsGameStarted(false);
+    setSquares([
+      { id: 0, owner: "", imgSrc: signs[0] },
+      { id: 1, owner: "", imgSrc: signs[0] },
+      { id: 2, owner: "", imgSrc: signs[0] },
+      { id: 3, owner: "", imgSrc: signs[0] },
+      { id: 4, owner: "", imgSrc: signs[0] },
+      { id: 5, owner: "", imgSrc: signs[0] },
+      { id: 6, owner: "", imgSrc: signs[0] },
+      { id: 7, owner: "", imgSrc: signs[0] },
+      { id: 8, owner: "", imgSrc: signs[0] },
+      { id: 9, owner: "", imgSrc: signs[0] },
+      { id: 10, owner: "", imgSrc: signs[0] },
+      { id: 11, owner: "", imgSrc: signs[0] },
+      { id: 12, owner: "", imgSrc: signs[0] },
+      { id: 13, owner: "", imgSrc: signs[0] },
+      { id: 14, owner: "", imgSrc: signs[0] },
+      { id: 15, owner: "", imgSrc: signs[0] },
+      { id: 16, owner: "", imgSrc: signs[0] },
+      { id: 17, owner: "", imgSrc: signs[0] },
+      { id: 18, owner: "", imgSrc: signs[0] },
+      { id: 19, owner: "", imgSrc: signs[0] },
+      { id: 20, owner: "", imgSrc: signs[0] },
+      { id: 21, owner: "", imgSrc: signs[0] },
+      { id: 22, owner: "", imgSrc: signs[0] },
+      { id: 23, owner: "", imgSrc: signs[0] },
+      { id: 24, owner: "", imgSrc: signs[0] },
+    ]);
+    setAvailableSquares([]);
+    setUserChoices([]);
+    setPejmanChoices([]);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setFilledSquaresByUser([]);
+    setFilledSquaresByPejman([]);
+    setIsWin("");
+    if (easyMode) {
+      setIsUserTurn(true);
+      setIsPejmanTurn(false);
+    } else if (normalMode) {
+      setIsPejmanTurn(true);
+      setIsUserTurn(false);
+    }
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(() => {
     setAvailableSquares(squares.filter((s) => s.owner === ""));
@@ -358,7 +413,7 @@ export default function XO() {
       {userSign !== "" && !isGameStarted && isWin === "" && (
         <button onClick={handleStart}>Start the Game</button>
       )}
-      <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
+      {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         isPejmanTurn: {isPejmanTurn ? "T" : "F"}
       </div>
@@ -379,8 +434,8 @@ export default function XO() {
         {pejmanChoices.map((s) => (
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
-      </div>
-      {isWin === "" && isGameStarted && (
+      </div> */}
+      {isWin === "" && isGameStarted && !isTogglingReset && (
         <div
           style={{
             opacity: !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
@@ -389,7 +444,7 @@ export default function XO() {
           Your Point: {userPoint}
         </div>
       )}
-      {isWin === "" && isGameStarted && (
+      {isWin === "" && isGameStarted && !isTogglingReset && (
         <div
           style={{
             opacity: !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
@@ -433,6 +488,7 @@ export default function XO() {
                   availableSquares={availableSquares}
                   setAvailableSquares={setAvailableSquares}
                   normalMode={normalMode}
+                  isTogglingReset={isTogglingReset}
                 />
               }
             </div>
@@ -453,6 +509,7 @@ export default function XO() {
                   availableSquares={availableSquares}
                   setAvailableSquares={setAvailableSquares}
                   normalMode={normalMode}
+                  isTogglingReset={isTogglingReset}
                 />
               }
               <br></br>
@@ -461,6 +518,7 @@ export default function XO() {
         )}
       {isGameStarted &&
         !isUserTurn &&
+        !isTogglingReset &&
         (availableSquares.length !== 0 ? (
           <div>
             <div>{`Allow Pejman to ${
@@ -476,13 +534,35 @@ export default function XO() {
             <button onClick={announcingTheGameResult}>Ok</button>
           </div>
         ))}
-      {isGameStarted && isUserTurn && availableSquares.length === 0 && (
+      {isGameStarted &&
+        isUserTurn &&
+        availableSquares.length === 0 &&
+        !isTogglingReset && (
+          <div>
+            <div>The game is finished. Let's see who is the winner.</div>
+            <button onClick={announcingTheGameResult}>Ok</button>
+          </div>
+        )}
+      {isGameStarted &&
+        isWin === "" &&
+        !isTogglingReset &&
+        // !isTogglingHomePage &&
+        (easyMode || normalMode) &&
+        userSign !== "" && (
+          <div>
+            <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+        )}
+      {isTogglingReset && (
         <div>
-          <div>The game is finished. Let's see who is the winner.</div>
-          <button onClick={announcingTheGameResult}>Ok</button>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
         </div>
       )}
-      {userPoint > 0 && (
+      {userPoint > 0 && !isTogglingReset && (
         <div>
           <div>
             {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
@@ -523,7 +603,7 @@ export default function XO() {
           )}
         </div>
       )}
-      {pejmanPoint > 0 && (
+      {pejmanPoint > 0 && !isTogglingReset && (
         <div>
           <div>
             {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
