@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Square from "./Square";
 import SquareDetails from "./SquareDetails";
 import ConfirmationBox from "../ConfirmationBox";
+import ModeExplaination from "../ModeExplaination";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
 import XU from "./Images/XU.jpg";
@@ -141,12 +142,15 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     );
     if (userPoint > pejmanPoint) {
       setIsWin(true);
-    } else if (pejmanPoint > userPoint) {
+    } else {
       setIsWin(false);
     }
     // else if (pejmanPoint === userPoint) {
     //   setIsWin("Equal");
     // }
+    if (normalMode) {
+      updateTotalPoint(1);
+    }
     setIsGameStarted(false);
   };
   const toggleReset = () => {
@@ -408,6 +412,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
   }, [isUserTurn, isPejmanTurn]);
   return (
     <div>
+      <h2>X-O</h2>
       {!easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={handleEasyMode}>Easy</button>
@@ -423,6 +428,15 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
           </div>
         </div>
       )}
+      {easyMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
+        <ModeExplaination message="Easy Mode: In his turn, Pejman chooses a square randomly. You won't get any stars if you win." />
+      )}
+      {normalMode &&
+        isWin === "" &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <ModeExplaination message="Normal Mode: In his turn, Pejman chooses a square with a strategy. You'll get 1 star if you win." />
+        )}
       {userSign !== "" &&
         !isGameStarted &&
         isWin === "" &&
@@ -491,6 +505,14 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
           <button onClick={handleReset}>Ok</button>
         </div>
       )}
+      {/* {isWin === "Equal" && !isTogglingHomePage && (
+        <div>
+          <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
+          <h2>No one wins!</h2>
+          <div>Try Again?</div>
+          <button onClick={handleReset}>Ok</button>
+        </div>
+      )} */}
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
