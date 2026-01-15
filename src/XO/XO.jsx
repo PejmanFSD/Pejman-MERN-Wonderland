@@ -381,6 +381,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
       // Creating the red array:
       setRedArray([]);
+      setGreenArray([]);
       const userIndexes = userChoices.map((item) => item.id);
       const pejmanIndexes = pejmanChoices.map((item) => item.id);
       const allIndexes = squares.map((item) => item.id);
@@ -447,7 +448,68 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         }
       }
       // Creating the green array:
-
+      for (const i of allIndexes) {
+        if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
+          if (pejmanIndexes.includes(i - 6) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 6) && !userIndexes.includes(i + 6)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i+6 ]);
+          }
+          if (pejmanIndexes.includes(i - 6) && pejmanIndexes.includes(i + 6) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i ]);
+          }
+          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 6) && !pejmanIndexes.includes(i - 6) && !userIndexes.includes(i - 6)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i-6 ]);
+          }
+          if (pejmanIndexes.includes(i - 4) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 4) && !userIndexes.includes(i + 4)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i+4 ]);
+          }
+          if (pejmanIndexes.includes(i - 4) && pejmanIndexes.includes(i + 4) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i ]);
+          }
+          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 4) && !pejmanIndexes.includes(i - 4) && !userIndexes.includes(i - 4)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i-4 ]);
+          }
+          if (pejmanIndexes.includes(i - 5) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 5) && !userIndexes.includes(i + 5)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i+5 ]);
+          }
+          if (pejmanIndexes.includes(i - 5) && pejmanIndexes.includes(i + 5) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i ]);
+          }
+          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 5) && !pejmanIndexes.includes(i - 5) && !userIndexes.includes(i - 5)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i-5 ]);
+          }
+          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 1) && !userIndexes.includes(i + 1)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i+1 ]);
+          }
+          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i ]);
+          }
+          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i - 1) && !userIndexes.includes(i - 1)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i-1 ]);
+          }
+        }
+        else if ([1, 2, 3, 21, 22, 23].includes(i)) {
+          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 1) && !userIndexes.includes(i + 1)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i+1 ]);
+          }
+          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i ]);
+          }
+          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i - 1) && !userIndexes.includes(i - 1)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i-1 ]);
+          }
+        }
+        else if ([5, 9, 10, 14, 15, 19].includes(i)) {
+          if (pejmanIndexes.includes(i - 5) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 5) && !userIndexes.includes(i + 5)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i+5 ]);
+          }
+          if (pejmanIndexes.includes(i + 5) && pejmanIndexes.includes(i - 5) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i ]);
+          }
+          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 5) && !pejmanIndexes.includes(i - 5) && !userIndexes.includes(i - 5)) {
+            setGreenArray(currGreenArray => [...currGreenArray, i-5 ]);
+          }
+        }
+      }
       // Considering the 4-5 conditions:
 
     }
@@ -537,6 +599,12 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       <div style={{ color: "gray" }}>
         Red Array:{" "}
         {redArray.map((s) => (
+          <div style={{ display: "inline" }}>{s}-</div>
+        ))}
+      </div>
+      <div style={{ color: "gray" }}>
+        Green Array:{" "}
+        {greenArray.map((s) => (
           <div style={{ display: "inline" }}>{s}-</div>
         ))}
       </div>
