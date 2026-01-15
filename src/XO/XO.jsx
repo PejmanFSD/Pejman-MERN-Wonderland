@@ -58,6 +58,8 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
   const [isWin, setIsWin] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [redArray, setRedArray] = useState([]);
+  const [greenArray, setGreenArray] = useState([]);
 
   const userX = () => {
     setUserSign(signs[1]);
@@ -142,14 +144,11 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     );
     if (userPoint > pejmanPoint) {
       setIsWin(true);
+      if (normalMode) {
+        updateTotalPoint(1);
+      }
     } else {
       setIsWin(false);
-    }
-    // else if (pejmanPoint === userPoint) {
-    //   setIsWin("Equal");
-    // }
-    if (normalMode) {
-      updateTotalPoint(1);
     }
     setIsGameStarted(false);
   };
@@ -366,7 +365,6 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
           : s
       )
     );
-    console.log(`${isUserTurn ? "User" : "Pejman"}: ${greenSquares}`);
     setPointFunction(greenSquares.length / 3);
   };
   useEffect(() => {
@@ -376,23 +374,23 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
-    if (isPejmanTurn && ((easyMode && userChoices.length > 0) || normalMode)) {
-      const newPejmanChoice = getRandArr(
-        availableSquares.map((item) => item.id)
-      );
-      setSquares((currSquares) =>
-        currSquares.map((s) =>
-          s.id === newPejmanChoice
-            ? { ...s, imgSrc: pejmanSign, owner: "Pejman" }
-            : s
-        )
-      );
-      setIsUserTurn(true);
+    let newPejmanChoice;
+    if (isPejmanTurn && easyMode && userChoices.length > 0) {
+      newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
+    } else if (isPejmanTurn && normalMode) {
+      newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
     }
+    setSquares((currSquares) =>
+      currSquares.map((s) =>
+        s.id === newPejmanChoice
+          ? { ...s, imgSrc: pejmanSign, owner: "Pejman" }
+          : s
+      )
+    );
+    setIsUserTurn(true);
     setPejmanChoices(squares.filter((s) => s.owner === "Pejman"));
     setIsPejmanTurn(false);
   }, [isPejmanTurn]);
-
   useEffect(() => {
     if (isUserTurn) {
       handlePlayerPoints(
@@ -505,14 +503,6 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
           <button onClick={handleReset}>Ok</button>
         </div>
       )}
-      {/* {isWin === "Equal" && !isTogglingHomePage && (
-        <div>
-          <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-          <h2>No one wins!</h2>
-          <div>Try Again?</div>
-          <button onClick={handleReset}>Ok</button>
-        </div>
-      )} */}
       {isGameStarted &&
         new Array(25).fill(null).map((square, idx) =>
           (idx + 1) % 5 !== 0 ? (
