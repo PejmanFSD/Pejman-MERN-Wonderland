@@ -384,135 +384,68 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       newPejmanChoice = 12;
     } else if (isPejmanTurn && normalMode && pejmanChoices.length !== 0) {
       newPejmanChoice = getRandArr(availableSquares.map((item) => item.id)); // Will be removed at the End!!!!!!!!!!!!!
-      // Creating the red array:
       setRedArray([]);
       setGreenArray([]);
+      const handleCrucialArray = (playerIndexes, idx1, idx2, idx3, rivalIndexes, setArray) => {
+        if (playerIndexes.includes(idx1) && playerIndexes.includes(idx2) && !playerIndexes.includes(idx3) && !rivalIndexes.includes(idx3)) {
+            setArray(currRedArray => [...currRedArray, idx3 ]);
+          }
+      }
       const userIndexes = userChoices.map((item) => item.id);
       const pejmanIndexes = pejmanChoices.map((item) => item.id);
       const allIndexes = squares.map((item) => item.id);
+      // Creating the red array:
       for (const i of allIndexes) {
         if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
-          if (userIndexes.includes(i - 6) && userIndexes.includes(i) && !userIndexes.includes(i + 6) && !pejmanIndexes.includes(i + 6)) {
-            setRedArray(currRedArray => [...currRedArray, i+6 ]);
-          }
-          if (userIndexes.includes(i - 6) && userIndexes.includes(i + 6) && !userIndexes.includes(i) && !pejmanIndexes.includes(i)) {
-            setRedArray(currRedArray => [...currRedArray, i ]);
-          }
-          if (userIndexes.includes(i) && userIndexes.includes(i + 6) && !userIndexes.includes(i - 6) && !pejmanIndexes.includes(i - 6)) {
-            setRedArray(currRedArray => [...currRedArray, i-6 ]);
-          }
-          if (userIndexes.includes(i - 4) && userIndexes.includes(i) && !userIndexes.includes(i + 4) && !pejmanIndexes.includes(i + 4)) {
-            setRedArray(currRedArray => [...currRedArray, i+4 ]);
-          }
-          if (userIndexes.includes(i - 4) && userIndexes.includes(i + 4) && !userIndexes.includes(i) && !pejmanIndexes.includes(i)) {
-            setRedArray(currRedArray => [...currRedArray, i ]);
-          }
-          if (userIndexes.includes(i) && userIndexes.includes(i + 4) && !userIndexes.includes(i - 4) && !pejmanIndexes.includes(i - 4)) {
-            setRedArray(currRedArray => [...currRedArray, i-4 ]);
-          }
-          if (userIndexes.includes(i - 5) && userIndexes.includes(i) && !userIndexes.includes(i + 5) && !pejmanIndexes.includes(i + 5)) {
-            setRedArray(currRedArray => [...currRedArray, i+5 ]);
-          }
-          if (userIndexes.includes(i - 5) && userIndexes.includes(i + 5) && !userIndexes.includes(i) && !pejmanIndexes.includes(i)) {
-            setRedArray(currRedArray => [...currRedArray, i ]);
-          }
-          if (userIndexes.includes(i) && userIndexes.includes(i + 5) && !userIndexes.includes(i - 5) && !pejmanIndexes.includes(i - 5)) {
-            setRedArray(currRedArray => [...currRedArray, i-5 ]);
-          }
-          if (userIndexes.includes(i - 1) && userIndexes.includes(i) && !userIndexes.includes(i + 1) && !pejmanIndexes.includes(i + 1)) {
-            setRedArray(currRedArray => [...currRedArray, i+1 ]);
-          }
-          if (userIndexes.includes(i - 1) && userIndexes.includes(i + 1) && !userIndexes.includes(i) && !pejmanIndexes.includes(i)) {
-            setRedArray(currRedArray => [...currRedArray, i ]);
-          }
-          if (userIndexes.includes(i) && userIndexes.includes(i + 1) && !userIndexes.includes(i - 1) && !pejmanIndexes.includes(i - 1)) {
-            setRedArray(currRedArray => [...currRedArray, i-1 ]);
-          }
+          handleCrucialArray(userIndexes, i-6, i, i+6, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-6, i+6, i, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i, i+6, i-6, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-4, i, i+4, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-4, i+4, i, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i, i+4, i-4, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-5, i, i+5, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-5, i+5, i, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i, i+5, i-5, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-1, i, i+1, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-1, i+1, i, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i, i+1, i-1, pejmanIndexes, setRedArray);
         }
         else if ([1, 2, 3, 21, 22, 23].includes(i)) {
-          if (userIndexes.includes(i - 1) && userIndexes.includes(i) && !userIndexes.includes(i + 1) && !pejmanIndexes.includes(i + 1)) {
-            setRedArray(currRedArray => [...currRedArray, i+1 ]);
-          }
-          if (userIndexes.includes(i - 1) && userIndexes.includes(i + 1) && !userIndexes.includes(i) && !pejmanIndexes.includes(i)) {
-            setRedArray(currRedArray => [...currRedArray, i ]);
-          }
-          if (userIndexes.includes(i) && userIndexes.includes(i + 1) && !userIndexes.includes(i - 1) && !pejmanIndexes.includes(i - 1)) {
-            setRedArray(currRedArray => [...currRedArray, i-1 ]);
-          }
+          handleCrucialArray(userIndexes, i-1, i, i+1, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i-1, i+1, i, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i, i+1, i-1, pejmanIndexes, setRedArray);
         }
         else if ([5, 9, 10, 14, 15, 19].includes(i)) {
-          if (userIndexes.includes(i - 5) && userIndexes.includes(i) && !userIndexes.includes(i + 5) && !pejmanIndexes.includes(i + 5)) {
-            setRedArray(currRedArray => [...currRedArray, i+5 ]);
-          }
-          if (userIndexes.includes(i + 5) && userIndexes.includes(i - 5) && !userIndexes.includes(i) && !pejmanIndexes.includes(i)) {
-            setRedArray(currRedArray => [...currRedArray, i ]);
-          }
-          if (userIndexes.includes(i) && userIndexes.includes(i + 5) && !userIndexes.includes(i - 5) && !pejmanIndexes.includes(i - 5)) {
-            setRedArray(currRedArray => [...currRedArray, i-5 ]);
-          }
+          handleCrucialArray(userIndexes, i-5, i, i+5, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i+5, i-5, i, pejmanIndexes, setRedArray);
+          handleCrucialArray(userIndexes, i, i+5, i-5, pejmanIndexes, setRedArray);
         }
       }
       // Creating the green array:
       for (const i of allIndexes) {
         if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
-          if (pejmanIndexes.includes(i - 6) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 6) && !userIndexes.includes(i + 6)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i+6 ]);
-          }
-          if (pejmanIndexes.includes(i - 6) && pejmanIndexes.includes(i + 6) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i ]);
-          }
-          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 6) && !pejmanIndexes.includes(i - 6) && !userIndexes.includes(i - 6)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i-6 ]);
-          }
-          if (pejmanIndexes.includes(i - 4) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 4) && !userIndexes.includes(i + 4)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i+4 ]);
-          }
-          if (pejmanIndexes.includes(i - 4) && pejmanIndexes.includes(i + 4) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i ]);
-          }
-          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 4) && !pejmanIndexes.includes(i - 4) && !userIndexes.includes(i - 4)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i-4 ]);
-          }
-          if (pejmanIndexes.includes(i - 5) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 5) && !userIndexes.includes(i + 5)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i+5 ]);
-          }
-          if (pejmanIndexes.includes(i - 5) && pejmanIndexes.includes(i + 5) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i ]);
-          }
-          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 5) && !pejmanIndexes.includes(i - 5) && !userIndexes.includes(i - 5)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i-5 ]);
-          }
-          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 1) && !userIndexes.includes(i + 1)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i+1 ]);
-          }
-          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i ]);
-          }
-          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i - 1) && !userIndexes.includes(i - 1)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i-1 ]);
-          }
+          handleCrucialArray(pejmanIndexes, i-6, i, i+6, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-6, i+6, i, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i, i+6, i-6, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-4, i, i+4, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-4, i+4, i, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i, i+4, i-4, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-5, i, i+5, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-5, i+5, i, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i, i+5, i-5, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-1, i, i+1, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-1, i+1, i, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i, i+1, i-1, userIndexes, setGreenArray);
         }
         else if ([1, 2, 3, 21, 22, 23].includes(i)) {
-          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 1) && !userIndexes.includes(i + 1)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i+1 ]);
-          }
-          if (pejmanIndexes.includes(i - 1) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i ]);
-          }
-          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 1) && !pejmanIndexes.includes(i - 1) && !userIndexes.includes(i - 1)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i-1 ]);
-          }
+          handleCrucialArray(pejmanIndexes, i-1, i, i+1, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i-1, i+1, i, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i, i+1, i-1, userIndexes, setGreenArray);
         }
         else if ([5, 9, 10, 14, 15, 19].includes(i)) {
-          if (pejmanIndexes.includes(i - 5) && pejmanIndexes.includes(i) && !pejmanIndexes.includes(i + 5) && !userIndexes.includes(i + 5)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i+5 ]);
-          }
-          if (pejmanIndexes.includes(i + 5) && pejmanIndexes.includes(i - 5) && !pejmanIndexes.includes(i) && !userIndexes.includes(i)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i ]);
-          }
-          if (pejmanIndexes.includes(i) && pejmanIndexes.includes(i + 5) && !pejmanIndexes.includes(i - 5) && !userIndexes.includes(i - 5)) {
-            setGreenArray(currGreenArray => [...currGreenArray, i-5 ]);
-          }
+          handleCrucialArray(pejmanIndexes, i-5, i, i+5, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i+5, i-5, i, userIndexes, setGreenArray);
+          handleCrucialArray(pejmanIndexes, i, i+5, i-5, userIndexes, setGreenArray);
         }
       }
       // Considering the 4-5 conditions:
