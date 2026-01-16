@@ -129,7 +129,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
   const allowPejman = () => {
     setIsPejmanTurn(true);
   };
-  const announcingTheGameResult = () => {
+  const handleFinalPlayerPoints = () => {
     handlePlayerPoints(
       setFilledSquaresByUser,
       userChoices,
@@ -142,7 +142,10 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       pejmanSign,
       setPejmanPoint
     );
-    if (userPoint > pejmanPoint) {
+    announcingTheGameResult();
+  };
+  const announcingTheGameResult = () => {
+      if (userPoint > pejmanPoint) {
       setIsWin(true);
       if (normalMode) {
         updateTotalPoint(1);
@@ -151,7 +154,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       setIsWin(false);
     }
     setIsGameStarted(false);
-  };
+  }
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
@@ -377,8 +380,10 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     let newPejmanChoice;
     if (isPejmanTurn && easyMode && userChoices.length > 0) {
       newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
-    } else if (isPejmanTurn && normalMode) {
-      newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
+    } else if (normalMode && pejmanChoices.length === 0) {
+      newPejmanChoice = 12;
+    } else if (isPejmanTurn && normalMode && pejmanChoices.length !== 0) {
+      newPejmanChoice = getRandArr(availableSquares.map((item) => item.id)); // Will be removed at the End!!!!!!!!!!!!!
       // Creating the red array:
       setRedArray([]);
       setGreenArray([]);
@@ -574,7 +579,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         !isTogglingHomePage && (
           <button onClick={handleStart}>Start the Game</button>
         )}
-      {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
+      <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         isPejmanTurn: {isPejmanTurn ? "T" : "F"}
       </div>
@@ -595,7 +600,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         {pejmanChoices.map((s) => (
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
-      </div> */}
+      </div>
       <div style={{ color: "gray" }}>
         Red Array:{" "}
         {redArray.map((s) => (
@@ -713,7 +718,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         ) : (
           <div>
             <div>The game is finished. Let's see who is the winner.</div>
-            <button onClick={announcingTheGameResult}>Ok</button>
+            <button onClick={handleFinalPlayerPoints}>Ok</button>
           </div>
         ))}
       {isGameStarted &&
@@ -723,7 +728,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         !isTogglingHomePage && (
           <div>
             <div>The game is finished. Let's see who is the winner.</div>
-            <button onClick={announcingTheGameResult}>Ok</button>
+            <button onClick={handleFinalPlayerPoints}>Ok</button>
           </div>
         )}
       {isGameStarted &&
