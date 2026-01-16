@@ -383,7 +383,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     } else if (normalMode && pejmanChoices.length === 0) {
       newPejmanChoice = 12;
     } else if (isPejmanTurn && normalMode && pejmanChoices.length !== 0) {
-      newPejmanChoice = getRandArr(availableSquares.map((item) => item.id)); // Will be removed at the End!!!!!!!!!!!!!
+      
       setRedArray([]);
       setGreenArray([]);
       const handleCrucialArray = (playerIndexes, idx1, idx2, idx3, rivalIndexes, setArray) => {
@@ -449,7 +449,35 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         }
       }
       // Considering the 4-5 conditions:
-
+      // Condition 1: redArray.length === 0 && greenArray.length === 0
+      if (redArray.length === 0 && greenArray.length === 0) {
+        for (const i of [6, 7, 8, 11, 12, 13, 16, 17, 18]) {
+          if (pejmanIndexes.includes(i)) {
+            if (!pejmanIndexes.includes(i-6) && !userIndexes.includes(i-6)) {
+              newPejmanChoice = i-6;
+              break;
+            } else if (!pejmanIndexes.includes(i+6) && !userIndexes.includes(i+6)) {
+              newPejmanChoice = i+6;
+              break;
+            } else if (!pejmanIndexes.includes(i-4) && !userIndexes.includes(i-4)) {
+              newPejmanChoice = i-4;
+              break;
+            } else if (!pejmanIndexes.includes(i+4) && !userIndexes.includes(i+4)) {
+              newPejmanChoice = i+4;
+              break;
+            } else if (!pejmanIndexes.includes(i-1) && !userIndexes.includes(i-1)) {
+              newPejmanChoice = i-1;
+              break;
+            } else if (!pejmanIndexes.includes(i+1) && !userIndexes.includes(i+1)) {
+              newPejmanChoice = i+1;
+              break;
+            }
+          }
+        }
+      } else {
+          console.log('Condition ZZZ');
+          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id)); // Will be removed at the End!!!!!!!!!!!!!
+      }
     }
     setSquares((currSquares) =>
       currSquares.map((s) =>
