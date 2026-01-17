@@ -381,7 +381,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     setUserChoices(squares.filter((s) => s.owner === "User"));
   }, [squares]);
   useEffect(() => {
-    let newPejmanChoice;
+    let newPejmanChoice = null;
     if (isPejmanTurn && easyMode && userChoices.length > 0) {
       newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
     } else if (normalMode && pejmanChoices.length === 0) {
@@ -480,6 +480,14 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
               console.log('Condition 1F, i+1: ', i+1);
               newPejmanChoice = i+1;
               break;
+            } else if (!pejmanIndexes.includes(i-5) && !userIndexes.includes(i-5)) {
+              console.log('Condition 1G, i-5: ', i-5);
+              newPejmanChoice = i-5;
+              break;
+            } else if (!pejmanIndexes.includes(i+5) && !userIndexes.includes(i+5)) {
+              console.log('Condition 1H, i+5: ', i+5);
+              newPejmanChoice = i+5;
+              break;
             }
           }
         }
@@ -504,10 +512,6 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
             newPejmanChoice = s;
             break;
           }
-        }
-        if (!sortedGreenArray.includes(newPejmanChoice)) {
-          console.log('Condition 2B - Random');
-          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
         }
       }
       // Condition 3:
@@ -561,10 +565,6 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
             }
           }
         }
-        if (!sortedRedArray.includes(newPejmanChoice)) {
-          console.log('Condition 4D - Random');
-          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
-        }
       }
       // Condition 5:
        else if (greenArray.length > 1) {
@@ -588,7 +588,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
           }
         }
        }
-      else {
+      else if (newPejmanChoice === null) {
           console.log('Condition ZZZ');
           newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
       }
