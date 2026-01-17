@@ -125,6 +125,8 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     setFilledSquaresByUser([]);
     setFilledSquaresByPejman([]);
     setIsWin("");
+    setRedArray([]);
+    setGreenArray([]);
   };
   const allowPejman = () => {
     setIsPejmanTurn(true);
@@ -203,6 +205,8 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       setIsUserTurn(false);
     }
     setIsTogglingReset(false);
+    setRedArray([]);
+    setGreenArray([]);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
@@ -383,7 +387,6 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     } else if (normalMode && pejmanChoices.length === 0) {
       newPejmanChoice = 12;
     } else if (isPejmanTurn && normalMode && pejmanChoices.length !== 0) {
-      
       setRedArray([]);
       setGreenArray([]);
       const handleCrucialArray = (playerIndexes, idx1, idx2, idx3, rivalIndexes, setArray) => {
@@ -449,34 +452,145 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         }
       }
       // Considering the 4-5 conditions:
-      // Condition 1: redArray.length === 0 && greenArray.length === 0
+      // Condition 1:
       if (redArray.length === 0 && greenArray.length === 0) {
         for (const i of [6, 7, 8, 11, 12, 13, 16, 17, 18]) {
           if (pejmanIndexes.includes(i)) {
             if (!pejmanIndexes.includes(i-6) && !userIndexes.includes(i-6)) {
+              console.log('Condition 1A, i-6: ', i-6);
               newPejmanChoice = i-6;
               break;
             } else if (!pejmanIndexes.includes(i+6) && !userIndexes.includes(i+6)) {
+              console.log('Condition 1B, i+6: ', i+6);
               newPejmanChoice = i+6;
               break;
             } else if (!pejmanIndexes.includes(i-4) && !userIndexes.includes(i-4)) {
+              console.log('Condition 1C, i-4: ', i-4);
               newPejmanChoice = i-4;
               break;
             } else if (!pejmanIndexes.includes(i+4) && !userIndexes.includes(i+4)) {
+              console.log('Condition 1D, i+4: ', i+4);
               newPejmanChoice = i+4;
               break;
             } else if (!pejmanIndexes.includes(i-1) && !userIndexes.includes(i-1)) {
+              console.log('Condition 1E, i-1: ', i-1);
               newPejmanChoice = i-1;
               break;
             } else if (!pejmanIndexes.includes(i+1) && !userIndexes.includes(i+1)) {
+              console.log('Condition 1F, i+1: ', i+1);
               newPejmanChoice = i+1;
               break;
             }
           }
         }
-      } else {
+      }
+      // Condition 2;
+      else if (redArray.length === 0 && greenArray.length > 0) {
+        // Sorting the "greenArray" based on the repetition of the elements:
+        // 1️⃣ Count frequencies:
+        const greenFreq = new Map();
+        greenArray.forEach(idx => {
+          greenFreq.set(idx, (greenFreq.get(idx) || 0) + 1);
+        });
+        // 2️⃣ Sort by frequency (desc):
+        const sortedGreenArray = [...greenArray].sort((a, b) => {
+          const diff = greenFreq.get(b) - greenFreq.get(a);
+          return diff !== 0 ? diff : a - b;
+        });
+        console.log('Condition 2, sorted greenArray: ', sortedGreenArray);
+        for (const s of sortedGreenArray) {
+          if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
+            console.log('Condition 2A, chosen element: ', s);
+            newPejmanChoice = s;
+            break;
+          }
+        }
+        if (!sortedGreenArray.includes(newPejmanChoice)) {
+          console.log('Condition 2B - Random');
+          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
+        }
+      }
+      // Condition 3:
+      else if (redArray.length === 1 && greenArray.length === 0 && !pejmanIndexes.includes(redArray[0]) && !userIndexes.includes(redArray[0])) {
+        newPejmanChoice = redArray[0];
+        console.log('Condition 3 - redArray[0]: ', redArray[0]);
+      }
+      // Condition 4:
+      else if (redArray.length > 1) {
+        console.log('Condition 4: Before Sorting');
+        // Sorting the "redArray" based on the repetition of the elements:
+        // 1️⃣ Count frequencies:
+        const redFreq = new Map();
+        redArray.forEach(idx => {
+          redFreq.set(idx, (redFreq.get(idx) || 0) + 1);
+        });
+        // 2️⃣ Sort by frequency (desc):
+        const sortedRedArray = [...redArray].sort((a, b) => {
+          const diff = redFreq.get(b) - redFreq.get(a);
+          return diff !== 0 ? diff : a - b;
+        });
+        console.log('Condition 4, sorted redArray: ', sortedRedArray);
+        // Sorting the "greenArray" based on the repetition of the elements:
+        // 1️⃣ Count frequencies:
+        const greenFreq = new Map();
+        greenArray.forEach(idx => {
+          greenFreq.set(idx, (greenFreq.get(idx) || 0) + 1);
+        });
+        // 2️⃣ Sort by frequency (desc):
+        const sortedGreenArray = [...greenArray].sort((a, b) => {
+          const diff = greenFreq.get(b) - greenFreq.get(a);
+          return diff !== 0 ? diff : a - b;
+        });
+        console.log('Condition 4, sorted greenArray: ', sortedGreenArray);
+        if (
+          (greenArray.length > 1 && sortedGreenArray[0] === sortedGreenArray[1] && !pejmanIndexes.includes(sortedGreenArray[0]) && !userIndexes.includes(sortedGreenArray[0]))
+          ||
+          (greenArray.length > 1 && sortedRedArray[0] !== sortedRedArray[1] && !pejmanIndexes.includes(sortedGreenArray[0]) && !userIndexes.includes(sortedGreenArray[0]))
+        ) {
+          console.log('Condition 4A, sortedGreenArray[0]: ', sortedGreenArray[0]);
+          newPejmanChoice = sortedGreenArray[0];
+        } else if (!pejmanIndexes.includes(sortedRedArray[0]) && !userIndexes.includes(sortedRedArray[0])) {
+          console.log('Condition 4B, sortedRedArray[0]: ', sortedRedArray[0]);
+          newPejmanChoice = sortedRedArray[0];
+        } else {
+          for (const s of sortedRedArray) {
+            if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
+              console.log('Condition 4C, chosen element: ', s);
+              newPejmanChoice = s;
+              break;
+            }
+          }
+        }
+        if (!sortedRedArray.includes(newPejmanChoice)) {
+          console.log('Condition 4D - Random');
+          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
+        }
+      }
+      // Condition 5:
+       else if (greenArray.length > 1) {
+        // Sorting the "greenArray" based on the repetition of the elements:
+        // 1️⃣ Count frequencies:
+        const greenFreq = new Map();
+        greenArray.forEach(idx => {
+          greenFreq.set(idx, (greenFreq.get(idx) || 0) + 1);
+        });
+        // 2️⃣ Sort by frequency (desc):
+        const sortedGreenArray = [...greenArray].sort((a, b) => {
+          const diff = greenFreq.get(b) - greenFreq.get(a);
+          return diff !== 0 ? diff : a - b;
+        });
+        console.log('Condition 5, sorted greenArray: ', sortedGreenArray);
+        for (const s of sortedGreenArray) {
+          if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
+            console.log('Condition 5A, chosen element: ', s);
+            newPejmanChoice = s;
+            break;
+          }
+        }
+       }
+      else {
           console.log('Condition ZZZ');
-          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id)); // Will be removed at the End!!!!!!!!!!!!!
+          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
       }
     }
     setSquares((currSquares) =>
@@ -540,7 +654,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         !isTogglingHomePage && (
           <button onClick={handleStart}>Start the Game</button>
         )}
-      <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
+      {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         isPejmanTurn: {isPejmanTurn ? "T" : "F"}
       </div>
@@ -561,7 +675,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
         {pejmanChoices.map((s) => (
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
-      </div>
+      </div> */}
       <div style={{ color: "gray" }}>
         Red Array:{" "}
         {redArray.map((s) => (
@@ -609,7 +723,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
       {isWin === false && !isTogglingHomePage && (
         <div>
           <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-          <h2>Pejman Wins!</h2>
+          <h2>You loose!</h2>
           <div>Try Again?</div>
           <button onClick={handleReset}>Ok</button>
         </div>
