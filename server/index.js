@@ -19,6 +19,13 @@ app.set('views', 'views');
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'Pejman-MERN-Wonderland' }));
 
+const requireLogin = (req, res, next) => {
+    if (!req.session.user_id) {
+        return res.redirect('/login');
+    }
+    next();
+}
+
 app.get('/', (req, res) => {
     res.send('Home Page of Pejman-MERN-Wonderland!');
 })
@@ -33,6 +40,25 @@ app.post('/register', async (req, res) => {
     await user.save();
     req.session.user_id = user._id;
     res.redirect('/');
+})
+
+app.get('/login', (req, res) => {
+    res.render('login')
+})
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const foundUser = await User.findAndValidate(username, password);
+    if (foundUser) {
+        req.session.user_id = foundUser._id;
+        res.redirect('./secret');
+    } else {
+        res.redirect('/login');
+    }
+})
+
+app.get('/secret', requireLogin, (req, res) => {
+    res.render('secret');
 })
 
 app.listen(3000, () => {
