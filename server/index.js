@@ -57,6 +57,11 @@ app.post('/login', async (req, res) => {
     }
 })
 
+app.post('/logout', (req, res) => {
+    req.session.user_id = null;
+    res.redirect('/login');
+})
+
 app.get('/secret', requireLogin, (req, res) => {
     res.render('secret');
 })
