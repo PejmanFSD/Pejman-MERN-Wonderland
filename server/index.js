@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const User = require('./models/user');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const session = require('express-session');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
@@ -16,6 +17,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: 'Pejman-MERN-Wonderland' }));
 
@@ -27,7 +29,18 @@ const requireLogin = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-    res.send('Home Page of Pejman-MERN-Wonderland!');
+    res.render('home');
+})
+
+app.get('/users', async (req, res) => {
+    const users = await User.find({});
+    res.render('users/index', {users})
+})
+
+app.get('/users/:id', async (req, res) => {
+    const id = req.params.id;
+    const user = await User.findById(id);
+    res.render('users/show', {user});
 })
 
 app.get('/register', (req, res) => {
