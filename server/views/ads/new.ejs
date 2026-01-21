@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new Ad</title>
+</head>
+<body>
+    <form action="/ads" method="POST">
+        <div>
+            <label for="company">Company name</label>
+            <input type="text" id="company" name="ad[company]">
+        </div>
+        <div>
+            <label for="text">Ad text</label>
+            <input type="text" id="text" name="ad[text]">
+        </div>
+        <button>Create AD</button>
+    </form>
+    <a href="/ads">All Ads</a>
+</body>
+</html>

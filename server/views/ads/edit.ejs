@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Ad</title>
+</head>
+<body>
+    <h1>Edit Ad</h1>
+    <form action="/ads/<%= ad._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="company">Company name</label>
+            <input type="text" id="company" name="ad[company]" value="<%= ad.company %>">
+        </div>
+        <div>
+            <label for="text">Ad text</label>
+            <input type="text" id="text" name="ad[text]" value="<%= ad.text %>">
+        </div>
+        <button>Update AD</button>
+    </form>
+    <a href="/ads/<%= ad._id %>">Back to Ads</a>
+</body>
+</html>

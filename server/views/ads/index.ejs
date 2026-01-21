@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All ads</title>
+</head>
+
+<body>
+    <h1>All ads</h1>
+    <div>
+        <a href="/ads/new">Create new Ad</a>
+    </div>
+    <ul>
+        <% for (let ad of ads) { %>
+            <a href="/ads/<%= ad._id %>"><%= ad.company %>: <%= ad.text %></a></br>
+        <% } %>
+    </ul>
+</body>
+
+</html>
