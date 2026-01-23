@@ -121,6 +121,10 @@ app.get('/secret', requireLogin, (req, res) => {
     res.render('secret');
 })
 
+app.use((req, res) => {
+    res.status(404).send('NOT FOUND!');
+})
+
 app.listen(3000, () => {
-    console.log("SERVING YOUR APP! - 3000")
+    console.log("SERVING YOUR APP! - 3000");
 })

@@ -13,8 +13,12 @@
             <input type="text" id="company" name="ad[company]" value="<%= ad.company %>">
         </div>
         <div>
-            <label for="text">Ad text</label>
-            <input type="text" id="text" name="ad[text]" value="<%= ad.text %>">
+            <label for="text">text</label>
+            <textarea type="text" id="text" name="ad[text]" value="<%= ad.text %>"><%= ad.text %></textarea>
+        </div>
+        <div>
+            <label for="image">Image</label>
+            <input type="text" id="image" name="ad[image]" value="<%= ad.image %>">
         </div>
         <button>Update AD</button>
     </form>

@@ -9,6 +9,10 @@ const adSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Ad text cannot be blank'],
         maxlength: [350, 'The maximum length of the Ad text is 350 characters']
+    },
+    image: {
+        type: String,
+        required: [true, 'Image cannot be blank']
     }
 })
 

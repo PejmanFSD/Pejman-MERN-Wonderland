@@ -8,8 +8,9 @@
 </head>
 
 <body>
-    <h3><%= ad.company %></h3>
-    <h4><%= ad.text %></h4>
+    <div><%= ad.company %></div>
+    <div><%= ad.text %></div>
+    <img src="<%= ad.image %>" alt="image Ad" style="height: 70px;">
     <a href="/ads/<%= ad._id %>/edit">Edit</a>
     <form action="/ads/<%= ad._id %>?_method=DELETE" method="POST">
         <button>Delete</button>

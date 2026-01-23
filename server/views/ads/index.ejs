@@ -14,7 +14,11 @@
     </div>
     <ul>
         <% for (let ad of ads) { %>
-            <a href="/ads/<%= ad._id %>"><%= ad.company %>: <%= ad.text %></a></br>
+            <div>
+                <a href="/ads/<%= ad._id %>"><%= ad.company %>: <%= ad.text %></a>
+                <img src="<%= ad.image %>" alt="image Ad" style="height: 30px;">
+            </br>
+        </div>
         <% } %>
     </ul>
 </body>
