@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 // const bcrypt = require('bcrypt');
 const session = require('express-session');
+const AppError = require('./AppError');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
     .then(() => {
@@ -39,26 +40,34 @@ app.get('/register', (req, res) => {
     res.render('Register');
 })
 
-app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-    const user = new User({ username, password });
-    await user.save();
-    req.session.user_id = user._id;
-    res.redirect('/');
+app.post('/register', async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+        const user = new User({ username, password });
+        await user.save();
+        req.session.user_id = user._id;
+        res.redirect('/');
+    } catch (err) {
+        next(err);
+    }
 })
 
 app.get('/login', (req, res) => {
     res.render('login');
 })
 
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    const foundUser = await User.findAndValidate(username, password);
-    if (foundUser) {
-        req.session.user_id = foundUser._id;
-        res.redirect('./secret');
-    } else {
-        res.redirect('/login');
+app.post('/login', async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+        const foundUser = await User.findAndValidate(username, password);
+        if (foundUser) {
+            req.session.user_id = foundUser._id;
+            res.redirect('./secret');
+        } else {
+            res.redirect('/login');
+        }
+    } catch (err) {
+        next(err);
     }
 })
 
@@ -67,62 +76,102 @@ app.post('/logout', (req, res) => {
     res.redirect('/login');
 })
 
-app.get('/ads', async (req, res) => {
-    const ads = await Ad.find({});
-    res.render('ads/index', {ads});
+app.get('/ads', async (req, res, next) => {
+    try {
+        const ads = await Ad.find({});
+        res.render('ads/index', {ads});
+    } catch (err) {
+        next(err);
+    }
 })
 
 app.get('/ads/new', (req, res) => {
     res.render('ads/new');
 })
 
-app.post('/ads', async(req, res) => {
-    const ad = new Ad(req.body.ad);
-    await ad.save();
-    res.redirect(`/ads/${ad._id}`);
+app.post('/ads', async(req, res, next) => {
+    try {
+        const ad = new Ad(req.body.ad);
+        await ad.save();
+        res.redirect(`/ads/${ad._id}`);
+    } catch(err) {
+        next(err);
+    }
 })
 
-app.get('/ads/:id', async (req, res) => {
-    const id = req.params.id;
-    const ad = await Ad.findById(id);
-    res.render('ads/show', {ad});
+app.get('/ads/:id', async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const ad = await Ad.findById(id);
+        if (!ad) {
+            throw new AppError('Ad not found!', 404);
+        }
+        res.render('ads/show', {ad});
+    } catch(err) {
+        next(err);
+    }
 })
 
-app.get('/ads/:id/edit', async(req, res) => {
-    const id = req.params.id;
-    const ad = await Ad.findById(id);
-    res.render('ads/edit', {ad});
+app.get('/ads/:id/edit', async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const ad = await Ad.findById(id);
+        if (!ad) {
+            throw new AppError('Ad not found!', 404);
+        }
+        res.render('ads/edit', {ad});
+    } catch(err) {
+        next(err);
+    }
 })
 
-app.put('/ads/:id', async(req, res) => {
-    const {id} = req.params;
-    const ad = await Ad.findByIdAndUpdate(id, {...req.body.ad});
-    res.redirect(`/ads/${ad._id}`);
+app.put('/ads/:id', async(req, res, next) => {
+    try {
+        const {id} = req.params;
+        const ad = await Ad.findByIdAndUpdate(id, {...req.body.ad}, {runValidators: true, new: true});
+        res.redirect(`/ads/${ad._id}`);
+    } catch(err) {
+        next(err);
+    }
 })
 
-app.delete('/ads/:id', async (req, res) => {
-    const {id} = req.params;
-    await Ad.findByIdAndDelete(id);
-    res.redirect('/ads');
+app.delete('/ads/:id', async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        await Ad.findByIdAndDelete(id);
+        res.redirect('/ads');
+    } catch (err) {
+        next(err);
+    }
 })
 
-app.get('/users', async (req, res) => {
-    const users = await User.find({});
-    res.render('users/index', {users});
+app.get('/users', async (req, res, next) => {
+    try {
+        const users = await User.find({});
+        res.render('users/index', {users});
+    } catch (err) {
+        next(err);
+    }
 })
 
-app.get('/users/:id', async (req, res) => {
-    const id = req.params.id;
-    const user = await User.findById(id);
-    res.render('users/show', {user});
+app.get('/users/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const user = await User.findById(id);
+        res.render('users/show', {user});
+    } catch (err) {
+        next(err);
+    }
 })
 
 app.get('/secret', requireLogin, (req, res) => {
     res.render('secret');
 })
-
-app.use((req, res) => {
-    res.status(404).send('NOT FOUND!');
+// If an error is caught, the "next" attribute
+// sends it to the following middleware:
+app.use((err, req, res, next) => {
+    const {status = 500, message = 'Something went wrong'} = err;
+    res.status(status).send(message);
 })
 
 app.listen(3000, () => {
