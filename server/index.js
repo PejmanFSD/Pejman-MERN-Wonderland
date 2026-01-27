@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
+const {adSchema} = require('./schemas.js');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
     .then(() => {
@@ -31,6 +32,16 @@ const requireLogin = (req, res, next) => {
         return res.redirect('/login');
     }
     next();
+}
+
+const validateAd = (req, res, next) => {
+    const {error} = adSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
 }
 
 app.get('/', (req, res) => {
@@ -78,8 +89,8 @@ app.get('/ads/new', (req, res) => {
     res.render('ads/new');
 })
 
-app.post('/ads', catchAsync(async(req, res) => {
-    if (!req.body.ad) throw new ExpressError('Invalid Ad Data', 400);
+app.post('/ads', validateAd, catchAsync(async(req, res) => {
+    // if (!req.body.ad) throw new ExpressError('Invalid Ad Data', 400);
     const ad = new Ad(req.body.ad);
     await ad.save();
     res.redirect(`/ads/${ad._id}`);
@@ -103,7 +114,7 @@ app.get('/ads/:id/edit', catchAsync(async(req, res) => {
     res.render('ads/edit', {ad});
 }))
 
-app.put('/ads/:id', catchAsync(async(req, res) => {
+app.put('/ads/:id', validateAd, catchAsync(async(req, res) => {
     const {id} = req.params;
     const ad = await Ad.findByIdAndUpdate(id, {...req.body.ad}, {runValidators: true, new: true});
     res.redirect(`/ads/${ad._id}`);
