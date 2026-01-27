@@ -50,8 +50,19 @@ export default function KukuKube() {
             )
           )}
     {isGameStarted &&
-    new Array(squareNum).fill(null).map((el) =>
-        <Square easyMode={easyMode} />
+    new Array(squareNum).fill(null).map((el, idx) =>
+        (idx+1) % (squareNum ** 0.5) !== 0 ?
+        (
+            <div style={{ display: "inline" }}>
+                <Square easyMode={easyMode} />
+            </div>
+        ) : (
+            <div style={{ display: "inline" }}>
+                <Square easyMode={easyMode} />
+                <br></br>
+            </div>
+            
+        )
     )
     }
   </div>

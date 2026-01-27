@@ -2,9 +2,9 @@ export default function Square({easyMode}) {
     return (
         <button
         style={{
-            display: "inline",
+            // display: "inline",
             border: "1px solid black",
-            margin: "5px",
+            margin: easyMode ? "6px" : "3px",
             width: easyMode ? "80px" : "40px",
             height: easyMode ? "80px" : "40px",
             position: "relative",
