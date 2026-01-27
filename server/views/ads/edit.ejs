@@ -10,15 +10,15 @@
     <form action="/ads/<%= ad._id %>?_method=PUT" method="POST">
         <div>
             <label for="company">Company name</label>
-            <input type="text" id="company" name="ad[company]" value="<%= ad.company %>">
+            <input type="text" id="company" name="ad[company]" value="<%= ad.company %>" required>
         </div>
         <div>
             <label for="text">text</label>
-            <textarea type="text" id="text" name="ad[text]" value="<%= ad.text %>"><%= ad.text %></textarea>
+            <textarea type="text" id="text" name="ad[text]" value="<%= ad.text %>" required><%= ad.text %></textarea>
         </div>
         <div>
             <label for="image">Image</label>
-            <input type="text" id="image" name="ad[image]" value="<%= ad.image %>">
+            <input type="text" id="image" name="ad[image]" value="<%= ad.image %>" required>
         </div>
         <button>Update AD</button>
     </form>

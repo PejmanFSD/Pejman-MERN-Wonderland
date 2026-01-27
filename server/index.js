@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 // const bcrypt = require('bcrypt');
 const session = require('express-session');
-const AppError = require('./AppError');
+const ExpressError = require('./utils/ExpressError');
+const catchAsync = require('./utils/catchAsync');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
     .then(() => {
@@ -32,12 +33,6 @@ const requireLogin = (req, res, next) => {
     next();
 }
 
-const wrapAsync = (fn) => {
-    return function (req, res, next) {
-        fn(req, res, next).catch(e => next(e));
-    }
-}
-
 app.get('/', (req, res) => {
     res.render('home');
 })
@@ -46,7 +41,7 @@ app.get('/register', (req, res) => {
     res.render('Register');
 })
 
-app.post('/register', wrapAsync(async (req, res) => {
+app.post('/register', catchAsync(async (req, res) => {
     const { username, password } = req.body;
     const user = new User({ username, password });
     await user.save();
@@ -58,7 +53,7 @@ app.get('/login', (req, res) => {
     res.render('login');
 })
 
-app.post('/login', wrapAsync(async (req, res) => {
+app.post('/login', catchAsync(async (req, res) => {
     const { username, password } = req.body;
     const foundUser = await User.findAndValidate(username, password);
     if (foundUser) {
@@ -74,7 +69,7 @@ app.post('/logout', (req, res) => {
     res.redirect('/login');
 })
 
-app.get('/ads', wrapAsync(async (req, res) => {
+app.get('/ads', catchAsync(async (req, res) => {
     const ads = await Ad.find({});
     res.render('ads/index', {ads});
 }))
@@ -83,48 +78,49 @@ app.get('/ads/new', (req, res) => {
     res.render('ads/new');
 })
 
-app.post('/ads', wrapAsync(async(req, res) => {
+app.post('/ads', catchAsync(async(req, res) => {
+    if (!req.body.ad) throw new ExpressError('Invalid Ad Data', 400);
     const ad = new Ad(req.body.ad);
     await ad.save();
     res.redirect(`/ads/${ad._id}`);
 }))
 
-app.get('/ads/:id', wrapAsync(async (req, res) => {
+app.get('/ads/:id', catchAsync(async (req, res) => {
     const {id} = req.params;
     const ad = await Ad.findById(id);
     if (!ad) {
-        throw new AppError('Ad not found!', 404);
+        throw new ExpressError('Ad not found!', 404);
     }
     res.render('ads/show', {ad});
 }))
 
-app.get('/ads/:id/edit', wrapAsync(async(req, res) => {
+app.get('/ads/:id/edit', catchAsync(async(req, res) => {
     const id = req.params.id;
     const ad = await Ad.findById(id);
     if (!ad) {
-        throw new AppError('Ad not found!', 404);
+        throw new ExpressError('Ad not found!', 404);
     }
     res.render('ads/edit', {ad});
 }))
 
-app.put('/ads/:id', wrapAsync(async(req, res) => {
+app.put('/ads/:id', catchAsync(async(req, res) => {
     const {id} = req.params;
     const ad = await Ad.findByIdAndUpdate(id, {...req.body.ad}, {runValidators: true, new: true});
     res.redirect(`/ads/${ad._id}`);
 }))
 
-app.delete('/ads/:id', wrapAsync(async (req, res) => {
+app.delete('/ads/:id', catchAsync(async (req, res) => {
     const {id} = req.params;
     await Ad.findByIdAndDelete(id);
     res.redirect('/ads');
 }))
 
-app.get('/users', wrapAsync(async (req, res) => {
+app.get('/users', catchAsync(async (req, res) => {
     const users = await User.find({});
     res.render('users/index', {users});
 }))
 
-app.get('/users/:id', wrapAsync(async (req, res) => {
+app.get('/users/:id', catchAsync(async (req, res) => {
     const id = req.params.id;
     const user = await User.findById(id);
     res.render('users/show', {user});
@@ -134,16 +130,16 @@ app.get('/secret', requireLogin, (req, res) => {
     res.render('secret');
 })
 
-app.use((err, req, res, next) => {
-    console.log(err.name);
-    next(err);
+app.all(/(.*)/, (req, res, next) => {
+    next(new ExpressError('Page Not Found', 404));
 })
 
 // If an error is caught, the "next" attribute
 // sends it to the following middleware:
 app.use((err, req, res, next) => {
-    const {status = 500, message = 'Something went wrong'} = err;
-    res.status(status).send(message);
+    const {statusCode = 500} = err;
+    if (!err.message) err.message = 'Somethignwent wrong!'
+    res.status(statusCode).render('error', {err});
 })
 
 app.listen(3000, () => {
