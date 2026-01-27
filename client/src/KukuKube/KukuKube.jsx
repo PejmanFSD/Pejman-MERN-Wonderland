@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
+import {getRandNum} from "../utils";
 
 export default function KukuKube() {
   const [easyMode, setEasyMode] = useState(false);
@@ -9,6 +10,7 @@ export default function KukuKube() {
   const [isColorChosen, setIsColorChosen] = useState(false);
   const [color, setColor] = useState({red: null, green: null, blue: null, opacity: null});
   const [squareNum, setSquareNum] = useState(0);
+  const [uniqueSquare, setUniqueSquare] = useState(0);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -21,8 +23,8 @@ export default function KukuKube() {
     setSquareNum(36);
   };
   const handleStart = () => {
-
     setIsGameStarted(true);
+    setUniqueSquare(getRandNum(squareNum));
   };
   const handleColor = (e) => {
     if (e.target.value === 'Red') {
@@ -79,16 +81,29 @@ export default function KukuKube() {
     {!isGameStarted && (easyMode || normalMode) && isColorChosen &&
         <button onClick={handleStart}>Start the Game</button>
     }
+    <div>{uniqueSquare}</div>
     {isGameStarted &&
     new Array(squareNum).fill(null).map((el, idx) =>
         (idx+1) % (squareNum ** 0.5) !== 0 ?
         (
             <div style={{ display: "inline" }}>
-                <Square easyMode={easyMode} red={color.red} green={color.green} blue={color.blue} opacity={color.opacity} />
+                <Square
+                easyMode={easyMode}
+                red={color.red}
+                green={color.green}
+                blue={color.blue}
+                opacity={idx + 1 === uniqueSquare ? 0.5 : 1}
+                text={idx + 1} />
             </div>
         ) : (
             <div style={{ display: "inline" }}>
-                <Square easyMode={easyMode} red={color.red} green={color.green} blue={color.blue} opacity={color.opacity} />
+                <Square
+                easyMode={easyMode}
+                red={color.red}
+                green={color.green}
+                blue={color.blue}
+                opacity={idx + 1 === uniqueSquare ? 0.5 : 1}
+                text={idx + 1} />
                 <br></br>
             </div>
             
