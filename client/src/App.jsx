@@ -10,6 +10,7 @@ import MemoryCards from "./MemoryCards/MemoryCards";
 import Nim from "./Nim/Nim";
 import HappyFlower from "./HappyFlower/HappyFlower";
 import XO from "./XO/XO";
+import KukuKube from "./KukuKube/KukuKube";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -23,6 +24,7 @@ function App() {
   const [showNim, setShowNim] = useState(false);
   const [showHappyFlower, setShowHappyFlower] = useState(false);
   const [showXO, setShowXO] = useState(false);
+  const [showKukuKube, setShowKukuKube] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -61,6 +63,10 @@ function App() {
   const toggleXO = () => {
     setShowGameTitles(false);
     setShowXO(true);
+  };
+  const toggleKukuKube = () => {
+    setShowGameTitles(false);
+    setShowKukuKube(true);
   };
   return (
     <div className="App">
@@ -187,6 +193,19 @@ function App() {
           <button onClick={() => toggleXO()}>X-O</button>
         )
       )}
+      {!showGameTitles && showKukuKube ? (
+        <KukuKube
+          setShowGameTitles={setShowGameTitles}
+          setShowKukuKube={setShowKukuKube}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showKukuKube && (
+          <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
+        )
+      )}
+      {/* <div style={{border: "1px solid black", width: "30px", height: "30px", backgroundColor: "rgba(0, 0, 255, 0.1)"}}></div> */}
     </div>
   );
 }
