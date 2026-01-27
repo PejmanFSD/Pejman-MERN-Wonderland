@@ -6,6 +6,8 @@ export default function KukuKube() {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isColorChosen, setIsColorChosen] = useState(false);
+  const [color, setColor] = useState({red: null, green: null, blue: null, opacity: null});
   const [squareNum, setSquareNum] = useState(0);
 
   const runEasyMode = () => {
@@ -19,8 +21,19 @@ export default function KukuKube() {
     setSquareNum(36);
   };
   const handleStart = () => {
+
     setIsGameStarted(true);
   };
+  const handleColor = (e) => {
+    if (e.target.value === 'Red') {
+        setColor({red: 255, green: 0, blue: 0, opacity: 1});
+    } else if (e.target.value === 'Green') {
+        setColor({red: 0, green: 170, blue: 0, opacity: 1});
+    } else if (e.target.value === 'Blue') {
+        setColor({red: 0, green: 0, blue: 255, opacity: 1});
+    }
+    setIsColorChosen(true);
+  }
   return (
   <div>
     <h2>Kuku Kube</h2>
@@ -30,9 +43,6 @@ export default function KukuKube() {
         <button onClick={runEasyMode}>Easy Mode</button>
         <button onClick={runNormalMode}>Normal Mode</button>
     </div>
-    }
-    {!isGameStarted && (easyMode || normalMode) &&
-        <button onClick={handleStart}>Start the Game</button>
     }
     {easyMode && !normalMode
         //   && !isTogglingReset &&
@@ -49,16 +59,36 @@ export default function KukuKube() {
               <ModeExplaination message="Normal Mode: You will get one star if you win." />
             )
           )}
+    {!isGameStarted && (easyMode || normalMode) &&
+        <div>
+          <label htmlFor='color'></label>
+          <select
+            onChange={handleColor}
+            name='color'
+            id='color'
+          >
+            <option value={color} disabled selected>
+              Select a Color
+            </option>
+            {['Red', 'Green', 'Blue'].map((c) => (
+              <option>{c}</option>
+            ))}
+          </select>
+        </div>
+    }
+    {!isGameStarted && (easyMode || normalMode) && isColorChosen &&
+        <button onClick={handleStart}>Start the Game</button>
+    }
     {isGameStarted &&
     new Array(squareNum).fill(null).map((el, idx) =>
         (idx+1) % (squareNum ** 0.5) !== 0 ?
         (
             <div style={{ display: "inline" }}>
-                <Square easyMode={easyMode} />
+                <Square easyMode={easyMode} red={color.red} green={color.green} blue={color.blue} opacity={color.opacity} />
             </div>
         ) : (
             <div style={{ display: "inline" }}>
-                <Square easyMode={easyMode} />
+                <Square easyMode={easyMode} red={color.red} green={color.green} blue={color.blue} opacity={color.opacity} />
                 <br></br>
             </div>
             

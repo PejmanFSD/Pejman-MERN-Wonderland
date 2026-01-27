@@ -1,4 +1,4 @@
-export default function Square({easyMode}) {
+export default function Square({easyMode, red, green, blue, opacity}) {
     return (
         <button
         style={{
@@ -9,7 +9,7 @@ export default function Square({easyMode}) {
             height: easyMode ? "80px" : "40px",
             position: "relative",
             top: "20px",
-            backgroundColor: "rgba(0, 0, 255, 1)"
+            backgroundColor: `rgba(${red}, ${green}, ${blue}, ${opacity})`
             }}
         >
         </button>
