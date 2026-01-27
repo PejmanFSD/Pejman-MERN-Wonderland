@@ -205,7 +205,6 @@ function App() {
           <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
         )
       )}
-      {/* <div style={{border: "1px solid black", width: "30px", height: "30px", backgroundColor: "rgba(0, 0, 255, 0.1)"}}></div> */}
     </div>
   );
 }

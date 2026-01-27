@@ -1,18 +1,22 @@
 import { useState } from "react";
+import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 
 export default function KukuKube() {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [squareNum, setSquareNum] = useState(0);
 
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
+    setSquareNum(9);
   };
   const runNormalMode = () => {
     setNormalMode(true);
     setEasyMode(false);
+    setSquareNum(36);
   };
   const handleStart = () => {
     setIsGameStarted(true);
@@ -45,7 +49,11 @@ export default function KukuKube() {
               <ModeExplaination message="Normal Mode: You will get one star if you win." />
             )
           )}
-    {isGameStarted && <div>The game is started</div>}
+    {isGameStarted &&
+    new Array(squareNum).fill(null).map((el) =>
+        <Square easyMode={easyMode} />
+    )
+    }
   </div>
   )
 }
