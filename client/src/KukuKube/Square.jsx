@@ -4,11 +4,9 @@ export default function Square({
   green,
   blue,
   opacity,
-  userChoice,
   setUserChoice,
-  uniqueSquare,
   text,
-  setIsStepPassed
+  isStepPassed,
 }) {
   const handleClick = () => {
     setUserChoice(text);
@@ -26,8 +24,9 @@ export default function Square({
         backgroundColor: `rgba(${red}, ${green}, ${blue}, ${opacity})`,
       }}
       onClick={() => handleClick()}
+      disabled={isStepPassed !== null}
     >
-      {/* {text} */}
+      {text}
     </button>
   );
 }

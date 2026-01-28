@@ -3,7 +3,7 @@ import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import { getRandNum } from "../utils";
 
-export default function KukuKube() {
+export default function KukuKube({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -41,9 +41,13 @@ export default function KukuKube() {
     setIsColorChosen(true);
   };
   const submitUserChoice = () => {
-    if (Number(userChoice) === Number(uniqueSquare)) {
+    if (userChoice === uniqueSquare) {
         setIsStepPassed(true);
-    } else if (Number(userChoice) !== Number(uniqueSquare)){
+        if (step === 10 && normalMode) {
+            updateTotalPoint(1);
+        }
+    }
+    else if (userChoice !== uniqueSquare){
         setIsStepPassed(false);
     }
   }
@@ -101,8 +105,6 @@ export default function KukuKube() {
       )}
       <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
       <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
-    {isStepPassed === true && <>YES</>}
-    {isStepPassed === false && <>FAIL</>}
       {step > 0 && <div>Step {step}</div>}
       {isGameStarted &&
         new Array(squareNum).fill(null).map((el, idx) =>
@@ -115,10 +117,8 @@ export default function KukuKube() {
                 blue={color.blue}
                 opacity={idx + 1 === uniqueSquare ? step * 0.085 : 1}
                 text={idx + 1}
-                userChoice={userChoice}
-                uniqueSquare={uniqueSquare}
                 setUserChoice={setUserChoice}
-                setIsStepPassed={setIsStepPassed}
+                isStepPassed={isStepPassed}
               />
             </div>
           ) : (
@@ -130,20 +130,34 @@ export default function KukuKube() {
                 blue={color.blue}
                 opacity={idx + 1 === uniqueSquare ? step * 0.085 : 1}
                 text={idx + 1}
-                userChoice={userChoice}
-                uniqueSquare={uniqueSquare}
                 setUserChoice={setUserChoice}
-                setIsStepPassed={setIsStepPassed}
+                isStepPassed={isStepPassed}
               />
               <br></br>
             </div>
           ),
         )}
-        {userChoice && isStepPassed === null && <button onClick={submitUserChoice} style={{position: "relative", top: "30px"}}>Submit</button>}
-        {isGameStarted && isStepPassed === true && userChoice &&
+        {/* {userChoice && isStepPassed === null && <button onClick={submitUserChoice} style={{position: "relative", top: "30px"}}>Submit</button>} */}
+        {isGameStarted && <button
+        onClick={submitUserChoice}
+        style={{position: "relative", top: "30px"}}
+        disabled={!userChoice || isStepPassed !== null}
+        >
+            Submit
+        </button>}
+        {isGameStarted && isStepPassed === true && userChoice && step !== 10 &&
             <div style={{position: "relative", top: "30px"}}>
                 Well Done! You guessed correctly!
                 <div><button onClick={handleNextStep}>Next Step</button></div>
+            </div>
+        }
+        {isGameStarted && isStepPassed === true && userChoice && step === 10 &&
+            <div style={{position: "relative", top: "30px"}}>
+                You Win! You get 1 star :)
+                <div>
+                    <div>Play Again?</div>
+                    <button onClick={handleTryAgain}>Ok</button>
+                </div>
             </div>
         }
         {isGameStarted && isStepPassed === false && userChoice &&
