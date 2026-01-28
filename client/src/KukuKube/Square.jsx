@@ -4,9 +4,12 @@ export default function Square({
   green,
   blue,
   opacity,
+  userChoice,
   setUserChoice,
   text,
   isStepPassed,
+  uniqueSquare,
+  isUniqueSquareRevealed
 }) {
   const handleClick = () => {
     setUserChoice(text);
@@ -14,19 +17,20 @@ export default function Square({
   return (
     <button
       style={{
-        // display: "inline",
-        border: "1px solid black",
+        border: userChoice === text ? "5px solid black" : "1px solid black",
         margin: easyMode ? "6px" : "3px",
         width: easyMode ? "80px" : "40px",
         height: easyMode ? "80px" : "40px",
         position: "relative",
         top: "20px",
         backgroundColor: `rgba(${red}, ${green}, ${blue}, ${opacity})`,
+        color: isUniqueSquareRevealed && uniqueSquare === text ? "black" : `rgba(${red}, ${green}, ${blue}, 0)`,
+        
       }}
       onClick={() => handleClick()}
       disabled={isStepPassed !== null}
     >
-      {text}
+      {isUniqueSquareRevealed && uniqueSquare === text ? "X" : text}
     </button>
   );
 }

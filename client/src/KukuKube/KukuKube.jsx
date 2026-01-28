@@ -14,6 +14,7 @@ export default function KukuKube({updateTotalPoint}) {
   const [step, setStep] = useState(0);
   const [userChoice, setUserChoice] = useState(null);
   const [isStepPassed, setIsStepPassed] = useState(null);
+  const [isUniqueSquareRevealed, setIsUniqueSquareRevealed] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -41,6 +42,7 @@ export default function KukuKube({updateTotalPoint}) {
     setIsColorChosen(true);
   };
   const submitUserChoice = () => {
+    setIsUniqueSquareRevealed(true);
     if (userChoice === uniqueSquare) {
         setIsStepPassed(true);
         if (step === 10 && normalMode) {
@@ -56,6 +58,7 @@ export default function KukuKube({updateTotalPoint}) {
     setUserChoice(null);
     setUniqueSquare(getRandNum(squareNum));
     setIsStepPassed(null);
+    setIsUniqueSquareRevealed(false);
   }
   const handleTryAgain = () => {
     setStep(1);
@@ -117,8 +120,11 @@ export default function KukuKube({updateTotalPoint}) {
                 blue={color.blue}
                 opacity={idx + 1 === uniqueSquare ? step * 0.085 : 1}
                 text={idx + 1}
+                userChoice={userChoice}
                 setUserChoice={setUserChoice}
                 isStepPassed={isStepPassed}
+                uniqueSquare={uniqueSquare}
+                isUniqueSquareRevealed={isUniqueSquareRevealed}
               />
             </div>
           ) : (
@@ -130,14 +136,16 @@ export default function KukuKube({updateTotalPoint}) {
                 blue={color.blue}
                 opacity={idx + 1 === uniqueSquare ? step * 0.085 : 1}
                 text={idx + 1}
+                userChoice={userChoice}
                 setUserChoice={setUserChoice}
                 isStepPassed={isStepPassed}
+                uniqueSquare={uniqueSquare}
+                isUniqueSquareRevealed={isUniqueSquareRevealed}
               />
               <br></br>
             </div>
           ),
         )}
-        {/* {userChoice && isStepPassed === null && <button onClick={submitUserChoice} style={{position: "relative", top: "30px"}}>Submit</button>} */}
         {isGameStarted && <button
         onClick={submitUserChoice}
         style={{position: "relative", top: "30px"}}
@@ -148,12 +156,12 @@ export default function KukuKube({updateTotalPoint}) {
         {isGameStarted && isStepPassed === true && userChoice && step !== 10 &&
             <div style={{position: "relative", top: "30px"}}>
                 Well Done! You guessed correctly!
-                <div><button onClick={handleNextStep}>Next Step</button></div>
+                <div><button onClick={handleNextStep}>{`Go to Step ${step + 1}`}</button></div>
             </div>
         }
         {isGameStarted && isStepPassed === true && userChoice && step === 10 &&
             <div style={{position: "relative", top: "30px"}}>
-                You Win! You get 1 star :)
+              {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
                 <div>
                     <div>Play Again?</div>
                     <button onClick={handleTryAgain}>Ok</button>
