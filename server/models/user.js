@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Ad = require('./ad');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
@@ -11,8 +10,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Password cannot be blank']
-    },
-    ads: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ad'}]
+    }
 })
 
 userSchema.statics.findAndValidate = async function (username, password) {

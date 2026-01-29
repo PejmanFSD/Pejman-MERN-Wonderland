@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const User = require('./models/user');
+const Company = require('./models/company');
 const Ad = require('./models/ad');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -9,6 +10,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
+const {companySchema} = require('./schemas.js');
 const {adSchema} = require('./schemas.js');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
@@ -36,6 +38,16 @@ const requireLogin = (req, res, next) => {
 
 const validateAd = (req, res, next) => {
     const {error} = adSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
+
+const validateCompany = (req, res, next) => {
+    const {error} = companySchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',');
         throw new ExpressError(msg, 400);
@@ -79,7 +91,53 @@ app.post('/logout', (req, res) => {
     req.session.user_id = null;
     res.redirect('/login');
 })
+// Company route-handlers:
+app.get('/companies', catchAsync(async (req, res) => {
+    const companies = await Company.find({});
+    res.render('companies/index', {companies});
+}))
 
+app.get('/companies/new', (req, res) => {
+    res.render('companies/new');
+})
+
+app.post('/companies', validateCompany, catchAsync(async(req, res) => {
+    // if (!req.body.company) throw new ExpressError('Invalid Company Data', 400);
+    const company = new Company(req.body.company);
+    await company.save();
+    res.redirect(`/companies/${company._id}`);
+}))
+
+app.get('/companies/:id', catchAsync(async (req, res) => {
+    const {id} = req.params;
+    const company = await Company.findById(id);
+    if (!company) {
+        throw new ExpressError('Company not found!', 404);
+    }
+    res.render('companies/show', {company});
+}))
+
+app.get('/companies/:id/edit', catchAsync(async(req, res) => {
+    const id = req.params.id;
+    const company = await Company.findById(id);
+    if (!company) {
+        throw new ExpressError('Company not found!', 404);
+    }
+    res.render('companies/edit', {company});
+}))
+
+app.put('/companies/:id', validateCompany, catchAsync(async(req, res) => {
+    const {id} = req.params;
+    const company = await Company.findByIdAndUpdate(id, {...req.body.company}, {runValidators: true, new: true});
+    res.redirect(`/companies/${company._id}`);
+}))
+
+app.delete('/companies/:id', catchAsync(async (req, res) => {
+    const {id} = req.params;
+    await Company.findByIdAndDelete(id);
+    res.redirect('/companies');
+}))
+// Ad route-handlers:
 app.get('/ads', catchAsync(async (req, res) => {
     const ads = await Ad.find({});
     res.render('ads/index', {ads});
