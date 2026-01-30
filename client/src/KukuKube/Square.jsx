@@ -17,7 +17,10 @@ export default function Square({
   return (
     <button
       style={{
-        border: userChoice === text ? "5px solid black" : "1px solid black",
+        border: userChoice === text && red === 0 && green === 170 && blue === 0 ? "5px solid black" :
+        userChoice === text && red === 170 && green === 0 && blue === 0 ? "5px solid limegreen" :
+        userChoice === text && red === 0 && green === 0 && blue === 170 ? "5px solid magenta" :
+        "1px solid black",
         margin: easyMode ? "6px" : "3px",
         width: easyMode ? "80px" : "40px",
         height: easyMode ? "80px" : "40px",

@@ -2,6 +2,10 @@ import { useState } from "react";
 import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import { getRandNum } from "../utils";
+import Blank from './images/Blank.jpg';
+import Cross from './images/Cross.jpg';
+import Tick from './images/Tick.jpg';
+import Current from './images/Current.jpg';
 
 export default function KukuKube({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -65,6 +69,7 @@ export default function KukuKube({updateTotalPoint}) {
     setUserChoice(null);
     setUniqueSquare(getRandNum(squareNum));
     setIsStepPassed(null);
+    setIsUniqueSquareRevealed(false);
   }
   return (
     <div>
@@ -146,21 +151,36 @@ export default function KukuKube({updateTotalPoint}) {
             </div>
           ),
         )}
+        {isGameStarted &&
+          new Array(10).fill(null).map((el, idx) =>
+            <img
+            style={{height: "20px", position: "relative", top: "30px", margin: "2px"}}
+            src={
+              idx === step - 1 && isUniqueSquareRevealed && userChoice === uniqueSquare ? Tick :
+              idx === step - 1 && isUniqueSquareRevealed && userChoice !== uniqueSquare ? Cross :
+              idx === step - 1 && (userChoice || !isUniqueSquareRevealed) ? Current :
+              idx < step - 1 ? Tick :
+              Blank
+            } 
+            />
+          )
+        }
+        <br></br>
         {isGameStarted && <button
         onClick={submitUserChoice}
-        style={{position: "relative", top: "30px"}}
+        style={{position: "relative", top: "50px"}}
         disabled={!userChoice || isStepPassed !== null}
         >
             Submit
         </button>}
         {isGameStarted && isStepPassed === true && userChoice && step !== 10 &&
-            <div style={{position: "relative", top: "30px"}}>
+            <div style={{position: "relative", top: "60px"}}>
                 Well Done! You guessed correctly!
                 <div><button onClick={handleNextStep}>{`Go to Step ${step + 1}`}</button></div>
             </div>
         }
         {isGameStarted && isStepPassed === true && userChoice && step === 10 &&
-            <div style={{position: "relative", top: "30px"}}>
+            <div style={{position: "relative", top: "60px"}}>
               {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
                 <div>
                     <div>Play Again?</div>
@@ -169,7 +189,7 @@ export default function KukuKube({updateTotalPoint}) {
             </div>
         }
         {isGameStarted && isStepPassed === false && userChoice &&
-            <div style={{position: "relative", top: "30px"}}>
+            <div style={{position: "relative", top: "60px"}}>
                 Sorry! You didn't guess correctly!
                 <div>
                     <div>Try Again?</div>
