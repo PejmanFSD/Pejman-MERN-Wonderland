@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const adSchema = new mongoose.Schema({
+    company: {
+        type: String,
+        required: [true, 'Company name cannot be blank']
+    },
     text: {
         type: String,
         required: [true, 'Ad text cannot be blank'],
