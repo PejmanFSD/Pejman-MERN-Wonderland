@@ -3,12 +3,12 @@ import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { getRandNum } from "../utils";
-import Blank from './images/Blank.jpg';
-import Cross from './images/Cross.jpg';
-import Tick from './images/Tick.jpg';
-import Current from './images/Current.jpg';
+import Blank from "./images/Blank.jpg";
+import Cross from "./images/Cross.jpg";
+import Tick from "./images/Tick.jpg";
+import Current from "./images/Current.jpg";
 
-export default function KukuKube({updateTotalPoint}) {
+export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowKukuKube }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -21,6 +21,7 @@ export default function KukuKube({updateTotalPoint}) {
   const [isStepPassed, setIsStepPassed] = useState(null);
   const [isUniqueSquareRevealed, setIsUniqueSquareRevealed] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -37,13 +38,13 @@ export default function KukuKube({updateTotalPoint}) {
     setUniqueSquare(getRandNum(squareNum));
     setStep(1);
   };
-    const handleReset = () => {
+  const handleReset = () => {
     setStep(1);
     setUserChoice(null);
     setUniqueSquare(getRandNum(squareNum));
     setIsStepPassed(null);
     setIsUniqueSquareRevealed(false);
-  }
+  };
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
@@ -61,7 +62,7 @@ export default function KukuKube({updateTotalPoint}) {
     setIsGameStarted(false);
     setIsTogglingReset(false);
   };
-    const toggleResetCancel = () => {
+  const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
   const handleColor = (e) => {
@@ -77,47 +78,56 @@ export default function KukuKube({updateTotalPoint}) {
   const submitUserChoice = () => {
     setIsUniqueSquareRevealed(true);
     if (userChoice === uniqueSquare) {
-        setIsStepPassed(true);
-        if (step === 12 && normalMode) {
-            updateTotalPoint(1);
-        }
+      setIsStepPassed(true);
+      if (step === 12 && normalMode) {
+        updateTotalPoint(1);
+      }
+    } else if (userChoice !== uniqueSquare) {
+      setIsStepPassed(false);
     }
-    else if (userChoice !== uniqueSquare){
-        setIsStepPassed(false);
-    }
-  }
+  };
   const handleNextStep = () => {
-    setStep(currStep => currStep + 1);
+    setStep((currStep) => currStep + 1);
     setUserChoice(null);
     setUniqueSquare(getRandNum(squareNum));
     setIsStepPassed(null);
     setIsUniqueSquareRevealed(false);
-  }
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowKukuKube(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
+  };
   return (
     <div>
       <h2>Kuku Kube</h2>
-      {!isTogglingReset && <h4>In each step, find the square with the unique color</h4>}
-      {!isGameStarted && !easyMode && !normalMode && (
+      {!isTogglingReset && !isTogglingHomePage && (
+        <h4>In each step, find the square with the unique color</h4>
+      )}
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={runEasyMode}>Easy Mode</button>
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode && !isTogglingReset ? (
-        //   && !isTogglingReset &&
-        //   !isTogglingHomePage &&
+      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
         //   !isTogglingLevel
         <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
       ) : (
         !easyMode &&
-        normalMode && !isTogglingReset && (
-          // && !isTogglingReset &&
-          // !isTogglingHomePage &&
+        normalMode &&
+        !isTogglingReset && !isTogglingHomePage && (
           // !isTogglingLevel
           <ModeExplaination message="Normal Mode: You will get one star if you win." />
         )
       )}
-      {!isGameStarted && (easyMode || normalMode) && (
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingHomePage && (
         <div>
           <label htmlFor="color"></label>
           <select onChange={handleColor} name="color" id="color">
@@ -130,30 +140,47 @@ export default function KukuKube({updateTotalPoint}) {
           </select>
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && isColorChosen && (
+      {!isGameStarted && (easyMode || normalMode) && isColorChosen && !isTogglingHomePage && (
         <button onClick={handleStart}>Start the Game</button>
       )}
       <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
       <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
       {isGameStarted &&
         !isTogglingReset &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         (easyMode || normalMode) && (
           <div>
             <button onClick={toggleReset}>Reset the Game</button>
           </div>
         )}
       {isTogglingReset && (
-              <div>
-                <ConfirmationBox
-                  question="Are you sure you want to reset the game?"
-                  toggleYes={toggleResetYes}
-                  toggleCancel={toggleResetCancel}
-                />
-              </div>
-            )}
-      {step > 0 && !isTogglingReset && <div>Step {step}</div>}
-      {isGameStarted && !isTogglingReset &&
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
+        </div>
+      )}
+      {!isTogglingHomePage && !isTogglingReset && (
+        <div>
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        </div>
+      )}
+      {isTogglingHomePage && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        </div>
+      )}
+      {step > 0 && !isTogglingReset && !isTogglingHomePage && <div>Step {step}</div>}
+      {isGameStarted &&
+        !isTogglingReset && !isTogglingHomePage && 
         new Array(squareNum).fill(null).map((el, idx) =>
           (idx + 1) % squareNum ** 0.5 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -190,52 +217,84 @@ export default function KukuKube({updateTotalPoint}) {
             </div>
           ),
         )}
-        {isGameStarted && !isTogglingReset &&
-          new Array(12).fill(null).map((el, idx) =>
+      {isGameStarted && !isTogglingReset && !isTogglingHomePage && 
+        new Array(12)
+          .fill(null)
+          .map((el, idx) => (
             <img
-            style={{height: "19px", position: "relative", top: "30px", margin: "2px"}}
-            src={
-              idx === step - 1 && isUniqueSquareRevealed && userChoice === uniqueSquare ? Tick :
-              idx === step - 1 && isUniqueSquareRevealed && userChoice !== uniqueSquare ? Cross :
-              idx === step - 1 && (userChoice || !isUniqueSquareRevealed) ? Current :
-              idx < step - 1 ? Tick :
-              Blank
-            } 
+              style={{
+                height: "19px",
+                position: "relative",
+                top: "30px",
+                margin: "2px",
+              }}
+              src={
+                idx === step - 1 &&
+                isUniqueSquareRevealed &&
+                userChoice === uniqueSquare
+                  ? Tick
+                  : idx === step - 1 &&
+                      isUniqueSquareRevealed &&
+                      userChoice !== uniqueSquare
+                    ? Cross
+                    : idx === step - 1 &&
+                        (userChoice || !isUniqueSquareRevealed)
+                      ? Current
+                      : idx < step - 1
+                        ? Tick
+                        : Blank
+              }
             />
-          )
-        }
-        <br></br>
-        {isGameStarted && !isTogglingReset && <button
-        onClick={submitUserChoice}
-        style={{position: "relative", top: "50px"}}
-        disabled={!userChoice || isStepPassed !== null}
+          ))}
+      <br></br>
+      {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
+        <button
+          onClick={submitUserChoice}
+          style={{ position: "relative", top: "50px" }}
+          disabled={!userChoice || isStepPassed !== null}
         >
-            Submit
-        </button>}
-        {isGameStarted && isStepPassed === true && userChoice && step !== 12 && !isTogglingReset &&
-            <div style={{position: "relative", top: "60px"}}>
-                Well Done! You guessed correctly!
-                <div><button onClick={handleNextStep}>{`Go to Step ${step + 1}`}</button></div>
+          Submit
+        </button>
+      )}
+      {isGameStarted &&
+        isStepPassed === true &&
+        userChoice &&
+        step !== 12 &&
+        !isTogglingReset && !isTogglingHomePage && (
+          <div style={{ position: "relative", top: "60px" }}>
+            Well Done! You guessed correctly!
+            <div>
+              <button
+                onClick={handleNextStep}
+              >{`Go to Step ${step + 1}`}</button>
             </div>
-        }
-        {isGameStarted && isStepPassed === true && userChoice && step === 12 && !isTogglingReset &&
-            <div style={{position: "relative", top: "60px"}}>
-              {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
-                <div>
-                    <div>Play Again?</div>
-                    <button onClick={handleReset}>Ok</button>
-                </div>
+          </div>
+        )}
+      {isGameStarted &&
+        isStepPassed === true &&
+        userChoice &&
+        step === 12 &&
+        !isTogglingReset && !isTogglingHomePage && (
+          <div style={{ position: "relative", top: "60px" }}>
+            {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
+            <div>
+              <div>Play Again?</div>
+              <button onClick={handleReset}>Ok</button>
             </div>
-        }
-        {isGameStarted && isStepPassed === false && userChoice && !isTogglingReset &&
-            <div style={{position: "relative", top: "60px"}}>
-                Sorry! You didn't guess correctly!
-                <div>
-                    <div>Try Again?</div>
-                    <button onClick={handleReset}>Ok</button>
-                </div>
+          </div>
+        )}
+      {isGameStarted &&
+        isStepPassed === false &&
+        userChoice &&
+        !isTogglingReset && !isTogglingHomePage && (
+          <div style={{ position: "relative", top: "60px" }}>
+            Sorry! You didn't guess correctly!
+            <div>
+              <div>Try Again?</div>
+              <button onClick={handleReset}>Ok</button>
             </div>
-        }
+          </div>
+        )}
     </div>
   );
 }
