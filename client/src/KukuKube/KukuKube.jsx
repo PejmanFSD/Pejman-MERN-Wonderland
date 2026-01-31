@@ -8,7 +8,11 @@ import Cross from "./images/Cross.jpg";
 import Tick from "./images/Tick.jpg";
 import Current from "./images/Current.jpg";
 
-export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowKukuKube }) {
+export default function KukuKube({
+  updateTotalPoint,
+  setShowGameTitles,
+  setShowKukuKube,
+}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -22,6 +26,7 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
   const [isUniqueSquareRevealed, setIsUniqueSquareRevealed] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -104,10 +109,34 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+      setSquareNum(36);
+      setUniqueSquare(getRandNum(36));
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+      setSquareNum(9);
+      setUniqueSquare(getRandNum(9));
+    }
+    setStep(1);
+    setUserChoice(null);
+    setIsStepPassed(null);
+    setIsUniqueSquareRevealed(false);
+    setIsTogglingLevel(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
+  };
   return (
     <div>
       <h2>Kuku Kube</h2>
-      {!isTogglingReset && !isTogglingHomePage && (
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
         <h4>In each step, find the square with the unique color</h4>
       )}
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
@@ -116,38 +145,50 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
-        //   !isTogglingLevel
+      {easyMode &&
+      !normalMode &&
+      !isTogglingReset &&
+      !isTogglingHomePage &&
+      !isTogglingLevel ? (
         <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
       ) : (
         !easyMode &&
         normalMode &&
-        !isTogglingReset && !isTogglingHomePage && (
-          // !isTogglingLevel
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <ModeExplaination message="Normal Mode: You will get one star if you win." />
         )
       )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingHomePage && (
-        <div>
-          <label htmlFor="color"></label>
-          <select onChange={handleColor} name="color" id="color">
-            <option value={color} disabled selected>
-              Select a Color
-            </option>
-            {["Red", "Green", "Blue"].map((c) => (
-              <option>{c}</option>
-            ))}
-          </select>
-        </div>
-      )}
-      {!isGameStarted && (easyMode || normalMode) && isColorChosen && !isTogglingHomePage && (
-        <button onClick={handleStart}>Start the Game</button>
-      )}
+      {!isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <label htmlFor="color"></label>
+            <select onChange={handleColor} name="color" id="color">
+              <option value={color} disabled selected>
+                Select a Color
+              </option>
+              {["Red", "Green", "Blue"].map((c) => (
+                <option>{c}</option>
+              ))}
+            </select>
+          </div>
+        )}
+      {!isGameStarted &&
+        (easyMode || normalMode) &&
+        isColorChosen &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <button onClick={handleStart}>Start the Game</button>
+        )}
       <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
       <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingHomePage &&
+        !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
             <button onClick={toggleReset}>Reset the Game</button>
@@ -162,7 +203,33 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
           />
         </div>
       )}
-      {!isTogglingHomePage && !isTogglingReset && (
+      {isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <button
+              style={{
+                display: "inline",
+              }}
+              onClick={() => toggleLevel()}
+            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+          </div>
+        )}
+      {(easyMode || normalMode) && isTogglingLevel && (
+        <div>
+          <ConfirmationBox
+            question={`Are you sure you want to switch to ${
+              easyMode ? "Normal Mode" : "Easy Mode"
+            }?`}
+            toggleYes={toggleLevelYes}
+            toggleCancel={toggleLevelCancel}
+            easyMode={easyMode}
+          />
+        </div>
+      )}
+      {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
         <div>
           <button onClick={() => toggleHomePage()}>
             Back to the home page
@@ -178,9 +245,16 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
           />
         </div>
       )}
-      {step > 0 && !isTogglingReset && !isTogglingHomePage && <div>Step {step}</div>}
+      {step > 0 &&
+        isColorChosen &&
+        isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && <div>Step {step}</div>}
       {isGameStarted &&
-        !isTogglingReset && !isTogglingHomePage && 
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
         new Array(squareNum).fill(null).map((el, idx) =>
           (idx + 1) % squareNum ** 0.5 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -217,50 +291,55 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
             </div>
           ),
         )}
-      {isGameStarted && !isTogglingReset && !isTogglingHomePage && 
-        new Array(12)
-          .fill(null)
-          .map((el, idx) => (
-            <img
-              style={{
-                height: "19px",
-                position: "relative",
-                top: "30px",
-                margin: "2px",
-              }}
-              src={
-                idx === step - 1 &&
-                isUniqueSquareRevealed &&
-                userChoice === uniqueSquare
-                  ? Tick
-                  : idx === step - 1 &&
-                      isUniqueSquareRevealed &&
-                      userChoice !== uniqueSquare
-                    ? Cross
-                    : idx === step - 1 &&
-                        (userChoice || !isUniqueSquareRevealed)
-                      ? Current
-                      : idx < step - 1
-                        ? Tick
-                        : Blank
-              }
-            />
-          ))}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
+        new Array(12).fill(null).map((el, idx) => (
+          <img
+            style={{
+              height: "19px",
+              position: "relative",
+              top: "30px",
+              margin: "2px",
+            }}
+            src={
+              idx === step - 1 &&
+              isUniqueSquareRevealed &&
+              userChoice === uniqueSquare
+                ? Tick
+                : idx === step - 1 &&
+                    isUniqueSquareRevealed &&
+                    userChoice !== uniqueSquare
+                  ? Cross
+                  : idx === step - 1 && (userChoice || !isUniqueSquareRevealed)
+                    ? Current
+                    : idx < step - 1
+                      ? Tick
+                      : Blank
+            }
+          />
+        ))}
       <br></br>
-      {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-        <button
-          onClick={submitUserChoice}
-          style={{ position: "relative", top: "50px" }}
-          disabled={!userChoice || isStepPassed !== null}
-        >
-          Submit
-        </button>
-      )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <button
+            onClick={submitUserChoice}
+            style={{ position: "relative", top: "50px" }}
+            disabled={!userChoice || isStepPassed !== null}
+          >
+            Submit
+          </button>
+        )}
       {isGameStarted &&
         isStepPassed === true &&
         userChoice &&
         step !== 12 &&
-        !isTogglingReset && !isTogglingHomePage && (
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <div style={{ position: "relative", top: "60px" }}>
             Well Done! You guessed correctly!
             <div>
@@ -274,7 +353,9 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
         isStepPassed === true &&
         userChoice &&
         step === 12 &&
-        !isTogglingReset && !isTogglingHomePage && (
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <div style={{ position: "relative", top: "60px" }}>
             {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
             <div>
@@ -286,7 +367,9 @@ export default function KukuKube({ updateTotalPoint, setShowGameTitles, setShowK
       {isGameStarted &&
         isStepPassed === false &&
         userChoice &&
-        !isTogglingReset && !isTogglingHomePage && (
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <div style={{ position: "relative", top: "60px" }}>
             Sorry! You didn't guess correctly!
             <div>
