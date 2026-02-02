@@ -11,6 +11,7 @@ import Nim from "./Nim/Nim";
 import HappyFlower from "./HappyFlower/HappyFlower";
 import XO from "./XO/XO";
 import KukuKube from "./KukuKube/KukuKube";
+import Pidoku from "./Pidoku/Pidoku";
 
 function App() {
   const [showGameTitles, setShowGameTitles] = useState(true);
@@ -25,6 +26,7 @@ function App() {
   const [showHappyFlower, setShowHappyFlower] = useState(false);
   const [showXO, setShowXO] = useState(false);
   const [showKukuKube, setShowKukuKube] = useState(false);
+  const [showPidoku, setShowPidoku] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
   };
@@ -67,6 +69,10 @@ function App() {
   const toggleKukuKube = () => {
     setShowGameTitles(false);
     setShowKukuKube(true);
+  };
+  const togglePidoku = () => {
+    setShowGameTitles(false);
+    setShowPidoku(true);
   };
   return (
     <div className="App">
@@ -203,6 +209,18 @@ function App() {
         showGameTitles &&
         !showKukuKube && (
           <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
+        )
+      )}
+      {!showGameTitles && showPidoku ? (
+        <Pidoku
+          setShowGameTitles={setShowGameTitles}
+          setShowPidoku={setShowPidoku}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showPidoku && (
+          <button onClick={() => togglePidoku()}>Pidoku</button>
         )
       )}
     </div>
