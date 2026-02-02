@@ -1,5 +1,25 @@
-export default function Square() {
+import { useState } from "react";
+
+export default function Square({ userNums, setUserNums }) {
+  const [btnText, setBtnText] = useState(0);
+  const handleClick = () => {
+    setBtnText(userNums[0]);
+    setUserNums(userNums.filter((el) => userNums.indexOf(el) !== 0));
+  };
   return (
-    <button style={{ height: "50px", width: "50px", margin: "2px" }}></button>
+    <button
+      style={{
+        border: "2px solid black",
+        height: "50px",
+        width: "50px",
+        margin: "2px",
+        background: btnText === 0 ? "lightgray" : "lightblue",
+        color: btnText === 0 ? "lightgray" : "black",
+      }}
+      disabled={btnText !== 0}
+      onClick={handleClick}
+    >
+      {btnText}
+    </button>
   );
 }
