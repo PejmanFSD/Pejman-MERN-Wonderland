@@ -1,10 +1,28 @@
 import { useState } from "react";
 
-export default function Square({ userNums, setUserNums, userColor }) {
-  const [btnText, setBtnText] = useState(0);
+export default function Square({
+  userNums,
+  setUserNums,
+  userColor,
+  pejmanColor,
+  isUserTurn,
+  setIsUserTurn,
+  idx,
+  freeSquares,
+  setFreeSquares,
+  squares,
+  setSquares,
+}) {
   const handleClick = () => {
-    setBtnText(userNums[0]);
+    setSquares((currSquares) =>
+      currSquares.map((s) =>
+        s.id === idx + 1 ? { ...s, text: userNums[0], owner: "User" } : s,
+      ),
+    );
     setUserNums(userNums.filter((el) => userNums.indexOf(el) !== 0));
+    setFreeSquares(freeSquares.filter((el) => el !== idx + 1));
+
+    setIsUserTurn(false);
   };
   return (
     <button
@@ -14,20 +32,25 @@ export default function Square({ userNums, setUserNums, userColor }) {
         width: "50px",
         margin: "2px",
         background:
-          btnText === 0
+          squares.find((s) => s.id === idx + 1).text === 0
             ? "lightgray"
-            : `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`,
+            : squares.find((s) => s.id === idx + 1).owner === "User"
+              ? `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`
+              : `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
         color:
-          btnText === 0
+          squares.find((s) => s.id === idx + 1).text === 0
             ? "lightgray"
-            : userColor.red === 240 || userColor.blue === 240
+            : (squares.find((s) => s.id === idx + 1).owner === "User" &&
+                  (userColor.red === 240 || userColor.blue === 240)) ||
+                (squares.find((s) => s.id === idx + 1).owner === "Pejman" &&
+                  (userColor.red === 240 || userColor.blue === 240))
               ? "white"
               : "black",
       }}
-      disabled={btnText !== 0}
+      disabled={squares.find((s) => s.id === idx + 1).text !== 0 || !isUserTurn}
       onClick={handleClick}
     >
-      {btnText}
+      {squares.find((s) => s.id === idx + 1).text}
     </button>
   );
 }

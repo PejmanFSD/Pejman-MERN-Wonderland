@@ -1,18 +1,17 @@
 import { useState } from "react";
 import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
+import { getRandArr } from "../utils";
 
 export default function Pidoku() {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isUserColorChosen, setIsUserColorChosen] = useState(false);
   const [userColor, setUserColor] = useState({
     red: null,
     green: null,
     blue: null,
   });
-  const [isPejmanColorChosen, setIsPejmanColorChosen] = useState(false);
   const [pejmanColor, setPejmanColor] = useState({
     red: null,
     green: null,
@@ -22,6 +21,42 @@ export default function Pidoku() {
   const [userNums, setUserNums] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
   ]);
+  const [pejmanNums, setPejmanNums] = useState([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+  ]);
+  const [isUserTurn, setIsUserTurn] = useState(false);
+  const [squares, setSquares] = useState([
+    { id: 1, text: 0, owner: null },
+    { id: 2, text: 0, owner: null },
+    { id: 3, text: 0, owner: null },
+    { id: 4, text: 0, owner: null },
+    { id: 5, text: 0, owner: null },
+    { id: 6, text: 0, owner: null },
+    { id: 7, text: 0, owner: null },
+    { id: 8, text: 0, owner: null },
+    { id: 9, text: 0, owner: null },
+    { id: 10, text: 0, owner: null },
+    { id: 11, text: 0, owner: null },
+    { id: 12, text: 0, owner: null },
+    { id: 13, text: 0, owner: null },
+    { id: 14, text: 0, owner: null },
+    { id: 15, text: 0, owner: null },
+    { id: 16, text: 0, owner: null },
+    { id: 17, text: 0, owner: null },
+    { id: 18, text: 0, owner: null },
+    { id: 19, text: 0, owner: null },
+    { id: 20, text: 0, owner: null },
+    { id: 21, text: 0, owner: null },
+    { id: 22, text: 0, owner: null },
+    { id: 23, text: 0, owner: null },
+    { id: 24, text: 0, owner: null },
+    { id: 25, text: 0, owner: null },
+  ]);
+  const [freeSquares, setFreeSquares] = useState([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25,
+  ]);
+
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -40,7 +75,6 @@ export default function Pidoku() {
     } else if (e.target.value === "Yellow") {
       setUserColor({ red: 220, green: 220, blue: 0 });
     }
-    setIsUserColorChosen(true);
   };
   const handlePejmanColor = (e) => {
     if (e.target.value === "Red") {
@@ -52,7 +86,6 @@ export default function Pidoku() {
     } else if (e.target.value === "Yellow") {
       setPejmanColor({ red: 220, green: 220, blue: 0 });
     }
-    setIsPejmanColorChosen(true);
   };
   const handleStart = () => {
     if (
@@ -64,11 +97,28 @@ export default function Pidoku() {
     } else {
       setIsGameStarted(true);
     }
+    setIsUserTurn(true);
   };
   const handleOk = () => {
     setUserColor({ red: null, green: null, blue: null });
     setPejmanColor({ red: null, green: null, blue: null });
     setIsIdenticalColor(false);
+  };
+  const handleAllowPejman = () => {
+    let pejmanNewChoice;
+    if (easyMode) {
+      pejmanNewChoice = getRandArr(freeSquares);
+    }
+    setSquares((currSquares) =>
+      currSquares.map((s) =>
+        s.id === pejmanNewChoice
+          ? { ...s, text: pejmanNums[0], owner: "Pejman" }
+          : s,
+      ),
+    );
+    setPejmanNums(pejmanNums.filter((el) => pejmanNums.indexOf(el) !== 0));
+    setFreeSquares(freeSquares.filter((el) => el !== pejmanNewChoice));
+    setIsUserTurn(true);
   };
   return (
     <div>
@@ -87,6 +137,12 @@ export default function Pidoku() {
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
+      <div style={{ color: "gray" }}>
+        Free Squares:
+        {Object.values(freeSquares).map((s) => (
+          <div style={{ display: "inline", color: "gray" }}>{s}-</div>
+        ))}
+      </div>
       {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
         <div>
           <div>
@@ -140,6 +196,14 @@ export default function Pidoku() {
                 userNums={userNums}
                 setUserNums={setUserNums}
                 userColor={userColor}
+                pejmanColor={pejmanColor}
+                isUserTurn={isUserTurn}
+                setIsUserTurn={setIsUserTurn}
+                idx={idx}
+                freeSquares={freeSquares}
+                setFreeSquares={setFreeSquares}
+                squares={squares}
+                setSquares={setSquares}
               />
             </div>
           ) : (
@@ -148,11 +212,25 @@ export default function Pidoku() {
                 userNums={userNums}
                 setUserNums={setUserNums}
                 userColor={userColor}
+                pejmanColor={pejmanColor}
+                isUserTurn={isUserTurn}
+                setIsUserTurn={setIsUserTurn}
+                idx={idx}
+                freeSquares={freeSquares}
+                setFreeSquares={setFreeSquares}
+                squares={squares}
+                setSquares={setSquares}
               />
               <br></br>
             </div>
           ),
         )}
+      {isGameStarted && !isUserTurn && (
+        <div>
+          <div>Allow Pejman to make his move</div>
+          <button onClick={handleAllowPejman}>Ok</button>
+        </div>
+      )}
     </div>
   );
 }
