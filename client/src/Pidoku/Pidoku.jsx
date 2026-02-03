@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import { getRandArr } from "../utils";
@@ -56,6 +56,10 @@ export default function Pidoku() {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24, 25,
   ]);
+  const [userPoint, setUserPoint] = useState(0);
+  const [pejmanPoint, setPejmanPoint] = useState(0);
+  const [isWin, setIsWin] = useState("");
+  const [finalSquares, setFinalSquares] = useState([]);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -120,6 +124,30 @@ export default function Pidoku() {
     setFreeSquares(freeSquares.filter((el) => el !== pejmanNewChoice));
     setIsUserTurn(true);
   };
+  useEffect(() => {
+    if (freeSquares.length === 1) {
+      const star = freeSquares[0];
+      if ([7, 8, 9, 12, 13, 14, 17, 18, 19].includes(star)) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1 ,star + 1, star - 5, star + 5, star - 6, star + 6, star - 4, star + 4]);
+      } else if ([2, 3, 4].includes(star)) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1, star + 1, star + 4, star + 5, star + 6]);
+      } else if ([22, 23, 24].includes(star)) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1, star + 1, star - 6, star - 5, star - 4]);
+      } else if ([6, 11, 16].includes(star)) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, star + 1, star - 5, star + 5, star - 4, star + 6]);
+      } else if ([10, 15, 20].includes(star)) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1, star - 5, star + 5, star - 6, star + 4]);
+      } else if (star === 1) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, 2, 6, 7]);
+      } else if (star === 5) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, 4, 9, 10]);
+      } else if (star === 21) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, 16, 17, 22]);
+      } else if (star === 25) {
+        setFinalSquares(currFinalSquares => [...currFinalSquares, 19, 20, 24]);
+      }
+    }
+  }, [freeSquares]);
   return (
     <div>
       <h2>Pidoku</h2>
@@ -204,6 +232,7 @@ export default function Pidoku() {
                 setFreeSquares={setFreeSquares}
                 squares={squares}
                 setSquares={setSquares}
+                finalSquares={finalSquares}
               />
             </div>
           ) : (
@@ -220,6 +249,7 @@ export default function Pidoku() {
                 setFreeSquares={setFreeSquares}
                 squares={squares}
                 setSquares={setSquares}
+                finalSquares={finalSquares}
               />
               <br></br>
             </div>

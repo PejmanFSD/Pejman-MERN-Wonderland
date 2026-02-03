@@ -12,6 +12,7 @@ export default function Square({
   setFreeSquares,
   squares,
   setSquares,
+  finalSquares
 }) {
   const handleClick = () => {
     setSquares((currSquares) =>
@@ -27,23 +28,25 @@ export default function Square({
   return (
     <button
       style={{
-        border: "2px solid black",
+        border: finalSquares.includes(squares.find((s) => s.id === idx + 1).id) ? "8px solid black" : "2px solid black",
         height: "50px",
         width: "50px",
         margin: "2px",
         background:
+          freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0] ? "black" :
           squares.find((s) => s.id === idx + 1).text === 0
             ? "lightgray"
             : squares.find((s) => s.id === idx + 1).owner === "User"
               ? `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`
               : `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
         color:
+          freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0] ? "black" :
           squares.find((s) => s.id === idx + 1).text === 0
             ? "lightgray"
             : (squares.find((s) => s.id === idx + 1).owner === "User" &&
                   (userColor.red === 240 || userColor.blue === 240)) ||
                 (squares.find((s) => s.id === idx + 1).owner === "Pejman" &&
-                  (userColor.red === 240 || userColor.blue === 240))
+                  (pejmanColor.red === 240 || pejmanColor.blue === 240))
               ? "white"
               : "black",
       }}
