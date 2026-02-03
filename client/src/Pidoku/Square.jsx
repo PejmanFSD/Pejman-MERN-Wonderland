@@ -12,7 +12,8 @@ export default function Square({
   setFreeSquares,
   squares,
   setSquares,
-  finalSquares
+  finalSquares,
+  isShowTime
 }) {
   const handleClick = () => {
     setSquares((currSquares) =>
@@ -33,14 +34,14 @@ export default function Square({
         width: "50px",
         margin: "2px",
         background:
-          freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0] ? "black" :
+          freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0] && isShowTime ? "black" :
           squares.find((s) => s.id === idx + 1).text === 0
             ? "lightgray"
             : squares.find((s) => s.id === idx + 1).owner === "User"
               ? `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`
               : `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
         color:
-          freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0] ? "black" :
+          freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0] && isShowTime ? "black" :
           squares.find((s) => s.id === idx + 1).text === 0
             ? "lightgray"
             : (squares.find((s) => s.id === idx + 1).owner === "User" &&
@@ -49,6 +50,10 @@ export default function Square({
                   (pejmanColor.red === 240 || pejmanColor.blue === 240))
               ? "white"
               : "black",
+        opacity:
+          (finalSquares.includes(squares.find((s) => s.id === idx + 1).id) ||
+          (freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0])) &&
+          isShowTime ? 1 : 0.3
       }}
       disabled={squares.find((s) => s.id === idx + 1).text !== 0 || !isUserTurn}
       onClick={handleClick}

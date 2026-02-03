@@ -60,6 +60,7 @@ export default function Pidoku() {
   const [pejmanPoint, setPejmanPoint] = useState(0);
   const [isWin, setIsWin] = useState("");
   const [finalSquares, setFinalSquares] = useState([]);
+  const [isShowTime, setIsShowTime] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -124,8 +125,11 @@ export default function Pidoku() {
     setFreeSquares(freeSquares.filter((el) => el !== pejmanNewChoice));
     setIsUserTurn(true);
   };
+  const handleShowTime = () => {
+    setIsShowTime(true);
+  }
   useEffect(() => {
-    if (freeSquares.length === 1) {
+    if (isShowTime) {
       const star = freeSquares[0];
       if ([7, 8, 9, 12, 13, 14, 17, 18, 19].includes(star)) {
         setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1 ,star + 1, star - 5, star + 5, star - 6, star + 6, star - 4, star + 4]);
@@ -147,7 +151,7 @@ export default function Pidoku() {
         setFinalSquares(currFinalSquares => [...currFinalSquares, 19, 20, 24]);
       }
     }
-  }, [freeSquares]);
+  }, [isShowTime]);
   return (
     <div>
       <h2>Pidoku</h2>
@@ -233,6 +237,7 @@ export default function Pidoku() {
                 squares={squares}
                 setSquares={setSquares}
                 finalSquares={finalSquares}
+                isShowTime={isShowTime}
               />
             </div>
           ) : (
@@ -250,6 +255,7 @@ export default function Pidoku() {
                 squares={squares}
                 setSquares={setSquares}
                 finalSquares={finalSquares}
+                isShowTime={isShowTime}
               />
               <br></br>
             </div>
@@ -261,6 +267,12 @@ export default function Pidoku() {
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
+      {freeSquares.length === 1 &&
+        <div>
+          <div>All 24 squares are selected, the result of the game relies on the last square</div>
+          <button onClick={handleShowTime}>Show the game result</button>
+        </div>
+      }
     </div>
   );
 }
