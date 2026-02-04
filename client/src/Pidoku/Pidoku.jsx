@@ -61,6 +61,7 @@ export default function Pidoku() {
   const [isWin, setIsWin] = useState("");
   const [finalSquares, setFinalSquares] = useState([]);
   const [isShowTime, setIsShowTime] = useState(false);
+  const [isGameResult, setIsGameResult] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -118,7 +119,7 @@ export default function Pidoku() {
       currSquares.map((s) =>
         s.id === pejmanNewChoice
           ? { ...s, text: pejmanNums[0], owner: "Pejman" }
-          : s,
+          : s
       ),
     );
     setPejmanNums(pejmanNums.filter((el) => pejmanNums.indexOf(el) !== 0));
@@ -127,6 +128,9 @@ export default function Pidoku() {
   };
   const handleShowTime = () => {
     setIsShowTime(true);
+  }
+  const handleGameResult = () => {
+    setIsGameResult(true);
   }
   useEffect(() => {
     if (isShowTime) {
@@ -152,6 +156,19 @@ export default function Pidoku() {
       }
     }
   }, [isShowTime]);
+  useEffect(() => {
+    if (isGameResult) {
+      for (const s of squares) {
+        if (finalSquares.includes(s.id)) {
+          if (s.owner === "User") {
+            setUserPoint((currUserPoint) => currUserPoint + s.text);
+          } else {
+            setPejmanPoint((currPejmanPoint) => currPejmanPoint + s.text);
+          }
+        }
+      }
+    }
+  }, [isGameResult]);
   return (
     <div>
       <h2>Pidoku</h2>
@@ -170,8 +187,20 @@ export default function Pidoku() {
         )
       )}
       <div style={{ color: "gray" }}>
+        Squares:
+        {squares.map((s) => (
+          <div style={{ display: "inline", color: "gray" }}>{s.id}-{s.owner}-{s.text} --- </div>
+        ))}
+      </div>
+      <div style={{ color: "gray" }}>
         Free Squares:
         {Object.values(freeSquares).map((s) => (
+          <div style={{ display: "inline", color: "gray" }}>{s}-</div>
+        ))}
+      </div>
+      <div style={{ color: "gray" }}>
+        Final Squares:
+        {Object.values(finalSquares).map((s) => (
           <div style={{ display: "inline", color: "gray" }}>{s}-</div>
         ))}
       </div>
@@ -220,6 +249,8 @@ export default function Pidoku() {
           <button onClick={handleOk}>Ok</button>
         </div>
       )}
+      <div style={{ color: "gray" }}>User Point: {userPoint}</div>
+      <div style={{ color: "gray" }}>Pejman Point: {pejmanPoint}</div>
       {isGameStarted &&
         new Array(25).fill(null).map((el, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -267,11 +298,14 @@ export default function Pidoku() {
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {freeSquares.length === 1 &&
+      {freeSquares.length === 1 && finalSquares.length === 0 &&
         <div>
-          <div>All 24 squares are selected, the result of the game relies on the last square</div>
-          <button onClick={handleShowTime}>Show the game result</button>
+          <div>All 24 squares are selected, the result of the game relies on the squares around the last empty one</div>
+          <button onClick={handleShowTime}>Show the decisive squares</button>
         </div>
+      }
+      {finalSquares.length !== 0 &&
+        <button onClick={handleGameResult}>Show the Game Result</button>
       }
     </div>
   );

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function Square({
   userNums,
   setUserNums,
@@ -18,7 +16,7 @@ export default function Square({
   const handleClick = () => {
     setSquares((currSquares) =>
       currSquares.map((s) =>
-        s.id === idx + 1 ? { ...s, text: userNums[0], owner: "User" } : s,
+        s.id === idx + 1 ? { ...s, text: userNums[0], owner: "User" } : s
       ),
     );
     setUserNums(userNums.filter((el) => userNums.indexOf(el) !== 0));
@@ -52,8 +50,8 @@ export default function Square({
               : "black",
         opacity:
           (finalSquares.includes(squares.find((s) => s.id === idx + 1).id) ||
-          (freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0])) &&
-          isShowTime ? 1 : 0.3
+          (freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0]))
+          || freeSquares.length > 1 ? 1 : 0.3
       }}
       disabled={squares.find((s) => s.id === idx + 1).text !== 0 || !isUserTurn}
       onClick={handleClick}
