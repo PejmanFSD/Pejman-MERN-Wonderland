@@ -58,7 +58,6 @@ export default function Pidoku() {
   ]);
   const [userPoint, setUserPoint] = useState(0);
   const [pejmanPoint, setPejmanPoint] = useState(0);
-  const [isWin, setIsWin] = useState("");
   const [finalSquares, setFinalSquares] = useState([]);
   const [isShowTime, setIsShowTime] = useState(false);
   const [isGameResult, setIsGameResult] = useState(false);
@@ -132,6 +131,58 @@ export default function Pidoku() {
   const handleGameResult = () => {
     setIsGameResult(true);
   }
+  const playAgain = () => {
+    setIsGameStarted(false);
+    setUserColor({
+    red: null,
+    green: null,
+    blue: null,
+  });
+  setPejmanColor({
+    red: null,
+    green: null,
+    blue: null,
+  });
+  setIsIdenticalColor(false);
+  setUserNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  setPejmanNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  setIsUserTurn(true);
+  setSquares([
+    { id: 1, text: 0, owner: null },
+    { id: 2, text: 0, owner: null },
+    { id: 3, text: 0, owner: null },
+    { id: 4, text: 0, owner: null },
+    { id: 5, text: 0, owner: null },
+    { id: 6, text: 0, owner: null },
+    { id: 7, text: 0, owner: null },
+    { id: 8, text: 0, owner: null },
+    { id: 9, text: 0, owner: null },
+    { id: 10, text: 0, owner: null },
+    { id: 11, text: 0, owner: null },
+    { id: 12, text: 0, owner: null },
+    { id: 13, text: 0, owner: null },
+    { id: 14, text: 0, owner: null },
+    { id: 15, text: 0, owner: null },
+    { id: 16, text: 0, owner: null },
+    { id: 17, text: 0, owner: null },
+    { id: 18, text: 0, owner: null },
+    { id: 19, text: 0, owner: null },
+    { id: 20, text: 0, owner: null },
+    { id: 21, text: 0, owner: null },
+    { id: 22, text: 0, owner: null },
+    { id: 23, text: 0, owner: null },
+    { id: 24, text: 0, owner: null },
+    { id: 25, text: 0, owner: null },
+  ]);
+  setFreeSquares([1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25]);
+  setUserPoint(0);
+  setPejmanPoint(0);
+  setFinalSquares([]);
+  setIsShowTime(false);
+  setIsGameResult(false);
+  }
   useEffect(() => {
     if (isShowTime) {
       const star = freeSquares[0];
@@ -186,12 +237,12 @@ export default function Pidoku() {
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
-      <div style={{ color: "gray" }}>
+      {/* <div style={{ color: "gray" }}>
         Squares:
         {squares.map((s) => (
           <div style={{ display: "inline", color: "gray" }}>{s.id}-{s.owner}-{s.text} --- </div>
         ))}
-      </div>
+      </div> */}
       <div style={{ color: "gray" }}>
         Free Squares:
         {Object.values(freeSquares).map((s) => (
@@ -249,8 +300,6 @@ export default function Pidoku() {
           <button onClick={handleOk}>Ok</button>
         </div>
       )}
-      <div style={{ color: "gray" }}>User Point: {userPoint}</div>
-      <div style={{ color: "gray" }}>Pejman Point: {pejmanPoint}</div>
       {isGameStarted &&
         new Array(25).fill(null).map((el, idx) =>
           (idx + 1) % 5 !== 0 ? (
@@ -304,8 +353,32 @@ export default function Pidoku() {
           <button onClick={handleShowTime}>Show the decisive squares</button>
         </div>
       }
-      {finalSquares.length !== 0 &&
+      {finalSquares.length !== 0 && !isGameResult &&
         <button onClick={handleGameResult}>Show the Game Result</button>
+      }
+      {isGameResult &&
+        <div>
+          <h3>Your totoal Point: {userPoint}</h3>
+          <h3>Pejman's totoal Point: {pejmanPoint}</h3>
+        </div>
+      }
+      {isGameResult && userPoint > pejmanPoint &&
+        <div>
+          <h2>You Win!</h2>
+          <button onClick={playAgain}>Play Again</button>
+        </div>
+      }
+      {isGameResult && userPoint === pejmanPoint &&
+        <div>
+          <h2>No Winner!</h2>
+          <button onClick={playAgain}>Play Again</button>
+        </div>
+      }
+      {isGameResult && userPoint < pejmanPoint &&
+        <div>
+          <h2>You Loose!</h2>
+          <button onClick={playAgain}>Try Again</button>
+        </div>
       }
     </div>
   );
