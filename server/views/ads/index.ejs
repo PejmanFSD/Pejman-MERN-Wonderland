@@ -8,7 +8,16 @@
 </head>
 
 <body>
-    <!-- The Flash "messages" should appear here %> -->
+    <% if (success && success.length) { %>
+        <div>
+            <%= success %>
+        </div>
+    <% } %>
+    <% if (error && error.length) { %>
+        <div>
+            <%= error %>
+        </div>
+    <% } %>
     <h1>All ads</h1>
     <div>
         <a href="/ads/new">Create new Ad</a>

@@ -4,10 +4,20 @@ const path = require('path');
 const User = require('./models/user');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-// const flash = require('connect-flash');
-// const bcrypt = require('bcrypt');
 const session = require('express-session');
-const sessionOptions = {secret: 'Pejman-MERN-Wonderland', resave: false, saveUninitialized: false};
+const flash = require('connect-flash');
+// const bcrypt = require('bcrypt');
+const sessionConfig = {
+    name: 'session',
+    secret: 'Pejman-MERN-Wonderland',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Expiring the cookie in a week
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+};
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
 const ads = require('./routes/ads.js');
@@ -26,13 +36,15 @@ app.set('views', 'views');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true })); // For parcing the request
 app.use(methodOverride('_method'));
-app.use(session(sessionOptions));
+app.use(session(sessionConfig));
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success"); // Most of the time it's empty!
+    res.locals.error = req.flash("error"); // Most of the time it's empty!
+    next();
+})
 app.use('/ads', ads);
-// app.use(flash());
-// app.use((req, res, next) => {
-//     res.locals.messages = req.flash("success");
-//     next();
-// })
+app.use(express.static(path.join(__dirname, 'public')));
 
 const requireLogin = (req, res, next) => {
     if (!req.session.user_id) {
