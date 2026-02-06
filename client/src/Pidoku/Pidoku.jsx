@@ -61,7 +61,33 @@ export default function Pidoku() {
   const [finalSquares, setFinalSquares] = useState([]);
   const [isShowTime, setIsShowTime] = useState(false);
   const [isGameResult, setIsGameResult] = useState(false);
-
+  const [crucialSquares, setCrucialSquares] = useState([
+    { id: 1, crucialPoint: 0 },
+    { id: 2, crucialPoint: 0 },
+    { id: 3, crucialPoint: 0 },
+    { id: 4, crucialPoint: 0 },
+    { id: 5, crucialPoint: 0 },
+    { id: 6, crucialPoint: 0 },
+    { id: 7, crucialPoint: 0 },
+    { id: 8, crucialPoint: 0 },
+    { id: 9, crucialPoint: 0 },
+    { id: 10, crucialPoint: 0 },
+    { id: 11, crucialPoint: 0 },
+    { id: 12, crucialPoint: 0 },
+    { id: 13, crucialPoint: 0 },
+    { id: 14, crucialPoint: 0 },
+    { id: 15, crucialPoint: 0 },
+    { id: 16, crucialPoint: 0 },
+    { id: 17, crucialPoint: 0 },
+    { id: 18, crucialPoint: 0 },
+    { id: 19, crucialPoint: 0 },
+    { id: 20, crucialPoint: 0 },
+    { id: 21, crucialPoint: 0 },
+    { id: 22, crucialPoint: 0 },
+    { id: 23, crucialPoint: 0 },
+    { id: 24, crucialPoint: 0 },
+    { id: 25, crucialPoint: 0 },
+  ]);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -110,100 +136,378 @@ export default function Pidoku() {
     setIsIdenticalColor(false);
   };
   const handleAllowPejman = () => {
-    let pejmanNewChoice;
     if (easyMode) {
-      pejmanNewChoice = getRandArr(freeSquares);
+      const pejmanNewEasyChoice = getRandArr(freeSquares);
+      setSquares((currSquares) =>
+        currSquares.map((s) =>
+          s.id === pejmanNewEasyChoice
+            ? { ...s, text: pejmanNums[0], owner: "Pejman" }
+            : s,
+        ),
+      );
+      setPejmanNums(pejmanNums.filter((el) => pejmanNums.indexOf(el) !== 0));
+      setFreeSquares(freeSquares.filter((el) => el !== pejmanNewEasyChoice));
+      setIsUserTurn(true);
+    } else if (normalMode) {
+      setCrucialSquares([
+        { id: 1, crucialPoint: 0 },
+        { id: 2, crucialPoint: 0 },
+        { id: 3, crucialPoint: 0 },
+        { id: 4, crucialPoint: 0 },
+        { id: 5, crucialPoint: 0 },
+        { id: 6, crucialPoint: 0 },
+        { id: 7, crucialPoint: 0 },
+        { id: 8, crucialPoint: 0 },
+        { id: 9, crucialPoint: 0 },
+        { id: 10, crucialPoint: 0 },
+        { id: 11, crucialPoint: 0 },
+        { id: 12, crucialPoint: 0 },
+        { id: 13, crucialPoint: 0 },
+        { id: 14, crucialPoint: 0 },
+        { id: 15, crucialPoint: 0 },
+        { id: 16, crucialPoint: 0 },
+        { id: 17, crucialPoint: 0 },
+        { id: 18, crucialPoint: 0 },
+        { id: 19, crucialPoint: 0 },
+        { id: 20, crucialPoint: 0 },
+        { id: 21, crucialPoint: 0 },
+        { id: 22, crucialPoint: 0 },
+        { id: 23, crucialPoint: 0 },
+        { id: 24, crucialPoint: 0 },
+        { id: 25, crucialPoint: 0 },
+      ]);
+      for (const fs of freeSquares) {
+        if ([7, 8, 9, 12, 13, 14, 17, 18, 19].includes(fs)) {
+          for (const i of [
+            fs - 1,
+            fs + 1,
+            fs - 5,
+            fs + 5,
+            fs - 6,
+            fs + 6,
+            fs - 4,
+            fs + 4,
+          ]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if ([2, 3, 4].includes(fs)) {
+          for (const i of [fs - 1, fs + 1, fs + 4, fs + 5, fs + 6]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if ([22, 23, 24].includes(fs)) {
+          for (const i of [fs - 1, fs + 1, fs - 6, fs - 5, fs - 4]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if ([6, 11, 16].includes(fs)) {
+          for (const i of [fs + 1, fs - 5, fs + 5, fs - 4, fs + 6]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if ([10, 15, 20].includes(fs)) {
+          for (const i of [fs - 1, fs - 5, fs + 5, fs - 6, fs + 4]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if ([10, 15, 20].includes(fs)) {
+          for (const i of [fs - 1, fs - 5, fs + 5, fs - 6, fs + 4]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if (fs === 1) {
+          for (const i of [2, 6, 7]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if (fs === 5) {
+          for (const i of [4, 9, 10]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if (fs === 21) {
+          for (const i of [16, 17, 22]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        } else if (fs === 25) {
+          for (const i of [19, 20, 24]) {
+            if (squares.find((s) => s.id === i).owner === "User") {
+              setCrucialSquares((currCrucialSquares) =>
+                currCrucialSquares.map((cs) =>
+                  cs.id === fs
+                    ? {
+                        ...cs,
+                        crucialPoint:
+                          cs.crucialPoint +
+                          squares.find((s) => s.id === i).text,
+                      }
+                    : cs,
+                ),
+              );
+            }
+          }
+        }
+      }
+      setCrucialSquares((currCrucialSquares) =>
+        [...currCrucialSquares].sort((a, b) => b.crucialPoint - a.crucialPoint),
+      );
+      let pejmanNewNormalChoice;
+      for (const cs of crucialSquares) {
+        if (freeSquares.includes(cs.id)) {
+          pejmanNewNormalChoice = cs.id;
+          break;
+        }
+      }
+      setSquares((currSquares) =>
+        currSquares.map((s) =>
+          s.id === pejmanNewNormalChoice
+            ? { ...s, text: pejmanNums[0], owner: "Pejman" }
+            : s,
+        ),
+      );
+      setPejmanNums(pejmanNums.filter((el) => pejmanNums.indexOf(el) !== 0));
+      setFreeSquares(freeSquares.filter((el) => el !== pejmanNewNormalChoice));
+      setIsUserTurn(true);
     }
-    setSquares((currSquares) =>
-      currSquares.map((s) =>
-        s.id === pejmanNewChoice
-          ? { ...s, text: pejmanNums[0], owner: "Pejman" }
-          : s
-      ),
-    );
-    setPejmanNums(pejmanNums.filter((el) => pejmanNums.indexOf(el) !== 0));
-    setFreeSquares(freeSquares.filter((el) => el !== pejmanNewChoice));
-    setIsUserTurn(true);
   };
   const handleShowTime = () => {
     setIsShowTime(true);
-  }
+  };
   const handleGameResult = () => {
     setIsGameResult(true);
-  }
+  };
   const playAgain = () => {
     setIsGameStarted(false);
     setUserColor({
-    red: null,
-    green: null,
-    blue: null,
-  });
-  setPejmanColor({
-    red: null,
-    green: null,
-    blue: null,
-  });
-  setIsIdenticalColor(false);
-  setUserNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-  setPejmanNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-  setIsUserTurn(true);
-  setSquares([
-    { id: 1, text: 0, owner: null },
-    { id: 2, text: 0, owner: null },
-    { id: 3, text: 0, owner: null },
-    { id: 4, text: 0, owner: null },
-    { id: 5, text: 0, owner: null },
-    { id: 6, text: 0, owner: null },
-    { id: 7, text: 0, owner: null },
-    { id: 8, text: 0, owner: null },
-    { id: 9, text: 0, owner: null },
-    { id: 10, text: 0, owner: null },
-    { id: 11, text: 0, owner: null },
-    { id: 12, text: 0, owner: null },
-    { id: 13, text: 0, owner: null },
-    { id: 14, text: 0, owner: null },
-    { id: 15, text: 0, owner: null },
-    { id: 16, text: 0, owner: null },
-    { id: 17, text: 0, owner: null },
-    { id: 18, text: 0, owner: null },
-    { id: 19, text: 0, owner: null },
-    { id: 20, text: 0, owner: null },
-    { id: 21, text: 0, owner: null },
-    { id: 22, text: 0, owner: null },
-    { id: 23, text: 0, owner: null },
-    { id: 24, text: 0, owner: null },
-    { id: 25, text: 0, owner: null },
-  ]);
-  setFreeSquares([1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25]);
-  setUserPoint(0);
-  setPejmanPoint(0);
-  setFinalSquares([]);
-  setIsShowTime(false);
-  setIsGameResult(false);
-  }
+      red: null,
+      green: null,
+      blue: null,
+    });
+    setPejmanColor({
+      red: null,
+      green: null,
+      blue: null,
+    });
+    setIsIdenticalColor(false);
+    setUserNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    setPejmanNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    setIsUserTurn(true);
+    setSquares([
+      { id: 1, text: 0, owner: null },
+      { id: 2, text: 0, owner: null },
+      { id: 3, text: 0, owner: null },
+      { id: 4, text: 0, owner: null },
+      { id: 5, text: 0, owner: null },
+      { id: 6, text: 0, owner: null },
+      { id: 7, text: 0, owner: null },
+      { id: 8, text: 0, owner: null },
+      { id: 9, text: 0, owner: null },
+      { id: 10, text: 0, owner: null },
+      { id: 11, text: 0, owner: null },
+      { id: 12, text: 0, owner: null },
+      { id: 13, text: 0, owner: null },
+      { id: 14, text: 0, owner: null },
+      { id: 15, text: 0, owner: null },
+      { id: 16, text: 0, owner: null },
+      { id: 17, text: 0, owner: null },
+      { id: 18, text: 0, owner: null },
+      { id: 19, text: 0, owner: null },
+      { id: 20, text: 0, owner: null },
+      { id: 21, text: 0, owner: null },
+      { id: 22, text: 0, owner: null },
+      { id: 23, text: 0, owner: null },
+      { id: 24, text: 0, owner: null },
+      { id: 25, text: 0, owner: null },
+    ]);
+    setFreeSquares([
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+      22, 23, 24, 25,
+    ]);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setFinalSquares([]);
+    setIsShowTime(false);
+    setIsGameResult(false);
+  };
   useEffect(() => {
     if (isShowTime) {
       const star = freeSquares[0];
       if ([7, 8, 9, 12, 13, 14, 17, 18, 19].includes(star)) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1 ,star + 1, star - 5, star + 5, star - 6, star + 6, star - 4, star + 4]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          star - 1,
+          star + 1,
+          star - 5,
+          star + 5,
+          star - 6,
+          star + 6,
+          star - 4,
+          star + 4,
+        ]);
       } else if ([2, 3, 4].includes(star)) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1, star + 1, star + 4, star + 5, star + 6]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          star - 1,
+          star + 1,
+          star + 4,
+          star + 5,
+          star + 6,
+        ]);
       } else if ([22, 23, 24].includes(star)) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1, star + 1, star - 6, star - 5, star - 4]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          star - 1,
+          star + 1,
+          star - 6,
+          star - 5,
+          star - 4,
+        ]);
       } else if ([6, 11, 16].includes(star)) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, star + 1, star - 5, star + 5, star - 4, star + 6]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          star + 1,
+          star - 5,
+          star + 5,
+          star - 4,
+          star + 6,
+        ]);
       } else if ([10, 15, 20].includes(star)) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, star - 1, star - 5, star + 5, star - 6, star + 4]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          star - 1,
+          star - 5,
+          star + 5,
+          star - 6,
+          star + 4,
+        ]);
       } else if (star === 1) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, 2, 6, 7]);
+        setFinalSquares((currFinalSquares) => [...currFinalSquares, 2, 6, 7]);
       } else if (star === 5) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, 4, 9, 10]);
+        setFinalSquares((currFinalSquares) => [...currFinalSquares, 4, 9, 10]);
       } else if (star === 21) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, 16, 17, 22]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          16,
+          17,
+          22,
+        ]);
       } else if (star === 25) {
-        setFinalSquares(currFinalSquares => [...currFinalSquares, 19, 20, 24]);
+        setFinalSquares((currFinalSquares) => [
+          ...currFinalSquares,
+          19,
+          20,
+          24,
+        ]);
       }
     }
   }, [isShowTime]);
@@ -237,16 +541,18 @@ export default function Pidoku() {
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
-      {/* <div style={{ color: "gray" }}>
-        Squares:
-        {squares.map((s) => (
-          <div style={{ display: "inline", color: "gray" }}>{s.id}-{s.owner}-{s.text} --- </div>
-        ))}
-      </div> */}
       <div style={{ color: "gray" }}>
         Free Squares:
         {Object.values(freeSquares).map((s) => (
           <div style={{ display: "inline", color: "gray" }}>{s}-</div>
+        ))}
+      </div>
+      <div style={{ color: "gray" }}>
+        Crucial Squares:
+        {crucialSquares.map((s) => (
+          <div style={{ display: "inline", color: "magenta" }}>
+            {s.id}-{s.crucialPoint}**
+          </div>
         ))}
       </div>
       <div style={{ color: "gray" }}>
@@ -347,39 +653,42 @@ export default function Pidoku() {
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {freeSquares.length === 1 && finalSquares.length === 0 &&
+      {freeSquares.length === 1 && finalSquares.length === 0 && (
         <div>
-          <div>All 24 squares are selected, the result of the game relies on the squares around the last empty one</div>
+          <div>
+            All 24 squares are selected, the result of the game relies on the
+            squares around the last empty one
+          </div>
           <button onClick={handleShowTime}>Show the decisive squares</button>
         </div>
-      }
-      {finalSquares.length !== 0 && !isGameResult &&
+      )}
+      {finalSquares.length !== 0 && !isGameResult && (
         <button onClick={handleGameResult}>Show the Game Result</button>
-      }
-      {isGameResult &&
+      )}
+      {isGameResult && (
         <div>
           <h3>Your totoal Point: {userPoint}</h3>
           <h3>Pejman's totoal Point: {pejmanPoint}</h3>
         </div>
-      }
-      {isGameResult && userPoint > pejmanPoint &&
+      )}
+      {isGameResult && userPoint > pejmanPoint && (
         <div>
           <h2>You Win!</h2>
           <button onClick={playAgain}>Play Again</button>
         </div>
-      }
-      {isGameResult && userPoint === pejmanPoint &&
+      )}
+      {isGameResult && userPoint === pejmanPoint && (
         <div>
           <h2>No Winner!</h2>
           <button onClick={playAgain}>Play Again</button>
         </div>
-      }
-      {isGameResult && userPoint < pejmanPoint &&
+      )}
+      {isGameResult && userPoint < pejmanPoint && (
         <div>
           <h2>You Loose!</h2>
           <button onClick={playAgain}>Try Again</button>
         </div>
-      }
+      )}
     </div>
   );
 }

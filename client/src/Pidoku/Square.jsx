@@ -21,7 +21,6 @@ export default function Square({
     );
     setUserNums(userNums.filter((el) => userNums.indexOf(el) !== 0));
     setFreeSquares(freeSquares.filter((el) => el !== idx + 1));
-
     setIsUserTurn(false);
   };
   return (
