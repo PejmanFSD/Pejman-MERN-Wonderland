@@ -668,7 +668,41 @@ export default function Pidoku() {
       {isGameResult && (
         <div>
           <h3>Your totoal Point: {userPoint}</h3>
+          <div style={{ display: "inline", margin: "10px" }}>(</div>
+          {finalSquares.map((fs) =>
+            squares.find((s) => s.id === fs).owner === "User" &&
+            <div
+            style={{
+              display: "inline",
+              margin: "10px",
+              color: userColor.red === 240 || userColor.blue === 240 ? "white" : "black",
+              background: `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`,
+              padding: "7px",
+              border: "4px solid black"
+            }}
+              >
+                {squares.find((s) => s.id === fs).text < 10 ? `0${squares.find((s) => s.id === fs).text}` : squares.find((s) => s.id === fs).text}
+              </div>
+          )}
+          <div style={{ display: "inline", margin: "10px" }}>)</div>
           <h3>Pejman's totoal Point: {pejmanPoint}</h3>
+          <div style={{ display: "inline", margin: "10px" }}>(</div>
+          {finalSquares.map((fs) =>
+            squares.find((s) => s.id === fs).owner === "Pejman" &&
+            <div
+            style={{
+              display: "inline",
+              margin: "10px",
+              color: pejmanColor.red === 240 || pejmanColor.blue === 240 ? "white" : "black",
+              background: `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
+              padding: "7px",
+              border: "4px solid black"
+            }}
+              >
+                {squares.find((s) => s.id === fs).text < 10 ? `0${squares.find((s) => s.id === fs).text}` : squares.find((s) => s.id === fs).text}
+              </div>
+          )}
+          <div style={{ display: "inline", margin: "10px" }}>)</div>
         </div>
       )}
       {isGameResult && userPoint > pejmanPoint && (
