@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const User = require('./models/user');
+const User = require('./models/user'); // Will be removed later
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
@@ -20,7 +20,8 @@ const sessionConfig = {
 };
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
-const ads = require('./routes/ads.js');
+const userRoutes = require('./routes/users.js');
+const adRoutes = require('./routes/ads.js');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
     .then(() => {
@@ -43,7 +44,8 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error"); // Most of the time it's empty!
     next();
 })
-app.use('/ads', ads);
+app.use('/', userRoutes);
+app.use('/ads', adRoutes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 const requireLogin = (req, res, next) => {
@@ -57,38 +59,9 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/register', (req, res) => {
-    res.render('Register');
-})
-
-app.post('/register', catchAsync(async (req, res) => {
-    const { username, password } = req.body;
-    const user = new User({ username, password });
-    await user.save();
-    req.session.user_id = user._id;
-    // req.flash('success', 'Successfully registered!');
-    res.redirect('/');
-}))
-
-app.get('/login', (req, res) => {
-    res.render('login');
-})
-
-app.post('/login', catchAsync(async (req, res) => {
-    const { username, password } = req.body;
-    const foundUser = await User.findAndValidate(username, password);
-    if (foundUser) {
-        req.session.user_id = foundUser._id;
-        // req.flash('success', 'Successfully logged-in!');
-        res.redirect('./secret');
-    } else {
-        res.redirect('/login');
-    }
-}))
-
 app.post('/logout', (req, res) => {
     req.session.user_id = null;
-    // req.flash('success', 'Successfully logged-out!');
+    req.flash('success', 'Successfully logged-out!');
     res.redirect('/login');
 })
 

@@ -1,0 +1,46 @@
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user');
+const {userSchema} = require('../schemas.js');
+const ExpressError = require('../utils/ExpressError');
+const catchAsync = require('../utils/catchAsync');
+
+router.get('/register', (req, res) => {
+    res.render('users/register');
+})
+
+router.post('/register', catchAsync(async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = new User({ username, password });
+        // Right before the "save" method, the password will be hashed (in models/user.js)
+        await user.save();
+        req.session.user_id = user._id;
+        req.flash('success', 'Welcome!');
+        res.redirect('./secret');
+    } catch(e) {
+        req.flash('error', 'Something is wrong!');
+        res.redirect('/');
+    }
+}))
+
+router.get('/login', (req, res) => {
+    res.render('users/login');
+})
+
+router.post('/login', catchAsync(async (req, res) => {
+    try{
+    const { username, password } = req.body;
+    const foundUser = await User.findAndValidate(username, password);
+        if (foundUser) {
+            req.session.user_id = foundUser._id;
+            req.flash('success', 'Welcome Back!');
+            res.redirect('./secret');
+        }
+    } catch(e) {
+        req.flash('error', 'Something is wrong!');
+        res.redirect('/');
+    }
+}))
+
+module.exports = router;
