@@ -59,12 +59,6 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.post('/logout', (req, res) => {
-    req.session.user_id = null;
-    req.flash('success', 'Successfully logged-out!');
-    res.redirect('/login');
-})
-
 app.get('/users', catchAsync(async (req, res) => {
     const users = await User.find({});
     res.render('users/index', {users});

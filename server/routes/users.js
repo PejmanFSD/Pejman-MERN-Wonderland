@@ -43,4 +43,10 @@ router.post('/login', catchAsync(async (req, res) => {
     }
 }))
 
+router.post('/logout', (req, res) => {
+    req.session.user_id = null;
+    req.flash('success', 'Successfully logged-out!');
+    res.redirect('/login');
+})
+
 module.exports = router;
