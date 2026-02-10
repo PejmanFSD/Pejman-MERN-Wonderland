@@ -23,9 +23,13 @@
         <a href="/login"><button>Login</button></a>
     <% } %>
     <% if(currentUser) { %>
-        <form action="/logout" method="POST">
-            <button type="submit">Logout</button>
-        </form>
+        <div>
+            <a href="/ads"><button>All Ads</button></a>
+            <a href="/users"><button>All Users</button></a>
+            <form action="/logout" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
     <% } %>
     <h1>Home Page</h1>
     <h2>Welcome to Pejman-MERN-Wonderland</h2>

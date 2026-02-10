@@ -35,7 +35,11 @@ router.post('/login', catchAsync(async (req, res) => {
         if (foundUser) {
             req.session.user_id = foundUser._id;
             req.flash('success', 'Welcome Back!');
-            const redirectUrl = req.session.returnTo || './secret';
+            // Redirecting the user (who hadn't logged-in) to the page
+            // that they had tried to reach before logging-in:
+            const redirectUrl = req.session.returnTo || './secret'; // './secret' is for the situation
+            // where they click on the "Login" button at first.
+            // We don't want the "returnTo" key remains in the session:
             delete req.session.returnTo;
             res.redirect(redirectUrl);
         }

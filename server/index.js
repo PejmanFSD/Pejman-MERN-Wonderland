@@ -18,6 +18,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 };
+const {isLoggedIn} = require('./middleware.js');
 const ExpressError = require('./utils/ExpressError');
 const catchAsync = require('./utils/catchAsync');
 const userRoutes = require('./routes/users.js');
@@ -40,7 +41,6 @@ app.use(methodOverride('_method'));
 app.use(session(sessionConfig));
 app.use(flash());
 app.use((req, res, next) => {
-    console.log(req.session);
     // We have access to all the following variables in ALL the files of our
     // application (including the files of the client side)
     res.locals.currentUser = req.session.user_id;
@@ -63,12 +63,12 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/users', catchAsync(async (req, res) => {
+app.get('/users', isLoggedIn, catchAsync(async (req, res) => {
     const users = await User.find({});
     res.render('users/index', {users});
 }))
 
-app.get('/users/:id', catchAsync(async (req, res) => {
+app.get('/users/:id', isLoggedIn, catchAsync(async (req, res) => {
     const id = req.params.id;
     const user = await User.findById(id);
     res.render('users/show', {user});

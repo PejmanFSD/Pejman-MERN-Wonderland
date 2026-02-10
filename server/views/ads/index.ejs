@@ -20,17 +20,17 @@
     <% } %>
     <h1>All ads</h1>
     <div>
-        <a href="/ads/new">Create new Ad</a>
+        <a href="/ads/new"><button>Create new Ad</button></a>
     </div>
     <ul>
         <% for (let ad of ads) { %>
-            <div>
-                <a href="/ads/<%= ad._id %>"><%= ad.company %>: <%= ad.text %></a>
-                <img src="<%= ad.image %>" alt="image Ad" style="height: 30px;">
+            <h3>
+                <%= ad.company %>: <%= ad.text %> <a href="/ads/<%= ad._id %>"><button>Details</button></a>
             </br>
-        </div>
+        </h3>
         <% } %>
     </ul>
+    <a href="/"><button>Home Page</button></a>
 </body>
 
 </html>

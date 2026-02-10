@@ -11,9 +11,14 @@
     <h1>All users</h1>
     <ul>
         <% for (let user of users) { %>
-            <a href="/users/<%= user._id %>"><%= user.username %></a>
+            <h3>
+                <%= user.username %>
+                <a href="/users/<%= user._id %>"><button>Details</button></a>
+                </br>
+            </h3>
         <% } %>
     </ul>
+    <a href="/"><button>Home Page</button></a>
 </body>
 
 </html>
