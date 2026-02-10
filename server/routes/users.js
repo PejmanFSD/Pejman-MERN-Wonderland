@@ -35,7 +35,9 @@ router.post('/login', catchAsync(async (req, res) => {
         if (foundUser) {
             req.session.user_id = foundUser._id;
             req.flash('success', 'Welcome Back!');
-            res.redirect('./secret');
+            const redirectUrl = req.session.returnTo || './secret';
+            delete req.session.returnTo;
+            res.redirect(redirectUrl);
         }
     } catch(e) {
         req.flash('error', 'Something is wrong!');

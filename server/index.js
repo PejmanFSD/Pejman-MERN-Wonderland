@@ -40,6 +40,10 @@ app.use(methodOverride('_method'));
 app.use(session(sessionConfig));
 app.use(flash());
 app.use((req, res, next) => {
+    console.log(req.session);
+    // We have access to all the following variables in ALL the files of our
+    // application (including the files of the client side)
+    res.locals.currentUser = req.session.user_id;
     res.locals.success = req.flash("success"); // Most of the time it's empty!
     res.locals.error = req.flash("error"); // Most of the time it's empty!
     next();
