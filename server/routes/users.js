@@ -29,7 +29,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', catchAsync(async (req, res) => {
-    try{
+    try {
     const { username, password } = req.body;
     const foundUser = await User.findAndValidate(username, password);
         if (foundUser) {

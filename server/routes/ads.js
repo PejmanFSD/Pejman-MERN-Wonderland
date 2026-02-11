@@ -22,26 +22,24 @@ router.get('/', isLoggedIn, catchAsync(async (req, res) => {
 }))
 
 router.get('/new', isLoggedIn, (req, res) => {
-    // if (!req.session.user_id) {
-    //     req.flash('error', 'You should login!');
-    //     return res.redirect('/login');
-    // }
     res.render('ads/new');
 })
 
 router.post('/', validateAd, isLoggedIn, catchAsync(async(req, res) => {
-    // if (!req.body.ad) throw new ExpressError('Invalid Ad Data', 400);
     const ad = new Ad(req.body.ad);
+    ad.author = req.user._id;
     await ad.save();
+    req.user.ads.push(ad._id);
+    await req.user.save();
     req.flash('success', 'Successfully made a new Ad!');
     res.redirect(`/ads/${ad._id}`);
 }))
 
 router.get('/:id', isLoggedIn, catchAsync(async (req, res) => {
     const {id} = req.params;
-    const ad = await Ad.findById(id);
+    const ad = await Ad.findById(id).populate('author');
+    console.log(ad);
     if (!ad) {
-        // throw new ExpressError('Ad not found!', 404);
         req.flash('error', "Can't find that ad!");
         return res.redirect('/ads');
     }
@@ -52,7 +50,6 @@ router.get('/:id/edit', isLoggedIn, catchAsync(async(req, res) => {
     const id = req.params.id;
     const ad = await Ad.findById(id);
     if (!ad) {
-        // throw new ExpressError('Ad not found!', 404);
         req.flash('error', "Can't find that ad!");
         return res.redirect('/ads');
     }

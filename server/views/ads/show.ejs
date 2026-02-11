@@ -21,6 +21,7 @@
     <img src="<%= ad.image %>" alt="image Ad" style="height: 70px;">
     <div><%= ad.company %></div>
     <div><%= ad.text %></div>
+    <div>Submitted by: <%= ad.author.username %></div>
     <a href="/ads/<%= ad._id %>/edit"><button>Edit</button></a>
     <form action="/ads/<%= ad._id %>?_method=DELETE" method="POST">
         <button>Delete</button>

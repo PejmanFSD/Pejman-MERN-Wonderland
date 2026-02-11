@@ -13,6 +13,10 @@ const adSchema = new mongoose.Schema({
     image: {
         type: String,
         required: [true, 'Image cannot be blank']
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 })
 

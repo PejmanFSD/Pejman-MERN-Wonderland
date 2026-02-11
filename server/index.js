@@ -48,8 +48,23 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error"); // Most of the time it's empty!
     next();
 })
+app.use(async (req, res, next) => {
+    if (req.session.user_id) {
+        try {
+            const user = await User.findById(req.session.user_id);
+            if (user) {
+                req.user = user;
+                res.locals.currentUser = user;
+            }
+        } catch (e) {
+            req.user = null;
+        }
+    }
+    next();
+});
 app.use('/', userRoutes);
 app.use('/ads', adRoutes);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const requireLogin = (req, res, next) => {
