@@ -1,8 +1,6 @@
 const Ad = require('./models/ad');
-// const ExpressError = require('../utils/ExpressError');
 const ExpressError = require('./utils/ExpressError');
-// const {adSchema} = require('../schemas.js');
-const {adSchema} = require('./schemas.js')
+const {adSchema} = require('./schemas.js');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.session.user_id) {

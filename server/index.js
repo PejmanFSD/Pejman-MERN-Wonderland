@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const User = require('./models/user'); // Will be removed later
+const User = require('./models/user');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
-// const bcrypt = require('bcrypt');
 const sessionConfig = {
     name: 'session',
     secret: 'Pejman-MERN-Wonderland',
@@ -20,7 +19,7 @@ const sessionConfig = {
 };
 const {isLoggedIn} = require('./middleware.js');
 const ExpressError = require('./utils/ExpressError');
-const catchAsync = require('./utils/catchAsync');
+const userAuthRoutes = require('./routes/usersAuth.js');
 const userRoutes = require('./routes/users.js');
 const adRoutes = require('./routes/ads.js');
 
@@ -62,34 +61,17 @@ app.use(async (req, res, next) => {
     }
     next();
 });
-app.use('/', userRoutes);
+app.use('/', userAuthRoutes);
+app.use('/users', userRoutes);
 app.use('/ads', adRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-const requireLogin = (req, res, next) => {
-    if (!req.session.user_id) {
-        return res.redirect('/login');
-    }
-    next();
-}
 
 app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/users', isLoggedIn, catchAsync(async (req, res) => {
-    const users = await User.find({});
-    res.render('users/index', {users});
-}))
-
-app.get('/users/:id', isLoggedIn, catchAsync(async (req, res) => {
-    const id = req.params.id;
-    const user = await User.findById(id);
-    res.render('users/show', {user});
-}))
-
-app.get('/secret', requireLogin, (req, res) => {
+app.get('/secret', isLoggedIn, (req, res) => {
     res.render('secret');
 })
 

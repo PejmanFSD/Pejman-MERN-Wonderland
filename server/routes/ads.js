@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const Ad = require('../models/ad');
 const ads = require('../controllers/ads.js');
 const {isLoggedIn, validateAd, isAuthor} = require('../middleware.js');
 const catchAsync = require('../utils/catchAsync');
