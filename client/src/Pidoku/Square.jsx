@@ -52,7 +52,7 @@ export default function Square({
           (freeSquares.length === 1 && squares.find((s) => s.id === idx + 1).id === freeSquares[0]))
           || freeSquares.length > 1 ? 1 : 0.3
       }}
-      disabled={squares.find((s) => s.id === idx + 1).text !== 0 || !isUserTurn}
+      disabled={squares.find((s) => s.id === idx + 1).text !== 0 || !isUserTurn || freeSquares.length === 1}
       onClick={handleClick}
     >
       {squares.find((s) => s.id === idx + 1).text}

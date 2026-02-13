@@ -3,7 +3,7 @@ import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import { getRandArr } from "../utils";
 
-export default function Pidoku() {
+export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -524,6 +524,13 @@ export default function Pidoku() {
       }
     }
   }, [isGameResult]);
+    useEffect(() => {
+    if (normalMode && (userPoint > 0 || pejmanPoint > 0) && isGameResult) {
+      if (userPoint > pejmanPoint) {
+        updateTotalPoint(1);
+      }
+    }
+  }, [userPoint, pejmanPoint]);
   return (
     <div>
       <h2>Pidoku</h2>
@@ -541,7 +548,7 @@ export default function Pidoku() {
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
-      <div style={{ color: "gray" }}>
+      {/* <div style={{ color: "gray" }}>
         Free Squares:
         {Object.values(freeSquares).map((s) => (
           <div style={{ display: "inline", color: "gray" }}>{s}-</div>
@@ -560,7 +567,7 @@ export default function Pidoku() {
         {Object.values(finalSquares).map((s) => (
           <div style={{ display: "inline", color: "gray" }}>{s}-</div>
         ))}
-      </div>
+      </div> */}
       {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
         <div>
           <div>
@@ -668,7 +675,7 @@ export default function Pidoku() {
       {isGameResult && (
         <div>
           <h3>Your totoal Point: {userPoint}</h3>
-          <div style={{ display: "inline", margin: "10px" }}>(</div>
+          <div style={{ display: "inline", margin: "10px" }}>{userPoint !== 0 && "("}</div>
           {finalSquares.map((fs) =>
             squares.find((s) => s.id === fs).owner === "User" &&
             <div
@@ -684,9 +691,9 @@ export default function Pidoku() {
                 {squares.find((s) => s.id === fs).text < 10 ? `0${squares.find((s) => s.id === fs).text}` : squares.find((s) => s.id === fs).text}
               </div>
           )}
-          <div style={{ display: "inline", margin: "10px" }}>)</div>
+          <div style={{ display: "inline", margin: "10px" }}>{userPoint !== 0 && ")"}</div>
           <h3>Pejman's totoal Point: {pejmanPoint}</h3>
-          <div style={{ display: "inline", margin: "10px" }}>(</div>
+          <div style={{ display: "inline", margin: "10px" }}>{pejmanPoint !== 0 && "("}</div>
           {finalSquares.map((fs) =>
             squares.find((s) => s.id === fs).owner === "Pejman" &&
             <div
@@ -702,7 +709,7 @@ export default function Pidoku() {
                 {squares.find((s) => s.id === fs).text < 10 ? `0${squares.find((s) => s.id === fs).text}` : squares.find((s) => s.id === fs).text}
               </div>
           )}
-          <div style={{ display: "inline", margin: "10px" }}>)</div>
+          <div style={{ display: "inline", margin: "10px" }}>{pejmanPoint !== 0 && ")"}</div>
         </div>
       )}
       {isGameResult && userPoint > pejmanPoint && (
