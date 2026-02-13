@@ -22,10 +22,13 @@
     <div><%= ad.company %></div>
     <div><%= ad.text %></div>
     <div>Submitted by: <%= ad.author.username %></div>
-    <a href="/ads/<%= ad._id %>/edit"><button>Edit</button></a>
-    <form action="/ads/<%= ad._id %>?_method=DELETE" method="POST">
-        <button>Delete</button>
-    </form>
+    <!-- The "Edit" and "Delete" buttons should be visible only if the logged-in user owns the ad -->
+    <% if (currentUser && ad.author.equals(currentUser._id)) { %>
+        <a href="/ads/<%= ad._id %>/edit"><button>Edit</button></a>
+        <form action="/ads/<%= ad._id %>?_method=DELETE" method="POST">
+            <button>Delete</button>
+        </form>
+    <% } %>
     <a href="/ads"><button>All ads</button></a>
     <a href="/"><button>Home Page</button></a>
 </body>

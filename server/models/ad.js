@@ -14,7 +14,7 @@ const adSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Image cannot be blank']
     },
-    author: {
+    author: { // The owner of the ad
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
