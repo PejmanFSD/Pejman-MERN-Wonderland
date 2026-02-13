@@ -4,18 +4,22 @@ const ads = require('../controllers/ads.js');
 const {isLoggedIn, validateAd, isAuthor} = require('../middleware.js');
 const catchAsync = require('../utils/catchAsync');
 
-router.get('/', isLoggedIn, catchAsync(ads.index));
+router.route('/')
+    .get(isLoggedIn, catchAsync(ads.index))
+    .post(isLoggedIn, validateAd, catchAsync(ads.createAd));
+// router.get('/', isLoggedIn, catchAsync(ads.index));
+// router.post('/', isLoggedIn, validateAd, catchAsync(ads.createAd));
 
 router.get('/new', isLoggedIn, ads.renderNewForm);
 
-router.post('/', validateAd, isLoggedIn, catchAsync(ads.createAd));
-
-router.get('/:id', isLoggedIn, catchAsync(ads.showAd));
+router.route('/:id')
+    .get(isLoggedIn, catchAsync(ads.showAd))
+    .put(isLoggedIn, isAuthor, validateAd, catchAsync(ads.editAd))
+    .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
+// router.get('/:id', isLoggedIn, catchAsync(ads.showAd));
+// router.put('/:id', isLoggedIn, isAuthor, validateAd, catchAsync(ads.editAd));
+// router.delete('/:id', isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(ads.renderEditForm));
-
-router.put('/:id', isLoggedIn, isAuthor, validateAd, catchAsync(ads.editAd));
-
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
 
 module.exports = router;
