@@ -2,8 +2,13 @@ import { useState, useEffect } from "react";
 import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import { getRandArr } from "../utils";
+import ConfirmationBox from "../ConfirmationBox";
 
-export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoint}) {
+export default function Pidoku({
+  setShowPidoku,
+  setShowGameTitles,
+  updateTotalPoint,
+}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -88,6 +93,8 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
     { id: 24, crucialPoint: 0 },
     { id: 25, crucialPoint: 0 },
   ]);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
+
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -386,7 +393,7 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
   const handleGameResult = () => {
     setIsGameResult(true);
   };
-  const playAgain = () => {
+  const handlePlayAgain = () => {
     setIsGameStarted(false);
     setUserColor({
       red: null,
@@ -438,6 +445,16 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
     setFinalSquares([]);
     setIsShowTime(false);
     setIsGameResult(false);
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handlePlayAgain();
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(() => {
     if (isShowTime) {
@@ -524,7 +541,7 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
       }
     }
   }, [isGameResult]);
-    useEffect(() => {
+  useEffect(() => {
     if (normalMode && (userPoint > 0 || pejmanPoint > 0) && isGameResult) {
       if (userPoint > pejmanPoint) {
         updateTotalPoint(1);
@@ -540,11 +557,12 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode ? (
+      {easyMode && !normalMode && !isTogglingReset ? (
         <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the squares randomly. You won't get any stars if you win." />
       ) : (
         !easyMode &&
-        normalMode && (
+        normalMode &&
+        !isTogglingReset && (
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
@@ -614,6 +632,7 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
         </div>
       )}
       {isGameStarted &&
+        !isTogglingReset &&
         new Array(25).fill(null).map((el, idx) =>
           (idx + 1) % 5 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -654,80 +673,123 @@ export default function Pidoku({setShowPidoku, setShowGameTitles, updateTotalPoi
             </div>
           ),
         )}
-      {isGameStarted && !isUserTurn && (
+      {isGameStarted && !isUserTurn && !isTogglingReset && (
         <div>
           <div>Allow Pejman to make his move</div>
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {freeSquares.length === 1 && finalSquares.length === 0 && (
-        <div>
+      {freeSquares.length === 1 &&
+        finalSquares.length === 0 &&
+        !isTogglingReset && (
           <div>
-            All 24 squares are selected, the result of the game relies on the
-            squares around the last empty one
+            <div>
+              All 24 squares are selected, the result of the game relies on the
+              squares around the last empty one
+            </div>
+            <button onClick={handleShowTime}>Show the decisive squares</button>
           </div>
-          <button onClick={handleShowTime}>Show the decisive squares</button>
-        </div>
-      )}
-      {finalSquares.length !== 0 && !isGameResult && (
+        )}
+      {finalSquares.length !== 0 && !isGameResult && !isTogglingReset && (
         <button onClick={handleGameResult}>Show the Game Result</button>
       )}
-      {isGameResult && (
+      {isGameResult && !isTogglingReset && (
         <div>
           <h3>Your totoal Point: {userPoint}</h3>
-          <div style={{ display: "inline", margin: "10px" }}>{userPoint !== 0 && "("}</div>
-          {finalSquares.map((fs) =>
-            squares.find((s) => s.id === fs).owner === "User" &&
-            <div
-            style={{
-              display: "inline",
-              margin: "10px",
-              color: userColor.red === 240 || userColor.blue === 240 ? "white" : "black",
-              background: `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`,
-              padding: "7px",
-              border: "4px solid black"
-            }}
-              >
-                {squares.find((s) => s.id === fs).text < 10 ? `0${squares.find((s) => s.id === fs).text}` : squares.find((s) => s.id === fs).text}
-              </div>
+          <div style={{ display: "inline", margin: "10px" }}>
+            {userPoint !== 0 && "("}
+          </div>
+          {finalSquares.map(
+            (fs) =>
+              squares.find((s) => s.id === fs).owner === "User" && (
+                <div
+                  style={{
+                    display: "inline",
+                    margin: "10px",
+                    color:
+                      userColor.red === 240 || userColor.blue === 240
+                        ? "white"
+                        : "black",
+                    background: `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`,
+                    padding: "7px",
+                    border: "4px solid black",
+                  }}
+                >
+                  {squares.find((s) => s.id === fs).text < 10
+                    ? `0${squares.find((s) => s.id === fs).text}`
+                    : squares.find((s) => s.id === fs).text}
+                </div>
+              ),
           )}
-          <div style={{ display: "inline", margin: "10px" }}>{userPoint !== 0 && ")"}</div>
+          <div style={{ display: "inline", margin: "10px" }}>
+            {userPoint !== 0 && ")"}
+          </div>
           <h3>Pejman's totoal Point: {pejmanPoint}</h3>
-          <div style={{ display: "inline", margin: "10px" }}>{pejmanPoint !== 0 && "("}</div>
-          {finalSquares.map((fs) =>
-            squares.find((s) => s.id === fs).owner === "Pejman" &&
-            <div
-            style={{
-              display: "inline",
-              margin: "10px",
-              color: pejmanColor.red === 240 || pejmanColor.blue === 240 ? "white" : "black",
-              background: `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
-              padding: "7px",
-              border: "4px solid black"
-            }}
-              >
-                {squares.find((s) => s.id === fs).text < 10 ? `0${squares.find((s) => s.id === fs).text}` : squares.find((s) => s.id === fs).text}
-              </div>
+          <div style={{ display: "inline", margin: "10px" }}>
+            {pejmanPoint !== 0 && "("}
+          </div>
+          {finalSquares.map(
+            (fs) =>
+              squares.find((s) => s.id === fs).owner === "Pejman" && (
+                <div
+                  style={{
+                    display: "inline",
+                    margin: "10px",
+                    color:
+                      pejmanColor.red === 240 || pejmanColor.blue === 240
+                        ? "white"
+                        : "black",
+                    background: `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
+                    padding: "7px",
+                    border: "4px solid black",
+                  }}
+                >
+                  {squares.find((s) => s.id === fs).text < 10
+                    ? `0${squares.find((s) => s.id === fs).text}`
+                    : squares.find((s) => s.id === fs).text}
+                </div>
+              ),
           )}
-          <div style={{ display: "inline", margin: "10px" }}>{pejmanPoint !== 0 && ")"}</div>
+          <div style={{ display: "inline", margin: "10px" }}>
+            {pejmanPoint !== 0 && ")"}
+          </div>
         </div>
       )}
-      {isGameResult && userPoint > pejmanPoint && (
+      {isGameResult && userPoint > pejmanPoint && !isTogglingReset && (
         <div>
           <h2>You Win!</h2>
-          <button onClick={playAgain}>Play Again</button>
+          <button onClick={handlePlayAgain}>Play Again</button>
         </div>
       )}
-      {isGameResult && userPoint === pejmanPoint && (
+      {isGameResult && userPoint === pejmanPoint && !isTogglingReset && (
         <div>
           <h2>No Winner!</h2>
-          <button onClick={playAgain}>Play Again</button>
+          <button onClick={handlePlayAgain}>Play Again</button>
         </div>
       )}
-      {isGameResult && userPoint < pejmanPoint && (
+      {isGameResult && userPoint < pejmanPoint && !isTogglingReset && (
         <div>
           <h2>You Loose!</h2>
-          <button onClick={playAgain}>Try Again</button>
+          <button onClick={handlePlayAgain}>Try Again</button>
+        </div>
+      )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isGameResult &&
+        // !isTogglingHomePage &&
+        // !isTogglingLevel &&
+        (easyMode || normalMode) && (
+          <div>
+            <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+        )}
+      {isTogglingReset && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
         </div>
       )}
     </div>
