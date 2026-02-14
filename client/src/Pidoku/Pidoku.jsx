@@ -95,6 +95,7 @@ export default function Pidoku({
   ]);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -457,7 +458,7 @@ export default function Pidoku({
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
-    const toggleHomePage = () => {
+  const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
@@ -467,6 +468,61 @@ export default function Pidoku({
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
+  };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+    }
+    setUserNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    setPejmanNums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    setIsUserTurn(true);
+    setSquares([
+      { id: 1, text: 0, owner: null },
+      { id: 2, text: 0, owner: null },
+      { id: 3, text: 0, owner: null },
+      { id: 4, text: 0, owner: null },
+      { id: 5, text: 0, owner: null },
+      { id: 6, text: 0, owner: null },
+      { id: 7, text: 0, owner: null },
+      { id: 8, text: 0, owner: null },
+      { id: 9, text: 0, owner: null },
+      { id: 10, text: 0, owner: null },
+      { id: 11, text: 0, owner: null },
+      { id: 12, text: 0, owner: null },
+      { id: 13, text: 0, owner: null },
+      { id: 14, text: 0, owner: null },
+      { id: 15, text: 0, owner: null },
+      { id: 16, text: 0, owner: null },
+      { id: 17, text: 0, owner: null },
+      { id: 18, text: 0, owner: null },
+      { id: 19, text: 0, owner: null },
+      { id: 20, text: 0, owner: null },
+      { id: 21, text: 0, owner: null },
+      { id: 22, text: 0, owner: null },
+      { id: 23, text: 0, owner: null },
+      { id: 24, text: 0, owner: null },
+      { id: 25, text: 0, owner: null },
+    ]);
+    setFreeSquares([
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+      22, 23, 24, 25,
+    ]);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setFinalSquares([]);
+    setIsShowTime(false);
+    setIsGameResult(false);
+    setIsTogglingLevel(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
   };
   useEffect(() => {
     if (isShowTime) {
@@ -569,12 +625,18 @@ export default function Pidoku({
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
+      {easyMode &&
+      !normalMode &&
+      !isTogglingReset &&
+      !isTogglingHomePage &&
+      !isTogglingLevel ? (
         <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the squares randomly. You won't get any stars if you win." />
       ) : (
         !easyMode &&
         normalMode &&
-        !isTogglingReset && !isTogglingHomePage && (
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
@@ -598,46 +660,56 @@ export default function Pidoku({
           <div style={{ display: "inline", color: "gray" }}>{s}-</div>
         ))}
       </div> */}
-      {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && !isTogglingHomePage && (
-        <div>
+      {!isGameStarted &&
+        !isIdenticalColor &&
+        (easyMode || normalMode) &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <div>
-            <label htmlFor="userColor">Select a Color for yourself </label>
-            <br></br>
-            <select onChange={handleUserColor} name="userColor" id="userColor">
-              <option value={userColor} disabled selected>
-                🔽🔽🔽
-              </option>
-              {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                <option>{c}</option>
-              ))}
-            </select>
+            <div>
+              <label htmlFor="userColor">Select a Color for yourself </label>
+              <br></br>
+              <select
+                onChange={handleUserColor}
+                name="userColor"
+                id="userColor"
+              >
+                <option value={userColor} disabled selected>
+                  🔽🔽🔽
+                </option>
+                {["Red", "Green", "Blue", "Yellow"].map((c) => (
+                  <option>{c}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="pejmanColor">Select a Color for Pejman </label>
+              <br></br>
+              <select
+                onChange={handlePejmanColor}
+                name="pejmanColor"
+                id="pejmanColor"
+              >
+                <option value={pejmanColor} disabled selected>
+                  🔽🔽🔽
+                </option>
+                {["Red", "Green", "Blue", "Yellow"].map((c) => (
+                  <option>{c}</option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div>
-            <label htmlFor="pejmanColor">Select a Color for Pejman </label>
-            <br></br>
-            <select
-              onChange={handlePejmanColor}
-              name="pejmanColor"
-              id="pejmanColor"
-            >
-              <option value={pejmanColor} disabled selected>
-                🔽🔽🔽
-              </option>
-              {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                <option>{c}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
+        )}
       {!isGameStarted &&
         (easyMode || normalMode) &&
         (userColor.red || userColor.blue || userColor.green) &&
         (pejmanColor.red || pejmanColor.blue || pejmanColor.green) &&
-        !isIdenticalColor && !isTogglingHomePage && (
+        !isIdenticalColor &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <button onClick={handleStart}>Start the Game</button>
         )}
-      {isIdenticalColor && !isTogglingHomePage && (
+      {isIdenticalColor && !isTogglingHomePage && !isTogglingLevel && (
         <div>
           <div>You can't choose an identical color for both players</div>
           <button onClick={handleOk}>Ok</button>
@@ -646,6 +718,7 @@ export default function Pidoku({
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingHomePage &&
+        !isTogglingLevel &&
         new Array(25).fill(null).map((el, idx) =>
           (idx + 1) % 5 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -686,16 +759,21 @@ export default function Pidoku({
             </div>
           ),
         )}
-      {isGameStarted && !isUserTurn && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <div>Allow Pejman to make his move</div>
-          <button onClick={handleAllowPejman}>Ok</button>
-        </div>
-      )}
+      {isGameStarted &&
+        !isUserTurn &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <div>Allow Pejman to make his move</div>
+            <button onClick={handleAllowPejman}>Ok</button>
+          </div>
+        )}
       {freeSquares.length === 1 &&
         finalSquares.length === 0 &&
         !isTogglingReset &&
-        !isTogglingHomePage && (
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <div>
             <div>
               All 24 squares are selected, the result of the game relies on the
@@ -704,94 +782,138 @@ export default function Pidoku({
             <button onClick={handleShowTime}>Show the decisive squares</button>
           </div>
         )}
-      {finalSquares.length !== 0 && !isGameResult && !isTogglingReset && !isTogglingHomePage && (
-        <button onClick={handleGameResult}>Show the Game Result</button>
-      )}
-      {isGameResult && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <h3>Your totoal Point: {userPoint}</h3>
-          <div style={{ display: "inline", margin: "10px" }}>
-            {userPoint !== 0 && "("}
+      {finalSquares.length !== 0 &&
+        !isGameResult &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <button onClick={handleGameResult}>Show the Game Result</button>
+        )}
+      {isGameResult &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <h3>Your totoal Point: {userPoint}</h3>
+            <div style={{ display: "inline", margin: "10px" }}>
+              {userPoint !== 0 && "("}
+            </div>
+            {finalSquares.map(
+              (fs) =>
+                squares.find((s) => s.id === fs).owner === "User" && (
+                  <div
+                    style={{
+                      display: "inline",
+                      margin: "10px",
+                      color:
+                        userColor.red === 240 || userColor.blue === 240
+                          ? "white"
+                          : "black",
+                      background: `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`,
+                      padding: "7px",
+                      border: "4px solid black",
+                    }}
+                  >
+                    {squares.find((s) => s.id === fs).text < 10
+                      ? `0${squares.find((s) => s.id === fs).text}`
+                      : squares.find((s) => s.id === fs).text}
+                  </div>
+                ),
+            )}
+            <div style={{ display: "inline", margin: "10px" }}>
+              {userPoint !== 0 && ")"}
+            </div>
+            <h3>Pejman's totoal Point: {pejmanPoint}</h3>
+            <div style={{ display: "inline", margin: "10px" }}>
+              {pejmanPoint !== 0 && "("}
+            </div>
+            {finalSquares.map(
+              (fs) =>
+                squares.find((s) => s.id === fs).owner === "Pejman" && (
+                  <div
+                    style={{
+                      display: "inline",
+                      margin: "10px",
+                      color:
+                        pejmanColor.red === 240 || pejmanColor.blue === 240
+                          ? "white"
+                          : "black",
+                      background: `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
+                      padding: "7px",
+                      border: "4px solid black",
+                    }}
+                  >
+                    {squares.find((s) => s.id === fs).text < 10
+                      ? `0${squares.find((s) => s.id === fs).text}`
+                      : squares.find((s) => s.id === fs).text}
+                  </div>
+                ),
+            )}
+            <div style={{ display: "inline", margin: "10px" }}>
+              {pejmanPoint !== 0 && ")"}
+            </div>
           </div>
-          {finalSquares.map(
-            (fs) =>
-              squares.find((s) => s.id === fs).owner === "User" && (
-                <div
-                  style={{
-                    display: "inline",
-                    margin: "10px",
-                    color:
-                      userColor.red === 240 || userColor.blue === 240
-                        ? "white"
-                        : "black",
-                    background: `rgba(${userColor.red}, ${userColor.green}, ${userColor.blue})`,
-                    padding: "7px",
-                    border: "4px solid black",
-                  }}
-                >
-                  {squares.find((s) => s.id === fs).text < 10
-                    ? `0${squares.find((s) => s.id === fs).text}`
-                    : squares.find((s) => s.id === fs).text}
-                </div>
-              ),
-          )}
-          <div style={{ display: "inline", margin: "10px" }}>
-            {userPoint !== 0 && ")"}
+        )}
+      {isGameResult &&
+        userPoint > pejmanPoint &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <h2>You Win!</h2>
+            <button onClick={handlePlayAgain}>Play Again</button>
           </div>
-          <h3>Pejman's totoal Point: {pejmanPoint}</h3>
-          <div style={{ display: "inline", margin: "10px" }}>
-            {pejmanPoint !== 0 && "("}
+        )}
+      {isGameResult &&
+        userPoint === pejmanPoint &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <h2>No Winner!</h2>
+            <button onClick={handlePlayAgain}>Play Again</button>
           </div>
-          {finalSquares.map(
-            (fs) =>
-              squares.find((s) => s.id === fs).owner === "Pejman" && (
-                <div
-                  style={{
-                    display: "inline",
-                    margin: "10px",
-                    color:
-                      pejmanColor.red === 240 || pejmanColor.blue === 240
-                        ? "white"
-                        : "black",
-                    background: `rgba(${pejmanColor.red}, ${pejmanColor.green}, ${pejmanColor.blue})`,
-                    padding: "7px",
-                    border: "4px solid black",
-                  }}
-                >
-                  {squares.find((s) => s.id === fs).text < 10
-                    ? `0${squares.find((s) => s.id === fs).text}`
-                    : squares.find((s) => s.id === fs).text}
-                </div>
-              ),
-          )}
-          <div style={{ display: "inline", margin: "10px" }}>
-            {pejmanPoint !== 0 && ")"}
+        )}
+      {isGameResult &&
+        userPoint < pejmanPoint &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <h2>You Loose!</h2>
+            <button onClick={handlePlayAgain}>Try Again</button>
           </div>
-        </div>
-      )}
-      {isGameResult && userPoint > pejmanPoint && !isTogglingReset && !isTogglingHomePage && (
+        )}
+      {(easyMode || normalMode) &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <button
+              style={{
+                display: "inline",
+              }}
+              onClick={() => toggleLevel()}
+            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+          </div>
+        )}
+      {(easyMode || normalMode) && isTogglingLevel && (
         <div>
-          <h2>You Win!</h2>
-          <button onClick={handlePlayAgain}>Play Again</button>
-        </div>
-      )}
-      {isGameResult && userPoint === pejmanPoint && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <h2>No Winner!</h2>
-          <button onClick={handlePlayAgain}>Play Again</button>
-        </div>
-      )}
-      {isGameResult && userPoint < pejmanPoint && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <h2>You Loose!</h2>
-          <button onClick={handlePlayAgain}>Try Again</button>
+          <ConfirmationBox
+            question={`Are you sure you want to switch to ${
+              easyMode ? "Normal Mode" : "Easy Mode"
+            }?`}
+            toggleYes={toggleLevelYes}
+            toggleCancel={toggleLevelCancel}
+            easyMode={easyMode}
+          />
         </div>
       )}
       {isGameStarted &&
         !isTogglingReset &&
         !isGameResult &&
         !isTogglingHomePage &&
-        // !isTogglingLevel &&
+        !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
             <button onClick={toggleReset}>Reset the Game</button>
@@ -806,24 +928,22 @@ export default function Pidoku({
           />
         </div>
       )}
-            {!isTogglingHomePage &&
-            // !isTogglingLevel &&
-            !isTogglingReset && (
-              <div>
-                <button onClick={() => toggleHomePage()}>
-                  Back to the home page
-                </button>
-              </div>
-            )}
-            {isTogglingHomePage && (
-              <div>
-                <ConfirmationBox
-                  question="Are you sure you want to go back to Home Page?"
-                  toggleYes={toggleHomePageYes}
-                  toggleCancel={toggleHomePageCancel}
-                />
-              </div>
-            )}
+      {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+        <div>
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        </div>
+      )}
+      {isTogglingHomePage && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        </div>
+      )}
     </div>
   );
 }
