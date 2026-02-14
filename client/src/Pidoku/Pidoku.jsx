@@ -94,6 +94,7 @@ export default function Pidoku({
     { id: 25, crucialPoint: 0 },
   ]);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const runEasyMode = () => {
     setEasyMode(true);
@@ -456,6 +457,17 @@ export default function Pidoku({
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+    const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowPidoku(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
+  };
   useEffect(() => {
     if (isShowTime) {
       const star = freeSquares[0];
@@ -551,18 +563,18 @@ export default function Pidoku({
   return (
     <div>
       <h2>Pidoku</h2>
-      {!isGameStarted && !easyMode && !normalMode && (
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={runEasyMode}>Easy Mode</button>
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode && !isTogglingReset ? (
+      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
         <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the squares randomly. You won't get any stars if you win." />
       ) : (
         !easyMode &&
         normalMode &&
-        !isTogglingReset && (
+        !isTogglingReset && !isTogglingHomePage && (
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
         )
       )}
@@ -586,7 +598,7 @@ export default function Pidoku({
           <div style={{ display: "inline", color: "gray" }}>{s}-</div>
         ))}
       </div> */}
-      {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
+      {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && !isTogglingHomePage && (
         <div>
           <div>
             <label htmlFor="userColor">Select a Color for yourself </label>
@@ -622,10 +634,10 @@ export default function Pidoku({
         (easyMode || normalMode) &&
         (userColor.red || userColor.blue || userColor.green) &&
         (pejmanColor.red || pejmanColor.blue || pejmanColor.green) &&
-        !isIdenticalColor && (
+        !isIdenticalColor && !isTogglingHomePage && (
           <button onClick={handleStart}>Start the Game</button>
         )}
-      {isIdenticalColor && (
+      {isIdenticalColor && !isTogglingHomePage && (
         <div>
           <div>You can't choose an identical color for both players</div>
           <button onClick={handleOk}>Ok</button>
@@ -633,6 +645,7 @@ export default function Pidoku({
       )}
       {isGameStarted &&
         !isTogglingReset &&
+        !isTogglingHomePage &&
         new Array(25).fill(null).map((el, idx) =>
           (idx + 1) % 5 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -673,7 +686,7 @@ export default function Pidoku({
             </div>
           ),
         )}
-      {isGameStarted && !isUserTurn && !isTogglingReset && (
+      {isGameStarted && !isUserTurn && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <div>Allow Pejman to make his move</div>
           <button onClick={handleAllowPejman}>Ok</button>
@@ -681,7 +694,8 @@ export default function Pidoku({
       )}
       {freeSquares.length === 1 &&
         finalSquares.length === 0 &&
-        !isTogglingReset && (
+        !isTogglingReset &&
+        !isTogglingHomePage && (
           <div>
             <div>
               All 24 squares are selected, the result of the game relies on the
@@ -690,10 +704,10 @@ export default function Pidoku({
             <button onClick={handleShowTime}>Show the decisive squares</button>
           </div>
         )}
-      {finalSquares.length !== 0 && !isGameResult && !isTogglingReset && (
+      {finalSquares.length !== 0 && !isGameResult && !isTogglingReset && !isTogglingHomePage && (
         <button onClick={handleGameResult}>Show the Game Result</button>
       )}
-      {isGameResult && !isTogglingReset && (
+      {isGameResult && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <h3>Your totoal Point: {userPoint}</h3>
           <div style={{ display: "inline", margin: "10px" }}>
@@ -755,19 +769,19 @@ export default function Pidoku({
           </div>
         </div>
       )}
-      {isGameResult && userPoint > pejmanPoint && !isTogglingReset && (
+      {isGameResult && userPoint > pejmanPoint && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <h2>You Win!</h2>
           <button onClick={handlePlayAgain}>Play Again</button>
         </div>
       )}
-      {isGameResult && userPoint === pejmanPoint && !isTogglingReset && (
+      {isGameResult && userPoint === pejmanPoint && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <h2>No Winner!</h2>
           <button onClick={handlePlayAgain}>Play Again</button>
         </div>
       )}
-      {isGameResult && userPoint < pejmanPoint && !isTogglingReset && (
+      {isGameResult && userPoint < pejmanPoint && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <h2>You Loose!</h2>
           <button onClick={handlePlayAgain}>Try Again</button>
@@ -776,7 +790,7 @@ export default function Pidoku({
       {isGameStarted &&
         !isTogglingReset &&
         !isGameResult &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         // !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
@@ -792,6 +806,24 @@ export default function Pidoku({
           />
         </div>
       )}
+            {!isTogglingHomePage &&
+            // !isTogglingLevel &&
+            !isTogglingReset && (
+              <div>
+                <button onClick={() => toggleHomePage()}>
+                  Back to the home page
+                </button>
+              </div>
+            )}
+            {isTogglingHomePage && (
+              <div>
+                <ConfirmationBox
+                  question="Are you sure you want to go back to Home Page?"
+                  toggleYes={toggleHomePageYes}
+                  toggleCancel={toggleHomePageCancel}
+                />
+              </div>
+            )}
     </div>
   );
 }
