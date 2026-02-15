@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Edit Ad</h1>
-    <form action="/ads/<%= ad._id %>?_method=PUT" method="POST">
+    <form action="/ads/<%= ad._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
         <div>
             <label for="company">Company name</label>
             <input type="text" id="company" name="ad[company]" value="<%= ad.company %>" required>
@@ -18,7 +18,7 @@
         </div>
         <div>
             <label for="image">Image</label>
-            <input type="text" id="image" name="ad[image]" value="<%= ad.image %>" required>
+            <input type="file" id="image" name="image" value="<%= ad.image %>" multiple>
         </div>
         <button>Update AD</button>
     </form>

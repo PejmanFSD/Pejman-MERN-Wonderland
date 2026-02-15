@@ -46,6 +46,9 @@ module.exports.renderEditForm = async(req, res) => {
 module.exports.editAd = async(req, res) => {
     const {id} = req.params;
     const ad = await Ad.findByIdAndUpdate(id, {...req.body.ad}, {runValidators: true, new: true});
+    const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
+    ad.images.push(...imgs); // We don't want to push an array to the original array
+    await ad.save();
     req.flash('success', 'Ad is successfully edited!');
     res.redirect(`/ads/${ad._id}`);
 }
