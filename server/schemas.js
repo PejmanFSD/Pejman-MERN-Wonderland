@@ -3,8 +3,8 @@ const Joi = require('joi');
 module.exports.adSchema = Joi.object({
     ad: Joi.object({
         company: Joi.string().trim().required(),
-        text: Joi.string().trim().required().max(250),
-        image: Joi.string().trim().required()
+        text: Joi.string().trim().required().max(250)
+        // image: Joi.string().trim().required()
     }).required()
 });
 

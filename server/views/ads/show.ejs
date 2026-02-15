@@ -18,7 +18,10 @@
             <%= error %>
         </div>
     <% } %>
-    <img src="<%= ad.image %>" alt="image Ad" style="height: 70px;">
+    <!-- Showing all the uploaded images with their urls: -->
+    <% for(let img of ad.images) { %>    
+        <img src="<%= img.url %>" alt="image Ad" style="height: 70px;">
+    <% } %>
     <div><%= ad.company %></div>
     <div><%= ad.text %></div>
     <div>Submitted by: <%= ad.author.username %></div>

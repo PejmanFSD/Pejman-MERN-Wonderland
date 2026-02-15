@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV !== "production") { // When the project is deployed, it will be running in "production" environment
+    // Before deploying, the project is running in "development" environment, so we need access to the ".env" file
+    require('dotenv').config();
+}
+
 const express = require('express');
 const app = express();
 const path = require('path');

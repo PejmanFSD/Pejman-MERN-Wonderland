@@ -3,10 +3,14 @@ const router = express.Router();
 const ads = require('../controllers/ads.js');
 const {isLoggedIn, validateAd, isAuthor} = require('../middleware.js');
 const catchAsync = require('../utils/catchAsync');
+const multer = require('multer');
+const {storage} = require('../cloudinary');
+// const upload = multer({dest: 'uploads/'});
+const upload = multer({storage});
 
 router.route('/')
     .get(isLoggedIn, catchAsync(ads.index))
-    .post(isLoggedIn, validateAd, catchAsync(ads.createAd));
+    .post(isLoggedIn, upload.array('image'), validateAd, catchAsync(ads.createAd));
 // router.get('/', isLoggedIn, catchAsync(ads.index));
 // router.post('/', isLoggedIn, validateAd, catchAsync(ads.createAd));
 

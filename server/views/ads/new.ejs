@@ -6,7 +6,7 @@
     <title>Add new Ad</title>
 </head>
 <body>
-    <form action="/ads" method="POST">
+    <form action="/ads" method="POST" enctype="multipart/form-data">
         <div>
             <label for="company">Company</label>
             <input type="text" id="company" name="ad[company]" required>
@@ -16,8 +16,8 @@
             <textarea type="text" id="text" name="ad[text]" required></textarea>
         </div>
         <div>
-            <label for="image">Ad image source</label>
-            <input type="text" id="image" name="ad[image]" required>
+            <label for="image">Ad image</label>
+            <input type="file" name="image" id="image" multiple>
         </div>
         <button>Create AD</button>
     </form>

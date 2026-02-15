@@ -11,8 +11,11 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createAd = async(req, res) => {
     const ad = new Ad(req.body.ad);
+    // Pushing all the uploaded images to the "images" array:
+    ad.images = req.files.map(f => ({url: f.path, filename: f.filename}));
     ad.author = req.user._id; // Giving the new created ad an owner!
     await ad.save();
+    console.log(ad);
     req.user.ads.push(ad._id); // Adding the new created ad to the list of the owner's ads
     await req.user.save();
     req.flash('success', 'Successfully made a new Ad!');
