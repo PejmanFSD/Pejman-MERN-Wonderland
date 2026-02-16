@@ -20,6 +20,14 @@
             <label for="image">Image</label>
             <input type="file" id="image" name="image" value="<%= ad.image %>" multiple>
         </div>
+        <div>
+            <% ad.images.forEach(function(img, i) { %>
+                <img src="<%= img.url %>" alt="image Ad" style="height: 40px;">
+                <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%= img.filename %>" />
+                <label for="image-<%= i %>">Delete?</label>
+                <br>
+            <% }) %>
+        </div>
         <button>Update AD</button>
     </form>
     <a href="/ads"><button>Back to Ads</button></a>

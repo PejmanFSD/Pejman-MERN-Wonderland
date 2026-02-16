@@ -1,4 +1,5 @@
 const Ad = require('../models/ad');
+const {cloudinary} = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
     const ads = await Ad.find({});
@@ -45,10 +46,19 @@ module.exports.renderEditForm = async(req, res) => {
 
 module.exports.editAd = async(req, res) => {
     const {id} = req.params;
+    console.log(req.body);
     const ad = await Ad.findByIdAndUpdate(id, {...req.body.ad}, {runValidators: true, new: true});
     const imgs = req.files.map(f => ({url: f.path, filename: f.filename}));
     ad.images.push(...imgs); // We don't want to push an array to the original array
     await ad.save();
+    if (req.body.deleteImages) { // If images are selected to be removed
+        for (let filename of req.body.deleteImages) {
+            // First delete them from the cloud
+            await cloudinary.uploader.destroy(filename);
+        }
+        await ad.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages}}}});// Pull out of the
+        // "images" array only the images whose "filename"s are inside the "req.body.deleteImages"
+    }
     req.flash('success', 'Ad is successfully edited!');
     res.redirect(`/ads/${ad._id}`);
 }
