@@ -11,6 +11,7 @@ import Nim from "./Nim/Nim";
 import HappyFlower from "./HappyFlower/HappyFlower";
 import XO from "./XO/XO";
 import KukuKube from "./KukuKube/KukuKube";
+import TripleEmojiMatch from "./TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Pidoku/Pidoku";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
   const [showHappyFlower, setShowHappyFlower] = useState(false);
   const [showXO, setShowXO] = useState(false);
   const [showKukuKube, setShowKukuKube] = useState(false);
+  const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
@@ -69,6 +71,10 @@ function App() {
   const toggleKukuKube = () => {
     setShowGameTitles(false);
     setShowKukuKube(true);
+  };
+  const toggleTripleEmojiMatch = () => {
+    setShowGameTitles(false);
+    setShowTripleEmojiMatch(true);
   };
   const togglePidoku = () => {
     setShowGameTitles(false);
@@ -209,6 +215,18 @@ function App() {
         showGameTitles &&
         !showKukuKube && (
           <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
+        )
+      )}
+      {!showGameTitles && showTripleEmojiMatch ? (
+        <TripleEmojiMatch
+          setShowGameTitles={setShowGameTitles}
+          setShowTripleEmojiMatch={setShowTripleEmojiMatch}
+          updateTotalPoint={updateTotalPoint}
+        />
+      ) : (
+        showGameTitles &&
+        !showTripleEmojiMatch && (
+          <button onClick={() => toggleTripleEmojiMatch()}>Triple Emoji Match</button>
         )
       )}
       {!showGameTitles && showPidoku ? (
