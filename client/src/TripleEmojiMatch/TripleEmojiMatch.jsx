@@ -2,6 +2,7 @@ import { useState } from "react";
 import Emoji from "./Emoji";
 import ModeExplaination from "../ModeExplaination";
 import { emojiPics } from "./imagesGroup";
+import E00 from "./images/000.jpg";
 
 export default function TripleEmojiMatch() {
   const [easyMode, setEasyMode] = useState(false);
@@ -248,6 +249,9 @@ export default function TripleEmojiMatch() {
     {id:237, image: emojiPics[77], isSelected: false},
     {id:238, image: emojiPics[78], isSelected: false},
     {id:239, image: emojiPics[79], isSelected: false}
+  ]);
+  const [selectedEmojis, setSelectedEmojis] = useState ([
+    null, null, null, null, null, null, null
   ])
   const runEasyMode = () => {
     setEasyMode(true);
@@ -275,6 +279,19 @@ export default function TripleEmojiMatch() {
         normalMode && (
           <ModeExplaination message="Normal Mode: Find all the matches in *** seconds. You will get one star if you win." />
         )
+      )}
+      {isGameStarted && (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(7, auto)",
+            justifyContent: "center",
+          }}
+        >
+        {selectedEmojis.map((selectedEmoji) => (
+          <Emoji key={selectedEmojis.indexOf(selectedEmoji)} imgSrc={E00} />
+        ))}
+        </div>
       )}
       {isGameStarted && (
         <div
