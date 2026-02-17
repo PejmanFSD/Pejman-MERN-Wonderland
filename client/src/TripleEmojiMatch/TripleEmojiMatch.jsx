@@ -251,7 +251,13 @@ export default function TripleEmojiMatch() {
     {id:239, image: emojiPics[79], isSelected: false}
   ]);
   const [selectedEmojis, setSelectedEmojis] = useState ([
-    null, null, null, null, null, null, null
+    {id:1, image: E00, isFilled: false},
+    {id:2, image: E00, isFilled: false},
+    {id:3, image: E00, isFilled: false},
+    {id:4, image: E00, isFilled: false},
+    {id:5, image: E00, isFilled: false},
+    {id:6, image: E00, isFilled: false},
+    {id:7, image: E00, isFilled: false}
   ])
   const runEasyMode = () => {
     setEasyMode(true);
@@ -289,7 +295,15 @@ export default function TripleEmojiMatch() {
           }}
         >
         {selectedEmojis.map((selectedEmoji) => (
-          <Emoji key={selectedEmojis.indexOf(selectedEmoji)} imgSrc={E00} />
+          <Emoji
+            key={selectedEmojis.indexOf(selectedEmoji)}
+            imgId={selectedEmojis.indexOf(selectedEmoji)}
+            imgSrc={selectedEmoji.image}
+            emojis={emojis}
+            setEmojis={setEmojis}
+            selectedEmojis={selectedEmojis}
+            setSelectedEmojis={setSelectedEmojis}
+          />
         ))}
         </div>
       )}
@@ -302,7 +316,15 @@ export default function TripleEmojiMatch() {
           }}
         >
           {emojis.map((emoji) => (
-            <Emoji key={emoji.id} imgSrc={emoji.image} />
+            <Emoji
+              key={emoji.id}
+              imgId={emoji.id}
+              imgSrc={emoji.image}
+              emojis={emojis}
+              setEmojis={setEmojis}
+              selectedEmojis={selectedEmojis}
+              setSelectedEmojis={setSelectedEmojis}
+            />
           ))}
         </div>
       )}
