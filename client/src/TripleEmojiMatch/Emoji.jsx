@@ -1,4 +1,5 @@
 import E00 from "./images/000.jpg";
+import Skull from "./images/Skull.jpg";
 
 export default function Emoji({
   imgId,
@@ -7,6 +8,8 @@ export default function Emoji({
   setEmojis,
   selectedEmojis,
   setSelectedEmojis,
+  tripleMatch,
+  isWin
 }) {
   const handleClickEmoji = () => {
     setEmojis((currEmojis) =>
@@ -40,7 +43,8 @@ export default function Emoji({
           width: "30px",
           border: "1px solid black",
           marginLeft: "4px",
-          pointerEvents: imgSrc === E00 ? "none" : "",
+          pointerEvents: imgSrc === E00 || tripleMatch || isWin !== "" ? "none" : "",
+          opacity: tripleMatch || isWin !== "" ? 0.5 : 1
         }}
         onClick={handleClickEmoji}
       />

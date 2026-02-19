@@ -3,6 +3,7 @@ import Emoji from "./Emoji";
 import ModeExplaination from "../ModeExplaination";
 import { emojiPics } from "./imagesGroup";
 import E00 from "./images/000.jpg";
+import Skull from "./images/Skull.jpg";
 
 export default function TripleEmojiMatch() {
   const [easyMode, setEasyMode] = useState(false);
@@ -257,9 +258,10 @@ export default function TripleEmojiMatch() {
     { id: 4, image: E00, isFilled: false, repetitionNum: 0 },
     { id: 5, image: E00, isFilled: false, repetitionNum: 0 },
     { id: 6, image: E00, isFilled: false, repetitionNum: 0 },
-    { id: 7, image: E00, isFilled: false, repetitionNum: 0 },
+    { id: 7, image: Skull, isFilled: false, repetitionNum: 0 },
   ]);
   const [tripleMatch, setTripleMatch] = useState(false);
+  const [isWin, setIsWin] = useState("");
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -306,6 +308,17 @@ export default function TripleEmojiMatch() {
       }
     }
   }, [selectedEmojis]);
+  useEffect(() => {
+    let freeSquares = 0;
+    for (const selectedEmoji of selectedEmojis) {
+      if (selectedEmoji.image === E00 || selectedEmoji.image === Skull) {
+        freeSquares ++;
+      }
+    }
+    if (freeSquares === 0) {
+        setIsWin(false);
+    }
+  }, [selectedEmojis]);
   return (
     <div>
       <h2>Triple Emoji Match</h2>
@@ -323,6 +336,7 @@ export default function TripleEmojiMatch() {
           <ModeExplaination message="Normal Mode: Find all the matches in *** seconds. You will get one star if you win." />
         )
       )}
+      {isWin === false && <h2>You loose!</h2>}
       {selectedEmojis.map((s) => (
         <div style={{ display: "inline" }}>{s.repetitionNum} - </div>
       ))}
@@ -343,6 +357,8 @@ export default function TripleEmojiMatch() {
               setEmojis={setEmojis}
               selectedEmojis={selectedEmojis}
               setSelectedEmojis={setSelectedEmojis}
+              tripleMatch={tripleMatch}
+              isWin={isWin}
             />
           ))}
         </div>
@@ -394,6 +410,8 @@ export default function TripleEmojiMatch() {
               setEmojis={setEmojis}
               selectedEmojis={selectedEmojis}
               setSelectedEmojis={setSelectedEmojis}
+              tripleMatch={tripleMatch}
+              isWin={isWin}
             />
           ))}
         </div>
