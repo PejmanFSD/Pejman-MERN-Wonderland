@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Emoji from "./Emoji";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 import { emojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
@@ -15,6 +16,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
   const [isWin, setIsWin] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [seconds, setSeconds] = useState(60);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -36,7 +38,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
     );
     setTripleMatch(false);
   };
-  const hanldePlayAgain = () => {
+  const handlePlayAgain = () => {
     setEmojis(emojisArray);
     setSelectedEmojis(selectedEmojisArray);
     setTripleMatch(false);
@@ -44,6 +46,16 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
     setSeconds(60);
     setIsWin("");
   }
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handlePlayAgain();
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
+  };
   useEffect(() => {
     setSelectedEmojis((currSelectedEmojis) =>
       currSelectedEmojis.map((emoji) => ({ ...emoji, repetitionNum: 0 })),
@@ -121,7 +133,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode ? (
+      {easyMode && !normalMode && !isTogglingReset ? (
         <ModeExplaination message="Easy Mode: There's no timer. You won't get any stars if you win." />
       ) : (
         !easyMode &&
@@ -134,24 +146,43 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           {seconds}
         </h3>
       )}
-      {isWin === false &&
+            {isGameStarted &&
+              !isTogglingReset &&
+              isWin === "" &&
+              // !isTogglingHomePage &&
+              // !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <div>
+                  <button onClick={toggleReset}>Reset the Game</button>
+                </div>
+              )}
+            {isTogglingReset && (
+              <div>
+                <ConfirmationBox
+                  question="Are you sure you want to reset the game?"
+                  toggleYes={toggleResetYes}
+                  toggleCancel={toggleResetCancel}
+                />
+              </div>
+            )}
+      {isWin === false && !isTogglingReset &&
         <div>
           <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You lose!"}</h2>
           <div>Try Again?</div>
-          <button onClick={hanldePlayAgain}>Ok</button>
+          <button onClick={handlePlayAgain}>Ok</button>
         </div>
       }
       {isWin === true &&
         <div>
           <h2>You Win!</h2>
           <div>Play Again?</div>
-          <button onClick={hanldePlayAgain}>Ok</button>
+          <button onClick={handlePlayAgain}>Ok</button>
         </div>
       }
       {/* {selectedEmojis.map((s) => (
         <div style={{ display: "inline" }}>{s.repetitionNum} - </div>
       ))} */}
-      {isGameStarted && isWin === "" && (
+      {isGameStarted && isWin === "" && !isTogglingReset && (
         <div
           style={{
             display: "grid",
@@ -174,7 +205,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           ))}
         </div>
       )}
-      {tripleMatch === true && isWin === "" && (
+      {tripleMatch === true && isWin === "" && !isTogglingReset && (
         <div>
           <div>Well Done! You found a tripleMatch</div>
           <div>
@@ -202,7 +233,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           </button>
         </div>
       )}
-      {isGameStarted && (
+      {isGameStarted && !isTogglingReset && (
         <div
           style={{
             position: "relative",
