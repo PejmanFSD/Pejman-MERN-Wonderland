@@ -6,7 +6,7 @@ import { emojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
 
-export default function TripleEmojiMatch({updateTotalPoint}) {
+export default function TripleEmojiMatch({updateTotalPoint, setShowTripleEmojiMatch, setShowGameTitles}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -17,6 +17,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [seconds, setSeconds] = useState(60);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -55,6 +56,17 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowTripleEmojiMatch(false);
+    setShowGameTitles(true);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   useEffect(() => {
     setSelectedEmojis((currSelectedEmojis) =>
@@ -127,13 +139,13 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
   return (
     <div>
       <h2>Triple Emoji Match</h2>
-      {!isGameStarted && !easyMode && !normalMode && (
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={runEasyMode}>Easy Mode</button>
           <button onClick={runNormalMode}>Normal Mode</button>
         </div>
       )}
-      {easyMode && !normalMode && !isTogglingReset ? (
+      {easyMode && !normalMode && !isTogglingReset && !isTogglingHomePage ? (
         <ModeExplaination message="Easy Mode: There's no timer. You won't get any stars if you win." />
       ) : (
         !easyMode &&
@@ -149,7 +161,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
             {isGameStarted &&
               !isTogglingReset &&
               isWin === "" &&
-              // !isTogglingHomePage &&
+              !isTogglingHomePage &&
               // !isTogglingLevel &&
               (easyMode || normalMode) && (
                 <div>
@@ -165,14 +177,30 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
                 />
               </div>
             )}
-      {isWin === false && !isTogglingReset &&
+                  {!isTogglingHomePage && !isTogglingReset && (
+                    <div>
+                      <button onClick={() => toggleHomePage()}>
+                        Back to the home page
+                      </button>
+                    </div>
+                  )}
+                  {isTogglingHomePage && (
+                    <div>
+                      <ConfirmationBox
+                        question="Are you sure you want to go back to Home Page?"
+                        toggleYes={toggleHomePageYes}
+                        toggleCancel={toggleHomePageCancel}
+                      />
+                    </div>
+                  )}
+      {isWin === false && !isTogglingReset && !isTogglingHomePage &&
         <div>
           <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You lose!"}</h2>
           <div>Try Again?</div>
           <button onClick={handlePlayAgain}>Ok</button>
         </div>
       }
-      {isWin === true &&
+      {isWin === true && !isTogglingHomePage &&
         <div>
           <h2>You Win!</h2>
           <div>Play Again?</div>
@@ -182,7 +210,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
       {/* {selectedEmojis.map((s) => (
         <div style={{ display: "inline" }}>{s.repetitionNum} - </div>
       ))} */}
-      {isGameStarted && isWin === "" && !isTogglingReset && (
+      {isGameStarted && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <div
           style={{
             display: "grid",
@@ -205,7 +233,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           ))}
         </div>
       )}
-      {tripleMatch === true && isWin === "" && !isTogglingReset && (
+      {tripleMatch === true && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
         <div>
           <div>Well Done! You found a tripleMatch</div>
           <div>
@@ -233,7 +261,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           </button>
         </div>
       )}
-      {isGameStarted && !isTogglingReset && (
+      {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
         <div
           style={{
             position: "relative",
