@@ -58,6 +58,17 @@ export default function TripleEmojiMatch() {
     }
   }, [emojis]);
   useEffect(() => {
+    let i = 0;
+    for (const emoji of emojis) {
+      if (emoji.image !== E00) {
+        i++;
+      }
+    }
+    if (i === 0) {
+      setIsWin(true);
+    }
+  }, [emojis]);
+  useEffect(() => {
     for (const selectedEmoji of selectedEmojis) {
       if (selectedEmoji.repetitionNum === 3) {
         setTripleMatch(true);
@@ -94,16 +105,23 @@ export default function TripleEmojiMatch() {
         )
       )}
       {isWin === false &&
-      <div>
-        <h2>You loose!</h2>
-        <div>Try Again?</div>
-        <button onClick={hanldePlayAgain}>Ok</button>
-      </div>
+        <div>
+          <h2>You loose!</h2>
+          <div>Try Again?</div>
+          <button onClick={hanldePlayAgain}>Ok</button>
+        </div>
       }
-      {selectedEmojis.map((s) => (
+      {isWin === true &&
+        <div>
+          <h2>You Win!</h2>
+          <div>Play Again?</div>
+          <button onClick={hanldePlayAgain}>Ok</button>
+        </div>
+      }
+      {/* {selectedEmojis.map((s) => (
         <div style={{ display: "inline" }}>{s.repetitionNum} - </div>
-      ))}
-      {isGameStarted && (
+      ))} */}
+      {isGameStarted && isWin === "" && (
         <div
           style={{
             display: "grid",
@@ -126,7 +144,7 @@ export default function TripleEmojiMatch() {
           ))}
         </div>
       )}
-      {tripleMatch === true && (
+      {tripleMatch === true && isWin === "" && (
         <div>
           <div>Well Done! You found a tripleMatch</div>
           <div>
