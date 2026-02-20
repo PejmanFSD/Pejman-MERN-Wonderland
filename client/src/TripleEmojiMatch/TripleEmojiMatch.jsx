@@ -5,7 +5,7 @@ import { emojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
 
-export default function TripleEmojiMatch() {
+export default function TripleEmojiMatch({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -66,6 +66,9 @@ export default function TripleEmojiMatch() {
     }
     if (i === 0) {
       setIsWin(true);
+      if(normalMode) {
+        updateTotalPoint(1);
+      }
     }
   }, [emojis]);
   useEffect(() => {
