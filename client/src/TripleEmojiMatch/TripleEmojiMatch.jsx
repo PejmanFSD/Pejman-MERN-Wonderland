@@ -19,17 +19,19 @@ export default function TripleEmojiMatch({
   const [tripleMatch, setTripleMatch] = useState(false);
   const [isWin, setIsWin] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(1200);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
   const runEasyMode = () => {
+    setEmojis(currEmojis => shuffleArray(currEmojis));
     setEasyMode(true);
     setNormalMode(false);
     setIsGameStarted(true);
   };
   const runNormalMode = () => {
+    setEmojis(currEmojis => shuffleArray(currEmojis));
     setNormalMode(true);
     setEasyMode(false);
     setIsGameStarted(true);
@@ -47,14 +49,23 @@ export default function TripleEmojiMatch({
   };
   const handlePlayAgain = () => {
     setEmojis(emojisArray);
+    setEmojis(currEmojis => shuffleArray(currEmojis));
     setSelectedEmojis(selectedEmojisArray);
     setTripleMatch(false);
-    setSeconds(10);
+    setSeconds(1200);
     setIsTimerRunning(true);
     setIsTogglingReset(false);
     setIsTogglingHomePage(false);
     setIsTogglingLevel(false);
     setIsWin("");
+  };
+  const shuffleArray = (array) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -183,7 +194,7 @@ export default function TripleEmojiMatch({
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: Find all the matches in *** seconds. You will get one star if you win." />
+          <ModeExplaination message="Normal Mode: Find all the matches in 1200 seconds. You will get one star if you win." />
         )
       )}
       {isTimerRunning && isWin === "" && normalMode && (
