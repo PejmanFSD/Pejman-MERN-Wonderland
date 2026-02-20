@@ -13,6 +13,8 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
   const [selectedEmojis, setSelectedEmojis] = useState(selectedEmojisArray);
   const [tripleMatch, setTripleMatch] = useState(false);
   const [isWin, setIsWin] = useState("");
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [seconds, setSeconds] = useState(60);
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -22,6 +24,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
     setNormalMode(true);
     setEasyMode(false);
     setIsGameStarted(true);
+    setIsTimerRunning(true);
   };
   const handleTripleMatch = () => {
     setSelectedEmojis((currSelectedEmojis) =>
@@ -37,6 +40,8 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
     setEmojis(emojisArray);
     setSelectedEmojis(selectedEmojisArray);
     setTripleMatch(false);
+    setIsTimerRunning(true);
+    setSeconds(60);
     setIsWin("");
   }
   useEffect(() => {
@@ -66,6 +71,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
     }
     if (i === 0) {
       setIsWin(true);
+      setIsTimerRunning(false);
       if(normalMode) {
         updateTotalPoint(1);
       }
@@ -88,8 +94,24 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
     }
     if (freeSquares === 0) {
         setIsWin(false);
+        setIsTimerRunning(false);
     }
   }, [selectedEmojis]);
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning && normalMode) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev > 1 && prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
+  useEffect(() => {
+    if (seconds < 1 && normalMode) {
+      setIsWin(false);
+      setIsTimerRunning(false);
+    }
+  }, [seconds]);
   return (
     <div>
       <h2>Triple Emoji Match</h2>
@@ -107,9 +129,14 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
           <ModeExplaination message="Normal Mode: Find all the matches in *** seconds. You will get one star if you win." />
         )
       )}
+      {isTimerRunning && isWin === "" && normalMode && (
+        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+          {seconds}
+        </h3>
+      )}
       {isWin === false &&
         <div>
-          <h2>You loose!</h2>
+          <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You lose!"}</h2>
           <div>Try Again?</div>
           <button onClick={hanldePlayAgain}>Ok</button>
         </div>
