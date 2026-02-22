@@ -1,5 +1,6 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Ads from './Ads';
 import Star from "./Games/Star.png";
 import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./Games/GuessNumber/GuessNumber";
@@ -29,7 +30,6 @@ export default function Home() {
   const [showKukuKube, setShowKukuKube] = useState(false);
   const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
-  const [ads, setAds] = useState(null);
 
   const updateTotalPoint = (i) => {
     setTotalPoint((currTotalPoint) => currTotalPoint + i);
@@ -81,36 +81,10 @@ export default function Home() {
   const togglePidoku = () => {
     setShowGameTitles(false);
     setShowPidoku(true);
-  };
-  useEffect(() => {
-    const fetchAds = async () => {
-      try {
-        const response = await fetch('/ads', {
-          credentials: 'include'
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch ads');
-        }
-
-        const data = await response.json();
-        console.log("DATA FROM SERVER:", data);
-        setAds(data);
-
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    fetchAds();
-  }, []);
+  }
   return (
     <div>
-      <div>
-        {ads && ads.map((ad) => (
-          <div key={ad._id}>{ad.company}: {ad.text}</div>
-        ))}
-      </div>
+      <Ads />
       <div>
         {new Array(totalPoint).fill(null).map((t) => (
           <img src={Star} width="30px" alt="Star" />
