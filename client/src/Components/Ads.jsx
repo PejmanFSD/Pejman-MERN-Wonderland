@@ -1,5 +1,6 @@
-import "./App.css";
+import "../App.css";
 import { useState, useEffect } from "react";
+import Ad from './Ad';
 
 export default function Ads() {
   const [ads, setAds] = useState(null);
@@ -25,9 +26,12 @@ export default function Ads() {
     <div>
       {ads &&
         ads.map((ad) => (
-          <div key={ad._id}>
-            {ad.company}: {ad.text}
-          </div>
+          <Ad
+            adKey={ad._id}
+            adCompany={ad.company}
+            adText={ad.text}
+            adImages={ad.images}
+          />
         ))}
     </div>
   );

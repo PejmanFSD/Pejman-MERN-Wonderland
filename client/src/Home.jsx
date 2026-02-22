@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState } from "react";
-import Ads from './Ads';
+import Ads from './Components/Ads';
 import Star from "./Games/Star.png";
 import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./Games/GuessNumber/GuessNumber";
