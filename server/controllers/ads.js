@@ -3,7 +3,8 @@ const {cloudinary} = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
     const ads = await Ad.find({});
-    res.render('ads/index', {ads});
+    // res.render('ads/index', {ads});
+    res.json(ads);
 }
 
 module.exports.renderNewForm = (req, res) => {

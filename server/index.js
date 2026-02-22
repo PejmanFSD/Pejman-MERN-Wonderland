@@ -27,6 +27,7 @@ const ExpressError = require('./utils/ExpressError');
 const userAuthRoutes = require('./routes/usersAuth.js');
 const userRoutes = require('./routes/users.js');
 const adRoutes = require('./routes/ads.js');
+const cors = require('cors');
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
     .then(() => {
@@ -52,6 +53,11 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error"); // Most of the time it's empty!
     next();
 })
+// For connecting to front-end:
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(async (req, res, next) => {
     if (req.session.user_id) {
         try {
@@ -93,5 +99,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(process.env.PORT, () => {
-    console.log("SERVING YOUR APP! - 3000");
+    console.log("SERVING YOUR APP! - 4000");
 })
