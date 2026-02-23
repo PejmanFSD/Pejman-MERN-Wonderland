@@ -2,8 +2,7 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import Ad from './Ad';
 
-export default function Ads() {
-  const [ads, setAds] = useState(null);
+export default function Ads({ads, setAds}) {
   useEffect(() => {
     const fetchAds = async () => {
       try {

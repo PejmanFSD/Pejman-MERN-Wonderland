@@ -17,6 +17,7 @@ import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 
 export default function Home() {
+  const [ads, setAds] = useState(null);
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -85,8 +86,10 @@ export default function Home() {
   }
   return (
     <div>
-      <Ads />
-      <AdForm />
+      <Ads ads={ads} setAds={setAds} />
+      <AdForm onAdCreated={(newAd) => {
+        setAds((currAds) => [newAd, ...currAds]);
+      }} />
       <div>
         {new Array(totalPoint).fill(null).map((t) => (
           <img src={Star} width="30px" alt="Star" />
