@@ -41,6 +41,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parcing the request
 app.use(methodOverride('_method'));
 app.use(session(sessionConfig));

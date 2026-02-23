@@ -1,4 +1,4 @@
-import "../App.css";
+import "../../App.css";
 import { useState, useEffect } from "react";
 import Ad from './Ad';
 
@@ -30,7 +30,7 @@ export default function Ads() {
             adKey={ad._id}
             adCompany={ad.company}
             adText={ad.text}
-            adImages={ad.images}
+            // adImages={ad.images && ad.images}
           />
         ))}
     </div>

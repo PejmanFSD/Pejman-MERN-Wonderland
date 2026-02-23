@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
-import Ads from './Components/Ads';
+import Ads from './Components/ads/Ads';
+import AdForm from './Components/ads/AdForm';
 import Star from "./Games/Star.png";
 import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./Games/GuessNumber/GuessNumber";
@@ -85,6 +86,7 @@ export default function Home() {
   return (
     <div>
       <Ads />
+      <AdForm />
       <div>
         {new Array(totalPoint).fill(null).map((t) => (
           <img src={Star} width="30px" alt="Star" />

@@ -11,11 +11,12 @@ const upload = multer({storage});
 router.route('/')
     // .get(isLoggedIn, catchAsync(ads.index))
     .get(catchAsync(ads.index))
-    .post(isLoggedIn, upload.array('image'), validateAd, catchAsync(ads.createAd));
+    // .post(isLoggedIn, upload.array('image'), validateAd, catchAsync(ads.createAd));
+    .post(catchAsync(ads.createAd));
 // router.get('/', isLoggedIn, catchAsync(ads.index));
 // router.post('/', isLoggedIn, validateAd, catchAsync(ads.createAd));
 
-router.get('/new', isLoggedIn, ads.renderNewForm);
+// router.get('/new', isLoggedIn, ads.renderNewForm);
 
 router.route('/:id')
     .get(isLoggedIn, catchAsync(ads.showAd))
