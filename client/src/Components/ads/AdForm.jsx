@@ -3,31 +3,28 @@ import { useState } from "react";
 export default function AdForm({ onAdCreated }) {
   const [company, setCompany] = useState("");
   const [text, setText] = useState("");
-  // const [image, setImage] = useState('');
+  const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const ad = { company, text };
-    const response = await fetch("/ads", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ company, text }),
-    });
-    const json = await response.json();
-    if (!response.ok) {
-      setError(json.error);
-    } else {
-      setCompany("");
-      setText("");
-      setError(null);
-      onAdCreated(json);
-      console.log("New Ad added");
-    }
-  };
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('company', company);
+  formData.append('text', text);
+  for (let i = 0; i < images.length; i++) {
+    formData.append('image', images[i]);
+  }
+  const response = await fetch('/ads', {
+    method: 'POST',
+    body: formData
+  });
+  const json = await response.json();
+  if (!response.ok) {
+    setError(json.error);
+  } else {
+    onAdCreated(json);
+  }
+};
 
   return (
     <form onSubmit={handleSubmit}>
@@ -43,7 +40,6 @@ export default function AdForm({ onAdCreated }) {
           required
         />
       </div>
-
       <div>
         <label htmlFor="text">Ad Text:</label>
         <textarea
@@ -55,26 +51,15 @@ export default function AdForm({ onAdCreated }) {
           required
         ></textarea>
       </div>
-
-      {/* <div>
-            <label htmlFor="image">Ad Image:</label>
-            <input
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-            id="image"
-            />
-            </div> */}
-      {/* <div>
-                <label htmlFor="image">Ad Image:</label>
-                <input
-                    type="file"
-                    onChange={(e) => setImage(e.target.files[0])}
-                    id="image"
-                    name="image"
-                    value={image}
-                    multiple
-                />
-            </div> */}
+      <div>
+        <label htmlFor="image">Ad Image:</label>
+        <input
+          type="file"
+          multiple
+          onChange={(e) => setImages(e.target.files)}
+          id="image"
+        />
+      </div>
       <button>Create Ad</button>
       {error && <div>{error}</div>}
     </form>

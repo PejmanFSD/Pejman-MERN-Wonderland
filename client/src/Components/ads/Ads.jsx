@@ -1,5 +1,5 @@
 import "../../App.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Ad from './Ad';
 
 export default function Ads({ads, setAds}) {
@@ -29,7 +29,7 @@ export default function Ads({ads, setAds}) {
             adKey={ad._id}
             adCompany={ad.company}
             adText={ad.text}
-            // adImages={ad.images && ad.images}
+            adImages={ad.images && ad.images}
           />
         ))}
     </div>

@@ -6,31 +6,36 @@ module.exports.index = async (req, res) => {
     // res.render('ads/index', {ads});
     res.json(ads);
 }
-
-// module.exports.renderNewForm = (req, res) => {
-//     res.render('ads/new');
-// }
-
 // module.exports.createAd = async(req, res) => {
 //     const ad = new Ad(req.body);
 //     // Pushing all the uploaded images to the "images" array:
 //     ad.images = req.files.map(f => ({url: f.path, filename: f.filename}));
-//     ad.author = req.user._id; // Giving the new created ad an owner!
+        //     ad.author = req.user._id; // Giving the new created ad an owner!
 //     await ad.save();
-//     console.log(ad);
-//     req.user.ads.push(ad._id); // Adding the new created ad to the list of the owner's ads
-//     await req.user.save();
-//     req.flash('success', 'Successfully made a new Ad!');
-//     res.redirect(`/ads/${ad._id}`);
+        //     console.log(ad);
+        //     req.user.ads.push(ad._id); // Adding the new created ad to the list of the owner's ads
+        //     await req.user.save();
+        //     req.flash('success', 'Successfully made a new Ad!');
+        //     res.redirect(`/ads/${ad._id}`);
 // }
 
 module.exports.createAd = async (req, res) => {
   try {
+    console.log("REQ.FILES FULL:", req.files);
     const ad = new Ad(req.body);
+    // Save uploaded images
+if (req.files && req.files.length > 0) {
+    ad.images = req.files.map(f => ({
+      url: f.path,
+      filename: f.filename
+    }));
+  }
+    // Aauthentication:
+    // if (req.user) {
+    //   ad.author = req.user._id;
+    // }
     await ad.save();
-
     res.status(201).json(ad);
-
   } catch (err) {
     console.log(err);
     res.status(400).json({ error: err.message });

@@ -12,7 +12,7 @@ router.route('/')
     // .get(isLoggedIn, catchAsync(ads.index))
     .get(catchAsync(ads.index))
     // .post(isLoggedIn, upload.array('image'), validateAd, catchAsync(ads.createAd));
-    .post(catchAsync(ads.createAd));
+    .post(upload.array('image'), catchAsync(ads.createAd));
 // router.get('/', isLoggedIn, catchAsync(ads.index));
 // router.post('/', isLoggedIn, validateAd, catchAsync(ads.createAd));
 
