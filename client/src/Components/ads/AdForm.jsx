@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function AdForm({ onAdCreated }) {
   const [company, setCompany] = useState("");
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
+  // For clearing the chosen images of the <form /> after creating a new ad:
+  const fileInputRef = useRef(null);
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -23,6 +25,13 @@ export default function AdForm({ onAdCreated }) {
     setError(json.error);
   } else {
     onAdCreated(json);
+    setCompany('');
+    setText('');
+    setImages([]);
+    // clearing the chosen images of the <form />
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
   }
 };
 
@@ -56,6 +65,7 @@ export default function AdForm({ onAdCreated }) {
         <input
           type="file"
           multiple
+          ref={fileInputRef} // For clearing the chosen images after creating a new ad
           onChange={(e) => setImages(e.target.files)}
           id="image"
         />
