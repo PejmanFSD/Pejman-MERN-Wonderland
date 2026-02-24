@@ -1,14 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import AdForm from "./ads/AdForm";
 
-export default function Navbar({ads, setAds}) {
+export default function Navbar({ ads, setAds }) {
+  const navigate = useNavigate();
   return (
     <header>
-      <div>
         <h1>Pejman MERN Wonderland</h1>
-        <Link to="/">Home Page</Link>
-        <Link to="/newAd">Create new Ad</Link>
+        <button onClick={() => navigate("/")}>Home Page</button>
+        <button onClick={() => navigate("/newAd")}>Create new Ad</button>
         <Routes>
           <Route
             path="/newAd"
@@ -21,7 +26,7 @@ export default function Navbar({ads, setAds}) {
             }
           />
         </Routes>
-      </div>
+        <hr />
     </header>
   );
 }

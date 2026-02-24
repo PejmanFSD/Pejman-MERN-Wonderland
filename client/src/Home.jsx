@@ -85,6 +85,7 @@ export default function Home({ads, setAds}) {
   return (
     <div>
       <Ads ads={ads} setAds={setAds} />
+      <hr />
       <div>
         {new Array(totalPoint).fill(null).map((t) => (
           <img src={Star} width="30px" alt="Star" />
