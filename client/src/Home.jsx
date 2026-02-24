@@ -1,7 +1,6 @@
 import "./App.css";
 import { useState } from "react";
 import Ads from './Components/ads/Ads';
-import AdForm from './Components/ads/AdForm';
 import Star from "./Games/Star.png";
 import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./Games/GuessNumber/GuessNumber";
@@ -16,8 +15,7 @@ import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 
-export default function Home() {
-  const [ads, setAds] = useState(null);
+export default function Home({ads, setAds}) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -87,9 +85,6 @@ export default function Home() {
   return (
     <div>
       <Ads ads={ads} setAds={setAds} />
-      <AdForm onAdCreated={(newAd) => {
-        setAds((currAds) => [newAd, ...currAds]);
-      }} />
       <div>
         {new Array(totalPoint).fill(null).map((t) => (
           <img src={Star} width="30px" alt="Star" />

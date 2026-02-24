@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+// For returning to the Home Page automatically when the new ad is created
+import { useNavigate } from "react-router-dom";
 
 export default function AdForm({ onAdCreated }) {
   const [company, setCompany] = useState("");
@@ -7,6 +9,7 @@ export default function AdForm({ onAdCreated }) {
   const [error, setError] = useState(null);
   // For clearing the chosen images of the <form /> after creating a new ad:
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -32,6 +35,7 @@ export default function AdForm({ onAdCreated }) {
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
     }
+    navigate('/');
   }
 };
 
