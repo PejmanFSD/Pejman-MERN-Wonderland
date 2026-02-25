@@ -105,12 +105,22 @@ module.exports.deleteAd = async (req, res) => {
   const { id } = req.params;
   // First find the ad:
   const ad = await Ad.findById(id);
+  if (!ad) {
+    return res.status(404).json({ error: "Ad not found" });
+  }
+  // if (!req.user) {
+  //   return res.status(401).json({ error: "Unauthorized" });
+  // }
   // Delete the found ad ONLY IF the logged-in user is the owner of the ad:
-  if (!ad.author.equals(req.user._id)) {
-    req.flash("error", "You don't have the permission!");
-    return res.redirect(`/ads/${id}`);
+  // if (!ad.author.equals(req.user._id)) {
+  // req.flash("error", "You don't have the permission!");
+  //   return res.status(403).json({ error: "Forbidden" });
+  // }
+  // Deleting images from Cloudinary
+  for (let img of ad.images) {
+    await cloudinary.uploader.destroy(img.filename);
   }
   await Ad.findByIdAndDelete(id);
-  req.flash("success", "Ad is successfully deleted!");
-  res.redirect("/ads");
+  // req.flash("success", "Ad is successfully deleted!");
+  res.status(200).json({ message: "Ad deleted successfully" });
 };
