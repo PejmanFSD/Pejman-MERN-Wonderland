@@ -5,6 +5,7 @@ export default function AdDetails() {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
   const navigate = useNavigate();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const fetchAd = async () => {
@@ -19,11 +20,11 @@ export default function AdDetails() {
 
   if (!ad) return <div>Loading...</div>;
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
+    setIsDeleting(true);
+  }
+  const handleDeleteYes = async () => {
     try {
-      const confirmDelete = window.confirm("Are you sure?");
-      if (!confirmDelete) return;
-
       const res = await fetch(`/ads/${ad._id}`, {
         method: "DELETE",
         credentials: "include",
@@ -38,8 +39,11 @@ export default function AdDetails() {
       console.error(err);
       alert("Could not delete the ad");
     }
+    setIsDeleting(false);
   };
-
+  const handleDeleteNo = () => {
+    setIsDeleting(false);
+  }
   return (
     <div>
       <h2>{ad.company}</h2>
@@ -50,10 +54,19 @@ export default function AdDetails() {
         ))}
       <br></br>
       <Link to={`/ads/${ad._id}/edit`}>
-        <button>Edit</button>
+        <button disabled={isDeleting}>Edit</button>
       </Link>
+      <br></br>
       {/* For Delete, we don't use <Link /> because <Link /> only sends the GET request */}
-      <button onClick={handleDelete}>Delete</button>
+      <button onClick={handleDelete} disabled={isDeleting}>Delete</button>
+      <br></br>
+      {isDeleting &&
+        <div>
+          <div>Are you sure!</div>
+          <button onClick={handleDeleteYes}>Yes</button>
+          <button onClick={handleDeleteNo}>No</button>
+        </div>
+      }
     </div>
   );
 }
