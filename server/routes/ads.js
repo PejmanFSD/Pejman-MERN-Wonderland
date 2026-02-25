@@ -19,7 +19,8 @@ router.route('/')
 // router.get('/new', isLoggedIn, ads.renderNewForm);
 
 router.route('/:id')
-    .get(isLoggedIn, catchAsync(ads.showAd))
+    // .get(isLoggedIn, catchAsync(ads.showAd))
+    .get(catchAsync(ads.showAd))
     .put(isLoggedIn, isAuthor, upload.array('image'), validateAd, catchAsync(ads.editAd))
     .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
 // router.get('/:id', isLoggedIn, catchAsync(ads.showAd));

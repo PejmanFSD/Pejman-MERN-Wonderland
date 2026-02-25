@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Ad({
   adKey,
   adCompany,
@@ -6,10 +8,9 @@ export default function Ad({
 }) {
   return (
     <div>
-      <div key={adKey}>
-        <div></div>
-        {adCompany}: {adText}
-      </div>
+      <Link to={`/ads/${adKey}`}>
+        <div>{adCompany} - {adText}</div>
+      </Link>
       {adImages && adImages.map((i) => (
         <img src={i.url} height="70px" />
       ))}

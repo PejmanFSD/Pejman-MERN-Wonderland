@@ -44,13 +44,15 @@ if (req.files && req.files.length > 0) {
 
 module.exports.showAd = async (req, res) => {
     const {id} = req.params;
-    const ad = await Ad.findById(id).populate('author');
+    // const ad = await Ad.findById(id).populate('author');
+    const ad = await Ad.findById(id);
     console.log(ad);
     if (!ad) {
-        req.flash('error', "Can't find that ad!");
-        return res.redirect('/ads');
+        // req.flash('error', "Can't find that ad!");
+        return res.status(404).json({ error: "Ad not found" });
     }
-    res.render('ads/show', {ad});
+    // res.render('ads/show', {ad});
+    res.status(200).json(ad);
 }
 
 module.exports.renderEditForm = async(req, res) => {
