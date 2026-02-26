@@ -1,8 +1,9 @@
 import "../../App.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Ad from './Ad';
 
 export default function Ads({ads, setAds}) {
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
     const fetchAds = async () => {
       try {
@@ -21,17 +22,33 @@ export default function Ads({ads, setAds}) {
     };
     fetchAds();
   }, []);
+  if (!ads || ads.length === 0) {
+    return <p>No ads available</p>;
+  }
+  const handleNext = () => {
+    setIdx((currAd) =>
+      currAd === ads.length - 1 ? 0 : currAd + 1
+    );
+  };
+  const handlePrevious = () => {
+    setIdx((currAd) =>
+      currAd === 0 ? ads.length - 1 : currAd - 1
+    );
+  };
+  const currentAd = ads[idx];
   return (
     <div>
-      {ads &&
-        ads.map((ad) => (
-          <Ad
-            adKey={ad._id}
-            adCompany={ad.company}
-            adText={ad.text}
-            adImages={ad.images && ad.images}
-          />
-        ))}
+      <Ad
+        adKey={currentAd._id}
+        adCompany={currentAd.company}
+        adText={currentAd.text}
+        adImages={currentAd.images}
+      />
+
+      <div style={{ marginTop: "20px" }}>
+        <button onClick={handlePrevious}>Previous Ad</button>
+        <button onClick={handleNext}>Next Ad</button>
+      </div>
     </div>
   );
 }
