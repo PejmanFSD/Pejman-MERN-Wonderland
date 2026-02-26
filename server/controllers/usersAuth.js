@@ -1,9 +1,5 @@
 const User = require('../models/user');
 
-module.exports.renderRegister = (req, res) => {
-    res.render('users/register');
-}
-
 module.exports.register = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -11,11 +7,19 @@ module.exports.register = async (req, res) => {
         // Right before the "save" method, the password will be hashed (in models/user.js)
         await user.save();
         req.session.user_id = user._id;
-        req.flash('success', 'Welcome!');
-        res.redirect('./secret');
+        // req.flash('success', 'Welcome!');
+        res.status(201).json({
+            message: "User registered successfully",
+            user: {
+                id: user._id,
+                username: user.username
+            }
+        });
     } catch(e) {
-        req.flash('error', 'Something is wrong!');
-        res.redirect('/');
+        // req.flash('error', 'Something is wrong!');
+        res.status(400).json({
+            error: e.message
+        });
     }
 }
 

@@ -15,11 +15,11 @@ const adSchema = new mongoose.Schema({
             url: String, // We use the returned url to shpw each image
             filename: String
         }
-    ]
-    // author: { // The owner of the ad
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // }
+    ],
+    author: { // The owner of the ad
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model('Ad', adSchema);

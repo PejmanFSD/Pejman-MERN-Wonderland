@@ -5,9 +5,7 @@ const usersAuth = require('../controllers/usersAuth.js');
 const catchAsync = require('../utils/catchAsync.js');
 
 router.route('/register')
-    .get(usersAuth.renderRegister)
     .post(catchAsync(usersAuth.register));
-// router.get('/register', usersAuth.renderRegister);
 // router.post('/register', catchAsync(usersAuth.register));
 
 router.route('/login')
