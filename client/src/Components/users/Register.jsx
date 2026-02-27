@@ -5,6 +5,8 @@ export default function Register({ onRegister }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [role, setRole] = useState("Player");
+  const [adminSecret, setAdminSecret] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -21,6 +23,8 @@ export default function Register({ onRegister }) {
           username,
           password,
           message,
+          role,
+          adminSecret
         }),
       });
       const json = await response.json();
@@ -71,6 +75,20 @@ export default function Register({ onRegister }) {
           value={message}
           required
         />
+      </div>
+      <div>
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="Player">Player</option>
+          <option value="Admin">Admin</option>
+        </select>
+        {role === "Admin" && (
+          <input
+            type="password"
+            placeholder="Enter Admin Secret"
+            value={adminSecret}
+            onChange={(e) => setAdminSecret(e.target.value)}
+          />
+        )}
       </div>
       <button>Sign Up</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
