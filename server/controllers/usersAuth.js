@@ -69,7 +69,17 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
-  req.session.user_id = null;
-  req.flash("success", "Successfully logged-out!");
-  res.redirect("/login");
+  // Removing session from server store:
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Logout failed"
+      });
+    }
+    // Removing the cookie from browser:
+    res.clearCookie("connect.sid");
+    return res.status(200).json({
+      message: "Logout successful"
+    });
+  });
 };

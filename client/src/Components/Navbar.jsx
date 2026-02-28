@@ -8,10 +8,23 @@ import {
 } from "react-router-dom";
 import AdForm from "./ads/AdForm";
 
-export default function Navbar({ currentUser, ads, setAds }) {
+export default function Navbar({ currentUser, ads, setAds, setCurrentUser }) {
   const navigate = useNavigate();
   const location = useLocation();
-  //   "location.pathname" is the path of the current page
+  // "location.pathname" is the path of the current page
+  const handleLogout = async () => {
+    try {
+      await fetch("/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      setCurrentUser(null);
+      navigate("/");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
   return (
     <header>
       <h1>Pejman MERN Wonderland</h1>
@@ -27,6 +40,11 @@ export default function Navbar({ currentUser, ads, setAds }) {
       )}
       {location.pathname !== "/login" && (
         <button onClick={() => navigate("/login")}>Login</button>
+      )}
+      {currentUser && (
+        <button onClick={handleLogout}>
+          Logout
+        </button>
       )}
       <Routes>
         <Route

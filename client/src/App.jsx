@@ -29,9 +29,8 @@ function App() {
   }, []);
   return (
     <div className="App">
-      {/* {currentUser && <div>Welcome, {currentUser.username}</div>} */}
       <BrowserRouter>
-        <Navbar currentUser={currentUser} ads={ads} setAds={setAds} />
+        <Navbar currentUser={currentUser} ads={ads} setAds={setAds} setCurrentUser={setCurrentUser} />
         <Routes>
           <Route path="/" element={<Home ads={ads} setAds={setAds} />} />
           <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
