@@ -25,6 +25,9 @@ export default function Navbar({ currentUser, ads, setAds }) {
       {location.pathname !== "/register" && (
         <button onClick={() => navigate("/register")}>Register</button>
       )}
+      {location.pathname !== "/login" && (
+        <button onClick={() => navigate("/login")}>Login</button>
+      )}
       <Routes>
         <Route
           path="/newAd"

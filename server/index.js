@@ -11,17 +11,6 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
-const sessionConfig = {
-    name: 'session',
-    secret: 'Pejman-MERN-Wonderland',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Expiring the cookie in a week
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-};
 const {isLoggedIn} = require('./middleware.js');
 const ExpressError = require('./utils/ExpressError');
 const userAuthRoutes = require('./routes/usersAuth.js');
@@ -44,7 +33,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parcing the request
 app.use(methodOverride('_method'));
-app.use(session(sessionConfig));
+app.use(session({
+  secret: "mySecret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false,   // VERY IMPORTANT for localhost
+    sameSite: "lax"
+  }
+}));
 app.use(flash());
 app.use((req, res, next) => {
     // We have access to all the following variables in ALL the files of our
@@ -56,7 +54,7 @@ app.use((req, res, next) => {
 })
 // For connecting to front-end:
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: "http://localhost:3000",
   credentials: true
 }));
 app.use(async (req, res, next) => {

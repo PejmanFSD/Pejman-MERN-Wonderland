@@ -34,28 +34,37 @@ module.exports.register = async (req, res) => {
   }
 };
 
-module.exports.renderLogin = (req, res) => {
-  res.render("users/login");
-};
-
 module.exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const foundUser = await User.findAndValidate(username, password);
-    if (foundUser) {
-      req.session.user_id = foundUser._id;
-      req.flash("success", "Welcome Back!");
-      // Redirecting the user (who hadn't logged-in) to the page
-      // that they had tried to reach before logging-in:
-      const redirectUrl = req.session.returnTo || "./secret"; // './secret' is for the situation
-      // where they click on the "Login" button at first.
-      // We don't want the "returnTo" key remains in the session:
-      delete req.session.returnTo;
-      res.redirect(redirectUrl);
+    if (!foundUser) {
+      return res.status(401).json({
+        error: "Invalid username or password"
+      });
     }
+    req.session.user_id = foundUser._id;
+    req.session.role = foundUser.role;
+    // req.flash("success", "Welcome Back!");
+    // Redirecting the user (who hadn't logged-in) to the page
+    // that they had tried to reach before logging-in:
+    // const redirectUrl = req.session.returnTo || "./secret"; // './secret' is for the situation
+    // where they click on the "Login" button at first.
+    // We don't want the "returnTo" key remains in the session:
+    // delete req.session.returnTo;
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: foundUser._id,
+        username: foundUser.username,
+        role: foundUser.role
+      }
+    });
   } catch (e) {
-    req.flash("error", "Something is wrong!");
-    res.redirect("/");
+    // req.flash("error", "Something is wrong!");
+    res.status(400).json({
+      error: e.message,
+    });
   }
 };
 
