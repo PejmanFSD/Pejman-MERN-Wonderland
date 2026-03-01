@@ -4,10 +4,13 @@ import User from "./User";
 
 export default function Users({ users, setUsers }) {
   //   const [idx, setIdx] = useState(0);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("/users", {
+        const response = await fetch(`/users?page=${page}`, { // `/users?page=${page}` is the new path for pagination.
+          // Before pagination it was "users"
           credentials: "include",
         });
         if (!response.ok) {
@@ -15,13 +18,14 @@ export default function Users({ users, setUsers }) {
         }
         const data = await response.json();
         console.log("DATA FROM SERVER:", data);
-        setUsers(data);
+        setUsers(data.users);
+        setTotalPages(data.totalPages);
       } catch (error) {
         console.error(error.message);
       }
     };
-    fetchUsers();
-  }, []);
+    fetchUsers(); // Refetching when "page" changes
+  }, [page]);
   if (!users || users.length === 0) {
     return <p>No users available</p>;
   }
@@ -54,14 +58,26 @@ export default function Users({ users, setUsers }) {
               <td>{user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
-                <button onClick={() => handleDelete(user._id)}>
-                  Delete
-                </button>
+                <button onClick={() => handleDelete(user._id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div style={{ marginTop: "20px" }}>
+        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          Previous
+        </button>
+        <span style={{ margin: "0 10px" }}>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
