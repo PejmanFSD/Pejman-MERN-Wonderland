@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Register({ onRegister }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [totalPoint, setTotalPoint] = useState(0);
   const [message, setMessage] = useState("");
   const [role, setRole] = useState("Player");
   const [adminSecret, setAdminSecret] = useState("");
@@ -22,6 +23,7 @@ export default function Register({ onRegister }) {
         body: JSON.stringify({
           username,
           password,
+          totalPoint,
           message,
           role,
           adminSecret
@@ -34,7 +36,9 @@ export default function Register({ onRegister }) {
       onRegister(json.user);
       setUsername("");
       setPassword("");
+      setTotalPoint(0);
       setMessage("");
+      setRole("Player");
       navigate("/");
     } catch (err) {
       setError(err.message);

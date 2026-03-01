@@ -3,7 +3,7 @@ require("dotenv").config();
 
 module.exports.register = async (req, res) => {
   try {
-    const { username, password, role, adminSecret } = req.body;
+    const { username, password, role, message, adminSecret } = req.body;
     let finalRole = "Player";
     if (role === "Admin") {
       if (adminSecret !== process.env.ADMIN_SECRET) {
@@ -13,7 +13,7 @@ module.exports.register = async (req, res) => {
       }
       finalRole = "Admin";
     }
-    const user = new User({ username, password, role: finalRole });
+    const user = new User({ username, password, message, role: finalRole });
     // Right before the "save" method, the password will be hashed (in models/user.js)
     await user.save();
     req.session.user_id = user._id;
@@ -23,7 +23,9 @@ module.exports.register = async (req, res) => {
       user: {
         id: user._id,
         username: user.username,
-        role: user.role
+        role: user.role,
+        message: user.message,
+        totalPoint: user.totalPoint
       },
     });
   } catch (e) {
@@ -57,7 +59,9 @@ module.exports.login = async (req, res) => {
       user: {
         id: foundUser._id,
         username: foundUser.username,
-        role: foundUser.role
+        role: foundUser.role,
+        totalPoint: foundUser.totalPoint,
+        message: foundUser.message
       }
     });
   } catch (e) {

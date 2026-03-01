@@ -6,10 +6,12 @@ import Register from "./Components/users/Register";
 import Login from "./Components/users/Login";
 import AdDetails from "./Components/ads/AdDetails";
 import AdEdit from "./Components/ads/AdEdit";
+import Users from "./Components/users/Users";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [ads, setAds] = useState([]);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const restoreUser = async () => {
       try {
@@ -30,13 +32,21 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar currentUser={currentUser} ads={ads} setAds={setAds} setCurrentUser={setCurrentUser} />
+        <Navbar
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          ads={ads}
+          setAds={setAds} 
+          users={users}
+          setUsers={setUsers}
+        />
         <Routes>
           <Route path="/" element={<Home ads={ads} setAds={setAds} />} />
           <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
           <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
           <Route path="/ads/:id" element={<AdDetails />} />
           <Route path="/ads/:id/edit" element={<AdEdit />} />
+          <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
         </Routes>
       </BrowserRouter>
     </div>

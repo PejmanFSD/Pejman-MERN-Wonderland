@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import AdForm from "./ads/AdForm";
 
-export default function Navbar({ currentUser, ads, setAds, setCurrentUser }) {
+export default function Navbar({ currentUser, setCurrentUser, users, setUsers, ads, setAds }) {
   const navigate = useNavigate();
   const location = useLocation();
   // "location.pathname" is the path of the current page
@@ -31,6 +31,9 @@ export default function Navbar({ currentUser, ads, setAds, setCurrentUser }) {
       {currentUser && <div>Welcome, {currentUser.username}</div>}
       {location.pathname !== "/" && (
         <button onClick={() => navigate("/")}>Home Page</button>
+      )}
+      {location.pathname !== "/users" && (
+        <button onClick={() => navigate("/users")}>All users</button>
       )}
       {location.pathname !== "/newAd" && (
         <button onClick={() => navigate("/newAd")}>Create new Ad</button>

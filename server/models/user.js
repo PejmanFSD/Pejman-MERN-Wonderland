@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   },
   message: {
     type: String,
+    default: ""
   },
   totalPoint: {
     type: Number,
