@@ -43,10 +43,10 @@ export default function Users({ users, setUsers }) {
         <thead>
           <tr>
             <th>Username</th>
-            <th>Role</th>
-            <th>Total Points</th>
-            <th>Message</th>
-            <th>Actions</th>
+            <th style={{ width: "5%" }}>Role</th>
+            <th style={{ width: "10%" }}>Number of Stars</th>
+            <th style={{ width: "60%" }}>Message</th>
+            <th style={{ width: "6%" }}>Actions</th>
           </tr>
         </thead>
 
@@ -58,7 +58,7 @@ export default function Users({ users, setUsers }) {
               <td>{user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
-                <button onClick={() => handleDelete(user._id)}>Delete</button>
+                {user.role !== "Admin" ? <button onClick={() => handleDelete(user._id)}>Delete</button> : <div>Admin &#128526;</div>}
               </td>
             </tr>
           ))}
