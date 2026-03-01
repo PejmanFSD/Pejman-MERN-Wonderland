@@ -25,31 +25,43 @@ export default function Users({ users, setUsers }) {
   if (!users || users.length === 0) {
     return <p>No users available</p>;
   }
-  //   const handleNext = () => {
-  //     setIdx((currUser) =>
-  //       currUser === users.length - 1 ? 0 : currUser + 1
-  //     );
-  //   };
-  //   const handlePrevious = () => {
-  //     setIdx((currUser) =>
-  //       currUser === 0 ? users.length - 1 : currUser - 1
-  //     );
-  //   };
-  //   const currentAd = users[idx];
+  const handleDelete = async (userId) => {
+    await fetch(`/users/${userId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+    // Removing the user from the state variable:
+    setUsers((currUsers) => currUsers.filter((u) => u._id !== userId));
+  };
   return (
     <div>
-      {users.map((user) => (
-        <User
-          userUsernam={user.username}
-          userRole={user.role}
-          userTotalPoint={user.totalPoint}
-          userMessage={user.message}
-        />
-      ))}
-      {/* <div style={{ marginTop: "20px" }}>
-        <button onClick={handlePrevious}>Previous Ad</button>
-        <button onClick={handleNext}>Next Ad</button>
-      </div> */}
+      <table border="1" cellPadding="10">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Total Points</th>
+            <th>Message</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user.username}</td>
+              <td>{user.role}</td>
+              <td>{user.totalPoint}</td>
+              <td>{user.message}</td>
+              <td>
+                <button onClick={() => handleDelete(user._id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
