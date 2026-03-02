@@ -6,10 +6,10 @@ const catchAsync = require('../utils/catchAsync.js');
 const {isLoggedIn} = require('../middleware.js');
 
 // router.get('/', isLoggedIn, catchAsync(users.index));
-router.get('/', catchAsync(users.index));
+router.get('/', isLoggedIn, catchAsync(users.index));
 
-router.get('/:id', isLoggedIn, catchAsync(users.showAd));
-router.delete("/:id", async (req, res) => {
+// router.get('/:id', isLoggedIn, catchAsync(users.showAd));
+router.delete("/:id", isLoggedIn, async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
   res.json({ message: "User deleted" });
 });

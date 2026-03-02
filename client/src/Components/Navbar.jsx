@@ -6,9 +6,17 @@ import {
   useNavigate,
   useLocation, // For hiding the button of the current page
 } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 import AdForm from "./ads/AdForm";
 
-export default function Navbar({ currentUser, setCurrentUser, users, setUsers, ads, setAds }) {
+export default function Navbar({
+  currentUser,
+  setCurrentUser,
+  users,
+  setUsers,
+  ads,
+  setAds,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   // "location.pathname" is the path of the current page
@@ -32,32 +40,30 @@ export default function Navbar({ currentUser, setCurrentUser, users, setUsers, a
       {location.pathname !== "/" && (
         <button onClick={() => navigate("/")}>Home Page</button>
       )}
-      {location.pathname !== "/users" && (
+      {currentUser && location.pathname !== "/users" && (
         <button onClick={() => navigate("/users")}>All users</button>
       )}
-      {location.pathname !== "/newAd" && (
+      {currentUser && location.pathname !== "/newAd" && (
         <button onClick={() => navigate("/newAd")}>Create new Ad</button>
       )}
-      {location.pathname !== "/register" && (
+      {!currentUser && location.pathname !== "/register" && (
         <button onClick={() => navigate("/register")}>Register</button>
       )}
-      {location.pathname !== "/login" && (
+      {!currentUser && location.pathname !== "/login" && (
         <button onClick={() => navigate("/login")}>Login</button>
       )}
-      {currentUser && (
-        <button onClick={handleLogout}>
-          Logout
-        </button>
-      )}
+      {currentUser && <button onClick={handleLogout}>Logout</button>}
       <Routes>
         <Route
           path="/newAd"
           element={
-            <AdForm
-              onAdCreated={(newAd) => {
-                setAds((currAds) => [newAd, ...currAds]);
-              }}
-            />
+            <ProtectedRoute currentUser={currentUser}>
+              <AdForm
+                onAdCreated={(newAd) => {
+                  setAds((currAds) => [newAd, ...currAds]);
+                }}
+              />
+            </ProtectedRoute>
           }
         />
       </Routes>

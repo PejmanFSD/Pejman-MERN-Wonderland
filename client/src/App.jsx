@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./Home";
+import ProtectedRoute from './Components/ProtectedRoute';
 import Navbar from "./Components/Navbar";
 import Register from "./Components/users/Register";
 import Login from "./Components/users/Login";
@@ -44,9 +45,9 @@ function App() {
           <Route path="/" element={<Home ads={ads} setAds={setAds} />} />
           <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
           <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
-          <Route path="/ads/:id" element={<AdDetails />} />
+          <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser}><AdDetails /></ProtectedRoute>} />
           <Route path="/ads/:id/edit" element={<AdEdit />} />
-          <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
+          <Route path="/users" element={<ProtectedRoute currentUser={currentUser}><Users users={users} setUsers={setUsers} /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </div>

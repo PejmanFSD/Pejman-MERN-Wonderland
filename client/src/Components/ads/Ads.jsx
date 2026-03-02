@@ -23,7 +23,7 @@ export default function Ads({ads, setAds}) {
     fetchAds();
   }, []);
   if (!ads || ads.length === 0) {
-    return <p>No ads available</p>;
+    return;
   }
   const handleNext = () => {
     setIdx((currAd) =>

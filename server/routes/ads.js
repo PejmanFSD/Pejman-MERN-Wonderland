@@ -13,7 +13,7 @@ router
   // .get(isLoggedIn, catchAsync(ads.index))
   .get(catchAsync(ads.index))
   // .post(isLoggedIn, upload.array('image'), validateAd, catchAsync(ads.createAd));
-  .post(upload.array("image"), catchAsync(ads.createAd));
+  .post(isLoggedIn, upload.array("image"), catchAsync(ads.createAd));
 // router.get('/', isLoggedIn, catchAsync(ads.index));
 // router.post('/', isLoggedIn, validateAd, catchAsync(ads.createAd));
 
@@ -22,11 +22,11 @@ router
 router
   .route("/:id")
   // .get(isLoggedIn, catchAsync(ads.showAd))
-  .get(catchAsync(ads.showAd))
+  .get(isLoggedIn, catchAsync(ads.showAd))
   // .put(isLoggedIn, isAuthor, upload.array('image'), validateAd, catchAsync(ads.editAd))
-  .put(upload.array("image"), catchAsync(ads.editAd))
+  .put(isLoggedIn, upload.array("image"), catchAsync(ads.editAd))
   // .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
-  .delete(catchAsync(ads.deleteAd));
+  .delete(isLoggedIn, catchAsync(ads.deleteAd));
 // router.get('/:id', isLoggedIn, catchAsync(ads.showAd));
 // router.put('/:id', isLoggedIn, isAuthor, validateAd, catchAsync(ads.editAd));
 // router.delete('/:id', isLoggedIn, isAuthor, catchAsync(ads.deleteAd));

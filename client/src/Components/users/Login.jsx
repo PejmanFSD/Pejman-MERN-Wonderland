@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Login({onLogin}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); // For navigating to the appropriate page after logging in
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -28,7 +29,9 @@ export default function Login({onLogin}) {
       onLogin(json.user);
       setUsername("");
       setPassword("");
-      navigate("/");
+      const from = location.state?.from?.pathname || "/"; // Either navigate to "/" or
+      // the page that required login and the user was trying to reach
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
     }
