@@ -13,6 +13,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [ads, setAds] = useState([]);
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     const restoreUser = async () => {
       try {
@@ -40,12 +41,13 @@ function App() {
           setAds={setAds} 
           users={users}
           setUsers={setUsers}
+           error={error}
         />
         <Routes>
           <Route path="/" element={<Home ads={ads} setAds={setAds} />} />
           <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
           <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
-          <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser}><AdDetails /></ProtectedRoute>} />
+          <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser}><AdDetails error={error} setError={setError} /></ProtectedRoute>} />
           <Route path="/ads/:id/edit" element={<AdEdit />} />
           <Route path="/users" element={<ProtectedRoute currentUser={currentUser}><Users users={users} setUsers={setUsers} /></ProtectedRoute>} />
         </Routes>

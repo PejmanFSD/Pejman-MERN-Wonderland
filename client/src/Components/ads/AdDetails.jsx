@@ -1,28 +1,49 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function AdDetails() {
+export default function AdDetails({error, setError}) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
-  const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
+  // const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAd = async () => {
-      const response = await fetch(`/ads/${id}`);
-      const json = await response.json();
-      if (response.ok) {
-        setAd(json);
+      const response = await fetch(`/ads/${id}`, {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        // Specifically for the "isAuthor" middleware
+        const data = await response.json();
+        setError(data.error);
+        return;
       }
+      const data = await response.json();
+      setAd(data);
     };
     fetchAd();
   }, [id]);
-
-  if (!ad) return <div>Loading...</div>;
+  const handleOk = () => {
+    navigate(-1);
+    setError(null);
+  }
+  // Specifically for the "isAuthor" middleware:
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button onClick={handleOk}>Ok</button>
+      </div>
+    );
+  }
+  if (!ad) {
+    return <div>Loading...</div>;
+  }
 
   const handleDelete = () => {
     setIsDeleting(true);
-  }
+  };
   const handleDeleteYes = async () => {
     try {
       const res = await fetch(`/ads/${ad._id}`, {
@@ -43,7 +64,7 @@ export default function AdDetails() {
   };
   const handleDeleteNo = () => {
     setIsDeleting(false);
-  }
+  };
   return (
     <div>
       <h2>{ad.company}</h2>
@@ -58,15 +79,17 @@ export default function AdDetails() {
       </Link>
       <br></br>
       {/* For Delete, we don't use <Link /> because <Link /> only sends the GET request */}
-      <button onClick={handleDelete} disabled={isDeleting}>Delete</button>
+      <button onClick={handleDelete} disabled={isDeleting}>
+        Delete
+      </button>
       <br></br>
-      {isDeleting &&
+      {isDeleting && (
         <div>
           <div>Are you sure!</div>
           <button onClick={handleDeleteYes}>Yes</button>
           <button onClick={handleDeleteNo}>No</button>
         </div>
-      }
+      )}
     </div>
   );
 }

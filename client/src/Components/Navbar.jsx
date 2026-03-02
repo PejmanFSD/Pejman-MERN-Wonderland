@@ -16,6 +16,7 @@ export default function Navbar({
   setUsers,
   ads,
   setAds,
+  error
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,21 +39,21 @@ export default function Navbar({
       <h1>Pejman MERN Wonderland</h1>
       {currentUser && <div>Welcome, {currentUser.username}</div>}
       {location.pathname !== "/" && (
-        <button onClick={() => navigate("/")}>Home Page</button>
+        <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
       )}
       {currentUser && location.pathname !== "/users" && (
-        <button onClick={() => navigate("/users")}>All users</button>
+        <button onClick={() => navigate("/users")} disabled={error}>All users</button>
       )}
       {currentUser && location.pathname !== "/newAd" && (
-        <button onClick={() => navigate("/newAd")}>Create new Ad</button>
+        <button onClick={() => navigate("/newAd")} disabled={error}>Create new Ad</button>
       )}
       {!currentUser && location.pathname !== "/register" && (
-        <button onClick={() => navigate("/register")}>Register</button>
+        <button onClick={() => navigate("/register")} disabled={error}>Register</button>
       )}
       {!currentUser && location.pathname !== "/login" && (
-        <button onClick={() => navigate("/login")}>Login</button>
+        <button onClick={() => navigate("/login")} disabled={error}>Login</button>
       )}
-      {currentUser && <button onClick={handleLogout}>Logout</button>}
+      {currentUser && <button onClick={handleLogout} disabled={error}>Logout</button>}
       <Routes>
         <Route
           path="/newAd"

@@ -22,7 +22,7 @@ router
 router
   .route("/:id")
   // .get(isLoggedIn, catchAsync(ads.showAd))
-  .get(isLoggedIn, catchAsync(ads.showAd))
+  .get(isLoggedIn, isAuthor, catchAsync(ads.showAd))
   // .put(isLoggedIn, isAuthor, upload.array('image'), validateAd, catchAsync(ads.editAd))
   .put(isLoggedIn, upload.array("image"), catchAsync(ads.editAd))
   // .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
