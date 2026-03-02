@@ -4,7 +4,8 @@ export default function Ad({
   adKey,
   adCompany,
   adText,
-  adImages
+  adImages,
+  adAuthor
 }) {
   return (
     <div>
@@ -14,6 +15,7 @@ export default function Ad({
       {adImages && adImages.map((i) => (
         <img src={i.url} height="70px" />
       ))}
+      <div>Created by: {adAuthor?.username}</div>
     </div>
   );
 }

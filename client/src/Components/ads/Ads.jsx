@@ -43,6 +43,7 @@ export default function Ads({ads, setAds}) {
         adCompany={currentAd.company}
         adText={currentAd.text}
         adImages={currentAd.images}
+        adAuthor={currentAd.author}
       />
 
       <div style={{ marginTop: "20px" }}>

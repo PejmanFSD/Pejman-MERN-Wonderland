@@ -42,10 +42,10 @@ export default function Users({ users, setUsers }) {
       <table border="1" cellPadding="10">
         <thead>
           <tr>
-            <th>Username</th>
+            <th style={{ width: "10%" }}>Username</th>
             <th style={{ width: "5%" }}>Role</th>
-            <th style={{ width: "10%" }}>Number of Stars</th>
-            <th style={{ width: "60%" }}>Message</th>
+            <th style={{ width: "9%" }}>Number of Stars</th>
+            <th style={{ width: "50%" }}>Message</th>
             <th style={{ width: "6%" }}>Actions</th>
           </tr>
         </thead>
