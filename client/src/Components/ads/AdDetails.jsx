@@ -5,7 +5,6 @@ export default function AdDetails({error, setError}) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  // const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,7 +13,7 @@ export default function AdDetails({error, setError}) {
         credentials: "include",
       });
       if (!response.ok) {
-        // Specifically for the "isAuthor" middleware
+        // Specifically for the "isAuthor" and "isAdmin" middlewares:
         const data = await response.json();
         setError(data.error);
         return;
@@ -28,7 +27,7 @@ export default function AdDetails({error, setError}) {
     navigate(-1);
     setError(null);
   }
-  // Specifically for the "isAuthor" middleware:
+  // Specifically for the "isAuthor" and "isAdmin" middlewares:
   if (error) {
     return (
       <div>

@@ -54,7 +54,7 @@ function App() {
           <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
           <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><AdDetails error={error} setError={setError} /></ProtectedRoute>} />
           <Route path="/ads/:id/edit" element={<AdEdit />} />
-          <Route path="/users" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><Users users={users} setUsers={setUsers} /></ProtectedRoute>} />
+          <Route path="/users" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><Users users={users} setUsers={setUsers} error={error} setError={setError} /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,4 +1,5 @@
 const Ad = require("./models/ad");
+const User = require("./models/user");
 const ExpressError = require("./utils/ExpressError");
 const { adSchema } = require("./schemas.js");
 
@@ -35,6 +36,20 @@ module.exports.isAuthor = async (req, res, next) => {
     return res.status(403).json({
       error: "You're not the creator of this ad",
     });
+  }
+  next();
+};
+
+module.exports.isAdmin = async (req, res, next) => {
+  // First check if the user is logged-in:
+  if (!req.session.user_id) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+  // Fetch the logged-in user:
+  const user = await User.findById(req.session.user_id);
+  // Check if the logged-in user is admin:
+  if (user.role !== "Admin") {
+    return res.status(403).json({ error: "Admin access only!" });
   }
   next();
 };

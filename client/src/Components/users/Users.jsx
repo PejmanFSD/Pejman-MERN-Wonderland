@@ -1,32 +1,46 @@
 import "../../App.css";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import User from "./User";
 
-export default function Users({ users, setUsers }) {
+export default function Users({ users, setUsers, error, setError }) {
   //   const [idx, setIdx] = useState(0);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUsers = async () => {
-      try {
-        const response = await fetch(`/users?page=${page}`, { // `/users?page=${page}` is the new path for pagination.
-          // Before pagination it was "users"
-          credentials: "include",
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
+      const response = await fetch(`/users?page=${page}`, { // `/users?page=${page}` is the new path for pagination.
+        // Before pagination it was "users"
+        credentials: "include",
+      });
+      if (!response.ok) {
         const data = await response.json();
-        console.log("DATA FROM SERVER:", data);
-        setUsers(data.users);
-        setTotalPages(data.totalPages);
-      } catch (error) {
-        console.error(error.message);
+        setError(data.error || "Something went wrong");
+        return;
       }
+      const data = await response.json();
+      console.log("DATA FROM SERVER:", data);
+      setUsers(data.users);
+      setTotalPages(data.totalPages);
     };
     fetchUsers(); // Refetching when "page" changes
   }, [page]);
-  if (!users || users.length === 0) {
+  const handleOk = () => {
+    navigate(-1);
+    setError(null);
+  }
+  // Specifically for the "isAuthor" and "isAdmin" middlewares:
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button onClick={handleOk}>Ok</button>
+      </div>
+    );
+  }
+  else if (!users || users.length === 0) {
     return <p>No users available</p>;
   }
   const handleDelete = async (userId) => {
