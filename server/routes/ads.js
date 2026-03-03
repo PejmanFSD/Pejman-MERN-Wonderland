@@ -24,9 +24,9 @@ router
   // .get(isLoggedIn, catchAsync(ads.showAd))
   .get(isLoggedIn, isAuthor, catchAsync(ads.showAd))
   // .put(isLoggedIn, isAuthor, upload.array('image'), validateAd, catchAsync(ads.editAd))
-  .put(isLoggedIn, upload.array("image"), catchAsync(ads.editAd))
+  .put(isLoggedIn, isAuthor, upload.array("image"), catchAsync(ads.editAd))
   // .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
-  .delete(isLoggedIn, catchAsync(ads.deleteAd));
+  .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
 // router.get('/:id', isLoggedIn, catchAsync(ads.showAd));
 // router.put('/:id', isLoggedIn, isAuthor, validateAd, catchAsync(ads.editAd));
 // router.delete('/:id', isLoggedIn, isAuthor, catchAsync(ads.deleteAd));

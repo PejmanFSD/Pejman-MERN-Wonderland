@@ -49,7 +49,7 @@ function App() {
           isAuthChecked={isAuthChecked}
         />
         <Routes>
-          <Route path="/" element={<Home ads={ads} setAds={setAds} />} />
+          <Route path="/" element={<Home ads={ads} setAds={setAds} currentUser={currentUser} />} />
           <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
           <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
           <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><AdDetails error={error} setError={setError} /></ProtectedRoute>} />

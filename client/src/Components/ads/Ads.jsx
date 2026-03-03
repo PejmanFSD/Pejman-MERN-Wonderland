@@ -2,7 +2,7 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import Ad from './Ad';
 
-export default function Ads({ads, setAds}) {
+export default function Ads({ads, setAds, currentUser}) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const fetchAds = async () => {
@@ -44,11 +44,11 @@ export default function Ads({ads, setAds}) {
         adText={currentAd.text}
         adImages={currentAd.images}
         adAuthor={currentAd.author}
+        currentUser={currentUser}
       />
-
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={handlePrevious}>Previous Ad</button>
-        <button onClick={handleNext}>Next Ad</button>
+      <div>
+        <button onClick={handlePrevious}>&#8592;</button>
+        <button onClick={handleNext}>&#8594;</button>
       </div>
     </div>
   );
