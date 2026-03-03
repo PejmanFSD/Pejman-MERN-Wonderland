@@ -4,7 +4,7 @@ import {
   Route,
   Link,
   useNavigate,
-  useLocation, // For hiding the button of the current page
+  useLocation // For hiding the button of the current page
 } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AdForm from "./ads/AdForm";
@@ -16,7 +16,8 @@ export default function Navbar({
   setUsers,
   ads,
   setAds,
-  error
+  error,
+  isAuthChecked
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,7 +59,7 @@ export default function Navbar({
         <Route
           path="/newAd"
           element={
-            <ProtectedRoute currentUser={currentUser}>
+            <ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}>
               <AdForm
                 onAdCreated={(newAd) => {
                   setAds((currAds) => [newAd, ...currAds]);

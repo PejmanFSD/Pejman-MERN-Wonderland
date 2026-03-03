@@ -14,6 +14,8 @@ function App() {
   const [ads, setAds] = useState([]);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+
   useEffect(() => {
     const restoreUser = async () => {
       try {
@@ -27,7 +29,9 @@ function App() {
         }
       } catch (err) {
         console.error("Failed to restore user");
-      }
+      } finally {
+      setIsAuthChecked(true);
+    }
     };
     restoreUser();
   }, []);
@@ -41,15 +45,16 @@ function App() {
           setAds={setAds} 
           users={users}
           setUsers={setUsers}
-           error={error}
+          error={error}
+          isAuthChecked={isAuthChecked}
         />
         <Routes>
           <Route path="/" element={<Home ads={ads} setAds={setAds} />} />
           <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
           <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
-          <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser}><AdDetails error={error} setError={setError} /></ProtectedRoute>} />
+          <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><AdDetails error={error} setError={setError} /></ProtectedRoute>} />
           <Route path="/ads/:id/edit" element={<AdEdit />} />
-          <Route path="/users" element={<ProtectedRoute currentUser={currentUser}><Users users={users} setUsers={setUsers} /></ProtectedRoute>} />
+          <Route path="/users" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><Users users={users} setUsers={setUsers} /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </div>
