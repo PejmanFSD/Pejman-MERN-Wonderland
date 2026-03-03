@@ -1,15 +1,38 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 // For returning to the Home Page automatically when the new ad is created
 import { useNavigate } from "react-router-dom";
 
-export default function AdForm({ onAdCreated }) {
+export default function AdForm({ onAdCreated, currentUser, error, setError }) {
   const [company, setCompany] = useState("");
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   // For clearing the chosen images of the <form /> after creating a new ad:
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadPage = async () => {
+      if (currentUser.role !== "Admin") {
+        setError("Admin access only!");
+        return;
+      }
+    };
+    loadPage(); // Refetching when "page" changes
+  }, []);
+
+  const handleOk = () => {
+    navigate(-1);
+    setError(null);
+  }
+  if (currentUser.role !== "Admin") {
+    return (
+        <div>
+          <p>{error}</p>
+          <button onClick={handleOk}>Ok</button>
+        </div>
+      );
+  }
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -38,7 +61,6 @@ export default function AdForm({ onAdCreated }) {
     navigate('/');
   }
 };
-
   return (
     <form onSubmit={handleSubmit}>
       <h3>Create a new Ad</h3>

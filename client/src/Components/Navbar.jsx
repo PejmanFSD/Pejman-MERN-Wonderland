@@ -17,6 +17,7 @@ export default function Navbar({
   ads,
   setAds,
   error,
+  setError,
   isAuthChecked
 }) {
   const navigate = useNavigate();
@@ -61,6 +62,9 @@ export default function Navbar({
           element={
             <ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}>
               <AdForm
+                error={error}
+                setError={setError}
+                currentUser={currentUser}
                 onAdCreated={(newAd) => {
                   setAds((currAds) => [newAd, ...currAds]);
                 }}

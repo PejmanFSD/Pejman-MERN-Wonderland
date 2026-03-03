@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./Home";
-import ProtectedRoute from './Components/ProtectedRoute';
+import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
 import Register from "./Components/users/Register";
 import Login from "./Components/users/Login";
@@ -20,7 +20,7 @@ function App() {
     const restoreUser = async () => {
       try {
         const res = await fetch("/current-user", {
-          credentials: "include"
+          credentials: "include",
         });
         if (!res.ok) throw new Error("Failed to fetch user");
         const data = await res.json();
@@ -30,8 +30,8 @@ function App() {
       } catch (err) {
         console.error("Failed to restore user");
       } finally {
-      setIsAuthChecked(true);
-    }
+        setIsAuthChecked(true);
+      }
     };
     restoreUser();
   }, []);
@@ -42,19 +42,56 @@ function App() {
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
           ads={ads}
-          setAds={setAds} 
+          setAds={setAds}
           users={users}
           setUsers={setUsers}
           error={error}
+          setError={setError}
           isAuthChecked={isAuthChecked}
         />
         <Routes>
-          <Route path="/" element={<Home ads={ads} setAds={setAds} currentUser={currentUser} />} />
-          <Route path="/register" element={<Register onRegister={(user) => setCurrentUser(user)} />} />
-          <Route path="/login" element={<Login onLogin={(user) => setCurrentUser(user)} />} />
-          <Route path="/ads/:id" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><AdDetails error={error} setError={setError} /></ProtectedRoute>} />
+          <Route
+            path="/"
+            element={
+              <Home ads={ads} setAds={setAds} currentUser={currentUser} />
+            }
+          />
+          <Route
+            path="/register"
+            element={<Register onRegister={(user) => setCurrentUser(user)} />}
+          />
+          <Route
+            path="/login"
+            element={<Login onLogin={(user) => setCurrentUser(user)} />}
+          />
+          <Route
+            path="/ads/:id"
+            element={
+              <ProtectedRoute
+                currentUser={currentUser}
+                isAuthChecked={isAuthChecked}
+              >
+                <AdDetails error={error} setError={setError} />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/ads/:id/edit" element={<AdEdit />} />
-          <Route path="/users" element={<ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}><Users users={users} setUsers={setUsers} error={error} setError={setError} /></ProtectedRoute>} />
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute
+                currentUser={currentUser}
+                isAuthChecked={isAuthChecked}
+              >
+                <Users
+                  users={users}
+                  setUsers={setUsers}
+                  error={error}
+                  setError={setError}
+                />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

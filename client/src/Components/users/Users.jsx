@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import User from "./User";
 
 export default function Users({ users, setUsers, error, setError }) {
-  //   const [idx, setIdx] = useState(0);
   const [page, setPage] = useState(1);
+  // For pagination:
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
