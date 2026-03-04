@@ -10,7 +10,7 @@ export default function Ad({
 }) {
   return (
     <div>
-      {currentUser &&
+      {currentUser && currentUser.role === "Admin" &&
         <Link to={`/ads/${adKey}`}>
         <div>{adCompany} - {adText}</div>
       </Link>
@@ -18,7 +18,7 @@ export default function Ad({
       {adImages && adImages.map((i) => (
         <img src={i.url} height="70px" />
       ))}
-      {currentUser &&
+      {currentUser && currentUser.role === "Admin" &&
         <div>Created by: {adAuthor?.username}</div>
       }
     </div>

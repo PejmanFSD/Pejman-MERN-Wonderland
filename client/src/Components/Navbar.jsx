@@ -43,10 +43,10 @@ export default function Navbar({
       {location.pathname !== "/" && (
         <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
       )}
-      {currentUser && location.pathname !== "/users" && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && (
         <button onClick={() => navigate("/users")} disabled={error}>All users</button>
       )}
-      {currentUser && location.pathname !== "/newAd" && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && (
         <button onClick={() => navigate("/newAd")} disabled={error}>Create new Ad</button>
       )}
       {!currentUser && location.pathname !== "/register" && (
