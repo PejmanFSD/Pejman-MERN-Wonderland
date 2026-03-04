@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Register({ onRegister }) {
+export default function Register({ currentUser, error, setError, onRegister }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [totalPoint, setTotalPoint] = useState(0);
   const [message, setMessage] = useState("");
   const [role, setRole] = useState("Player");
   const [adminSecret, setAdminSecret] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  useEffect(() => {
+    const loadPage = async () => {
+      if (!currentUser) {
+        setError("You're already logged-in. To register as a different user, you should first logout!");
+        return;
+      }
+    };
+    loadPage(); // Refetching when "page" changes
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -44,6 +52,19 @@ export default function Register({ onRegister }) {
       setError(err.message);
     }
   };
+  const handleOk = () => {
+  navigate(-1);
+  setError(null);
+  }
+  // Specifically for the "isAuthor" and "isAdmin" middlewares:
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button onClick={handleOk}>Ok</button>
+      </div>
+    );
+  }
   return (
     <form onSubmit={handleSubmit}>
       <h3>Sign Up!</h3>

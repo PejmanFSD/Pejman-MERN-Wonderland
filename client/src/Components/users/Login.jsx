@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export default function Login({onLogin}) {
+export default function Login({currentUser, error, setError, onLogin}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation(); // For navigating to the appropriate page after logging in
+  useEffect(() => {
+    const loadPage = async () => {
+      if (!currentUser) {
+        setError("You're already logged-in!");
+        return;
+      }
+    };
+    loadPage(); // Refetching when "page" changes
+  }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -36,6 +44,19 @@ export default function Login({onLogin}) {
       setError(err.message);
     }
   };
+  const handleOk = () => {
+  navigate(-1);
+  setError(null);
+  }
+  // Specifically for the "isAuthor" and "isAdmin" middlewares:
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button onClick={handleOk}>Ok</button>
+      </div>
+    );
+  }
   return (
     <form onSubmit={handleSubmit}>
       <h3>Login</h3>

@@ -58,11 +58,11 @@ function App() {
           />
           <Route
             path="/register"
-            element={<Register onRegister={(user) => setCurrentUser(user)} />}
+            element={<Register currentUser={currentUser} error={error} setError={setError} onRegister={(user) => setCurrentUser(user)} />}
           />
           <Route
             path="/login"
-            element={<Login onLogin={(user) => setCurrentUser(user)} />}
+            element={<Login currentUser={currentUser} error={error} setError={setError} onLogin={(user) => setCurrentUser(user)} />}
           />
           <Route
             path="/ads/:id"

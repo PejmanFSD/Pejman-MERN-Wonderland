@@ -12,6 +12,15 @@ module.exports.isLoggedIn = (req, res, next) => {
   }
   next();
 };
+// In order to stop the already logged-in users to login again or register:
+module.exports.isLoggedOut = (req, res, next) => {
+  if (req.session.user_id) {
+    return res.status(400).json({
+      error: "You are already logged in",
+    });
+  }
+  next();
+};
 
 module.exports.validateAd = (req, res, next) => {
   const { error } = adSchema.validate(req.body);
