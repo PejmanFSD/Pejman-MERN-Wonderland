@@ -60,7 +60,12 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile currentUser={currentUser} />
+              <ProtectedRoute
+                currentUser={currentUser}
+                isAuthChecked={isAuthChecked}
+              >
+                <Profile currentUser={currentUser} error={error} setError={setError} />
+              </ProtectedRoute>
             }
           />
           <Route
