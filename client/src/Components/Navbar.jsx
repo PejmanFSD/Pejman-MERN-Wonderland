@@ -40,6 +40,9 @@ export default function Navbar({
     <header>
       <h1>Pejman MERN Wonderland</h1>
       {currentUser && <div>Welcome, {currentUser.username}</div>}
+      {location.pathname !== '/profile' && (
+        <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
+      )}
       {location.pathname !== "/" && (
         <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
       )}

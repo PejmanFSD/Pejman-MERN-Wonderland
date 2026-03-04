@@ -8,6 +8,7 @@ import Login from "./Components/users/Login";
 import AdDetails from "./Components/ads/AdDetails";
 import AdEdit from "./Components/ads/AdEdit";
 import Users from "./Components/users/Users";
+import Profile from "./Components/users/Profile";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -54,6 +55,12 @@ function App() {
             path="/"
             element={
               <Home ads={ads} setAds={setAds} currentUser={currentUser} />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile currentUser={currentUser} />
             }
           />
           <Route

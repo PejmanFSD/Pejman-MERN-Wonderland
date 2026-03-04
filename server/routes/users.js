@@ -8,6 +8,8 @@ const {isLoggedIn, isAdmin} = require('../middleware.js');
 // router.get('/', isLoggedIn, catchAsync(users.index));
 router.get('/', isLoggedIn, isAdmin, catchAsync(users.index));
 
+router.get('/profile', isLoggedIn, catchAsync(users.showUser));
+
 // router.get('/:id', isLoggedIn, catchAsync(users.showAd));
 router.delete("/:id", isLoggedIn, isAdmin, async (req, res) => {
   await User.findByIdAndDelete(req.params.id);

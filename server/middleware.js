@@ -16,7 +16,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 module.exports.isLoggedOut = (req, res, next) => {
   if (req.session.user_id) {
     return res.status(400).json({
-      error: "You are already logged in",
+      error: "You are already logged in. You should logout first!",
     });
   }
   next();

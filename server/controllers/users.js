@@ -10,13 +10,19 @@ module.exports.index = async (req, res) => {
     .sort({ role: 1, username: 1 }) // Sorting the users, first based on roles and the usernames
     .skip(skip)
     .limit(limit); // The number of users per page
-  console.log("all users: ", users);
+  // console.log("all users: ", users);
   // res.render('users/index', {users});
   res.json({
     users,
     totalPages: Math.ceil(totalUsers / limit),
     currentPage: page,
   });
+};
+
+module.exports.showUser = async (req, res) => {
+  const user = await User.findById(req.session.user_id)
+    .select('-password'); // exclude password, we don't want to send password to UI
+  res.status(200).json(user);
 };
 
 module.exports.showAd = async (req, res) => {
