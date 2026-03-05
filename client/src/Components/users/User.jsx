@@ -2,7 +2,7 @@ export default function User({
   userUsernam,
   userRole,
   userTotalPoint,
-  userMessage,
+  userMessage
 }) {
   return (
     <div>

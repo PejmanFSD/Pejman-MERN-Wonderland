@@ -9,6 +9,7 @@ import AdDetails from "./Components/ads/AdDetails";
 import AdEdit from "./Components/ads/AdEdit";
 import Users from "./Components/users/Users";
 import Profile from "./Components/users/Profile";
+import EditProfile from "./Components/users/EditProfile";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -65,6 +66,21 @@ function App() {
                 isAuthChecked={isAuthChecked}
               >
                 <Profile currentUser={currentUser} error={error} setError={setError} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/edit-profile"
+            element={
+              <ProtectedRoute
+                currentUser={currentUser}
+                isAuthChecked={isAuthChecked}
+              >
+                <EditProfile
+                  setCurrentUser={setCurrentUser}
+                  // error={error}
+                  // setError={setError}
+                />
               </ProtectedRoute>
             }
           />

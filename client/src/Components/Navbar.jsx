@@ -22,7 +22,6 @@ export default function Navbar({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  // "location.pathname" is the path of the current page
   const handleLogout = async () => {
     try {
       await fetch("/logout", {
@@ -40,6 +39,7 @@ export default function Navbar({
     <header>
       <h1>Pejman MERN Wonderland</h1>
       {currentUser && <div>Welcome, {currentUser.username}</div>}
+      {/* "location.pathname" is the path of the current page */}
       {currentUser && location.pathname !== '/profile' && (
         <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
       )}
