@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Register({ onRegister }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [totalPoint, setTotalPoint] = useState(0);
   const [message, setMessage] = useState("");
   const [role, setRole] = useState("Player");
@@ -12,6 +13,10 @@ export default function Register({ onRegister }) {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
     setError(null);
     try {
       const response = await fetch("/register", {
@@ -66,6 +71,17 @@ export default function Register({ onRegister }) {
           id="password"
           name="password"
           value={password}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <input
+          type="password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          id="confirmPassword"
+          name="confirmPassword"
+          value={confirmPassword}
           required
         />
       </div>
