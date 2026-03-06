@@ -49,10 +49,14 @@ module.exports.changePassword = async (req, res) => {
   if (!isMatch) {
     return res.status(400).json({ message: "Current password is incorrect" });
   }
-  // Hash new password
-  const hashedPassword = await bcrypt.hash(newPassword, 12);
-  // Update password
-  user.password = hashedPassword;
+  if (currentPassword === newPassword) {
+    return res.status(400).json({
+      message: "New password must be different from current password",
+    });
+  }
+  // Update password (We don't have to hash the password because in model it's
+  // automatically hashed with ".pre" keyword)
+  user.password = newPassword;
   await user.save();
   res.status(200).json({ message: "Password updated successfully" });
 };
