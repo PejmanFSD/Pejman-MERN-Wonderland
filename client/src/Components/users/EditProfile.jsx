@@ -22,7 +22,6 @@ export default function EditProfile({ setCurrentUser }) {
     };
     fetchProfile();
   }, []);
-
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     const response = await fetch("/users/edit-profile", {
@@ -35,7 +34,7 @@ export default function EditProfile({ setCurrentUser }) {
     });
     if (currentPassword || newPassword || confirmNewPassword) {
       if (!currentPassword || !newPassword || !confirmNewPassword) {
-        setPasswordError("Please fill all password fields");
+        setPasswordError("Please either fill all password fields or leave all of the empty");
         return;
       }
       if (newPassword !== confirmNewPassword) {
@@ -60,10 +59,10 @@ export default function EditProfile({ setCurrentUser }) {
       }
     }
     if (response.ok) {
-        const updatedUser = await response.json();
-        setCurrentUser(updatedUser);
-        navigate("/profile");
-      }
+      const updatedUser = await response.json();
+      setCurrentUser(updatedUser);
+      navigate("/profile");
+    }
   };
   const checkPasswordMatch = (password, confirmPassword) => {
     if (!password && !confirmPassword) {
@@ -76,61 +75,69 @@ export default function EditProfile({ setCurrentUser }) {
       setPasswordMatch(false);
     }
   };
+  const cancelSubmit = () => {
+    navigate("/profile");
+  };
   return (
-    <form onSubmit={handleProfileUpdate}>
-      <div>
-        <label>Username:</label>
+    <div>
+      <form onSubmit={handleProfileUpdate}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Message:</label>
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            required
+          />
+        </div>
+        <label>Password:</label>
         <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
+          type="password"
+          placeholder="Current Password"
+          value={currentPassword}
+          onChange={(e) => setCurrentPassword(e.target.value)}
         />
-      </div>
-      <div>
-        <label>Message:</label>
         <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          required
+          type="password"
+          placeholder="New Password"
+          value={newPassword}
+          onChange={(e) => {
+            const value = e.target.value;
+            setNewPassword(value);
+            checkPasswordMatch(value, confirmNewPassword);
+          }}
         />
-      </div>
-      <label>Password:</label>
-      <input
-        type="password"
-        placeholder="Current Password"
-        value={currentPassword}
-        onChange={(e) => setCurrentPassword(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="New Password"
-        value={newPassword}
-        onChange={(e) => {
-          const value = e.target.value;
-          setNewPassword(value);
-          checkPasswordMatch(value, confirmNewPassword);
-        }}
-      />
-      <input
-        type="password"
-        placeholder="Confirm New Password"
-        value={confirmNewPassword}
-        onChange={(e) => {
-          const value = e.target.value;
-          setConfirmNewPassword(value);
-          checkPasswordMatch(newPassword, value);
-        }}
-      />
-      <button type="submit">Save Changes</button>
-      {newPassword && confirmNewPassword && passwordMatch === true && (
-        <p style={{ color: "green" }}>✔ New passwords match</p>
-      )}
-      {newPassword && confirmNewPassword && passwordMatch === false && (
-        <p style={{ color: "pink" }}>✖ New passwords do not match</p>
-      )}
-      {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
-    </form>
+        <input
+          type="password"
+          placeholder="Confirm New Password"
+          value={confirmNewPassword}
+          onChange={(e) => {
+            const value = e.target.value;
+            setConfirmNewPassword(value);
+            checkPasswordMatch(newPassword, value);
+          }}
+        />
+        <button type="submit">Save Changes</button>
+        {newPassword && confirmNewPassword && passwordMatch === true && (
+          <p style={{ color: "green" }}>✔ New passwords match</p>
+        )}
+        {newPassword && confirmNewPassword && passwordMatch === false && (
+          <p style={{ color: "pink" }}>✖ New passwords do not match</p>
+        )}
+        {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
+      </form>
+      <button type="submit" onClick={cancelSubmit}>
+        Cancel Changes
+      </button>
+    </div>
   );
 }
