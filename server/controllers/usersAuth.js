@@ -3,7 +3,13 @@ require("dotenv").config();
 
 module.exports.register = async (req, res) => {
   try {
-    const { username, password, role, message, adminSecret } = req.body;
+    const { username, password, confirmPassword, role, message, adminSecret } = req.body;
+    // Confirming the password:
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        message: "Passwords do not match",
+      });
+    }
     let finalRole = "Player";
     if (role === "Admin") {
       if (adminSecret !== process.env.ADMIN_SECRET) {

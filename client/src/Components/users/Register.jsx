@@ -28,6 +28,7 @@ export default function Register({ onRegister }) {
         body: JSON.stringify({
           username,
           password,
+          confirmPassword,
           totalPoint,
           message,
           role,
@@ -110,7 +111,13 @@ export default function Register({ onRegister }) {
           />
         )}
       </div>
-      <button>Sign Up</button>
+      <button disabled={password !== confirmPassword}>Sign Up</button>
+      {password && confirmPassword && password !== confirmPassword && (
+        <p style={{ color: "pink" }}>Passwords do not match</p>
+      )}
+      {password && confirmPassword && password === confirmPassword && (
+        <p style={{ color: "green" }}>Passwords match</p>
+      )}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
