@@ -113,10 +113,10 @@ export default function Register({ onRegister }) {
       </div>
       <button disabled={password !== confirmPassword}>Sign Up</button>
       {password && confirmPassword && password !== confirmPassword && (
-        <p style={{ color: "pink" }}>Passwords do not match</p>
+        <p style={{ color: "pink" }}>✖ Passwords do not match</p>
       )}
       {password && confirmPassword && password === confirmPassword && (
-        <p style={{ color: "green" }}>Passwords match</p>
+        <p style={{ color: "green" }}>✔ Passwords match</p>
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>

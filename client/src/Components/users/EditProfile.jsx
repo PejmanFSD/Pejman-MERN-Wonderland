@@ -7,6 +7,8 @@ export default function EditProfile({ setCurrentUser }) {
   const [message, setMessage] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordError, setPasswordError] = useState("");
 
   useEffect(() => {
@@ -31,29 +33,49 @@ export default function EditProfile({ setCurrentUser }) {
       credentials: "include",
       body: JSON.stringify({ username, message }),
     });
-    const passwordResponse = await fetch("/users/change-password", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        currentPassword,
-        newPassword,
-      }),
-    });
-    const passwordData = await passwordResponse.json();
-    if (!passwordResponse.ok) {
-      setPasswordError(passwordData.message);
-      return;
+    if (currentPassword || newPassword || confirmNewPassword) {
+      if (!currentPassword || !newPassword || !confirmNewPassword) {
+        setPasswordError("Please fill all password fields");
+        return;
+      }
+      if (newPassword !== confirmNewPassword) {
+        setPasswordError("New passwords do not match");
+        return;
+      }
+      const passwordResponse = await fetch("/users/change-password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+      const passwordData = await passwordResponse.json();
+      if (!passwordResponse.ok) {
+        setPasswordError(passwordData.message);
+        return;
+      }
     }
     if (response.ok) {
-      const updatedUser = await response.json();
-      setCurrentUser(updatedUser);
-      navigate("/profile");
+        const updatedUser = await response.json();
+        setCurrentUser(updatedUser);
+        navigate("/profile");
+      }
+  };
+  const checkPasswordMatch = (password, confirmPassword) => {
+    if (!password && !confirmPassword) {
+      setPasswordMatch(null);
+      return;
+    }
+    if (password === confirmPassword) {
+      setPasswordMatch(true);
+    } else {
+      setPasswordMatch(false);
     }
   };
-
   return (
     <form onSubmit={handleProfileUpdate}>
       <div>
@@ -85,9 +107,29 @@ export default function EditProfile({ setCurrentUser }) {
         type="password"
         placeholder="New Password"
         value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
+        onChange={(e) => {
+          const value = e.target.value;
+          setNewPassword(value);
+          checkPasswordMatch(value, confirmNewPassword);
+        }}
+      />
+      <input
+        type="password"
+        placeholder="Confirm New Password"
+        value={confirmNewPassword}
+        onChange={(e) => {
+          const value = e.target.value;
+          setConfirmNewPassword(value);
+          checkPasswordMatch(newPassword, value);
+        }}
       />
       <button type="submit">Save Changes</button>
+      {newPassword && confirmNewPassword && passwordMatch === true && (
+        <p style={{ color: "green" }}>✔ New passwords match</p>
+      )}
+      {newPassword && confirmNewPassword && passwordMatch === false && (
+        <p style={{ color: "pink" }}>✖ New passwords do not match</p>
+      )}
       {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
     </form>
   );
