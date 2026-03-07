@@ -55,6 +55,7 @@ function App() {
           isDeleting={isDeleting}
           setIsDeleting={setIsDeleting}
           isLoggingOut={isLoggingOut}
+          setIsLoggingOut={setIsLoggingOut}
         />
         <Routes>
           <Route
@@ -121,6 +122,8 @@ function App() {
                   setUsers={setUsers}
                   error={error}
                   setError={setError}
+                  isDeleting={isDeleting}
+                  setIsDeleting={setIsDeleting}
                 />
               </ProtectedRoute>
             }

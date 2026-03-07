@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import User from "./User";
 
-export default function Users({ users, setUsers, error, setError }) {
+export default function Users({ users, setUsers, error, setError, isDeleting, setIsDeleting }) {
   const [page, setPage] = useState(1);
+  const [deletingUser, setDeletingUser] = useState(null);
   // For pagination:
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
@@ -43,24 +44,34 @@ export default function Users({ users, setUsers, error, setError }) {
   else if (!users || users.length === 0) {
     return <p>No users available</p>;
   }
-  const handleDelete = async (userId) => {
+  const handleDelete = (userId) => {
+    setDeletingUser(userId);
+    setIsDeleting(true);
+  }
+  const handleDeleteYes = async (userId) => {
     await fetch(`/users/${userId}`, {
       method: "DELETE",
       credentials: "include",
     });
     // Removing the user from the state variable:
     setUsers((currUsers) => currUsers.filter((u) => u._id !== userId));
+    setDeletingUser(null);
+    setIsDeleting(false);
   };
+  const handleDeleteNo = () => {
+    setDeletingUser(null);
+    setIsDeleting(false);
+  }
   return (
     <div>
       <table border="1" cellPadding="10">
         <thead>
           <tr>
             <th style={{ width: "10%" }}>Username</th>
-            <th style={{ width: "5%" }}>Role</th>
-            <th style={{ width: "9%" }}>Number of Stars</th>
-            <th style={{ width: "50%" }}>Message</th>
-            <th style={{ width: "6%" }}>Actions</th>
+            <th style={{ width: "4%" }}>Role</th>
+            <th style={{ width: "5%" }}>Number of Stars</th>
+            <th style={{ width: "56%" }}>Message</th>
+            <th style={{ width: "25%" }}>Actions</th>
           </tr>
         </thead>
 
@@ -72,26 +83,37 @@ export default function Users({ users, setUsers, error, setError }) {
               <td>{user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
-                {user.role !== "Admin" ? <button onClick={() => handleDelete(user._id)}>Delete</button> : <div>Admin &#128526;</div>}
+                {user.role !== "Admin" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting}>Delete</button> : <div>Admin &#128526;</div>}
+                {isDeleting && deletingUser === user._id &&
+                  <div>
+                    <div>{`Are you sure you want to delete ${users.find(u => u._id === user._id).username}?`}</div>
+                    <div>
+                      <button onClick={() => handleDeleteYes(user._id)}>Yes</button>
+                      <button onClick={handleDeleteNo}>No</button>
+                    </div>
+                  </div>
+                }
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: "20px" }}>
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          Previous
-        </button>
-        <span style={{ margin: "0 10px" }}>
-          Page {page} of {totalPages}
-        </span>
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </button>
-      </div>
+      {!isDeleting &&
+        <div style={{ marginTop: "20px" }}>
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            Previous
+          </button>
+          <span style={{ margin: "0 10px" }}>
+            Page {page} of {totalPages}
+          </span>
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+            >
+            Next
+          </button>
+        </div>
+      }
     </div>
   );
 }
