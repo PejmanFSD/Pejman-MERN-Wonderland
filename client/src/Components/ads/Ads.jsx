@@ -47,7 +47,7 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut}) {
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
       />
-      {!isLoggingOut &&
+      {!isLoggingOut && ads.length > 1 &&
         <div>
         <button onClick={handlePrevious}>&#8592;</button>
         <button onClick={handleNext}>&#8594;</button>

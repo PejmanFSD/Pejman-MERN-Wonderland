@@ -36,6 +36,7 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
+  console.log("Submitting ad...");
   const formData = new FormData();
   formData.append('company', company);
   formData.append('text', text);
@@ -44,9 +45,11 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
   }
   const response = await fetch('/ads', {
     method: 'POST',
-    body: formData
+    body: formData,
+    credentials: "include"
   });
   const json = await response.json();
+  console.log("SERVER RESPONSE:", json);
   if (!response.ok) {
     setError(json.error);
   } else {
@@ -81,7 +84,7 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
           type="text"
           onChange={(e) => setText(e.target.value)}
           id="text"
-          name="ad[text]"
+          name="text"
           value={text}
           required
         ></textarea>

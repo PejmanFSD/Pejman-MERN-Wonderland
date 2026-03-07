@@ -10,13 +10,13 @@ const upload = multer({ storage });
 router
   .route("/")
   .get(catchAsync(ads.index))
-  .post(isLoggedIn, isAdmin, upload.array("image"), validateAd, catchAsync(ads.createAd)); // We use
+  .post(isLoggedIn, isAdmin, upload.array("image"), catchAsync(ads.createAd)); // We use
   // "validateAd" after uploading image(s) because the uploaded image(s) should be validated too
 
 router
   .route("/:id")
   .get(isLoggedIn, isAdmin, isAuthor, catchAsync(ads.showAd))
-  .put(isLoggedIn, isAdmin, isAuthor, upload.array("image"), validateAd, catchAsync(ads.editAd)) // We
+  .put(isLoggedIn, isAdmin, isAuthor, upload.array("image"), catchAsync(ads.editAd)) // We
   // use "validateAd" after uploading image(s) because the uploaded image(s) should be validated too
   .delete(isLoggedIn, isAdmin, isAuthor, catchAsync(ads.deleteAd));
 
