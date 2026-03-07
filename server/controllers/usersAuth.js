@@ -36,6 +36,11 @@ module.exports.register = async (req, res) => {
     });
   } catch (e) {
     // req.flash('error', 'Something is wrong!');
+    if (e.code === 11000) {
+      return res.status(400).json({
+        message: "Username already taken. Please choose another one."
+      });
+    }
     res.status(400).json({
       error: e.message,
     });

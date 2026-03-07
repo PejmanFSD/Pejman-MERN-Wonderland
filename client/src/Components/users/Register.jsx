@@ -37,7 +37,9 @@ export default function Register({ onRegister }) {
       });
       const json = await response.json();
       if (!response.ok) {
-        throw new Error(json.error || "Registration failed");
+        setError(json.message);
+        return;
+        // throw new Error(json.error || "Registration failed");
       }
       onRegister(json.user);
       setUsername("");
