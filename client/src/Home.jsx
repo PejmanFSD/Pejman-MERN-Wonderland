@@ -15,7 +15,7 @@ import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 
-export default function Home({ads, setAds, currentUser}) {
+export default function Home({ads, setAds, currentUser, isLoggingOut}) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -84,7 +84,7 @@ export default function Home({ads, setAds, currentUser}) {
   }
   return (
     <div>
-      <Ads ads={ads} setAds={setAds} currentUser={currentUser} />
+      <Ads ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />
       <hr />
       <div>
         {new Array(totalPoint).fill(null).map((t) => (

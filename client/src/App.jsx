@@ -17,6 +17,8 @@ function App() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const restoreUser = async () => {
@@ -50,12 +52,15 @@ function App() {
           error={error}
           setError={setError}
           isAuthChecked={isAuthChecked}
+          isDeleting={isDeleting}
+          setIsDeleting={setIsDeleting}
+          isLoggingOut={isLoggingOut}
         />
         <Routes>
           <Route
             path="/"
             element={
-              <Home ads={ads} setAds={setAds} currentUser={currentUser} />
+              <Home ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />
             }
           />
           <Route
@@ -99,7 +104,7 @@ function App() {
                 currentUser={currentUser}
                 isAuthChecked={isAuthChecked}
               >
-                <AdDetails error={error} setError={setError} />
+                <AdDetails error={error} setError={setError} isDeleting={isDeleting} setIsDeleting={setIsDeleting} />
               </ProtectedRoute>
             }
           />

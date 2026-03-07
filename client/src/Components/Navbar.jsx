@@ -1,3 +1,4 @@
+import {useState} from "react";
 import {
   BrowserRouter,
   Routes,
@@ -18,11 +19,18 @@ export default function Navbar({
   setAds,
   error,
   setError,
-  isAuthChecked
+  isAuthChecked,
+  isDeleting,
+  isLoggingOut,
+  setIsLoggingOut
 }) {
+  
   const navigate = useNavigate();
   const location = useLocation();
-  const handleLogout = async () => {
+  const handleLogout = () => {
+    setIsLoggingOut(true);
+  }
+  const handleLogoutYes = async () => {
     try {
       await fetch("/logout", {
         method: "POST",
@@ -34,31 +42,44 @@ export default function Navbar({
     } catch (err) {
       console.error("Logout failed:", err);
     }
+    setIsLoggingOut(false);
   };
+  const handleLogoutNo = () => {
+    setIsLoggingOut(false);
+  }
   return (
     <header>
       <h1>Pejman MERN Wonderland</h1>
-      {currentUser && <div>Welcome, {currentUser.username}</div>}
+      {currentUser && !isLoggingOut && <div>Welcome, {currentUser.username}</div>}
       {/* "location.pathname" is the path of the current page */}
-      {currentUser && location.pathname !== '/profile' && (
+      {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && (
         <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
       )}
-      {location.pathname !== "/" && (
+      {location.pathname !== "/" && !isLoggingOut && !isDeleting && (
         <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
       )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && !isLoggingOut && !isDeleting && (
         <button onClick={() => navigate("/users")} disabled={error}>All users</button>
       )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && !isLoggingOut && !isDeleting && (
         <button onClick={() => navigate("/newAd")} disabled={error}>Create new Ad</button>
       )}
-      {!currentUser && location.pathname !== "/register" && (
+      {!currentUser && location.pathname !== "/register" && !isLoggingOut && !isDeleting && (
         <button onClick={() => navigate("/register")} disabled={error}>Register</button>
       )}
-      {!currentUser && location.pathname !== "/login" && (
+      {!currentUser && location.pathname !== "/login" && !isLoggingOut && !isDeleting && (
         <button onClick={() => navigate("/login")} disabled={error}>Login</button>
       )}
-      {currentUser && <button onClick={handleLogout} disabled={error}>Logout</button>}
+      {currentUser && !isLoggingOut && !isDeleting && <button onClick={handleLogout} disabled={error}>Logout</button>}
+      {isLoggingOut &&
+        <div>
+          <div>Are you sure you want to logout?</div>
+          <div>
+            <button onClick={handleLogoutYes}>Yes</button>
+            <button onClick={handleLogoutNo}>No</button>
+          </div>
+        </div>
+      }
       <Routes>
         <Route
           path="/newAd"

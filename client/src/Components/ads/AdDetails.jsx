@@ -1,10 +1,9 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function AdDetails({error, setError}) {
+export default function AdDetails({error, setError, isDeleting, setIsDeleting}) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,7 +83,7 @@ export default function AdDetails({error, setError}) {
       <br></br>
       {isDeleting && (
         <div>
-          <div>Are you sure!</div>
+          <div>Are you sure you want to delete the ad?</div>
           <button onClick={handleDeleteYes}>Yes</button>
           <button onClick={handleDeleteNo}>No</button>
         </div>
