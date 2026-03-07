@@ -5,31 +5,20 @@ const { isLoggedIn, validateAd, isAuthor, isAdmin } = require("../middleware.js"
 const catchAsync = require("../utils/catchAsync");
 const multer = require("multer");
 const { storage } = require("../cloudinary");
-// const upload = multer({dest: 'uploads/'});
 const upload = multer({ storage });
 
 router
   .route("/")
-  // .get(isLoggedIn, catchAsync(ads.index))
   .get(catchAsync(ads.index))
-  // .post(isLoggedIn, upload.array('image'), validateAd, catchAsync(ads.createAd));
-  .post(isLoggedIn, isAdmin, upload.array("image"), catchAsync(ads.createAd));
-// router.get('/', isLoggedIn, catchAsync(ads.index));
-// router.post('/', isLoggedIn, validateAd, catchAsync(ads.createAd));
-
-// router.get('/new', isLoggedIn, ads.renderNewForm);
+  .post(isLoggedIn, isAdmin, upload.array("image"), validateAd, catchAsync(ads.createAd)); // We use
+  // "validateAd" after uploading image(s) because the uploaded image(s) should be validated too
 
 router
   .route("/:id")
-  // .get(isLoggedIn, catchAsync(ads.showAd))
   .get(isLoggedIn, isAdmin, isAuthor, catchAsync(ads.showAd))
-  // .put(isLoggedIn, isAuthor, upload.array('image'), validateAd, catchAsync(ads.editAd))
-  .put(isLoggedIn, isAdmin, isAuthor, upload.array("image"), catchAsync(ads.editAd))
-  // .delete(isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
+  .put(isLoggedIn, isAdmin, isAuthor, upload.array("image"), validateAd, catchAsync(ads.editAd)) // We
+  // use "validateAd" after uploading image(s) because the uploaded image(s) should be validated too
   .delete(isLoggedIn, isAdmin, isAuthor, catchAsync(ads.deleteAd));
-// router.get('/:id', isLoggedIn, catchAsync(ads.showAd));
-// router.put('/:id', isLoggedIn, isAuthor, validateAd, catchAsync(ads.editAd));
-// router.delete('/:id', isLoggedIn, isAuthor, catchAsync(ads.deleteAd));
 
 router.get("/:id/edit", isLoggedIn, isAdmin, isAuthor, catchAsync(ads.renderEditForm));
 
