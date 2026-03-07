@@ -36,11 +36,12 @@ module.exports.register = async (req, res) => {
     });
   } catch (e) {
     // req.flash('error', 'Something is wrong!');
-    if (e.code === 11000) {
+    if (e.code === 11000) { // 11000 is the error code of already-existed-user
       return res.status(400).json({
         message: "Username already taken. Please choose another one."
       });
     }
+    // For other errors:
     res.status(400).json({
       error: e.message,
     });

@@ -10,7 +10,7 @@ export default function EditProfile({ setCurrentUser }) {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordError, setPasswordError] = useState("");
-
+  const [error, setError] = useState("");
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await fetch("/users/profile", {
@@ -58,11 +58,13 @@ export default function EditProfile({ setCurrentUser }) {
         return;
       }
     }
-    if (response.ok) {
-      const updatedUser = await response.json();
-      setCurrentUser(updatedUser);
-      navigate("/profile");
+    const updatedUser = await response.json();
+    if (!response.ok) {
+      setError(updatedUser.message);
+      return;
     }
+    setCurrentUser(updatedUser);
+    navigate("/profile");
   };
   const checkPasswordMatch = (password, confirmPassword) => {
     if (!password && !confirmPassword) {
@@ -138,6 +140,7 @@ export default function EditProfile({ setCurrentUser }) {
       <button type="submit" onClick={cancelSubmit}>
         Cancel Changes
       </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
