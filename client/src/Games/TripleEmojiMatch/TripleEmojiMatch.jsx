@@ -10,6 +10,8 @@ export default function TripleEmojiMatch({
   updateTotalPoint,
   setShowTripleEmojiMatch,
   setShowGameTitles,
+  isAGameStarted,
+  setIsAGameStarted
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -84,6 +86,7 @@ export default function TripleEmojiMatch({
     setIsGameStarted(false);
     setShowTripleEmojiMatch(false);
     setShowGameTitles(true);
+    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

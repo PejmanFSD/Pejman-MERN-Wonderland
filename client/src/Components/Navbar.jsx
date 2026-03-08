@@ -22,7 +22,9 @@ export default function Navbar({
   isAuthChecked,
   isDeleting,
   isLoggingOut,
-  setIsLoggingOut
+  setIsLoggingOut,
+  isAGameStarted,
+  setIsAGameStarted
 }) {
   
   const navigate = useNavigate();
@@ -50,27 +52,27 @@ export default function Navbar({
   return (
     <header>
       <h1>Pejman MERN Wonderland</h1>
-      {currentUser && !isLoggingOut && <div>Welcome, {currentUser.username}</div>}
+      {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}</div>}
       {/* "location.pathname" is the path of the current page */}
-      {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && (
+      {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
       )}
-      {location.pathname !== "/" && !isLoggingOut && !isDeleting && (
+      {location.pathname !== "/" && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
       )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && !isLoggingOut && !isDeleting && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate("/users")} disabled={error}>All users</button>
       )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && !isLoggingOut && !isDeleting && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate("/newAd")} disabled={error}>Create new Ad</button>
       )}
-      {!currentUser && location.pathname !== "/register" && !isLoggingOut && !isDeleting && (
+      {!currentUser && location.pathname !== "/register" && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate("/register")} disabled={error}>Register</button>
       )}
-      {!currentUser && location.pathname !== "/login" && !isLoggingOut && !isDeleting && (
+      {!currentUser && location.pathname !== "/login" && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate("/login")} disabled={error}>Login</button>
       )}
-      {currentUser && !isLoggingOut && !isDeleting && <button onClick={handleLogout} disabled={error}>Logout</button>}
+      {currentUser && !isLoggingOut && !isDeleting && !isAGameStarted && <button onClick={handleLogout} disabled={error}>Logout</button>}
       {isLoggingOut &&
         <div>
           <div>Are you sure you want to logout?</div>

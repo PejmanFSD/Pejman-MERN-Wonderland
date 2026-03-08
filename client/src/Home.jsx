@@ -15,7 +15,7 @@ import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 
-export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggingOut}) {
+export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggingOut, isAGameStarted, setIsAGameStarted}) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showAllStars, setShowAllStars] = useState(false);
@@ -57,56 +57,70 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
   }
   const toggleRockScissorsPaper = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowRockScissorsPaper(true);
   };
   const toggleGuessNumber = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowGuessNumber(true);
   };
   const toggleCapitals = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowCapitals(true);
   };
   const toggleCryptogram = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowCryptogram(true);
   };
   const toggleCrazy100 = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowCrazy100(true);
   };
   const toggleMemoryCards = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowMemoryCards(true);
   };
   const toggleNim = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowNim(true);
   };
   const toggleHappyFlower = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowHappyFlower(true);
   };
   const toggleXO = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowXO(true);
   };
   const toggleKukuKube = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowKukuKube(true);
   };
   const toggleTripleEmojiMatch = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowTripleEmojiMatch(true);
   };
   const togglePidoku = () => {
     setShowGameTitles(false);
+    setIsAGameStarted(true);
     setShowPidoku(true);
   }
   return (
     <div>
-      <Ads ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />
+      {!isAGameStarted && <Ads ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />}
       <hr />
+      {!isAGameStarted &&
+<div>
       <div>
         {currentUser && currentUser?.totalPoint === 0 &&
         "You don't have any stars, play the interesting games and win some!"
@@ -124,7 +138,6 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
       ))}
       </div>
       }
-
       {!showAllStars && currentUser?.totalPoint > 5 &&
       <div>
       {new Array(5).fill(null).map(i => (
@@ -144,149 +157,175 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
       <button onClick={handleShowAllStars}>Minimize stars</button>
       </div>
       }
+</div>
+    }
       <hr />
-      {!showGameTitles && showRockScissorsPaper ? (
+      {!showGameTitles && showRockScissorsPaper && isAGameStarted ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
           setShowRockScissorsPaper={setShowRockScissorsPaper}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showRockScissorsPaper && (
+        !showRockScissorsPaper && !isAGameStarted && (
           <button onClick={() => toggleRockScissorsPaper()}>
             Rock - Scissors - Paper
           </button>
         )
       )}
-      {!showGameTitles && showGuessNumber ? (
+      {!showGameTitles && showGuessNumber && isAGameStarted ? (
         <GuessNumber
           setShowGameTitles={setShowGameTitles}
           setShowGuessNumber={setShowGuessNumber}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showGuessNumber && (
+        !showGuessNumber && !isAGameStarted && (
           <button onClick={() => toggleGuessNumber()}>Guess Number</button>
         )
       )}
-      {!showGameTitles && showCapitals ? (
+      {!showGameTitles && showCapitals && isAGameStarted ? (
         <Capitals
           setShowGameTitles={setShowGameTitles}
           setShowCapitals={setShowCapitals}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showCapitals && (
+        !showCapitals && !isAGameStarted && (
           <button onClick={() => toggleCapitals()}>Capitals</button>
         )
       )}
-      {!showGameTitles && showCryptogram ? (
+      {!showGameTitles && showCryptogram && isAGameStarted ? (
         <Cryptogram
           setShowGameTitles={setShowGameTitles}
           setShowCryptogram={setShowCryptogram}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showCryptogram && (
+        !showCryptogram && !isAGameStarted && (
           <button onClick={() => toggleCryptogram()}>Cryptogram</button>
         )
       )}
-      {!showGameTitles && showCrazy100 ? (
+      {!showGameTitles && showCrazy100 && isAGameStarted ? (
         <Crazy100
           setShowGameTitles={setShowGameTitles}
           setShowCrazy100={setShowCrazy100}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showCrazy100 && (
+        !showCrazy100 && !isAGameStarted && (
           <button onClick={() => toggleCrazy100()}>Crazy-100</button>
         )
       )}
-      {!showGameTitles && showMemoryCards ? (
+      {!showGameTitles && showMemoryCards && isAGameStarted ? (
         <MemoryCards
           setShowGameTitles={setShowGameTitles}
           setShowMemoryCards={setShowMemoryCards}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showMemoryCards && (
+        !showMemoryCards && !isAGameStarted && (
           <button onClick={() => toggleMemoryCards()}>Memory Cards</button>
         )
       )}
-      {!showGameTitles && showNim ? (
+      {!showGameTitles && showNim && isAGameStarted ? (
         <Nim
           setShowGameTitles={setShowGameTitles}
           setShowNim={setShowNim}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showNim && <button onClick={() => toggleNim()}>Nim</button>
+        !showNim && !isAGameStarted && <button onClick={() => toggleNim()}>Nim</button>
       )}
-      {!showGameTitles && showHappyFlower ? (
+      {!showGameTitles && showHappyFlower && isAGameStarted ? (
         <HappyFlower
           setShowGameTitles={setShowGameTitles}
           setShowHappyFlower={setShowHappyFlower}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showHappyFlower && (
+        !showHappyFlower && !isAGameStarted && (
           <button onClick={() => toggleHappyFlower()}>Happy Flower</button>
         )
       )}
-      {!showGameTitles && showXO ? (
+      {!showGameTitles && showXO && isAGameStarted ? (
         <XO
           setShowGameTitles={setShowGameTitles}
           setShowXO={setShowXO}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showXO && <button onClick={() => toggleXO()}>X-O</button>
+        !showXO && !isAGameStarted && <button onClick={() => toggleXO()}>X-O</button>
       )}
-      {!showGameTitles && showKukuKube ? (
+      {!showGameTitles && showKukuKube && isAGameStarted ? (
         <KukuKube
           setShowGameTitles={setShowGameTitles}
           setShowKukuKube={setShowKukuKube}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showKukuKube && (
+        !showKukuKube && !isAGameStarted && (
           <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
         )
       )}
-      {!showGameTitles && showTripleEmojiMatch ? (
+      {!showGameTitles && showTripleEmojiMatch && isAGameStarted ? (
         <TripleEmojiMatch
           setShowGameTitles={setShowGameTitles}
           setShowTripleEmojiMatch={setShowTripleEmojiMatch}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showTripleEmojiMatch && (
+        !showTripleEmojiMatch && !isAGameStarted && (
           <button onClick={() => toggleTripleEmojiMatch()}>
             Triple Emoji Match
           </button>
         )
       )}
-      {!showGameTitles && showPidoku ? (
+      {!showGameTitles && showPidoku && isAGameStarted ? (
         <Pidoku
           setShowGameTitles={setShowGameTitles}
           setShowPidoku={setShowPidoku}
           updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
-        !showPidoku && <button onClick={() => togglePidoku()}>Pidoku</button>
+        !showPidoku && !isAGameStarted && <button onClick={() => togglePidoku()}>Pidoku</button>
       )}
     </div>
   );

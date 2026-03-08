@@ -13,7 +13,7 @@ import OP from "./Images/OP.jpg";
 import { getRandArr } from "../utils";
 const signs = [S, X, O, XU, XP, OU, OP];
 
-export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
+export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint,isAGameStarted, setIsAGameStarted }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -218,6 +218,7 @@ export default function XO({ setShowGameTitles, setShowXO, updateTotalPoint }) {
     setIsGameStarted(false);
     setShowXO(false);
     setShowGameTitles(true);
+    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

@@ -3,7 +3,7 @@ import Bowls from "./Bowls";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles }) {
+export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles, isAGameStarted, setIsAGameStarted }) {
   const [standard, setStandard] = useState(false);
   const [misere, setMisere] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
@@ -58,6 +58,7 @@ export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles })
     setIsGameStarted(false);
     setShowNim(false);
     setShowGameTitles(true);
+    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
@@ -124,7 +125,6 @@ export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles })
           isTogglingHomePage={isTogglingHomePage}
           setIsTogglingHomePage={setIsTogglingHomePage}
           setShowNim={setShowNim}
-          setShowGameTitles={setShowGameTitles}
         />
       )}
       {!isTogglingReset &&

@@ -19,6 +19,7 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isAGameStarted, setIsAGameStarted] = useState(false);
 
   useEffect(() => {
     const restoreUser = async () => {
@@ -56,12 +57,22 @@ function App() {
           setIsDeleting={setIsDeleting}
           isLoggingOut={isLoggingOut}
           setIsLoggingOut={setIsLoggingOut}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
         />
         <Routes>
           <Route
             path="/"
             element={
-              <Home ads={ads} setAds={setAds} currentUser={currentUser} setCurrentUser={setCurrentUser} isLoggingOut={isLoggingOut} />
+              <Home
+                ads={ads}
+                setAds={setAds}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+                isLoggingOut={isLoggingOut}
+                isAGameStarted={isAGameStarted}
+                setIsAGameStarted={setIsAGameStarted}
+              />
             }
           />
           <Route
@@ -71,7 +82,11 @@ function App() {
                 currentUser={currentUser}
                 isAuthChecked={isAuthChecked}
               >
-                <Profile currentUser={currentUser} error={error} setError={setError} />
+                <Profile
+                  currentUser={currentUser}
+                  error={error}
+                  setError={setError}
+                />
               </ProtectedRoute>
             }
           />
@@ -92,11 +107,25 @@ function App() {
           />
           <Route
             path="/register"
-            element={<Register currentUser={currentUser} error={error} setError={setError} onRegister={(user) => setCurrentUser(user)} />}
+            element={
+              <Register
+                currentUser={currentUser}
+                error={error}
+                setError={setError}
+                onRegister={(user) => setCurrentUser(user)}
+              />
+            }
           />
           <Route
             path="/login"
-            element={<Login currentUser={currentUser} error={error} setError={setError} onLogin={(user) => setCurrentUser(user)} />}
+            element={
+              <Login
+                currentUser={currentUser}
+                error={error}
+                setError={setError}
+                onLogin={(user) => setCurrentUser(user)}
+              />
+            }
           />
           <Route
             path="/ads/:id"
@@ -105,7 +134,12 @@ function App() {
                 currentUser={currentUser}
                 isAuthChecked={isAuthChecked}
               >
-                <AdDetails error={error} setError={setError} isDeleting={isDeleting} setIsDeleting={setIsDeleting} />
+                <AdDetails
+                  error={error}
+                  setError={setError}
+                  isDeleting={isDeleting}
+                  setIsDeleting={setIsDeleting}
+                />
               </ProtectedRoute>
             }
           />

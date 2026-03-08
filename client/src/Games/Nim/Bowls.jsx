@@ -28,8 +28,7 @@ export default function Bowls({
   setIsTogglingReset,
   isTogglingHomePage,
   setIsTogglingHomePage,
-  setShowNim,
-  setShowGameTitles
+  setShowNim
 }) {
   const [bowls, setBowls] = useState([
     { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },

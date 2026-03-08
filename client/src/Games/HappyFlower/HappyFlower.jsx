@@ -4,7 +4,7 @@ import GuessTable from "./GuessTable";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function HappyFlower({ updateTotalPoint, setShowHappyFlower, setShowGameTitles }) {
+export default function HappyFlower({ updateTotalPoint, setShowHappyFlower, setShowGameTitles, isAGameStarted, setIsAGameStarted }) {
   const [title, setTitle] = useState("");
   const [word, setWord] = useState("");
   const [wordWithNoSpace, setWordWithNoSpace] = useState([]);
@@ -63,6 +63,7 @@ export default function HappyFlower({ updateTotalPoint, setShowHappyFlower, setS
     setIsGameStarted(false);
     setShowHappyFlower(false);
     setShowGameTitles(true);
+    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
