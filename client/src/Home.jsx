@@ -104,16 +104,19 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
       <Ads ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />
       <hr />
       <div>
-        {new Array(totalPoint).fill(null).map((t) => (
-          <img src={Star} width="30px" alt="Star" />
-        ))}
+        {currentUser && currentUser?.totalPoint === 0 &&
+        "You don't have any stars, play the interesting games and win some!"
+        }
       </div>
-      {/* <div>
-        {!totalPoint
-          ? "You don't have any stars yet, play the interesting games and win some!"
-          : `You have ${totalPoint} star${totalPoint > 1 ? "s" : ""}`}
+      <div>
+        {currentUser && currentUser?.totalPoint > 0 &&
+        `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`
+        }
       </div>
-      <hr></hr> */}
+      {new Array(currentUser?.totalPoint).fill(null).map((t) => (
+        <img src={Star} width="20px" alt="Star" style={{margin: "2px"}} />
+      ))}
+      <hr />
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
