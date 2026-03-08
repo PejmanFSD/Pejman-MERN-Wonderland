@@ -79,3 +79,18 @@ module.exports.showAd = async (req, res) => {
   // res.render('users/show', {user});
   res.status(200).json(user);
 };
+
+module.exports.updatePoints = async (req, res) => {
+  try {
+    // De-structuring the number of point that should be added to "totalPoint"
+    const { points } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.session.user_id, // Finding the user
+      { $inc: { totalPoint: points } }, // Same as: "user.totalPoint += points"
+      { new: true }
+    );
+    res.json(user); // Sending back the updated user (to Front-End)
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};

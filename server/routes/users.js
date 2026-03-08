@@ -15,6 +15,9 @@ router.put('/edit-profile', isLoggedIn, catchAsync(users.editUser));
 // Just for editing the password:
 router.put('/change-password', isLoggedIn, catchAsync(users.changePassword));
 
+// For updating the "totalPoint" of each user:
+router.patch("/update-points", isLoggedIn, users.updatePoints);
+
 // router.get('/:id', isLoggedIn, catchAsync(users.showAd));
 router.delete("/:id", isLoggedIn, isAdmin, async (req, res) => {
   await User.findByIdAndDelete(req.params.id);

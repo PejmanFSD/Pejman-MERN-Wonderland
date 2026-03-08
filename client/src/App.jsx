@@ -61,7 +61,7 @@ function App() {
           <Route
             path="/"
             element={
-              <Home ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />
+              <Home ads={ads} setAds={setAds} currentUser={currentUser} setCurrentUser={setCurrentUser} isLoggingOut={isLoggingOut} />
             }
           />
           <Route

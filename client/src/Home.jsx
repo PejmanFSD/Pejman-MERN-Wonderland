@@ -15,7 +15,7 @@ import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 
-export default function Home({ads, setAds, currentUser, isLoggingOut}) {
+export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggingOut}) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -31,9 +31,26 @@ export default function Home({ads, setAds, currentUser, isLoggingOut}) {
   const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
 
-  const updateTotalPoint = (i) => {
-    setTotalPoint((currTotalPoint) => currTotalPoint + i);
-  };
+  const updateTotalPoint = async (i) => {
+  const newTotal = totalPoint + i;
+  setTotalPoint(newTotal);
+  try {
+    const res = await fetch("/users/update-points", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ points: i }) // sending the increment value (i)
+    });
+    const updatedUser = await res.json();
+    if (res.ok) {
+      setCurrentUser(updatedUser);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
   const toggleRockScissorsPaper = () => {
     setShowGameTitles(false);
     setShowRockScissorsPaper(true);
@@ -91,12 +108,12 @@ export default function Home({ads, setAds, currentUser, isLoggingOut}) {
           <img src={Star} width="30px" alt="Star" />
         ))}
       </div>
-      <div>
+      {/* <div>
         {!totalPoint
           ? "You don't have any stars yet, play the interesting games and win some!"
           : `You have ${totalPoint} star${totalPoint > 1 ? "s" : ""}`}
       </div>
-      <hr></hr>
+      <hr></hr> */}
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
