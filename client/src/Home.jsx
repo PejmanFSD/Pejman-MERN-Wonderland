@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
-import Ads from './Components/ads/Ads';
+import { useNavigate } from "react-router-dom";
+import Ads from "./Components/ads/Ads";
 import Star from "./Games/Star.png";
 import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumber from "./Games/GuessNumber/GuessNumber";
@@ -15,7 +16,17 @@ import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 
-export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggingOut, isAGameStarted, setIsAGameStarted}) {
+export default function Home({
+  ads,
+  setAds,
+  currentUser,
+  setCurrentUser,
+  isLoggingOut,
+  isAGameStarted,
+  setIsAGameStarted,
+  youShouldLoginMessage,
+  setYouShouldLoginMessage
+}) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showAllStars, setShowAllStars] = useState(false);
@@ -32,133 +43,216 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
   const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
 
+  const navigate = useNavigate();
   const updateTotalPoint = async (i) => {
-  const newTotal = totalPoint + i;
-  setTotalPoint(newTotal);
-  try {
-    const res = await fetch("/users/update-points", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ points: i }) // sending the increment value (i)
-    });
-    const updatedUser = await res.json();
-    if (res.ok) {
-      setCurrentUser(updatedUser);
+    const newTotal = totalPoint + i;
+    setTotalPoint(newTotal);
+    try {
+      const res = await fetch("/users/update-points", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ points: i }), // sending the increment value (i)
+      });
+      const updatedUser = await res.json();
+      if (res.ok) {
+        setCurrentUser(updatedUser);
+      }
+    } catch (err) {
+      console.log(err);
     }
-  } catch (err) {
-    console.log(err);
-  }
-};
+  };
   const handleShowAllStars = () => {
-    setShowAllStars(currAllStars => !currAllStars);
-  }
+    setShowAllStars((currAllStars) => !currAllStars);
+  };
   const toggleRockScissorsPaper = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowRockScissorsPaper(true);
   };
   const toggleGuessNumber = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowGuessNumber(true);
   };
   const toggleCapitals = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowCapitals(true);
   };
   const toggleCryptogram = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowCryptogram(true);
   };
   const toggleCrazy100 = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowCrazy100(true);
   };
   const toggleMemoryCards = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowMemoryCards(true);
   };
   const toggleNim = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowNim(true);
   };
   const toggleHappyFlower = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowHappyFlower(true);
   };
   const toggleXO = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowXO(true);
   };
   const toggleKukuKube = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowKukuKube(true);
   };
   const toggleTripleEmojiMatch = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowTripleEmojiMatch(true);
   };
   const togglePidoku = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowPidoku(true);
-  }
+  };
   return (
     <div>
-      {!isAGameStarted && <Ads ads={ads} setAds={setAds} currentUser={currentUser} isLoggingOut={isLoggingOut} />}
+      {!isAGameStarted && (
+        <Ads
+          ads={ads}
+          setAds={setAds}
+          currentUser={currentUser}
+          isLoggingOut={isLoggingOut}
+        />
+      )}
       <hr />
-      {!isAGameStarted &&
-<div>
-      <div>
-        {currentUser && currentUser?.totalPoint === 0 &&
-        "You don't have any stars, play the interesting games and win some!"
-        }
-      </div>
-      <div>
-        {currentUser && currentUser?.totalPoint > 0 &&
-        `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`
-        }
-      </div>
-      {currentUser?.totalPoint <= 5 &&
-      <div>
-      {new Array(currentUser?.totalPoint).fill(null).map(i => (
-        <img src={Star} width="18px" alt="Star" style={{margin: "2px"}} />
-      ))}
-      </div>
-      }
-      {!showAllStars && currentUser?.totalPoint > 5 &&
-      <div>
-      {new Array(5).fill(null).map(i => (
-        <img src={Star} width="18px" alt="Star" style={{margin: "2px"}} />
-      ))}
-      <div style={{display:"inline", color: "red"}}>...</div>
-      <br />
-      <button onClick={handleShowAllStars}>Show all stars</button>
-      </div>
-      }
-      {showAllStars && currentUser?.totalPoint > 5 &&
-      <div>
-      {new Array(currentUser?.totalPoint).fill(null).map(i => (
-        <img src={Star} width="18px" alt="Star" style={{margin: "2px"}} />
-      ))}
-      <br />
-      <button onClick={handleShowAllStars}>Minimize stars</button>
-      </div>
-      }
-</div>
-    }
+      {!isAGameStarted && (
+        <div>
+          <div>
+            {currentUser &&
+              currentUser?.totalPoint === 0 &&
+              "You don't have any stars, play the interesting games and win some!"}
+          </div>
+          <div>
+            {currentUser &&
+              currentUser?.totalPoint > 0 &&
+              `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
+          </div>
+          {currentUser?.totalPoint <= 5 && (
+            <div>
+              {new Array(currentUser?.totalPoint).fill(null).map((i) => (
+                <img
+                  src={Star}
+                  width="18px"
+                  alt="Star"
+                  style={{ margin: "2px" }}
+                />
+              ))}
+            </div>
+          )}
+          {!showAllStars && currentUser?.totalPoint > 5 && (
+            <div>
+              {new Array(5).fill(null).map((i) => (
+                <img
+                  src={Star}
+                  width="18px"
+                  alt="Star"
+                  style={{ margin: "2px" }}
+                />
+              ))}
+              <div style={{ display: "inline", color: "red" }}>...</div>
+              <br />
+              <button onClick={handleShowAllStars}>Show all stars</button>
+            </div>
+          )}
+          {showAllStars && currentUser?.totalPoint > 5 && (
+            <div>
+              {new Array(currentUser?.totalPoint).fill(null).map((i) => (
+                <img
+                  src={Star}
+                  width="18px"
+                  alt="Star"
+                  style={{ margin: "2px" }}
+                />
+              ))}
+              <br />
+              <button onClick={handleShowAllStars}>Minimize stars</button>
+            </div>
+          )}
+        </div>
+      )}
       <hr />
       {!showGameTitles && showRockScissorsPaper && isAGameStarted ? (
         <RockScissorsPaper
@@ -171,7 +265,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showRockScissorsPaper && !isAGameStarted && (
+        !showRockScissorsPaper &&
+        !isAGameStarted && (
           <button onClick={() => toggleRockScissorsPaper()}>
             Rock - Scissors - Paper
           </button>
@@ -187,7 +282,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showGuessNumber && !isAGameStarted && (
+        !showGuessNumber &&
+        !isAGameStarted && (
           <button onClick={() => toggleGuessNumber()}>Guess Number</button>
         )
       )}
@@ -201,7 +297,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showCapitals && !isAGameStarted && (
+        !showCapitals &&
+        !isAGameStarted && (
           <button onClick={() => toggleCapitals()}>Capitals</button>
         )
       )}
@@ -215,7 +312,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showCryptogram && !isAGameStarted && (
+        !showCryptogram &&
+        !isAGameStarted && (
           <button onClick={() => toggleCryptogram()}>Cryptogram</button>
         )
       )}
@@ -229,7 +327,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showCrazy100 && !isAGameStarted && (
+        !showCrazy100 &&
+        !isAGameStarted && (
           <button onClick={() => toggleCrazy100()}>Crazy-100</button>
         )
       )}
@@ -243,7 +342,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showMemoryCards && !isAGameStarted && (
+        !showMemoryCards &&
+        !isAGameStarted && (
           <button onClick={() => toggleMemoryCards()}>Memory Cards</button>
         )
       )}
@@ -257,7 +357,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showNim && !isAGameStarted && <button onClick={() => toggleNim()}>Nim</button>
+        !showNim &&
+        !isAGameStarted && <button onClick={() => toggleNim()}>Nim</button>
       )}
       {!showGameTitles && showHappyFlower && isAGameStarted ? (
         <HappyFlower
@@ -269,7 +370,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showHappyFlower && !isAGameStarted && (
+        !showHappyFlower &&
+        !isAGameStarted && (
           <button onClick={() => toggleHappyFlower()}>Happy Flower</button>
         )
       )}
@@ -283,7 +385,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showXO && !isAGameStarted && <button onClick={() => toggleXO()}>X-O</button>
+        !showXO &&
+        !isAGameStarted && <button onClick={() => toggleXO()}>X-O</button>
       )}
       {!showGameTitles && showKukuKube && isAGameStarted ? (
         <KukuKube
@@ -295,7 +398,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showKukuKube && !isAGameStarted && (
+        !showKukuKube &&
+        !isAGameStarted && (
           <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
         )
       )}
@@ -309,7 +413,8 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showTripleEmojiMatch && !isAGameStarted && (
+        !showTripleEmojiMatch &&
+        !isAGameStarted && (
           <button onClick={() => toggleTripleEmojiMatch()}>
             Triple Emoji Match
           </button>
@@ -325,7 +430,10 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         />
       ) : (
         showGameTitles &&
-        !showPidoku && !isAGameStarted && <button onClick={() => togglePidoku()}>Pidoku</button>
+        !showPidoku &&
+        !isAGameStarted && (
+          <button onClick={() => togglePidoku()}>Pidoku</button>
+        )
       )}
     </div>
   );

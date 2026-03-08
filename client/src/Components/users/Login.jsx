@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export default function Login({onLogin}) {
+export default function Login({onLogin, youShouldLoginMessage, setYouShouldLoginMessage}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -32,6 +32,7 @@ export default function Login({onLogin}) {
       const from = location.state?.from?.pathname || "/"; // Either navigate to "/" or
       // the page that required login and the user was trying to reach
       navigate(from, { replace: true });
+      setYouShouldLoginMessage(false);
     } catch (err) {
       setError(err.message);
     }

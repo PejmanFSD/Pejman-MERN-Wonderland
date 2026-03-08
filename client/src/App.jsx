@@ -20,6 +20,7 @@ function App() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isAGameStarted, setIsAGameStarted] = useState(false);
+  const [youShouldLoginMessage, setYouShouldLoginMessage] = useState(false);
 
   useEffect(() => {
     const restoreUser = async () => {
@@ -61,6 +62,7 @@ function App() {
           setIsAGameStarted={setIsAGameStarted}
         />
         <Routes>
+          {!isLoggingOut &&
           <Route
             path="/"
             element={
@@ -72,9 +74,12 @@ function App() {
                 isLoggingOut={isLoggingOut}
                 isAGameStarted={isAGameStarted}
                 setIsAGameStarted={setIsAGameStarted}
+                youShouldLoginMessage={youShouldLoginMessage}
+                setYouShouldLoginMessage={setYouShouldLoginMessage}
               />
             }
           />
+}
           <Route
             path="/profile"
             element={
@@ -124,6 +129,8 @@ function App() {
                 error={error}
                 setError={setError}
                 onLogin={(user) => setCurrentUser(user)}
+                youShouldLoginMessage={youShouldLoginMessage}
+                setYouShouldLoginMessage={setYouShouldLoginMessage}
               />
             }
           />
