@@ -18,6 +18,7 @@ import Pidoku from "./Games/Pidoku/Pidoku";
 export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggingOut}) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [totalPoint, setTotalPoint] = useState(0);
+  const [showAllStars, setShowAllStars] = useState(false);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
   const [showGuessNumber, setShowGuessNumber] = useState(false);
   const [showCapitals, setShowCapitals] = useState(false);
@@ -51,6 +52,9 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
     console.log(err);
   }
 };
+  const handleShowAllStars = () => {
+    setShowAllStars(currAllStars => !currAllStars);
+  }
   const toggleRockScissorsPaper = () => {
     setShowGameTitles(false);
     setShowRockScissorsPaper(true);
@@ -113,9 +117,33 @@ export default function Home({ads, setAds, currentUser, setCurrentUser, isLoggin
         `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`
         }
       </div>
-      {new Array(currentUser?.totalPoint).fill(null).map((t) => (
-        <img src={Star} width="20px" alt="Star" style={{margin: "2px"}} />
+      {currentUser?.totalPoint <= 5 &&
+      <div>
+      {new Array(currentUser?.totalPoint).fill(null).map(i => (
+        <img src={Star} width="18px" alt="Star" style={{margin: "2px"}} />
       ))}
+      </div>
+      }
+
+      {!showAllStars && currentUser?.totalPoint > 5 &&
+      <div>
+      {new Array(5).fill(null).map(i => (
+        <img src={Star} width="18px" alt="Star" style={{margin: "2px"}} />
+      ))}
+      <div style={{display:"inline", color: "red"}}>...</div>
+      <br />
+      <button onClick={handleShowAllStars}>Show all stars</button>
+      </div>
+      }
+      {showAllStars && currentUser?.totalPoint > 5 &&
+      <div>
+      {new Array(currentUser?.totalPoint).fill(null).map(i => (
+        <img src={Star} width="18px" alt="Star" style={{margin: "2px"}} />
+      ))}
+      <br />
+      <button onClick={handleShowAllStars}>Minimize stars</button>
+      </div>
+      }
       <hr />
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
