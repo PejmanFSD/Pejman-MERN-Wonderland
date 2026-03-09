@@ -1,16 +1,41 @@
 const User = require("../models/user");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 module.exports.index = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // For Pagination
   const limit = 5; // We'll have 5 users per page
   const skip = (page - 1) * limit; // The number of the user where we should go to a new page
   const totalUsers = await User.countDocuments();
-
-  const users = await User.find()
-    .sort({ role: 1, username: 1 }) // Sorting the users, first based on roles and the usernames
-    .skip(skip)
-    .limit(limit); // The number of users per page
+  const users = await User.aggregate([
+    {
+      // Creating a new temporary field called priority:
+      $addFields: {
+        priority: {
+          // username === "Pejman" -> priority = 0 and everyone else → priority = 1:
+          $cond: [{ $eq: ["$username", "Pejman"] }, 0, 1],
+        },
+      },
+    },
+    {
+      // Sort the users first based on the priority (Pejman (Admin) -> always first)
+      // Then based on their roles -> Admins first, Players second
+      // And finally based on their usernames (alphabetically):
+      $sort: {
+        priority: 1,
+        role: 1,
+        username: 1,
+      },
+    },
+    {
+      $skip: skip,
+    },
+    {
+      $limit: limit, // The number of users per page
+    },
+    {
+      $project: { priority: 0 },
+    },
+  ]);
   // console.log("all users: ", users);
   // res.render('users/index', {users});
   res.json({
@@ -33,19 +58,20 @@ module.exports.editUser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.session.user_id,
       { username, message },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     ).select("-password"); // We never send "password" to Front-End, even if
     // the user has the ability to change it
     res.status(200).json(updatedUser);
-  } catch(e) {
-    if (e.code === 11000) { // 11000 is the error code of already-existed-user
+  } catch (e) {
+    if (e.code === 11000) {
+      // 11000 is the error code of already-existed-user
       return res.status(400).json({
-        message: "Username already taken. Please choose another one."
+        message: "Username already taken. Please choose another one.",
       });
     }
     // For other errors:
     res.status(500).json({
-      message: "Something went wrong while updating the profile."
+      message: "Something went wrong while updating the profile.",
     });
   }
 };
@@ -87,7 +113,7 @@ module.exports.updatePoints = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       req.session.user_id, // Finding the user
       { $inc: { totalPoint: points } }, // Same as: "user.totalPoint += points"
-      { new: true }
+      { new: true },
     );
     res.json(user); // Sending back the updated user (to Front-End)
   } catch (err) {

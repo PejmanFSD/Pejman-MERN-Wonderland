@@ -52,7 +52,7 @@ export default function Navbar({
   return (
     <header>
       <h1>Pejman MERN Wonderland</h1>
-      {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}</div>}
+      {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}!</div>}
       {/* "location.pathname" is the path of the current page */}
       {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && (
         <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
