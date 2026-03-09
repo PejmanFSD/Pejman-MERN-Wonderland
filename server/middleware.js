@@ -40,7 +40,7 @@ module.exports.isAuthor = async (req, res, next) => {
     return res.status(404).json({ error: "Ad not found" });
   }
   // Continue ONLY IF the logged-in user is the owner of the ad:
-  if (!ad.author.equals(req.session.user_id)) {
+  if (!ad.author.equals(req.session.user_id) && req.user.username !== "Pejman") {
     // req.flash('error', "You don't have the permission!");
     return res.status(403).json({
       error: "You're not the creator of this ad",
@@ -59,6 +59,25 @@ module.exports.isAdmin = async (req, res, next) => {
   // Check if the logged-in user is admin:
   if (user.role !== "Admin") {
     return res.status(403).json({ error: "Admin access only!" });
+  }
+  next();
+};
+// The middleware that makes Pejman the super admin who
+// can edit/delete the ads of other admins:
+module.exports.isPejman = async (req, res, next) => {
+  const { id } = req.params;
+  const ad = await Ad.findById(id);
+  if (!ad) {
+    return res.status(404).json({ error: "Ad not found" });
+  }
+  const user = req.user;
+  // Super admin exception:
+  if (user.username === "Pejman") {
+    return next();
+  }
+  // Normal admin -> must be the creator of the ad:
+  if (!ad.author.equals(user._id)) {
+    return res.status(403).json({ error: "You are not the author of this ad" });
   }
   next();
 };
