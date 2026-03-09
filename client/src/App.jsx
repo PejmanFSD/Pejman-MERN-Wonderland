@@ -165,6 +165,7 @@ function App() {
                   setError={setError}
                   isDeleting={isDeleting}
                   setIsDeleting={setIsDeleting}
+                  currentUser={currentUser}
                 />
               </ProtectedRoute>
             }
