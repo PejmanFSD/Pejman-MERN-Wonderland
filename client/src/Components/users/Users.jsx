@@ -68,10 +68,10 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
         <thead>
           <tr>
             <th style={{ width: "10%" }}>Username</th>
-            <th style={{ width: "4%" }}>Role</th>
+            <th style={{ width: "5%" }}>Role</th>
             <th style={{ width: "5%" }}>Number of Stars</th>
-            <th style={{ width: "56%" }}>Message</th>
-            <th style={{ width: "25%" }}>Actions</th>
+            <th style={{ width: "60%" }}>Message</th>
+            <th style={{ width: "20%" }}>Actions</th>
           </tr>
         </thead>
 
@@ -83,14 +83,12 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
               <td>{user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
-                {user.role !== "Admin" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting}>Delete</button> : <div>Admin &#128526;</div>}
+                {user.role !== "Admin" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button> : <div>Admin &#128526;</div>}
                 {isDeleting && deletingUser === user._id &&
-                  <div>
-                    <div>{`Are you sure you want to delete ${users.find(u => u._id === user._id).username}?`}</div>
-                    <div>
-                      <button onClick={() => handleDeleteYes(user._id)}>Yes</button>
-                      <button onClick={handleDeleteNo}>No</button>
-                    </div>
+                  <div style={{display: "inline", marginLeft: "8px"}}>
+                    {`Delete ${users.find(u => u._id === user._id).username}?`}
+                    <button onClick={() => handleDeleteYes(user._id)} style={{marginLeft: "8px"}}>Yes</button>
+                    <button onClick={handleDeleteNo} style={{marginLeft: "4px"}}>No</button>
                   </div>
                 }
               </td>
