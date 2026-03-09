@@ -90,14 +90,14 @@ export default function Register({ onRegister }) {
       </div>
       <div>
         <label htmlFor="message">Message:</label>
-        <input
+        <textarea
           type="text"
           onChange={(e) => setMessage(e.target.value)}
           id="message"
           name="message"
           value={message}
           required
-        />
+        ></textarea>
       </div>
       <div>
         <select value={role} onChange={(e) => setRole(e.target.value)}>

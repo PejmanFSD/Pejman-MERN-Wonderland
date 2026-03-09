@@ -94,12 +94,12 @@ export default function EditProfile({ setCurrentUser }) {
         </div>
         <div>
           <label>Message:</label>
-          <input
+          <textarea
             type="text"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
-          />
+        ></textarea>
         </div>
         <label>Password:</label>
         <input
