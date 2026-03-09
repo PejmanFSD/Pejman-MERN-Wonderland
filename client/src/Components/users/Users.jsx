@@ -68,10 +68,10 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
         <thead>
           <tr>
             <th style={{ width: "10%" }}>Username</th>
-            <th style={{ width: "5%" }}>Role</th>
+            <th style={{ width: "6%" }}>Role</th>
             <th style={{ width: "5%" }}>Number of Stars</th>
             <th style={{ width: "60%" }}>Message</th>
-            <th style={{ width: "20%" }}>Actions</th>
+            <th style={{ width: "19%" }}>Actions</th>
           </tr>
         </thead>
 
@@ -79,18 +79,15 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
           {users.map((user) => (
             <tr key={user._id}>
               <td>{user.username}</td>
-              <td>{user.role}</td>
-              <td>{user.totalPoint}</td>
+              <td>{user.username === "Pejman" ? "The Boss!" : user.role}</td>
+              <td>{user.username === "Pejman" ? "∞" : user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
                 {user.username === "Pejman" ? <div>Pejman &#128526;</div> :
                 currentUser.username === "Pejman" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button> :
                 user.role === "Admin" ? <div>Admin &#128515;</div> :
                 <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button>
-                
               }
-
-                {/* {user.role !== "Admin" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button> : <div>Admin &#128526;</div>} */}
                 {isDeleting && deletingUser === user._id &&
                   <div style={{display: "inline", marginLeft: "8px"}}>
                     {`Delete ${users.find(u => u._id === user._id).username}?`}
