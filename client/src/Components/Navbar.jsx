@@ -51,7 +51,7 @@ export default function Navbar({
   }
   return (
     <header>
-      <h1>Pejman MERN Wonderland</h1>
+      <h3>Pejman MERN Wonderland</h3>
       {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}!</div>}
       {/* "location.pathname" is the path of the current page */}
       {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && (
@@ -99,7 +99,6 @@ export default function Navbar({
           }
         />
       </Routes>
-      <hr />
     </header>
   );
 }

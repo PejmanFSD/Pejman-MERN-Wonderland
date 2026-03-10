@@ -199,20 +199,38 @@ export default function Home({
   };
   return (
     <div>
-      {!isAGameStarted &&
-        rankedUsers.map((user, i) => (
-          <li key={i}>
-            {i + 1} - {user.username} with {user.totalPoint} stars:{" "}
-            {user.message}
-          </li>
-        ))}
       <Ads
         ads={ads}
         setAds={setAds}
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
       />
-      <hr />
+      {!isAGameStarted &&
+      <div>
+        <div>The top 10 users with highest stars</div>
+        <br />
+      <table border="2" cellPadding="5">
+        <thead style={{height: "10px"}}>
+          <tr>
+            <th style={{ width: "5%" }}>Ranking</th>
+            <th style={{ width: "10%" }}>Username</th>
+            <th style={{ width: "10%" }}>Number of Stars</th>
+            <th style={{ width: "45%" }}>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+        {rankedUsers.map((user, i) => (
+          <tr key={user._id}>
+            <td>{i + 1}</td>
+            <td>{user.username}</td>
+            <td>{user.totalPoint}</td>
+            <td>{user.message}</td>
+          </tr>
+        ))}
+        </tbody>
+      </table>
+      </div>
+        }
       <div>
         <div>
           {currentUser &&
@@ -266,7 +284,6 @@ export default function Home({
           </div>
         )}
       </div>
-      <hr />
       {!showGameTitles && showRockScissorsPaper && isAGameStarted ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}

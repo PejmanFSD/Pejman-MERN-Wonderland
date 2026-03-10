@@ -64,17 +64,16 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
   }
   return (
     <div>
-      <table border="1" cellPadding="10">
+      <table border="1" cellPadding="10" style={{width: "90%"}}>
         <thead>
           <tr>
-            <th style={{ width: "10%" }}>Username</th>
-            <th style={{ width: "6%" }}>Role</th>
+            <th style={{ width: "12%" }}>Username</th>
+            <th style={{ width: "5%" }}>Role</th>
             <th style={{ width: "5%" }}>Number of Stars</th>
-            <th style={{ width: "60%" }}>Message</th>
-            <th style={{ width: "19%" }}>Actions</th>
+            <th style={{ width: "38%" }}>Message</th>
+            <th style={{ width: "30%" }}>Actions</th>
           </tr>
         </thead>
-
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
