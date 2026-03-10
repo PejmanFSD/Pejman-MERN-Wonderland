@@ -204,27 +204,27 @@ export default function Home({
         setAds={setAds}
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
+        isAGameStarted={isAGameStarted}
       />
       {!isAGameStarted &&
       <div>
         <div>The top 10 users with highest stars</div>
-        <br />
       <table border="2" cellPadding="5">
-        <thead style={{height: "10px"}}>
+        <thead style={{height: "5px"}}>
           <tr>
-            <th style={{ width: "5%" }}>Ranking</th>
-            <th style={{ width: "10%" }}>Username</th>
-            <th style={{ width: "10%" }}>Number of Stars</th>
-            <th style={{ width: "45%" }}>Message</th>
+            <th style={{ width: "5%", fontSize: "13px" }}>Ranking</th>
+            <th style={{ width: "10%", fontSize: "13px" }}>Username</th>
+            <th style={{ width: "10%", fontSize: "13px" }}>Number of Stars</th>
+            <th style={{ width: "45%", fontSize: "13px" }}>Message</th>
           </tr>
         </thead>
         <tbody>
         {rankedUsers.map((user, i) => (
           <tr key={user._id}>
-            <td>{i + 1}</td>
-            <td>{user.username}</td>
-            <td>{user.totalPoint}</td>
-            <td>{user.message}</td>
+            <td style={{fontSize: "13px"}}>{i + 1}</td>
+            <td style={{fontSize: "13px"}}>{user.username}</td>
+            <td style={{fontSize: "13px"}}>{user.totalPoint}</td>
+            <td style={{fontSize: "13px"}}>{user.message}</td>
           </tr>
         ))}
         </tbody>
@@ -242,7 +242,7 @@ export default function Home({
             currentUser?.totalPoint > 0 &&
             `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
         </div>
-        {currentUser?.totalPoint <= 5 && (
+        {currentUser?.totalPoint <= 5 && !isAGameStarted && (
           <div>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
@@ -254,7 +254,7 @@ export default function Home({
             ))}
           </div>
         )}
-        {!showAllStars && currentUser?.totalPoint > 5 && (
+        {!showAllStars && currentUser?.totalPoint > 5 && !isAGameStarted && (
           <div>
             {new Array(5).fill(null).map((i) => (
               <img
@@ -269,7 +269,7 @@ export default function Home({
             <button onClick={handleShowAllStars}>Show all stars</button>
           </div>
         )}
-        {showAllStars && currentUser?.totalPoint > 5 && (
+        {showAllStars && currentUser?.totalPoint > 5 && !isAGameStarted && (
           <div>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
