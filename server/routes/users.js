@@ -8,6 +8,8 @@ const {isLoggedIn, isAuthor, isAdmin} = require('../middleware.js');
 // router.get('/', isLoggedIn, catchAsync(users.index));
 router.get('/', isLoggedIn, isAdmin, catchAsync(users.index));
 
+router.get('/topUsers', catchAsync(users.topUsers));
+
 router.get('/profile', isLoggedIn, catchAsync(users.showUser));
 
 router.put('/edit-profile', isLoggedIn, catchAsync(users.editUser));

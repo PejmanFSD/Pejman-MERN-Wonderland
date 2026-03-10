@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Ads from "./Components/ads/Ads";
 import Star from "./Games/Star.png";
@@ -25,9 +25,11 @@ export default function Home({
   isAGameStarted,
   setIsAGameStarted,
   youShouldLoginMessage,
-  setYouShouldLoginMessage
+  setYouShouldLoginMessage,
+  setError,
 }) {
   const [showGameTitles, setShowGameTitles] = useState(true);
+  const [rankedUsers, setRankedUsers] = useState([]);
   const [totalPoint, setTotalPoint] = useState(0);
   const [showAllStars, setShowAllStars] = useState(false);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -43,6 +45,14 @@ export default function Home({
   const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await fetch("/users/topUsers");
+      const topUsers = await res.json();
+      setRankedUsers(topUsers);
+    };
+    fetchUsers(); // Refetching when "page" changes
+  }, []);
   const navigate = useNavigate();
   const updateTotalPoint = async (i) => {
     const newTotal = totalPoint + i;
@@ -189,70 +199,73 @@ export default function Home({
   };
   return (
     <div>
-      {!isAGameStarted && (
-        <Ads
-          ads={ads}
-          setAds={setAds}
-          currentUser={currentUser}
-          isLoggingOut={isLoggingOut}
-        />
-      )}
+      {!isAGameStarted &&
+        rankedUsers.map((user, i) => (
+          <li key={i}>
+            {i + 1} - {user.username} with {user.totalPoint} stars:{" "}
+            {user.message}
+          </li>
+        ))}
+      <Ads
+        ads={ads}
+        setAds={setAds}
+        currentUser={currentUser}
+        isLoggingOut={isLoggingOut}
+      />
       <hr />
-      {!isAGameStarted && (
+      <div>
         <div>
-          <div>
-            {currentUser &&
-              currentUser?.totalPoint === 0 &&
-              "You don't have any stars, play the interesting games and win some!"}
-          </div>
-          <div>
-            {currentUser &&
-              currentUser?.totalPoint > 0 &&
-              `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
-          </div>
-          {currentUser?.totalPoint <= 5 && (
-            <div>
-              {new Array(currentUser?.totalPoint).fill(null).map((i) => (
-                <img
-                  src={Star}
-                  width="18px"
-                  alt="Star"
-                  style={{ margin: "2px" }}
-                />
-              ))}
-            </div>
-          )}
-          {!showAllStars && currentUser?.totalPoint > 5 && (
-            <div>
-              {new Array(5).fill(null).map((i) => (
-                <img
-                  src={Star}
-                  width="18px"
-                  alt="Star"
-                  style={{ margin: "2px" }}
-                />
-              ))}
-              <div style={{ display: "inline", color: "red" }}>...</div>
-              <br />
-              <button onClick={handleShowAllStars}>Show all stars</button>
-            </div>
-          )}
-          {showAllStars && currentUser?.totalPoint > 5 && (
-            <div>
-              {new Array(currentUser?.totalPoint).fill(null).map((i) => (
-                <img
-                  src={Star}
-                  width="18px"
-                  alt="Star"
-                  style={{ margin: "2px" }}
-                />
-              ))}
-              <br />
-              <button onClick={handleShowAllStars}>Minimize stars</button>
-            </div>
-          )}
+          {currentUser &&
+            currentUser?.totalPoint === 0 &&
+            "You don't have any stars, play the interesting games and win some!"}
         </div>
-      )}
+        <div>
+          {currentUser &&
+            currentUser?.totalPoint > 0 &&
+            `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
+        </div>
+        {currentUser?.totalPoint <= 5 && (
+          <div>
+            {new Array(currentUser?.totalPoint).fill(null).map((i) => (
+              <img
+                src={Star}
+                width="18px"
+                alt="Star"
+                style={{ margin: "2px" }}
+              />
+            ))}
+          </div>
+        )}
+        {!showAllStars && currentUser?.totalPoint > 5 && (
+          <div>
+            {new Array(5).fill(null).map((i) => (
+              <img
+                src={Star}
+                width="18px"
+                alt="Star"
+                style={{ margin: "2px" }}
+              />
+            ))}
+            <div style={{ display: "inline", color: "red" }}>...</div>
+            <br />
+            <button onClick={handleShowAllStars}>Show all stars</button>
+          </div>
+        )}
+        {showAllStars && currentUser?.totalPoint > 5 && (
+          <div>
+            {new Array(currentUser?.totalPoint).fill(null).map((i) => (
+              <img
+                src={Star}
+                width="18px"
+                alt="Star"
+                style={{ margin: "2px" }}
+              />
+            ))}
+            <br />
+            <button onClick={handleShowAllStars}>Minimize stars</button>
+          </div>
+        )}
+      </div>
       <hr />
       {!showGameTitles && showRockScissorsPaper && isAGameStarted ? (
         <RockScissorsPaper

@@ -45,6 +45,20 @@ module.exports.index = async (req, res) => {
   });
 };
 
+module.exports.topUsers = async (req, res) => {
+  const topUsers = await User.find()
+    .sort({ totalPoint: -1 }) // Sorting users based on their "totalPoint"s
+    .limit(10) // only top 10 users
+    .select("username totalPoint message"); // Returning the fields that should be presented on UI
+  const rankedUsers = topUsers.map((user, index) => ({
+    rank: index + 1,
+    username: user.username,
+    totalPoint: user.totalPoint,
+    message: user.message
+  }));
+    res.json(rankedUsers);
+};
+
 module.exports.showUser = async (req, res) => {
   const user = await User.findById(req.session.user_id).select("-password"); // exclude password, we
   // don't want to send password to UI

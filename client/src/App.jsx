@@ -76,6 +76,7 @@ function App() {
                 setIsAGameStarted={setIsAGameStarted}
                 youShouldLoginMessage={youShouldLoginMessage}
                 setYouShouldLoginMessage={setYouShouldLoginMessage}
+                setError={setError}
               />
             }
           />
