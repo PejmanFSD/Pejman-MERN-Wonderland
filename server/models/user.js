@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Username cannot be blank"],
     unique: true,
+    maxlength: [10, 'The maximum length of username is 10 characters']
   },
   password: {
     type: String,
@@ -14,7 +15,8 @@ const userSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    default: ""
+    default: "",
+    maxlength: [40, 'The maximum length of message is 40 characters']
   },
   totalPoint: {
     type: Number,

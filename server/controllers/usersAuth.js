@@ -35,15 +35,27 @@ module.exports.register = async (req, res) => {
       },
     });
   } catch (e) {
-    // req.flash('error', 'Something is wrong!');
-    if (e.code === 11000) { // 11000 is the error code of already-existed-user
+    // duplicate username
+    if (e.code === 11000) {
       return res.status(400).json({
         message: "Username already taken. Please choose another one."
       });
     }
+    // mongoose validation errors
+    if (e.name === "ValidationError") {
+      const errors = {};
+      // Fetching only the message of the error
+      // (For example:
+      // "User validation failed: username: The maximum length of username is 12 characters"
+      // will become: "The maximum length of username is 12 characters"):
+      for (let field in e.errors) {
+        errors[field] = e.errors[field].message;
+      }
+      return res.status(400).json({ errors });
+    }
     // For other errors:
-    res.status(400).json({
-      error: e.message,
+    res.status(500).json({
+      error: "Server error",
     });
   }
 };

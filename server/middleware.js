@@ -22,6 +22,22 @@ module.exports.isLoggedOut = (req, res, next) => {
   next();
 };
 
+module.exports.handleRegistrationErrors = (err, req, res, next) => {
+  if (err.name === "ValidationError") {
+    const errors = {};
+    // Collecting all the errors:
+    for (let field in err.errors) {
+      errors[field] = err.errors[field].message;
+    }
+    // Returning the errors:
+    return res.status(400).json({
+      type: "ValidationError",
+      errors
+    });
+  }
+  next(err);
+};
+
 module.exports.validateAd = (req, res, next) => {
   const { error } = adSchema.validate(req.body);
   if (error) {

@@ -36,10 +36,19 @@ export default function Register({ onRegister }) {
         }),
       });
       const json = await response.json();
+      // Error handling
+      // If the fetching user process fails:
       if (!response.ok) {
-        setError(json.message);
+        // If the issue is with the userSchema limitations:
+        if (json.errors) {
+          const firstError = Object.values(json.errors)[0];
+          setError(firstError);
+        }
+        // If the issue is for something else (like the internet breakdown):
+        else {
+          setError(json.message || json.error || "Registration failed");
+        }
         return;
-        // throw new Error(json.error || "Registration failed");
       }
       onRegister(json.user);
       setUsername("");
