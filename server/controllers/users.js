@@ -66,28 +66,18 @@ module.exports.showUser = async (req, res) => {
 };
 
 module.exports.editUser = async (req, res) => {
-  try {
-    console.log(req.body);
+  // We don't have to use "try-catch" because the "handleUserErrors"
+  // middleware handles the "Default fallback" with the 500 status code
+  // and it's been used in index.js by the "use" keyword
     const { username, message } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       req.session.user_id,
       { username, message },
-      { runValidators: true, new: true },
+      { runValidators: true, new: true, context: "query" } // context: "query" ->
+      // Applying schema validators (like maxlength) during update queries
     ).select("-password"); // We never send "password" to Front-End, even if
     // the user has the ability to change it
     res.status(200).json(updatedUser);
-  } catch (e) {
-    if (e.code === 11000) {
-      // 11000 is the error code of already-existed-user
-      return res.status(400).json({
-        message: "Username already taken. Please choose another one.",
-      });
-    }
-    // For other errors:
-    res.status(500).json({
-      message: "Something went wrong while updating the profile.",
-    });
-  }
 };
 
 module.exports.changePassword = async (req, res) => {

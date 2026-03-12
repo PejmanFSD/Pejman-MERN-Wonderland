@@ -17,6 +17,9 @@ const userAuthRoutes = require('./routes/usersAuth.js');
 const userRoutes = require('./routes/users.js');
 const adRoutes = require('./routes/ads.js');
 const cors = require('cors');
+const {handleUserErrors} = require("./middleware.js"); // In order to
+// have one central middleware to validate everything related to the users
+// including registration or editting profile.
 
 mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
     .then(() => {
@@ -43,6 +46,7 @@ app.use(session({
     sameSite: "lax"
   }
 }));
+app.use(handleUserErrors);
 app.use(flash());
 app.use((req, res, next) => {
     // We have access to all the following variables in ALL the files of our

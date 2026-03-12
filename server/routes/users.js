@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user.js');
 const users = require('../controllers/users.js');
 const catchAsync = require('../utils/catchAsync.js');
-const {isLoggedIn, isAuthor, isAdmin} = require('../middleware.js');
+const {isLoggedIn, isAuthor, isAdmin, handleUserErrors} = require('../middleware.js');
 
 // router.get('/', isLoggedIn, catchAsync(users.index));
 router.get('/', isLoggedIn, isAdmin, catchAsync(users.index));
@@ -12,7 +12,10 @@ router.get('/topUsers', catchAsync(users.topUsers));
 
 router.get('/profile', isLoggedIn, catchAsync(users.showUser));
 
-router.put('/edit-profile', isLoggedIn, catchAsync(users.editUser));
+router.put('/edit-profile', isLoggedIn, catchAsync(users.editUser), handleUserErrors); // We
+// use "handleUserErrors" middleware after executing the controller because this middleware
+// should have the values of the <input /> tags before evaluating them.
+
 
 // Just for editing the password:
 router.put('/change-password', isLoggedIn, catchAsync(users.changePassword));

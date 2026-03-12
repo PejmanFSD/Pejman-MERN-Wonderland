@@ -23,49 +23,67 @@ export default function EditProfile({ setCurrentUser }) {
     fetchProfile();
   }, []);
   const handleProfileUpdate = async (e) => {
-    e.preventDefault();
-    const response = await fetch("/users/edit-profile", {
+  e.preventDefault();
+ // If there's already an error, we don't need it now because it's been already handled
+  setError(null);
+  setPasswordError(null);
+  // Validate password fields:
+  if (currentPassword || newPassword || confirmNewPassword) {
+    // Either all the <input /> tags should be filled or empty:
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      setPasswordError("Please either fill all password fields or leave all empty");
+      return;
+    }
+    // Confirming the new password:
+    if (newPassword !== confirmNewPassword) {
+      setPasswordError("New passwords do not match");
+      return;
+    }
+  }
+  // Updating the profile:
+  const response = await fetch("/users/edit-profile", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ username, message }),
+  });
+  const updatedUser = await response.json();
+  // Handling all sorts of error:
+  if (!response.ok) {
+    if (updatedUser.errors) {
+      const firstError = Object.values(updatedUser.errors)[0];
+      setError(firstError);
+    } else {
+      setError(updatedUser.message || "Profile update failed");
+    }
+    return;
+  }
+  // Changing password:
+  if (currentPassword) {
+    const passwordResponse = await fetch("/users/change-password", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ username, message }),
+      body: JSON.stringify({
+        currentPassword,
+        newPassword,
+      }),
     });
-    if (currentPassword || newPassword || confirmNewPassword) {
-      if (!currentPassword || !newPassword || !confirmNewPassword) {
-        setPasswordError("Please either fill all password fields or leave all of the empty");
-        return;
-      }
-      if (newPassword !== confirmNewPassword) {
-        setPasswordError("New passwords do not match");
-        return;
-      }
-      const passwordResponse = await fetch("/users/change-password", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          currentPassword,
-          newPassword,
-        }),
-      });
-      const passwordData = await passwordResponse.json();
-      if (!passwordResponse.ok) {
-        setPasswordError(passwordData.message);
-        return;
-      }
-    }
-    const updatedUser = await response.json();
-    if (!response.ok) {
-      setError(updatedUser.message);
+
+    const passwordData = await passwordResponse.json();
+    // Error-Handling of changing password:
+    if (!passwordResponse.ok) {
+      setPasswordError(passwordData.message);
       return;
     }
-    setCurrentUser(updatedUser);
-    navigate("/profile");
-  };
+  }
+  setCurrentUser(updatedUser);
+  navigate("/profile");
+};
   const checkPasswordMatch = (password, confirmPassword) => {
     if (!password && !confirmPassword) {
       setPasswordMatch(null);

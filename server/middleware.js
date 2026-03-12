@@ -22,7 +22,14 @@ module.exports.isLoggedOut = (req, res, next) => {
   next();
 };
 
-module.exports.handleRegistrationErrors = (err, req, res, next) => {
+module.exports.handleUserErrors = (err, req, res, next) => {
+  // Duplicate username error
+  if (err.code === 11000) {
+    return res.status(400).json({
+      message: "Username already taken. Please choose another one."
+    });
+  } 
+  // Mongoose validation errors
   if (err.name === "ValidationError") {
     const errors = {};
     // Collecting all the errors:
@@ -30,12 +37,12 @@ module.exports.handleRegistrationErrors = (err, req, res, next) => {
       errors[field] = err.errors[field].message;
     }
     // Returning the errors:
-    return res.status(400).json({
-      type: "ValidationError",
-      errors
-    });
+    return res.status(400).json({ errors });
   }
-  next(err);
+  // Default fallback, for other errors:
+  res.status(500).json({
+    message: "Something went wrong on the server."
+  });
 };
 
 module.exports.validateAd = (req, res, next) => {

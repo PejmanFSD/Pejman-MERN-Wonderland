@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedOut, handleRegistrationErrors } = require("../middleware.js");
+const { isLoggedOut, handleUserErrors } = require("../middleware.js");
 const User = require('../models/user.js');
 const usersAuth = require('../controllers/usersAuth.js');
 const catchAsync = require('../utils/catchAsync.js');
 
 router.route('/register')
-    .post(isLoggedOut, catchAsync(usersAuth.register), handleRegistrationErrors);
+    .post(isLoggedOut, catchAsync(usersAuth.register), handleUserErrors);
 // router.post('/register', catchAsync(usersAuth.register));
 
 router.route('/login')

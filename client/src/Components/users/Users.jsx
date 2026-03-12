@@ -79,10 +79,10 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
             <tr key={user._id}>
               <td>{user.username}</td>
               <td>{user.username === "Pejman" ? "The Boss!" : user.role}</td>
-              <td>{user.username === "Pejman" ? "∞" : user.totalPoint}</td>
+              <td>{user.username === "Pejman" ? <div>&#128526;</div> : user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
-                {user.username === "Pejman" ? <div>Pejman &#128526;</div> :
+                {user.username === "Pejman" ? <div>No Action for Pejman &#128526;</div> :
                 currentUser.username === "Pejman" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button> :
                 user.role === "Admin" ? <div>Admin &#128515;</div> :
                 <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button>
