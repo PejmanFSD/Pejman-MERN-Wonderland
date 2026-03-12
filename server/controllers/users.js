@@ -54,9 +54,9 @@ module.exports.topUsers = async (req, res) => {
     rank: index + 1,
     username: user.username,
     totalPoint: user.totalPoint,
-    message: user.message
+    message: user.message,
   }));
-    res.json(rankedUsers);
+  res.json(rankedUsers);
 };
 
 module.exports.showUser = async (req, res) => {
@@ -69,15 +69,28 @@ module.exports.editUser = async (req, res) => {
   // We don't have to use "try-catch" because the "handleUserErrors"
   // middleware handles the "Default fallback" with the 500 status code
   // and it's been used in index.js by the "use" keyword
-    const { username, message } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      req.session.user_id,
-      { username, message },
-      { runValidators: true, new: true, context: "query" } // context: "query" ->
-      // Applying schema validators (like maxlength) during update queries
-    ).select("-password"); // We never send "password" to Front-End, even if
-    // the user has the ability to change it
-    res.status(200).json(updatedUser);
+  const { username, message } = req.body;
+  // The more protecting controller for prohibiting the hackers to manipulate
+  // the "role" or the "totalPoint" in the browser console:
+  const user = await User.findById(req.session.user_id);
+  user.username = username;
+  user.message = message;
+  await user.save();
+  //const updatedUser = await User.findByIdAndUpdate(
+  //  req.session.user_id,
+  //  { username, message },
+  //  { runValidators: true, new: true, context: "query" } // context: "query" ->
+  // Applying schema validators (like maxlength) during update queries
+  // ).select("-password"); // We never send "password" to Front-End, even if
+  // the user has the ability to change it
+  // res.status(200).json(updatedUser);
+  res.status(200).json({
+    id: user._id,
+    username: user.username,
+    message: user.message,
+    role: user.role,
+    totalPoint: user.totalPoint,
+  });
 };
 
 module.exports.changePassword = async (req, res) => {
