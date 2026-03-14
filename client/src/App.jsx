@@ -21,6 +21,7 @@ function App() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isAGameStarted, setIsAGameStarted] = useState(false);
   const [youShouldLoginMessage, setYouShouldLoginMessage] = useState(false);
+  const [userCount, setUserCount] = useState(null);
 
   useEffect(() => {
     const restoreUser = async () => {
@@ -60,6 +61,8 @@ function App() {
           setIsLoggingOut={setIsLoggingOut}
           isAGameStarted={isAGameStarted}
           setIsAGameStarted={setIsAGameStarted}
+          userCount={userCount}
+          setUserCount={setUserCount}
         />
         <Routes>
           {!isLoggingOut &&
@@ -119,6 +122,7 @@ function App() {
                 error={error}
                 setError={setError}
                 onRegister={(user) => setCurrentUser(user)}
+                setUserCount={setUserCount}
               />
             }
           />

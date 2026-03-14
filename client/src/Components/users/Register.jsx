@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Register({ onRegister }) {
+export default function Register({ onRegister, setUserCount }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -50,6 +50,7 @@ export default function Register({ onRegister }) {
         }
         return;
       }
+      setUserCount((currUserCount) => currUserCount + 1);
       onRegister(json.user);
       setUsername("");
       setPassword("");

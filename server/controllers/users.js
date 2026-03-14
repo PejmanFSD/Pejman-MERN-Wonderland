@@ -137,3 +137,13 @@ module.exports.updatePoints = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+// The controller for fetching the total number of the registered users:
+module.exports.getUserCount = async (req, res, next) => {
+  try {
+    const count = await User.countDocuments(); // "countDocuments" is
+    // an inner function that counts the number of the users
+    res.json({ count }); // Sending the "count" variable to Front-End
+  } catch (err) {
+    next(err);
+  }
+};

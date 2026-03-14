@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect} from "react";
 import {
   BrowserRouter,
   Routes,
@@ -24,9 +24,10 @@ export default function Navbar({
   isLoggingOut,
   setIsLoggingOut,
   isAGameStarted,
-  setIsAGameStarted
+  setIsAGameStarted,
+  userCount,
+  setUserCount
 }) {
-  
   const navigate = useNavigate();
   const location = useLocation();
   const handleLogout = () => {
@@ -49,9 +50,19 @@ export default function Navbar({
   const handleLogoutNo = () => {
     setIsLoggingOut(false);
   }
+  // Fetching the total number of the registered users:
+  useEffect(() => {
+  const fetchUserCount = async () => {
+    const res = await fetch("/users/count");
+    const data = await res.json();
+    setUserCount(data.count);
+  };
+  fetchUserCount();
+}, []);
   return (
     <header>
-      <h3>Pejman MERN Wonderland</h3>
+      <div><strong>Pejman MERN Wonderland</strong></div>
+      <div>Total users: {userCount}</div>
       {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}!</div>}
       {/* "location.pathname" is the path of the current page */}
       {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && (

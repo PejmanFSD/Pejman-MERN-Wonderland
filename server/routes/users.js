@@ -12,6 +12,8 @@ router.get('/topUsers', catchAsync(users.topUsers));
 
 router.get('/profile', isLoggedIn, catchAsync(users.showUser));
 
+router.get('/count', catchAsync(users.getUserCount));
+
 router.put('/edit-profile', isLoggedIn, catchAsync(users.editUser), handleUserErrors); // We
 // use "handleUserErrors" middleware after executing the controller because this middleware
 // should have the values of the <input /> tags before evaluating them.
