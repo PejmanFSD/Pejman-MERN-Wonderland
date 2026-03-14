@@ -59,7 +59,7 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
       }
       // If the issue is for something else (like the internet breakdown):
       else {
-        setError(json.message || json.error || "Registration failed");
+        setError(json.message || json.error || "Creating new ad failed");
       }
     } else {
       onAdCreated(json);

@@ -70,40 +70,68 @@ module.exports.renderEditForm = async (req, res) => {
   res.render("ads/edit", { ad });
 };
 
-module.exports.editAd = async (req, res) => {
-  const { id } = req.params;
-  const ad = await Ad.findByIdAndUpdate(
-    id,
-    { company: req.body.company, text: req.body.text },
-    { runValidators: true, new: true },
-  );
-  if (req.files && req.files.length > 0) {
-    const imgs = req.files.map((f) => ({
-      url: f.path,
-      filename: f.filename,
-    }));
-    ad.images.push(...imgs); // We don't want to push an array to the original array
+module.exports.editAd = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const ad = await Ad.findById(id);
+    ad.company = req.body.company;
+    ad.text = req.body.text;
     await ad.save();
-  }
-
-  if (req.body.deleteImages) {
-    // If image(s) are selected to be removed
-    const deleteImages = Array.isArray(req.body.deleteImages)
-      ? req.body.deleteImages // Just one image is selected
-      : [req.body.deleteImages]; // Multiple images are selected (array)
-    // First delete them from the cloud
-    for (let filename of deleteImages) {
-      await cloudinary.uploader.destroy(filename);
+    // const ad = await Ad.findByIdAndUpdate(
+    //   id,
+    // { company: req.body.company, text: req.body.text },
+    // { runValidators: true, new: true },
+    // );
+    // Add new images:
+    if (req.files && req.files.length > 0) {
+      const imgs = req.files.map((f) => ({
+        url: f.path,
+        filename: f.filename,
+      }));
+      ad.images.push(...imgs); // We don't want to push an array to the original array
+      await ad.save();
     }
-    // Pull out of the images from "images" array only if "filename"s are
-    // inside the "req.body.deleteImages"
-    await ad.updateOne({
-      $pull: { images: { filename: { $in: deleteImages } } },
-    });
+    // Deleting images:
+    if (req.body.deleteImages) {
+      // If image(s) are selected to be removed
+      const deleteImages = Array.isArray(req.body.deleteImages)
+        ? req.body.deleteImages // Just one image is selected
+        : [req.body.deleteImages]; // Multiple images are selected (array)
+      // First delete them from the cloud
+      for (let filename of deleteImages) {
+        await cloudinary.uploader.destroy(filename);
+      }
+      // Pull out of the images from "images" array only if "filename"s are
+      // inside the "req.body.deleteImages"
+      await ad.updateOne({
+        $pull: { images: { filename: { $in: deleteImages } } },
+      });
+    }
+    // req.flash('success', 'Ad is successfully edited!');
+    // res.redirect(`/ads/${ad._id}`);
+    res.status(200).json(ad);
+  } catch (e) {
+    // Deleting newly uploaded images if validation fails
+    // if (req.files && req.files.length > 0) {
+    //   for (let file of req.files) {
+    //     await cloudinary.uploader.destroy(file.filename);
+    //   }
+    // }
+    // mongoose validation errors
+    // if (e.name === "ValidationError") {
+    //   const errors = {};
+    // Fetching only the message of the error
+    //   for (let field in e.errors) {
+    //     errors[field] = e.errors[field].message;
+    //   }
+    //   return res.status(400).json({ errors });
+    // }
+    // For other errors:
+    // res.status(500).json({
+    //   error: "Server error",
+    // });
+    next(e);
   }
-  // req.flash('success', 'Ad is successfully edited!');
-  // res.redirect(`/ads/${ad._id}`);
-  res.status(200).json(ad);
 };
 
 module.exports.deleteAd = async (req, res) => {

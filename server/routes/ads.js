@@ -15,7 +15,7 @@ router
 router
   .route("/:id")
   .get(isLoggedIn, isAdmin, isPejman, isAuthor, catchAsync(ads.showAd))
-  .put(isLoggedIn, isAdmin, isPejman, isAuthor, upload.array("image"), catchAsync(ads.editAd)) // We
+  .put(isLoggedIn, isAdmin, isPejman, isAuthor, upload.array("image"), catchAsync(ads.editAd), handleCreatingAdErrors) // We
   // use "validateAd" after uploading image(s) because the uploaded image(s) should be validated too
   .delete(isLoggedIn, isAdmin, isPejman, isAuthor, catchAsync(ads.deleteAd));
 

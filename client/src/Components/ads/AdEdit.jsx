@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function AdEdit() {
+export default function AdEdit({ error, setError }) {
   const { id } = useParams(); // For extracting the "id"
   const navigate = useNavigate();
   const fileInputRef = useRef(null); // For adding images
@@ -17,7 +17,7 @@ export default function AdEdit() {
     const fetchAd = async () => {
       const response = await fetch(`/ads/${id}`);
       const json = await response.json();
-        // if the id is fetched, apply the changes
+      // if the id is fetched, apply the changes
       if (response.ok) {
         setCompany(json.company);
         setText(json.text);
@@ -31,17 +31,17 @@ export default function AdEdit() {
   // Handling the checkbox toggle
   const handleCheckbox = (filename) => {
     setDeleteImages((currDeleteImages) =>
-        // Removing all the images that are in the "deleteImages" array
+      // Removing all the images that are in the "deleteImages" array
       currDeleteImages.includes(filename)
         ? currDeleteImages.filter((img) => img !== filename)
-        : [...currDeleteImages, filename]
+        : [...currDeleteImages, filename],
     );
   };
 
   // Handling Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError(null);
     const formData = new FormData();
     formData.append("company", company);
     formData.append("text", text);
@@ -57,14 +57,36 @@ export default function AdEdit() {
     deleteImages.forEach((filename) => {
       formData.append("deleteImages", filename);
     });
-
-    const response = await fetch(`/ads/${id}`, {
-      method: "PUT",
-      body: formData,
-    });
-
-    if (response.ok) {
+    try {
+      const response = await fetch(`/ads/${id}`, {
+        method: "PUT",
+        body: formData,
+        credentials: "include",
+      });
+      // The try-catch error-handling if the server returns HTML instead of JSON:
+      let json;
+      try {
+        json = await response.json();
+      } catch {
+        json = { error: "Invalid server response" };
+      }
+      // Error handling
+      // If the fetching ad process fails:
+      if (!response.ok) {
+        // If the issue is with the adSchema limitations:
+        if (json.errors) {
+          const firstError = Object.values(json.errors)[0];
+          setError(firstError);
+        }
+        // If the issue is for something else (like the internet breakdown):
+        else {
+          setError(json.message || json.error || "Edit failed");
+        }
+        return;
+      }
       navigate(`/ads/${id}`);
+    } catch (err) {
+      setError("Network error. Please try again.");
     }
   };
 
@@ -106,6 +128,7 @@ export default function AdEdit() {
         ))}
       </div>
       <button type="submit">Update Ad</button>
+      {error && <div style={{ color: "red" }}>{error}</div>}
     </form>
   );
 }

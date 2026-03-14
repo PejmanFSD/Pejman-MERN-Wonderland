@@ -151,7 +151,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/ads/:id/edit" element={<AdEdit />} />
+          <Route path="/ads/:id/edit" element={<AdEdit error={error} setError={setError} />} />
           <Route
             path="/users"
             element={

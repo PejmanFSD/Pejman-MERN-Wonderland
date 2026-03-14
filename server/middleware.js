@@ -118,5 +118,7 @@ module.exports.handleCreatingAdErrors = (err, req, res, next) => {
       errors
     });
   }
-  next(err);
+  return res.status(500).json({
+    error: err.message || "Server error"
+  });
 };
