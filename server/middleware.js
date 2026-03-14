@@ -104,3 +104,19 @@ module.exports.isPejman = async (req, res, next) => {
   }
   next();
 };
+
+module.exports.handleCreatingAdErrors = (err, req, res, next) => {
+  if (err.name === "ValidationError") {
+    const errors = {};
+    // Collecting all the errors:
+    for (let field in err.errors) {
+      errors[field] = err.errors[field].message;
+    }
+    // Returning the errors:
+    return res.status(400).json({
+      type: "ValidationError",
+      errors
+    });
+  }
+  next(err);
+};

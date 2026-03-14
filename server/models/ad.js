@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const adSchema = new mongoose.Schema({
     company: {
         type: String,
-        required: [true, 'Company name cannot be blank']
+        required: [true, 'Company name cannot be blank'],
+        maxlength: [12, 'The maximum length of the Ad company is 12 characters']
     },
     text: {
         type: String,
         required: [true, 'Ad text cannot be blank'],
-        maxlength: [250, 'The maximum length of the Ad text is 250 characters']
+        maxlength: [30, 'The maximum length of the Ad text is 30 characters']
     },
     images: [ // Based on cloudinary documentation
         {

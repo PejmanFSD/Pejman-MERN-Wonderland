@@ -9,7 +9,6 @@ module.exports.index = async (req, res) => {
 
 module.exports.createAd = async (req, res) => {
   try {
-    console.log("REQ.FILES FULL:", req.files);
     const ad = new Ad(req.body);
     // Pushing all the uploaded images to the "images" array:
     if (req.files && req.files.length > 0) {
@@ -24,9 +23,27 @@ module.exports.createAd = async (req, res) => {
     }
     await ad.save();
     res.status(201).json(ad);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err.message });
+  } catch (e) {
+    // If before facing the error and image / some images are uploaded
+    // they should be removed from cloudinary:
+    if (req.files && req.files.length > 0) {
+      for (let file of req.files) {
+        await cloudinary.uploader.destroy(file.filename);
+      }
+    }
+    // mongoose validation errors
+    if (e.name === "ValidationError") {
+      const errors = {};
+      // Fetching only the message of the error
+      for (let field in e.errors) {
+        errors[field] = e.errors[field].message;
+      }
+      return res.status(400).json({ errors });
+    }
+    // For other errors:
+    res.status(500).json({
+      error: "Server error",
+    });
   }
 };
 

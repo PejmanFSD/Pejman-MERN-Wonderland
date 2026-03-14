@@ -24,46 +24,55 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
   const handleOk = () => {
     navigate(-1);
     setError(null);
-  }
+  };
   if (currentUser.role !== "Admin") {
     return (
-        <div>
-          <p>{error}</p>
-          <button onClick={handleOk}>Ok</button>
-        </div>
-      );
+      <div>
+        <p>{error}</p>
+        <button onClick={handleOk}>Ok</button>
+      </div>
+    );
   }
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  console.log("Submitting ad...");
-  const formData = new FormData();
-  formData.append('company', company);
-  formData.append('text', text);
-  for (let i = 0; i < images.length; i++) {
-    formData.append('image', images[i]);
-  }
-  const response = await fetch('/ads', {
-    method: 'POST',
-    body: formData,
-    credentials: "include"
-  });
-  const json = await response.json();
-  console.log("SERVER RESPONSE:", json);
-  if (!response.ok) {
-    setError(json.error);
-  } else {
-    onAdCreated(json);
-    setCompany('');
-    setText('');
-    setImages([]);
-    // clearing the chosen images of the <form />
-    if (fileInputRef.current) {
-      fileInputRef.current.value = null;
+    e.preventDefault();
+    setError(null);
+    const formData = new FormData();
+    formData.append("company", company);
+    formData.append("text", text);
+    for (let i = 0; i < images.length; i++) {
+      formData.append("image", images[i]);
     }
-    navigate('/');
-  }
-};
+    const response = await fetch("/ads", {
+      method: "POST",
+      body: formData,
+      credentials: "include",
+    });
+    const json = await response.json();
+    // Error handling
+    // If the fetching ad process fails:
+    if (!response.ok) {
+      // If the issue is with the adSchema limitations:
+      if (json.errors) {
+        const firstError = Object.values(json.errors)[0];
+        setError(firstError);
+      }
+      // If the issue is for something else (like the internet breakdown):
+      else {
+        setError(json.message || json.error || "Registration failed");
+      }
+    } else {
+      onAdCreated(json);
+      setCompany("");
+      setText("");
+      setImages([]);
+      // clearing the chosen images of the <form />
+      if (fileInputRef.current) {
+        fileInputRef.current.value = null;
+      }
+      navigate("/");
+    }
+  };
   return (
     <form onSubmit={handleSubmit}>
       <h3>Create a new Ad</h3>
@@ -100,7 +109,7 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
         />
       </div>
       <button>Create Ad</button>
-      {error && <div>{error}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
     </form>
   );
 }
