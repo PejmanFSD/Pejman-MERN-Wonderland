@@ -111,25 +111,17 @@ module.exports.editAd = async (req, res, next) => {
     // res.redirect(`/ads/${ad._id}`);
     res.status(200).json(ad);
   } catch (e) {
-    // Deleting newly uploaded images if validation fails
-    // if (req.files && req.files.length > 0) {
-    //   for (let file of req.files) {
-    //     await cloudinary.uploader.destroy(file.filename);
-    //   }
-    // }
-    // mongoose validation errors
-    // if (e.name === "ValidationError") {
-    //   const errors = {};
-    // Fetching only the message of the error
-    //   for (let field in e.errors) {
-    //     errors[field] = e.errors[field].message;
-    //   }
-    //   return res.status(400).json({ errors });
-    // }
-    // For other errors:
-    // res.status(500).json({
-    //   error: "Server error",
-    // });
+    // Deleting the new uploaded image(s) from cloudinary, if
+    // the image(s) are selected while the error occurs:
+    if (req.files && req.files.length > 0) {
+      for (let file of req.files) {
+        try {
+          await cloudinary.uploader.destroy(file.filename);
+        } catch (cloudErr) {
+          console.error("Cloudinary rollback failed:", cloudErr);
+        }
+      }
+    }
     next(e);
   }
 };
