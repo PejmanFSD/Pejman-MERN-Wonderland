@@ -135,7 +135,9 @@ module.exports.updatePoints = async (req, res) => {
       { $inc: { totalPoint: points } }, // Same as: "user.totalPoint += points"
       { new: true },
     );
-    res.json(user); // Sending back the updated user (to Front-End)
+    res.json({
+      message: "Your stars are increased!",
+      user}); // Sending back the updated user (to Front-End)
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

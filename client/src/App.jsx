@@ -98,6 +98,7 @@ function App() {
                   youShouldLoginMessage={youShouldLoginMessage}
                   setYouShouldLoginMessage={setYouShouldLoginMessage}
                   setError={setError}
+                  setFlash={setFlash}
                 />
               }
             />

@@ -27,6 +27,7 @@ export default function Home({
   youShouldLoginMessage,
   setYouShouldLoginMessage,
   setError,
+  setFlash
 }) {
   const [showGameTitles, setShowGameTitles] = useState(true);
   const [rankedUsers, setRankedUsers] = useState([]);
@@ -67,9 +68,13 @@ export default function Home({
         body: JSON.stringify({ points: i }), // sending the increment value (i)
       });
       const updatedUser = await res.json();
+      setFlash(updatedUser.message);
       if (res.ok) {
-        setCurrentUser(updatedUser);
+        setCurrentUser(updatedUser.user);
       }
+      const res2 = await fetch("/users/topUsers");
+      const topUsers = await res2.json();
+      setRankedUsers(topUsers);
     } catch (err) {
       console.log(err);
     }
