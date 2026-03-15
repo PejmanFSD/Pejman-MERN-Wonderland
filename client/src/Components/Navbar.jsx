@@ -111,6 +111,7 @@ export default function Navbar({
                 onAdCreated={(newAd) => {
                   setAds((currAds) => [newAd, ...currAds]);
                 }}
+                setFlash={setFlash}
               />
             </ProtectedRoute>
           }

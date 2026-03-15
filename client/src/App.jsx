@@ -171,13 +171,14 @@ function App() {
                   isDeleting={isDeleting}
                   setIsDeleting={setIsDeleting}
                   currentUser={currentUser}
+                  setFlash={setFlash}
                 />
               </ProtectedRoute>
             }
           />
           <Route
             path="/ads/:id/edit"
-            element={<AdEdit error={error} setError={setError} />}
+            element={<AdEdit error={error} setError={setError} setFlash={setFlash} />}
           />
           <Route
             path="/users"

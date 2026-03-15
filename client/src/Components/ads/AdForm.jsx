@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 // For returning to the Home Page automatically when the new ad is created
 import { useNavigate } from "react-router-dom";
 
-export default function AdForm({ onAdCreated, currentUser, error, setError }) {
+export default function AdForm({ onAdCreated, currentUser, error, setError, setFlash }) {
   const [company, setCompany] = useState("");
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
@@ -70,6 +70,7 @@ export default function AdForm({ onAdCreated, currentUser, error, setError }) {
       if (fileInputRef.current) {
         fileInputRef.current.value = null;
       }
+      setFlash(json.message);
       navigate("/");
     }
   };

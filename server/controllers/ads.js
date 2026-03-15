@@ -3,7 +3,6 @@ const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
   const ads = await Ad.find().populate("author", "username");
-  // res.render('ads/index', {ads});
   res.json(ads);
 };
 
@@ -22,7 +21,10 @@ module.exports.createAd = async (req, res) => {
       ad.author = req.user._id; // Giving the new created ad an owner!
     }
     await ad.save();
-    res.status(201).json(ad);
+    res.status(201).json({
+      message: "Ad created successfully!",
+      ad,
+    });
   } catch (e) {
     // If before facing the error and image / some images are uploaded
     // they should be removed from cloudinary:
@@ -77,11 +79,6 @@ module.exports.editAd = async (req, res, next) => {
     ad.company = req.body.company;
     ad.text = req.body.text;
     await ad.save();
-    // const ad = await Ad.findByIdAndUpdate(
-    //   id,
-    // { company: req.body.company, text: req.body.text },
-    // { runValidators: true, new: true },
-    // );
     // Add new images:
     if (req.files && req.files.length > 0) {
       const imgs = req.files.map((f) => ({
@@ -107,9 +104,10 @@ module.exports.editAd = async (req, res, next) => {
         $pull: { images: { filename: { $in: deleteImages } } },
       });
     }
-    // req.flash('success', 'Ad is successfully edited!');
-    // res.redirect(`/ads/${ad._id}`);
-    res.status(200).json(ad);
+    res.status(200).json({
+      message: "Ad updated successfully!",
+      ad,
+    });
   } catch (e) {
     // Deleting the new uploaded image(s) from cloudinary, if
     // the image(s) are selected while the error occurs:
@@ -133,19 +131,10 @@ module.exports.deleteAd = async (req, res) => {
   if (!ad) {
     return res.status(404).json({ error: "Ad not found" });
   }
-  // if (!req.user) {
-  //   return res.status(401).json({ error: "Unauthorized" });
-  // }
-  // Delete the found ad ONLY IF the logged-in user is the owner of the ad:
-  // if (!ad.author.equals(req.user._id)) {
-  // req.flash("error", "You don't have the permission!");
-  //   return res.status(403).json({ error: "Forbidden" });
-  // }
   // Deleting images from Cloudinary
   for (let img of ad.images) {
     await cloudinary.uploader.destroy(img.filename);
   }
   await Ad.findByIdAndDelete(id);
-  // req.flash("success", "Ad is successfully deleted!");
   res.status(200).json({ message: "Ad deleted successfully" });
 };

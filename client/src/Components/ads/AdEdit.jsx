@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function AdEdit({ error, setError, currentUser }) {
+export default function AdEdit({ error, setError, setFlash }) {
   const { id } = useParams(); // For extracting the "id"
   const navigate = useNavigate();
   const fileInputRef = useRef(null); // For adding images
@@ -84,6 +84,7 @@ export default function AdEdit({ error, setError, currentUser }) {
         }
         return;
       }
+      setFlash(json.message);
       navigate(`/ads/${id}`);
     } catch (err) {
       setError("Network error. Please try again.");

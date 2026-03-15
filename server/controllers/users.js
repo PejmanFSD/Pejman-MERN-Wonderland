@@ -85,7 +85,7 @@ module.exports.editUser = async (req, res) => {
   // the user has the ability to change it
   // res.status(200).json(updatedUser);
   res.status(200).json({
-    message: "Profile successfully edited!",
+    message: "Profile edited successfully!",
     user: {
       id: user._id,
       username: user.username,

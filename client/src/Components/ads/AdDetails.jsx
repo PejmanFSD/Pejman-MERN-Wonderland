@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function AdDetails({error, setError, isDeleting, setIsDeleting}) {
+export default function AdDetails({error, setError, isDeleting, setIsDeleting, setFlash}) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
   const navigate = useNavigate();
@@ -43,20 +43,21 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting}) 
     setIsDeleting(true);
   };
   const handleDeleteYes = async () => {
+    setError(null);
     try {
       const res = await fetch(`/ads/${ad._id}`, {
         method: "DELETE",
         credentials: "include",
       });
-
+      const json = await res.json();
       if (!res.ok) {
         throw new Error("Delete failed");
       }
-
+      setFlash(json.message);
       navigate("/");
     } catch (err) {
       console.error(err);
-      alert("Could not delete the ad");
+      setError("Could not delete the ad");
     }
     setIsDeleting(false);
   };
