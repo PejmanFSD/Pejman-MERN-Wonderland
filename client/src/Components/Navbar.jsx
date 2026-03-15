@@ -26,7 +26,8 @@ export default function Navbar({
   isAGameStarted,
   setIsAGameStarted,
   userCount,
-  setUserCount
+  setUserCount,
+  setFlash
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,15 +36,20 @@ export default function Navbar({
   }
   const handleLogoutYes = async () => {
     try {
-      await fetch("/logout", {
+      const response = await fetch("/logout", {
         method: "POST",
         credentials: "include",
       });
-
+      const json = await response.json();
+      if (!response.ok) {
+        setFlash(json.error || "Logout failed");
+      }
       setCurrentUser(null);
+      setFlash(json.message);
       navigate("/");
     } catch (err) {
       console.error("Logout failed:", err);
+      setFlash("Network error during logout");
     }
     setIsLoggingOut(false);
   };

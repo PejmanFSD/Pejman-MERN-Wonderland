@@ -22,6 +22,7 @@ function App() {
   const [isAGameStarted, setIsAGameStarted] = useState(false);
   const [youShouldLoginMessage, setYouShouldLoginMessage] = useState(false);
   const [userCount, setUserCount] = useState(null);
+  const [flash, setFlash] = useState(null);
 
   useEffect(() => {
     const restoreUser = async () => {
@@ -42,8 +43,24 @@ function App() {
     };
     restoreUser();
   }, []);
+
+  useEffect(() => {
+  if (flash) {
+    const timer = setTimeout(() => {
+      setFlash(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }
+}, [flash]);
+
   return (
     <div className="App">
+      {flash && (
+        <div>
+          {flash}
+        </div>
+      )}
       <BrowserRouter>
         <Navbar
           currentUser={currentUser}
@@ -63,6 +80,7 @@ function App() {
           setIsAGameStarted={setIsAGameStarted}
           userCount={userCount}
           setUserCount={setUserCount}
+          setFlash={setFlash}
         />
         <Routes>
           {!isLoggingOut && (
@@ -123,6 +141,7 @@ function App() {
                 setError={setError}
                 onRegister={(user) => setCurrentUser(user)}
                 setUserCount={setUserCount}
+                setFlash={setFlash}
               />
             }
           />
@@ -136,6 +155,7 @@ function App() {
                 onLogin={(user) => setCurrentUser(user)}
                 youShouldLoginMessage={youShouldLoginMessage}
                 setYouShouldLoginMessage={setYouShouldLoginMessage}
+                setFlash={setFlash}
               />
             }
           />

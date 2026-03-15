@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Register({ onRegister, setUserCount }) {
+export default function Register({ onRegister, setUserCount, setFlash }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -57,6 +57,7 @@ export default function Register({ onRegister, setUserCount }) {
       setTotalPoint(0);
       setMessage("");
       setRole("Player");
+      setFlash(json.message);
       navigate("/");
     } catch (err) {
       setError(err.message);
