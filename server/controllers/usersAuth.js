@@ -1,9 +1,16 @@
 const User = require("../models/user");
+const isStrongPassword = require('../utils/isStrongPassword.js');
 require("dotenv").config();
 
 module.exports.register = async (req, res) => {
   try {
     const { username, password, confirmPassword, role, message, adminSecret } = req.body;
+    // Checking if the password is strong:
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({
+        error: "You should enter a strong password"
+      });
+    }
     // Confirming the password:
     if (password !== confirmPassword) {
       return res.status(400).json({
