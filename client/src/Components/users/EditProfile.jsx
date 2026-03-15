@@ -156,7 +156,7 @@ export default function EditProfile({ setCurrentUser }) {
         {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
       </form>
       <button type="submit" onClick={cancelSubmit}>
-        Cancel Changes
+        Cancel
       </button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>

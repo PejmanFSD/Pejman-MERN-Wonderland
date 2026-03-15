@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function AdEdit({ error, setError }) {
+export default function AdEdit({ error, setError, currentUser }) {
   const { id } = useParams(); // For extracting the "id"
   const navigate = useNavigate();
   const fileInputRef = useRef(null); // For adding images
@@ -90,45 +90,52 @@ export default function AdEdit({ error, setError }) {
     }
   };
 
+  const cancelSubmit = () => {
+    navigate(`/ads/${id}`);
+  };
+
   if (!company) return <div>Loading...</div>;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Company name</label>
-        <input
-          type="text"
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Text</label>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Add Images</label>
-        <input type="file" multiple ref={fileInputRef} />
-      </div>
-      <div>
-        {images.map((img) => (
-          <div key={img._id}>
-            <img src={img.url} alt="" height="40px" />
-            <input
-              type="checkbox"
-              onChange={() => handleCheckbox(img.filename)}
-            />
-            <label>Delete?</label>
-          </div>
-        ))}
-      </div>
-      <button type="submit">Update Ad</button>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Company name</label>
+          <input
+            type="text"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Text</label>
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Add Images</label>
+          <input type="file" multiple ref={fileInputRef} />
+        </div>
+        <div>
+          {images.map((img) => (
+            <div key={img._id}>
+              <img src={img.url} alt="" height="40px" />
+              <input
+                type="checkbox"
+                onChange={() => handleCheckbox(img.filename)}
+              />
+              <label>Delete?</label>
+            </div>
+          ))}
+        </div>
+        <button type="submit">Update Ad</button>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+      </form>
+      <button onClick={cancelSubmit}>Cancel</button>
+    </div>
   );
 }

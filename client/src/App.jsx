@@ -65,25 +65,25 @@ function App() {
           setUserCount={setUserCount}
         />
         <Routes>
-          {!isLoggingOut &&
-          <Route
-            path="/"
-            element={
-              <Home
-                ads={ads}
-                setAds={setAds}
-                currentUser={currentUser}
-                setCurrentUser={setCurrentUser}
-                isLoggingOut={isLoggingOut}
-                isAGameStarted={isAGameStarted}
-                setIsAGameStarted={setIsAGameStarted}
-                youShouldLoginMessage={youShouldLoginMessage}
-                setYouShouldLoginMessage={setYouShouldLoginMessage}
-                setError={setError}
-              />
-            }
-          />
-}
+          {!isLoggingOut && (
+            <Route
+              path="/"
+              element={
+                <Home
+                  ads={ads}
+                  setAds={setAds}
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                  isLoggingOut={isLoggingOut}
+                  isAGameStarted={isAGameStarted}
+                  setIsAGameStarted={setIsAGameStarted}
+                  youShouldLoginMessage={youShouldLoginMessage}
+                  setYouShouldLoginMessage={setYouShouldLoginMessage}
+                  setError={setError}
+                />
+              }
+            />
+          )}
           <Route
             path="/profile"
             element={
@@ -151,11 +151,15 @@ function App() {
                   setError={setError}
                   isDeleting={isDeleting}
                   setIsDeleting={setIsDeleting}
+                  currentUser={currentUser}
                 />
               </ProtectedRoute>
             }
           />
-          <Route path="/ads/:id/edit" element={<AdEdit error={error} setError={setError} />} />
+          <Route
+            path="/ads/:id/edit"
+            element={<AdEdit error={error} setError={setError} />}
+          />
           <Route
             path="/users"
             element={
