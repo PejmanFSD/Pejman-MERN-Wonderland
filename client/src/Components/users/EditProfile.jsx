@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function EditProfile({ setCurrentUser }) {
+export default function EditProfile({ setCurrentUser, setFlash }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
@@ -81,7 +81,12 @@ export default function EditProfile({ setCurrentUser }) {
       return;
     }
   }
-  setCurrentUser(updatedUser);
+  setCurrentUser(updatedUser.user); // After assigning the flash message as
+  // a separate key-value pair to the "user" object (in controller),
+  // "updatedUser" becomes an object with 2 key-value pairs. For updating
+  // the "currentUser" we don't need the first pair (whose key is "message")
+  // we just have to fetch the value of the second key("user")
+  setFlash(updatedUser.message);
   navigate("/profile");
 };
   const checkPasswordMatch = (password, confirmPassword) => {

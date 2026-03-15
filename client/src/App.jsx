@@ -126,8 +126,7 @@ function App() {
               >
                 <EditProfile
                   setCurrentUser={setCurrentUser}
-                  // error={error}
-                  // setError={setError}
+                  setFlash={setFlash}
                 />
               </ProtectedRoute>
             }
