@@ -82,10 +82,10 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
               <td>{user.username === "Pejman" ? <div>&#128526;</div> : user.totalPoint}</td>
               <td>{user.message}</td>
               <td>
-                {user.username === "Pejman" ? <div>No Action for Pejman &#128526;</div> :
-                currentUser.username === "Pejman" ? <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button> :
-                user.role === "Admin" ? <div>Admin &#128515;</div> :
-                <button onClick={() => handleDelete(user._id)} disabled={isDeleting} style={{display: "inline"}}>Delete</button>
+                {user.username === "Pejman" && !isDeleting ? <div>No Action for Pejman &#128526;</div> :
+                currentUser.username === "Pejman" && !isDeleting ? <button onClick={() => handleDelete(user._id)} style={{display: "inline"}}>Delete</button> :
+                user.role === "Admin" && !isDeleting ? <div>Admin &#128515;</div> :
+                !isDeleting && <button onClick={() => handleDelete(user._id)} style={{display: "inline"}}>Delete</button>
               }
                 {isDeleting && deletingUser === user._id &&
                   <div style={{display: "inline", marginLeft: "8px"}}>
