@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function AdDetails({error, setError, isDeleting, setIsDeleting, setFlash}) {
+export default function AdDetails({error, setError, isDeleting, setIsDeleting, setFlash, setIsAdEditing}) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
   const navigate = useNavigate();
@@ -42,6 +42,10 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting, s
   const handleDelete = () => {
     setIsDeleting(true);
   };
+  const handleEdit = () => {
+    setIsAdEditing(true);
+    navigate(`/ads/${ad._id}/edit`);
+  }
   const handleDeleteYes = async () => {
     setError(null);
     try {
@@ -73,14 +77,12 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting, s
           <img key={img._id} src={img.url} alt="" height="70px" />
         ))}
       <br></br>
-      <Link to={`/ads/${ad._id}/edit`}>
-        <button disabled={isDeleting}>Edit</button>
-      </Link>
+      {!isDeleting && <button onClick={handleEdit}>Edit</button>}
       <br></br>
       {/* For Delete, we don't use <Link /> because <Link /> only sends the GET request */}
-      <button onClick={handleDelete} disabled={isDeleting}>
+      {!isDeleting && <button onClick={handleDelete}>
         Delete
-      </button>
+      </button>}
       <br></br>
       {isDeleting && (
         <div>

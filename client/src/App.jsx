@@ -18,6 +18,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isAdEditing, setIsAdEditing] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isAGameStarted, setIsAGameStarted] = useState(false);
   const [isProfileEditing, setIsProfileEditing] = useState(false);
@@ -83,6 +84,7 @@ function App() {
           setUserCount={setUserCount}
           setFlash={setFlash}
           isProfileEditing={isProfileEditing}
+          isAdEditing={isAdEditing}
         />
         <Routes>
           {!isLoggingOut && (
@@ -177,13 +179,14 @@ function App() {
                   setIsDeleting={setIsDeleting}
                   currentUser={currentUser}
                   setFlash={setFlash}
+                  setIsAdEditing={setIsAdEditing}
                 />
               </ProtectedRoute>
             }
           />
           <Route
             path="/ads/:id/edit"
-            element={<AdEdit error={error} setError={setError} setFlash={setFlash} />}
+            element={<AdEdit error={error} setError={setError} setFlash={setFlash} setIsAdEditing={setIsAdEditing}/>}
           />
           <Route
             path="/users"
