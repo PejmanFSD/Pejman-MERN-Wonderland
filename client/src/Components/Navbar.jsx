@@ -1,11 +1,11 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Link,
   useNavigate,
-  useLocation // For hiding the button of the current page
+  useLocation, // For hiding the button of the current page
 } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import AdForm from "./ads/AdForm";
@@ -29,13 +29,15 @@ export default function Navbar({
   setUserCount,
   setFlash,
   isProfileEditing,
-  isAdEditing
+  isAdEditing,
+  isCreatingAd,
+  setIsCreatingAd,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const handleLogout = () => {
     setIsLoggingOut(true);
-  }
+  };
   const handleLogoutYes = async () => {
     try {
       const response = await fetch("/logout", {
@@ -57,42 +59,115 @@ export default function Navbar({
   };
   const handleLogoutNo = () => {
     setIsLoggingOut(false);
-  }
+  };
+  const renderCreateAdPage = () => {
+    setIsCreatingAd(true);
+    navigate("/newAd");
+  };
   // Fetching the total number of the registered users:
   useEffect(() => {
-  const fetchUserCount = async () => {
-    const res = await fetch("/users/count");
-    const data = await res.json();
-    setUserCount(data.count);
-  };
-  fetchUserCount();
-}, []);
+    const fetchUserCount = async () => {
+      const res = await fetch("/users/count");
+      const data = await res.json();
+      setUserCount(data.count);
+    };
+    fetchUserCount();
+  }, []);
   return (
     <header>
-      <div><strong>Pejman MERN Wonderland</strong></div>
+      <div>
+        <strong>Pejman MERN Wonderland</strong>
+      </div>
       <div>Total users: {userCount}</div>
-      {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}!</div>}
+      {currentUser && !isLoggingOut && !isAGameStarted && (
+        <div>Welcome, {currentUser.username}!</div>
+      )}
       {/* "location.pathname" is the path of the current page */}
-      {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && (
-        <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
-      )}
-      {location.pathname !== "/" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && (
-        <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
-      )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && (
-        <button onClick={() => navigate("/users")} disabled={error}>All users</button>
-      )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && (
-        <button onClick={() => navigate("/newAd")} disabled={error}>Create new Ad</button>
-      )}
-      {!currentUser && location.pathname !== "/register" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && (
-        <button onClick={() => navigate("/register")} disabled={error}>Register</button>
-      )}
-      {!currentUser && location.pathname !== "/login" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && (
-        <button onClick={() => navigate("/login")} disabled={error}>Login</button>
-      )}
-      {currentUser && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && !isAdEditing && <button onClick={handleLogout} disabled={error}>Logout</button>}
-      {isLoggingOut &&
+      {currentUser &&
+        location.pathname !== "/profile" &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={() => navigate("/profile")} disabled={error}>
+            My Profile
+          </button>
+        )}
+      {location.pathname !== "/" &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={() => navigate("/")} disabled={error}>
+            Home Page
+          </button>
+        )}
+      {currentUser &&
+        currentUser.role === "Admin" &&
+        location.pathname !== "/users" &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={() => navigate("/users")} disabled={error}>
+            All users
+          </button>
+        )}
+      {currentUser &&
+        currentUser.role === "Admin" &&
+        location.pathname !== "/newAd" &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={renderCreateAdPage} disabled={error}>
+            Create new Ad
+          </button>
+        )}
+      {!currentUser &&
+        location.pathname !== "/register" &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={() => navigate("/register")} disabled={error}>
+            Register
+          </button>
+        )}
+      {!currentUser &&
+        location.pathname !== "/login" &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={() => navigate("/login")} disabled={error}>
+            Login
+          </button>
+        )}
+      {currentUser &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isAGameStarted &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={handleLogout} disabled={error}>
+            Logout
+          </button>
+        )}
+      {isLoggingOut && (
         <div>
           <div>Are you sure you want to logout?</div>
           <div>
@@ -100,12 +175,15 @@ export default function Navbar({
             <button onClick={handleLogoutNo}>No</button>
           </div>
         </div>
-      }
+      )}
       <Routes>
         <Route
           path="/newAd"
           element={
-            <ProtectedRoute currentUser={currentUser} isAuthChecked={isAuthChecked}>
+            <ProtectedRoute
+              currentUser={currentUser}
+              isAuthChecked={isAuthChecked}
+            >
               <AdForm
                 error={error}
                 setError={setError}
@@ -114,6 +192,7 @@ export default function Navbar({
                   setAds((currAds) => [newAd, ...currAds]);
                 }}
                 setFlash={setFlash}
+                setIsCreatingAd={setIsCreatingAd}
               />
             </ProtectedRoute>
           }

@@ -18,6 +18,7 @@ function App() {
   const [error, setError] = useState(null);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isCreatingAd, setIsCreatingAd] = useState(false);
   const [isAdEditing, setIsAdEditing] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isAGameStarted, setIsAGameStarted] = useState(false);
@@ -85,6 +86,8 @@ function App() {
           setFlash={setFlash}
           isProfileEditing={isProfileEditing}
           isAdEditing={isAdEditing}
+          isCreatingAd={isCreatingAd}
+          setIsCreatingAd={setIsCreatingAd}
         />
         <Routes>
           {!isLoggingOut && (
