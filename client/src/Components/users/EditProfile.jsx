@@ -11,6 +11,13 @@ export default function EditProfile({ setCurrentUser, setFlash }) {
   const [passwordMatch, setPasswordMatch] = useState(null);
   const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
+  const [newPasswordStrenghtStatus, setNewPasswordStrenghtStatus] = useState({
+    length: false,
+    upper: false,
+    lower: false,
+    number: false,
+  });
+
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await fetch("/users/profile", {
@@ -22,6 +29,54 @@ export default function EditProfile({ setCurrentUser, setFlash }) {
     };
     fetchProfile();
   }, []);
+  useEffect(() => {
+    checkPassword(newPassword);
+  }, [newPassword]);
+  // We check if the password is strong or not, both in Back-End and Front-End:
+  const isStrongPassword = (password) => {
+    if (password.length < 8) return false;
+    let hasUpper = false;
+    let hasLower = false;
+    let hasNumber = false;
+    for (let char of password) {
+      if (char >= "A" && char <= "Z") hasUpper = true;
+      else if (char >= "a" && char <= "z") hasLower = true;
+      else if (char >= "0" && char <= "9") hasNumber = true;
+    }
+    return hasUpper && hasLower && hasNumber;
+  };
+  // Checking if each character of the password has one of the
+  // conditions of a strong password:
+  const checkPassword = (password) => {
+    setNewPasswordStrenghtStatus({
+      length: false,
+      upper: false,
+      lower: false,
+      number: false,
+    });
+    for (let char of password) {
+      if (char >= "A" && char <= "Z")
+        setNewPasswordStrenghtStatus((currNewPasswordStrenghtStatus) => ({
+          ...currNewPasswordStrenghtStatus,
+          upper: true,
+        }));
+      else if (char >= "a" && char <= "z")
+        setNewPasswordStrenghtStatus((currNewPasswordStrenghtStatus) => ({
+          ...currNewPasswordStrenghtStatus,
+          lower: true,
+        }));
+      else if (char >= "0" && char <= "9")
+        setNewPasswordStrenghtStatus((currNewPasswordStrenghtStatus) => ({
+          ...currNewPasswordStrenghtStatus,
+          number: true,
+        }));
+    }
+    if (password.length >= 8)
+      setNewPasswordStrenghtStatus((currNewPasswordStrenghtStatus) => ({
+        ...currNewPasswordStrenghtStatus,
+        length: true,
+      }));
+  };
   const handleProfileUpdate = async (e) => {
   e.preventDefault();
  // If there's already an error, we don't need it now because it's been already handled
@@ -32,6 +87,10 @@ export default function EditProfile({ setCurrentUser, setFlash }) {
     // Either all the <input /> tags should be filled or empty:
     if (!currentPassword || !newPassword || !confirmNewPassword) {
       setPasswordError("Please either fill all password fields or leave all empty");
+      return;
+    }
+    if (!isStrongPassword(newPassword)) {
+      setError("Your new password should be strong!");
       return;
     }
     // Confirming the new password:
@@ -151,6 +210,20 @@ export default function EditProfile({ setCurrentUser, setFlash }) {
             checkPasswordMatch(newPassword, value);
           }}
         />
+        <div>
+          <div style={{ color: newPasswordStrenghtStatus.length ? "green" : "pink" }}>
+            {newPasswordStrenghtStatus.length ? "✔" : "✖"} at least 8 characters
+          </div>
+          <div style={{ color: newPasswordStrenghtStatus.upper ? "green" : "pink" }}>
+            {newPasswordStrenghtStatus.upper ? "✔" : "✖"} one uppercase letter
+          </div>
+          <div style={{ color: newPasswordStrenghtStatus.lower ? "green" : "pink" }}>
+            {newPasswordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
+          </div>
+          <div style={{ color: newPasswordStrenghtStatus.number ? "green" : "pink" }}>
+            {newPasswordStrenghtStatus.number ? "✔" : "✖"} one number
+          </div>
+        </div>
         <button type="submit">Save Changes</button>
         {newPassword && confirmNewPassword && passwordMatch === true && (
           <p style={{ color: "green" }}>✔ New passwords match</p>

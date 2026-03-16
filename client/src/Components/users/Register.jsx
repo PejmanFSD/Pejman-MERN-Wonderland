@@ -147,16 +147,16 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
         />
       </div>
       <div>
-        <div style={{ color: passwordStrenghtStatus.length ? "green" : "red" }}>
+        <div style={{ color: passwordStrenghtStatus.length ? "green" : "pink" }}>
           {passwordStrenghtStatus.length ? "✔" : "✖"} at least 8 characters
         </div>
-        <div style={{ color: passwordStrenghtStatus.upper ? "green" : "red" }}>
+        <div style={{ color: passwordStrenghtStatus.upper ? "green" : "pink" }}>
           {passwordStrenghtStatus.upper ? "✔" : "✖"} one uppercase letter
         </div>
-        <div style={{ color: passwordStrenghtStatus.lower ? "green" : "red" }}>
+        <div style={{ color: passwordStrenghtStatus.lower ? "green" : "pink" }}>
           {passwordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
         </div>
-        <div style={{ color: passwordStrenghtStatus.number ? "green" : "red" }}>
+        <div style={{ color: passwordStrenghtStatus.number ? "green" : "pink" }}>
           {passwordStrenghtStatus.number ? "✔" : "✖"} one number
         </div>
       </div>

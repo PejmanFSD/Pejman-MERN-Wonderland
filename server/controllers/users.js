@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const isStrongPassword = require('../utils/isStrongPassword.js');
 const bcrypt = require("bcrypt");
 
 module.exports.index = async (req, res) => {
@@ -112,6 +113,12 @@ module.exports.changePassword = async (req, res) => {
       message: "New password must be different from current password",
     });
   }
+  // Checking if the password is strong:
+    if (!isStrongPassword(newPassword)) {
+      return res.status(400).json({
+        error: "Your new password should be strong!"
+      });
+    }
   // Update password (We don't have to hash the password because in model it's
   // automatically hashed with ".pre" keyword)
   user.password = newPassword;
