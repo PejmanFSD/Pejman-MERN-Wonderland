@@ -20,6 +20,7 @@ function App() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isAGameStarted, setIsAGameStarted] = useState(false);
+  const [isProfileEditing, setIsProfileEditing] = useState(false);
   const [youShouldLoginMessage, setYouShouldLoginMessage] = useState(false);
   const [userCount, setUserCount] = useState(null);
   const [flash, setFlash] = useState(null);
@@ -81,6 +82,7 @@ function App() {
           userCount={userCount}
           setUserCount={setUserCount}
           setFlash={setFlash}
+          isProfileEditing={isProfileEditing}
         />
         <Routes>
           {!isLoggingOut && (
@@ -114,6 +116,7 @@ function App() {
                   currentUser={currentUser}
                   error={error}
                   setError={setError}
+                  setIsProfileEditing={setIsProfileEditing}
                 />
               </ProtectedRoute>
             }
@@ -128,6 +131,7 @@ function App() {
                 <EditProfile
                   setCurrentUser={setCurrentUser}
                   setFlash={setFlash}
+                  setIsProfileEditing={setIsProfileEditing}
                 />
               </ProtectedRoute>
             }

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function EditProfile({ setCurrentUser, setFlash }) {
+export default function EditProfile({ setCurrentUser, setFlash, setIsProfileEditing }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
@@ -146,6 +146,7 @@ export default function EditProfile({ setCurrentUser, setFlash }) {
   // the "currentUser" we don't need the first pair (whose key is "message")
   // we just have to fetch the value of the second key("user")
   setFlash(updatedUser.message);
+  setIsProfileEditing(false);
   navigate("/profile");
 };
   const checkPasswordMatch = (password, confirmPassword) => {
@@ -160,6 +161,7 @@ export default function EditProfile({ setCurrentUser, setFlash }) {
     }
   };
   const cancelSubmit = () => {
+    setIsProfileEditing(false);
     navigate("/profile");
   };
   return (

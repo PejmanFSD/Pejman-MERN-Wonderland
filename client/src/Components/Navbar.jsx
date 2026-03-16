@@ -27,7 +27,8 @@ export default function Navbar({
   setIsAGameStarted,
   userCount,
   setUserCount,
-  setFlash
+  setFlash,
+  isProfileEditing
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -71,25 +72,25 @@ export default function Navbar({
       <div>Total users: {userCount}</div>
       {currentUser && !isLoggingOut && !isAGameStarted && <div>Welcome, {currentUser.username}!</div>}
       {/* "location.pathname" is the path of the current page */}
-      {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && (
+      {currentUser && location.pathname !== '/profile' && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && (
         <button onClick={() => navigate('/profile')} disabled={error}>My Profile</button>
       )}
-      {location.pathname !== "/" && !isLoggingOut && !isDeleting && !isAGameStarted && (
+      {location.pathname !== "/" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && (
         <button onClick={() => navigate("/")} disabled={error}>Home Page</button>
       )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && !isLoggingOut && !isDeleting && !isAGameStarted && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/users" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && (
         <button onClick={() => navigate("/users")} disabled={error}>All users</button>
       )}
-      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && !isLoggingOut && !isDeleting && !isAGameStarted && (
+      {currentUser && currentUser.role === "Admin" && location.pathname !== "/newAd" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && (
         <button onClick={() => navigate("/newAd")} disabled={error}>Create new Ad</button>
       )}
-      {!currentUser && location.pathname !== "/register" && !isLoggingOut && !isDeleting && !isAGameStarted && (
+      {!currentUser && location.pathname !== "/register" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && (
         <button onClick={() => navigate("/register")} disabled={error}>Register</button>
       )}
-      {!currentUser && location.pathname !== "/login" && !isLoggingOut && !isDeleting && !isAGameStarted && (
+      {!currentUser && location.pathname !== "/login" && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && (
         <button onClick={() => navigate("/login")} disabled={error}>Login</button>
       )}
-      {currentUser && !isLoggingOut && !isDeleting && !isAGameStarted && <button onClick={handleLogout} disabled={error}>Logout</button>}
+      {currentUser && !isLoggingOut && !isDeleting && !isAGameStarted && !isProfileEditing && <button onClick={handleLogout} disabled={error}>Logout</button>}
       {isLoggingOut &&
         <div>
           <div>Are you sure you want to logout?</div>
