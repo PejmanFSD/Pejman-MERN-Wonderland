@@ -196,7 +196,7 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
           />
         )}
       </div>
-      <button disabled={password !== confirmPassword}>Sign Up</button>
+      <button disabled={password !== confirmPassword || username === "" || password === "" || message === ""}>Sign Up</button>
       {password && confirmPassword && password !== confirmPassword && (
         <p style={{ color: "pink" }}>✖ Passwords do not match</p>
       )}
