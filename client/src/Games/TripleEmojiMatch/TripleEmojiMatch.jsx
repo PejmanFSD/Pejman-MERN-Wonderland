@@ -20,10 +20,11 @@ export default function TripleEmojiMatch({
   const [tripleMatch, setTripleMatch] = useState(false);
   const [isWin, setIsWin] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [seconds, setSeconds] = useState(1200);
+  const [seconds, setSeconds] = useState(720);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [addTimeChanse, setAddTimeChanse] = useState(true);
 
   const runEasyMode = () => {
     setEmojis(currEmojis => shuffleArray(currEmojis));
@@ -53,7 +54,8 @@ export default function TripleEmojiMatch({
     setEmojis(currEmojis => shuffleArray(currEmojis));
     setSelectedEmojis(selectedEmojisArray);
     setTripleMatch(false);
-    setSeconds(1200);
+    setSeconds(720);
+    setAddTimeChanse(true);
     setIsTimerRunning(true);
     setIsTogglingReset(false);
     setIsTogglingHomePage(false);
@@ -107,6 +109,10 @@ export default function TripleEmojiMatch({
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
+  const add30Seconds = () => {
+    setSeconds((currSeconds) => currSeconds + 30);
+    setAddTimeChanse(false);
+  }
   useEffect(() => {
     setSelectedEmojis((currSelectedEmojis) =>
       currSelectedEmojis.map((emoji) => ({ ...emoji, repetitionNum: 0 })),
@@ -196,7 +202,7 @@ export default function TripleEmojiMatch({
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: Find all the matches in 1200 seconds. You will get one star if you win." />
+          <ModeExplaination message="Normal Mode: Find all the matches in 720 seconds. You will get one star if you win." />
         )
       )}
       {isTimerRunning && isWin === "" && normalMode && (
@@ -255,6 +261,13 @@ export default function TripleEmojiMatch({
               onClick={() => toggleLevel()}
             >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
           </div>
+        )}
+        {normalMode &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
+        isWin === "" && (
+          <button onClick={add30Seconds} disabled={!addTimeChanse}>add 30 seconds</button>
         )}
       {isTogglingLevel && isWin === "" && (
         <div>
