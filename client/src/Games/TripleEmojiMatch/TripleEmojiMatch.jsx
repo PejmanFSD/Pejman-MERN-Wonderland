@@ -320,6 +320,7 @@ export default function TripleEmojiMatch({
                 setSelectedEmojis={setSelectedEmojis}
                 tripleMatch={tripleMatch}
                 isWin={isWin}
+                isSelected={true}
               />
             ))}
           </div>
@@ -380,6 +381,7 @@ export default function TripleEmojiMatch({
                 setSelectedEmojis={setSelectedEmojis}
                 tripleMatch={tripleMatch}
                 isWin={isWin}
+                isSelected={false}
               />
             ))}
           </div>

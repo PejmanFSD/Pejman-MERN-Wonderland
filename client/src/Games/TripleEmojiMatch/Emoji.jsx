@@ -8,7 +8,8 @@ export default function Emoji({
   selectedEmojis,
   setSelectedEmojis,
   tripleMatch,
-  isWin
+  isWin,
+  isSelected
 }) {
   const handleClickEmoji = () => {
     setEmojis((currEmojis) =>
@@ -42,7 +43,7 @@ export default function Emoji({
           width: "30px",
           border: "1px solid black",
           marginLeft: "4px",
-          pointerEvents: imgSrc === E00 || tripleMatch || isWin !== "" ? "none" : "",
+          pointerEvents: imgSrc === E00 || tripleMatch || isWin !== "" || isSelected ? "none" : "",
           opacity: tripleMatch || isWin !== "" ? 0.5 : 1
         }}
         onClick={handleClickEmoji}
