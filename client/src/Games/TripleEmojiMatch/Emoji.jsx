@@ -9,7 +9,9 @@ export default function Emoji({
   setSelectedEmojis,
   tripleMatch,
   isWin,
-  isSelected
+  isSelected,
+  pair1ChoseEmoji,
+  setAvailableEmojis
 }) {
   const handleClickEmoji = () => {
     setEmojis((currEmojis) =>
@@ -41,7 +43,11 @@ export default function Emoji({
         src={imgSrc}
         style={{
           width: "30px",
-          border: "1px solid black",
+          border:
+          pair1ChoseEmoji && imgSrc === pair1ChoseEmoji.image ?
+          "5px solid black" :
+          "1px solid black",
+          boxSizing: "border-box",
           marginLeft: "4px",
           pointerEvents: imgSrc === E00 || tripleMatch || isWin !== "" || isSelected ? "none" : "",
           opacity: tripleMatch || isWin !== "" ? 0.5 : 1

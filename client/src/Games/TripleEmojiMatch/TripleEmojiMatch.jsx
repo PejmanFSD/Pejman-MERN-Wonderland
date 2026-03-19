@@ -5,6 +5,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import { emojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
+import {getRandArr} from "../utils";
 
 export default function TripleEmojiMatch({
   updateTotalPoint,
@@ -25,6 +26,9 @@ export default function TripleEmojiMatch({
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [addTimeChanse, setAddTimeChanse] = useState(true);
+  const [availableEmojis, setAvailableEmojis] = useState([]);
+  const [pair1Chance, setPair1Chance] = useState(true);
+  const [pair1ChoseEmoji, setPair1ChoseEmoji] = useState(null);
 
   const runEasyMode = () => {
     setEmojis(currEmojis => shuffleArray(currEmojis));
@@ -56,11 +60,20 @@ export default function TripleEmojiMatch({
     setTripleMatch(false);
     setSeconds(720);
     setAddTimeChanse(true);
+    setAvailableEmojis([]);
+    setPair1Chance(true);
+    setPair1ChoseEmoji(null);
+    setAvailableEmojis([]);
     setIsTimerRunning(true);
     setIsTogglingReset(false);
     setIsTogglingHomePage(false);
     setIsTogglingLevel(false);
     setIsWin("");
+    for (const emoji of emojis) {
+      if (!emoji.isSelected) {
+        setAvailableEmojis(currAvailableEmojis => [...currAvailableEmojis, emoji]);
+      }
+    }
   };
   const shuffleArray = (array) => {
     const newArray = [...array];
@@ -113,6 +126,17 @@ export default function TripleEmojiMatch({
     setSeconds((currSeconds) => currSeconds + 30);
     setAddTimeChanse(false);
   }
+  const showPair1 = () => {
+    setPair1ChoseEmoji(getRandArr(availableEmojis));
+    setPair1Chance(false);
+  }
+  useEffect(() => {
+    for (const emoji of emojis) {
+      if (emoji.image !== E00) {
+        setAvailableEmojis(currAvailableEmojis => [...currAvailableEmojis, emoji]);
+      }
+    }
+  }, [pair1Chance]);
   useEffect(() => {
     setSelectedEmojis((currSelectedEmojis) =>
       currSelectedEmojis.map((emoji) => ({ ...emoji, repetitionNum: 0 })),
@@ -183,6 +207,7 @@ export default function TripleEmojiMatch({
   }, [seconds]);
   return (
     <div>
+      <div>pair1ChoseEmoji: {pair1ChoseEmoji && pair1ChoseEmoji.image}</div>
       <h2>Triple Emoji Match</h2>
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
@@ -269,6 +294,13 @@ export default function TripleEmojiMatch({
         isWin === "" && (
           <button onClick={add30Seconds} disabled={!addTimeChanse}>add 30 seconds</button>
         )}
+        {(normalMode || easyMode) &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel &&
+        isWin === "" && !tripleMatch && (
+          <button onClick={showPair1} disabled={!pair1Chance}>Show me a pair</button>
+        )}
       {isTogglingLevel && isWin === "" && (
         <div>
           <ConfirmationBox
@@ -321,6 +353,7 @@ export default function TripleEmojiMatch({
                 tripleMatch={tripleMatch}
                 isWin={isWin}
                 isSelected={true}
+                setAvailableEmojis={setAvailableEmojis}
               />
             ))}
           </div>
@@ -382,6 +415,8 @@ export default function TripleEmojiMatch({
                 tripleMatch={tripleMatch}
                 isWin={isWin}
                 isSelected={false}
+                pair1ChoseEmoji={pair1ChoseEmoji}
+                setAvailableEmojis={setAvailableEmojis}
               />
             ))}
           </div>
