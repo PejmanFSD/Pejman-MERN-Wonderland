@@ -11,7 +11,7 @@ export default function Emoji({
   isWin,
   isSelected,
   pair1ChoseEmoji,
-  setAvailableEmojis
+  pair2ChoseEmoji,
 }) {
   const handleClickEmoji = () => {
     setEmojis((currEmojis) =>
@@ -44,13 +44,18 @@ export default function Emoji({
         style={{
           width: "30px",
           border:
-          pair1ChoseEmoji && imgSrc === pair1ChoseEmoji.image ?
-          "5px solid black" :
-          "1px solid black",
+            pair1ChoseEmoji && imgSrc === pair1ChoseEmoji.image
+              ? "5px solid black"
+              : pair2ChoseEmoji && imgSrc === pair2ChoseEmoji.image
+                ? "5px dashed black"
+                : "1px solid black",
           boxSizing: "border-box",
           marginLeft: "4px",
-          pointerEvents: imgSrc === E00 || tripleMatch || isWin !== "" || isSelected ? "none" : "",
-          opacity: tripleMatch || isWin !== "" ? 0.5 : 1
+          pointerEvents:
+            imgSrc === E00 || tripleMatch || isWin !== "" || isSelected
+              ? "none"
+              : "",
+          opacity: tripleMatch || isWin !== "" ? 0.5 : 1,
         }}
         onClick={handleClickEmoji}
       />
