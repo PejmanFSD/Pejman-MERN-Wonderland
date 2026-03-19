@@ -78,7 +78,7 @@ export default function Navbar({
       <div>
         <strong>Pejman MERN Wonderland</strong>
       </div>
-      <div>Total users: {userCount}</div>
+      <div>Number of registered users: {userCount}</div>
       {currentUser && !isLoggingOut && !isAGameStarted && (
         <div>Welcome, {currentUser.username}!</div>
       )}

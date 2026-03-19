@@ -10,7 +10,6 @@ export default function TripleEmojiMatch({
   updateTotalPoint,
   setShowTripleEmojiMatch,
   setShowGameTitles,
-  isAGameStarted,
   setIsAGameStarted
 }) {
   const [easyMode, setEasyMode] = useState(false);
@@ -353,7 +352,7 @@ export default function TripleEmojiMatch({
               position: "relative",
               top: "15px",
               display: "grid",
-              gridTemplateColumns: "repeat(20, auto)",
+              gridTemplateColumns: "repeat(21, auto)",
               justifyContent: "center",
             }}
           >

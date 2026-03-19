@@ -1,5 +1,4 @@
 import E00 from "./images/000.jpg";
-import Skull from "./images/Skull.jpg";
 
 export default function Emoji({
   imgId,

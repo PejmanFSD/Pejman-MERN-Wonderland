@@ -214,7 +214,7 @@ export default function Home({
       {!isAGameStarted &&
       <div>
         <div>The top 10 users with highest stars</div>
-      <table border="2" cellPadding="5">
+      <table border="2" cellPadding="5" style={{position: "relative", top: "5px"}}>
         <thead style={{height: "5px"}}>
           <tr>
             <th style={{ width: "5%", fontSize: "13px" }}>Ranking</th>
@@ -242,13 +242,13 @@ export default function Home({
             currentUser?.totalPoint === 0 &&
             "You don't have any stars, play the interesting games and win some!"}
         </div>
-        <div>
+        <div style={{position: "relative", top: "5px"}}>
           {currentUser &&
             currentUser?.totalPoint > 0 &&
             `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
         </div>
         {currentUser?.totalPoint <= 5 && !isAGameStarted && (
-          <div>
+          <div style={{position: "relative", top: "5px"}}>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
                 src={Star}
@@ -260,7 +260,7 @@ export default function Home({
           </div>
         )}
         {!showAllStars && currentUser?.totalPoint > 5 && !isAGameStarted && (
-          <div>
+          <div style={{position: "relative", top: "5px"}}>
             {new Array(5).fill(null).map((i) => (
               <img
                 src={Star}
@@ -275,7 +275,7 @@ export default function Home({
           </div>
         )}
         {showAllStars && currentUser?.totalPoint > 5 && !isAGameStarted && (
-          <div>
+          <div style={{position: "relative", top: "5px"}}>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
                 src={Star}
@@ -302,7 +302,7 @@ export default function Home({
         showGameTitles &&
         !showRockScissorsPaper &&
         !isAGameStarted && (
-          <button onClick={() => toggleRockScissorsPaper()}>
+          <button onClick={() => toggleRockScissorsPaper()} style={{position: "relative", top: "5px"}}>
             Rock - Scissors - Paper
           </button>
         )
@@ -319,7 +319,7 @@ export default function Home({
         showGameTitles &&
         !showGuessNumber &&
         !isAGameStarted && (
-          <button onClick={() => toggleGuessNumber()}>Guess Number</button>
+          <button onClick={() => toggleGuessNumber()} style={{position: "relative", top: "5px"}}>Guess Number</button>
         )
       )}
       {!showGameTitles && showCapitals && isAGameStarted ? (
@@ -334,7 +334,7 @@ export default function Home({
         showGameTitles &&
         !showCapitals &&
         !isAGameStarted && (
-          <button onClick={() => toggleCapitals()}>Capitals</button>
+          <button onClick={() => toggleCapitals()} style={{position: "relative", top: "5px"}}>Capitals</button>
         )
       )}
       {!showGameTitles && showCryptogram && isAGameStarted ? (
@@ -349,7 +349,7 @@ export default function Home({
         showGameTitles &&
         !showCryptogram &&
         !isAGameStarted && (
-          <button onClick={() => toggleCryptogram()}>Cryptogram</button>
+          <button onClick={() => toggleCryptogram()} style={{position: "relative", top: "5px"}}>Cryptogram</button>
         )
       )}
       {!showGameTitles && showCrazy100 && isAGameStarted ? (
@@ -364,7 +364,7 @@ export default function Home({
         showGameTitles &&
         !showCrazy100 &&
         !isAGameStarted && (
-          <button onClick={() => toggleCrazy100()}>Crazy-100</button>
+          <button onClick={() => toggleCrazy100()} style={{position: "relative", top: "5px"}}>Crazy-100</button>
         )
       )}
       {!showGameTitles && showMemoryCards && isAGameStarted ? (
@@ -379,7 +379,7 @@ export default function Home({
         showGameTitles &&
         !showMemoryCards &&
         !isAGameStarted && (
-          <button onClick={() => toggleMemoryCards()}>Memory Cards</button>
+          <button onClick={() => toggleMemoryCards()} style={{position: "relative", top: "5px"}}>Memory Cards</button>
         )
       )}
       {!showGameTitles && showNim && isAGameStarted ? (
@@ -393,7 +393,7 @@ export default function Home({
       ) : (
         showGameTitles &&
         !showNim &&
-        !isAGameStarted && <button onClick={() => toggleNim()}>Nim</button>
+        !isAGameStarted && <button onClick={() => toggleNim()} style={{position: "relative", top: "5px"}}>Nim</button>
       )}
       {!showGameTitles && showHappyFlower && isAGameStarted ? (
         <HappyFlower
@@ -407,7 +407,7 @@ export default function Home({
         showGameTitles &&
         !showHappyFlower &&
         !isAGameStarted && (
-          <button onClick={() => toggleHappyFlower()}>Happy Flower</button>
+          <button onClick={() => toggleHappyFlower()} style={{position: "relative", top: "5px"}}>Happy Flower</button>
         )
       )}
       {!showGameTitles && showXO && isAGameStarted ? (
@@ -421,7 +421,7 @@ export default function Home({
       ) : (
         showGameTitles &&
         !showXO &&
-        !isAGameStarted && <button onClick={() => toggleXO()}>X-O</button>
+        !isAGameStarted && <button onClick={() => toggleXO()} style={{position: "relative", top: "5px"}}>X-O</button>
       )}
       {!showGameTitles && showKukuKube && isAGameStarted ? (
         <KukuKube
@@ -435,7 +435,7 @@ export default function Home({
         showGameTitles &&
         !showKukuKube &&
         !isAGameStarted && (
-          <button onClick={() => toggleKukuKube()}>Kuku Kube</button>
+          <button onClick={() => toggleKukuKube()} style={{position: "relative", top: "5px"}}>Kuku Kube</button>
         )
       )}
       {!showGameTitles && showTripleEmojiMatch && isAGameStarted ? (
@@ -450,7 +450,7 @@ export default function Home({
         showGameTitles &&
         !showTripleEmojiMatch &&
         !isAGameStarted && (
-          <button onClick={() => toggleTripleEmojiMatch()}>
+          <button onClick={() => toggleTripleEmojiMatch()} style={{position: "relative", top: "5px"}}>
             Triple Emoji Match
           </button>
         )
@@ -467,7 +467,7 @@ export default function Home({
         showGameTitles &&
         !showPidoku &&
         !isAGameStarted && (
-          <button onClick={() => togglePidoku()}>Pidoku</button>
+          <button onClick={() => togglePidoku()} style={{position: "relative", top: "5px"}}>Pidoku</button>
         )
       )}
     </div>

@@ -68,30 +68,20 @@ import E67 from "./images/067.jpg";
 import E68 from "./images/068.jpg";
 import E69 from "./images/069.jpg";
 import E70 from "./images/070.jpg";
-import E71 from "./images/071.jpg";
-import E72 from "./images/072.jpg";
-import E73 from "./images/073.jpg";
-import E74 from "./images/074.jpg";
-import E75 from "./images/075.jpg";
-import E76 from "./images/076.jpg";
-import E77 from "./images/077.jpg";
-import E78 from "./images/078.jpg";
-import E79 from "./images/079.jpg";
-import E80 from "./images/080.jpg";
 
 const emojiPics = [
   E01, E02, E03, E04, E05, E06, E07, E08, E09, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20,
   E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32, E33, E34, E35, E36, E37, E38, E39, E40,
   E41, E42, E43, E44, E45, E46, E47, E48, E49, E50, E51, E52, E53, E54, E55, E56, E57, E58, E59, E60,
-  E61, E62, E63, E64, E65, E66, E67, E68, E69, E70, E71, E72, E73, E74, E75, E76, E77, E78, E79, E80,
+  E61, E62, E63, E64, E65, E66, E67, E68, E69, E70,
   E01, E02, E03, E04, E05, E06, E07, E08, E09, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20,
   E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32, E33, E34, E35, E36, E37, E38, E39, E40,
   E41, E42, E43, E44, E45, E46, E47, E48, E49, E50, E51, E52, E53, E54, E55, E56, E57, E58, E59, E60,
-  E61, E62, E63, E64, E65, E66, E67, E68, E69, E70, E71, E72, E73, E74, E75, E76, E77, E78, E79, E80,
+  E61, E62, E63, E64, E65, E66, E67, E68, E69, E70,
   E01, E02, E03, E04, E05, E06, E07, E08, E09, E10, E11, E12, E13, E14, E15, E16, E17, E18, E19, E20,
   E21, E22, E23, E24, E25, E26, E27, E28, E29, E30, E31, E32, E33, E34, E35, E36, E37, E38, E39, E40,
   E41, E42, E43, E44, E45, E46, E47, E48, E49, E50, E51, E52, E53, E54, E55, E56, E57, E58, E59, E60,
-  E61, E62, E63, E64, E65, E66, E67, E68, E69, E70, E71, E72, E73, E74, E75, E76, E77, E78, E79, E80
+  E61, E62, E63, E64, E65, E66, E67, E68, E69, E70
 ];
 
 export { emojiPics };
