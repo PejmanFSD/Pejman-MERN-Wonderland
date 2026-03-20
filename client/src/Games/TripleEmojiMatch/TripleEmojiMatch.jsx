@@ -37,6 +37,14 @@ export default function TripleEmojiMatch({
     setEasyMode(true);
     setNormalMode(false);
     setIsGameStarted(true);
+        for (const emoji of emojis) {
+      if (!emoji.isSelected) {
+        setAvailableEmojis((currAvailableEmojis) => [
+          ...currAvailableEmojis,
+          emoji,
+        ]);
+      }
+    }
   };
   const runNormalMode = () => {
     setEmojis((currEmojis) => shuffleArray(currEmojis));
@@ -44,6 +52,14 @@ export default function TripleEmojiMatch({
     setEasyMode(false);
     setIsGameStarted(true);
     setIsTimerRunning(true);
+        for (const emoji of emojis) {
+      if (!emoji.isSelected) {
+        setAvailableEmojis((currAvailableEmojis) => [
+          ...currAvailableEmojis,
+          emoji,
+        ]);
+      }
+    }
   };
   const handleTripleMatch = () => {
     setSelectedEmojis((currSelectedEmojis) =>
@@ -141,15 +157,16 @@ export default function TripleEmojiMatch({
     setPair2Chance(false);
   };
   useEffect(() => {
+    setAvailableEmojis([]);
     for (const emoji of emojis) {
-      if (emoji.image !== E00) {
+      if (!emoji.isSelected) {
         setAvailableEmojis((currAvailableEmojis) => [
           ...currAvailableEmojis,
           emoji,
         ]);
       }
     }
-  }, [pair1Chance, pair2Chance]);
+  }, [emojis]);
   useEffect(() => {
     setSelectedEmojis((currSelectedEmojis) =>
       currSelectedEmojis.map((emoji) => ({ ...emoji, repetitionNum: 0 })),
