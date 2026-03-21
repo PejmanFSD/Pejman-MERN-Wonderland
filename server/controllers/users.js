@@ -6,8 +6,25 @@ module.exports.index = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // For Pagination
   const limit = 5; // We'll have 5 users per page
   const skip = (page - 1) * limit; // The number of the user where we should go to a new page
-  const totalUsers = await User.countDocuments();
+  const search = req.query.search || "";
+    // Search filter
+  const matchStage = search
+    ? { // If the "search" variable exists (if anything is typed inside the <input /> tag of searching):
+        $match: {
+          // live search filtering + case-insensitive:
+          username: { $regex: "^" + search, $options: "i" }
+        }
+      }
+    : { // If there's no "search" variable (if the admin types something inside the <input /> tag of searching):
+      $match: {}
+    };
+  const totalUsers = await User.countDocuments(
+    search
+      ? { username: { $regex: "^" + search, $options: "i" } } // case-insensitive:
+      : {}
+  );
   const users = await User.aggregate([
+    matchStage,
     {
       // Creating a new temporary field called priority:
       $addFields: {
@@ -37,8 +54,6 @@ module.exports.index = async (req, res) => {
       $project: { priority: 0 },
     },
   ]);
-  // console.log("all users: ", users);
-  // res.render('users/index', {users});
   res.json({
     users,
     totalPages: Math.ceil(totalUsers / limit),

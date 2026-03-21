@@ -8,26 +8,26 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
   const [deletingUser, setDeletingUser] = useState(null);
   // For pagination:
   const [totalPages, setTotalPages] = useState(1);
+  // For searching a specific user:
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await fetch(`/users?page=${page}`, { // `/users?page=${page}` is the new path for pagination.
-        // Before pagination it was "users"
-        credentials: "include",
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error || "Something went wrong");
-        return;
-      }
+  const fetchUsers = async (page = 1, search = "") => {
+    const response = await fetch(`/users?page=${page}&search=${search}`, { // `/users?page=${page}` is the new path for pagination.
+      // Before pagination it was "users"
+      credentials: "include",
+    });
+    if (!response.ok) {
       const data = await response.json();
-      console.log("DATA FROM SERVER:", data);
-      setUsers(data.users);
-      setTotalPages(data.totalPages);
-    };
-    fetchUsers(); // Refetching when "page" changes
-  }, [page]);
+      setError(data.error || "Something went wrong");
+      return;
+    }
+    const data = await response.json();
+    setUsers(data.users);
+    setTotalPages(data.totalPages);
+  };
+  useEffect(() => {
+    fetchUsers(page, search);
+  }, [page, search]); // Execute the "" function whenever "page" or "search" change.
   const handleOk = () => {
     navigate(-1);
     setError(null);
@@ -64,6 +64,15 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
   }
   return (
     <div>
+      <input
+        type="text"
+        placeholder="Search user..."
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setPage(1);
+        }}
+      />
       <table border="1" cellPadding="10" style={{width: "90%"}}>
         <thead>
           <tr>
