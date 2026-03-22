@@ -15,6 +15,7 @@ import XO from "./Games/XO/XO";
 import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
+import Counter from "./Games/Counter/Counter";
 
 export default function Home({
   ads,
@@ -45,6 +46,7 @@ export default function Home({
   const [showKukuKube, setShowKukuKube] = useState(false);
   const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
+  const [showCounter, setShowCounter] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -201,6 +203,16 @@ export default function Home({
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowPidoku(true);
+  };
+  const toggleCounter = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    setShowGameTitles(false);
+    setIsAGameStarted(true);
+    setShowCounter(true);
   };
   return (
     <div>
@@ -468,6 +480,21 @@ export default function Home({
         !showPidoku &&
         !isAGameStarted && (
           <button onClick={() => togglePidoku()} style={{position: "relative", top: "5px"}}>Pidoku</button>
+        )
+      )}
+      {!showGameTitles && showCounter && isAGameStarted ? (
+        <Counter
+          setShowGameTitles={setShowGameTitles}
+          setShowCounter={setShowCounter}
+          updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
+        />
+      ) : (
+        showGameTitles &&
+        !showCounter &&
+        !isAGameStarted && (
+          <button onClick={() => toggleCounter()} style={{position: "relative", top: "5px"}}>Counter</button>
         )
       )}
     </div>
