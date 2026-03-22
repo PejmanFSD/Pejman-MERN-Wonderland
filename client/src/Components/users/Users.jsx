@@ -41,9 +41,6 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
       </div>
     );
   }
-  else if (!users || users.length === 0) {
-    return <p>No users available</p>;
-  }
   const handleDelete = (userId) => {
     setDeletingUser(userId);
     setIsDeleting(true);
@@ -73,6 +70,8 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
           setPage(1);
         }}
       />
+      {users.length === 0 || !users ?
+      <div>No users available</div> :
       <table border="1" cellPadding="10" style={{width: "90%"}}>
         <thead>
           <tr>
@@ -108,7 +107,8 @@ export default function Users({ users, setUsers, error, setError, isDeleting, se
           ))}
         </tbody>
       </table>
-      {!isDeleting &&
+      }
+      {!isDeleting && users && users.length > 0 &&
         <div style={{ marginTop: "20px" }}>
           <button disabled={page === 1} onClick={() => setPage(page - 1)}>
             Previous
