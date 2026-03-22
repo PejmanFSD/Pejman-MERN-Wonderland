@@ -8,7 +8,8 @@ const {isLoggedIn, isAuthor, isAdmin, handleUserErrors} = require('../middleware
 // router.get('/', isLoggedIn, catchAsync(users.index));
 router.get('/', isLoggedIn, isAdmin, catchAsync(users.index));
 
-router.get('/topUsers', catchAsync(users.topUsers));
+router.get('/topUsers', catchAsync(users.topUsers)); // Only the first top 10
+router.get('/topAllUsers', catchAsync(users.topAllUsers)); // All the users
 
 router.get('/profile', isLoggedIn, catchAsync(users.showUser));
 

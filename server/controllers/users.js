@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const isStrongPassword = require('../utils/isStrongPassword.js');
+const isStrongPassword = require("../utils/isStrongPassword.js");
 const bcrypt = require("bcrypt");
 
 module.exports.index = async (req, res) => {
@@ -7,21 +7,23 @@ module.exports.index = async (req, res) => {
   const limit = 5; // We'll have 5 users per page
   const skip = (page - 1) * limit; // The number of the user where we should go to a new page
   const search = req.query.search || "";
-    // Search filter
+  // Search filter
   const matchStage = search
-    ? { // If the "search" variable exists (if anything is typed inside the <input /> tag of searching):
+    ? {
+        // If the "search" variable exists (if anything is typed inside the <input /> tag of searching):
         $match: {
           // live search filtering + case-insensitive:
-          username: { $regex: "^" + search, $options: "i" }
-        }
+          username: { $regex: "^" + search, $options: "i" },
+        },
       }
-    : { // If there's no "search" variable (if the admin types something inside the <input /> tag of searching):
-      $match: {}
-    };
+    : {
+        // If there's no "search" variable (if the admin types something inside the <input /> tag of searching):
+        $match: {},
+      };
   const totalUsers = await User.countDocuments(
     search
       ? { username: { $regex: "^" + search, $options: "i" } } // case-insensitive:
-      : {}
+      : {},
   );
   const users = await User.aggregate([
     matchStage,
@@ -73,6 +75,29 @@ module.exports.topUsers = async (req, res) => {
     message: user.message,
   }));
   res.json(rankedUsers);
+};
+
+module.exports.topAllUsers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // For Pagination
+  const limit = 5; // We'll have 5 users per page
+  const skip = (page - 1) * limit; // The number of the user where we should go to a new page
+  const users = await User.aggregate([
+    { $sort: { totalPoint: -1 } },
+    { $skip: skip },
+    { $limit: limit }, // The number of users per page
+  ]);
+  const totalUsers = await User.countDocuments();
+  const totalPages = Math.ceil(totalUsers / limit);
+  const rankedAllUsers = users.map((user, index) => ({
+    username: user.username,
+    role: user.role,
+    totalPoint: user.totalPoint,
+    message: user.message,
+  }));
+  res.json({
+    users: rankedAllUsers,
+    totalPages,
+  });
 };
 
 module.exports.showUser = async (req, res) => {
@@ -129,11 +154,11 @@ module.exports.changePassword = async (req, res) => {
     });
   }
   // Checking if the password is strong:
-    if (!isStrongPassword(newPassword)) {
-      return res.status(400).json({
-        error: "Your new password should be strong!"
-      });
-    }
+  if (!isStrongPassword(newPassword)) {
+    return res.status(400).json({
+      error: "Your new password should be strong!",
+    });
+  }
   // Update password (We don't have to hash the password because in model it's
   // automatically hashed with ".pre" keyword)
   user.password = newPassword;
@@ -159,7 +184,8 @@ module.exports.updatePoints = async (req, res) => {
     );
     res.json({
       message: "Your stars are increased!",
-      user}); // Sending back the updated user (to Front-End)
+      user,
+    }); // Sending back the updated user (to Front-End)
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
