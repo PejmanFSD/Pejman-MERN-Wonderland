@@ -7,8 +7,10 @@ export default function Counter() {
     const [finalGameArray, setFinalGameArray] = useState([]);
     const [isGameStarted, setIsGameStarted] = useState(false);
     // Variables for the timer:
+    const [phase, setPhase] = useState("start"); // start -> 3 -> 2 -> 1 -> blank -> images -> ...
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [showImage, setShowImage] = useState(true); // A boolean to show/hide images
+    const [showImage, setShowImage] = useState(false); // A boolean to show/hide images
+    const [countdown, setCountdown] = useState(3); // Just for the first 3 numbers (3, 2, 1)
 
     const handleStart = () => {
         setIsGameStarted(true);
@@ -32,21 +34,28 @@ export default function Counter() {
         )))
     }, []);
     useEffect(() => {
-        let step = 0;
-
+        if (isGameStarted) {
+        let step = -1;
         const interval = setInterval(() => {
-            if (step % 2 === 0) {
-            setShowImage(true);
-            } else {
-            setShowImage(false);
-            setCurrentIndex(prev => prev + 1);
-            }
-
             step++;
+            // First second (step === 0) -> nothing
+            if (step === 0) setCountdown(3);
+            if (step === 1) setCountdown(2);
+            if (step === 2) setCountdown(1);
+            if (step === 3) setCountdown(-1);
+            if (step === 4) setCountdown(0);
+            if (step >= 5) {
+            setShowImage(prev => !prev); // Every other second, we see nothing
+                // For even seconds we see the images:
+            if (step % 2 === 0) {
+                setCurrentIndex(prev => prev + 1);
+            }
+            }
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
+}
+    }, [isGameStarted]);
     return (
         <div>
             <button onClick={handleStart}>Start the Game</button>
@@ -66,17 +75,13 @@ export default function Counter() {
                 />
             )}
             <br />
-            {showImage && finalGameArray[currentIndex] && (
-            <img
-                src={finalGameArray[currentIndex].image}
-                alt=""
-                style={{
-                    width: "80px",
-                    border: "1px solid black",
-                    margin: "5px"
-                }}
-            />
-            )}
+            <div>
+                {countdown > 0 && <h1>{countdown}</h1>}
+                {countdown === -1 && <h1>Go!</h1>}
+                {countdown === 0 && showImage && finalGameArray[currentIndex] && (
+                    <img src={finalGameArray[currentIndex].image} alt="" width="80px" />
+                )}
+            </div>
         </div>
     )
 }
