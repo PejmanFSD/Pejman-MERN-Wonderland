@@ -8,10 +8,16 @@ export default function Counter() {
   const [quizArray, setQuizArray] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isSlideShowStarted, setIsSlideShowStarted] = useState(false);
+  const [isResult, setIsResult] = useState(false);
   // Variables for the timer:
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showImage, setShowImage] = useState(false); // A boolean to show/hide images
   const [countdown, setCountdown] = useState(3); // Just for the first 3 numbers (3, 2, 1)
+  const [userAnswers, setUserAnswers] = useState({
+    answer1: "",
+    answer2: "",
+    answer3: "",
+  });
 
   const handleStart = () => {
     setIsGameStarted(true);
@@ -29,6 +35,31 @@ export default function Counter() {
     // permanent variable(finalGameArray):
     setFinalGameArray(shuffled);
     setIsSlideShowStarted(true);
+  };
+  const handleQuestion1 = (e) => {
+    const value = e.target.value;
+    setUserAnswers((currUserAnswers) => ({
+      ...currUserAnswers,
+      answer1: value,
+    }));
+  };
+  const handleQuestion2 = (e) => {
+    const value = e.target.value;
+    setUserAnswers((currUserAnswers) => ({
+      ...currUserAnswers,
+      answer2: value,
+    }));
+  };
+  const handleQuestion3 = (e) => {
+    const value = e.target.value;
+    setUserAnswers((currUserAnswers) => ({
+      ...currUserAnswers,
+      answer3: value,
+    }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsResult(true);
   };
   useEffect(() => {
     setGameArray((currGameArray) =>
@@ -56,20 +87,20 @@ export default function Counter() {
           }
         }
         // Stop when last image reached
-          if (step === 6 + 2 * finalGameArray.length) {
-            clearInterval(interval);
-            setIsSlideShowStarted(false);
-            return;
-          }
+        if (step === 6 + 2 * finalGameArray.length) {
+          clearInterval(interval);
+          setIsSlideShowStarted(false);
+          return;
+        }
       }, 100);
       return () => clearInterval(interval);
     }
   }, [isGameStarted]);
   useEffect(() => {
     if (!isSlideShowStarted) {
-        const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
-        const selected = shuffled.slice(0, 3);
-        setQuizArray(selected);
+      const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
+      const selected = shuffled.slice(0, 3);
+      setQuizArray(selected);
     }
   }, [isSlideShowStarted]);
   return (
@@ -92,25 +123,116 @@ export default function Counter() {
       ))}
       <br />
       <div>
-        {isGameStarted && isSlideShowStarted && countdown > 0 && <h1>{countdown}</h1>}
-        {isGameStarted && isSlideShowStarted && countdown === -1 && <h1>Go!</h1>}
-        {isGameStarted && isSlideShowStarted && countdown === 0 && showImage && finalGameArray[currentIndex] && (
-            <img
-                src={finalGameArray[currentIndex].image}
-                style={{
-                    width: "80px",
-                    border: "1px solid black",
-                    margin: "5px",
-                }}
-                alt=""
-                width="80px"
-            />
+        {isGameStarted && isSlideShowStarted && countdown > 0 && (
+          <h1>{countdown}</h1>
         )}
+        {isGameStarted && isSlideShowStarted && countdown === -1 && (
+          <h1>Go!</h1>
+        )}
+        {isGameStarted &&
+          isSlideShowStarted &&
+          countdown === 0 &&
+          showImage &&
+          finalGameArray[currentIndex] && (
+            <img
+              src={finalGameArray[currentIndex].image}
+              style={{
+                width: "80px",
+                border: "1px solid black",
+                margin: "5px",
+              }}
+              alt=""
+              width="80px"
+            />
+          )}
       </div>
-        {isGameStarted && !isSlideShowStarted && (
-            quizArray.map(i => <img src={i.image} style={{width: "60px", border: "1px solid red", margin: "4px"}} />)
-            )
-        }
+      {isGameStarted &&
+        !isSlideShowStarted &&
+        quizArray.map((i) => (
+          <div style={{ display: "inline" }}>
+            <img
+              src={i.image}
+              style={{ width: "60px", border: "1px solid red", margin: "4px" }}
+            />
+            <div style={{ display: "inline", color: "red" }}>
+              {i.repetition}
+            </div>
+            <div style={{ display: "inline", color: "blue" }}>{i.name}</div>
+          </div>
+        ))}
+      {isGameStarted && !isSlideShowStarted && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
+            <select onChange={handleQuestion1} name="question1" id="question1">
+              <option value={userAnswers.answer1} disabled selected>
+                {`Choose number of ${quizArray[0].name}`}
+              </option>
+              {[1, 2, 3].map((i) => (
+                <option>{i}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="question2">{`How many ${quizArray[1].name} did you see?`}</label>
+            <select onChange={handleQuestion2} name="question2" id="question2">
+              <option value={userAnswers.answer2} disabled selected>
+                {`Choose number of ${quizArray[1].name}`}
+              </option>
+              {[1, 2, 3].map((i) => (
+                <option>{i}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="question3">{`How many ${quizArray[2].name} did you see?`}</label>
+            <select onChange={handleQuestion3} name="question3" id="question3">
+              <option value={userAnswers.answer3} disabled selected>
+                {`Choose number of ${quizArray[2].name}`}
+              </option>
+              {[1, 2, 3].map((i) => (
+                <option>{i}</option>
+              ))}
+            </select>
+          </div>
+          <button>Submit</button>
+        </form>
+      )}
+      {isGameStarted && !isSlideShowStarted && (
+        <div>
+          <div>Answer1: {userAnswers.answer1}</div>
+          <div>Answer2: {userAnswers.answer2}</div>
+          <div>Answer3: {userAnswers.answer3}</div>
+        </div>
+      )}
+      {isResult && (
+        <div>
+          <div>
+            {userAnswers.answer1} - {quizArray[0].repetition}
+          </div>
+          <div>
+            {userAnswers.answer2} - {quizArray[1].repetition}
+          </div>
+          <div>
+            {userAnswers.answer3} - {quizArray[2].repetition}
+          </div>
+          <div>
+            {parseInt(userAnswers.answer1) === quizArray[0].repetition
+              ? "Correct"
+              : "Incorrect"}
+          </div>
+          <div>
+            {parseInt(userAnswers.answer2) === quizArray[1].repetition
+              ? "Correct"
+              : "Incorrect"}
+          </div>
+          <div>
+            {parseInt(userAnswers.answer3) === quizArray[2].repetition
+              ? "Correct"
+              : "Incorrect"}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
