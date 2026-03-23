@@ -5,6 +5,7 @@ import { getRandNumInRange } from "../utils";
 export default function Counter() {
   const [gameArray, setGameArray] = useState(imagesArray);
   const [finalGameArray, setFinalGameArray] = useState([]);
+  const [quizArray, setQuizArray] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isSlideShowStarted, setIsSlideShowStarted] = useState(false);
   // Variables for the timer:
@@ -60,11 +61,17 @@ export default function Counter() {
             setIsSlideShowStarted(false);
             return;
           }
-      }, 500);
+      }, 100);
       return () => clearInterval(interval);
     }
-    
   }, [isGameStarted]);
+  useEffect(() => {
+    if (!isSlideShowStarted) {
+        const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
+        const selected = shuffled.slice(0, 3);
+        setQuizArray(selected);
+    }
+  }, [isSlideShowStarted]);
   return (
     <div>
       {!isGameStarted && <button onClick={handleStart}>Start the Game</button>}
@@ -100,8 +107,9 @@ export default function Counter() {
             />
         )}
       </div>
-        {isGameStarted && !isSlideShowStarted &&
-            <div>Questions</div>
+        {isGameStarted && !isSlideShowStarted && (
+            quizArray.map(i => <img src={i.image} style={{width: "60px", border: "1px solid red", margin: "4px"}} />)
+            )
         }
     </div>
   );
