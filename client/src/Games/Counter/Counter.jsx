@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { imagesArray } from "./imagesArray";
 import { getRandNumInRange } from "../utils";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function Counter({ updateTotalPoint }) {
   const [easyMode, setEasyMode] = useState(false);
@@ -21,6 +22,7 @@ export default function Counter({ updateTotalPoint }) {
     answer3: "",
   });
   const [finalMessage, setFinalMessage] = useState("");
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -97,12 +99,23 @@ export default function Counter({ updateTotalPoint }) {
     setShowImage(false);
     setCountdown(3);
     setUserAnswers({
-        answer1: "",
-        answer2: "",
-        answer3: "",
+      answer1: "",
+      answer2: "",
+      answer3: "",
     });
     setFinalMessage("");
-  }
+    setIsTogglingReset(false);
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handlePlayAgain();
+    setIsTogglingReset(false);
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
+  };
   useEffect(() => {
     if (easyMode) {
       setGameArray(
@@ -171,6 +184,25 @@ export default function Counter({ updateTotalPoint }) {
       {/* {gameArray.map((el) => (
         <div style={{ display: "inline", color: "gray" }}>{el.repetition} - </div>
       ))} */}
+      {isGameStarted &&
+        !isTogglingReset &&
+        finalMessage === "" &&
+        // !isTogglingHomePage &&
+        // !isTogglingLevel &&
+        (easyMode || normalMode) && (
+          <div>
+            <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+        )}
+      {isTogglingReset && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
+        </div>
+      )}
       {finalGameArray.map((el, i) => (
         <img
           src={finalGameArray[i].image}
@@ -221,6 +253,7 @@ export default function Counter({ updateTotalPoint }) {
         ))}
       {isGameStarted &&
         !isSlideShowStarted &&
+        !isTogglingReset &&
         quizArray.map((i) => (
           <div style={{ display: "inline" }}>
             <img
@@ -233,7 +266,7 @@ export default function Counter({ updateTotalPoint }) {
             />
           </div>
         ))}
-      {isGameStarted && !isSlideShowStarted && (
+      {isGameStarted && !isSlideShowStarted && !isTogglingReset && (
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
@@ -278,7 +311,7 @@ export default function Counter({ updateTotalPoint }) {
           <div>Answer3: {userAnswers.answer3}</div>
         </div>
       )} */}
-      {isResult && (
+      {isResult && !isTogglingReset && (
         <div>
           {/* <div>
             {userAnswers.answer1} - {quizArray[0].repetition}
@@ -308,17 +341,17 @@ export default function Counter({ updateTotalPoint }) {
           </strong>
           <h2>{finalMessage}</h2>
           {finalMessage === "You Loose!" && (
-                <div>
-                    <div>Try Again?</div>
-                    <button onClick={handlePlayAgain}>Ok</button>
-                </div>
-            )}
-            {finalMessage && finalMessage !== "You Loose!" && (
-                <div>
-                    <div>Play Again?</div>
-                    <button onClick={handlePlayAgain}>Ok</button>
-                </div>
-            )}
+            <div>
+              <div>Try Again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {finalMessage && finalMessage !== "You Loose!" && (
+            <div>
+              <div>Play Again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
         </div>
       )}
     </div>
