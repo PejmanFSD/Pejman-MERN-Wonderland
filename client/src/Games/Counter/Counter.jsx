@@ -24,6 +24,7 @@ export default function Counter({ updateTotalPoint }) {
   });
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -106,6 +107,7 @@ export default function Counter({ updateTotalPoint }) {
     });
     setFinalMessage("");
     setIsTogglingReset(false);
+    setIsTogglingLevel(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -116,6 +118,23 @@ export default function Counter({ updateTotalPoint }) {
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
+  };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+    }
+    handlePlayAgain();
+    setIsTogglingLevel(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
   };
   useEffect(() => {
     if (easyMode) {
@@ -180,23 +199,21 @@ export default function Counter({ updateTotalPoint }) {
         </div>
       )}
       {easyMode &&
-            !normalMode &&
-            !isTogglingReset
-            // !isTogglingHomePage &&
-            // !isTogglingLevel
-            ? (
-              <ModeExplaination message="Easy Mode: There are only 5 images. You won't get any stars if you win." />
-            ) : (
-              !easyMode &&
-              normalMode &&
-              !isTogglingReset &&
-            //   !isTogglingHomePage &&
-            //   !isTogglingLevel &&
-              (
-                <ModeExplaination message="Normal Mode: There are 16 images. You will get one star if you win." />
-              )
-            )}
-      {!isGameStarted && (easyMode || normalMode) && (
+      !normalMode &&
+      !isTogglingReset &&
+      // !isTogglingHomePage &&
+      !isTogglingLevel ? (
+        <ModeExplaination message="Easy Mode: There are only 5 images. You won't get any stars if you win." />
+      ) : (
+        !easyMode &&
+        normalMode &&
+        !isTogglingReset && (
+          //   !isTogglingHomePage &&
+          //   !isTogglingLevel &&
+          <ModeExplaination message="Normal Mode: There are 16 images. You will get one star if you win." />
+        )
+      )}
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && (
         <button onClick={handleStart}>Start the Game</button>
       )}
       {/* {gameArray.map((el) => (
@@ -206,7 +223,7 @@ export default function Counter({ updateTotalPoint }) {
         !isTogglingReset &&
         finalMessage === "" &&
         // !isTogglingHomePage &&
-        // !isTogglingLevel &&
+        !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
             <button onClick={toggleReset}>Reset the Game</button>
@@ -218,6 +235,32 @@ export default function Counter({ updateTotalPoint }) {
             question="Are you sure you want to reset the game?"
             toggleYes={toggleResetYes}
             toggleCancel={toggleResetCancel}
+          />
+        </div>
+      )}
+      {(easyMode || normalMode) &&
+        !isTogglingReset &&
+        // !isTogglingHomePage &&
+        !isTogglingLevel &&
+        finalMessage === "" && (
+          <div>
+            <button
+              style={{
+                display: "inline",
+              }}
+              onClick={() => toggleLevel()}
+            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+          </div>
+        )}
+      {isTogglingLevel && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question={`Are you sure you want to switch to ${
+              easyMode ? "Normal Mode" : "Easy Mode"
+            }?`}
+            toggleYes={toggleLevelYes}
+            toggleCancel={toggleLevelCancel}
+            easyMode={easyMode}
           />
         </div>
       )}
@@ -272,6 +315,7 @@ export default function Counter({ updateTotalPoint }) {
       {isGameStarted &&
         !isSlideShowStarted &&
         !isTogglingReset &&
+        !isTogglingLevel &&
         quizArray.map((i) => (
           <div style={{ display: "inline" }}>
             <img
@@ -284,44 +328,59 @@ export default function Counter({ updateTotalPoint }) {
             />
           </div>
         ))}
-      {isGameStarted && !isSlideShowStarted && !isTogglingReset && (
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
-            <select onChange={handleQuestion1} name="question1" id="question1">
-              <option value={userAnswers.answer1} disabled selected>
-                🔽
-              </option>
-              {[1, 2, 3].map((i) => (
-                <option disabled={isResult}>{i}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="question2">{`How many ${quizArray[1].name} did you see?`}</label>
-            <select onChange={handleQuestion2} name="question2" id="question2">
-              <option value={userAnswers.answer2} disabled selected>
-                🔽
-              </option>
-              {[1, 2, 3].map((i) => (
-                <option disabled={isResult}>{i}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="question3">{`How many ${quizArray[2].name} did you see?`}</label>
-            <select onChange={handleQuestion3} name="question3" id="question3">
-              <option value={userAnswers.answer3} disabled selected>
-                🔽
-              </option>
-              {[1, 2, 3].map((i) => (
-                <option disabled={isResult}>{i}</option>
-              ))}
-            </select>
-          </div>
-          {!isResult && <button>Submit</button>}
-        </form>
-      )}
+      {isGameStarted &&
+        !isSlideShowStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel && (
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
+              <select
+                onChange={handleQuestion1}
+                name="question1"
+                id="question1"
+              >
+                <option value={userAnswers.answer1} disabled selected>
+                  🔽
+                </option>
+                {[1, 2, 3].map((i) => (
+                  <option disabled={isResult}>{i}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="question2">{`How many ${quizArray[1].name} did you see?`}</label>
+              <select
+                onChange={handleQuestion2}
+                name="question2"
+                id="question2"
+              >
+                <option value={userAnswers.answer2} disabled selected>
+                  🔽
+                </option>
+                {[1, 2, 3].map((i) => (
+                  <option disabled={isResult}>{i}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="question3">{`How many ${quizArray[2].name} did you see?`}</label>
+              <select
+                onChange={handleQuestion3}
+                name="question3"
+                id="question3"
+              >
+                <option value={userAnswers.answer3} disabled selected>
+                  🔽
+                </option>
+                {[1, 2, 3].map((i) => (
+                  <option disabled={isResult}>{i}</option>
+                ))}
+              </select>
+            </div>
+            {!isResult && <button>Submit</button>}
+          </form>
+        )}
       {/* {isGameStarted && !isSlideShowStarted && (
         <div>
           <div>Answer1: {userAnswers.answer1}</div>
@@ -329,7 +388,7 @@ export default function Counter({ updateTotalPoint }) {
           <div>Answer3: {userAnswers.answer3}</div>
         </div>
       )} */}
-      {isResult && !isTogglingReset && (
+      {isResult && !isTogglingReset && !isTogglingLevel && (
         <div>
           {/* <div>
             {userAnswers.answer1} - {quizArray[0].repetition}
