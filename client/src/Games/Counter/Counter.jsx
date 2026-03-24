@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { imagesArray } from "./imagesArray";
 import { getRandNumInRange } from "../utils";
 
-export default function Counter() {
+export default function Counter({ updateTotalPoint }) {
   const [gameArray, setGameArray] = useState(imagesArray);
   const [finalGameArray, setFinalGameArray] = useState([]);
   const [quizArray, setQuizArray] = useState([]);
@@ -18,6 +18,7 @@ export default function Counter() {
     answer2: "",
     answer3: "",
   });
+  const [finalMessage, setFinalMessage] = useState("");
 
   const handleStart = () => {
     setIsGameStarted(true);
@@ -59,6 +60,16 @@ export default function Counter() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (
+      parseInt(userAnswers.answer1) === quizArray[0].repetition &&
+      parseInt(userAnswers.answer2) === quizArray[1].repetition &&
+      parseInt(userAnswers.answer3) === quizArray[2].repetition
+    ) {
+      setFinalMessage("You Win!");
+      updateTotalPoint(1);
+    } else {
+      setFinalMessage("You Loose!");
+    }
     setIsResult(true);
   };
   useEffect(() => {
@@ -166,10 +177,10 @@ export default function Counter() {
             <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
             <select onChange={handleQuestion1} name="question1" id="question1">
               <option value={userAnswers.answer1} disabled selected>
-                {`Choose number of ${quizArray[0].name}`}
+                🔽
               </option>
               {[1, 2, 3].map((i) => (
-                <option>{i}</option>
+                <option disabled={isResult}>{i}</option>
               ))}
             </select>
           </div>
@@ -177,10 +188,10 @@ export default function Counter() {
             <label htmlFor="question2">{`How many ${quizArray[1].name} did you see?`}</label>
             <select onChange={handleQuestion2} name="question2" id="question2">
               <option value={userAnswers.answer2} disabled selected>
-                {`Choose number of ${quizArray[1].name}`}
+                🔽
               </option>
               {[1, 2, 3].map((i) => (
-                <option>{i}</option>
+                <option disabled={isResult}>{i}</option>
               ))}
             </select>
           </div>
@@ -188,14 +199,14 @@ export default function Counter() {
             <label htmlFor="question3">{`How many ${quizArray[2].name} did you see?`}</label>
             <select onChange={handleQuestion3} name="question3" id="question3">
               <option value={userAnswers.answer3} disabled selected>
-                {`Choose number of ${quizArray[2].name}`}
+                🔽
               </option>
               {[1, 2, 3].map((i) => (
-                <option>{i}</option>
+                <option disabled={isResult}>{i}</option>
               ))}
             </select>
           </div>
-          <button>Submit</button>
+          {!isResult && <button>Submit</button>}
         </form>
       )}
       {isGameStarted && !isSlideShowStarted && (
@@ -218,19 +229,20 @@ export default function Counter() {
           </div>
           <div>
             {parseInt(userAnswers.answer1) === quizArray[0].repetition
-              ? "Correct"
-              : "Incorrect"}
+              ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}. You guessed correctly! ✅`
+              : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}. You guessed wrong! ❌`}
           </div>
           <div>
             {parseInt(userAnswers.answer2) === quizArray[1].repetition
-              ? "Correct"
-              : "Incorrect"}
+              ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}. You guessed correctly! ✅`
+              : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}. You guessed wrong! ❌`}
           </div>
           <div>
             {parseInt(userAnswers.answer3) === quizArray[2].repetition
-              ? "Correct"
-              : "Incorrect"}
+              ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}. You guessed correctly! ✅`
+              : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}. You guessed wrong! ❌`}
           </div>
+          <h2>{finalMessage}</h2>
         </div>
       )}
     </div>
