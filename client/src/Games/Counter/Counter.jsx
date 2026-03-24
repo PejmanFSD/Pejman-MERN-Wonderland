@@ -3,7 +3,9 @@ import { imagesArray } from "./imagesArray";
 import { getRandNumInRange } from "../utils";
 
 export default function Counter({ updateTotalPoint }) {
-  const [gameArray, setGameArray] = useState(imagesArray);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
+  const [gameArray, setGameArray] = useState([]);
   const [finalGameArray, setFinalGameArray] = useState([]);
   const [quizArray, setQuizArray] = useState([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -20,6 +22,14 @@ export default function Counter({ updateTotalPoint }) {
   });
   const [finalMessage, setFinalMessage] = useState("");
 
+  const handleEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const handleNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const handleStart = () => {
     setIsGameStarted(true);
     // expanding the gameArray based on the repetition value
@@ -65,21 +75,34 @@ export default function Counter({ updateTotalPoint }) {
       parseInt(userAnswers.answer2) === quizArray[1].repetition &&
       parseInt(userAnswers.answer3) === quizArray[2].repetition
     ) {
-      setFinalMessage("You Win!");
-      updateTotalPoint(1);
+      if (normalMode) {
+        setFinalMessage("You Win!");
+        updateTotalPoint(1);
+      } else if (easyMode) {
+        setFinalMessage("You Win, but you don't get any stars!");
+      }
     } else {
       setFinalMessage("You Loose!");
     }
     setIsResult(true);
   };
   useEffect(() => {
-    setGameArray((currGameArray) =>
-      currGameArray.map((arr) => ({
-        ...arr,
-        repetition: getRandNumInRange(1, 3),
-      })),
-    );
-  }, []);
+    if (easyMode) {
+      setGameArray(
+        imagesArray.slice(0, 5).map((arr) => ({
+          ...arr,
+          repetition: getRandNumInRange(1, 3),
+        })),
+      );
+    } else if (normalMode) {
+      setGameArray(
+        imagesArray.map((arr) => ({
+          ...arr,
+          repetition: getRandNumInRange(1, 3),
+        })),
+      );
+    }
+  }, [easyMode, normalMode]);
   useEffect(() => {
     if (isGameStarted && isSlideShowStarted) {
       let step = -1;
@@ -104,24 +127,33 @@ export default function Counter({ updateTotalPoint }) {
           return;
         }
       }, 100);
-      return () => clearInterval(interval);
-    }
-  }, [isGameStarted]);
-  useEffect(() => {
-    if (!isSlideShowStarted) {
       const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
       const selected = shuffled.slice(0, 3);
       setQuizArray(selected);
+      return () => clearInterval(interval);
     }
-  }, [isSlideShowStarted]);
+  }, [isGameStarted]);
+  //   useEffect(() => {
+  //     if (!isSlideShowStarted) {
+  //       const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
+  //       const selected = shuffled.slice(0, 3);
+  //       setQuizArray(selected);
+  //     }
+  //   }, [isSlideShowStarted]);
   return (
     <div>
-      {!isGameStarted && <button onClick={handleStart}>Start the Game</button>}
-      <br />
-      {gameArray.map((el) => (
-        <div style={{ display: "inline" }}>{el.repetition} - </div>
-      ))}
-      <br />
+      {!isGameStarted && !easyMode && !normalMode && (
+        <div>
+          <button onClick={handleEasyMode}>Easy Mode</button>
+          <button onClick={handleNormalMode}>Normal Mode</button>
+        </div>
+      )}
+      {!isGameStarted && (easyMode || normalMode) && (
+        <button onClick={handleStart}>Start the Game</button>
+      )}
+      {/* {gameArray.map((el) => (
+        <div style={{ display: "inline", color: "gray" }}>{el.repetition} - </div>
+      ))} */}
       {finalGameArray.map((el, i) => (
         <img
           src={finalGameArray[i].image}
@@ -132,7 +164,6 @@ export default function Counter({ updateTotalPoint }) {
           }}
         />
       ))}
-      <br />
       <div>
         {isGameStarted && isSlideShowStarted && countdown > 0 && (
           <h1>{countdown}</h1>
@@ -161,14 +192,28 @@ export default function Counter({ updateTotalPoint }) {
         !isSlideShowStarted &&
         quizArray.map((i) => (
           <div style={{ display: "inline" }}>
-            <img
+            {/* <img
               src={i.image}
               style={{ width: "60px", border: "1px solid red", margin: "4px" }}
-            />
-            <div style={{ display: "inline", color: "red" }}>
+            /> */}
+            <div style={{ display: "inline", color: "gray" }}>
               {i.repetition}
             </div>
-            <div style={{ display: "inline", color: "blue" }}>{i.name}</div>
+            {/* <div style={{ display: "inline", color: "gray" }}>{i.name}***</div> */}
+          </div>
+        ))}
+      {isGameStarted &&
+        !isSlideShowStarted &&
+        quizArray.map((i) => (
+          <div style={{ display: "inline" }}>
+            <img
+              src={i.image}
+              style={{
+                width: "60px",
+                border: "1px solid black",
+                margin: "4px",
+              }}
+            />
           </div>
         ))}
       {isGameStarted && !isSlideShowStarted && (
@@ -209,16 +254,16 @@ export default function Counter({ updateTotalPoint }) {
           {!isResult && <button>Submit</button>}
         </form>
       )}
-      {isGameStarted && !isSlideShowStarted && (
+      {/* {isGameStarted && !isSlideShowStarted && (
         <div>
           <div>Answer1: {userAnswers.answer1}</div>
           <div>Answer2: {userAnswers.answer2}</div>
           <div>Answer3: {userAnswers.answer3}</div>
         </div>
-      )}
+      )} */}
       {isResult && (
         <div>
-          <div>
+          {/* <div>
             {userAnswers.answer1} - {quizArray[0].repetition}
           </div>
           <div>
@@ -226,22 +271,24 @@ export default function Counter({ updateTotalPoint }) {
           </div>
           <div>
             {userAnswers.answer3} - {quizArray[2].repetition}
-          </div>
-          <div>
+          </div> */}
+          <strong>
             {parseInt(userAnswers.answer1) === quizArray[0].repetition
-              ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}. You guessed correctly! ✅`
-              : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}. You guessed wrong! ❌`}
-          </div>
-          <div>
+              ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed correctly! ✅`
+              : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed wrong! ❌`}
+          </strong>
+          <br />
+          <strong>
             {parseInt(userAnswers.answer2) === quizArray[1].repetition
-              ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}. You guessed correctly! ✅`
-              : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}. You guessed wrong! ❌`}
-          </div>
-          <div>
+              ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed correctly! ✅`
+              : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed wrong! ❌`}
+          </strong>
+          <br />
+          <strong>
             {parseInt(userAnswers.answer3) === quizArray[2].repetition
-              ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}. You guessed correctly! ✅`
-              : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}. You guessed wrong! ❌`}
-          </div>
+              ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed correctly! ✅`
+              : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
+          </strong>
           <h2>{finalMessage}</h2>
         </div>
       )}
