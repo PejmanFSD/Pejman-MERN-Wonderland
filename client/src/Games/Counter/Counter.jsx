@@ -4,7 +4,13 @@ import { getRandNumInRange } from "../utils";
 import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
 
-export default function Counter({ updateTotalPoint }) {
+export default function Counter({
+  updateTotalPoint,
+  setShowGameTitles,
+  setShowCounter,
+  isAGameStarted,
+  setIsAGameStarted,
+}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [gameArray, setGameArray] = useState([]);
@@ -25,6 +31,7 @@ export default function Counter({ updateTotalPoint }) {
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -108,6 +115,7 @@ export default function Counter({ updateTotalPoint }) {
     setFinalMessage("");
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -135,6 +143,18 @@ export default function Counter({ updateTotalPoint }) {
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowCounter(false);
+    setShowGameTitles(true);
+    setIsAGameStarted(false);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   useEffect(() => {
     if (easyMode) {
@@ -176,23 +196,17 @@ export default function Counter({ updateTotalPoint }) {
           setIsSlideShowStarted(false);
           return;
         }
-      }, 100);
+      }, 1000);
       const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
       const selected = shuffled.slice(0, 3);
       setQuizArray(selected);
       return () => clearInterval(interval);
     }
   }, [isGameStarted]);
-  //   useEffect(() => {
-  //     if (!isSlideShowStarted) {
-  //       const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
-  //       const selected = shuffled.slice(0, 3);
-  //       setQuizArray(selected);
-  //     }
-  //   }, [isSlideShowStarted]);
   return (
     <div>
-      {!isGameStarted && !easyMode && !normalMode && (
+      <h2>Counter</h2>
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
@@ -201,28 +215,31 @@ export default function Counter({ updateTotalPoint }) {
       {easyMode &&
       !normalMode &&
       !isTogglingReset &&
-      // !isTogglingHomePage &&
+      !isTogglingHomePage &&
       !isTogglingLevel ? (
         <ModeExplaination message="Easy Mode: There are only 5 images. You won't get any stars if you win." />
       ) : (
         !easyMode &&
         normalMode &&
-        !isTogglingReset && (
-          //   !isTogglingHomePage &&
-          //   !isTogglingLevel &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
           <ModeExplaination message="Normal Mode: There are 16 images. You will get one star if you win." />
         )
       )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && (
-        <button onClick={handleStart}>Start the Game</button>
-      )}
+      {!isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <button onClick={handleStart}>Start the Game</button>
+        )}
       {/* {gameArray.map((el) => (
         <div style={{ display: "inline", color: "gray" }}>{el.repetition} - </div>
       ))} */}
       {isGameStarted &&
         !isTogglingReset &&
         finalMessage === "" &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
@@ -240,7 +257,7 @@ export default function Counter({ updateTotalPoint }) {
       )}
       {(easyMode || normalMode) &&
         !isTogglingReset &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         finalMessage === "" && (
           <div>
@@ -261,6 +278,25 @@ export default function Counter({ updateTotalPoint }) {
             toggleYes={toggleLevelYes}
             toggleCancel={toggleLevelCancel}
             easyMode={easyMode}
+          />
+        </div>
+      )}
+      {!isTogglingHomePage &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        finalMessage === "" && (
+          <div>
+            <button onClick={() => toggleHomePage()}>
+              Back to the home page
+            </button>
+          </div>
+        )}
+      {isTogglingHomePage && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
           />
         </div>
       )}
@@ -316,6 +352,7 @@ export default function Counter({ updateTotalPoint }) {
         !isSlideShowStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         quizArray.map((i) => (
           <div style={{ display: "inline" }}>
             <img
@@ -331,7 +368,8 @@ export default function Counter({ updateTotalPoint }) {
       {isGameStarted &&
         !isSlideShowStarted &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <form onSubmit={handleSubmit}>
             <div>
               <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
@@ -381,56 +419,43 @@ export default function Counter({ updateTotalPoint }) {
             {!isResult && <button>Submit</button>}
           </form>
         )}
-      {/* {isGameStarted && !isSlideShowStarted && (
-        <div>
-          <div>Answer1: {userAnswers.answer1}</div>
-          <div>Answer2: {userAnswers.answer2}</div>
-          <div>Answer3: {userAnswers.answer3}</div>
-        </div>
-      )} */}
-      {isResult && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          {/* <div>
-            {userAnswers.answer1} - {quizArray[0].repetition}
-          </div>
+      {isResult &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
-            {userAnswers.answer2} - {quizArray[1].repetition}
+            <strong>
+              {parseInt(userAnswers.answer1) === quizArray[0].repetition
+                ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed correctly! ✅`
+                : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed wrong! ❌`}
+            </strong>
+            <br />
+            <strong>
+              {parseInt(userAnswers.answer2) === quizArray[1].repetition
+                ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed correctly! ✅`
+                : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed wrong! ❌`}
+            </strong>
+            <br />
+            <strong>
+              {parseInt(userAnswers.answer3) === quizArray[2].repetition
+                ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed correctly! ✅`
+                : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
+            </strong>
+            <h2>{finalMessage}</h2>
+            {finalMessage === "You Loose!" && (
+              <div>
+                <div>Try Again?</div>
+                <button onClick={handlePlayAgain}>Ok</button>
+              </div>
+            )}
+            {finalMessage && finalMessage !== "You Loose!" && (
+              <div>
+                <div>Play Again?</div>
+                <button onClick={handlePlayAgain}>Ok</button>
+              </div>
+            )}
           </div>
-          <div>
-            {userAnswers.answer3} - {quizArray[2].repetition}
-          </div> */}
-          <strong>
-            {parseInt(userAnswers.answer1) === quizArray[0].repetition
-              ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed correctly! ✅`
-              : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed wrong! ❌`}
-          </strong>
-          <br />
-          <strong>
-            {parseInt(userAnswers.answer2) === quizArray[1].repetition
-              ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed correctly! ✅`
-              : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed wrong! ❌`}
-          </strong>
-          <br />
-          <strong>
-            {parseInt(userAnswers.answer3) === quizArray[2].repetition
-              ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed correctly! ✅`
-              : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
-          </strong>
-          <h2>{finalMessage}</h2>
-          {finalMessage === "You Loose!" && (
-            <div>
-              <div>Try Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
-            </div>
-          )}
-          {finalMessage && finalMessage !== "You Loose!" && (
-            <div>
-              <div>Play Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
-            </div>
-          )}
-        </div>
-      )}
+        )}
     </div>
   );
 }
