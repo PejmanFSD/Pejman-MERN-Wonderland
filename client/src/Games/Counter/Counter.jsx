@@ -86,6 +86,23 @@ export default function Counter({ updateTotalPoint }) {
     }
     setIsResult(true);
   };
+  const handlePlayAgain = () => {
+    setGameArray([]);
+    setFinalGameArray([]);
+    setQuizArray([]);
+    setIsGameStarted(false);
+    setIsSlideShowStarted(false);
+    setIsResult(false);
+    setCurrentIndex(0);
+    setShowImage(false);
+    setCountdown(3);
+    setUserAnswers({
+        answer1: "",
+        answer2: "",
+        answer3: "",
+    });
+    setFinalMessage("");
+  }
   useEffect(() => {
     if (easyMode) {
       setGameArray(
@@ -102,7 +119,7 @@ export default function Counter({ updateTotalPoint }) {
         })),
       );
     }
-  }, [easyMode, normalMode]);
+  }, [easyMode, normalMode, isGameStarted]);
   useEffect(() => {
     if (isGameStarted && isSlideShowStarted) {
       let step = -1;
@@ -290,6 +307,18 @@ export default function Counter({ updateTotalPoint }) {
               : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
           </strong>
           <h2>{finalMessage}</h2>
+          {finalMessage === "You Loose!" && (
+                <div>
+                    <div>Try Again?</div>
+                    <button onClick={handlePlayAgain}>Ok</button>
+                </div>
+            )}
+            {finalMessage && finalMessage !== "You Loose!" && (
+                <div>
+                    <div>Play Again?</div>
+                    <button onClick={handlePlayAgain}>Ok</button>
+                </div>
+            )}
         </div>
       )}
     </div>
