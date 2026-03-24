@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { imagesArray } from "./imagesArray";
 import { getRandNumInRange } from "../utils";
 import ConfirmationBox from "../ConfirmationBox";
+import ModeExplaination from "../ModeExplaination";
 
 export default function Counter({ updateTotalPoint }) {
   const [easyMode, setEasyMode] = useState(false);
@@ -178,6 +179,23 @@ export default function Counter({ updateTotalPoint }) {
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
+      {easyMode &&
+            !normalMode &&
+            !isTogglingReset
+            // !isTogglingHomePage &&
+            // !isTogglingLevel
+            ? (
+              <ModeExplaination message="Easy Mode: There are only 5 images. You won't get any stars if you win." />
+            ) : (
+              !easyMode &&
+              normalMode &&
+              !isTogglingReset &&
+            //   !isTogglingHomePage &&
+            //   !isTogglingLevel &&
+              (
+                <ModeExplaination message="Normal Mode: There are 16 images. You will get one star if you win." />
+              )
+            )}
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={handleStart}>Start the Game</button>
       )}
