@@ -26,7 +26,12 @@ const bluePicsArray = [
     {currentLocation: -1, correctLocation: 21, image: bluePics[21], isFilled: true},
     {currentLocation: -1, correctLocation: 22, image: bluePics[22], isFilled: true},
     {currentLocation: -1, correctLocation: 23, image: bluePics[23], isFilled: true},
-    {currentLocation: -1, correctLocation: 24, image: bluePics[24], isFilled: true}
+    {currentLocation: -1, correctLocation: 24, image: bluePics[24], isFilled: true},
+    {currentLocation: -1, correctLocation: 25, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 26, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 27, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 28, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 29, image: E00, isFilled: true}
 ];
 
 const redPicsArray = [
@@ -54,40 +59,12 @@ const redPicsArray = [
     {currentLocation: -1, correctLocation: 21, image: redPics[21], isFilled: true},
     {currentLocation: -1, correctLocation: 22, image: redPics[22], isFilled: true},
     {currentLocation: -1, correctLocation: 23, image: redPics[23], isFilled: true},
-    {currentLocation: -1, correctLocation: 24, image: redPics[24], isFilled: true}
+    {currentLocation: -1, correctLocation: 24, image: redPics[24], isFilled: true},
+    {currentLocation: -1, correctLocation: 25, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 26, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 27, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 28, image: E00, isFilled: true},
+    {currentLocation: -1, correctLocation: 29, image: E00, isFilled: true}
 ];
 
-const board = [
-    {currentLocation: -1, correctLocation: 0, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 1, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 2, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 3, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 4, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 5, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 6, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 7, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 8, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 9, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 10, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 11, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 12, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 13, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 14, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 15, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 16, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 17, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 18, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 19, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 20, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 21, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 22, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 23, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 24, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 25, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 26, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 27, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 28, image: E00, isFilled: false},
-    {currentLocation: -1, correctLocation: 29, image: E00, isFilled: false}
-];
-
-export {bluePicsArray, redPicsArray, board};
+export {bluePicsArray, redPicsArray};

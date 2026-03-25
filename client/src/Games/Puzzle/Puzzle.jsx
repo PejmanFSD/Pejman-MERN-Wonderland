@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Cell from "./Cell";
-import { bluePicsArray, redPicsArray, board } from "./imagesArray";
+import { bluePicsArray, redPicsArray } from "./imagesArray";
 
 export default function Puzzle() {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -12,27 +12,28 @@ export default function Puzzle() {
   };
   const handleImageGroup = (e) => {
     if (e.target.value === "Blue Numbers") {
-      setImageGroup(bluePicsArray);
+      setImageGroup(bluePicsArray.sort(() => Math.random() - 0.5));
     } else if (e.target.value === "Red Numbers") {
-      setImageGroup(redPicsArray);
+      setImageGroup(redPicsArray.sort(() => Math.random() - 0.5));
     }
     setIsImageGroupChosen(true);
   };
   return (
     <div>
       {!isGameStarted && <button onClick={handleStart}>Start the Game</button>}
-      {isGameStarted &&
-      <div>
-        <label htmlFor="imageGroup"></label>
-        <select onChange={handleImageGroup} name="imageGroup" id="imageGroup">
-          <option value={imageGroup} disabled selected>
-            Select an image group
-          </option>
-          {["Blue Numbers", "Red Numbers"].map((c) => (
-            <option>{c}</option>
-          ))}
-        </select>
-      </div>}
+      {isGameStarted && (
+        <div>
+          <label htmlFor="imageGroup"></label>
+          <select onChange={handleImageGroup} name="imageGroup" id="imageGroup">
+            <option value={imageGroup} disabled selected>
+              Select an image group
+            </option>
+            {["Blue Numbers", "Red Numbers"].map((c) => (
+              <option>{c}</option>
+            ))}
+          </select>
+        </div>
+      )}
       {isGameStarted && isImageGroupChosen && (
         <div
           style={{
@@ -43,8 +44,8 @@ export default function Puzzle() {
             justifyContent: "center",
           }}
         >
-          {board.map((cell, idx) => (
-            <Cell image={idx < 25 ? imageGroup[idx].image : cell.image} />
+          {imageGroup.map((cell) => (
+            <Cell image={cell.image} />
           ))}
         </div>
       )}
