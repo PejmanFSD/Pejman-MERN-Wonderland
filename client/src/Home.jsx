@@ -16,6 +16,7 @@ import KukuKube from "./Games/KukuKube/KukuKube";
 import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 import Counter from "./Games/Counter/Counter";
+import Puzzle from "./Games/Puzzle/Puzzle";
 
 export default function Home({
   ads,
@@ -47,6 +48,7 @@ export default function Home({
   const [showTripleEmojiMatch, setShowTripleEmojiMatch] = useState(false);
   const [showPidoku, setShowPidoku] = useState(false);
   const [showCounter, setShowCounter] = useState(false);
+  const [showPuzzle, setShowPuzzle] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -213,6 +215,16 @@ export default function Home({
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowCounter(true);
+  };
+  const togglePuzzle = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    setShowGameTitles(false);
+    setIsAGameStarted(true);
+    setShowPuzzle(true);
   };
   return (
     <div>
@@ -495,6 +507,21 @@ export default function Home({
         !showCounter &&
         !isAGameStarted && (
           <button onClick={() => toggleCounter()} style={{position: "relative", top: "5px"}}>Counter</button>
+        )
+      )}
+      {!showGameTitles && showPuzzle && isAGameStarted ? (
+        <Puzzle
+          setShowGameTitles={setShowGameTitles}
+          setShowPuzzle={setShowPuzzle}
+          updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
+        />
+      ) : (
+        showGameTitles &&
+        !showPuzzle &&
+        !isAGameStarted && (
+          <button onClick={() => togglePuzzle()} style={{position: "relative", top: "5px"}}>Puzzle</button>
         )
       )}
     </div>
