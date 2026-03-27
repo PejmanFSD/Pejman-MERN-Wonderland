@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Cell from "./Cell";
 import { bluePicsArray, redPicsArray } from "./imagesArray";
 import E00 from "./images/E00.jpg";
@@ -12,6 +12,7 @@ export default function Puzzle() {
   const [isActiveDownButton, setIsActiveDownButton] = useState(false);
   const [isActiveRightButton, setIsActiveRightButton] = useState(false);
   const [isAnImageClicked, setIsAnImageClicked] = useState(false);
+  const [finalMessage, setFinalMessage] = useState("");
 
   const handleStart = () => {
     setIsGameStarted(true);
@@ -210,8 +211,41 @@ export default function Puzzle() {
     setIsActiveRightButton(false);
     setIsAnImageClicked(false);
   };
+  useEffect(() => {
+    if (
+      isImageGroupChosen &&
+      imageGroup[0].currentLocation === imageGroup[0].correctLocation &&
+      imageGroup[1].currentLocation === imageGroup[1].correctLocation &&
+      imageGroup[2].currentLocation === imageGroup[2].correctLocation &&
+      imageGroup[3].currentLocation === imageGroup[3].correctLocation &&
+      imageGroup[4].currentLocation === imageGroup[4].correctLocation &&
+      imageGroup[5].currentLocation === imageGroup[5].correctLocation &&
+      imageGroup[6].currentLocation === imageGroup[6].correctLocation &&
+      imageGroup[7].currentLocation === imageGroup[7].correctLocation &&
+      imageGroup[8].currentLocation === imageGroup[8].correctLocation &&
+      imageGroup[9].currentLocation === imageGroup[9].correctLocation &&
+      imageGroup[10].currentLocation === imageGroup[10].correctLocation &&
+      imageGroup[11].currentLocation === imageGroup[11].correctLocation &&
+      imageGroup[12].currentLocation === imageGroup[12].correctLocation &&
+      imageGroup[13].currentLocation === imageGroup[13].correctLocation &&
+      imageGroup[14].currentLocation === imageGroup[14].correctLocation &&
+      imageGroup[15].currentLocation === imageGroup[15].correctLocation &&
+      imageGroup[16].currentLocation === imageGroup[16].correctLocation &&
+      imageGroup[17].currentLocation === imageGroup[17].correctLocation &&
+      imageGroup[18].currentLocation === imageGroup[18].correctLocation &&
+      imageGroup[19].currentLocation === imageGroup[19].correctLocation &&
+      imageGroup[20].currentLocation === imageGroup[20].correctLocation &&
+      imageGroup[21].currentLocation === imageGroup[21].correctLocation &&
+      imageGroup[22].currentLocation === imageGroup[22].correctLocation &&
+      imageGroup[23].currentLocation === imageGroup[23].correctLocation &&
+      imageGroup[24].currentLocation === imageGroup[24].correctLocation
+    ) {
+      setFinalMessage("You Win");
+    }
+  }, [imageGroup]);
   return (
     <div>
+      <h2>{finalMessage}</h2>
       {!isGameStarted && (
         <div>
           <label htmlFor="imageGroup"></label>
@@ -249,6 +283,7 @@ export default function Puzzle() {
               setImageGroup={setImageGroup}
               isAnImageClicked={isAnImageClicked}
               setIsAnImageClicked={setIsAnImageClicked}
+              finalMessage={finalMessage}
             />
           ))}
         </div>
