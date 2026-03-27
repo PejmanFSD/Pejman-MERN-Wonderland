@@ -1,15 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Cell from "./Cell";
 import { bluePicsArray, redPicsArray } from "./imagesArray";
-import E00 from "./images/E00.jpg";
 
 export default function Puzzle() {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [imageGroup, setImageGroup] = useState([]);
   const [isImageGroupChosen, setIsImageGroupChosen] = useState(false);
+  const [isActiveUpButton, setIsActiveUpButton] = useState(false);
+  const [isActiveLeftButton, setIsActiveLeftButton] = useState(false);
+  const [isActiveDownButton, setIsActiveDownButton] = useState(false);
+  const [isActiveRightButton, setIsActiveRightButton] = useState(false);
+  const [isAnImageClicked, setIsAnImageClicked] = useState(false);
 
   const handleStart = () => {
     setIsGameStarted(true);
+    setImageGroup((currImage) =>
+      currImage.map((image) => ({
+        ...image,
+        currentLocation: currImage.indexOf(image),
+      })),
+    );
   };
   const handleImageGroup = (e) => {
     if (e.target.value === "Blue Numbers") {
@@ -19,14 +29,6 @@ export default function Puzzle() {
     }
     setIsImageGroupChosen(true);
   };
-  useEffect(() => {
-    setImageGroup((currImage) =>
-      currImage.map((image) => ({
-        ...image,
-        currentLocation: currImage.indexOf(image),
-      })),
-    );
-  }, [imageGroup, isGameStarted]);
   return (
     <div>
       {!isGameStarted && (
@@ -56,10 +58,27 @@ export default function Puzzle() {
           }}
         >
           {imageGroup.map((cell) => (
-            <Cell image={cell.image} />
+            <Cell
+                imageSrc={cell.image}
+                setIsActiveUpButton={setIsActiveUpButton}
+                setIsActiveLeftButton={setIsActiveLeftButton}
+                setIsActiveDownButton={setIsActiveDownButton}
+                setIsActiveRightButton={setIsActiveRightButton}
+                imageGroup={imageGroup}
+                setImageGroup={setImageGroup}
+                isAnImageClicked={isAnImageClicked}
+                setIsAnImageClicked={setIsAnImageClicked}
+            />
           ))}
         </div>
       )}
+      <div>
+        <button style={{position: "relative", top: "20px"}} disabled={isActiveUpButton === false}>&#8593;</button>
+        <br />
+        <button style={{position: "relative", top: "20px"}} disabled={isActiveLeftButton === false}>&#8592;</button>
+        <button style={{position: "relative", top: "20px"}} disabled={isActiveDownButton === false}>&#8595;</button>
+        <button style={{position: "relative", top: "20px"}} disabled={isActiveRightButton === false}>&#8594;</button>
+      </div>
       <div
         style={{
           position: "relative",
@@ -67,11 +86,18 @@ export default function Puzzle() {
           display: "grid",
           gridTemplateColumns: "repeat(5, auto)",
           justifyContent: "center",
+          position: "relative", top: "25px"
         }}
       >
         {imageGroup.map((cell) => (
-          <div style={{ backgroundColor: "lightblue", margin: "2px" }}>
-            {cell.currentLocation} - {cell.correctLocation} - {cell.isFilled ? "T" : "F"}
+          <div style={{ border: "3px solid black", margin: "5px" }}>
+            <div style={{backgroundColor: "lightblue", display: "inline"}}>{cell.currentLocation}</div>-
+            <div style={{backgroundColor: "pink", display: "inline"}}>{cell.correctLocation}</div>-
+            <div style={{backgroundColor: "white", display: "inline"}}>{cell.isClicked ? "T" : "F"}</div>-
+            <div style={{backgroundColor: "orange", display: "inline"}}>{`up: ${cell.isSwapUpTarget ? "T" : "F"}`}</div>-
+            <div style={{backgroundColor: "lightgreen", display: "inline"}}>{`left: ${cell.isSwapLeftTarget ? "T" : "F"}`}</div>-
+            <div style={{backgroundColor: "orange", display: "inline"}}>{`down: ${cell.isSwapDownTarget ? "T" : "F"}`}</div>-
+            <div style={{backgroundColor: "lightgreen", display: "inline"}}>{`right: ${cell.isSwapRightTarget ? "T" : "F"}`}</div>
           </div>
         ))}
       </div>
