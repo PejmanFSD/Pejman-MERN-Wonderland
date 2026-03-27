@@ -374,6 +374,7 @@ export default function Cell({
           imageSrc === E00 || isAnImageClicked || finalMessage !== ""
             ? "none"
             : "",
+        opacity: finalMessage === "Time's Up!" ? 0.3 : 1
       }}
       src={imageSrc}
     />

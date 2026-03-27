@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import Cell from "./Cell";
 import { bluePicsArray, redPicsArray } from "./imagesArray";
 import E00 from "./images/E00.jpg";
+import ModeExplaination from "../ModeExplaination";
 
 export default function Puzzle() {
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [imageGroup, setImageGroup] = useState([]);
   const [isImageGroupChosen, setIsImageGroupChosen] = useState(false);
@@ -13,7 +16,17 @@ export default function Puzzle() {
   const [isActiveRightButton, setIsActiveRightButton] = useState(false);
   const [isAnImageClicked, setIsAnImageClicked] = useState(false);
   const [finalMessage, setFinalMessage] = useState("");
+  const [seconds, setSeconds] = useState(6);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
+  const handleEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const handleNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const handleStart = () => {
     setIsGameStarted(true);
     setImageGroup((currImage) =>
@@ -22,6 +35,10 @@ export default function Puzzle() {
         currentLocation: currImage.indexOf(image),
       })),
     );
+    handleResetTimer();
+    if (normalMode) {
+      handleStartTimer();
+    }
   };
   const handleImageGroup = (e) => {
     if (e.target.value === "Blue Numbers") {
@@ -211,6 +228,26 @@ export default function Puzzle() {
     setIsActiveRightButton(false);
     setIsAnImageClicked(false);
   };
+  const handleStartTimer = () => setIsTimerRunning(true);
+  const handleStopTimer = () => setIsTimerRunning(false);
+  const handleResetTimer = () => {
+    setSeconds(6);
+    setIsTimerRunning(false);
+  };
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev > 1 && prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
+  useEffect(() => {
+    if (seconds < 1) {
+        setFinalMessage("Time's Up!")
+    }
+  }, [seconds]);
   useEffect(() => {
     if (
       isImageGroupChosen &&
@@ -240,13 +277,57 @@ export default function Puzzle() {
       imageGroup[23].currentLocation === imageGroup[23].correctLocation &&
       imageGroup[24].currentLocation === imageGroup[24].correctLocation
     ) {
-      setFinalMessage("You Win");
+        if (easyMode) {
+            handleStopTimer();
+            setFinalMessage("You Win, but you don't get any stars!");
+        } else if (normalMode) {
+            handleStopTimer();
+            setFinalMessage("You Win!");
+        }
     }
   }, [imageGroup]);
   return (
     <div>
-      <h2>{finalMessage}</h2>
-      {!isGameStarted && (
+    <h2>Puzzle</h2>
+      {!isGameStarted &&
+      !easyMode &&
+      !normalMode &&
+    //   !isTogglingHomePage &&
+      (
+        <div>
+          <button onClick={handleEasyMode}>Easy Mode</button>
+          <button onClick={handleNormalMode}>Normal Mode</button>
+        </div>
+      )}
+            {easyMode &&
+            !normalMode
+            // !isTogglingReset &&
+            // !isTogglingHomePage &&
+            // !isTogglingLevel
+            ? (
+              <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+            ) : (
+              !easyMode &&
+              normalMode &&
+            //   !isTogglingReset &&
+            //   !isTogglingHomePage &&
+            //   !isTogglingLevel &&
+              (
+                <ModeExplaination message="Normal Mode: You will get one star if you win." />
+              )
+            )}
+      {finalMessage && <h2>{finalMessage}</h2>}
+      {isGameStarted &&
+        normalMode &&
+        // !isTogglingReset &&
+        // !isTogglingHomePage &&
+        // !isTogglingLevel &&
+        (
+          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            {seconds}
+          </h3>
+        )}
+      {!isGameStarted && (easyMode || normalMode) && (
         <div>
           <label htmlFor="imageGroup"></label>
           <select onChange={handleImageGroup} name="imageGroup" id="imageGroup">
@@ -288,38 +369,46 @@ export default function Puzzle() {
           ))}
         </div>
       )}
-      <div>
-        <button
-          onClick={handleUp}
-          style={{ position: "relative", top: "20px" }}
-          disabled={isActiveUpButton === false || isAnImageClicked === false}
-        >
-          &#8593;
-        </button>
-        <br />
-        <button
-          onClick={handleLeft}
-          style={{ position: "relative", top: "20px" }}
-          disabled={isActiveLeftButton === false || isAnImageClicked === false}
-        >
-          &#8592;
-        </button>
-        <button
-          onClick={handleDown}
-          style={{ position: "relative", top: "20px" }}
-          disabled={isActiveDownButton === false || isAnImageClicked === false}
-        >
-          &#8595;
-        </button>
-        <button
-          onClick={handleRight}
-          style={{ position: "relative", top: "20px" }}
-          disabled={isActiveRightButton === false || isAnImageClicked === false}
-        >
-          &#8594;
-        </button>
-      </div>
-      <div
+      {isGameStarted && (
+        <div>
+          <button
+            onClick={handleUp}
+            style={{ position: "relative", top: "20px" }}
+            disabled={isActiveUpButton === false || isAnImageClicked === false}
+          >
+            &#8593;
+          </button>
+          <br />
+          <button
+            onClick={handleLeft}
+            style={{ position: "relative", top: "20px" }}
+            disabled={
+              isActiveLeftButton === false || isAnImageClicked === false
+            }
+          >
+            &#8592;
+          </button>
+          <button
+            onClick={handleDown}
+            style={{ position: "relative", top: "20px" }}
+            disabled={
+              isActiveDownButton === false || isAnImageClicked === false
+            }
+          >
+            &#8595;
+          </button>
+          <button
+            onClick={handleRight}
+            style={{ position: "relative", top: "20px" }}
+            disabled={
+              isActiveRightButton === false || isAnImageClicked === false
+            }
+          >
+            &#8594;
+          </button>
+        </div>
+      )}
+      {/* <div
         style={{
           position: "relative",
           top: "15px",
@@ -361,7 +450,7 @@ export default function Puzzle() {
             >{`right: ${cell.isSwapRightTarget ? "T" : "F"}`}</div>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
