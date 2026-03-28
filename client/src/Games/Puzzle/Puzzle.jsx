@@ -5,7 +5,13 @@ import E00 from "./images/E00.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function Puzzle({ updateTotalPoint }) {
+export default function Puzzle({
+  updateTotalPoint,
+  setShowGameTitles,
+  setShowPuzzle,
+  isAGameStarted,
+  setIsAGameStarted,
+}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -21,6 +27,7 @@ export default function Puzzle({ updateTotalPoint }) {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -245,7 +252,7 @@ export default function Puzzle({ updateTotalPoint }) {
     setSeconds(400);
     setIsTimerRunning(false);
     setIsTogglingLevel(false);
-    // setIsTogglingHomePage(false);
+    setIsTogglingHomePage(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -271,6 +278,18 @@ export default function Puzzle({ updateTotalPoint }) {
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowPuzzle(false);
+    setShowGameTitles(true);
+    setIsAGameStarted(false);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
@@ -334,8 +353,7 @@ export default function Puzzle({ updateTotalPoint }) {
   return (
     <div>
       <h2>Puzzle</h2>
-      {!isGameStarted && !easyMode && !normalMode && (
-        //   !isTogglingHomePage &&
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
@@ -343,21 +361,21 @@ export default function Puzzle({ updateTotalPoint }) {
       )}
       {easyMode && !normalMode
         ? !isTogglingReset &&
-          // !isTogglingHomePage &&
+          !isTogglingHomePage &&
           !isTogglingLevel && (
             <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
           )
         : !easyMode &&
           normalMode &&
           !isTogglingReset &&
-          //   !isTogglingHomePage &&
+          !isTogglingHomePage &&
           !isTogglingLevel && (
             <ModeExplaination message="Normal Mode: You will get one star if you win." />
           )}
       {isGameStarted &&
         !isTogglingReset &&
         finalMessage === "" &&
-        //   !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
@@ -375,7 +393,7 @@ export default function Puzzle({ updateTotalPoint }) {
       )}
       {(easyMode || normalMode) &&
         !isTogglingReset &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         finalMessage === "" && (
           <div>
@@ -399,6 +417,25 @@ export default function Puzzle({ updateTotalPoint }) {
           />
         </div>
       )}
+      {!isTogglingHomePage &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        finalMessage === "" && (
+          <div>
+            <button onClick={() => toggleHomePage()}>
+              Back to the home page
+            </button>
+          </div>
+        )}
+      {isTogglingHomePage && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        </div>
+      )}
       {finalMessage && <h2>{finalMessage}</h2>}
       {isGameStarted && normalMode && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
@@ -408,7 +445,8 @@ export default function Puzzle({ updateTotalPoint }) {
       {!isGameStarted &&
         (easyMode || normalMode) &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             <label htmlFor="imageGroup"></label>
             <select
@@ -428,13 +466,15 @@ export default function Puzzle({ updateTotalPoint }) {
       {!isGameStarted &&
         imageGroup.length !== 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <button onClick={handleStart}>Start the Game</button>
         )}
       {isGameStarted &&
         isImageGroupChosen &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div
             style={{
               position: "relative",
@@ -463,7 +503,8 @@ export default function Puzzle({ updateTotalPoint }) {
       {isGameStarted &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             <button
               onClick={handleUp}
