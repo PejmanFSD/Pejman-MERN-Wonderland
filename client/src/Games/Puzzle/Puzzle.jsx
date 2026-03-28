@@ -3,8 +3,9 @@ import Cell from "./Cell";
 import { bluePicsArray, redPicsArray } from "./imagesArray";
 import E00 from "./images/E00.jpg";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
-export default function Puzzle() {
+export default function Puzzle({ updateTotalPoint }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -16,8 +17,9 @@ export default function Puzzle() {
   const [isActiveRightButton, setIsActiveRightButton] = useState(false);
   const [isAnImageClicked, setIsAnImageClicked] = useState(false);
   const [finalMessage, setFinalMessage] = useState("");
-  const [seconds, setSeconds] = useState(6);
+  const [seconds, setSeconds] = useState(400);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -228,10 +230,35 @@ export default function Puzzle() {
     setIsActiveRightButton(false);
     setIsAnImageClicked(false);
   };
+  const handlePlayAgain = () => {
+    setIsGameStarted(false);
+    setFinalMessage("");
+    setIsTogglingReset(false);
+    setImageGroup([]);
+    setIsImageGroupChosen(false);
+    setIsActiveUpButton(false);
+    setIsActiveLeftButton(false);
+    setIsActiveDownButton(false);
+    setIsActiveRightButton(false);
+    setIsAnImageClicked(false);
+    setSeconds(400);
+    setIsTimerRunning(false);
+    // setIsTogglingLevel(false);
+    // setIsTogglingHomePage(false);
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handlePlayAgain();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
+  };
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(6);
+    setSeconds(400);
     setIsTimerRunning(false);
   };
   useEffect(() => {
@@ -245,7 +272,7 @@ export default function Puzzle() {
   }, [isTimerRunning]);
   useEffect(() => {
     if (seconds < 1) {
-        setFinalMessage("Time's Up!")
+      setFinalMessage("Time's Up!");
     }
   }, [seconds]);
   useEffect(() => {
@@ -277,57 +304,66 @@ export default function Puzzle() {
       imageGroup[23].currentLocation === imageGroup[23].correctLocation &&
       imageGroup[24].currentLocation === imageGroup[24].correctLocation
     ) {
-        if (easyMode) {
-            handleStopTimer();
-            setFinalMessage("You Win, but you don't get any stars!");
-        } else if (normalMode) {
-            handleStopTimer();
-            setFinalMessage("You Win!");
-        }
+      if (easyMode) {
+        handleStopTimer();
+        setFinalMessage("You Win, but you don't get any stars!");
+      } else if (normalMode) {
+        handleStopTimer();
+        setFinalMessage("You Win!");
+        updateTotalPoint(1);
+      }
     }
   }, [imageGroup]);
   return (
     <div>
-    <h2>Puzzle</h2>
-      {!isGameStarted &&
-      !easyMode &&
-      !normalMode &&
-    //   !isTogglingHomePage &&
-      (
+      <h2>Puzzle</h2>
+      {!isGameStarted && !easyMode && !normalMode && (
+        //   !isTogglingHomePage &&
         <div>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
-            {easyMode &&
-            !normalMode
-            // !isTogglingReset &&
-            // !isTogglingHomePage &&
-            // !isTogglingLevel
-            ? (
-              <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-            ) : (
-              !easyMode &&
-              normalMode &&
-            //   !isTogglingReset &&
-            //   !isTogglingHomePage &&
-            //   !isTogglingLevel &&
-              (
-                <ModeExplaination message="Normal Mode: You will get one star if you win." />
-              )
-            )}
-      {finalMessage && <h2>{finalMessage}</h2>}
-      {isGameStarted &&
-        normalMode &&
+      {easyMode && !normalMode ? (
         // !isTogglingReset &&
         // !isTogglingHomePage &&
-        // !isTogglingLevel &&
-        (
-          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-            {seconds}
-          </h3>
-        )}
-      {!isGameStarted && (easyMode || normalMode) && (
+        // !isTogglingLevel
+        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+      ) : (
+        !easyMode &&
+        normalMode && (
+          //   !isTogglingReset &&
+          //   !isTogglingHomePage &&
+          //   !isTogglingLevel &&
+          <ModeExplaination message="Normal Mode: You will get one star if you win." />
+        )
+      )}
+      {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+            //   !isTogglingHomePage &&
+            //   !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <div>
+                  <button onClick={toggleReset}>Reset the Game</button>
+                </div>
+              )}
+            {isTogglingReset && finalMessage === "" && (
+              <div>
+                <ConfirmationBox
+                  question="Are you sure you want to reset the game?"
+                  toggleYes={toggleResetYes}
+                  toggleCancel={toggleResetCancel}
+                />
+              </div>
+            )}
+      {finalMessage && <h2>{finalMessage}</h2>}
+      {isGameStarted && normalMode && (
+        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+          {seconds}
+        </h3>
+      )}
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingReset && (
         <div>
           <label htmlFor="imageGroup"></label>
           <select onChange={handleImageGroup} name="imageGroup" id="imageGroup">
@@ -340,10 +376,10 @@ export default function Puzzle() {
           </select>
         </div>
       )}
-      {!isGameStarted && imageGroup.length !== 0 && (
+      {!isGameStarted && imageGroup.length !== 0 && !isTogglingReset && (
         <button onClick={handleStart}>Start the Game</button>
       )}
-      {isGameStarted && isImageGroupChosen && (
+      {isGameStarted && isImageGroupChosen && !isTogglingReset && (
         <div
           style={{
             position: "relative",
@@ -369,7 +405,7 @@ export default function Puzzle() {
           ))}
         </div>
       )}
-      {isGameStarted && (
+      {isGameStarted && finalMessage === "" && !isTogglingReset && (
         <div>
           <button
             onClick={handleUp}
