@@ -365,16 +365,17 @@ export default function Cell({
     <img
       onClick={handleClickCell}
       style={{
-        width: "50px",
+        width: "40px",
         border: imageGroup.find((i) => i.image === imageSrc).isClicked
-          ? "5px solid black"
+          ? "5px solid red"
           : "1px solid black",
         boxSizing: "border-box",
         pointerEvents:
           imageSrc === E00 || isAnImageClicked || finalMessage !== ""
             ? "none"
             : "",
-        opacity: finalMessage === "Time's Up!" ? 0.3 : 1
+        opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
+        margin: "1px",
       }}
       src={imageSrc}
     />

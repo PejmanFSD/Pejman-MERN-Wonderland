@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 import Cell from "./Cell";
-import { bluePicsArray, redPicsArray } from "./imagesArray";
+import {
+  balloonsPicsArray,
+  ghostPicsArray,
+  lionPicsArray,
+  mansionPicsArray,
+  numbersPicsArray,
+  pencilsPicsArray,
+} from "./imagesArray";
 import E00 from "./images/E00.jpg";
+import Balloons from "./images/Balloons/Balloons.jpg";
+import Ghost from "./images/Ghost/Ghost.jpg";
+import Lion from "./images/Lion/Lion.jpg";
+import Mansion from "./images/Mansion/Mansion.jpg";
+import Numbers from "./images/Numbers/Numbers.jpg";
+import Pencils from "./images/Pencils/Pencils.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
@@ -15,6 +28,7 @@ export default function Puzzle({
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [mainImage, setMainImage] = useState(null);
   const [imageGroup, setImageGroup] = useState([]);
   const [isImageGroupChosen, setIsImageGroupChosen] = useState(false);
   const [isActiveUpButton, setIsActiveUpButton] = useState(false);
@@ -51,10 +65,24 @@ export default function Puzzle({
     }
   };
   const handleImageGroup = (e) => {
-    if (e.target.value === "Blue Numbers") {
-      setImageGroup(bluePicsArray.sort(() => Math.random() - 0.5));
-    } else if (e.target.value === "Red Numbers") {
-      setImageGroup(redPicsArray.sort(() => Math.random() - 0.5));
+    if (e.target.value === "Balloons") {
+      setImageGroup(balloonsPicsArray.sort(() => Math.random() - 0.5));
+      setMainImage(Balloons);
+    } else if (e.target.value === "Ghost") {
+      setImageGroup(ghostPicsArray.sort(() => Math.random() - 0.5));
+      setMainImage(Ghost);
+    } else if (e.target.value === "Lion") {
+      setImageGroup(lionPicsArray.sort(() => Math.random() - 0.5));
+      setMainImage(Lion);
+    } else if (e.target.value === "Mansion") {
+      setImageGroup(mansionPicsArray.sort(() => Math.random() - 0.5));
+      setMainImage(Mansion);
+    } else if (e.target.value === "Numbers") {
+      setImageGroup(numbersPicsArray.sort(() => Math.random() - 0.5));
+      setMainImage(Numbers);
+    } else if (e.target.value === "Pencils") {
+      setImageGroup(pencilsPicsArray.sort(() => Math.random() - 0.5));
+      setMainImage(Pencils);
     }
     setIsImageGroupChosen(true);
   };
@@ -243,6 +271,7 @@ export default function Puzzle({
     setFinalMessage("");
     setIsTogglingReset(false);
     setImageGroup([]);
+    setMainImage(null);
     setIsImageGroupChosen(false);
     setIsActiveUpButton(false);
     setIsActiveLeftButton(false);
@@ -457,7 +486,14 @@ export default function Puzzle({
               <option value={imageGroup} disabled selected>
                 Select an image group
               </option>
-              {["Blue Numbers", "Red Numbers"].map((c) => (
+              {[
+                "Balloons",
+                "Ghost",
+                "Lion",
+                "Mansion",
+                "Numbers",
+                "Pencils",
+              ].map((c) => (
                 <option>{c}</option>
               ))}
             </select>
@@ -475,10 +511,26 @@ export default function Puzzle({
         !isTogglingReset &&
         !isTogglingLevel &&
         !isTogglingHomePage && (
+          <img
+            src={mainImage}
+            style={{
+              width: "150px",
+              border: "1px solid black",
+              position: "relative",
+              top: "5px",
+              display: "inline",
+            }}
+          />
+        )}
+      {isGameStarted &&
+        isImageGroupChosen &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div
             style={{
               position: "relative",
-              top: "15px",
+              top: "5px",
               display: "grid",
               gridTemplateColumns: "repeat(5, auto)",
               justifyContent: "center",
