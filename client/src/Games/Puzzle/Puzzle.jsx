@@ -466,6 +466,19 @@ export default function Puzzle({
         </div>
       )}
       {finalMessage && <h2>{finalMessage}</h2>}
+      {(finalMessage === "You Win, but you don't get any stars!" ||
+        finalMessage === "You Win!") && (
+        <div>
+          <div>Play again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
+      {finalMessage === "Time's Up!" && (
+        <div>
+          <div>Try again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
       {isGameStarted && normalMode && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
           {seconds}
@@ -519,6 +532,7 @@ export default function Puzzle({
               position: "relative",
               top: "5px",
               display: "inline",
+              opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
             }}
           />
         )}
@@ -597,49 +611,6 @@ export default function Puzzle({
             </button>
           </div>
         )}
-      {/* <div
-        style={{
-          position: "relative",
-          top: "15px",
-          display: "grid",
-          gridTemplateColumns: "repeat(5, auto)",
-          justifyContent: "center",
-          position: "relative",
-          top: "25px",
-        }}
-      >
-        {imageGroup.map((cell) => (
-          <div style={{ border: "3px solid black", margin: "5px" }}>
-            <div style={{ backgroundColor: "lightblue", display: "inline" }}>
-              {cell.currentLocation}
-            </div>
-            -
-            <div style={{ backgroundColor: "pink", display: "inline" }}>
-              {cell.correctLocation}
-            </div>
-            -
-            <div style={{ backgroundColor: "white", display: "inline" }}>
-              {cell.isClicked ? "T" : "F"}
-            </div>
-            -
-            <div
-              style={{ backgroundColor: "orange", display: "inline" }}
-            >{`up: ${cell.isSwapUpTarget ? "T" : "F"}`}</div>
-            -
-            <div
-              style={{ backgroundColor: "lightgreen", display: "inline" }}
-            >{`left: ${cell.isSwapLeftTarget ? "T" : "F"}`}</div>
-            -
-            <div
-              style={{ backgroundColor: "orange", display: "inline" }}
-            >{`down: ${cell.isSwapDownTarget ? "T" : "F"}`}</div>
-            -
-            <div
-              style={{ backgroundColor: "lightgreen", display: "inline" }}
-            >{`right: ${cell.isSwapRightTarget ? "T" : "F"}`}</div>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 }
