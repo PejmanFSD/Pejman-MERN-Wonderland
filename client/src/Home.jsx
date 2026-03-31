@@ -17,6 +17,7 @@ import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
 import Pidoku from "./Games/Pidoku/Pidoku";
 import Counter from "./Games/Counter/Counter";
 import Puzzle from "./Games/Puzzle/Puzzle";
+import Bingo from "./Games/Bingo/Bingo";
 
 export default function Home({
   ads,
@@ -49,6 +50,7 @@ export default function Home({
   const [showPidoku, setShowPidoku] = useState(false);
   const [showCounter, setShowCounter] = useState(false);
   const [showPuzzle, setShowPuzzle] = useState(false);
+  const [showBingo, setShowBingo] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -225,6 +227,16 @@ export default function Home({
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowPuzzle(true);
+  };
+  const toggleBingo = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    setShowGameTitles(false);
+    setIsAGameStarted(true);
+    setShowBingo(true);
   };
   return (
     <div>
@@ -522,6 +534,21 @@ export default function Home({
         !showPuzzle &&
         !isAGameStarted && (
           <button onClick={() => togglePuzzle()} style={{position: "relative", top: "5px"}}>Puzzle</button>
+        )
+      )}
+      {!showGameTitles && showBingo && isAGameStarted ? (
+        <Bingo
+          setShowGameTitles={setShowGameTitles}
+          setShowBingo={setShowBingo}
+          updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
+        />
+      ) : (
+        showGameTitles &&
+        !showBingo &&
+        !isAGameStarted && (
+          <button onClick={() => toggleBingo()} style={{position: "relative", top: "5px"}}>Bingo</button>
         )
       )}
     </div>
