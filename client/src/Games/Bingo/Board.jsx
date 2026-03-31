@@ -1,6 +1,6 @@
 import Cell from "./Cell";
 
-export default function Board({ nums }) {
+export default function Board({ nums, userColor }) {
   return (
     <div>
       UserTens1:
@@ -15,7 +15,7 @@ export default function Board({ nums }) {
           }}
         >
           {new Array(25).fill(null).map((cell, idx) => (
-            <Cell value={nums[idx]} />
+            <Cell value={nums[idx]} userColor={userColor} />
           ))}
         </div>
       }
