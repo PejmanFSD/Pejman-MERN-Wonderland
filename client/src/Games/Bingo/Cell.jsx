@@ -1,5 +1,19 @@
-export default function Cell({value, userColor}) {
+export default function Cell({value, color}) {
     return (
-        <div style={{width: "25px", height: "25px", border: "1px solid black", color: userColor}}>{value}</div>
+        <div
+            style={{
+                width: "25px",
+                height: "25px",
+                fontSize: "11px",
+                border: "1px solid black",
+                color: color,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: "1px"
+            }}
+        >
+            {value}
+        </div>
     )
 }
