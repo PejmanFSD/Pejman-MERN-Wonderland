@@ -1,7 +1,14 @@
-export default function Cell({value, color}) {
+export default function Cell({value, color, selectedNums}) {
+    const handleClickCell = () => {
+        console.log(`Clicked on ${value}`);
+    }
     return (
         <div
+            onClick={handleClickCell}
+            disabled={selectedNums.includes(value)}
             style={{
+                pointerEvents: !selectedNums.includes(value) && "none",
+                backgroundColor: selectedNums.includes(value) ? "yellow" : "white",
                 width: "25px",
                 height: "25px",
                 fontSize: "11px",

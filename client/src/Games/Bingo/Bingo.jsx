@@ -188,17 +188,17 @@ export default function Bingo() {
             {isGameStarted &&
                 <div>Pejman's boards:</div>}
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                    {isGameStarted && <Board nums={pejman1Nums} color={"black"} />}
-                    {isGameStarted && <Board nums={pejman2Nums} color={"black"} />}
-                    {isGameStarted && <Board nums={pejman3Nums} color={"black"} />}
+                    {isGameStarted && <Board nums={pejman1Nums} color={"black"} selectedNums={selectedNums} />}
+                    {isGameStarted && <Board nums={pejman2Nums} color={"black"} selectedNums={selectedNums} />}
+                    {isGameStarted && <Board nums={pejman3Nums} color={"black"} selectedNums={selectedNums} />}
                 </div>
             <br />
             {isGameStarted &&
                 <div>Your boards:</div>}
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                    {isGameStarted && <Board nums={user1Nums} color={userColor} />}
-                    {isGameStarted && <Board nums={user2Nums} color={userColor} />}
-                    {isGameStarted && <Board nums={user3Nums} color={userColor} />}
+                    {isGameStarted && <Board nums={user1Nums} color={userColor} selectedNums={selectedNums} />}
+                    {isGameStarted && <Board nums={user2Nums} color={userColor} selectedNums={selectedNums} />}
+                    {isGameStarted && <Board nums={user3Nums} color={userColor} selectedNums={selectedNums} />}
                 </div>
         </div>
     )
