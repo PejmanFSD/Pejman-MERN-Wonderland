@@ -1,5 +1,6 @@
-import {useState} from "react";
-import Board from "./Board";
+import {useState, useEffect} from "react";
+import UserBoard from "./UserBoard";
+import PejmanBoard from "./PejmanBoard";
 
 const initialTens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -56,11 +57,11 @@ export default function Bingo() {
     const updateNumsArray = (arr, updateFunc, player) => {
         const shuffledArr = [...arr].sort(() => Math.random() - 0.5).slice(0, 5).sort();
         updateFunc(curr => [...curr,
-            {num: shuffledArr[0], isClicked: false, owner: player},
-            {num: shuffledArr[1], isClicked: false, owner: player},
-            {num: shuffledArr[2], isClicked: false, owner: player},
-            {num: shuffledArr[3], isClicked: false, owner: player},
-            {num: shuffledArr[4], isClicked: false, owner: player}
+            {num: shuffledArr[0], isSelected: false, owner: player},
+            {num: shuffledArr[1], isSelected: false, owner: player},
+            {num: shuffledArr[2], isSelected: false, owner: player},
+            {num: shuffledArr[3], isSelected: false, owner: player},
+            {num: shuffledArr[4], isSelected: false, owner: player}
         ]);
     }
     const handleStart = () => {
@@ -150,6 +151,17 @@ export default function Bingo() {
         setSelectedNums(prev => [...prev, selectedNumber]);
         setNumCounter(currNumCounter => currNumCounter + 1);
     };
+    useEffect(() => {
+        setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((n) =>
+            selectedNums.includes(n.num) ? {...n, isSelected: true} : n
+        ));
+        setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((n) =>
+            selectedNums.includes(n.num) ? {...n, isSelected: true} : n
+        ));
+        setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((n) =>
+            selectedNums.includes(n.num) ? {...n, isSelected: true} : n
+        ));
+    }, [allNums, selectedNums])
     return (
         <div>
             {!isGameStarted && userColor === "" && (
@@ -195,15 +207,15 @@ export default function Bingo() {
             <div>
                 <div>Pejman's boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                    {isGameStarted && <Board nums={pejman1Nums} color={"black"} selectedNums={selectedNums} />}
-                    {isGameStarted && <Board nums={pejman2Nums} color={"black"} selectedNums={selectedNums} />}
-                    {isGameStarted && <Board nums={pejman3Nums} color={"black"} selectedNums={selectedNums} />}
+                    {isGameStarted && <PejmanBoard nums={pejman1Nums} selectedNums={selectedNums} />}
+                    {isGameStarted && <PejmanBoard nums={pejman2Nums} selectedNums={selectedNums} />}
+                    {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} />}
                 </div>
             <br />
                 <div>Your boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
                     {isGameStarted &&
-                        <Board
+                        <UserBoard
                             nums={user1Nums}
                             color={userColor}
                             selectedNums={selectedNums}
@@ -216,7 +228,7 @@ export default function Bingo() {
                         />
                     }
                     {isGameStarted &&
-                        <Board
+                        <UserBoard
                             nums={user2Nums}
                             color={userColor}
                             selectedNums={selectedNums}
@@ -229,7 +241,7 @@ export default function Bingo() {
                         />
                     }
                     {isGameStarted &&
-                        <Board
+                        <UserBoard
                             nums={user3Nums}
                             color={userColor}
                             selectedNums={selectedNums}

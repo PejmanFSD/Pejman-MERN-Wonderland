@@ -1,16 +1,16 @@
-export default function Cell({value, owner, isClicked, color, selectedNums, nums, user1Nums, user2Nums, user3Nums, setUser1Nums, setUser2Nums, setUser3Nums}) {
+export default function UserCell({value, owner, isSelected, color, selectedNums, nums, user1Nums, user2Nums, user3Nums, setUser1Nums, setUser2Nums, setUser3Nums}) {
     const handleClickCell = () => {
         if (nums === user1Nums) {
             setUser1Nums((currUser1Nums) => currUser1Nums.map((n) =>
-                n.num === value ? {...n, isClicked: true} : n
+                n.num === value ? {...n, isSelected: true} : n
             ));
         } else if (nums === user2Nums) {
             setUser2Nums((currUser2Nums) => currUser2Nums.map((n) =>
-                n.num === value ? {...n, isClicked: true} : n
+                n.num === value ? {...n, isSelected: true} : n
             ));
         } else if (nums === user3Nums) {
             setUser3Nums((currUser3Nums) => currUser3Nums.map((n) =>
-                n.num === value ? {...n, isClicked: true} : n
+                n.num === value ? {...n, isSelected: true} : n
             ));
         }
     }
@@ -21,8 +21,8 @@ export default function Cell({value, owner, isClicked, color, selectedNums, nums
             style={{
                 pointerEvents: (!selectedNums.includes(value) || owner === "Pejman") && "none",
                 backgroundColor:
-                    (selectedNums.includes(value) && isClicked) ? color :
-                    (selectedNums.includes(value) && !isClicked) ? "yellow" :
+                    (selectedNums.includes(value) && isSelected) ? color :
+                    (selectedNums.includes(value) && !isSelected) ? "yellow" :
                     "white",
                 width: "25px",
                 height: "25px",
