@@ -13,10 +13,14 @@ const array60To69 = [60, 61, 62, 63, 64, 65, 66, 67, 68, 69];
 const array70To79 = [70, 71, 72, 73, 74, 75, 76, 77, 78, 79];
 const array80To89 = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89];
 const array90To99 = [90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
+const allNumsArray = Array.from({ length: 99 }, (_, i) => i + 1);
 
 export default function Bingo() {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [userColor, setUserColor] = useState("");
+    const [allNums, setAllNums] = useState(allNumsArray);
+    const [selectedNums, setSelectedNums] = useState([]);
+    const [numCounter, setNumCounter] = useState(1);
     const [userTens1, setUserTens1] = useState([]);
     const [userTens2, setUserTens2] = useState([]);
     const [userTens3, setUserTens3] = useState([]);
@@ -129,6 +133,17 @@ export default function Bingo() {
             if (pt3 === 9) {updateNumsArray(array90To99, setPejman3Nums)}
         }
     };
+    const pickRandomNumber = () => {
+        if (allNums.length === 0) return;
+        const randomIndex = Math.floor(Math.random() * allNums.length);
+        const selectedNumber = allNums[randomIndex];
+        // Remove number from allNums:
+        const newAllNums = allNums.filter((_, i) => i !== randomIndex);
+        // Add number to selectedNums:
+        setAllNums(newAllNums);
+        setSelectedNums(prev => [...prev, selectedNumber]);
+        setNumCounter(currNumCounter => currNumCounter + 1);
+    };
     return (
         <div>
         {!isGameStarted && userColor === "" && (
@@ -152,27 +167,39 @@ export default function Bingo() {
             {!isGameStarted && userColor !== "" &&
                 <button onClick={handleStart}>Start</button>
             }
-            {/* {isGameStarted && pejmanTens1.map(n => <div style={{display: "inline", color: "red"}}>{n} -</div>)}
-            {isGameStarted && pejmanTens2.map(n => <div style={{display: "inline", color: "magenta"}}>{n} -</div>)}
-            {isGameStarted && pejmanTens3.map(n => <div style={{display: "inline", color: "orange"}}>{n} -</div>)}
-            {isGameStarted && pejman1Nums.map(n => <div style={{display: "inline"}}>{n} -</div>)}<br /> */}
-            Pejman's boards:
-            <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                {isGameStarted && <Board nums={pejman1Nums} color={"black"} />}
-                {isGameStarted && <Board nums={pejman2Nums} color={"black"} />}
-                {isGameStarted && <Board nums={pejman3Nums} color={"black"} />}
-            </div>
-<br />
-            {/* {isGameStarted && userTens1.map(n => <div style={{display: "inline", color: "red"}}>{n} -</div>)}
-            {isGameStarted && userTens2.map(n => <div style={{display: "inline", color: "magenta"}}>{n} -</div>)}
-            {isGameStarted && userTens3.map(n => <div style={{display: "inline", color: "orange"}}>{n} -</div>)}
-            {isGameStarted && user1Nums.map(n => <div style={{display: "inline"}}>{n} -</div>)}<br /> */}
-            Your boards:
-            <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                {isGameStarted && <Board nums={user1Nums} color={userColor} />}
-                {isGameStarted && <Board nums={user2Nums} color={userColor} />}
-                {isGameStarted && <Board nums={user3Nums} color={userColor} />}
-            </div>
+            {isGameStarted &&
+                <div>
+                    <div>{selectedNums[selectedNums.length - 1]}</div>
+                    <button onClick={pickRandomNumber}>{`Choose number ${numCounter}`}</button>
+                </div>
+            }
+            {isGameStarted &&
+                <div>
+                    <div style={{color: "gray"}}>All Nums:</div>
+                    {allNums.map(a => <div style={{display: "inline", color: "gray"}}>{a} -</div>)}
+                </div>
+            }
+            {isGameStarted &&
+                <div>
+                    <div style={{color: "gray"}}>Selected Nums:</div>
+                    {selectedNums.map(a => <div style={{display: "inline", color: "gray"}}>{a} -</div>)}
+                </div>
+            }
+            {isGameStarted &&
+                <div>Pejman's boards:</div>}
+                <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
+                    {isGameStarted && <Board nums={pejman1Nums} color={"black"} />}
+                    {isGameStarted && <Board nums={pejman2Nums} color={"black"} />}
+                    {isGameStarted && <Board nums={pejman3Nums} color={"black"} />}
+                </div>
+            <br />
+            {isGameStarted &&
+                <div>Your boards:</div>}
+                <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
+                    {isGameStarted && <Board nums={user1Nums} color={userColor} />}
+                    {isGameStarted && <Board nums={user2Nums} color={userColor} />}
+                    {isGameStarted && <Board nums={user3Nums} color={userColor} />}
+                </div>
         </div>
     )
 }
