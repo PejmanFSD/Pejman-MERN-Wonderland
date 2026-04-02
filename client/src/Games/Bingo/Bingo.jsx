@@ -53,84 +53,90 @@ export default function Bingo() {
     const shuffled = [...initialTens].sort(() => Math.random() - 0.5);
     arr(shuffled.slice(0, 5).sort());
   }
-    const updateNumsArray = (arr, updateFunc) => {
+    const updateNumsArray = (arr, updateFunc, player) => {
         const shuffledArr = [...arr].sort(() => Math.random() - 0.5).slice(0, 5).sort();
-        updateFunc(curr => [...curr, shuffledArr[0], shuffledArr[1], shuffledArr[2], shuffledArr[3], shuffledArr[4]]);
+        updateFunc(curr => [...curr,
+            {num: shuffledArr[0], isClicked: false, owner: player},
+            {num: shuffledArr[1], isClicked: false, owner: player},
+            {num: shuffledArr[2], isClicked: false, owner: player},
+            {num: shuffledArr[3], isClicked: false, owner: player},
+            {num: shuffledArr[4], isClicked: false, owner: player}
+        ]);
     }
     const handleStart = () => {
         setIsGameStarted(true);
         for (const ut1 of userTens1) {
-            if (ut1 === 0) {updateNumsArray(array1To9, setUser1Nums)}
-            if (ut1 === 1) {updateNumsArray(array10To19, setUser1Nums)}
-            if (ut1 === 2) {updateNumsArray(array20To29, setUser1Nums)}
-            if (ut1 === 3) {updateNumsArray(array30To39, setUser1Nums)}
-            if (ut1 === 4) {updateNumsArray(array40To49, setUser1Nums)}
-            if (ut1 === 5) {updateNumsArray(array50To59, setUser1Nums)}
-            if (ut1 === 6) {updateNumsArray(array60To69, setUser1Nums)}
-            if (ut1 === 7) {updateNumsArray(array70To79, setUser1Nums)}
-            if (ut1 === 8) {updateNumsArray(array80To89, setUser1Nums)}
-            if (ut1 === 9) {updateNumsArray(array90To99, setUser1Nums)}
+            if (ut1 === 0) {updateNumsArray(array1To9, setUser1Nums, "User")}
+            if (ut1 === 1) {updateNumsArray(array10To19, setUser1Nums, "User")}
+            if (ut1 === 2) {updateNumsArray(array20To29, setUser1Nums, "User")}
+            if (ut1 === 3) {updateNumsArray(array30To39, setUser1Nums, "User")}
+            if (ut1 === 4) {updateNumsArray(array40To49, setUser1Nums, "User")}
+            if (ut1 === 5) {updateNumsArray(array50To59, setUser1Nums, "User")}
+            if (ut1 === 6) {updateNumsArray(array60To69, setUser1Nums, "User")}
+            if (ut1 === 7) {updateNumsArray(array70To79, setUser1Nums, "User")}
+            if (ut1 === 8) {updateNumsArray(array80To89, setUser1Nums, "User")}
+            if (ut1 === 9) {updateNumsArray(array90To99, setUser1Nums, "User")}
         }
         for (const ut2 of userTens2) {
-            if (ut2 === 0) {updateNumsArray(array1To9, setUser2Nums)}
-            if (ut2 === 1) {updateNumsArray(array10To19, setUser2Nums)}
-            if (ut2 === 2) {updateNumsArray(array20To29, setUser2Nums)}
-            if (ut2 === 3) {updateNumsArray(array30To39, setUser2Nums)}
-            if (ut2 === 4) {updateNumsArray(array40To49, setUser2Nums)}
-            if (ut2 === 5) {updateNumsArray(array50To59, setUser2Nums)}
-            if (ut2 === 6) {updateNumsArray(array60To69, setUser2Nums)}
-            if (ut2 === 7) {updateNumsArray(array70To79, setUser2Nums)}
-            if (ut2 === 8) {updateNumsArray(array80To89, setUser2Nums)}
-            if (ut2 === 9) {updateNumsArray(array90To99, setUser2Nums)}
+            if (ut2 === 0) {updateNumsArray(array1To9, setUser2Nums, "User")}
+            if (ut2 === 1) {updateNumsArray(array10To19, setUser2Nums, "User")}
+            if (ut2 === 2) {updateNumsArray(array20To29, setUser2Nums, "User")}
+            if (ut2 === 3) {updateNumsArray(array30To39, setUser2Nums, "User")}
+            if (ut2 === 4) {updateNumsArray(array40To49, setUser2Nums, "User")}
+            if (ut2 === 5) {updateNumsArray(array50To59, setUser2Nums, "User")}
+            if (ut2 === 6) {updateNumsArray(array60To69, setUser2Nums, "User")}
+            if (ut2 === 7) {updateNumsArray(array70To79, setUser2Nums, "User")}
+            if (ut2 === 8) {updateNumsArray(array80To89, setUser2Nums, "User")}
+            if (ut2 === 9) {updateNumsArray(array90To99, setUser2Nums, "User")}
         }
         for (const ut3 of userTens3) {
-            if (ut3 === 0) {updateNumsArray(array1To9, setUser3Nums)}
-            if (ut3 === 1) {updateNumsArray(array10To19, setUser3Nums)}
-            if (ut3 === 2) {updateNumsArray(array20To29, setUser3Nums)}
-            if (ut3 === 3) {updateNumsArray(array30To39, setUser3Nums)}
-            if (ut3 === 4) {updateNumsArray(array40To49, setUser3Nums)}
-            if (ut3 === 5) {updateNumsArray(array50To59, setUser3Nums)}
-            if (ut3 === 6) {updateNumsArray(array60To69, setUser3Nums)}
-            if (ut3 === 7) {updateNumsArray(array70To79, setUser3Nums)}
-            if (ut3 === 8) {updateNumsArray(array80To89, setUser3Nums)}
-            if (ut3 === 9) {updateNumsArray(array90To99, setUser3Nums)}
+            if (ut3 === 0) {updateNumsArray(array1To9, setUser3Nums, "User")}
+            if (ut3 === 1) {updateNumsArray(array10To19, setUser3Nums, "User")}
+            if (ut3 === 2) {updateNumsArray(array20To29, setUser3Nums, "User")}
+            if (ut3 === 3) {updateNumsArray(array30To39, setUser3Nums, "User")}
+            if (ut3 === 4) {updateNumsArray(array40To49, setUser3Nums, "User")}
+            if (ut3 === 5) {updateNumsArray(array50To59, setUser3Nums, "User")}
+            if (ut3 === 6) {updateNumsArray(array60To69, setUser3Nums, "User")}
+            if (ut3 === 7) {updateNumsArray(array70To79, setUser3Nums, "User")}
+            if (ut3 === 8) {updateNumsArray(array80To89, setUser3Nums, "User")}
+            if (ut3 === 9) {updateNumsArray(array90To99, setUser3Nums, "User")}
         }
 
         for (const pt1 of pejmanTens1) {
-            if (pt1 === 0) {updateNumsArray(array1To9, setPejman1Nums)}
-            if (pt1 === 1) {updateNumsArray(array10To19, setPejman1Nums)}
-            if (pt1 === 2) {updateNumsArray(array20To29, setPejman1Nums)}
-            if (pt1 === 3) {updateNumsArray(array30To39, setPejman1Nums)}
-            if (pt1 === 4) {updateNumsArray(array40To49, setPejman1Nums)}
-            if (pt1 === 5) {updateNumsArray(array50To59, setPejman1Nums)}
-            if (pt1 === 6) {updateNumsArray(array60To69, setPejman1Nums)}
-            if (pt1 === 7) {updateNumsArray(array70To79, setPejman1Nums)}
-            if (pt1 === 8) {updateNumsArray(array80To89, setPejman1Nums)}
-            if (pt1 === 9) {updateNumsArray(array90To99, setPejman1Nums)}
+            if (pt1 === 0) {updateNumsArray(array1To9, setPejman1Nums, "Pejman")}
+            if (pt1 === 1) {updateNumsArray(array10To19, setPejman1Nums, "Pejman")}
+            if (pt1 === 2) {updateNumsArray(array20To29, setPejman1Nums, "Pejman")}
+            if (pt1 === 3) {updateNumsArray(array30To39, setPejman1Nums, "Pejman")}
+            if (pt1 === 4) {updateNumsArray(array40To49, setPejman1Nums, "Pejman")}
+            if (pt1 === 5) {updateNumsArray(array50To59, setPejman1Nums, "Pejman")}
+            if (pt1 === 6) {updateNumsArray(array60To69, setPejman1Nums, "Pejman")}
+            if (pt1 === 7) {updateNumsArray(array70To79, setPejman1Nums, "Pejman")}
+            if (pt1 === 8) {updateNumsArray(array80To89, setPejman1Nums, "Pejman")}
+            if (pt1 === 9) {updateNumsArray(array90To99, setPejman1Nums, "Pejman")}
         }
         for (const pt2 of pejmanTens2) {
-            if (pt2 === 0) {updateNumsArray(array1To9, setPejman2Nums)}
-            if (pt2 === 1) {updateNumsArray(array10To19, setPejman2Nums)}
-            if (pt2 === 2) {updateNumsArray(array20To29, setPejman2Nums)}
-            if (pt2 === 3) {updateNumsArray(array30To39, setPejman2Nums)}
-            if (pt2 === 4) {updateNumsArray(array40To49, setPejman2Nums)}
-            if (pt2 === 5) {updateNumsArray(array50To59, setPejman2Nums)}
-            if (pt2 === 6) {updateNumsArray(array60To69, setPejman2Nums)}
-            if (pt2 === 7) {updateNumsArray(array70To79, setPejman2Nums)}
-            if (pt2 === 8) {updateNumsArray(array80To89, setPejman2Nums)}
-            if (pt2 === 9) {updateNumsArray(array90To99, setPejman2Nums)}
+            if (pt2 === 0) {updateNumsArray(array1To9, setPejman2Nums, "Pejman")}
+            if (pt2 === 1) {updateNumsArray(array10To19, setPejman2Nums, "Pejman")}
+            if (pt2 === 2) {updateNumsArray(array20To29, setPejman2Nums, "Pejman")}
+            if (pt2 === 3) {updateNumsArray(array30To39, setPejman2Nums, "Pejman")}
+            if (pt2 === 4) {updateNumsArray(array40To49, setPejman2Nums, "Pejman")}
+            if (pt2 === 5) {updateNumsArray(array50To59, setPejman2Nums, "Pejman")}
+            if (pt2 === 6) {updateNumsArray(array60To69, setPejman2Nums, "Pejman")}
+            if (pt2 === 7) {updateNumsArray(array70To79, setPejman2Nums, "Pejman")}
+            if (pt2 === 8) {updateNumsArray(array80To89, setPejman2Nums, "Pejman")}
+            if (pt2 === 9) {updateNumsArray(array90To99, setPejman2Nums, "Pejman")}
         }
         for (const pt3 of pejmanTens3) {
-            if (pt3 === 0) {updateNumsArray(array1To9, setPejman3Nums)}
-            if (pt3 === 1) {updateNumsArray(array10To19, setPejman3Nums)}
-            if (pt3 === 2) {updateNumsArray(array20To29, setPejman3Nums)}
-            if (pt3 === 3) {updateNumsArray(array30To39, setPejman3Nums)}
-            if (pt3 === 4) {updateNumsArray(array40To49, setPejman3Nums)}
-            if (pt3 === 5) {updateNumsArray(array50To59, setPejman3Nums)}
-            if (pt3 === 6) {updateNumsArray(array60To69, setPejman3Nums)}
-            if (pt3 === 7) {updateNumsArray(array70To79, setPejman3Nums)}
-            if (pt3 === 8) {updateNumsArray(array80To89, setPejman3Nums)}
-            if (pt3 === 9) {updateNumsArray(array90To99, setPejman3Nums)}
+            if (pt3 === 0) {updateNumsArray(array1To9, setPejman3Nums, "Pejman")}
+            if (pt3 === 1) {updateNumsArray(array10To19, setPejman3Nums, "Pejman")}
+            if (pt3 === 2) {updateNumsArray(array20To29, setPejman3Nums, "Pejman")}
+            if (pt3 === 3) {updateNumsArray(array30To39, setPejman3Nums, "Pejman")}
+            if (pt3 === 4) {updateNumsArray(array40To49, setPejman3Nums, "Pejman")}
+            if (pt3 === 5) {updateNumsArray(array50To59, setPejman3Nums, "Pejman")}
+            if (pt3 === 6) {updateNumsArray(array60To69, setPejman3Nums, "Pejman")}
+            if (pt3 === 7) {updateNumsArray(array70To79, setPejman3Nums, "Pejman")}
+            if (pt3 === 8) {updateNumsArray(array80To89, setPejman3Nums, "Pejman")}
+            if (pt3 === 9) {updateNumsArray(array90To99, setPejman3Nums, "Pejman")}
         }
     };
     const pickRandomNumber = () => {
@@ -146,24 +152,24 @@ export default function Bingo() {
     };
     return (
         <div>
-        {!isGameStarted && userColor === "" && (
-            <div>
-              <label htmlFor="userColor">Select a Color</label>
-              <br></br>
-              <select
-                onChange={handleUserColor}
-                name="userColor"
-                id="userColor"
-              >
-                <option value={userColor} disabled selected>
-                  🔽🔽🔽
-                </option>
-                {["Red", "Green", "Blue"].map((c) => (
-                  <option>{c}</option>
-                ))}
-              </select>
-            </div>
-        )}
+            {!isGameStarted && userColor === "" && (
+                <div>
+                <label htmlFor="userColor">Select a Color</label>
+                <br></br>
+                <select
+                    onChange={handleUserColor}
+                    name="userColor"
+                    id="userColor"
+                >
+                    <option value={userColor} disabled selected>
+                    🔽🔽🔽
+                    </option>
+                    {["Red", "Green", "Blue"].map((c) => (
+                    <option>{c}</option>
+                    ))}
+                </select>
+                </div>
+            )}
             {!isGameStarted && userColor !== "" &&
                 <button onClick={handleStart}>Start</button>
             }
@@ -186,20 +192,58 @@ export default function Bingo() {
                 </div>
             }
             {isGameStarted &&
-                <div>Pejman's boards:</div>}
+            <div>
+                <div>Pejman's boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
                     {isGameStarted && <Board nums={pejman1Nums} color={"black"} selectedNums={selectedNums} />}
                     {isGameStarted && <Board nums={pejman2Nums} color={"black"} selectedNums={selectedNums} />}
                     {isGameStarted && <Board nums={pejman3Nums} color={"black"} selectedNums={selectedNums} />}
                 </div>
             <br />
-            {isGameStarted &&
-                <div>Your boards:</div>}
+                <div>Your boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                    {isGameStarted && <Board nums={user1Nums} color={userColor} selectedNums={selectedNums} />}
-                    {isGameStarted && <Board nums={user2Nums} color={userColor} selectedNums={selectedNums} />}
-                    {isGameStarted && <Board nums={user3Nums} color={userColor} selectedNums={selectedNums} />}
+                    {isGameStarted &&
+                        <Board
+                            nums={user1Nums}
+                            color={userColor}
+                            selectedNums={selectedNums}
+                            user1Nums={user1Nums}
+                            user2Nums={user2Nums}
+                            user3Nums={user3Nums}
+                            setUser1Nums={setUser1Nums}
+                            setUser2Nums={setUser2Nums}
+                            setUser3Nums={setUser3Nums}
+                        />
+                    }
+                    {isGameStarted &&
+                        <Board
+                            nums={user2Nums}
+                            color={userColor}
+                            selectedNums={selectedNums}
+                            user1Nums={user1Nums}
+                            user2Nums={user2Nums}
+                            user3Nums={user3Nums}
+                            setUser1Nums={setUser1Nums}
+                            setUser2Nums={setUser2Nums}
+                            setUser3Nums={setUser3Nums}
+                        />
+                    }
+                    {isGameStarted &&
+                        <Board
+                            nums={user3Nums}
+                            color={userColor}
+                            selectedNums={selectedNums}
+                            user1Nums={user1Nums}
+                            user2Nums={user2Nums}
+                            user3Nums={user3Nums}
+                            setUser1Nums={setUser1Nums}
+                            setUser2Nums={setUser2Nums}
+                            setUser3Nums={setUser3Nums}
+                        />
+                    }
                 </div>
+            </div>
+            }
         </div>
     )
 }
