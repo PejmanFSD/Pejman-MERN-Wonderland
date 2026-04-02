@@ -1,4 +1,4 @@
-export default function PejmanCell({value, owner, isSelected, selectedNums, nums}) {
+export default function PejmanCell({value, owner, isSelected}) {
     return (
         <div
             disabled

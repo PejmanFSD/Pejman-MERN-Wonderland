@@ -34,6 +34,7 @@ export default function Bingo() {
     const [pejman1Nums, setPejman1Nums] = useState([]);
     const [pejman2Nums, setPejman2Nums] = useState([]);
     const [pejman3Nums, setPejman3Nums] = useState([]);
+    const [youMissedMessage, setYouMissedMessage] = useState(false);
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -57,11 +58,11 @@ export default function Bingo() {
     const updateNumsArray = (arr, updateFunc, player) => {
         const shuffledArr = [...arr].sort(() => Math.random() - 0.5).slice(0, 5).sort();
         updateFunc(curr => [...curr,
-            {num: shuffledArr[0], isSelected: false, owner: player},
-            {num: shuffledArr[1], isSelected: false, owner: player},
-            {num: shuffledArr[2], isSelected: false, owner: player},
-            {num: shuffledArr[3], isSelected: false, owner: player},
-            {num: shuffledArr[4], isSelected: false, owner: player}
+            {num: shuffledArr[0], isSelected: false, isClicked: false, owner: player},
+            {num: shuffledArr[1], isSelected: false, isClicked: false, owner: player},
+            {num: shuffledArr[2], isSelected: false, isClicked: false, owner: player},
+            {num: shuffledArr[3], isSelected: false, isClicked: false, owner: player},
+            {num: shuffledArr[4], isSelected: false, isClicked: false, owner: player}
         ]);
     }
     const handleStart = () => {
@@ -141,6 +142,16 @@ export default function Bingo() {
         }
     };
     const pickRandomNumber = () => {
+        setYouMissedMessage(false);
+        setUser1Nums((currUser1Nums) => currUser1Nums.map((n) =>
+            selectedNums.includes(n.num) ? {...n, isSelected: true} : n
+        ));
+        setUser2Nums((currUser2Nums) => currUser2Nums.map((n) =>
+            selectedNums.includes(n.num) ? {...n, isSelected: true} : n
+        ));
+        setUser3Nums((currUser3Nums) => currUser3Nums.map((n) =>
+            selectedNums.includes(n.num) ? {...n, isSelected: true} : n
+        ));
         if (allNums.length === 0) return;
         const randomIndex = Math.floor(Math.random() * allNums.length);
         const selectedNumber = allNums[randomIndex];
@@ -161,7 +172,24 @@ export default function Bingo() {
         setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((n) =>
             selectedNums.includes(n.num) ? {...n, isSelected: true} : n
         ));
-    }, [allNums, selectedNums])
+    }, [allNums, selectedNums]);
+    useEffect(() => {
+        for (const un1 of user1Nums) {
+            if (un1.isSelected && !un1.isClicked && selectedNums.indexOf(un1.num) === selectedNums.length - 2) {
+                setYouMissedMessage(true);
+            }
+        }
+        for (const un2 of user2Nums) {
+            if (un2.isSelected && !un2.isClicked && selectedNums.indexOf(un2.num) === selectedNums.length - 2) {
+                setYouMissedMessage(true);
+            }
+        }
+        for (const un3 of user3Nums) {
+            if (un3.isSelected && !un3.isClicked && selectedNums.indexOf(un3.num) === selectedNums.length - 2) {
+                setYouMissedMessage(true);
+            }
+        }
+    }, [user1Nums, user2Nums, user3Nums]);
     return (
         <div>
             {!isGameStarted && userColor === "" && (
@@ -225,6 +253,7 @@ export default function Bingo() {
                             setUser1Nums={setUser1Nums}
                             setUser2Nums={setUser2Nums}
                             setUser3Nums={setUser3Nums}
+                            setYouMissedMessage={setYouMissedMessage}
                         />
                     }
                     {isGameStarted &&
@@ -238,6 +267,7 @@ export default function Bingo() {
                             setUser1Nums={setUser1Nums}
                             setUser2Nums={setUser2Nums}
                             setUser3Nums={setUser3Nums}
+                            setYouMissedMessage={setYouMissedMessage}
                         />
                     }
                     {isGameStarted &&
@@ -251,8 +281,10 @@ export default function Bingo() {
                             setUser1Nums={setUser1Nums}
                             setUser2Nums={setUser2Nums}
                             setUser3Nums={setUser3Nums}
+                            setYouMissedMessage={setYouMissedMessage}
                         />
                     }
+                    {youMissedMessage === true && <div>{`You missed ${selectedNums[selectedNums.length - 2]}`}</div>}
                 </div>
             </div>
             }

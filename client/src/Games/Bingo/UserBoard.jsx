@@ -1,6 +1,17 @@
 import UserCell from "./UserCell";
 
-export default function UserBoard({ nums, color, selectedNums, user1Nums, user2Nums, user3Nums, setUser1Nums, setUser2Nums, setUser3Nums }) {
+export default function UserBoard({
+  nums,
+  color,
+  selectedNums,
+  user1Nums,
+  user2Nums,
+  user3Nums,
+  setUser1Nums,
+  setUser2Nums,
+  setUser3Nums,
+  setYouMissedMessage,
+}) {
   return (
     <div>
       {
@@ -18,6 +29,7 @@ export default function UserBoard({ nums, color, selectedNums, user1Nums, user2N
                 value={nums[idx].num}
                 owner={nums[idx].owner}
                 isSelected={nums[idx].isSelected}
+                isClicked={nums[idx].isClicked}
                 color={color}
                 selectedNums={selectedNums}
                 nums={nums}
@@ -27,6 +39,7 @@ export default function UserBoard({ nums, color, selectedNums, user1Nums, user2N
                 setUser1Nums={setUser1Nums}
                 setUser2Nums={setUser2Nums}
                 setUser3Nums={setUser3Nums}
+                setYouMissedMessage={setYouMissedMessage}
             />
           ))}
         </div>

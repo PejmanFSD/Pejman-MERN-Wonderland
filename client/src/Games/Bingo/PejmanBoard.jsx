@@ -18,8 +18,6 @@ export default function PejmanBoard({ nums, selectedNums }) {
                 value={nums[idx].num}
                 owner={nums[idx].owner}
                 isSelected={nums[idx].isSelected}
-                selectedNums={selectedNums}
-                nums={nums}
             />
           ))}
         </div>
