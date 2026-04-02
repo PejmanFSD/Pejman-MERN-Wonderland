@@ -35,6 +35,9 @@ export default function Bingo() {
     const [pejman2Nums, setPejman2Nums] = useState([]);
     const [pejman3Nums, setPejman3Nums] = useState([]);
     const [youMissedMessage, setYouMissedMessage] = useState(false);
+    const [missedNumOnBoard1, setMissedNumOnBoard1] = useState(null);
+    const [missedNumOnBoard2, setMissedNumOnBoard2] = useState(null);
+    const [missedNumOnBoard3, setMissedNumOnBoard3] = useState(null);
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -143,6 +146,9 @@ export default function Bingo() {
     };
     const pickRandomNumber = () => {
         setYouMissedMessage(false);
+        setMissedNumOnBoard1(null);
+        setMissedNumOnBoard2(null);
+        setMissedNumOnBoard3(null);
         setUser1Nums((currUser1Nums) => currUser1Nums.map((n) =>
             selectedNums.includes(n.num) ? {...n, isSelected: true} : n
         ));
@@ -177,16 +183,19 @@ export default function Bingo() {
         for (const un1 of user1Nums) {
             if (un1.isSelected && !un1.isClicked && selectedNums.indexOf(un1.num) === selectedNums.length - 2) {
                 setYouMissedMessage(true);
+                setMissedNumOnBoard1(un1.num);
             }
         }
         for (const un2 of user2Nums) {
             if (un2.isSelected && !un2.isClicked && selectedNums.indexOf(un2.num) === selectedNums.length - 2) {
                 setYouMissedMessage(true);
+                setMissedNumOnBoard2(un2.num);
             }
         }
         for (const un3 of user3Nums) {
             if (un3.isSelected && !un3.isClicked && selectedNums.indexOf(un3.num) === selectedNums.length - 2) {
                 setYouMissedMessage(true);
+                setMissedNumOnBoard3(un3.num);
             }
         }
     }, [user1Nums, user2Nums, user3Nums]);
@@ -284,7 +293,12 @@ export default function Bingo() {
                             setYouMissedMessage={setYouMissedMessage}
                         />
                     }
-                    {youMissedMessage === true && <div>{`You missed ${selectedNums[selectedNums.length - 2]}`}</div>}
+                    {youMissedMessage === true && missedNumOnBoard1 &&
+                    <div>{`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}</div>}
+                    {youMissedMessage === true && missedNumOnBoard2 &&
+                    <div>{`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}</div>}
+                    {youMissedMessage === true && missedNumOnBoard3 &&
+                    <div>{`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}</div>}
                 </div>
             </div>
             }
