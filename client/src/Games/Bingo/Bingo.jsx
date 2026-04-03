@@ -224,22 +224,52 @@ export default function Bingo() {
             }
             {isGameStarted &&
                 <div>
-                    <div>{selectedNums[selectedNums.length - 1]}</div>
+                    <div
+                        style={{
+                            backgroundColor: "orange",
+                            width: "50px",
+                            border: "1px solid black",
+                            paddingLeft: "38px",
+                            paddingRight: "38px",
+                            paddingTop: "2px",
+                            paddingBottom: "2px",
+                            marginTop: "5px",
+                            marginBottom: "5px",
+                            margin: "5 auto"
+                        }}
+                    >
+                        {selectedNums[selectedNums.length - 1]}
+                    </div>
                     <button onClick={pickRandomNumber}>{`Choose number ${numCounter}`}</button>
                 </div>
             }
-            {isGameStarted &&
-                <div>
-                    <div style={{color: "gray"}}>All Nums:</div>
-                    {allNums.map(a => <div style={{display: "inline", color: "gray"}}>{a} -</div>)}
+            {isGameStarted && (
+                <div
+                style={{
+                    position: "relative",
+                    top: "5px",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(15, auto)",
+                    justifyContent: "center",
+                }}
+                >
+                    {selectedNums.map((n) =>
+                        <div
+                            style={{
+                                backgroundColor: "orange",
+                                paddingLeft: "8px",
+                                paddingRight: "8px",
+                                paddingTop: "2px",
+                                paddingBottom: "2px",
+                                margin: "3px",
+                                border: "1px solid black"
+                            }}
+                        >
+                            {n}
+                        </div>
+                    )}
                 </div>
-            }
-            {isGameStarted &&
-                <div>
-                    <div style={{color: "gray"}}>Selected Nums:</div>
-                    {selectedNums.map(a => <div style={{display: "inline", color: "gray"}}>{a} -</div>)}
-                </div>
-            }
+            )}
             {isGameStarted &&
             <div>
                 <div>Pejman's boards:</div>
