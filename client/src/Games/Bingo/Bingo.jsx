@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import UserBoard from "./UserBoard";
 import PejmanBoard from "./PejmanBoard";
+import ConfirmationBox from "../ConfirmationBox";
 
 const initialTens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -39,6 +40,7 @@ export default function Bingo() {
     const [missedNumOnBoard2, setMissedNumOnBoard2] = useState(null);
     const [missedNumOnBoard3, setMissedNumOnBoard3] = useState(null);
     const [finalMessage, setFinalMessage] = useState("");
+    const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -194,6 +196,16 @@ export default function Bingo() {
         setMissedNumOnBoard1(null);
         setMissedNumOnBoard2(null);
         setMissedNumOnBoard3(null);
+        setIsTogglingReset(false);
+    };
+    const toggleReset = () => {
+        setIsTogglingReset(true);
+    };
+    const toggleResetYes = () => {
+        handlePlayAgain();
+    };
+    const toggleResetCancel = () => {
+        setIsTogglingReset(false);
     };
     useEffect(() => {
         setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((n) =>
@@ -539,6 +551,25 @@ export default function Bingo() {
                     <div>Try again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
                 </div>
             }
+            {isGameStarted &&
+            !isTogglingReset &&
+            finalMessage === "" &&
+            userColor !== "" &&
+            // !isTogglingHomePage &&
+            (
+                <div>
+                    <button onClick={toggleReset}>Reset the Game</button>
+                </div>
+            )}
+            {isTogglingReset && finalMessage === "" && (
+            <div>
+                <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+                />
+            </div>
+            )}
             {!isGameStarted && userColor === "" && (
                 <div>
                 <label htmlFor="userColor">Select a Color</label>
@@ -560,7 +591,7 @@ export default function Bingo() {
             {!isGameStarted && userColor !== "" &&
                 <button onClick={handleStart}>Start</button>
             }
-            {isGameStarted &&
+            {isGameStarted && !isTogglingReset &&
                 <div>
                     {selectedNums.length > 0 && 
                     <div
@@ -586,7 +617,7 @@ export default function Bingo() {
                     {finalMessage === "" && <button onClick={pickRandomNumber} style={{position: "relative", top: "10px"}}>{`Choose number ${numCounter}`}</button>}
                 </div>
             }
-            {isGameStarted && (
+            {isGameStarted && !isTogglingReset && (
                 <div
                 style={{
                     position: "relative",
@@ -615,7 +646,7 @@ export default function Bingo() {
                     )}
                 </div>
             )}
-            {isGameStarted &&
+            {isGameStarted && !isTogglingReset &&
             <div style={{position: "relative", top: "5px"}}>
                 <div style={{position: "relative", top: "5px"}}>Pejman's boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
@@ -624,13 +655,13 @@ export default function Bingo() {
                     {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                 </div>
             </div>}
-            {youMissedMessage === true && missedNumOnBoard1 && finalMessage === "" &&
+            {youMissedMessage === true && missedNumOnBoard1 && finalMessage === "" && !isTogglingReset &&
             <div style={{color: "red", position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`} &#128533;</div>}
-            {youMissedMessage === true && missedNumOnBoard2 && finalMessage === "" &&
+            {youMissedMessage === true && missedNumOnBoard2 && finalMessage === "" && !isTogglingReset &&
             <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`} &#128533;</div>}
-            {youMissedMessage === true && missedNumOnBoard3 && finalMessage === "" &&
+            {youMissedMessage === true && missedNumOnBoard3 && finalMessage === "" && !isTogglingReset &&
             <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`} &#128533;</div>}
-            {isGameStarted &&
+            {isGameStarted && !isTogglingReset &&
             <div style={{position: "relative", top: "15px"}}>
                 <div style={{position: "relative", top: "5px"}}>Your boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
