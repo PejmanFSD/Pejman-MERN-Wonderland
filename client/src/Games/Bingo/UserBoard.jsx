@@ -11,6 +11,7 @@ export default function UserBoard({
   setUser2Nums,
   setUser3Nums,
   setYouMissedMessage,
+  finalMessage
 }) {
   return (
     <div>
@@ -30,6 +31,7 @@ export default function UserBoard({
                 owner={nums[idx].owner}
                 isSelected={nums[idx].isSelected}
                 isClicked={nums[idx].isClicked}
+                isWinnerCell={nums[idx].isWinnerCell}
                 color={color}
                 selectedNums={selectedNums}
                 nums={nums}
@@ -40,6 +42,7 @@ export default function UserBoard({
                 setUser2Nums={setUser2Nums}
                 setUser3Nums={setUser3Nums}
                 setYouMissedMessage={setYouMissedMessage}
+                finalMessage={finalMessage}
             />
           ))}
         </div>

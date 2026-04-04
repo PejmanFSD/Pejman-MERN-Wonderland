@@ -3,6 +3,7 @@ export default function UserCell({
     owner,
     isSelected,
     isClicked,
+    isWinnerCell,
     color,
     selectedNums,
     nums,
@@ -13,7 +14,7 @@ export default function UserCell({
     setUser2Nums,
     setUser3Nums,
     setYouMissedMessage,
-
+    finalMessage
 }) {
     const handleClickCell = () => {
         setYouMissedMessage(false);
@@ -41,15 +42,19 @@ export default function UserCell({
                     (selectedNums.includes(value) && isSelected === true && isClicked === false) ? "lightgray" :
                     (selectedNums.includes(value) && isSelected === false && isClicked === false) ? "yellow" :
                     "white",
-                width: "25px",
-                height: "25px",
+                width: "30px",
+                height: "30px",
                 fontSize: "11px",
-                border: "1px solid black",
-                color: (selectedNums.includes(value) && isSelected === true && isClicked === false) ? "gray" : color,
+                border: isWinnerCell ? "5px solid black" : "1px solid black",
+                boxSizing: "border-box",
+                color: (selectedNums.includes(value) && isSelected === true && isClicked === false) ? "gray" :
+                    (selectedNums.includes(value) && isSelected === true && isClicked === true) ? "white" :
+                color,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                margin: "1px"
+                margin: "1px",
+                opacity: (finalMessage !== "" && isWinnerCell) || finalMessage === "" ? "1" : "0.3"
             }}
         >
             {value}

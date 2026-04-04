@@ -1,6 +1,6 @@
 import PejmanCell from "./PejmanCell";
 
-export default function PejmanBoard({ nums, selectedNums }) {
+export default function PejmanBoard({ nums, selectedNums, finalMessage }) {
   return (
     <div>
       {
@@ -17,7 +17,9 @@ export default function PejmanBoard({ nums, selectedNums }) {
             <PejmanCell
                 value={nums[idx].num}
                 owner={nums[idx].owner}
+                isWinnerCell={nums[idx].isWinnerCell}
                 isSelected={nums[idx].isSelected}
+                finalMessage={finalMessage}
             />
           ))}
         </div>

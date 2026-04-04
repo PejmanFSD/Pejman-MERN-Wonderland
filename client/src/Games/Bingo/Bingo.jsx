@@ -38,6 +38,7 @@ export default function Bingo() {
     const [missedNumOnBoard1, setMissedNumOnBoard1] = useState(null);
     const [missedNumOnBoard2, setMissedNumOnBoard2] = useState(null);
     const [missedNumOnBoard3, setMissedNumOnBoard3] = useState(null);
+    const [finalMessage, setFinalMessage] = useState("");
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -61,11 +62,11 @@ export default function Bingo() {
     const updateNumsArray = (arr, updateFunc, player) => {
         const shuffledArr = [...arr].sort(() => Math.random() - 0.5).slice(0, 5).sort();
         updateFunc(curr => [...curr,
-            {num: shuffledArr[0], isSelected: false, isClicked: false, owner: player},
-            {num: shuffledArr[1], isSelected: false, isClicked: false, owner: player},
-            {num: shuffledArr[2], isSelected: false, isClicked: false, owner: player},
-            {num: shuffledArr[3], isSelected: false, isClicked: false, owner: player},
-            {num: shuffledArr[4], isSelected: false, isClicked: false, owner: player}
+            {num: shuffledArr[0], isSelected: false, isClicked: false, owner: player, isWinnerCell: false},
+            {num: shuffledArr[1], isSelected: false, isClicked: false, owner: player, isWinnerCell: false},
+            {num: shuffledArr[2], isSelected: false, isClicked: false, owner: player, isWinnerCell: false},
+            {num: shuffledArr[3], isSelected: false, isClicked: false, owner: player, isWinnerCell: false},
+            {num: shuffledArr[4], isSelected: false, isClicked: false, owner: player, isWinnerCell: false}
         ]);
     }
     const handleStart = () => {
@@ -199,8 +200,309 @@ export default function Bingo() {
             }
         }
     }, [user1Nums, user2Nums, user3Nums]);
+    useEffect(() => {
+        if (user1Nums.length > 0 && user1Nums[0].isClicked && user1Nums[1].isClicked && user1Nums[2].isClicked && user1Nums[3].isClicked && user1Nums[4].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [0, 1, 2, 3, 4].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[5].isClicked && user1Nums[6].isClicked && user1Nums[7].isClicked && user1Nums[8].isClicked && user1Nums[9].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [5, 6, 7, 8, 9].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[10].isClicked && user1Nums[11].isClicked && user1Nums[12].isClicked && user1Nums[13].isClicked && user1Nums[14].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [10, 11, 12, 13, 14].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[15].isClicked && user1Nums[16].isClicked && user1Nums[17].isClicked && user1Nums[18].isClicked && user1Nums[19].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [15, 16, 17, 18, 19].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[20].isClicked && user1Nums[21].isClicked && user1Nums[22].isClicked && user1Nums[23].isClicked && user1Nums[24].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [20, 21, 22, 23, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[0].isClicked && user1Nums[5].isClicked && user1Nums[10].isClicked && user1Nums[15].isClicked && user1Nums[20].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [0, 5, 10, 15, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[1].isClicked && user1Nums[6].isClicked && user1Nums[11].isClicked && user1Nums[16].isClicked && user1Nums[21].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [1, 6, 11, 16, 21].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[2].isClicked && user1Nums[7].isClicked && user1Nums[12].isClicked && user1Nums[17].isClicked && user1Nums[22].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [2, 7, 12, 17, 22].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[3].isClicked && user1Nums[8].isClicked && user1Nums[13].isClicked && user1Nums[18].isClicked && user1Nums[23].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [3, 8, 13, 18, 23].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[4].isClicked && user1Nums[9].isClicked && user1Nums[14].isClicked && user1Nums[19].isClicked && user1Nums[24].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [4, 9, 14, 19, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[0].isClicked && user1Nums[6].isClicked && user1Nums[12].isClicked && user1Nums[18].isClicked && user1Nums[24].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [0, 6, 12, 18, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user1Nums.length > 0 && user1Nums[4].isClicked && user1Nums[8].isClicked && user1Nums[12].isClicked && user1Nums[16].isClicked && user1Nums[20].isClicked) {
+            setUser1Nums((currUser1Nums) => currUser1Nums.map((un1, i) => [4, 8, 12, 16, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+    }, [user1Nums]);
+    useEffect(() => {
+        if (user2Nums.length > 0 && user2Nums[0].isClicked && user2Nums[1].isClicked && user2Nums[2].isClicked && user2Nums[3].isClicked && user2Nums[4].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [0, 1, 2, 3, 4].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[5].isClicked && user2Nums[6].isClicked && user2Nums[7].isClicked && user2Nums[8].isClicked && user2Nums[9].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [5, 6, 7, 8, 9].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[10].isClicked && user2Nums[11].isClicked && user2Nums[12].isClicked && user2Nums[13].isClicked && user2Nums[14].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [10, 11, 12, 13, 14].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[15].isClicked && user2Nums[16].isClicked && user2Nums[17].isClicked && user2Nums[18].isClicked && user2Nums[19].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [15, 16, 17, 18, 19].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[20].isClicked && user2Nums[21].isClicked && user2Nums[22].isClicked && user2Nums[23].isClicked && user2Nums[24].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [20, 21, 22, 23, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[0].isClicked && user2Nums[5].isClicked && user2Nums[10].isClicked && user2Nums[15].isClicked && user2Nums[20].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [0, 5, 10, 15, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[1].isClicked && user2Nums[6].isClicked && user2Nums[11].isClicked && user2Nums[16].isClicked && user2Nums[21].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [1, 6, 11, 16, 21].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[2].isClicked && user2Nums[7].isClicked && user2Nums[12].isClicked && user2Nums[17].isClicked && user2Nums[22].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [2, 7, 12, 17, 22].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[3].isClicked && user2Nums[8].isClicked && user2Nums[13].isClicked && user2Nums[18].isClicked && user2Nums[23].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [3, 8, 13, 18, 23].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[4].isClicked && user2Nums[9].isClicked && user2Nums[14].isClicked && user2Nums[19].isClicked && user2Nums[24].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [4, 9, 14, 19, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[0].isClicked && user2Nums[6].isClicked && user2Nums[12].isClicked && user2Nums[18].isClicked && user2Nums[24].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [0, 6, 12, 18, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user2Nums.length > 0 && user2Nums[4].isClicked && user2Nums[8].isClicked && user2Nums[12].isClicked && user2Nums[16].isClicked && user2Nums[20].isClicked) {
+            setUser2Nums((currUser2Nums) => currUser2Nums.map((un1, i) => [4, 8, 12, 16, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+    }, [user2Nums]);
+    useEffect(() => {
+        if (user3Nums.length > 0 && user3Nums[0].isClicked && user3Nums[1].isClicked && user3Nums[2].isClicked && user3Nums[3].isClicked && user3Nums[4].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [0, 1, 2, 3, 4].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[5].isClicked && user3Nums[6].isClicked && user3Nums[7].isClicked && user3Nums[8].isClicked && user3Nums[9].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [5, 6, 7, 8, 9].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[10].isClicked && user3Nums[11].isClicked && user3Nums[12].isClicked && user3Nums[13].isClicked && user3Nums[14].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [10, 11, 12, 13, 14].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[15].isClicked && user3Nums[16].isClicked && user3Nums[17].isClicked && user3Nums[18].isClicked && user3Nums[19].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [15, 16, 17, 18, 19].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[20].isClicked && user3Nums[21].isClicked && user3Nums[22].isClicked && user3Nums[23].isClicked && user3Nums[24].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [20, 21, 22, 23, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[0].isClicked && user3Nums[5].isClicked && user3Nums[10].isClicked && user3Nums[15].isClicked && user3Nums[20].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [0, 5, 10, 15, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[1].isClicked && user3Nums[6].isClicked && user3Nums[11].isClicked && user3Nums[16].isClicked && user3Nums[21].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [1, 6, 11, 16, 21].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[2].isClicked && user3Nums[7].isClicked && user3Nums[12].isClicked && user3Nums[17].isClicked && user3Nums[22].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [2, 7, 12, 17, 22].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[3].isClicked && user3Nums[8].isClicked && user3Nums[13].isClicked && user3Nums[18].isClicked && user3Nums[23].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [3, 8, 13, 18, 23].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[4].isClicked && user3Nums[9].isClicked && user3Nums[14].isClicked && user3Nums[19].isClicked && user3Nums[24].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [4, 9, 14, 19, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[0].isClicked && user3Nums[6].isClicked && user3Nums[12].isClicked && user3Nums[18].isClicked && user3Nums[24].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [0, 6, 12, 18, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+        if (user3Nums.length > 0 && user3Nums[4].isClicked && user3Nums[8].isClicked && user3Nums[12].isClicked && user3Nums[16].isClicked && user3Nums[20].isClicked) {
+            setUser3Nums((currUser3Nums) => currUser3Nums.map((un1, i) => [4, 8, 12, 16, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("You Win!");
+        }
+    }, [user3Nums]);
+    useEffect(() => {
+        if (pejman1Nums.length > 0 && pejman1Nums[0].isSelected && pejman1Nums[1].isSelected && pejman1Nums[2].isSelected && pejman1Nums[3].isSelected && pejman1Nums[4].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [0, 1, 2, 3, 4].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[5].isSelected && pejman1Nums[6].isSelected && pejman1Nums[7].isSelected && pejman1Nums[8].isSelected && pejman1Nums[9].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [5, 6, 7, 8, 9].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[10].isSelected && pejman1Nums[11].isSelected && pejman1Nums[12].isSelected && pejman1Nums[13].isSelected && pejman1Nums[14].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [10, 11, 12, 13, 14].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[15].isSelected && pejman1Nums[16].isSelected && pejman1Nums[17].isSelected && pejman1Nums[18].isSelected && pejman1Nums[19].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [15, 16, 17, 18, 19].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[20].isSelected && pejman1Nums[21].isSelected && pejman1Nums[22].isSelected && pejman1Nums[23].isSelected && pejman1Nums[24].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [20, 21, 22, 23, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[0].isSelected && pejman1Nums[5].isSelected && pejman1Nums[10].isSelected && pejman1Nums[15].isSelected && pejman1Nums[20].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [0, 5, 10, 15, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[1].isSelected && pejman1Nums[6].isSelected && pejman1Nums[11].isSelected && pejman1Nums[16].isSelected && pejman1Nums[21].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [1, 6, 11, 16, 21].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[2].isSelected && pejman1Nums[7].isSelected && pejman1Nums[12].isSelected && pejman1Nums[17].isSelected && pejman1Nums[22].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [2, 7, 12, 17, 22].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[3].isSelected && pejman1Nums[8].isSelected && pejman1Nums[13].isSelected && pejman1Nums[18].isSelected && pejman1Nums[23].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [3, 8, 13, 18, 23].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[4].isSelected && pejman1Nums[9].isSelected && pejman1Nums[14].isSelected && pejman1Nums[19].isSelected && pejman1Nums[24].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [4, 9, 14, 19, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[0].isSelected && pejman1Nums[6].isSelected && pejman1Nums[12].isSelected && pejman1Nums[18].isSelected && pejman1Nums[24].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [0, 6, 12, 18, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman1Nums.length > 0 && pejman1Nums[4].isSelected && pejman1Nums[8].isSelected && pejman1Nums[12].isSelected && pejman1Nums[16].isSelected && pejman1Nums[20].isSelected) {
+            setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((un1, i) => [4, 8, 12, 16, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+    }, [pejman1Nums]);
+    useEffect(() => {
+        if (pejman2Nums.length > 0 && pejman2Nums[0].isSelected && pejman2Nums[1].isSelected && pejman2Nums[2].isSelected && pejman2Nums[3].isSelected && pejman2Nums[4].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [0, 1, 2, 3, 4].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[5].isSelected && pejman2Nums[6].isSelected && pejman2Nums[7].isSelected && pejman2Nums[8].isSelected && pejman2Nums[9].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [5, 6, 7, 8, 9].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[10].isSelected && pejman2Nums[11].isSelected && pejman2Nums[12].isSelected && pejman2Nums[13].isSelected && pejman2Nums[14].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [10, 11, 12, 13, 14].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[15].isSelected && pejman2Nums[16].isSelected && pejman2Nums[17].isSelected && pejman2Nums[18].isSelected && pejman2Nums[19].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [15, 16, 17, 18, 19].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[20].isSelected && pejman2Nums[21].isSelected && pejman2Nums[22].isSelected && pejman2Nums[23].isSelected && pejman2Nums[24].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [20, 21, 22, 23, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[0].isSelected && pejman2Nums[5].isSelected && pejman2Nums[10].isSelected && pejman2Nums[15].isSelected && pejman2Nums[20].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [0, 5, 10, 15, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[1].isSelected && pejman2Nums[6].isSelected && pejman2Nums[11].isSelected && pejman2Nums[16].isSelected && pejman2Nums[21].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [1, 6, 11, 16, 21].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[2].isSelected && pejman2Nums[7].isSelected && pejman2Nums[12].isSelected && pejman2Nums[17].isSelected && pejman2Nums[22].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [2, 7, 12, 17, 22].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[3].isSelected && pejman2Nums[8].isSelected && pejman2Nums[13].isSelected && pejman2Nums[18].isSelected && pejman2Nums[23].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [3, 8, 13, 18, 23].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[4].isSelected && pejman2Nums[9].isSelected && pejman2Nums[14].isSelected && pejman2Nums[19].isSelected && pejman2Nums[24].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [4, 9, 14, 19, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[0].isSelected && pejman2Nums[6].isSelected && pejman2Nums[12].isSelected && pejman2Nums[18].isSelected && pejman2Nums[24].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [0, 6, 12, 18, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman2Nums.length > 0 && pejman2Nums[4].isSelected && pejman2Nums[8].isSelected && pejman2Nums[12].isSelected && pejman2Nums[16].isSelected && pejman2Nums[20].isSelected) {
+            setPejman2Nums((currPejman2Nums) => currPejman2Nums.map((un1, i) => [4, 8, 12, 16, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+    }, [pejman2Nums]);
+    useEffect(() => {
+        if (pejman3Nums.length > 0 && pejman3Nums[0].isSelected && pejman3Nums[1].isSelected && pejman3Nums[2].isSelected && pejman3Nums[3].isSelected && pejman3Nums[4].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [0, 1, 2, 3, 4].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[5].isSelected && pejman3Nums[6].isSelected && pejman3Nums[7].isSelected && pejman3Nums[8].isSelected && pejman3Nums[9].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [5, 6, 7, 8, 9].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[10].isSelected && pejman3Nums[11].isSelected && pejman3Nums[12].isSelected && pejman3Nums[13].isSelected && pejman3Nums[14].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [10, 11, 12, 13, 14].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[15].isSelected && pejman3Nums[16].isSelected && pejman3Nums[17].isSelected && pejman3Nums[18].isSelected && pejman3Nums[19].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [15, 16, 17, 18, 19].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[20].isSelected && pejman3Nums[21].isSelected && pejman3Nums[22].isSelected && pejman3Nums[23].isSelected && pejman3Nums[24].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [20, 21, 22, 23, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[0].isSelected && pejman3Nums[5].isSelected && pejman3Nums[10].isSelected && pejman3Nums[15].isSelected && pejman3Nums[20].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [0, 5, 10, 15, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[1].isSelected && pejman3Nums[6].isSelected && pejman3Nums[11].isSelected && pejman3Nums[16].isSelected && pejman3Nums[21].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [1, 6, 11, 16, 21].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[2].isSelected && pejman3Nums[7].isSelected && pejman3Nums[12].isSelected && pejman3Nums[17].isSelected && pejman3Nums[22].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [2, 7, 12, 17, 22].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[3].isSelected && pejman3Nums[8].isSelected && pejman3Nums[13].isSelected && pejman3Nums[18].isSelected && pejman3Nums[23].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [3, 8, 13, 18, 23].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[4].isSelected && pejman3Nums[9].isSelected && pejman3Nums[14].isSelected && pejman3Nums[19].isSelected && pejman3Nums[24].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [4, 9, 14, 19, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[0].isSelected && pejman3Nums[6].isSelected && pejman3Nums[12].isSelected && pejman3Nums[18].isSelected && pejman3Nums[24].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [0, 6, 12, 18, 24].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+        if (pejman3Nums.length > 0 && pejman3Nums[4].isSelected && pejman3Nums[8].isSelected && pejman3Nums[12].isSelected && pejman3Nums[16].isSelected && pejman3Nums[20].isSelected) {
+            setPejman3Nums((currPejman3Nums) => currPejman3Nums.map((un1, i) => [4, 8, 12, 16, 20].includes(i) ? {...un1, isWinnerCell: true} : un1));
+            setFinalMessage("Pejman Wins!");
+        }
+    }, [pejman3Nums]);
     return (
         <div>
+            {finalMessage !== "" && <h2>{finalMessage}</h2>}
             {!isGameStarted && userColor === "" && (
                 <div>
                 <label htmlFor="userColor">Select a Color</label>
@@ -224,6 +526,7 @@ export default function Bingo() {
             }
             {isGameStarted &&
                 <div>
+                    {selectedNums.length > 0 && 
                     <div
                         style={{
                             backgroundColor: "orange",
@@ -235,11 +538,12 @@ export default function Bingo() {
                             paddingBottom: "2px",
                             marginTop: "5px",
                             marginBottom: "5px",
-                            margin: "5 auto"
+                            margin: "0 auto"
                         }}
                     >
                         {selectedNums[selectedNums.length - 1]}
                     </div>
+                    }
                     <button onClick={pickRandomNumber}>{`Choose number ${numCounter}`}</button>
                 </div>
             }
@@ -271,16 +575,16 @@ export default function Bingo() {
                 </div>
             )}
             {isGameStarted &&
-            <div>
+            <div style={{position: "relative", top: "5px"}}>
                 <div>Pejman's boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
-                    {isGameStarted && <PejmanBoard nums={pejman1Nums} selectedNums={selectedNums} />}
-                    {isGameStarted && <PejmanBoard nums={pejman2Nums} selectedNums={selectedNums} />}
-                    {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} />}
+                    {isGameStarted && <PejmanBoard nums={pejman1Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
+                    {isGameStarted && <PejmanBoard nums={pejman2Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
+                    {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                 </div>
-            <br />
-                <div>Your boards:</div>
-                <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
+            {/* <br /> */}
+                <div style={{position: "relative", top: "5px"}}>Your boards:</div>
+                <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
                     {isGameStarted &&
                         <UserBoard
                             nums={user1Nums}
@@ -293,6 +597,7 @@ export default function Bingo() {
                             setUser2Nums={setUser2Nums}
                             setUser3Nums={setUser3Nums}
                             setYouMissedMessage={setYouMissedMessage}
+                            finalMessage={finalMessage}
                         />
                     }
                     {isGameStarted &&
@@ -307,6 +612,7 @@ export default function Bingo() {
                             setUser2Nums={setUser2Nums}
                             setUser3Nums={setUser3Nums}
                             setYouMissedMessage={setYouMissedMessage}
+                            finalMessage={finalMessage}
                         />
                     }
                     {isGameStarted &&
@@ -321,6 +627,7 @@ export default function Bingo() {
                             setUser2Nums={setUser2Nums}
                             setUser3Nums={setUser3Nums}
                             setYouMissedMessage={setYouMissedMessage}
+                            finalMessage={finalMessage}
                         />
                     }
                     {youMissedMessage === true && missedNumOnBoard1 &&
