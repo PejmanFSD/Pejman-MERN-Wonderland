@@ -538,13 +538,14 @@ export default function Bingo() {
                             paddingBottom: "2px",
                             marginTop: "5px",
                             marginBottom: "5px",
-                            margin: "0 auto"
+                            margin: "0 auto",
+                            opacity: finalMessage === "" ? 1 : 0.3
                         }}
                     >
                         {selectedNums[selectedNums.length - 1]}
                     </div>
                     }
-                    <button onClick={pickRandomNumber}>{`Choose number ${numCounter}`}</button>
+                    {finalMessage === "" && <button onClick={pickRandomNumber} disabled={finalMessage !== ""}>{`Choose number ${numCounter}`}</button>}
                 </div>
             }
             {isGameStarted && (
@@ -560,13 +561,15 @@ export default function Bingo() {
                     {selectedNums.map((n) =>
                         <div
                             style={{
+                                fontSize: finalMessage === "" ? "15px" : "10px",
                                 backgroundColor: "orange",
                                 paddingLeft: "8px",
                                 paddingRight: "8px",
                                 paddingTop: "2px",
                                 paddingBottom: "2px",
                                 margin: "3px",
-                                border: "1px solid black"
+                                border: "1px solid black",
+                                opacity: finalMessage === "" ? 1 : 0.3
                             }}
                         >
                             {n}
@@ -582,8 +585,16 @@ export default function Bingo() {
                     {isGameStarted && <PejmanBoard nums={pejman2Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                     {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                 </div>
-            {/* <br /> */}
-                <div style={{position: "relative", top: "5px"}}>Your boards:</div>
+            </div>}
+            {youMissedMessage === true && missedNumOnBoard1 && finalMessage === "" &&
+            <div style={{color: "red", position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`} &#128533;</div>}
+            {youMissedMessage === true && missedNumOnBoard2 && finalMessage === "" &&
+            <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`} &#128533;</div>}
+            {youMissedMessage === true && missedNumOnBoard3 && finalMessage === "" &&
+            <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`} &#128533;</div>}
+            {isGameStarted &&
+            <div style={{position: "relative", top: "15px"}}>
+                <div>Your boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
                     {isGameStarted &&
                         <UserBoard
@@ -630,12 +641,6 @@ export default function Bingo() {
                             finalMessage={finalMessage}
                         />
                     }
-                    {youMissedMessage === true && missedNumOnBoard1 &&
-                    <div>{`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}</div>}
-                    {youMissedMessage === true && missedNumOnBoard2 &&
-                    <div>{`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}</div>}
-                    {youMissedMessage === true && missedNumOnBoard3 &&
-                    <div>{`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}</div>}
                 </div>
             </div>
             }
