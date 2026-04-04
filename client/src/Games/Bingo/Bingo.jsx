@@ -48,6 +48,8 @@ export default function Bingo() {
     } else if (e.target.value === "Blue") {
       setUserColor("blue");
     }
+    setIsGameStarted(false);
+    setFinalMessage("");
     updateTensArray(setUserTens1);
     updateTensArray(setUserTens2);
     updateTensArray(setUserTens3);
@@ -168,6 +170,30 @@ export default function Bingo() {
         setAllNums(newAllNums);
         setSelectedNums(prev => [...prev, selectedNumber]);
         setNumCounter(currNumCounter => currNumCounter + 1);
+    };
+    const handlePlayAgain = () => {
+        setFinalMessage("");
+        setIsGameStarted(false);
+        setUserColor("");
+        setAllNums(allNumsArray);
+        setSelectedNums([]);
+        setNumCounter(1);
+        setUserTens1([]);
+        setUserTens2([]);
+        setUserTens3([]);
+        setPejmanTens1([]);
+        setPejmanTens2([]);
+        setPejmanTens3([]);
+        setUser1Nums([]);
+        setUser2Nums([]);
+        setUser3Nums([]);
+        setPejman1Nums([]);
+        setPejman2Nums([]);
+        setPejman3Nums([]);
+        setYouMissedMessage(false);
+        setMissedNumOnBoard1(null);
+        setMissedNumOnBoard2(null);
+        setMissedNumOnBoard3(null);
     };
     useEffect(() => {
         setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((n) =>
@@ -502,7 +528,17 @@ export default function Bingo() {
     }, [pejman3Nums]);
     return (
         <div>
-            {finalMessage !== "" && <h2>{finalMessage}</h2>}
+            {finalMessage !== "" && isGameStarted && <h2>{finalMessage}</h2>}
+            {finalMessage === "You Win!" && isGameStarted &&
+                <div>
+                    <div>Play again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
+                </div>
+            }
+            {finalMessage === "Pejman Wins!" && isGameStarted &&
+                <div>
+                    <div>Try again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
+                </div>
+            }
             {!isGameStarted && userColor === "" && (
                 <div>
                 <label htmlFor="userColor">Select a Color</label>
@@ -529,6 +565,8 @@ export default function Bingo() {
                     {selectedNums.length > 0 && 
                     <div
                         style={{
+                            position: "relative",
+                            top: "10px",
                             backgroundColor: "orange",
                             width: "50px",
                             border: "1px solid black",
@@ -545,14 +583,14 @@ export default function Bingo() {
                         {selectedNums[selectedNums.length - 1]}
                     </div>
                     }
-                    {finalMessage === "" && <button onClick={pickRandomNumber} disabled={finalMessage !== ""}>{`Choose number ${numCounter}`}</button>}
+                    {finalMessage === "" && <button onClick={pickRandomNumber} style={{position: "relative", top: "10px"}}>{`Choose number ${numCounter}`}</button>}
                 </div>
             }
             {isGameStarted && (
                 <div
                 style={{
                     position: "relative",
-                    top: "5px",
+                    top: "10px",
                     display: "grid",
                     gridTemplateColumns: "repeat(15, auto)",
                     justifyContent: "center",
@@ -579,8 +617,8 @@ export default function Bingo() {
             )}
             {isGameStarted &&
             <div style={{position: "relative", top: "5px"}}>
-                <div>Pejman's boards:</div>
-                <div style={{display: "flex", justifyContent: "center", gap: "20px"}}>
+                <div style={{position: "relative", top: "5px"}}>Pejman's boards:</div>
+                <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
                     {isGameStarted && <PejmanBoard nums={pejman1Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                     {isGameStarted && <PejmanBoard nums={pejman2Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                     {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
@@ -594,7 +632,7 @@ export default function Bingo() {
             <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`} &#128533;</div>}
             {isGameStarted &&
             <div style={{position: "relative", top: "15px"}}>
-                <div>Your boards:</div>
+                <div style={{position: "relative", top: "5px"}}>Your boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
                     {isGameStarted &&
                         <UserBoard
