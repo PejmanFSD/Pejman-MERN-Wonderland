@@ -17,7 +17,7 @@ const array80To89 = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89];
 const array90To99 = [90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
 const allNumsArray = Array.from({ length: 99 }, (_, i) => i + 1);
 
-export default function Bingo() {
+export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint, isAGameStarted, setIsAGameStarted}) {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [userColor, setUserColor] = useState("");
     const [allNums, setAllNums] = useState(allNumsArray);
@@ -41,6 +41,7 @@ export default function Bingo() {
     const [missedNumOnBoard3, setMissedNumOnBoard3] = useState(null);
     const [finalMessage, setFinalMessage] = useState("");
     const [isTogglingReset, setIsTogglingReset] = useState(false);
+    const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -197,6 +198,7 @@ export default function Bingo() {
         setMissedNumOnBoard2(null);
         setMissedNumOnBoard3(null);
         setIsTogglingReset(false);
+        setIsTogglingHomePage(false);
     };
     const toggleReset = () => {
         setIsTogglingReset(true);
@@ -207,6 +209,18 @@ export default function Bingo() {
     const toggleResetCancel = () => {
         setIsTogglingReset(false);
     };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowBingo(false);
+    setShowGameTitles(true);
+    setIsAGameStarted(false);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
+  };
     useEffect(() => {
         setPejman1Nums((currPejman1Nums) => currPejman1Nums.map((n) =>
             selectedNums.includes(n.num) ? {...n, isSelected: true} : n
@@ -540,28 +554,17 @@ export default function Bingo() {
     }, [pejman3Nums]);
     return (
         <div>
-            {finalMessage !== "" && isGameStarted && <h2>{finalMessage}</h2>}
-            {finalMessage === "You Win!" && isGameStarted &&
-                <div>
-                    <div>Play again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
-                </div>
-            }
-            {finalMessage === "Pejman Wins!" && isGameStarted &&
-                <div>
-                    <div>Try again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
-                </div>
-            }
             {isGameStarted &&
             !isTogglingReset &&
             finalMessage === "" &&
             userColor !== "" &&
-            // !isTogglingHomePage &&
+            !isTogglingHomePage &&
             (
                 <div>
                     <button onClick={toggleReset}>Reset the Game</button>
                 </div>
             )}
-            {isTogglingReset && finalMessage === "" && (
+            {isTogglingReset && (
             <div>
                 <ConfirmationBox
                 question="Are you sure you want to reset the game?"
@@ -570,7 +573,36 @@ export default function Bingo() {
                 />
             </div>
             )}
-            {!isGameStarted && userColor === "" && (
+                  {!isTogglingHomePage &&
+                    !isTogglingReset && (
+                      <div>
+                        <button onClick={() => toggleHomePage()}>
+                          Back to the home page
+                        </button>
+                      </div>
+                    )}
+                  {isTogglingHomePage && (
+                    <div>
+                      <ConfirmationBox
+                        question="Are you sure you want to go back to Home Page?"
+                        toggleYes={toggleHomePageYes}
+                        toggleCancel={toggleHomePageCancel}
+                      />
+                    </div>
+                  )}
+            {finalMessage !== "" && isGameStarted && !isTogglingHomePage && <h2>{finalMessage}</h2>}
+            {finalMessage === "You Win!" && isGameStarted && !isTogglingHomePage &&
+                <div>
+                    <div>Play again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
+                </div>
+            }
+            {finalMessage === "Pejman Wins!" && isGameStarted && !isTogglingHomePage &&
+                <div>
+                    <div>Try again</div><button onClick={handlePlayAgain} style={{position: "relative", top: "5px"}}>Ok</button>
+                </div>
+            }
+            
+            {!isGameStarted && userColor === "" && !isTogglingHomePage && (
                 <div>
                 <label htmlFor="userColor">Select a Color</label>
                 <br></br>
@@ -588,10 +620,10 @@ export default function Bingo() {
                 </select>
                 </div>
             )}
-            {!isGameStarted && userColor !== "" &&
+            {!isGameStarted && userColor !== "" && !isTogglingHomePage &&
                 <button onClick={handleStart}>Start</button>
             }
-            {isGameStarted && !isTogglingReset &&
+            {isGameStarted && !isTogglingReset && !isTogglingHomePage &&
                 <div>
                     {selectedNums.length > 0 && 
                     <div
@@ -617,7 +649,7 @@ export default function Bingo() {
                     {finalMessage === "" && <button onClick={pickRandomNumber} style={{position: "relative", top: "10px"}}>{`Choose number ${numCounter}`}</button>}
                 </div>
             }
-            {isGameStarted && !isTogglingReset && (
+            {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
                 <div
                 style={{
                     position: "relative",
@@ -646,7 +678,7 @@ export default function Bingo() {
                     )}
                 </div>
             )}
-            {isGameStarted && !isTogglingReset &&
+            {isGameStarted && !isTogglingReset && !isTogglingHomePage &&
             <div style={{position: "relative", top: "5px"}}>
                 <div style={{position: "relative", top: "5px"}}>Pejman's boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
@@ -655,13 +687,13 @@ export default function Bingo() {
                     {isGameStarted && <PejmanBoard nums={pejman3Nums} selectedNums={selectedNums} finalMessage={finalMessage} />}
                 </div>
             </div>}
-            {youMissedMessage === true && missedNumOnBoard1 && finalMessage === "" && !isTogglingReset &&
+            {youMissedMessage === true && missedNumOnBoard1 && finalMessage === "" && !isTogglingReset && !isTogglingHomePage &&
             <div style={{color: "red", position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`} &#128533;</div>}
-            {youMissedMessage === true && missedNumOnBoard2 && finalMessage === "" && !isTogglingReset &&
+            {youMissedMessage === true && missedNumOnBoard2 && finalMessage === "" && !isTogglingReset && !isTogglingHomePage &&
             <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`} &#128533;</div>}
-            {youMissedMessage === true && missedNumOnBoard3 && finalMessage === "" && !isTogglingReset &&
+            {youMissedMessage === true && missedNumOnBoard3 && finalMessage === "" && !isTogglingReset && !isTogglingHomePage &&
             <div style={{color: "red",position: "relative", top: "15px"}}>{`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`} &#128533;</div>}
-            {isGameStarted && !isTogglingReset &&
+            {isGameStarted && !isTogglingReset && !isTogglingHomePage &&
             <div style={{position: "relative", top: "15px"}}>
                 <div style={{position: "relative", top: "5px"}}>Your boards:</div>
                 <div style={{display: "flex", justifyContent: "center", gap: "20px", position: "relative", top: "5px"}}>
