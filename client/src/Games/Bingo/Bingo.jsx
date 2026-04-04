@@ -552,6 +552,11 @@ export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint
             setFinalMessage("Pejman Wins!");
         }
     }, [pejman3Nums]);
+    useEffect(() => {
+        if (finalMessage === "You Win!") {
+            updateTotalPoint(1);
+        }
+    }, [finalMessage]);
     return (
         <div>
             {isGameStarted &&
@@ -573,23 +578,23 @@ export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint
                 />
             </div>
             )}
-                  {!isTogglingHomePage &&
-                    !isTogglingReset && (
-                      <div>
-                        <button onClick={() => toggleHomePage()}>
-                          Back to the home page
-                        </button>
-                      </div>
-                    )}
-                  {isTogglingHomePage && (
-                    <div>
-                      <ConfirmationBox
-                        question="Are you sure you want to go back to Home Page?"
-                        toggleYes={toggleHomePageYes}
-                        toggleCancel={toggleHomePageCancel}
-                      />
-                    </div>
-                  )}
+            {!isTogglingHomePage &&
+            !isTogglingReset && (
+                <div>
+                <button onClick={() => toggleHomePage()}>
+                    Back to the home page
+                </button>
+                </div>
+            )}
+            {isTogglingHomePage && (
+            <div>
+                <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+                />
+            </div>
+            )}
             {finalMessage !== "" && isGameStarted && !isTogglingHomePage && <h2>{finalMessage}</h2>}
             {finalMessage === "You Win!" && isGameStarted && !isTogglingHomePage &&
                 <div>
