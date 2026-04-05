@@ -18,6 +18,7 @@ import Pidoku from "./Games/Pidoku/Pidoku";
 import Counter from "./Games/Counter/Counter";
 import Puzzle from "./Games/Puzzle/Puzzle";
 import Bingo from "./Games/Bingo/Bingo";
+import TugOfWar from "./Games/TugOfWar/TugOfWar";
 
 export default function Home({
   ads,
@@ -51,6 +52,7 @@ export default function Home({
   const [showCounter, setShowCounter] = useState(false);
   const [showPuzzle, setShowPuzzle] = useState(false);
   const [showBingo, setShowBingo] = useState(false);
+  const [showTugOfWar, setShowTugOfWar] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -238,6 +240,16 @@ export default function Home({
     setIsAGameStarted(true);
     setShowBingo(true);
   };
+  const toggleTugOfWar = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    setShowGameTitles(false);
+    setIsAGameStarted(true);
+    setShowTugOfWar(true);
+  };
   return (
     <div>
       <Ads
@@ -339,7 +351,7 @@ export default function Home({
         !showRockScissorsPaper &&
         !isAGameStarted && (
           <button onClick={() => toggleRockScissorsPaper()} style={{position: "relative", top: "5px"}}>
-            Rock - Scissors - Paper
+            R - S - P
           </button>
         )
       )}
@@ -549,6 +561,21 @@ export default function Home({
         !showBingo &&
         !isAGameStarted && (
           <button onClick={() => toggleBingo()} style={{position: "relative", top: "5px"}}>Bingo</button>
+        )
+      )}
+      {!showGameTitles && showTugOfWar && isAGameStarted ? (
+        <TugOfWar
+          setShowGameTitles={setShowGameTitles}
+          setShowTugOfWar={setShowTugOfWar}
+          updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
+        />
+      ) : (
+        showGameTitles &&
+        !showTugOfWar &&
+        !isAGameStarted && (
+          <button onClick={() => toggleTugOfWar()} style={{position: "relative", top: "5px"}}>Tug of War</button>
         )
       )}
     </div>

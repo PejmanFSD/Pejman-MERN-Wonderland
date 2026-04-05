@@ -559,6 +559,7 @@ export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint
     }, [finalMessage]);
     return (
         <div>
+            <h2>Bingo</h2>
             {isGameStarted &&
             !isTogglingReset &&
             finalMessage === "" &&
