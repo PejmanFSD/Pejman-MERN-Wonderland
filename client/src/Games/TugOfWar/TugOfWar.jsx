@@ -1,26 +1,42 @@
 import { useState } from "react";
+import Match from "./Match";
 import Dice1 from "./images/001.jpg";
 import Dice2 from "./images/002.jpg";
 import Dice3 from "./images/003.jpg";
 import Dice4 from "./images/004.jpg";
 import Dice5 from "./images/005.jpg";
 import Dice6 from "./images/006.jpg";
+import Blue1 from "./images/Blue-1.jpg";
+import Blue2 from "./images/Blue-2.jpg";
+import Blue3 from "./images/Blue-3.jpg";
+import Blue4 from "./images/Blue-4.jpg";
+import Blue5 from "./images/Blue-5.jpg";
+import Red1 from "./images/Red-1.jpg";
+import Red2 from "./images/Red-2.jpg";
+import Red3 from "./images/Red-3.jpg";
+import Red4 from "./images/Red-4.jpg";
+import Red5 from "./images/Red-5.jpg";
+import V1 from "./images/V-1.jpg";
+import V2 from "./images/V-2.jpg";
+import V3 from "./images/V-3.jpg";
 
 export default function TugOfWar() {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userColor, setUserColor] = useState("");
-  const [pejmanColor, setPejmanColor] = useState("");
+//   const [pejmanColor, setPejmanColor] = useState("");
   const [dice, setDice] = useState(-1);
+  const [match1, setMatch1] = useState([Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]);
+
   const handleStart = () => {
     setIsGameStarted(true);
   };
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
-      setUserColor("red");
-      setPejmanColor("blue");
+      setUserColor("Red");
+    //   setPejmanColor("blue");
     } else if (e.target.value === "Blue") {
-      setUserColor("blue");
-      setPejmanColor("red");
+      setUserColor("Blue");
+    //   setPejmanColor("red");
     }
   };
   const rollDice = () => {
@@ -52,7 +68,8 @@ export default function TugOfWar() {
       )}
       {isGameStarted && (
         <div>
-          <div>{userColor}</div>
+          {userColor && userColor === "Blue" && <div>You are <span style={{color: "blue"}}>Blue</span></div>}
+          {userColor && userColor === "Red" && <div>You are <span style={{color: "red"}}>Red</span></div>}
           <button onClick={rollDice}>Roll the Dice</button>
           <div style={{position: "relative", top: "5px"}}>
             {dice === 0 && <div>Rolling the Dice ...</div>}
@@ -64,6 +81,9 @@ export default function TugOfWar() {
             {dice === 6 && <img src={Dice6} width="50px" />}
           </div>
         </div>
+      )}
+      {isGameStarted && (
+        <Match matchImages={match1} userColor={userColor} />
       )}
     </div>
   );
