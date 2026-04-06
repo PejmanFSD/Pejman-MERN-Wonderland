@@ -1,10 +1,16 @@
 import { useState } from "react";
+import Dice1 from "./images/001.jpg";
+import Dice2 from "./images/002.jpg";
+import Dice3 from "./images/003.jpg";
+import Dice4 from "./images/004.jpg";
+import Dice5 from "./images/005.jpg";
+import Dice6 from "./images/006.jpg";
 
 export default function TugOfWar() {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userColor, setUserColor] = useState("");
   const [pejmanColor, setPejmanColor] = useState("");
-  const [dice, setDice] = useState(0);
+  const [dice, setDice] = useState(-1);
   const handleStart = () => {
     setIsGameStarted(true);
   };
@@ -18,8 +24,12 @@ export default function TugOfWar() {
     }
   };
   const rollDice = () => {
-    setDice(Math.floor(Math.random() * 6) + 1);
-  };
+  setDice(0);
+  setTimeout(() => {
+    const randomNumber = Math.floor(Math.random() * 6) + 1;
+    setDice(randomNumber);
+  }, 1000);
+};
   return (
     <div>
       <h2>Tug of War</h2>
@@ -44,7 +54,15 @@ export default function TugOfWar() {
         <div>
           <div>{userColor}</div>
           <button onClick={rollDice}>Roll the Dice</button>
-          {dice > 0 && <div>{dice}</div>}
+          <div style={{position: "relative", top: "5px"}}>
+            {dice === 0 && <div>Rolling the Dice ...</div>}
+            {dice === 1 && <img src={Dice1} width="50px" />}
+            {dice === 2 && <img src={Dice2} width="50px" />}
+            {dice === 3 && <img src={Dice3} width="50px" />}
+            {dice === 4 && <img src={Dice4} width="50px" />}
+            {dice === 5 && <img src={Dice5} width="50px" />}
+            {dice === 6 && <img src={Dice6} width="50px" />}
+          </div>
         </div>
       )}
     </div>
