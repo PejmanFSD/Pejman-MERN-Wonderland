@@ -47,19 +47,41 @@ export default function TugOfWar() {
     }, 1000);
     setIsDiceUpdated(true);
   };
-  // () => replaceElement(setMatch1, match1[0], Blue2)
   const replaceElement = (arrFunc, firstEl, secEl) => {
     arrFunc((currArr) => currArr.map(el => el === firstEl ? secEl : el));
+  }
+  const swapElements = (arrFunc, indexl, index2) => {
+    arrFunc(currArr => {
+        const newArr = [...currArr];
+        [newArr[indexl], newArr[index2]] = [newArr[index2], newArr[indexl]];
+        return newArr;
+    });
   }
   const userAct = () => {
     if (userColor === "Blue") {
         replaceElement(setMatch1, match1[0], Blue2);
         replaceElement(setMatch1, match1[14], Red3);
+        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - dice);
     } else if (userColor === "Red") {
         replaceElement(setMatch1, match1[14], Red2);
         replaceElement(setMatch1, match1[0], Blue3);
+        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + dice);
     }
     setIsDiceUpdated(false);
+    setIsUserTurn(false);
+  }
+  const pejmanAct = () => {
+    if (userColor === "Blue") {
+        replaceElement(setMatch1, match1[0], Blue3);
+        replaceElement(setMatch1, match1[14], Red2);
+        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + dice);
+    } else if (userColor === "Red") {
+        replaceElement(setMatch1, match1[14], Red3);
+        replaceElement(setMatch1, match1[0], Blue2);
+        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - dice);
+    }
+    setIsDiceUpdated(false);
+    setIsUserTurn(true);
   }
   return (
     <div>
@@ -87,11 +109,18 @@ export default function TugOfWar() {
             {userColor && userColor === "Red" && <div>You are <span style={{color: "red"}}>Red</span></div>}
         </div>
       }
+
+
       {isGameStarted && isUserTurn && !isDiceUpdated && 
         <button onClick={rollDice}>Roll the Dice</button>
       }
-
-{isGameStarted && isUserTurn && isDiceUpdated && (
+      {isGameStarted && !isUserTurn && !isDiceUpdated &&
+        <div>
+            <div>Allow Pejman to roll the dice</div>
+            <button onClick={rollDice}>Ok</button>
+        </div>
+      }
+      {isGameStarted && isDiceUpdated && (
           <div style={{position: "relative", top: "5px"}}>
             {dice === 0 && <div>Rolling the Dice ...</div>}
             {dice === 1 && <img src={Dice1} width="50px" />}
@@ -102,8 +131,14 @@ export default function TugOfWar() {
             {dice === 6 && <img src={Dice6} width="50px" />}
           </div>
       )}
-      {isGameStarted && isDiceUpdated &&
+      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 &&
         <button onClick={userAct} style={{position: "relative", top: "5px"}}>Act</button>
+      }
+      {isGameStarted && !isUserTurn && isDiceUpdated && dice > 0 &&
+        <div>
+            <div>Allow Pejman to make his move</div>
+            <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
+        </div>
       }
       {isGameStarted && (
         <Match matchImages={match1} userColor={userColor} />
