@@ -27,6 +27,7 @@ export default function TugOfWar() {
   const [dice, setDice] = useState(-1);
   const [isDiceUpdated, setIsDiceUpdated] = useState(false);
   const [match1, setMatch1] = useState([Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]);
+  const [finalMessage, setFinalMessage] = useState("");
 
   const handleStart = () => {
     setIsGameStarted(true);
@@ -49,43 +50,82 @@ export default function TugOfWar() {
   };
   const replaceElement = (arrFunc, firstEl, secEl) => {
     arrFunc((currArr) => currArr.map(el => el === firstEl ? secEl : el));
-  }
+  };
   const swapElements = (arrFunc, indexl, index2) => {
     arrFunc(currArr => {
         const newArr = [...currArr];
         [newArr[indexl], newArr[index2]] = [newArr[index2], newArr[indexl]];
         return newArr;
     });
+  };
+  const updateRopes = (arrFunc) => {
+    arrFunc(currArr =>
+        currArr.map(n => (n === V1 || n === V2 ? V3 : n))
+    );
   }
   const userAct = () => {
     if (userColor === "Blue") {
-        replaceElement(setMatch1, match1[0], Blue2);
-        replaceElement(setMatch1, match1[14], Red3);
-        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - dice);
+        if (match1.indexOf(V2) - dice < 1) {
+            replaceElement(setMatch1, match1[0], Blue4);
+            replaceElement(setMatch1, match1[14], Red5);
+updateRopes(setMatch1);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + 1);
+            setFinalMessage("You Win!");
+        } else {
+            replaceElement(setMatch1, match1[0], Blue2);
+            replaceElement(setMatch1, match1[14], Red3);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - dice);
+        }
     } else if (userColor === "Red") {
-        replaceElement(setMatch1, match1[14], Red2);
-        replaceElement(setMatch1, match1[0], Blue3);
-        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + dice);
+        if (match1.indexOf(V2) + dice > 13) {
+            replaceElement(setMatch1, match1[14], Red4);
+            replaceElement(setMatch1, match1[0], Blue5);
+updateRopes(setMatch1);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - 1);
+            setFinalMessage("You Win!");
+        } else {
+            replaceElement(setMatch1, match1[14], Red2);
+            replaceElement(setMatch1, match1[0], Blue3);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + dice);
+        }
     }
     setIsDiceUpdated(false);
     setIsUserTurn(false);
-  }
+  };
   const pejmanAct = () => {
     if (userColor === "Blue") {
-        replaceElement(setMatch1, match1[0], Blue3);
-        replaceElement(setMatch1, match1[14], Red2);
-        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + dice);
+        if (match1.indexOf(V2) + dice > 13) {
+            replaceElement(setMatch1, match1[0], Blue5);
+            replaceElement(setMatch1, match1[14], Red4);
+updateRopes(setMatch1);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - 1);
+            setFinalMessage("Pejman Wins!");
+        } else {   
+            replaceElement(setMatch1, match1[0], Blue3);
+            replaceElement(setMatch1, match1[14], Red2);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + dice);
+        }
     } else if (userColor === "Red") {
-        replaceElement(setMatch1, match1[14], Red3);
-        replaceElement(setMatch1, match1[0], Blue2);
-        swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - dice);
+        if (match1.indexOf(V2) - dice < 1) {
+            replaceElement(setMatch1, match1[14], Red5);
+            replaceElement(setMatch1, match1[0], Blue4);
+updateRopes(setMatch1);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + 1);
+            setFinalMessage("Pejman Wins!");
+        } else {
+            replaceElement(setMatch1, match1[14], Red3);
+            replaceElement(setMatch1, match1[0], Blue2);
+            swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - dice);
+        }
     }
     setIsDiceUpdated(false);
     setIsUserTurn(true);
-  }
+  };
   return (
     <div>
       <h2>Tug of War</h2>
+      {finalMessage && finalMessage === "You Win!" && <h3>You Win!</h3>}
+      {finalMessage && finalMessage === "Pejman Wins!" && <h3>Pejman Wins!</h3>}
       {!isGameStarted && userColor === "" && (
         <div>
           <label htmlFor="userColor">Select a Color</label>
@@ -111,10 +151,10 @@ export default function TugOfWar() {
       }
 
 
-      {isGameStarted && isUserTurn && !isDiceUpdated && 
+      {isGameStarted && isUserTurn && !isDiceUpdated && finalMessage === "" &&
         <button onClick={rollDice}>Roll the Dice</button>
       }
-      {isGameStarted && !isUserTurn && !isDiceUpdated &&
+      {isGameStarted && !isUserTurn && !isDiceUpdated && finalMessage === "" &&
         <div>
             <div>Allow Pejman to roll the dice</div>
             <button onClick={rollDice}>Ok</button>
@@ -131,10 +171,10 @@ export default function TugOfWar() {
             {dice === 6 && <img src={Dice6} width="50px" />}
           </div>
       )}
-      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 &&
+      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" &&
         <button onClick={userAct} style={{position: "relative", top: "5px"}}>Act</button>
       }
-      {isGameStarted && !isUserTurn && isDiceUpdated && dice > 0 &&
+      {isGameStarted && !isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" &&
         <div>
             <div>Allow Pejman to make his move</div>
             <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
