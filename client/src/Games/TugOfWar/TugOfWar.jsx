@@ -23,29 +23,44 @@ import V3 from "./images/V-3.jpg";
 export default function TugOfWar() {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userColor, setUserColor] = useState("");
-//   const [pejmanColor, setPejmanColor] = useState("");
+  const [isUserTurn, setIsUserTurn] = useState(false);
   const [dice, setDice] = useState(-1);
+  const [isDiceUpdated, setIsDiceUpdated] = useState(false);
   const [match1, setMatch1] = useState([Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]);
 
   const handleStart = () => {
     setIsGameStarted(true);
+    setIsUserTurn(true);
   };
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
       setUserColor("Red");
-    //   setPejmanColor("blue");
     } else if (e.target.value === "Blue") {
       setUserColor("Blue");
-    //   setPejmanColor("red");
     }
   };
   const rollDice = () => {
-  setDice(0);
-  setTimeout(() => {
-    const randomNumber = Math.floor(Math.random() * 6) + 1;
-    setDice(randomNumber);
-  }, 1000);
-};
+    setDice(0);
+    setTimeout(() => {
+      const randomNumber = Math.floor(Math.random() * 6) + 1;
+      setDice(randomNumber);
+    }, 1000);
+    setIsDiceUpdated(true);
+  };
+  // () => replaceElement(setMatch1, match1[0], Blue2)
+  const replaceElement = (arrFunc, firstEl, secEl) => {
+    arrFunc((currArr) => currArr.map(el => el === firstEl ? secEl : el));
+  }
+  const userAct = () => {
+    if (userColor === "Blue") {
+        replaceElement(setMatch1, match1[0], Blue2);
+        replaceElement(setMatch1, match1[14], Red3);
+    } else if (userColor === "Red") {
+        replaceElement(setMatch1, match1[14], Red2);
+        replaceElement(setMatch1, match1[0], Blue3);
+    }
+    setIsDiceUpdated(false);
+  }
   return (
     <div>
       <h2>Tug of War</h2>
@@ -66,11 +81,17 @@ export default function TugOfWar() {
       {!isGameStarted && userColor !== "" && (
         <button onClick={handleStart}>Start</button>
       )}
-      {isGameStarted && (
+      {isGameStarted &&
         <div>
-          {userColor && userColor === "Blue" && <div>You are <span style={{color: "blue"}}>Blue</span></div>}
-          {userColor && userColor === "Red" && <div>You are <span style={{color: "red"}}>Red</span></div>}
-          <button onClick={rollDice}>Roll the Dice</button>
+            {userColor && userColor === "Blue" && <div>You are <span style={{color: "blue"}}>Blue</span></div>}
+            {userColor && userColor === "Red" && <div>You are <span style={{color: "red"}}>Red</span></div>}
+        </div>
+      }
+      {isGameStarted && isUserTurn && !isDiceUpdated && 
+        <button onClick={rollDice}>Roll the Dice</button>
+      }
+
+{isGameStarted && isUserTurn && isDiceUpdated && (
           <div style={{position: "relative", top: "5px"}}>
             {dice === 0 && <div>Rolling the Dice ...</div>}
             {dice === 1 && <img src={Dice1} width="50px" />}
@@ -80,8 +101,10 @@ export default function TugOfWar() {
             {dice === 5 && <img src={Dice5} width="50px" />}
             {dice === 6 && <img src={Dice6} width="50px" />}
           </div>
-        </div>
       )}
+      {isGameStarted && isDiceUpdated &&
+        <button onClick={userAct} style={{position: "relative", top: "5px"}}>Act</button>
+      }
       {isGameStarted && (
         <Match matchImages={match1} userColor={userColor} />
       )}

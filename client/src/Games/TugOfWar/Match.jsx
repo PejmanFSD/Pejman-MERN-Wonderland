@@ -8,7 +8,7 @@ export default function Match({matchImages, userColor}) {
                     height="80px"
                     style={{
                         position: "relative",
-                        top: "10px"
+                        top: "15px"
                     }}
                 />
             )}
