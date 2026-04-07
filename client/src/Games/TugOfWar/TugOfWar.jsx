@@ -68,7 +68,7 @@ export default function TugOfWar() {
         if (match1.indexOf(V2) - dice < 1) {
             replaceElement(setMatch1, match1[0], Blue4);
             replaceElement(setMatch1, match1[14], Red5);
-updateRopes(setMatch1);
+            updateRopes(setMatch1);
             swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + 1);
             setFinalMessage("You Win!");
         } else {
@@ -80,7 +80,7 @@ updateRopes(setMatch1);
         if (match1.indexOf(V2) + dice > 13) {
             replaceElement(setMatch1, match1[14], Red4);
             replaceElement(setMatch1, match1[0], Blue5);
-updateRopes(setMatch1);
+            updateRopes(setMatch1);
             swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - 1);
             setFinalMessage("You Win!");
         } else {
@@ -97,7 +97,7 @@ updateRopes(setMatch1);
         if (match1.indexOf(V2) + dice > 13) {
             replaceElement(setMatch1, match1[0], Blue5);
             replaceElement(setMatch1, match1[14], Red4);
-updateRopes(setMatch1);
+            updateRopes(setMatch1);
             swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) - 1);
             setFinalMessage("Pejman Wins!");
         } else {   
@@ -109,7 +109,7 @@ updateRopes(setMatch1);
         if (match1.indexOf(V2) - dice < 1) {
             replaceElement(setMatch1, match1[14], Red5);
             replaceElement(setMatch1, match1[0], Blue4);
-updateRopes(setMatch1);
+            updateRopes(setMatch1);
             swapElements(setMatch1, match1.indexOf(V2), match1.indexOf(V2) + 1);
             setFinalMessage("Pejman Wins!");
         } else {
@@ -124,6 +124,9 @@ updateRopes(setMatch1);
   return (
     <div>
       <h2>Tug of War</h2>
+      {isGameStarted && (
+        <Match matchImages={match1} userColor={userColor} />
+      )}
       {finalMessage && finalMessage === "You Win!" && <h3>You Win!</h3>}
       {finalMessage && finalMessage === "Pejman Wins!" && <h3>Pejman Wins!</h3>}
       {!isGameStarted && userColor === "" && (
@@ -143,25 +146,24 @@ updateRopes(setMatch1);
       {!isGameStarted && userColor !== "" && (
         <button onClick={handleStart}>Start</button>
       )}
-      {isGameStarted &&
-        <div>
+      {isGameStarted && finalMessage === "" &&
+        <div style={{position: "relative", top: "15px"}}>
             {userColor && userColor === "Blue" && <div>You are <span style={{color: "blue"}}>Blue</span></div>}
             {userColor && userColor === "Red" && <div>You are <span style={{color: "red"}}>Red</span></div>}
         </div>
       }
 
-
       {isGameStarted && isUserTurn && !isDiceUpdated && finalMessage === "" &&
-        <button onClick={rollDice}>Roll the Dice</button>
+        <button style={{position: "relative", top: "15px"}} onClick={rollDice}>Roll the Dice</button>
       }
       {isGameStarted && !isUserTurn && !isDiceUpdated && finalMessage === "" &&
-        <div>
+        <div style={{position: "relative", top: "15px"}}>
             <div>Allow Pejman to roll the dice</div>
             <button onClick={rollDice}>Ok</button>
         </div>
       }
       {isGameStarted && isDiceUpdated && (
-          <div style={{position: "relative", top: "5px"}}>
+          <div style={{position: "relative", top: "20px"}}>
             {dice === 0 && <div>Rolling the Dice ...</div>}
             {dice === 1 && <img src={Dice1} width="50px" />}
             {dice === 2 && <img src={Dice2} width="50px" />}
@@ -172,17 +174,14 @@ updateRopes(setMatch1);
           </div>
       )}
       {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" &&
-        <button onClick={userAct} style={{position: "relative", top: "5px"}}>Act</button>
+        <button onClick={userAct} style={{position: "relative", top: "15px"}}>Act</button>
       }
       {isGameStarted && !isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" &&
-        <div>
+        <div style={{position: "relative", top: "20px"}}>
             <div>Allow Pejman to make his move</div>
             <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
         </div>
       }
-      {isGameStarted && (
-        <Match matchImages={match1} userColor={userColor} />
-      )}
     </div>
   );
 }
