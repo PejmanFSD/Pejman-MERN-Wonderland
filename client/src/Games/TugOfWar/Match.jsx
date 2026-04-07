@@ -66,7 +66,7 @@ export default function Match({
           style={{
             position: "relative",
             top: "15px",
-            opacity: finalMessage === "" ? 1 : 0.5
+            opacity: finalMessage === "" ? 1 : 0.6
           }}
         />
       ))}

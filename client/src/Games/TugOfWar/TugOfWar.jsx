@@ -19,8 +19,11 @@ import Red5 from "./images/Red-5.jpg";
 import V1 from "./images/V-1.jpg";
 import V2 from "./images/V-2.jpg";
 import V3 from "./images/V-3.jpg";
+import ModeExplaination from "../ModeExplaination";
 
 export default function TugOfWar() {
+    const [easyMode, setEasyMode] = useState(false);
+    const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userColor, setUserColor] = useState("");
   const [isUserTurn, setIsUserTurn] = useState(false);
@@ -38,6 +41,14 @@ export default function TugOfWar() {
   const [pejmanScore, setPejmanScore] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
 
+  const handleEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const handleNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+  };
   const handleStart = () => {
     setIsGameStarted(true);
     setIsUserTurn(true);
@@ -184,10 +195,33 @@ export default function TugOfWar() {
   return (
     <div>
       <h2>Tug of War</h2>
-      <div>Selected Match: {selectedMatch}</div>
+      {!isGameStarted && !easyMode && !normalMode &&
+        <div>
+            <button onClick={handleEasyMode}>Easy Mode</button>
+            <button onClick={handleNormalMode}>Normal Mode</button>
+        </div>
+      }
+      {finalMessage && finalMessage === "You Win!" && <h3>You Win!</h3>}
+      {finalMessage && finalMessage === "Pejman Wins!" && <h3>Pejman Wins!</h3>}
+      {easyMode && !normalMode && finalMessage === ""
+              ? 
+                // !isTogglingReset &&
+                // !isTogglingHomePage &&
+                // !isTogglingLevel &&
+                (
+                  <ModeExplaination message="Easy Mode: Pejman chooses the match randomly. You won't get any stars if you win." />
+                )
+              : !easyMode && normalMode && finalMessage === "" &&
+                // !isTogglingReset &&
+                // !isTogglingHomePage &&
+                // !isTogglingLevel &&
+                (
+                  <ModeExplaination message="Normal Mode: Pejman chooses the match with a strategy. You will get one star if you win." />
+                )}
+      {/* <div>Selected Match: {selectedMatch}</div>
       finished Matches: {finishedMatches.map(m => <div style={{display: "inline"}}>{m}</div>)}<br />
       Available Matches: {availableMatches.map(m => <div style={{display: "inline"}}>{m}</div>)}<br />
-      Selected Status: {matches.map((m) => <div style={{display: "inline"}}>{m.isMatchSelected ? "T" : "F"}</div>)}
+      Selected Status: {matches.map((m) => <div style={{display: "inline"}}>{m.isMatchSelected ? "T" : "F"}</div>)} */}
       {isGameStarted && userColor === "Blue" &&
         <div>
             <div style={{color: "blue", display: "inline"}}><strong>{`Your Point: ${userScore}`}</strong></div>
@@ -246,9 +280,7 @@ export default function TugOfWar() {
             />
         </div>
       )}
-      {finalMessage && finalMessage === "You Win!" && <h3>You Win!</h3>}
-      {finalMessage && finalMessage === "Pejman Wins!" && <h3>Pejman Wins!</h3>}
-      {!isGameStarted && (
+      {!isGameStarted && (easyMode || normalMode) && (
         <div>
           <label htmlFor="userColor">Select a Color</label>
           <br></br>
@@ -262,7 +294,7 @@ export default function TugOfWar() {
           </select>
         </div>
       )}
-      {!isGameStarted && userColor !== "" && (
+      {!isGameStarted && (easyMode || normalMode) && userColor !== "" && (
         <button onClick={handleStart}>Start</button>
       )}
       {isGameStarted && isUserTurn && !isDiceUpdated && finalMessage === "" &&
