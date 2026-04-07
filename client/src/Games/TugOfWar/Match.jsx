@@ -1,5 +1,5 @@
 export default function Match({
-  matchImages,
+  theMatch,
   matchName,
   userColor,
   isUserTurn,
@@ -8,12 +8,33 @@ export default function Match({
   setMatches,
   selectedMatch,
   setSelectedMatch,
+  finishedMatches,
+  availableMatches,
+  finalMessage
 }) {
   const chooseMatch = (matchName) => {
     if (selectedMatch !== "") {
       setSelectedMatch("");
+      setMatches((currentMatches) =>
+        currentMatches.map((match) =>
+          match.matchName === matchName
+            ? { ...match, isMatchSelected: !match.isMatchSelected }
+            : match,
+        ),
+      );
       return;
-    } else {
+    }
+    else if (theMatch.isMatchSelected) {
+        setMatches((currentMatches) =>
+        currentMatches.map((match) =>
+          match.matchName === matchName
+            ? { ...match, isMatchSelected: !match.isMatchSelected }
+            : match,
+        ),
+      );
+      return;
+    }
+    else {
       setMatches((currentMatches) =>
         currentMatches.map((match) =>
           match.matchName === matchName
@@ -26,43 +47,42 @@ export default function Match({
   };
   return (
     <div>
-      {userColor === "Blue" && (
+      {userColor === "Blue" && isUserTurn && dice > 0 && finalMessage === "" && (
         <input
           type="checkbox"
-          value={selectedMatch === matchImages.matchName}
-          onChange={() => chooseMatch(matchImages.matchName)}
+          checked={theMatch.isMatchSelected}
+          onChange={() => chooseMatch(theMatch.matchName)}
           disabled={
-            !isUserTurn ||
             !isDiceUpdated ||
-            dice < 1 ||
-            (selectedMatch !== "" && selectedMatch !== matchImages.matchName)
+            (selectedMatch !== "" && selectedMatch !== theMatch.matchName) ||
+            finishedMatches.includes(theMatch.matchName)
           }
         />
       )}
-      {matchImages.matchValue.map((m, idx) => (
+      {theMatch.matchValue.map((m, idx) => (
         <img
-          src={matchImages.matchValue[idx]}
+          src={theMatch.matchValue[idx]}
           height="80px"
           style={{
             position: "relative",
             top: "15px",
+            opacity: finalMessage === "" ? 1 : 0.5
           }}
         />
       ))}
-      {userColor === "Red" && (
+      {userColor === "Red" && isUserTurn && dice > 0 && finalMessage === "" && (
         <input
           type="checkbox"
-          value={selectedMatch === matchImages.matchName}
-          onChange={() => chooseMatch(matchImages.matchName)}
+          checked={theMatch.isMatchSelected}
+          onChange={() => chooseMatch(theMatch.matchName)}
           disabled={
-            !isUserTurn ||
             !isDiceUpdated ||
-            dice < 1 ||
-            (selectedMatch !== "" && selectedMatch !== matchImages.matchName)
+            (selectedMatch !== "" && selectedMatch !== theMatch.matchName) ||
+            finishedMatches.includes(theMatch.matchName)
           }
         />
       )}
-      {selectedMatch === matchName && isUserTurn && (
+      {selectedMatch === matchName && isUserTurn && availableMatches.length > 1 && (
         <div
           style={{
             color: "gray",
@@ -71,7 +91,7 @@ export default function Match({
             top: "10px",
           }}
         >
-          You can change the chosen match, but you should de-select it first
+          You can change the chosen match, but first you should de-select the one you chose.
         </div>
       )}
     </div>

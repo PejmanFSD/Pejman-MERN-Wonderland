@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Match from "./Match";
 import Dice1 from "./images/001.jpg";
 import Dice2 from "./images/002.jpg";
@@ -32,6 +32,10 @@ export default function TugOfWar() {
     {matchName: "match3", isMatchSelected: false, matchValue: [Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]}
   ]);
   const [selectedMatch, setSelectedMatch] = useState("");
+  const [finishedMatches, setFinishedMatches] = useState([]);
+  const [availableMatches, setAvailableMatches] = useState(["match1", "match2", "match3"]);
+  const [userScore, setUserScore] = useState(0);
+  const [pejmanScore, setPejmanScore] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
 
   const handleStart = () => {
@@ -46,12 +50,22 @@ export default function TugOfWar() {
     }
   };
   const rollDice = () => {
+    setMatches((currMatches) => currMatches.map((m) =>
+        m.isMatchSelected === true ? {...m, isMatchSelected: false} : m
+    ));
+    setSelectedMatch("");
     setDice(0);
     setTimeout(() => {
       const randomNumber = Math.floor(Math.random() * 6) + 1;
       setDice(randomNumber);
     }, 1000);
     setIsDiceUpdated(true);
+    if (!isUserTurn) {
+        setSelectedMatch(availableMatches[Math.floor(Math.random() * availableMatches.length)]);
+        setMatches((currMatches) => currMatches.map((m) =>
+        m.matchName === selectedMatch ? {...m, isMatchSelected: true} : m
+    ))
+    }
   };
   const replaceElement = (firstEl, secondEl) => {
     setMatches(currMatches =>
@@ -92,7 +106,9 @@ export default function TugOfWar() {
             replaceElement(match[14], Red5);
             updateRopes();
             swapElements(match.indexOf(V2), match.indexOf(V2) + 1);
-            setFinalMessage("You Win!");
+            setUserScore(currUserScore => currUserScore + 1);
+            setFinishedMatches(currFinishedMatches => [...currFinishedMatches, selectedMatch]);
+            setAvailableMatches(availableMatches.filter (el => el !== selectedMatch));
         } else {
             replaceElement(match[0], Blue2);
             replaceElement(match[14], Red3);
@@ -104,13 +120,18 @@ export default function TugOfWar() {
             replaceElement(match[0], Blue5);
             updateRopes();
             swapElements(match.indexOf(V2), match.indexOf(V2) - 1);
-            setFinalMessage("You Win!");
+            setUserScore(currUserScore => currUserScore + 1);
+            setFinishedMatches(currFinishedMatches => [...currFinishedMatches, selectedMatch]);
+            setAvailableMatches(availableMatches.filter (el => el !== selectedMatch));
         } else {
             replaceElement(match[14], Red2);
             replaceElement(match[0], Blue3);
             swapElements(match.indexOf(V2), match.indexOf(V2) + dice);
         }
     }
+    setMatches((currMatches) => currMatches.map((m) =>
+        m.isMatchSelected === true ? {...m, isMatchSelected: false} : m
+    ));
     setIsDiceUpdated(false);
     setIsUserTurn(false);
   };
@@ -122,7 +143,9 @@ export default function TugOfWar() {
             replaceElement(match[14], Red4);
             updateRopes();
             swapElements(match.indexOf(V2), match.indexOf(V2) - 1);
-            setFinalMessage("Pejman Wins!");
+            setPejmanScore(currPejmanScore => currPejmanScore + 1);
+            setFinishedMatches(currFinishedMatches => [...currFinishedMatches, selectedMatch]);
+            setAvailableMatches(availableMatches.filter (el => el !== selectedMatch));
         } else {   
             replaceElement(match[0], Blue3);
             replaceElement(match[14], Red2);
@@ -134,7 +157,9 @@ export default function TugOfWar() {
             replaceElement(match[0], Blue4);
             updateRopes();
             swapElements(match.indexOf(V2), match.indexOf(V2) + 1);
-            setFinalMessage("Pejman Wins!");
+            setPejmanScore(currPejmanScore => currPejmanScore + 1);
+            setFinishedMatches(currFinishedMatches => [...currFinishedMatches, selectedMatch]);
+            setAvailableMatches(availableMatches.filter (el => el !== selectedMatch));
         } else {
             replaceElement(match[14], Red3);
             replaceElement(match[0], Blue2);
@@ -142,21 +167,88 @@ export default function TugOfWar() {
         }
     }
     setIsDiceUpdated(false);
+    setSelectedMatch("");
+    setDice(-1);
     setIsUserTurn(true);
   };
+  useEffect(() => {
+    if (userScore === 2) {
+        setFinalMessage("You Win!");
+    }
+  }, [userScore]);
+  useEffect(() => {
+    if (pejmanScore === 2) {
+        setFinalMessage("Pejman Wins!");
+    }
+  }, [pejmanScore]);
   return (
     <div>
       <h2>Tug of War</h2>
+      <div>Selected Match: {selectedMatch}</div>
+      finished Matches: {finishedMatches.map(m => <div style={{display: "inline"}}>{m}</div>)}<br />
+      Available Matches: {availableMatches.map(m => <div style={{display: "inline"}}>{m}</div>)}<br />
+      Selected Status: {matches.map((m) => <div style={{display: "inline"}}>{m.isMatchSelected ? "T" : "F"}</div>)}
+      {isGameStarted && userColor === "Blue" &&
+        <div>
+            <div style={{color: "blue", display: "inline"}}><strong>{`Your Point: ${userScore}`}</strong></div>
+            <div style={{color: "red", display: "inline"}}><strong>{`Pejman's Point: ${pejmanScore}`}</strong></div>
+        </div>
+      }
+      {isGameStarted && userColor === "Red" &&
+        <div>
+            <div style={{color: "blue", display: "inline"}}><strong>{`Pejman's Point: ${pejmanScore}`}</strong></div>
+            <div style={{color: "red", display: "inline"}}><strong>{`Your Point: ${userScore}`}</strong></div>
+        </div>
+      }
       {isGameStarted && (
         <div>
-            <Match matchImages={matches[0]} matchName={matches[0].matchName} userColor={userColor} isUserTurn={isUserTurn} isDiceUpdated={isDiceUpdated} dice={dice} setMatches={setMatches} selectedMatch={selectedMatch} setSelectedMatch={setSelectedMatch} />
-            <Match matchImages={matches[1]} matchName={matches[1].matchName} userColor={userColor} isUserTurn={isUserTurn} isDiceUpdated={isDiceUpdated} dice={dice} setMatches={setMatches} selectedMatch={selectedMatch} setSelectedMatch={setSelectedMatch} />
-            <Match matchImages={matches[2]} matchName={matches[2].matchName} userColor={userColor} isUserTurn={isUserTurn} isDiceUpdated={isDiceUpdated} dice={dice} setMatches={setMatches} selectedMatch={selectedMatch} setSelectedMatch={setSelectedMatch} />
+            <Match
+                theMatch={matches[0]}
+                matchName={matches[0].matchName}
+                userColor={userColor}
+                isUserTurn={isUserTurn}
+                isDiceUpdated={isDiceUpdated}
+                dice={dice}
+                setMatches={setMatches}
+                selectedMatch={selectedMatch}
+                setSelectedMatch={setSelectedMatch}
+                finishedMatches={finishedMatches}
+                availableMatches={availableMatches}
+                finalMessage={finalMessage}
+            />
+            <Match
+                theMatch={matches[1]}
+                matchName={matches[1].matchName}
+                userColor={userColor}
+                isUserTurn={isUserTurn}
+                isDiceUpdated={isDiceUpdated}
+                dice={dice}
+                setMatches={setMatches}
+                selectedMatch={selectedMatch}
+                setSelectedMatch={setSelectedMatch}
+                finishedMatches={finishedMatches}
+                availableMatches={availableMatches}
+                finalMessage={finalMessage}
+            />
+            <Match
+                theMatch={matches[2]}
+                matchName={matches[2].matchName}
+                userColor={userColor}
+                isUserTurn={isUserTurn}
+                isDiceUpdated={isDiceUpdated}
+                dice={dice}
+                setMatches={setMatches}
+                selectedMatch={selectedMatch}
+                setSelectedMatch={setSelectedMatch}
+                finishedMatches={finishedMatches}
+                availableMatches={availableMatches}
+                finalMessage={finalMessage}
+            />
         </div>
       )}
       {finalMessage && finalMessage === "You Win!" && <h3>You Win!</h3>}
       {finalMessage && finalMessage === "Pejman Wins!" && <h3>Pejman Wins!</h3>}
-      {!isGameStarted && userColor === "" && (
+      {!isGameStarted && (
         <div>
           <label htmlFor="userColor">Select a Color</label>
           <br></br>
