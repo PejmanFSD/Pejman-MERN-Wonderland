@@ -41,6 +41,7 @@ export default function TugOfWar() {
   const [userScore, setUserScore] = useState(0);
   const [pejmanScore, setPejmanScore] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [condition, setCondition] = useState("");
 
   const handleEasyMode = () => {
@@ -203,6 +204,20 @@ export default function TugOfWar() {
     setPejmanScore(0);
     setFinalMessage("");
   }
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    setEasyMode(false);
+    setNormalMode(false);
+    setIsGameStarted(false);
+    setUserColor("");
+    setIsTogglingReset(false);
+    handlePlayAgain();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
+  };
   useEffect(() => {
         if (!isUserTurn && isDiceUpdated && normalMode) {
             // user's color is "Blue":
@@ -1244,6 +1259,25 @@ export default function TugOfWar() {
             <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       }
+      {isGameStarted &&
+          !isTogglingReset &&
+          finalMessage === "" &&
+        //   !isTogglingHomePage &&
+        //   !isTogglingLevel &&
+          (easyMode || normalMode) && (
+          <div>
+              <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+          )}
+      {isTogglingReset && finalMessage === "" && (
+          <div>
+            <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+            />
+          </div>
+      )}
       {finalMessage && finalMessage === "You Win!" &&
         <div>
             <h3>You Win!</h3>
@@ -1260,14 +1294,14 @@ export default function TugOfWar() {
       }
       {easyMode && !normalMode && finalMessage === ""
               ? 
-                // !isTogglingReset &&
+                !isTogglingReset &&
                 // !isTogglingHomePage &&
                 // !isTogglingLevel &&
                 (
                   <ModeExplaination message="Easy Mode: Pejman chooses the match randomly. You won't get any stars if you win." />
                 )
               : !easyMode && normalMode && finalMessage === "" &&
-                // !isTogglingReset &&
+                !isTogglingReset &&
                 // !isTogglingHomePage &&
                 // !isTogglingLevel &&
                 (
@@ -1277,19 +1311,19 @@ export default function TugOfWar() {
       finished Matches: {finishedMatches.map(m => <div style={{display: "inline"}}>{m}</div>)}<br />
       Available Matches: {availableMatches.map(m => <div style={{display: "inline"}}>{m}</div>)}<br />
       Selected Status: {matches.map((m) => <div style={{display: "inline"}}>{m.isMatchSelected ? "T" : "F"}</div>)} */}
-      {isGameStarted && userColor === "Blue" &&
+      {isGameStarted && userColor === "Blue" && !isTogglingReset &&
         <div>
             <div style={{color: "blue", display: "inline"}}><strong>{`Your Point: ${userScore}`}</strong></div>
             <div style={{color: "red", display: "inline"}}><strong>{`Pejman's Point: ${pejmanScore}`}</strong></div>
         </div>
       }
-      {isGameStarted && userColor === "Red" &&
+      {isGameStarted && userColor === "Red" && !isTogglingReset &&
         <div>
             <div style={{color: "blue", display: "inline"}}><strong>{`Pejman's Point: ${pejmanScore}`}</strong></div>
             <div style={{color: "red", display: "inline"}}><strong>{`Your Point: ${userScore}`}</strong></div>
         </div>
       }
-      {isGameStarted && (
+      {isGameStarted && !isTogglingReset && (
         <div>
             <Match
                 theMatch={matches[0]}
@@ -1335,7 +1369,7 @@ export default function TugOfWar() {
             />
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && (
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingReset && (
         <div>
           <label htmlFor="userColor">Select a Color</label>
           <br></br>
@@ -1349,19 +1383,19 @@ export default function TugOfWar() {
           </select>
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && userColor !== "" && (
+      {!isGameStarted && (easyMode || normalMode) && userColor !== "" && !isTogglingReset && (
         <button onClick={handleStart}>Start</button>
       )}
-      {isGameStarted && isUserTurn && !isDiceUpdated && finalMessage === "" &&
+      {isGameStarted && isUserTurn && !isDiceUpdated && finalMessage === "" && !isTogglingReset &&
         <button style={{position: "relative", top: "15px"}} onClick={rollDice}>Roll the Dice</button>
       }
-      {isGameStarted && !isUserTurn && !isDiceUpdated && finalMessage === "" &&
+      {isGameStarted && !isUserTurn && !isDiceUpdated && finalMessage === "" && !isTogglingReset &&
         <div style={{position: "relative", top: "15px"}}>
             <div>Allow Pejman to roll the dice</div>
             <button onClick={rollDice}>Ok</button>
         </div>
       }
-      {isGameStarted && isDiceUpdated && (
+      {isGameStarted && isDiceUpdated && !isTogglingReset && (
           <div style={{position: "relative", top: "20px"}}>
             {dice === 0 && <div>Rolling the Dice ...</div>}
             {dice === 1 && <img src={Dice1} width="50px" />}
@@ -1372,13 +1406,13 @@ export default function TugOfWar() {
             {dice === 6 && <img src={Dice6} width="50px" />}
           </div>
       )}
-      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" && selectedMatch === "" &&
+      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" && selectedMatch === "" && !isTogglingReset &&
         <div style={{position: "relative", top: "20px"}}>Choose a match</div>
       }
-      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" &&selectedMatch !== "" &&
+      {isGameStarted && isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" && selectedMatch !== "" && !isTogglingReset &&
         <button onClick={userAct} style={{position: "relative", top: "20px"}}>Act</button>
       }
-      {isGameStarted && !isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" &&
+      {isGameStarted && !isUserTurn && isDiceUpdated && dice > 0 && finalMessage === "" && !isTogglingReset &&
         <div style={{position: "relative", top: "20px"}}>
             <div>Allow Pejman to make his move</div>
             <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
