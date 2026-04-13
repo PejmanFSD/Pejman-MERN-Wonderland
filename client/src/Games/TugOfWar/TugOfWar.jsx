@@ -692,6 +692,511 @@ export default function TugOfWar() {
                     setSelectedMatch(availableMatches[0]);
                 }
             }
+            // user's color is "Blue":
+            else if (userColor === "Red") {
+                // Main Condition 1:
+                if (userScore === 0 && pejmanScore === 0) {
+                    // User is in a beeter situation in all 3 matches:
+                    if (matches[0]?.matchValue?.indexOf(V2) >= 7 && matches[1]?.matchValue?.indexOf(V2) >= 7 && matches[2]?.matchValue?.indexOf(V2) >= 7) {
+                        if (dice === 4 || dice === 5 || dice === 6) {
+                            setCondition("R-01");
+                            // Choose user's best:
+                            if (matches[0]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2) &&
+                                matches[0]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[0].matchName);
+                                }
+                            else if (matches[1]?.matchValue?.indexOf(V2) >= matches[0]?.matchValue?.indexOf(V2) &&
+                                matches[1]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[1].matchName);
+                                }
+                            else if (matches[2]?.matchValue?.indexOf(V2) >= matches[0]?.matchValue?.indexOf(V2) &&
+                                matches[2]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[2].matchName);
+                                }
+                        } else {
+                            setCondition("R-02");
+                            // Choose user's worst:
+                            if (matches[0]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2) &&
+                                matches[0]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[0].matchName);
+                                }
+                            else if (matches[1]?.matchValue?.indexOf(V2) <= matches[0]?.matchValue?.indexOf(V2) &&
+                                matches[1]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[1].matchName);
+                                }
+                            else if (matches[2]?.matchValue?.indexOf(V2) <= matches[0]?.matchValue?.indexOf(V2) &&
+                                matches[2]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[2].matchName);
+                                }
+                        }
+                    }
+                    // We are in a beeter situation in all 3 matches:
+                    else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) < 7) {
+                        // We can win 1 match:
+                        if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-03-Match1");
+                            // Choose match1:
+                            setSelectedMatch(matches[0].matchName);
+                        }
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-03-Match2");
+                            // Choose match2:
+                            setSelectedMatch(matches[1].matchName);
+                        }
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-03-Match3");
+                            // Choose match3:
+                            setSelectedMatch(matches[2].matchName);
+                        } 
+                        // We can win 2 matches:
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-04-Match1+Match2");
+                            // Choose the lightest win:
+                            if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                            } else {
+                                setSelectedMatch(matches[1].matchName);
+                            }
+                        }
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-04-Match1+Match3");
+                            // Choose the lightest win:
+                            if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                            } else {
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        }
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-04-Match2+Match3");
+                            // Choose the lightest win:
+                            if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[1].matchName);
+                            } else {
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        }
+                        // We can win 3 matches:
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-05");
+                            // Choose the lightest win:
+                            if (matches[0]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2) && matches[0]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                            } else if (matches[1]?.matchValue?.indexOf(V2) >= matches[0]?.matchValue?.indexOf(V2) && matches[1]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[1].matchName);
+                            } else if (matches[2]?.matchValue?.indexOf(V2) >= matches[0]?.matchValue?.indexOf(V2) && matches[2]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        }
+                        // We can't win in any match:
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-06");
+                            // Choose our best option:
+                            if (matches[0]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2) && matches[0]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                            } else if (matches[1]?.matchValue?.indexOf(V2) <= matches[0]?.matchValue?.indexOf(V2) && matches[1]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[1].matchName);
+                            } else if (matches[2]?.matchValue?.indexOf(V2) <= matches[0]?.matchValue?.indexOf(V2) && matches[2]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        }
+                    }
+                    // We are in a beter situation in 2 matches:
+                    // We are better in "match1" and "match2":
+                    else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) > 6) {
+                        // We win "match1" and "match2":
+                        if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-07-Match1+Match2");
+                            // Choose the lightest:
+                            if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                            } else {
+                                setSelectedMatch(matches[1].matchName);
+                            }
+                        }
+                        // We win "match1":
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-08-Match1-Not Match2");
+                            // Choose "match1":
+                            setSelectedMatch(matches[0].matchName);
+                        }
+                        // We win "match2":
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-08-Match2-Not Match1");
+                            // Choose "match2":
+                            setSelectedMatch(matches[1].matchName);
+                        }
+                        // We neither win "match1" nor "match2":
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice > 0) {
+                            // The user needs 1 to win match3:
+                            if (matches[2]?.matchValue?.indexOf(V2) === 13) {
+                                setCondition("R-09-The user needs 1 in match3");
+                                // Choose match3:
+                                setSelectedMatch(matches[2].matchName);
+                            } else {
+                                setCondition("R-10-The closer between match1 or match2");
+                                // Choose the closer between match1 or match2:
+                                if (matches[0]?.matchValue?.indexOf(V2) < matches[1]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                                } else {
+                                    setSelectedMatch(matches[1].matchName);
+                                }
+                            }
+                        }
+                    }
+                    // We are better in "match1" and "match3":
+                    else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) > 6 && matches[2]?.matchValue?.indexOf(V2) < 7) {
+                        // We win "match1" and "match3":
+                        if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-07-Match1+Match3");
+                            // Choose the lightest:
+                            if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[0].matchName);
+                            } else {
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        }
+                        // We win "match1":
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-08-Match1-Not Match3");
+                            // Choose "match1":
+                            setSelectedMatch(matches[0].matchName);
+                        }
+                        // We win "match3":
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-08-Match3-Not Match1");
+                            // Choose "match3":
+                            setSelectedMatch(matches[2].matchName);
+                        }
+                        // We neither win "match1" nor "match3":
+                        else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            // The user needs 1 to win match2
+                            if (matches[1]?.matchValue?.indexOf(V2) === 13) {
+                                setCondition("R-09-The user needs 1 in match2");
+                                // Choose match2:
+                                setSelectedMatch(matches[1].matchName);
+                            } else {
+                                setCondition("R-10-The closer between match1 or match3");
+                                // Choose the closer between match1 or match3:
+                                if (matches[0]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[0].matchName);
+                                } else {
+                                    setSelectedMatch(matches[2].matchName);
+                                }
+                            }
+                        }
+                    }
+                    // We are better in "match2" and "match3":
+                    else if (matches[0]?.matchValue?.indexOf(V2) > 6 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) < 7) {
+                        // We win "match2" and "match3":
+                        if (matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-07-Match2+Match3");
+                            // Choose the lightest:
+                            if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matches[1].matchName);
+                            } else {
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        }
+                        // We win "match2":
+                        else if (matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            setCondition("R-08-Match2-Not Match3");
+                            // Choose "match2":
+                            setSelectedMatch(matches[1].matchName);
+                        }
+                        // We win "match3":
+                        else if (matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-08-Match3-Not Match2");
+                            // Choose "match3":
+                            setSelectedMatch(matches[2].matchName);
+                        }
+                        // We neither win "match2" nor "match3":
+                        else if (matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
+                            // The user needs 1 to win match1
+                            if (matches[0]?.matchValue?.indexOf(V2) === 13) {
+                                setCondition("R-09-The user needs 1 in match1");
+                                // Choose match1:
+                                setSelectedMatch(matches[0].matchName);
+                            } else {
+                                setCondition("R-10-The closer between match2 or match3");
+                                // Choose the closer between match2 or match3:
+                                if (matches[1]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matches[1].matchName);
+                                } else {
+                                    setSelectedMatch(matches[2].matchName);
+                                }
+                            }
+                        }
+
+                    }
+                    // We're better in 1 match:
+                    // We're better in "match1":
+                    else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) > 6 && matches[2]?.matchValue?.indexOf(V2) > 6) {
+                        // We win "match1":
+                        if (matches[0]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-11-Winning match1");
+                            // Choose "match1":
+                            setSelectedMatch(matches[0].matchName);
+                        } else if (dice > 3) {
+                            setCondition("R-12-We're better in match1");
+                            // Choose the user's best:
+                            if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
+                                // Choose "match2":
+                                setSelectedMatch(matches[1].matchName);
+                            } else {
+                                // Choose "match3":
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        } else {
+                            setCondition("R-13-We're better in match1");
+                            // Choose "match1":
+                            setSelectedMatch(matches[0].matchName);
+                        }
+                    }
+                    // We're better in "match2":
+                    else if (matches[0]?.matchValue?.indexOf(V2) > 6 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) > 6) {
+                        // We win "match2":
+                        if (matches[1]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-11-Winning match2");
+                            // Choose "match2":
+                            setSelectedMatch(matches[1].matchName);
+                        } else if (dice > 3) {
+                            setCondition("R-12-We're better in match2");
+                            // Choose the user's best:
+                            if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
+                                // Choose "match1":
+                            setSelectedMatch(matches[0].matchName);
+                            } else {
+                                // Choose "match3":
+                                setSelectedMatch(matches[2].matchName);
+                            }
+                        } else {
+                            setCondition("R-13-We're better in match2");
+                            // Choose "match2":
+                            setSelectedMatch(matches[1].matchName);
+                        }
+                    }
+                    // We're better in "match3":
+                    else if (matches[0]?.matchValue?.indexOf(V2) > 6 && matches[1]?.matchValue?.indexOf(V2) > 6 && matches[2]?.matchValue?.indexOf(V2) < 7) {
+                        // We win "match3":
+                        if (matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
+                            setCondition("R-11-Winning match3");
+                            // Choose "match3":
+                            setSelectedMatch(matches[2].matchName);
+                        } else if (dice > 3) {
+                            setCondition("R-12-We're better in match3");
+                            // Choose the user's best:
+                            if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
+                                // Choose "match1":
+                            setSelectedMatch(matches[0].matchName);
+                            } else {
+                                // Choose "match2":
+                                setSelectedMatch(matches[1].matchName);
+                            }
+                        } else {
+                            setCondition("R-13-We're better in match3");
+                            // Choose "match3":
+                            setSelectedMatch(matches[2].matchName);
+                        }
+                    }
+                    else {
+                        setSelectedMatch(availableMatches[Math.floor(Math.random() * availableMatches.length)]);
+                    }
+                }
+                // Main Condition 2:
+                else if (userScore === 1 && pejmanScore === 0) {
+                    const matchA = availableMatches[0];
+                    const matchB = availableMatches[1];
+                    // We're better in both remaining matches:
+                    if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 7 &&
+                        matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 7) {
+                        // We win both remaining matches:
+                        if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
+                                setCondition("R-14");
+                                // Choose the lighter:
+                                if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matchA);
+                                } else {
+                                    setSelectedMatch(matchB);
+                                }
+                            }
+                        // We win "matchA":
+                        else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
+                                setCondition("R-15");
+                                // Choose "matchA":
+                                setSelectedMatch(matchA);
+                            }
+                        // We win "matchB":
+                        else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
+                                setCondition("R-15");
+                                // Choose "matchB":
+                                setSelectedMatch(matchB);
+                            }
+                        // We win none of the remining matches:
+                        else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
+                                setCondition("R-16");
+                                // Choose the closest:
+                                if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
+                                    setSelectedMatch(matchA);
+                                } else {
+                                    setSelectedMatch(matchB);
+                                }
+                            }
+                    }
+                    // We're better in "matchA":
+                    else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 7 &&
+                        matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
+                            // We win "matchA":
+                            if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1) {
+                                // user needs 1 or 2 or 3 to win:
+                                if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 10) {
+                                    setCondition("R-17");
+                                    // Choose "matchB":
+                                    setSelectedMatch(matchB);
+                                } else {
+                                    setCondition("R-18");
+                                    // Choose "matchA":
+                                    setSelectedMatch(matchA);
+                                }
+                            }
+                            // We don't win "matchA":
+                            else {
+                                setCondition("R-19");
+                                // Choose "matchA":
+                                setSelectedMatch(matchA);
+                            }
+                        }
+                    // We're better in "matchB":
+                    else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6 &&
+                        matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 7) {
+                            // We win "matchB":
+                            if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
+                                // user needs 1 or 2 or 3 to win:
+                                if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 10) {
+                                    setCondition("R-17");
+                                    // Choose "matchA":
+                                    setSelectedMatch(matchA);
+                                } else {
+                                    setCondition("R-18");
+                                    // Choose "matchB":
+                                    setSelectedMatch(matchB);
+                                }
+                            }
+                            // We don't win "matchB":
+                            else {
+                                setCondition("R-19");
+                                // Choose "matchB":
+                                setSelectedMatch(matchB);
+                            }
+                        }
+                    // We're neither better in "MatchA" nor in "matchB":
+                    else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6 &&
+                        matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
+                            setCondition("R-20");
+                            // Choose the closest:
+                            if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
+                                setSelectedMatch(matchA);
+                            } else {
+                                setSelectedMatch(matchB);
+                            }
+                        }
+                    else {
+                        setSelectedMatch(availableMatches[Math.floor(Math.random() * availableMatches.length)]);
+                    }
+                }
+                // Main Condition 3:
+                else if (userScore === 0 && pejmanScore === 1) {
+                    const matchA = availableMatches[0];
+                    const matchB = availableMatches[1];
+                    // We win both remaining matches:
+                    if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
+                                setCondition("R-21");
+                                // Choose one of them :)
+                                setSelectedMatch(matchA);
+                            }
+                    // We win only "matchA":
+                    else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
+                                setCondition("R-22");
+                                // Choose "matchA":
+                                setSelectedMatch(matchA);
+                            }
+                    // We win only "matchB":
+                    else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
+                                setCondition("R-22");
+                                // Choose "matchB":
+                                setSelectedMatch(matchB);
+                            }
+                    // We neither win "matchA" nor "matchB":
+                    else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
+                            matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
+                                // We're better in both "matchA" and "matchB":
+                                if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 7 &&
+                                matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 7) {
+                                    setCondition("R-23");
+                                    // Choose the closest:
+                                    if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
+                                        setSelectedMatch(matchA);
+                                    } else {
+                                        setSelectedMatch(matchB);
+                                    }
+                                }
+                                // User's better in both "matchA" and "matchB":
+                                else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6 &&
+                                matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
+                                    setCondition("R-24");
+                                    // Choose the closest:
+                                    if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
+                                        setSelectedMatch(matchA);
+                                    } else {
+                                        setSelectedMatch(matchB);
+                                    }
+                                }
+                                // We're better in "matchA":
+                                else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 7 &&
+                                matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
+                                    // User needs 1 or 2 or 3 to win:
+                                    if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 10) {
+                                        setCondition("R-25");
+                                        // Choose "matchB":
+                                        setSelectedMatch(matchB);
+                                    } else {
+                                        setCondition("R-26");
+                                        // Choose "matchA":
+                                        setSelectedMatch(matchA);
+                                    }
+                                }
+                                // We're better in "matchB":
+                                else if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 7 &&
+                                matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6) {
+                                    // User needs 1 or 2 or 3 to win:
+                                    if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 10) {
+                                        setCondition("R-25");
+                                        // Choose "matchA":
+                                        setSelectedMatch(matchA);
+                                    } else {
+                                        setCondition("R-26");
+                                        // Choose "matchB":
+                                        setSelectedMatch(matchB);
+                                    }
+                                }
+                            }
+                    else {
+                        setSelectedMatch(availableMatches[Math.floor(Math.random() * availableMatches.length)]);
+                    }
+                }
+                // Main Condition 4:
+                else if (userScore === 1 && pejmanScore === 1) {
+                    setCondition("R-27");
+                    setSelectedMatch(availableMatches[0]);
+                }
+            }
         setMatches((currMatches) => currMatches.map((m) =>
         m.matchName === selectedMatch ? {...m, isMatchSelected: true} : m
     ))
