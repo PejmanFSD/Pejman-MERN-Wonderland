@@ -20,6 +20,7 @@ import V1 from "./images/V-1.jpg";
 import V2 from "./images/V-2.jpg";
 import V3 from "./images/V-3.jpg";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function TugOfWar() {
   const [easyMode, setEasyMode] = useState(false);
@@ -185,6 +186,23 @@ export default function TugOfWar() {
     setDice(-1);
     setIsUserTurn(true);
   };
+
+  const handlePlayAgain = () => {
+    setIsUserTurn(true);
+    setDice(-1);
+    setIsDiceUpdated(false);
+    setMatches([
+        {matchName: "match1", isMatchSelected: false, matchValue: [Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]},
+        {matchName: "match2", isMatchSelected: false, matchValue: [Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]},
+        {matchName: "match3", isMatchSelected: false, matchValue: [Blue1, V1, V1, V1, V1, V1, V1, V2, V1, V1, V1, V1, V1, V1, Red1]}
+    ]);
+    setSelectedMatch("");
+    setFinishedMatches([]);
+    setAvailableMatches(["match1", "match2", "match3"]);
+    setUserScore(0);
+    setPejmanScore(0);
+    setFinalMessage("");
+  }
   useEffect(() => {
         if (!isUserTurn && isDiceUpdated && normalMode) {
             // user's color is "Blue":
@@ -1226,8 +1244,20 @@ export default function TugOfWar() {
             <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       }
-      {finalMessage && finalMessage === "You Win!" && <h3>You Win!</h3>}
-      {finalMessage && finalMessage === "Pejman Wins!" && <h3>Pejman Wins!</h3>}
+      {finalMessage && finalMessage === "You Win!" &&
+        <div>
+            <h3>You Win!</h3>
+            <div>Play Again?</div>
+            <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      }
+      {finalMessage && finalMessage === "Pejman Wins!" && 
+        <div>
+            <h3>Pejman Wins!</h3>
+            <div>Try Again?</div>
+            <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      }
       {easyMode && !normalMode && finalMessage === ""
               ? 
                 // !isTogglingReset &&
