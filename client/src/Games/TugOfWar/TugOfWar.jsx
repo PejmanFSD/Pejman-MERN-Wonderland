@@ -44,7 +44,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
-  const [condition, setCondition] = useState("");
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -260,7 +259,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     // User is in a beeter situation in all 3 matches:
                     if (matches[0]?.matchValue?.indexOf(V2) < 8 && matches[1]?.matchValue?.indexOf(V2) < 8 && matches[2]?.matchValue?.indexOf(V2) < 8) {
                         if (dice === 4 || dice === 5 || dice === 6) {
-                            setCondition("B-01");
                             // Choose user's best:
                             if (matches[0]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2) &&
                                 matches[0]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
@@ -275,7 +273,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                     setSelectedMatch(matches[2].matchName);
                                 }
                         } else {
-                            setCondition("B-02");
                             // Choose user's worst:
                             if (matches[0]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2) &&
                                 matches[0]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
@@ -295,23 +292,19 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 7 && matches[1]?.matchValue?.indexOf(V2) > 7 && matches[2]?.matchValue?.indexOf(V2) > 7) {
                         // We can win 1 match:
                         if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[1]?.matchValue?.indexOf(V2) + dice < 14 && matches[2]?.matchValue?.indexOf(V2) + dice < 14) {
-                            setCondition("B-03-Match1");
                             // Choose match1:
                             setSelectedMatch(matches[0].matchName);
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice < 14 && matches[1]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice < 14) {
-                            setCondition("B-03-Match2");
                             // Choose match2:
                             setSelectedMatch(matches[1].matchName);
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice < 14 && matches[1]?.matchValue?.indexOf(V2) + dice < 14 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-03-Match3");
                             // Choose match3:
                             setSelectedMatch(matches[2].matchName);
                         } 
                         // We can win 2 matches:
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[1]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice < 14) {
-                            setCondition("B-04-Match1+Match2");
                             // Choose the lightest win:
                             if (matches[0]?.matchValue?.indexOf(V2) < matches[1]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -320,7 +313,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             }
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[1]?.matchValue?.indexOf(V2) + dice < 14 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-04-Match1+Match3");
                             // Choose the lightest win:
                             if (matches[0]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -329,7 +321,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             }
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice < 14 && matches[1]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-04-Match2+Match3");
                             // Choose the lightest win:
                             if (matches[1]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[1].matchName);
@@ -339,7 +330,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We can win 3 matches:
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[1]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-05");
                             // Choose the lightest win:
                             if (matches[0]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2) && matches[0]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -351,7 +341,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We can't win in any match:
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice < 14 && matches[1]?.matchValue?.indexOf(V2) + dice < 14 && matches[2]?.matchValue?.indexOf(V2) + dice < 14) {
-                            setCondition("B-06");
                             // Choose our best option:
                             if (matches[0]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2) && matches[0]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -367,7 +356,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 7 && matches[1]?.matchValue?.indexOf(V2) > 7 && matches[2]?.matchValue?.indexOf(V2) < 8) {
                         // We win "match1" and "match2":
                         if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[1]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-07-Match1+Match2");
                             // Choose the lightest:
                             if (matches[0]?.matchValue?.indexOf(V2) < matches[1]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -377,13 +365,11 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We win "match1":
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[1]?.matchValue?.indexOf(V2) + dice <= 13) {
-                            setCondition("B-08-Match1-Not Match2");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         }
                         // We win "match2":
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice <= 13 && matches[1]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-08-Match2-Not Match1");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         }
@@ -391,11 +377,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice <= 13 && matches[1]?.matchValue?.indexOf(V2) + dice <= 13) {
                             // The user needs 1 to win match3:
                             if (matches[2]?.matchValue?.indexOf(V2) === 1) {
-                                setCondition("B-09-The user needs 1 in match3");
                                 // Choose match3:
                                 setSelectedMatch(matches[2].matchName);
                             } else {
-                                setCondition("B-10-The closer between match1 or match2");
                                 // Choose the closer between match1 or match2:
                                 if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -409,7 +393,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 7 && matches[1]?.matchValue?.indexOf(V2) < 8 && matches[2]?.matchValue?.indexOf(V2) > 7) {
                         // We win "match1" and "match3":
                         if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-07-Match1+Match3");
                             // Choose the lightest:
                             if (matches[0]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -419,13 +402,11 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We win "match1":
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice <= 13) {
-                            setCondition("B-08-Match1-Not Match3");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         }
                         // We win "match3":
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice <= 13 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-08-Match3-Not Match1");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         }
@@ -433,11 +414,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         else if (matches[0]?.matchValue?.indexOf(V2) + dice <= 13 && matches[2]?.matchValue?.indexOf(V2) + dice <= 13) {
                             // The user needs 1 to win match2
                             if (matches[1]?.matchValue?.indexOf(V2) === 1) {
-                                setCondition("B-09-The user needs 1 in match2");
                                 // Choose match2:
                                 setSelectedMatch(matches[1].matchName);
                             } else {
-                                setCondition("B-10-The closer between match1 or match3");
                                 // Choose the closer between match1 or match3:
                                 if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matches[0].matchName);
@@ -451,7 +430,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 8 && matches[1]?.matchValue?.indexOf(V2) > 7 && matches[2]?.matchValue?.indexOf(V2) > 7) {
                         // We win "match2" and "match3":
                         if (matches[1]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-07-Match2+Match3");
                             // Choose the lightest:
                             if (matches[1]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[1].matchName);
@@ -461,13 +439,11 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We win "match2":
                         else if (matches[1]?.matchValue?.indexOf(V2) + dice > 13 && matches[2]?.matchValue?.indexOf(V2) + dice <= 13) {
-                            setCondition("B-08-Match2-Not Match3");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         }
                         // We win "match3":
                         else if (matches[1]?.matchValue?.indexOf(V2) + dice <= 13 && matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-08-Match3-Not Match2");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         }
@@ -475,11 +451,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         else if (matches[1]?.matchValue?.indexOf(V2) + dice <= 13 && matches[2]?.matchValue?.indexOf(V2) + dice <= 13) {
                             // The user needs 1 to win match1
                             if (matches[0]?.matchValue?.indexOf(V2) === 1) {
-                                setCondition("B-09-The user needs 1 in match1");
                                 // Choose match1:
                                 setSelectedMatch(matches[0].matchName);
                             } else {
-                                setCondition("B-10-The closer between match2 or match3");
                                 // Choose the closer between match2 or match3:
                                 if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matches[1].matchName);
@@ -495,11 +469,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 7 && matches[1]?.matchValue?.indexOf(V2) < 8 && matches[2]?.matchValue?.indexOf(V2) < 8) {
                         // We win "match1":
                         if (matches[0]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-11-Winning match1");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         } else if (dice > 3) {
-                            setCondition("B-12-We're better in match1");
                             // Choose the user's best:
                             if (matches[1]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                 // Choose "match2":
@@ -509,7 +481,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 setSelectedMatch(matches[2].matchName);
                             }
                         } else {
-                            setCondition("B-13-We're better in match1");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         }
@@ -518,11 +489,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 8 && matches[1]?.matchValue?.indexOf(V2) > 7 && matches[2]?.matchValue?.indexOf(V2) < 8) {
                         // We win "match2":
                         if (matches[1]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-11-Winning match2");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         } else if (dice > 3) {
-                            setCondition("B-12-We're better in match2");
                             // Choose the user's best:
                             if (matches[0]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                 // Choose "match1":
@@ -532,7 +501,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 setSelectedMatch(matches[2].matchName);
                             }
                         } else {
-                            setCondition("B-13-We're better in match2");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         }
@@ -541,11 +509,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 8 && matches[1]?.matchValue?.indexOf(V2) < 8 && matches[2]?.matchValue?.indexOf(V2) > 7) {
                         // We win "match3":
                         if (matches[2]?.matchValue?.indexOf(V2) + dice > 13) {
-                            setCondition("B-11-Winning match3");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         } else if (dice > 3) {
-                            setCondition("B-12-We're better in match3");
                             // Choose the user's best:
                             if (matches[0]?.matchValue?.indexOf(V2) < matches[1]?.matchValue?.indexOf(V2)) {
                                 // Choose "match1":
@@ -555,7 +521,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 setSelectedMatch(matches[1].matchName);
                             }
                         } else {
-                            setCondition("B-13-We're better in match3");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         }
@@ -574,7 +539,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         // We win both remaining matches:
                         if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice > 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice > 13) {
-                                setCondition("B-14");
                                 // Choose the lighter:
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matchA);
@@ -585,21 +549,18 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         // We win "matchA":
                         else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice > 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice <= 13) {
-                                setCondition("B-15");
                                 // Choose "matchA":
                                 setSelectedMatch(matchA);
                             }
                         // We win "matchB":
                         else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice <= 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice > 13) {
-                                setCondition("B-15");
                                 // Choose "matchB":
                                 setSelectedMatch(matchB);
                             }
                         // We win none of the remining matches:
                         else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice <= 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice <= 13) {
-                                setCondition("B-16");
                                 // Choose the closest:
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matchA);
@@ -615,18 +576,15 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice > 13) {
                                 // user needs 1 or 2 or 3 to win:
                                 if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 4) {
-                                    setCondition("B-17");
                                     // Choose "matchB":
                                     setSelectedMatch(matchB);
                                 } else {
-                                    setCondition("B-18");
                                     // Choose "matchA":
                                     setSelectedMatch(matchA);
                                 }
                             }
                             // We don't win "matchA":
                             else {
-                                setCondition("B-19");
                                 // Choose "matchA":
                                 setSelectedMatch(matchA);
                             }
@@ -638,18 +596,15 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice > 13) {
                                 // user needs 1 or 2 or 3 to win:
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 4) {
-                                    setCondition("B-17");
                                     // Choose "matchA":
                                     setSelectedMatch(matchA);
                                 } else {
-                                    setCondition("B-18");
                                     // Choose "matchB":
                                     setSelectedMatch(matchB);
                                 }
                             }
                             // We don't win "matchB":
                             else {
-                                setCondition("B-19");
                                 // Choose "matchB":
                                 setSelectedMatch(matchB);
                             }
@@ -657,7 +612,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     // We're neither better in "MatchA" nor in "matchB":
                     else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 8 &&
                         matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 8) {
-                            setCondition("B-20");
                             // Choose the closest:
                             if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matchA);
@@ -676,21 +630,18 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     // We win both remaining matches:
                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice > 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice > 13) {
-                                setCondition("B-21");
                                 // Choose one of them :)
                                 setSelectedMatch(matchA);
                             }
                     // We win only "matchA":
                     else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice > 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice <= 13) {
-                                setCondition("B-22");
                                 // Choose "matchA":
                                 setSelectedMatch(matchA);
                             }
                     // We win only "matchB":
                     else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) + dice <= 13 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) + dice > 13) {
-                                setCondition("B-22");
                                 // Choose "matchB":
                                 setSelectedMatch(matchB);
                             }
@@ -700,7 +651,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 // We're better in both "matchA" and "matchB":
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 7 &&
                                 matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 7) {
-                                    setCondition("B-23");
                                     // Choose the closest:
                                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                         setSelectedMatch(matchA);
@@ -711,7 +661,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 // User's better in both "matchA" and "matchB":
                                 else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) <= 7 &&
                                 matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) <= 7) {
-                                    setCondition("B-24");
                                     // Choose the closest:
                                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                         setSelectedMatch(matchA);
@@ -724,11 +673,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) <= 7) {
                                     // User needs 1 or 2 or 3 to win:
                                     if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) <= 3) {
-                                        setCondition("B-25");
                                         // Choose "matchB":
                                         setSelectedMatch(matchB);
                                     } else {
-                                        setCondition("B-26");
                                         // Choose "matchA":
                                         setSelectedMatch(matchA);
                                     }
@@ -738,11 +685,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) <= 7) {
                                     // User needs 1 or 2 or 3 to win:
                                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) <= 3) {
-                                        setCondition("B-25");
                                         // Choose "matchA":
                                         setSelectedMatch(matchA);
                                     } else {
-                                        setCondition("B-26");
                                         // Choose "matchB":
                                         setSelectedMatch(matchB);
                                     }
@@ -754,7 +699,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                 }
                 // Main Condition 4:
                 else if (userScore === 1 && pejmanScore === 1) {
-                    setCondition("B-27");
                     setSelectedMatch(availableMatches[0]);
                 }
             }
@@ -765,7 +709,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     // User is in a beeter situation in all 3 matches:
                     if (matches[0]?.matchValue?.indexOf(V2) >= 7 && matches[1]?.matchValue?.indexOf(V2) >= 7 && matches[2]?.matchValue?.indexOf(V2) >= 7) {
                         if (dice === 4 || dice === 5 || dice === 6) {
-                            setCondition("R-01");
                             // Choose user's best:
                             if (matches[0]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2) &&
                                 matches[0]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
@@ -780,7 +723,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                     setSelectedMatch(matches[2].matchName);
                                 }
                         } else {
-                            setCondition("R-02");
                             // Choose user's worst:
                             if (matches[0]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2) &&
                                 matches[0]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
@@ -800,23 +742,19 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) < 7) {
                         // We can win 1 match:
                         if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-03-Match1");
                             // Choose match1:
                             setSelectedMatch(matches[0].matchName);
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-03-Match2");
                             // Choose match2:
                             setSelectedMatch(matches[1].matchName);
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-03-Match3");
                             // Choose match3:
                             setSelectedMatch(matches[2].matchName);
                         } 
                         // We can win 2 matches:
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-04-Match1+Match2");
                             // Choose the lightest win:
                             if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -825,7 +763,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             }
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-04-Match1+Match3");
                             // Choose the lightest win:
                             if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -834,7 +771,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             }
                         }
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-04-Match2+Match3");
                             // Choose the lightest win:
                             if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[1].matchName);
@@ -844,7 +780,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We can win 3 matches:
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-05");
                             // Choose the lightest win:
                             if (matches[0]?.matchValue?.indexOf(V2) >= matches[1]?.matchValue?.indexOf(V2) && matches[0]?.matchValue?.indexOf(V2) >= matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -856,7 +791,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We can't win in any match:
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-06");
                             // Choose our best option:
                             if (matches[0]?.matchValue?.indexOf(V2) <= matches[1]?.matchValue?.indexOf(V2) && matches[0]?.matchValue?.indexOf(V2) <= matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -872,7 +806,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) > 6) {
                         // We win "match1" and "match2":
                         if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-07-Match1+Match2");
                             // Choose the lightest:
                             if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -882,13 +815,11 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We win "match1":
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[1]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-08-Match1-Not Match2");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         }
                         // We win "match2":
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-08-Match2-Not Match1");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         }
@@ -896,11 +827,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[1]?.matchValue?.indexOf(V2) - dice > 0) {
                             // The user needs 1 to win match3:
                             if (matches[2]?.matchValue?.indexOf(V2) === 13) {
-                                setCondition("R-09-The user needs 1 in match3");
                                 // Choose match3:
                                 setSelectedMatch(matches[2].matchName);
                             } else {
-                                setCondition("R-10-The closer between match1 or match2");
                                 // Choose the closer between match1 or match2:
                                 if (matches[0]?.matchValue?.indexOf(V2) < matches[1]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -914,7 +843,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) > 6 && matches[2]?.matchValue?.indexOf(V2) < 7) {
                         // We win "match1" and "match3":
                         if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-07-Match1+Match3");
                             // Choose the lightest:
                             if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[0].matchName);
@@ -924,13 +852,11 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We win "match1":
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-08-Match1-Not Match3");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         }
                         // We win "match3":
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-08-Match3-Not Match1");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         }
@@ -938,11 +864,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         else if (matches[0]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
                             // The user needs 1 to win match2
                             if (matches[1]?.matchValue?.indexOf(V2) === 13) {
-                                setCondition("R-09-The user needs 1 in match2");
                                 // Choose match2:
                                 setSelectedMatch(matches[1].matchName);
                             } else {
-                                setCondition("R-10-The closer between match1 or match3");
                                 // Choose the closer between match1 or match3:
                                 if (matches[0]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matches[0].matchName);
@@ -956,7 +880,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 6 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) < 7) {
                         // We win "match2" and "match3":
                         if (matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-07-Match2+Match3");
                             // Choose the lightest:
                             if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matches[1].matchName);
@@ -966,13 +889,11 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         }
                         // We win "match2":
                         else if (matches[1]?.matchValue?.indexOf(V2) - dice < 1 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
-                            setCondition("R-08-Match2-Not Match3");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         }
                         // We win "match3":
                         else if (matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-08-Match3-Not Match2");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         }
@@ -980,11 +901,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         else if (matches[1]?.matchValue?.indexOf(V2) - dice > 0 && matches[2]?.matchValue?.indexOf(V2) - dice > 0) {
                             // The user needs 1 to win match1
                             if (matches[0]?.matchValue?.indexOf(V2) === 13) {
-                                setCondition("R-09-The user needs 1 in match1");
                                 // Choose match1:
                                 setSelectedMatch(matches[0].matchName);
                             } else {
-                                setCondition("R-10-The closer between match2 or match3");
                                 // Choose the closer between match2 or match3:
                                 if (matches[1]?.matchValue?.indexOf(V2) < matches[2]?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matches[1].matchName);
@@ -1000,11 +919,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) < 7 && matches[1]?.matchValue?.indexOf(V2) > 6 && matches[2]?.matchValue?.indexOf(V2) > 6) {
                         // We win "match1":
                         if (matches[0]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-11-Winning match1");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         } else if (dice > 3) {
-                            setCondition("R-12-We're better in match1");
                             // Choose the user's best:
                             if (matches[1]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                 // Choose "match2":
@@ -1014,7 +931,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 setSelectedMatch(matches[2].matchName);
                             }
                         } else {
-                            setCondition("R-13-We're better in match1");
                             // Choose "match1":
                             setSelectedMatch(matches[0].matchName);
                         }
@@ -1023,11 +939,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 6 && matches[1]?.matchValue?.indexOf(V2) < 7 && matches[2]?.matchValue?.indexOf(V2) > 6) {
                         // We win "match2":
                         if (matches[1]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-11-Winning match2");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         } else if (dice > 3) {
-                            setCondition("R-12-We're better in match2");
                             // Choose the user's best:
                             if (matches[0]?.matchValue?.indexOf(V2) > matches[2]?.matchValue?.indexOf(V2)) {
                                 // Choose "match1":
@@ -1037,7 +951,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 setSelectedMatch(matches[2].matchName);
                             }
                         } else {
-                            setCondition("R-13-We're better in match2");
                             // Choose "match2":
                             setSelectedMatch(matches[1].matchName);
                         }
@@ -1046,11 +959,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     else if (matches[0]?.matchValue?.indexOf(V2) > 6 && matches[1]?.matchValue?.indexOf(V2) > 6 && matches[2]?.matchValue?.indexOf(V2) < 7) {
                         // We win "match3":
                         if (matches[2]?.matchValue?.indexOf(V2) - dice < 1) {
-                            setCondition("R-11-Winning match3");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         } else if (dice > 3) {
-                            setCondition("R-12-We're better in match3");
                             // Choose the user's best:
                             if (matches[0]?.matchValue?.indexOf(V2) > matches[1]?.matchValue?.indexOf(V2)) {
                                 // Choose "match1":
@@ -1060,7 +971,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 setSelectedMatch(matches[1].matchName);
                             }
                         } else {
-                            setCondition("R-13-We're better in match3");
                             // Choose "match3":
                             setSelectedMatch(matches[2].matchName);
                         }
@@ -1079,7 +989,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         // We win both remaining matches:
                         if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
-                                setCondition("R-14");
                                 // Choose the lighter:
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matchA);
@@ -1090,21 +999,18 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                         // We win "matchA":
                         else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
-                                setCondition("R-15");
                                 // Choose "matchA":
                                 setSelectedMatch(matchA);
                             }
                         // We win "matchB":
                         else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
-                                setCondition("R-15");
                                 // Choose "matchB":
                                 setSelectedMatch(matchB);
                             }
                         // We win none of the remining matches:
                         else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
-                                setCondition("R-16");
                                 // Choose the closest:
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                     setSelectedMatch(matchA);
@@ -1120,18 +1026,15 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1) {
                                 // user needs 1 or 2 or 3 to win:
                                 if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 10) {
-                                    setCondition("R-17");
                                     // Choose "matchB":
                                     setSelectedMatch(matchB);
                                 } else {
-                                    setCondition("R-18");
                                     // Choose "matchA":
                                     setSelectedMatch(matchA);
                                 }
                             }
                             // We don't win "matchA":
                             else {
-                                setCondition("R-19");
                                 // Choose "matchA":
                                 setSelectedMatch(matchA);
                             }
@@ -1143,18 +1046,15 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                             if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
                                 // user needs 1 or 2 or 3 to win:
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 10) {
-                                    setCondition("R-17");
                                     // Choose "matchA":
                                     setSelectedMatch(matchA);
                                 } else {
-                                    setCondition("R-18");
                                     // Choose "matchB":
                                     setSelectedMatch(matchB);
                                 }
                             }
                             // We don't win "matchB":
                             else {
-                                setCondition("R-19");
                                 // Choose "matchB":
                                 setSelectedMatch(matchB);
                             }
@@ -1162,7 +1062,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     // We're neither better in "MatchA" nor in "matchB":
                     else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6 &&
                         matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
-                            setCondition("R-20");
                             // Choose the closest:
                             if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                 setSelectedMatch(matchA);
@@ -1181,21 +1080,18 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                     // We win both remaining matches:
                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
-                                setCondition("R-21");
                                 // Choose one of them :)
                                 setSelectedMatch(matchA);
                             }
                     // We win only "matchA":
                     else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice < 1 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice > 0) {
-                                setCondition("R-22");
                                 // Choose "matchA":
                                 setSelectedMatch(matchA);
                             }
                     // We win only "matchB":
                     else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) - dice > 0 &&
                             matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) - dice < 1) {
-                                setCondition("R-22");
                                 // Choose "matchB":
                                 setSelectedMatch(matchB);
                             }
@@ -1205,7 +1101,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 // We're better in both "matchA" and "matchB":
                                 if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < 7 &&
                                 matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) < 7) {
-                                    setCondition("R-23");
                                     // Choose the closest:
                                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                         setSelectedMatch(matchA);
@@ -1216,7 +1111,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 // User's better in both "matchA" and "matchB":
                                 else if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6 &&
                                 matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
-                                    setCondition("R-24");
                                     // Choose the closest:
                                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) < matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2)) {
                                         setSelectedMatch(matchA);
@@ -1229,11 +1123,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 6) {
                                     // User needs 1 or 2 or 3 to win:
                                     if (matches.find(m => m.matchName === matchB)?.matchValue?.indexOf(V2) > 10) {
-                                        setCondition("R-25");
                                         // Choose "matchB":
                                         setSelectedMatch(matchB);
                                     } else {
-                                        setCondition("R-26");
                                         // Choose "matchA":
                                         setSelectedMatch(matchA);
                                     }
@@ -1243,11 +1135,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                                 matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 6) {
                                     // User needs 1 or 2 or 3 to win:
                                     if (matches.find(m => m.matchName === matchA)?.matchValue?.indexOf(V2) > 10) {
-                                        setCondition("R-25");
                                         // Choose "matchA":
                                         setSelectedMatch(matchA);
                                     } else {
-                                        setCondition("R-26");
                                         // Choose "matchB":
                                         setSelectedMatch(matchB);
                                     }
@@ -1259,7 +1149,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
                 }
                 // Main Condition 4:
                 else if (userScore === 1 && pejmanScore === 1) {
-                    setCondition("R-27");
                     setSelectedMatch(availableMatches[0]);
                 }
             }
@@ -1274,6 +1163,9 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
   useEffect(() => {
     if (userScore === 2) {
         setFinalMessage("You Win!");
+        if (normalMode) {
+            updateTotalPoint(1);
+        }
     }
   }, [userScore]);
   useEffect(() => {
@@ -1284,7 +1176,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
   return (
     <div>
       <h2>Tug of War</h2>
-      <div>Condition: {condition}</div>
       <div style={{color: "red"}}>Dice: {dice}</div>
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage &&
         <div>
