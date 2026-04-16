@@ -19,6 +19,7 @@ import Counter from "./Games/Counter/Counter";
 import Puzzle from "./Games/Puzzle/Puzzle";
 import Bingo from "./Games/Bingo/Bingo";
 import TugOfWar from "./Games/TugOfWar/TugOfWar";
+import Maze from "./Games/Maze/Maze";
 
 export default function Home({
   ads,
@@ -53,6 +54,7 @@ export default function Home({
   const [showPuzzle, setShowPuzzle] = useState(false);
   const [showBingo, setShowBingo] = useState(false);
   const [showTugOfWar, setShowTugOfWar] = useState(false);
+  const [showMaze, setShowMaze] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -249,6 +251,16 @@ export default function Home({
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowTugOfWar(true);
+  };
+  const toggleMaze = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    setShowGameTitles(false);
+    setIsAGameStarted(true);
+    setShowMaze(true);
   };
   return (
     <div>
@@ -576,6 +588,21 @@ export default function Home({
         !showTugOfWar &&
         !isAGameStarted && (
           <button onClick={() => toggleTugOfWar()} style={{position: "relative", top: "5px"}}>Tug of War</button>
+        )
+      )}
+      {!showGameTitles && showMaze && isAGameStarted ? (
+        <Maze
+          setShowGameTitles={setShowGameTitles}
+          setShowMaze={setShowMaze}
+          updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
+        />
+      ) : (
+        showGameTitles &&
+        !showMaze &&
+        !isAGameStarted && (
+          <button onClick={() => toggleMaze()} style={{position: "relative", top: "5px"}}>Maze</button>
         )
       )}
     </div>
