@@ -42,14 +42,12 @@ export default function Maze() {
         Bodies.rectangle(0, height / 2, width / 80, height, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}}),
         Bodies.rectangle(width, height / 2, width / 80, height, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}})
     ];
-    const cells = 6;
-    const grid = Array(cells).fill(null).map(() => Array(cells).fill(false));
-    const verticals = Array(cells).fill(null).map(() => Array(cells - 1).fill(false));
-    const horizontals = Array(cells - 1).fill(null).map(() => Array(cells).fill(false));
-    // const box = Bodies.rectangle(width / 2, height / 2, 50, 50);
-    // const ground = Bodies.rectangle(width / 2, height / 1.5, width / 1.5, height / 10, {
-    //   isStatic: true, // The shape can't move
-    // });
+    const cellsHorizontal = 20;
+    const cellsVertical = 12;
+    const grid = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
+    const verticals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal - 1).fill(false));
+    const horizontals = Array(cellsVertical - 1).fill(null).map(() => Array(cellsHorizontal).fill(false));
+
     const shuffle = (arr) => {
         let counter = arr.length;
         while (counter > 0) {
@@ -87,7 +85,7 @@ export default function Maze() {
             const [nextRow, nextColumn, direction] = neighbor; // De-structuring the neighbor
             // If that neighbor is out of bounds
             // continue to the next neighbor cell
-            if (nextRow < 0 || nextRow >= cells || nextColumn < 0 || nextColumn >= cells) {
+            if (nextRow < 0 || nextRow >= cellsVertical || nextColumn < 0 || nextColumn >= cellsHorizontal) {
                 continue; // "continue" means don't leave this loop, but skip the rest of
                 // the loop for the current variable
             }
@@ -122,7 +120,8 @@ export default function Maze() {
     }
     stepThroughCells(0, 0);
     // Drawing the maze:
-    const unitLength = (height - (height / 80)) / cells;
+    const unitLengthX = (width - (height / 80)) / cellsHorizontal;
+    const unitLengthY = (height - (height / 80)) / cellsVertical;
     // Iterating through the "horizontals" array:
     horizontals.forEach((row, rowIndex) => { // This array contains some arrays which
         // are the row walls, so we call each a "row"
@@ -133,10 +132,10 @@ export default function Maze() {
                 return;
             } // Otherwise create a wall
             const wall = Bodies.rectangle(
-                width / 80 + columnIndex * unitLength + unitLength / 2, // "X" of the center of the wall
-                width / 80 + rowIndex * unitLength + unitLength, // "Y" of the center of the wall
-                unitLength + unitLength / 8,
-                unitLength / 8,
+                height / 80 + columnIndex * unitLengthX + unitLengthX / 2, // "X" of the center of the wall
+                height / 80 + rowIndex * unitLengthY + unitLengthY, // "Y" of the center of the wall
+                unitLengthX + unitLengthY / 20,
+                unitLengthY / 20,
                 { isStatic: true, label: 'wall', render: { fillStyle: 'gray' } }
             );
             World.add(world, wall);
@@ -149,10 +148,10 @@ export default function Maze() {
                 return;
             }
             const wall = Bodies.rectangle(
-                width / 80 + columnIndex * unitLength + unitLength,
-                width / 80 + rowIndex * unitLength + unitLength / 2,
-                unitLength / 8,
-                unitLength + unitLength / 8,
+                height / 80 + columnIndex * unitLengthX + unitLengthX,
+                height / 80 + rowIndex * unitLengthY + unitLengthY / 2,
+                unitLengthY / 20,
+                unitLengthY + unitLengthY / 20,
                 { isStatic: true, label: 'wall', render: { fillStyle: 'gray' } }
             );
             World.add(world, wall);
