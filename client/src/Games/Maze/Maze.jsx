@@ -1,12 +1,34 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Matter from "matter-js";
 
 export default function Maze() {
   const sceneRef = useRef(null);
+    // const cellsHorizontal = 20;
+    // const cellsVertical = 12;
+    const [cellsHorizontal, setCellsHorizontal] = useState(5);
+    const [cellsVertical, setCellsVertical] = useState(3);
+    const [easyMode, setEasyMode] = useState(false);
+    const [normalMode, setNormalMode] = useState(false);
+    const [isGameStarted, setIsGameStarted] = useState(false);
 //   const [cellsNum, setCellsNum] = useState(6);
 //   const [cells, setCells] = useState([]);
 //   const [verticalWalls, setVerticalWalls] = useState([]);
 //   const [horizontalWalls, setHorizontalWalls] = useState([]);
+  const handleEasyMode = () => {
+    setCellsHorizontal(20);
+    setCellsVertical(12);
+    setEasyMode(true);
+    setNormalMode(false);
+  };
+  const handleNormalMode = () => {
+    setCellsHorizontal(40);
+    setCellsVertical(24);
+    setNormalMode(true);
+    setEasyMode(false);
+  };
+  const handleStart = () => {
+    setIsGameStarted(true);
+  };
   useEffect(() => {
     // Aliases; de-structuring the "Matter" object:
     const World = Matter.World; // The object that containes all the shapes
@@ -42,8 +64,8 @@ export default function Maze() {
         Bodies.rectangle(0, height / 2, width / 80, height, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}}),
         Bodies.rectangle(width, height / 2, width / 80, height, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}})
     ];
-    const cellsHorizontal = 20;
-    const cellsVertical = 12;
+    // const cellsHorizontal = 20;
+    // const cellsVertical = 12;
     const grid = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal).fill(false));
     const verticals = Array(cellsVertical).fill(null).map(() => Array(cellsHorizontal - 1).fill(false));
     const horizontals = Array(cellsVertical - 1).fill(null).map(() => Array(cellsHorizontal).fill(false));
@@ -169,7 +191,20 @@ export default function Maze() {
       render.canvas.remove();
       render.textures = {};
     };
-  }, []);
+  }, [isGameStarted]);
 
-  return <div ref={sceneRef} style ={{position: "relative", top: "50px"}}/>;
+  return (
+    <div>
+        {!isGameStarted && (!easyMode && !normalMode) &&
+            <div>
+                <button onClick={handleEasyMode}>Easy Mode</button>
+                <button onClick={handleNormalMode}>Normal Mode</button>
+            </div>
+        }
+        {!isGameStarted && (easyMode || normalMode) &&
+            <button onClick={handleStart}>Start the Game</button>
+        }
+        {isGameStarted &&<div ref={sceneRef} style ={{position: "relative", top: "50px"}}/>}
+    </div>
+  )
 }
