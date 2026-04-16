@@ -32,14 +32,19 @@ export default function Maze() {
     // Creating the "runner":
     const runner = Runner.create();
     Runner.run(runner, engine);
-    // Add shapes:
-    const box = Bodies.rectangle(200, 200, 50, 50);
-    const ground = Bodies.rectangle(width / 2, height / 1.5, width / 1.5, height / 10, {
-      isStatic: true, // The shape can't move
-    });
+    // Creating the 4 major walls around the canvas:
+    const walls = [
+        Bodies.rectangle(width / 2, 0, width, width / 80, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}}),
+        Bodies.rectangle(width / 2, height, width, width / 80, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}}),
+        Bodies.rectangle(0, height / 2, width / 80, height, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}}),
+        Bodies.rectangle(width, height / 2, width / 80, height, {isStatic: true, label: 'border', render: {fillStyle: 'blue'}})
+    ]
+    // const box = Bodies.rectangle(width / 2, height / 2, 50, 50);
+    // const ground = Bodies.rectangle(width / 2, height / 1.5, width / 1.5, height / 10, {
+    //   isStatic: true, // The shape can't move
+    // });
     // Rendering the shapes on screen:
-    World.add(world, [box, ground]);
-
+    World.add(world, [walls[0], walls[1], walls[2], walls[3]]);
     // Cleaning up:
     return () => {
       Render.stop(render);
