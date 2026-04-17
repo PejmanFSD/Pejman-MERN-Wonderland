@@ -10,6 +10,7 @@ export default function Maze() {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [hasWon, setHasWon] = useState(false);
   //   const [cellsNum, setCellsNum] = useState(6);
   //   const [cells, setCells] = useState([]);
   //   const [verticalWalls, setVerticalWalls] = useState([]);
@@ -241,7 +242,10 @@ export default function Maze() {
     World.add(world, ball);
     // Moving the ball:
     const Query = Matter.Query;
+    const Body = Matter.Body;
     const handleKeyDown = (event) => {
+        // If the ball touches the goal, Stop responding to keydown events:
+        if (hasWon) return;
       const step = 10; // 10 pixels by each keydown
       let { x, y } = ball.position; // The ball's position
       let nextPosition = { x, y }; // The ball's updated position after each keydown
@@ -255,6 +259,20 @@ export default function Maze() {
       } else if (event.key === "ArrowRight") {
         nextPosition.x += step;
       }
+      // create fake ball at next position:
+        const tempBall = Bodies.circle(
+            nextPosition.x,
+            nextPosition.y,
+            ball.circleRadius
+        );
+        // Checking goal collision AFTER movement:
+        const goalCollision = Query.collides(
+            tempBall,
+            world.bodies.filter((b) => b.label === "goal")
+        );
+        if (goalCollision.length > 0) {
+            setHasWon(true);
+        }
       // Checking if we place the ball at the next position, would it hit any walls or borders or not:
       const collisions = Query.collides(
         // Faking the next position of the ball:
@@ -267,7 +285,6 @@ export default function Maze() {
         Matter.Body.setPosition(ball, nextPosition);
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     // Cleaning up:
     return () => {
@@ -292,6 +309,7 @@ export default function Maze() {
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={handleStart}>Start the Game</button>
       )}
+      {hasWon && <h2>You Win!</h2>}
       {isGameStarted && (
         <div ref={sceneRef} style={{ position: "relative", top: "50px" }} />
       )}
