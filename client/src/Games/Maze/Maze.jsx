@@ -194,6 +194,19 @@ export default function Maze() {
         }
     );
     World.add(world, goal);
+    // Creating the ball:
+    const ballRadius = Math.min(unitLengthX, unitLengthY);
+    const ball = Bodies.circle(
+        unitLengthX / 2 + width / 160,
+        unitLengthY / 2 + width / 160,
+        0.3 * ballRadius,
+        {
+            label: 'ball',
+            isStatic: true,
+            render: {fillStyle: 'magenta'}
+        }
+    );
+    World.add(world, ball);
     // Cleaning up:
     return () => {
       Render.stop(render);
