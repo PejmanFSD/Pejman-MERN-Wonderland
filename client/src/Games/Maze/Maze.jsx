@@ -3,18 +3,14 @@ import Matter from "matter-js";
 
 export default function Maze() {
   const sceneRef = useRef(null);
-  // const cellsHorizontal = 20;
-  // const cellsVertical = 12;
+  const hasWonRef = useRef(false);
   const [cellsHorizontal, setCellsHorizontal] = useState(5);
   const [cellsVertical, setCellsVertical] = useState(3);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [hasWon, setHasWon] = useState(false);
-  //   const [cellsNum, setCellsNum] = useState(6);
-  //   const [cells, setCells] = useState([]);
-  //   const [verticalWalls, setVerticalWalls] = useState([]);
-  //   const [horizontalWalls, setHorizontalWalls] = useState([]);
+
   const handleEasyMode = () => {
     setCellsHorizontal(20);
     setCellsVertical(12);
@@ -30,6 +26,10 @@ export default function Maze() {
   const handleStart = () => {
     setIsGameStarted(true);
   };
+  // For freezing the ball when it reaches the goal:
+  useEffect(() => {
+    hasWonRef.current = hasWon;
+  }, [hasWon]);
   useEffect(() => {
     // Aliases; de-structuring the "Matter" object:
     const World = Matter.World; // The object that containes all the shapes
@@ -245,7 +245,8 @@ export default function Maze() {
     const Body = Matter.Body;
     const handleKeyDown = (event) => {
         // If the ball touches the goal, Stop responding to keydown events:
-        if (hasWon) return;
+        // if (hasWon) return;
+      if (hasWonRef.current) return; // Always up to date with "hasWonRef"
       const step = 10; // 10 pixels by each keydown
       let { x, y } = ball.position; // The ball's position
       let nextPosition = { x, y }; // The ball's updated position after each keydown
