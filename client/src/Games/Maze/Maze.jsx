@@ -142,8 +142,8 @@ export default function Maze() {
     }
     stepThroughCells(0, 0);
     // Drawing the maze:
-    const unitLengthX = (width - (height / 80)) / cellsHorizontal;
-    const unitLengthY = (height - (height / 80)) / cellsVertical;
+    const unitLengthX = (width - (width / 80)) / cellsHorizontal;
+    const unitLengthY = (height - (width / 80)) / cellsVertical;
     // Iterating through the "horizontals" array:
     horizontals.forEach((row, rowIndex) => { // This array contains some arrays which
         // are the row walls, so we call each a "row"
@@ -181,6 +181,19 @@ export default function Maze() {
     });
     // Rendering the shapes on screen:
     World.add(world, [walls[0], walls[1], walls[2], walls[3]]);
+    const minLineWidth = Math.min(unitLengthX, unitLengthY);
+    const goal = Bodies.rectangle(
+        width - width / 160 - unitLengthX / 2 + unitLengthX / 40,
+        height - width / 160 - unitLengthY / 2 + unitLengthY / 40,
+        0.6 * minLineWidth,
+        0.6 * minLineWidth,
+        {
+            label: 'goal',
+            isStatic: true,
+            render: { fillStyle: 'yellow' }
+        }
+    );
+    World.add(world, goal);
     // Cleaning up:
     return () => {
       Render.stop(render);
@@ -191,6 +204,7 @@ export default function Maze() {
       render.canvas.remove();
       render.textures = {};
     };
+    
   }, [isGameStarted]);
 
   return (
