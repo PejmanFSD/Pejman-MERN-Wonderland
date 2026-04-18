@@ -370,15 +370,18 @@ export default function Maze() {
   return (
     <div>
       {!isGameStarted && !easyMode && !normalMode && (
-        <div>
+        <div style={{ position: "relative", top: "5px" }}>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
       {!isGameStarted && (easyMode || normalMode) && (
-        <button onClick={handleStart}>Start the Game</button>
+        <button onClick={handleStart} style={{ position: "relative", top: "5px" }}>Start the Game</button>
       )}
       {finalMessage && <h2>{finalMessage}</h2>}
+      {finalMessage === "Time's Up!" &&
+        <img src={Clock} width="50px" />
+      }
       {hasWon && (
         <div>
           <div>Play Again?</div>
@@ -389,12 +392,6 @@ export default function Maze() {
         <div>
           <div>Try Again?</div>
           <button onClick={handlePlayAgain}>Ok</button>
-          <br />
-          <img
-            src={Clock}
-            width="250px"
-            style={{ position: "relative", top: "15px" }}
-          />
         </div>
       )}
       {isGameStarted && normalMode && (
@@ -403,9 +400,8 @@ export default function Maze() {
         </h3>
       )}
       {isGameStarted &&
-      seconds >= 1 &&
       (
-        <div ref={sceneRef} style={{ position: "relative", top: "50px" }} />
+        <div ref={sceneRef} style={{ position: "relative", top: "5px" }} />
       )}
     </div>
   );
