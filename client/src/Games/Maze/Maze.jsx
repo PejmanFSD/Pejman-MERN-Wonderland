@@ -10,6 +10,9 @@ export default function Maze() {
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [hasWon, setHasWon] = useState(false);
+  const [seconds, setSeconds] = useState(47);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [finalMessage, setFinalMessage] = useState("");
 
   const handleEasyMode = () => {
     setCellsHorizontal(10); // 20
@@ -18,19 +21,43 @@ export default function Maze() {
     setNormalMode(false);
   };
   const handleNormalMode = () => {
-    setCellsHorizontal(40);
-    setCellsVertical(24);
+    setCellsHorizontal(10); // 40
+    setCellsVertical(6); // 12
     setNormalMode(true);
     setEasyMode(false);
   };
   const handleStart = () => {
     setIsGameStarted(true);
+    handleResetTimer();
+    if (normalMode) {
+      handleStartTimer();
+    }
+  };
+  const handleStartTimer = () => setIsTimerRunning(true);
+  const handleStopTimer = () => setIsTimerRunning(false);
+  const handleResetTimer = () => {
+    setSeconds(47);
+    setIsTimerRunning(false);
   };
   // For freezing the ball when it reaches the goal:
   useEffect(() => {
     hasWonRef.current = hasWon;
-
   }, [hasWon]);
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning) {
+      interval = setInterval(() => {
+        setSeconds((prev) => prev > 1 && prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning]);
+  useEffect(() => {
+    if (seconds < 1) {
+      setHasWon(false);
+      setFinalMessage("Time's Up!");
+    }
+  }, [seconds]);
   useEffect(() => {
     // Aliases; de-structuring the "Matter" object:
     const World = Matter.World; // The object that containes all the shapes
@@ -272,12 +299,20 @@ export default function Maze() {
         );
         if (!hasWonRef.current && goalCollision.length > 0) {
             setHasWon(true);
+            if (easyMode) {
+                handleStopTimer();
+                setFinalMessage("You Win, but you don't get any stars!");
+            } else if (normalMode) {
+                handleStopTimer();
+                setFinalMessage("You Win!");
+                // updateTotalPoint(1);
+            }
             // decreasing the opacity of the elements if we win:
             world.bodies.forEach((body) => {
-            if (body.label === "wall" || body.label === "ball" || body.label === "goal") {
-                body.render.opacity = 0.3;
-            }
-        });
+                if (body.label === "wall" || body.label === "ball" || body.label === "goal") {
+                    body.render.opacity = 0.3;
+                }
+            });
         }
       // Checking if we place the ball at the next position, would it hit any walls or borders or not:
       const collisions = Query.collides(
@@ -315,8 +350,13 @@ export default function Maze() {
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={handleStart}>Start the Game</button>
       )}
-      {hasWon && <h2>You Win!</h2>}
-      {isGameStarted && (
+      {finalMessage && <h2>{finalMessage}</h2>}
+      {isGameStarted && normalMode && (
+        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+          {seconds}
+        </h3>
+      )}
+      {isGameStarted && seconds >= 1 && (
         <div ref={sceneRef} style={{ position: "relative", top: "50px" }} />
       )}
     </div>
