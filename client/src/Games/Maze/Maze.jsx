@@ -1,18 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import Matter from "matter-js";
+import Clock from "../HappyFlower/Images/Clock.jpg";
 
 export default function Maze() {
   const sceneRef = useRef(null);
   const hasWonRef = useRef(false);
+  const isTimeUpRef = useRef(false);
   const [cellsHorizontal, setCellsHorizontal] = useState(5);
   const [cellsVertical, setCellsVertical] = useState(3);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [hasWon, setHasWon] = useState(false);
-  const [seconds, setSeconds] = useState(47);
+  const [seconds, setSeconds] = useState(30);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [finalMessage, setFinalMessage] = useState("");
+  const [gameKey, setGameKey] = useState(0); // For reseting the game
+  // The "isTimeUp" useState variable + isTimeUpRef useRef variable are for
+  // disabling the ball when the time is over:
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   const handleEasyMode = () => {
     setCellsHorizontal(10); // 20
@@ -22,7 +28,7 @@ export default function Maze() {
   };
   const handleNormalMode = () => {
     setCellsHorizontal(10); // 40
-    setCellsVertical(6); // 12
+    setCellsVertical(6); // 24
     setNormalMode(true);
     setEasyMode(false);
   };
@@ -36,9 +42,27 @@ export default function Maze() {
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(47);
+    setSeconds(30);
     setIsTimerRunning(false);
   };
+  const handlePlayAgain = () => {
+    if (easyMode) {
+      setCellsHorizontal(10); // 20
+      setCellsVertical(6); // 12
+    } else if (normalMode) {
+      setCellsHorizontal(10); // 40
+      setCellsVertical(6); // 24
+      setSeconds(30);
+      setIsTimerRunning(true);
+    }
+    setIsTimeUp(false);
+    setHasWon(false);
+    setGameKey((currGameKey) => currGameKey + 1);
+    setFinalMessage("");
+  };
+  useEffect(() => {
+    isTimeUpRef.current = isTimeUp;
+  }, [isTimeUp]);
   // For freezing the ball when it reaches the goal:
   useEffect(() => {
     hasWonRef.current = hasWon;
@@ -54,6 +78,7 @@ export default function Maze() {
   }, [isTimerRunning]);
   useEffect(() => {
     if (seconds < 1) {
+      setIsTimeUp(true);
       setHasWon(false);
       setFinalMessage("Time's Up!");
     }
@@ -270,9 +295,8 @@ export default function Maze() {
     const Query = Matter.Query;
     const Body = Matter.Body;
     const handleKeyDown = (event) => {
-        // If the ball touches the goal, Stop responding to keydown events:
-        // if (hasWon) return;
-      if (hasWonRef.current) return; // Always up to date with "hasWonRef"
+      // If the ball touches the goal, Stop responding to keydown events:
+      if (hasWonRef.current || isTimeUpRef.current) return; // Always up to date with "hasWonRef"
       const step = 10; // 10 pixels by each keydown
       let { x, y } = ball.position; // The ball's position
       let nextPosition = { x, y }; // The ball's updated position after each keydown
@@ -287,33 +311,37 @@ export default function Maze() {
         nextPosition.x += step;
       }
       // create fake ball at next position:
-        const tempBall = Bodies.circle(
-            nextPosition.x,
-            nextPosition.y,
-            ball.circleRadius
-        );
-        // Checking goal collision AFTER movement:
-        const goalCollision = Query.collides(
-            tempBall,
-            world.bodies.filter((b) => b.label === "goal")
-        );
-        if (!hasWonRef.current && goalCollision.length > 0) {
-            setHasWon(true);
-            if (easyMode) {
-                handleStopTimer();
-                setFinalMessage("You Win, but you don't get any stars!");
-            } else if (normalMode) {
-                handleStopTimer();
-                setFinalMessage("You Win!");
-                // updateTotalPoint(1);
-            }
-            // decreasing the opacity of the elements if we win:
-            world.bodies.forEach((body) => {
-                if (body.label === "wall" || body.label === "ball" || body.label === "goal") {
-                    body.render.opacity = 0.3;
-                }
-            });
+      const tempBall = Bodies.circle(
+        nextPosition.x,
+        nextPosition.y,
+        ball.circleRadius,
+      );
+      // Checking goal collision AFTER movement:
+      const goalCollision = Query.collides(
+        tempBall,
+        world.bodies.filter((b) => b.label === "goal"),
+      );
+      if (!hasWonRef.current && goalCollision.length > 0) {
+        setHasWon(true);
+        if (easyMode) {
+          handleStopTimer();
+          setFinalMessage("You Win, but you don't get any stars!");
+        } else if (normalMode) {
+          handleStopTimer();
+          setFinalMessage("You Win!");
+          // updateTotalPoint(1);
         }
+        // decreasing the opacity of the elements if we win:
+        world.bodies.forEach((body) => {
+          if (
+            body.label === "wall" ||
+            body.label === "ball" ||
+            body.label === "goal"
+          ) {
+            body.render.opacity = 0.3;
+          }
+        });
+      }
       // Checking if we place the ball at the next position, would it hit any walls or borders or not:
       const collisions = Query.collides(
         // Faking the next position of the ball:
@@ -337,7 +365,7 @@ export default function Maze() {
       render.canvas.remove();
       render.textures = {};
     };
-  }, [isGameStarted]);
+  }, [isGameStarted, gameKey]);
 
   return (
     <div>
@@ -351,12 +379,32 @@ export default function Maze() {
         <button onClick={handleStart}>Start the Game</button>
       )}
       {finalMessage && <h2>{finalMessage}</h2>}
+      {hasWon && (
+        <div>
+          <div>Play Again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
+      {seconds < 1 && (
+        <div>
+          <div>Try Again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+          <br />
+          <img
+            src={Clock}
+            width="250px"
+            style={{ position: "relative", top: "15px" }}
+          />
+        </div>
+      )}
       {isGameStarted && normalMode && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
           {seconds}
         </h3>
       )}
-      {isGameStarted && seconds >= 1 && (
+      {isGameStarted &&
+      seconds >= 1 &&
+      (
         <div ref={sceneRef} style={{ position: "relative", top: "50px" }} />
       )}
     </div>
