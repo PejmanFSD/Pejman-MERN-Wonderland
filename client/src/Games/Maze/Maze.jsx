@@ -12,8 +12,8 @@ export default function Maze() {
   const [hasWon, setHasWon] = useState(false);
 
   const handleEasyMode = () => {
-    setCellsHorizontal(20);
-    setCellsVertical(12);
+    setCellsHorizontal(10); // 20
+    setCellsVertical(6); // 12
     setEasyMode(true);
     setNormalMode(false);
   };
@@ -29,6 +29,7 @@ export default function Maze() {
   // For freezing the ball when it reaches the goal:
   useEffect(() => {
     hasWonRef.current = hasWon;
+
   }, [hasWon]);
   useEffect(() => {
     // Aliases; de-structuring the "Matter" object:
@@ -81,8 +82,6 @@ export default function Maze() {
         render: { fillStyle: "blue" },
       }),
     ];
-    // const cellsHorizontal = 20;
-    // const cellsVertical = 12;
     const grid = Array(cellsVertical)
       .fill(null)
       .map(() => Array(cellsHorizontal).fill(false));
@@ -271,8 +270,14 @@ export default function Maze() {
             tempBall,
             world.bodies.filter((b) => b.label === "goal")
         );
-        if (goalCollision.length > 0) {
+        if (!hasWonRef.current && goalCollision.length > 0) {
             setHasWon(true);
+            // decreasing the opacity of the elements if we win:
+            world.bodies.forEach((body) => {
+            if (body.label === "wall" || body.label === "ball" || body.label === "goal") {
+                body.render.opacity = 0.3;
+            }
+        });
         }
       // Checking if we place the ball at the next position, would it hit any walls or borders or not:
       const collisions = Query.collides(
