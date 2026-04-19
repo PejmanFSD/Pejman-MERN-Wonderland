@@ -22,6 +22,7 @@ export default function Maze() {
   // disabling the ball when the time is over:
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
   const handleEasyMode = () => {
     setCellsHorizontal(10); // 20
@@ -59,6 +60,7 @@ export default function Maze() {
       setIsTimerRunning(true);
     }
     setIsTogglingReset(false);
+    setIsTogglingLevel(false);
     setIsTimeUp(false);
     setHasWon(false);
     setGameKey((currGameKey) => currGameKey + 1);
@@ -72,6 +74,28 @@ export default function Maze() {
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
+  };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+      setCellsHorizontal(10); // 40
+      setCellsVertical(6); // 24
+      setSeconds(30);
+      setIsTimerRunning(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+      setCellsHorizontal(10); // 20
+      setCellsVertical(6); // 12
+    }
+    handlePlayAgain();
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
   };
   useEffect(() => {
     isTimeUpRef.current = isTimeUp;
@@ -346,12 +370,11 @@ export default function Maze() {
         }
         // decreasing the opacity of the elements if we win:
         world.bodies.forEach((body) => {
-          if (
-            body.label === "wall" ||
-            body.label === "ball" ||
-            body.label === "goal"
-          ) {
+          if (body.label === "ball" || body.label === "goal") {
             body.render.opacity = 0.3;
+          }
+          if (body.label === "wall") {
+            body.render.opacity = 0;
           }
         });
       }
@@ -392,37 +415,18 @@ export default function Maze() {
       {easyMode && !normalMode
             ? !isTogglingReset &&
             // !isTogglingHomePage &&
-            // !isTogglingLevel &&
+            !isTogglingLevel &&
             (<ModeExplaination message="Easy Mode: You won't get any stars if you win." />)
             : !easyMode &&
             normalMode &&
             !isTogglingReset &&
             // !isTogglingHomePage &&
-            // !isTogglingLevel &&
+            !isTogglingLevel &&
             (<ModeExplaination message="Normal Mode: You will get one star if you win." />)
         }
-      {!isGameStarted && (easyMode || normalMode) && (
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && (
         <button onClick={handleStart} style={{ position: "relative", top: "5px" }}>Start the Game</button>
       )}
-      {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-            //   !isTogglingHomePage &&
-            //   !isTogglingLevel &&
-              (easyMode || normalMode) && (
-                <div>
-                  <button onClick={toggleReset}>Reset the Game</button>
-                </div>
-              )}
-            {isTogglingReset && finalMessage === "" && (
-              <div>
-                <ConfirmationBox
-                  question="Are you sure you want to reset the game?"
-                  toggleYes={toggleResetYes}
-                  toggleCancel={toggleResetCancel}
-                />
-              </div>
-            )}
       {finalMessage && <h2>{finalMessage}</h2>}
       {finalMessage === "Time's Up!" &&
         <img src={Clock} width="50px" />
@@ -446,8 +450,65 @@ export default function Maze() {
       )}
       {isGameStarted &&
       (
-        <div ref={sceneRef} style={{ position: "relative", top: "5px" }} />
+        <div ref={sceneRef} style={{ position: "relative", top: "15px" }} />
       )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+            //   !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <div>
+                  <button
+                  style={{
+                        display: "inline",
+                        position: "relative", top: "15px",
+                      }}
+                  onClick={toggleReset}>Reset the Game</button>
+                </div>
+              )}
+            {isTogglingReset && finalMessage === "" && (
+              <div style={{
+                        display: "inline",
+                        position: "relative", top: "15px",
+                      }}>
+                <ConfirmationBox
+                  question="Are you sure you want to reset the game?"
+                  toggleYes={toggleResetYes}
+                  toggleCancel={toggleResetCancel}
+                />
+              </div>
+            )}
+        {(easyMode || normalMode) &&
+                !isTogglingReset &&
+                // !isTogglingHomePage &&
+                !isTogglingLevel &&
+                finalMessage === "" && (
+                  <div>
+                    <button
+                      style={{
+                        display: "inline",
+                        position: "relative", top: "15px",
+                      }}
+                      onClick={() => toggleLevel()}
+                    >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+                  </div>
+                )}
+              {isTogglingLevel && finalMessage === "" && (
+                <div style={{
+                        display: "inline",
+                        position: "relative", top: "15px",
+                      }}>
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              )}
     </div>
   );
 }
