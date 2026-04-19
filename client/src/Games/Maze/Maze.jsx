@@ -4,7 +4,13 @@ import Clock from "../HappyFlower/Images/Clock.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function Maze() {
+export default function Maze({
+    updateTotalPoint,
+    setShowGameTitles,
+    setShowMaze,
+    isAGameStarted,
+    setIsAGameStarted,
+}) {
   const sceneRef = useRef(null);
   const hasWonRef = useRef(false);
   const isTimeUpRef = useRef(false);
@@ -23,6 +29,7 @@ export default function Maze() {
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const handleEasyMode = () => {
     setCellsHorizontal(10); // 20
@@ -61,6 +68,7 @@ export default function Maze() {
     }
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
     setIsTimeUp(false);
     setHasWon(false);
     setGameKey((currGameKey) => currGameKey + 1);
@@ -96,6 +104,18 @@ export default function Maze() {
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowMaze(false);
+    setShowGameTitles(true);
+    setIsAGameStarted(false);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   useEffect(() => {
     isTimeUpRef.current = isTimeUp;
@@ -406,7 +426,7 @@ export default function Maze() {
   return (
     <div>
         <h2>Maze</h2>
-      {!isGameStarted && !easyMode && !normalMode && (
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div style={{ position: "relative", top: "5px" }}>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
@@ -414,30 +434,30 @@ export default function Maze() {
       )}
       {easyMode && !normalMode
             ? !isTogglingReset &&
-            // !isTogglingHomePage &&
+            !isTogglingHomePage &&
             !isTogglingLevel &&
             (<ModeExplaination message="Easy Mode: You won't get any stars if you win." />)
             : !easyMode &&
             normalMode &&
             !isTogglingReset &&
-            // !isTogglingHomePage &&
+            !isTogglingHomePage &&
             !isTogglingLevel &&
             (<ModeExplaination message="Normal Mode: You will get one star if you win." />)
         }
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && (
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && !isTogglingHomePage && (
         <button onClick={handleStart} style={{ position: "relative", top: "5px" }}>Start the Game</button>
       )}
-      {finalMessage && <h2>{finalMessage}</h2>}
-      {finalMessage === "Time's Up!" &&
+      {finalMessage && !isTogglingHomePage && <h2>{finalMessage}</h2>}
+      {finalMessage === "Time's Up!" && !isTogglingHomePage &&
         <img src={Clock} width="50px" />
       }
-      {hasWon && (
+      {hasWon && !isTogglingHomePage && (
         <div>
           <div>Play Again?</div>
           <button onClick={handlePlayAgain}>Ok</button>
         </div>
       )}
-      {seconds < 1 && (
+      {seconds < 1 && !isTogglingHomePage && (
         <div>
           <div>Try Again?</div>
           <button onClick={handlePlayAgain}>Ok</button>
@@ -455,7 +475,7 @@ export default function Maze() {
             {isGameStarted &&
               !isTogglingReset &&
               finalMessage === "" &&
-            //   !isTogglingHomePage &&
+              !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
                 <div>
@@ -481,7 +501,7 @@ export default function Maze() {
             )}
         {(easyMode || normalMode) &&
                 !isTogglingReset &&
-                // !isTogglingHomePage &&
+                !isTogglingHomePage &&
                 !isTogglingLevel &&
                 finalMessage === "" && (
                   <div>
@@ -509,6 +529,33 @@ export default function Maze() {
                   />
                 </div>
               )}
+              {!isTogglingHomePage &&
+                      !isTogglingReset &&
+                      !isTogglingLevel &&
+                      finalMessage === "" && (
+                        <div>
+                          <button
+                          style={{
+                                display: "inline",
+                                position: "relative", top: "15px",
+                            }}
+                          onClick={() => toggleHomePage()}>
+                            Back to the home page
+                          </button>
+                        </div>
+                      )}
+                    {isTogglingHomePage && finalMessage === "" && (
+                      <div style={{
+                                display: "inline",
+                                position: "relative", top: "15px",
+                            }}>
+                        <ConfirmationBox
+                          question="Are you sure you want to go back to Home Page?"
+                          toggleYes={toggleHomePageYes}
+                          toggleCancel={toggleHomePageCancel}
+                        />
+                      </div>
+                    )}
     </div>
   );
 }
