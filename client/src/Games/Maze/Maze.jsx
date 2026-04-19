@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import Matter from "matter-js";
 import Clock from "../HappyFlower/Images/Clock.jpg";
+import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function Maze() {
   const sceneRef = useRef(null);
@@ -19,6 +21,7 @@ export default function Maze() {
   // The "isTimeUp" useState variable + isTimeUpRef useRef variable are for
   // disabling the ball when the time is over:
   const [isTimeUp, setIsTimeUp] = useState(false);
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleEasyMode = () => {
     setCellsHorizontal(10); // 20
@@ -55,10 +58,20 @@ export default function Maze() {
       setSeconds(30);
       setIsTimerRunning(true);
     }
+    setIsTogglingReset(false);
     setIsTimeUp(false);
     setHasWon(false);
     setGameKey((currGameKey) => currGameKey + 1);
     setFinalMessage("");
+  };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    handlePlayAgain();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   useEffect(() => {
     isTimeUpRef.current = isTimeUp;
@@ -369,15 +382,47 @@ export default function Maze() {
 
   return (
     <div>
+        <h2>Maze</h2>
       {!isGameStarted && !easyMode && !normalMode && (
         <div style={{ position: "relative", top: "5px" }}>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
+      {easyMode && !normalMode
+            ? !isTogglingReset &&
+            // !isTogglingHomePage &&
+            // !isTogglingLevel &&
+            (<ModeExplaination message="Easy Mode: You won't get any stars if you win." />)
+            : !easyMode &&
+            normalMode &&
+            !isTogglingReset &&
+            // !isTogglingHomePage &&
+            // !isTogglingLevel &&
+            (<ModeExplaination message="Normal Mode: You will get one star if you win." />)
+        }
       {!isGameStarted && (easyMode || normalMode) && (
         <button onClick={handleStart} style={{ position: "relative", top: "5px" }}>Start the Game</button>
       )}
+      {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+            //   !isTogglingHomePage &&
+            //   !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <div>
+                  <button onClick={toggleReset}>Reset the Game</button>
+                </div>
+              )}
+            {isTogglingReset && finalMessage === "" && (
+              <div>
+                <ConfirmationBox
+                  question="Are you sure you want to reset the game?"
+                  toggleYes={toggleResetYes}
+                  toggleCancel={toggleResetCancel}
+                />
+              </div>
+            )}
       {finalMessage && <h2>{finalMessage}</h2>}
       {finalMessage === "Time's Up!" &&
         <img src={Clock} width="50px" />
