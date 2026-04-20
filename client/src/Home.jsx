@@ -20,6 +20,7 @@ import Puzzle from "./Games/Puzzle/Puzzle";
 import Bingo from "./Games/Bingo/Bingo";
 import TugOfWar from "./Games/TugOfWar/TugOfWar";
 import Maze from "./Games/Maze/Maze";
+import BirdHunter from "./Games/BirdHunter/BirdHunter";
 
 export default function Home({
   ads,
@@ -55,6 +56,7 @@ export default function Home({
   const [showBingo, setShowBingo] = useState(false);
   const [showTugOfWar, setShowTugOfWar] = useState(false);
   const [showMaze, setShowMaze] = useState(false);
+  const [showBirdHunter, setShowBirdHunter] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -261,6 +263,16 @@ export default function Home({
     setShowGameTitles(false);
     setIsAGameStarted(true);
     setShowMaze(true);
+  };
+  const toggleBirdHunter = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    setShowGameTitles(false);
+    setIsAGameStarted(true);
+    setShowBirdHunter(true);
   };
   return (
     <div>
@@ -603,6 +615,21 @@ export default function Home({
         !showMaze &&
         !isAGameStarted && (
           <button onClick={() => toggleMaze()} style={{position: "relative", top: "5px"}}>Maze</button>
+        )
+      )}
+      {!showGameTitles && showBirdHunter && isAGameStarted ? (
+        <BirdHunter
+          setShowGameTitles={setShowGameTitles}
+          setShowBirdHunter={setShowBirdHunter}
+          updateTotalPoint={updateTotalPoint}
+          isAGameStarted={isAGameStarted}
+          setIsAGameStarted={setIsAGameStarted}
+        />
+      ) : (
+        showGameTitles &&
+        !showBirdHunter &&
+        !isAGameStarted && (
+          <button onClick={() => toggleBirdHunter()} style={{position: "relative", top: "5px"}}>Bird Hunter</button>
         )
       )}
     </div>
