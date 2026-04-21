@@ -8,6 +8,8 @@ export default function HuntingGround({
   chosenGround,
   isRunning,
   setIsRunning,
+  delayMilliSec,
+  handleChooseGround
 }) {
   const [images, setImages] = useState(Array(8).fill(A));
   //   const [isRunning, setIsRunning] = useState(false);
@@ -30,7 +32,7 @@ export default function HuntingGround({
           setImages((currImages) =>
             currImages.map((img, idx) => (idx === i ? B : img)),
           );
-          await delay(1000);
+          await delay(delayMilliSec);
           if (stopRef.current) break; // 👈 stop check again
           // Turn it back to A
           setImages((currImages) =>
@@ -57,6 +59,7 @@ export default function HuntingGround({
             setImages={setImages}
             setIsRunning={setIsRunning}
             stopRef={stopRef}
+            handleChooseGround={handleChooseGround} 
           />
         ))}
       </div>
