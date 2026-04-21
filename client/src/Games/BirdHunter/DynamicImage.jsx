@@ -2,12 +2,16 @@ import A from "./images/A.jpg";
 import B from "./images/B.jpg";
 import C from "./images/C.jpg";
 
-export default function DynamicImage({ index, src, setImages, setIsRunning, stopRef, handleChooseGround }) {
+export default function DynamicImage({ grounds, index, src, setImages, setIsRunning, stopRef, handleChooseGround, setChosenGround }) {
     const handleClickImage = () => {
-        setImages((currImages) => currImages.map((img, idx) => (idx === index ? C : A)));
+        setImages((currImages) => currImages.map((img, idx) => (idx === index ? {imgSrc: C, status: "bingo"} : {imgSrc: A, status: "blank"})));
         stopRef.current = true; // 👈 trigger stop
         setIsRunning(false);
-        handleChooseGround();
+        if (grounds.length > 0) {
+            handleChooseGround();
+        } else if (grounds.length === 0) {
+            setChosenGround(0)
+        }
     }
   return (
     <img

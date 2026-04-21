@@ -4,15 +4,16 @@ import A from "./images/A.jpg";
 import B from "./images/B.jpg";
 
 export default function HuntingGround({
+  grounds,
   groundNum,
   chosenGround,
   isRunning,
   setIsRunning,
   delayMilliSec,
-  handleChooseGround
+  handleChooseGround,
+  setChosenGround
 }) {
-  const [images, setImages] = useState(Array(8).fill(A));
-  //   const [isRunning, setIsRunning] = useState(false);
+  const [images, setImages] = useState(Array(8).fill({imgSrc: A, status: "blank"}));
   const stopRef = useRef(false); // control flag
 
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -30,13 +31,13 @@ export default function HuntingGround({
           if (stopRef.current) break; // 👈 stop check
           // Turn current image to B
           setImages((currImages) =>
-            currImages.map((img, idx) => (idx === i ? B : img)),
+            currImages.map((img, idx) => (idx === i ? {imgSrc: B, status: "blank"} : img)),
           );
           await delay(delayMilliSec);
           if (stopRef.current) break; // 👈 stop check again
           // Turn it back to A
           setImages((currImages) =>
-            currImages.map((img, idx) => (idx === i ? A : img)),
+            currImages.map((img, idx) => (idx === i ? {imgSrc: A, status: "blank"} : img)),
           );
         }
         setIsRunning(false);
@@ -47,19 +48,17 @@ export default function HuntingGround({
 
   return (
     <div>
-      {/* <button style={{position: "relative", top: "10px"}} onClick={handleClick} disabled={isRunning}>
-        Start
-      </button> */}
-
       <div>
-        {images.map((src, index) => (
+        {images.map((img, index) => (
           <DynamicImage
+            grounds={grounds}
             index={index}
-            src={src}
+            src={img.imgSrc}
             setImages={setImages}
             setIsRunning={setIsRunning}
             stopRef={stopRef}
-            handleChooseGround={handleChooseGround} 
+            handleChooseGround={handleChooseGround}
+            setChosenGround={setChosenGround}
           />
         ))}
       </div>
