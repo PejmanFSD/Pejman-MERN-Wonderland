@@ -2,7 +2,14 @@ import { useState } from "react";
 import HuntingGround from "./HuntingGround";
 import { getRandArr } from "../utils";
 
-export default function BirdHunter() {
+export default function BirdHunter({
+  setShowGameTitles,
+  setShowBirdHunter,
+  updateTotalPoint,
+  isAGameStarted,
+  setIsAGameStarted,
+}) {
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [grounds, setGrounds] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
   ]);
@@ -13,18 +20,33 @@ export default function BirdHunter() {
   const [userScore, setUserScore] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
 
+  const handleStart = () => {
+    setIsGameStarted(true);
+    handleChooseGround();
+  };
   const handleChooseGround = () => {
     const c = getRandArr(grounds);
     setChosenGround(c);
     setGrounds((currGrounds) => currGrounds.filter((g) => g !== c));
   };
   const handleAnnouncingTheGameResult = () => {
+    setIsGameStarted(false);
     if (userScore > 13) {
-        setFinalMessage("You Win!");
+      setFinalMessage("You Win!");
+      updateTotalPoint(1);
     } else {
-        setFinalMessage("You Loose!");
+      setFinalMessage("You Loose!");
     }
-  }
+  };
+  const handlePlayAgain = () => {
+    setGrounds([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+    setChosenGround(0);
+    setIsRunning(false);
+    setDelayMilliSec(1000);
+    setNumOfDoneGrounds(0);
+    setUserScore(0);
+    setFinalMessage("");
+  };
   return (
     <div>
       {grounds.map((g) => (
@@ -33,65 +55,85 @@ export default function BirdHunter() {
       <div>chosenGround: {chosenGround}</div>
       <div>numOfDoneGrounds: {numOfDoneGrounds}</div>
       <div>userScore: {userScore}</div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ display: "flex", gap: "50px" }}>
-        <div style={{ display: "inline" }}>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
-            <HuntingGround
-              grounds={grounds}
-              groundNum={el}
-              chosenGround={chosenGround}
-              isRunning={isRunning}
-              setIsRunning={setIsRunning}
-              delayMilliSec={delayMilliSec}
-              setDelayMilliSec={setDelayMilliSec}
-              handleChooseGround={handleChooseGround}
-              setChosenGround={setChosenGround}
-              setNumOfDoneGrounds={setNumOfDoneGrounds}
-              setUserScore={setUserScore}
-            />
-          ))}
-        </div>
-        <div style={{ display: "inline" }}>
-          {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
-            <HuntingGround
-              grounds={grounds}
-              groundNum={el}
-              chosenGround={chosenGround}
-              isRunning={isRunning}
-              setIsRunning={setIsRunning}
-              delayMilliSec={delayMilliSec}
-              setDelayMilliSec={setDelayMilliSec}
-              handleChooseGround={handleChooseGround}
-              setChosenGround={setChosenGround}
-              setNumOfDoneGrounds={setNumOfDoneGrounds}
-              setUserScore={setUserScore}
-            />
-          ))}
-        </div>
-      </div>
+      {isGameStarted && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: "50px" }}>
+            <div style={{ display: "inline" }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
+                <HuntingGround
+                  grounds={grounds}
+                  groundNum={el}
+                  chosenGround={chosenGround}
+                  isRunning={isRunning}
+                  setIsRunning={setIsRunning}
+                  delayMilliSec={delayMilliSec}
+                  setDelayMilliSec={setDelayMilliSec}
+                  handleChooseGround={handleChooseGround}
+                  setChosenGround={setChosenGround}
+                  setNumOfDoneGrounds={setNumOfDoneGrounds}
+                  setUserScore={setUserScore}
+                />
+              ))}
+            </div>
+            <div style={{ display: "inline" }}>
+              {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
+                <HuntingGround
+                  grounds={grounds}
+                  groundNum={el}
+                  chosenGround={chosenGround}
+                  isRunning={isRunning}
+                  setIsRunning={setIsRunning}
+                  delayMilliSec={delayMilliSec}
+                  setDelayMilliSec={setDelayMilliSec}
+                  handleChooseGround={handleChooseGround}
+                  setChosenGround={setChosenGround}
+                  setNumOfDoneGrounds={setNumOfDoneGrounds}
+                  setUserScore={setUserScore}
+                />
+              ))}
+            </div>
           </div>
+        </div>
+      )}
       {grounds.length === 16 && (
         <button
           style={{ position: "relative", top: "30px" }}
-          onClick={handleChooseGround}
+          onClick={handleStart}
           disabled={isRunning}
         >
-          Start
+          Start the Game
         </button>
       )}
-      {numOfDoneGrounds === 16 && finalMessage === "" &&
+      {numOfDoneGrounds === 16 && finalMessage === "" && (
         <button
           style={{ position: "relative", top: "30px" }}
           onClick={handleAnnouncingTheGameResult}
         >
-          See the game result
+          See the Game Result
         </button>
-      }
+      )}
       <h2>{finalMessage && finalMessage}</h2>
-      <div>{finalMessage && userScore === 16 && "Wow! You didn't miss a bird!"}</div>
+      <div>
+        {finalMessage && userScore === 16 && "Wow! You didn't miss a single bird!"}
+      </div>
       <div>{finalMessage && userScore === 15 && "You missed a bird!"}</div>
-      <div>{finalMessage && userScore < 15 && `You missed ${16 - userScore} birds!`}</div>
+      <div>
+        {finalMessage &&
+          userScore < 15 &&
+          `You missed ${16 - userScore} birds!`}
+      </div>
+      {finalMessage === "You Win!" && (
+        <div>
+          <div>Play Again!</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
+      {finalMessage === "You Loose!" && (
+        <div>
+          <div>Try Again!</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
     </div>
   );
 }
