@@ -10,13 +10,14 @@ export default function HuntingGround({
   isRunning,
   setIsRunning,
   delayMilliSec,
+  setDelayMilliSec,
   handleChooseGround,
   setChosenGround,
   setNumOfDoneGrounds,
   setUserScore,
 }) {
   const [images, setImages] = useState(
-    Array(8).fill({ imgSrc: A, status: "blank" }),
+    Array(7).fill({ imgSrc: A, status: "blank" }),
   );
   const stopRef = useRef(false); // control flag
 
@@ -31,6 +32,7 @@ export default function HuntingGround({
       if (chosenGround === groundNum) {
         if (isRunning) return; // Preventing double clicks
         setIsRunning(true);
+        setDelayMilliSec(currDelayMilliSec => currDelayMilliSec - 60);
         for (let i = 0; i < images.length; i++) {
           if (stopRef.current) break; // 👈 stop check
           // Turn current image to B
