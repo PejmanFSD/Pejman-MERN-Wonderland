@@ -32,7 +32,7 @@ export default function HuntingGround({
       if (chosenGround === groundNum) {
         if (isRunning) return; // Preventing double clicks
         setIsRunning(true);
-        setDelayMilliSec(currDelayMilliSec => currDelayMilliSec - 60);
+        setDelayMilliSec(currDelayMilliSec => currDelayMilliSec - 5);
         for (let i = 0; i < images.length; i++) {
           if (stopRef.current) break; // 👈 stop check
           // Turn current image to B

@@ -11,11 +11,20 @@ export default function BirdHunter() {
   const [delayMilliSec, setDelayMilliSec] = useState(1000);
   const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0);
   const [userScore, setUserScore] = useState(0);
+  const [finalMessage, setFinalMessage] = useState("");
+
   const handleChooseGround = () => {
     const c = getRandArr(grounds);
     setChosenGround(c);
     setGrounds((currGrounds) => currGrounds.filter((g) => g !== c));
   };
+  const handleAnnouncingTheGameResult = () => {
+    if (userScore > 13) {
+        setFinalMessage("You Win!");
+    } else {
+        setFinalMessage("You Loose!");
+    }
+  }
   return (
     <div>
       {grounds.map((g) => (
@@ -62,7 +71,7 @@ export default function BirdHunter() {
         </div>
       </div>
           </div>
-      {chosenGround === 0 && (
+      {grounds.length === 16 && (
         <button
           style={{ position: "relative", top: "30px" }}
           onClick={handleChooseGround}
@@ -71,6 +80,18 @@ export default function BirdHunter() {
           Start
         </button>
       )}
+      {numOfDoneGrounds === 16 && finalMessage === "" &&
+        <button
+          style={{ position: "relative", top: "30px" }}
+          onClick={handleAnnouncingTheGameResult}
+        >
+          See the game result
+        </button>
+      }
+      <h2>{finalMessage && finalMessage}</h2>
+      <div>{finalMessage && userScore === 16 && "Wow! You didn't miss a bird!"}</div>
+      <div>{finalMessage && userScore === 15 && "You missed a bird!"}</div>
+      <div>{finalMessage && userScore < 15 && `You missed ${16 - userScore} birds!`}</div>
     </div>
   );
 }
