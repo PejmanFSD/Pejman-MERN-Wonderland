@@ -11,9 +11,13 @@ export default function HuntingGround({
   setIsRunning,
   delayMilliSec,
   handleChooseGround,
-  setChosenGround
+  setChosenGround,
+  setNumOfDoneGrounds,
+  setUserScore,
 }) {
-  const [images, setImages] = useState(Array(8).fill({imgSrc: A, status: "blank"}));
+  const [images, setImages] = useState(
+    Array(8).fill({ imgSrc: A, status: "blank" }),
+  );
   const stopRef = useRef(false); // control flag
 
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
@@ -31,14 +35,25 @@ export default function HuntingGround({
           if (stopRef.current) break; // 👈 stop check
           // Turn current image to B
           setImages((currImages) =>
-            currImages.map((img, idx) => (idx === i ? {imgSrc: B, status: "blank"} : img)),
+            currImages.map((img, idx) =>
+              idx === i ? { imgSrc: B, status: "blank" } : img,
+            ),
           );
           await delay(delayMilliSec);
           if (stopRef.current) break; // 👈 stop check again
-          // Turn it back to A
-          setImages((currImages) =>
-            currImages.map((img, idx) => (idx === i ? {imgSrc: A, status: "blank"} : img)),
-          );
+          if (i === images.length - 1) {
+            setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
+            handleChooseGround();
+          }
+        //   else {
+            // Turn it back to A
+            setImages((currImages) =>
+              currImages.map((img, idx) =>
+                idx === i ? { imgSrc: A, status: "blank" } : img,
+              ),
+            );
+            // setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
+        //   }
         }
         setIsRunning(false);
       }
@@ -48,20 +63,20 @@ export default function HuntingGround({
 
   return (
     <div>
-      <div>
-        {images.map((img, index) => (
-          <DynamicImage
-            grounds={grounds}
-            index={index}
-            src={img.imgSrc}
-            setImages={setImages}
-            setIsRunning={setIsRunning}
-            stopRef={stopRef}
-            handleChooseGround={handleChooseGround}
-            setChosenGround={setChosenGround}
-          />
-        ))}
-      </div>
+      {images.map((img, index) => (
+        <DynamicImage
+          grounds={grounds}
+          index={index}
+          src={img.imgSrc}
+          setImages={setImages}
+          setIsRunning={setIsRunning}
+          stopRef={stopRef}
+          handleChooseGround={handleChooseGround}
+          setChosenGround={setChosenGround}
+          setNumOfDoneGrounds={setNumOfDoneGrounds}
+          setUserScore={setUserScore}
+        />
+      ))}
     </div>
   );
 }

@@ -7,6 +7,8 @@ export default function BirdHunter() {
   const [chosenGround, setChosenGround] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [delayMilliSec, setDelayMilliSec] = useState(1000);
+  const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0);
+  const [userScore, setUserScore] = useState(0);
   const handleChooseGround = () => {
     const c = getRandArr(grounds);
     setChosenGround(c);
@@ -18,6 +20,8 @@ export default function BirdHunter() {
         <div style={{ display: "inline" }}>{g}-</div>
       ))}
       <div>chosenGround: {chosenGround}</div>
+      <div>numOfDoneGrounds: {numOfDoneGrounds}</div>
+      <div>userScore: {userScore}</div>
       {new Array(8).fill(null).map((el, idx) => (
         <HuntingGround
           grounds={grounds}
@@ -28,6 +32,8 @@ export default function BirdHunter() {
           delayMilliSec={delayMilliSec}
           handleChooseGround={handleChooseGround}
           setChosenGround={setChosenGround}
+          setNumOfDoneGrounds={setNumOfDoneGrounds}
+          setUserScore={setUserScore}
         />
       ))}
       {chosenGround === 0 && (
