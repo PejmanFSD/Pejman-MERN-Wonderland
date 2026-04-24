@@ -13,7 +13,8 @@ export default function DynamicImage({
   handleChooseGround,
   setChosenGround,
   setNumOfDoneGrounds,
-  setUserScore
+  setUserScore,
+  isTogglingHomePage
 }) {
   const handleClickImage = () => {
     setImages((currImages) =>
@@ -39,7 +40,7 @@ export default function DynamicImage({
       key={index}
       src={src}
       alt={`img-${index}`}
-      height="55px"
+      height={isTogglingHomePage ? "30px" : "55px"}
       style={{
         pointerEvents: src === B1 || src === B2 ? "" : "none",
       }}

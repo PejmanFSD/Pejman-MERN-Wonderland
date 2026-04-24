@@ -78,7 +78,7 @@ export default function BirdHunter({
             <div style={{ display: "inline" }}>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
                 <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px", padding: "7px" }}>
-                    <img src={T1} height="55px" />
+                    <img src={T1} height={isTogglingHomePage ? "30px" : "55px"} />
                     <HuntingGround
                     grounds={grounds}
                     groundNum={el}
@@ -91,15 +91,16 @@ export default function BirdHunter({
                     setChosenGround={setChosenGround}
                     setNumOfDoneGrounds={setNumOfDoneGrounds}
                     setUserScore={setUserScore}
+                    isTogglingHomePage={isTogglingHomePage}
                     />
-                    <img src={T2} height="55px" />
+                    <img src={T2} height={isTogglingHomePage ? "30px" : "55px"} />
                 </div>
               ))}
             </div>
             <div style={{ display: "inline" }}>
               {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
                 <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px", padding: "7px" }}>
-                    <img src={T1} height="55px" />
+                    <img src={T1} height={isTogglingHomePage ? "30px" : "55px"} />
                     <HuntingGround
                     grounds={grounds}
                     groundNum={el}
@@ -112,8 +113,9 @@ export default function BirdHunter({
                     setChosenGround={setChosenGround}
                     setNumOfDoneGrounds={setNumOfDoneGrounds}
                     setUserScore={setUserScore}
+                    isTogglingHomePage={isTogglingHomePage}
                     />
-                    <img src={T2} height="55px" />
+                    <img src={T2} height={isTogglingHomePage ? "30px" : "55px"} />
                 </div>
               ))}
             </div>

@@ -16,6 +16,7 @@ export default function HuntingGround({
   setChosenGround,
   setNumOfDoneGrounds,
   setUserScore,
+  isTogglingHomePage
 }) {
   const [images, setImages] = useState(
     Array(7).fill({ imgSrc: A, status: "blank" }),
@@ -80,6 +81,7 @@ export default function HuntingGround({
           setChosenGround={setChosenGround}
           setNumOfDoneGrounds={setNumOfDoneGrounds}
           setUserScore={setUserScore}
+          isTogglingHomePage={isTogglingHomePage}
         />
       ))}
     </div>
