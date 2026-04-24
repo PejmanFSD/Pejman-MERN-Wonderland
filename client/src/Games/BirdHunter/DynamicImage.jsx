@@ -1,5 +1,6 @@
 import A from "./images/A.jpg";
-import B from "./images/B.jpg";
+import B1 from "./images/B1.jpg";
+import B2 from "./images/B2.jpg";
 import C from "./images/C.jpg";
 
 export default function DynamicImage({
@@ -38,12 +39,12 @@ export default function DynamicImage({
       key={index}
       src={src}
       alt={`img-${index}`}
-      width="50px"
+      height="60px"
       style={{
-        position: "relative",
-        top: "15px",
-        margin: "2px",
-        pointerEvents: src === B ? "" : "none",
+        // position: "relative",
+        // top: "15px",
+        // margin: "2px",
+        pointerEvents: src === B1 || src === B2 ? "" : "none",
       }}
     />
   );

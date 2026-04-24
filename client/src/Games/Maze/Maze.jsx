@@ -99,8 +99,15 @@ export default function Maze({
       setEasyMode(true);
       setCellsHorizontal(10);
       setCellsVertical(6);
+      setIsTimerRunning(false);
     }
-    handlePlayAgain();
+    setIsTogglingReset(false);
+    setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
+    setIsTimeUp(false);
+    setHasWon(false);
+    setGameKey((currGameKey) => currGameKey + 1);
+    setFinalMessage("");
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
@@ -126,7 +133,7 @@ export default function Maze({
   }, [hasWon]);
   useEffect(() => {
     let interval;
-    if (isTimerRunning) {
+    if (isTimerRunning && normalMode) {
       interval = setInterval(() => {
         setSeconds((prev) => prev > 1 && prev - 1);
       }, 1000);

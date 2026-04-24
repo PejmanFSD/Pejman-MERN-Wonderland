@@ -1,6 +1,8 @@
 import { useState } from "react";
 import HuntingGround from "./HuntingGround";
 import { getRandArr } from "../utils";
+import T1 from "./images/T1.jpg";
+import T2 from "./images/T2.jpg";
 
 export default function BirdHunter({
   setShowGameTitles,
@@ -60,36 +62,44 @@ export default function BirdHunter({
           <div style={{ display: "flex", gap: "50px" }}>
             <div style={{ display: "inline" }}>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
-                <HuntingGround
-                  grounds={grounds}
-                  groundNum={el}
-                  chosenGround={chosenGround}
-                  isRunning={isRunning}
-                  setIsRunning={setIsRunning}
-                  delayMilliSec={delayMilliSec}
-                  setDelayMilliSec={setDelayMilliSec}
-                  handleChooseGround={handleChooseGround}
-                  setChosenGround={setChosenGround}
-                  setNumOfDoneGrounds={setNumOfDoneGrounds}
-                  setUserScore={setUserScore}
-                />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <img src={T1} height="60px" />
+                    <HuntingGround
+                    grounds={grounds}
+                    groundNum={el}
+                    chosenGround={chosenGround}
+                    isRunning={isRunning}
+                    setIsRunning={setIsRunning}
+                    delayMilliSec={delayMilliSec}
+                    setDelayMilliSec={setDelayMilliSec}
+                    handleChooseGround={handleChooseGround}
+                    setChosenGround={setChosenGround}
+                    setNumOfDoneGrounds={setNumOfDoneGrounds}
+                    setUserScore={setUserScore}
+                    />
+                    <img src={T2} height="60px" />
+                </div>
               ))}
             </div>
             <div style={{ display: "inline" }}>
               {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
-                <HuntingGround
-                  grounds={grounds}
-                  groundNum={el}
-                  chosenGround={chosenGround}
-                  isRunning={isRunning}
-                  setIsRunning={setIsRunning}
-                  delayMilliSec={delayMilliSec}
-                  setDelayMilliSec={setDelayMilliSec}
-                  handleChooseGround={handleChooseGround}
-                  setChosenGround={setChosenGround}
-                  setNumOfDoneGrounds={setNumOfDoneGrounds}
-                  setUserScore={setUserScore}
-                />
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <img src={T1} height="60px" />
+                    <HuntingGround
+                    grounds={grounds}
+                    groundNum={el}
+                    chosenGround={chosenGround}
+                    isRunning={isRunning}
+                    setIsRunning={setIsRunning}
+                    delayMilliSec={delayMilliSec}
+                    setDelayMilliSec={setDelayMilliSec}
+                    handleChooseGround={handleChooseGround}
+                    setChosenGround={setChosenGround}
+                    setNumOfDoneGrounds={setNumOfDoneGrounds}
+                    setUserScore={setUserScore}
+                    />
+                    <img src={T2} height="60px" />
+                </div>
               ))}
             </div>
           </div>

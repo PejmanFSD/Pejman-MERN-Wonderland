@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import DynamicImage from "./DynamicImage";
 import A from "./images/A.jpg";
-import B from "./images/B.jpg";
+import B1 from "./images/B1.jpg";
+import B2 from "./images/B2.jpg";
 
 export default function HuntingGround({
   grounds,
@@ -32,30 +33,36 @@ export default function HuntingGround({
       if (chosenGround === groundNum) {
         if (isRunning) return; // Preventing double clicks
         setIsRunning(true);
-        setDelayMilliSec(currDelayMilliSec => currDelayMilliSec - 5);
+        setDelayMilliSec((currDelayMilliSec) => currDelayMilliSec - 50);
         for (let i = 0; i < images.length; i++) {
           if (stopRef.current) break; // 👈 stop check
           // Turn current image to B
           setImages((currImages) =>
             currImages.map((img, idx) =>
-              idx === i ? { imgSrc: B, status: "blank" } : img,
+              idx === i && i % 2 === 0
+                ? { imgSrc: B1, status: "blank" }
+                : idx === i && i % 2 !== 0
+                  ? { imgSrc: B2, status: "blank" }
+                  : img,
             ),
           );
           await delay(delayMilliSec);
           if (stopRef.current) break; // 👈 stop check again
           if (i === images.length - 1) {
-            setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
+            setNumOfDoneGrounds(
+              (currNumOfDoneGrounds) => currNumOfDoneGrounds + 1,
+            );
             handleChooseGround();
           }
-        //   else {
-            // Turn it back to A
-            setImages((currImages) =>
-              currImages.map((img, idx) =>
-                idx === i ? { imgSrc: A, status: "blank" } : img,
-              ),
-            );
-            // setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
-        //   }
+          //   else {
+          // Turn it back to A
+          setImages((currImages) =>
+            currImages.map((img, idx) =>
+              idx === i ? { imgSrc: A, status: "blank" } : img,
+            ),
+          );
+          // setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
+          //   }
         }
         setIsRunning(false);
       }
