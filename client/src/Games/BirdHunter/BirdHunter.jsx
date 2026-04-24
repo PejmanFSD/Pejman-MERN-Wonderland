@@ -3,6 +3,7 @@ import HuntingGround from "./HuntingGround";
 import { getRandArr } from "../utils";
 import T1 from "./images/T1.jpg";
 import T2 from "./images/T2.jpg";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function BirdHunter({
   setShowGameTitles,
@@ -21,6 +22,7 @@ export default function BirdHunter({
   const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0);
   const [userScore, setUserScore] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
   const handleStart = () => {
     setIsGameStarted(true);
@@ -48,6 +50,19 @@ export default function BirdHunter({
     setNumOfDoneGrounds(0);
     setUserScore(0);
     setFinalMessage("");
+    setIsTogglingHomePage(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    setIsGameStarted(false);
+    setShowBirdHunter(false);
+    setShowGameTitles(true);
+    setIsAGameStarted(false);
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   return (
     <div>
@@ -62,8 +77,8 @@ export default function BirdHunter({
           <div style={{ display: "flex", gap: "50px" }}>
             <div style={{ display: "inline" }}>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
-                <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px" }}>
-                    <img src={T1} height="60px" />
+                <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px", padding: "7px" }}>
+                    <img src={T1} height="55px" />
                     <HuntingGround
                     grounds={grounds}
                     groundNum={el}
@@ -77,14 +92,14 @@ export default function BirdHunter({
                     setNumOfDoneGrounds={setNumOfDoneGrounds}
                     setUserScore={setUserScore}
                     />
-                    <img src={T2} height="60px" />
+                    <img src={T2} height="55px" />
                 </div>
               ))}
             </div>
             <div style={{ display: "inline" }}>
               {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
-                <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px" }}>
-                    <img src={T1} height="60px" />
+                <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px", padding: "7px" }}>
+                    <img src={T1} height="55px" />
                     <HuntingGround
                     grounds={grounds}
                     groundNum={el}
@@ -98,50 +113,65 @@ export default function BirdHunter({
                     setNumOfDoneGrounds={setNumOfDoneGrounds}
                     setUserScore={setUserScore}
                     />
-                    <img src={T2} height="60px" />
+                    <img src={T2} height="55px" />
                 </div>
               ))}
             </div>
           </div>
         </div>
       )}
-      {grounds.length === 16 && (
+      {grounds.length === 16 && !isTogglingHomePage && (
         <button
-          style={{ position: "relative", top: "30px" }}
+          style={{ position: "relative", top: "5px" }}
           onClick={handleStart}
           disabled={isRunning}
         >
           Start the Game
         </button>
       )}
-      {numOfDoneGrounds === 16 && finalMessage === "" && (
+      {numOfDoneGrounds === 16 && finalMessage === "" && !isTogglingHomePage && (
         <button
-          style={{ position: "relative", top: "30px" }}
+          style={{ position: "relative", top: "5px" }}
           onClick={handleAnnouncingTheGameResult}
         >
           See the Game Result
         </button>
       )}
-      <h2>{finalMessage && finalMessage}</h2>
+      <h2>{finalMessage && !isTogglingHomePage && finalMessage}</h2>
       <div>
-        {finalMessage && userScore === 16 && "Wow! You didn't miss a single bird!"}
+        {finalMessage && userScore === 16 && !isTogglingHomePage && "Wow! You didn't miss a single bird!"}
       </div>
-      <div>{finalMessage && userScore === 15 && "You missed a bird!"}</div>
+      <div>{finalMessage && userScore === 15 && !isTogglingHomePage && "You missed a bird!"}</div>
       <div>
-        {finalMessage &&
-          userScore < 15 &&
+        {finalMessage && userScore < 15 && !isTogglingHomePage &&
           `You missed ${16 - userScore} birds!`}
       </div>
-      {finalMessage === "You Win!" && (
+      {finalMessage === "You Win!" && !isTogglingHomePage && (
         <div>
           <div>Play Again!</div>
           <button onClick={handlePlayAgain}>Ok</button>
         </div>
       )}
-      {finalMessage === "You Loose!" && (
+      {finalMessage === "You Loose!" && !isTogglingHomePage && (
         <div>
           <div>Try Again!</div>
           <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
+      {!isTogglingHomePage && (
+        <div>
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        </div>
+      )}
+      {isTogglingHomePage && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
         </div>
       )}
     </div>
