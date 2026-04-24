@@ -25,7 +25,7 @@ export default function DynamicImage({
     );
     setUserScore(currUserScore => currUserScore + 1);
     setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
-    stopRef.current = true; // 👈 trigger stop
+    stopRef.current = true; // Triggering stop
     setIsRunning(false);
     if (grounds.length > 0) {
       handleChooseGround();
@@ -41,9 +41,6 @@ export default function DynamicImage({
       alt={`img-${index}`}
       height="60px"
       style={{
-        // position: "relative",
-        // top: "15px",
-        // margin: "2px",
         pointerEvents: src === B1 || src === B2 ? "" : "none",
       }}
     />

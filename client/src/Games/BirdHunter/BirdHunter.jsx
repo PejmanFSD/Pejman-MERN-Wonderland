@@ -62,7 +62,7 @@ export default function BirdHunter({
           <div style={{ display: "flex", gap: "50px" }}>
             <div style={{ display: "inline" }}>
               {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px" }}>
                     <img src={T1} height="60px" />
                     <HuntingGround
                     grounds={grounds}
@@ -83,7 +83,7 @@ export default function BirdHunter({
             </div>
             <div style={{ display: "inline" }}>
               {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", border: "1px solid black", margin: "5px" }}>
                     <img src={T1} height="60px" />
                     <HuntingGround
                     grounds={grounds}

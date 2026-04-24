@@ -27,15 +27,14 @@ export default function HuntingGround({
   // res is provided automatically by JavaScript when we create a Promise,
   // so when we create a Promise, JavaScript calls our function immediately
   // and passes in a function as the first argument.
-  //   const handleClick = async () => {
   useEffect(() => {
     const runningTheChosenGround = async () => {
       if (chosenGround === groundNum) {
         if (isRunning) return; // Preventing double clicks
         setIsRunning(true);
-        setDelayMilliSec((currDelayMilliSec) => currDelayMilliSec - 50);
+        setDelayMilliSec((currDelayMilliSec) => currDelayMilliSec - 55);
         for (let i = 0; i < images.length; i++) {
-          if (stopRef.current) break; // 👈 stop check
+          if (stopRef.current) break; // Stop checking
           // Turn current image to B
           setImages((currImages) =>
             currImages.map((img, idx) =>
@@ -47,22 +46,19 @@ export default function HuntingGround({
             ),
           );
           await delay(delayMilliSec);
-          if (stopRef.current) break; // 👈 stop check again
+          if (stopRef.current) break; // Stop checking again
           if (i === images.length - 1) {
             setNumOfDoneGrounds(
               (currNumOfDoneGrounds) => currNumOfDoneGrounds + 1,
             );
             handleChooseGround();
           }
-          //   else {
           // Turn it back to A
           setImages((currImages) =>
             currImages.map((img, idx) =>
               idx === i ? { imgSrc: A, status: "blank" } : img,
             ),
           );
-          // setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
-          //   }
         }
         setIsRunning(false);
       }
