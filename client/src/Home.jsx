@@ -274,12 +274,12 @@ export default function Home({
   };
   return (
     <div>
-      <Ads
+      {/* <Ads
         ads={ads}
         setAds={setAds}
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
-      />
+      /> */}
       <div>
         <div>The top 10 users with highest stars</div>
       <table border="2" cellPadding="5" style={{position: "relative", top: "5px"}}>

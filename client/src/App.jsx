@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./Home";
+import Ads from "./Components/ads/Ads";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
 import Register from "./Components/users/Register";
@@ -104,6 +105,12 @@ function App() {
           isCreatingAd={isCreatingAd}
           setIsCreatingAd={setIsCreatingAd}
         />
+        <Ads
+                ads={ads}
+                setAds={setAds}
+                currentUser={currentUser}
+                isLoggingOut={isLoggingOut}
+              />
         <Routes>
           {!isLoggingOut && (
             <Route
