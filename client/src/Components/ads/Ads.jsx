@@ -2,7 +2,7 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import Ad from './Ad';
 
-export default function Ads({ads, setAds, currentUser, isLoggingOut, isAGameStarted}) {
+export default function Ads({ads, setAds, currentUser, isLoggingOut}) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const fetchAds = async () => {
@@ -46,7 +46,6 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isAGameStar
         adAuthor={currentAd.author}
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
-        isAGameStarted={isAGameStarted}
       />
       {!isLoggingOut && ads.length > 1 &&
         <div>

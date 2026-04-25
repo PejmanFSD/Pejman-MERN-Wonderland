@@ -8,9 +8,7 @@ import Blocks from "./Blocks";
 export default function Crazy100({
   setShowGameTitles,
   setShowCrazy100,
-  updateTotalPoint,
-  isAGameStarted,
-  setIsAGameStarted
+  updateTotalPoint
 }) {
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
@@ -174,7 +172,6 @@ export default function Crazy100({
     setIsGameStarted(false);
     setShowCrazy100(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

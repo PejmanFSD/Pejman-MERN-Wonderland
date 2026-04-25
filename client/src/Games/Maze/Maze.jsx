@@ -3,14 +3,9 @@ import Matter from "matter-js";
 import Clock from "../HappyFlower/Images/Clock.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
-export default function Maze({
-  updateTotalPoint,
-  setShowGameTitles,
-  setShowMaze,
-  isAGameStarted,
-  setIsAGameStarted,
-}) {
+export default function Maze({updateTotalPoint}) {
   const sceneRef = useRef(null);
   const hasWonRef = useRef(false);
   const isTimeUpRef = useRef(false);
@@ -31,6 +26,7 @@ export default function Maze({
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setCellsHorizontal(10);
     setCellsVertical(6);
@@ -116,10 +112,7 @@ export default function Maze({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowMaze(false);
-    setShowGameTitles(true);
-    setIsAGameStarted(false);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

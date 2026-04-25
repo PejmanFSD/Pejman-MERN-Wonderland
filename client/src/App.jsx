@@ -10,6 +10,24 @@ import AdEdit from "./Components/ads/AdEdit";
 import Users from "./Components/users/Users";
 import Profile from "./Components/users/Profile";
 import EditProfile from "./Components/users/EditProfile";
+import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
+import GuessNumber from "./Games/GuessNumber/GuessNumber";
+import Capitals from "./Games/Capitals/Capitals";
+import Cryptogram from "./Games/Cryptogram/Cryptogram";
+import Crazy100 from "./Games/Crazy100/Crazy100";
+import MemoryCards from "./Games/MemoryCards/MemoryCards";
+import Nim from "./Games/Nim/Nim";
+import HappyFlower from "./Games/HappyFlower/HappyFlower";
+import XO from "./Games/XO/XO";
+import KukuKube from "./Games/KukuKube/KukuKube";
+import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
+import Pidoku from "./Games/Pidoku/Pidoku";
+import Counter from "./Games/Counter/Counter";
+import Puzzle from "./Games/Puzzle/Puzzle";
+import Bingo from "./Games/Bingo/Bingo";
+import TugOfWar from "./Games/TugOfWar/TugOfWar";
+import Maze from "./Games/Maze/Maze";
+import BirdHunter from "./Games/BirdHunter/BirdHunter";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -21,7 +39,6 @@ function App() {
   const [isCreatingAd, setIsCreatingAd] = useState(false);
   const [isAdEditing, setIsAdEditing] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [isAGameStarted, setIsAGameStarted] = useState(false);
   const [isProfileEditing, setIsProfileEditing] = useState(false);
   const [youShouldLoginMessage, setYouShouldLoginMessage] = useState(false);
   const [userCount, setUserCount] = useState(null);
@@ -79,8 +96,6 @@ function App() {
           setIsDeleting={setIsDeleting}
           isLoggingOut={isLoggingOut}
           setIsLoggingOut={setIsLoggingOut}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
           userCount={userCount}
           setUserCount={setUserCount}
           setFlash={setFlash}
@@ -100,8 +115,6 @@ function App() {
                   currentUser={currentUser}
                   setCurrentUser={setCurrentUser}
                   isLoggingOut={isLoggingOut}
-                  isAGameStarted={isAGameStarted}
-                  setIsAGameStarted={setIsAGameStarted}
                   youShouldLoginMessage={youShouldLoginMessage}
                   setYouShouldLoginMessage={setYouShouldLoginMessage}
                   setError={setError}
@@ -210,6 +223,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/maze" element={<Maze />} />
         </Routes>
       </BrowserRouter>
     </div>

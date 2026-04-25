@@ -8,9 +8,7 @@ import ConfirmationBox from "../ConfirmationBox";
 export default function BirdHunter({
   setShowGameTitles,
   setShowBirdHunter,
-  updateTotalPoint,
-  isAGameStarted,
-  setIsAGameStarted,
+  updateTotalPoint
 }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [grounds, setGrounds] = useState([
@@ -59,7 +57,6 @@ export default function BirdHunter({
     setIsGameStarted(false);
     setShowBirdHunter(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

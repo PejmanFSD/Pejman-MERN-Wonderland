@@ -7,9 +7,7 @@ import ModeExplaination from "../ModeExplaination";
 export default function Counter({
   updateTotalPoint,
   setShowGameTitles,
-  setShowCounter,
-  isAGameStarted,
-  setIsAGameStarted,
+  setShowCounter
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -151,7 +149,6 @@ export default function Counter({
     setIsGameStarted(false);
     setShowCounter(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

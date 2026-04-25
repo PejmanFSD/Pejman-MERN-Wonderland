@@ -22,7 +22,7 @@ import V3 from "./images/V-3.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 
-export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTotalPoint, setIsAGameStarted}) {
+export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -245,7 +245,6 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
     setIsGameStarted(false);
     setShowTugOfWar(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

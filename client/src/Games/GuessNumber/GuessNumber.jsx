@@ -10,9 +10,7 @@ import { getRandArr } from "../utils";
 export default function GuessNumber({
   setShowGameTitles,
   setShowGuessNumber,
-  updateTotalPoint,
-  isAGameStarted,
-  setIsAGameStarted
+  updateTotalPoint
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -143,7 +141,6 @@ export default function GuessNumber({
     setIsGameStarted(false);
     setShowGuessNumber(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

@@ -21,9 +21,7 @@ import ConfirmationBox from "../ConfirmationBox";
 export default function Puzzle({
   updateTotalPoint,
   setShowGameTitles,
-  setShowPuzzle,
-  isAGameStarted,
-  setIsAGameStarted,
+  setShowPuzzle
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -315,7 +313,6 @@ export default function Puzzle({
     setIsGameStarted(false);
     setShowPuzzle(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

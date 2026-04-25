@@ -10,8 +10,7 @@ import { getRandArr } from "../utils";
 export default function TripleEmojiMatch({
   updateTotalPoint,
   setShowTripleEmojiMatch,
-  setShowGameTitles,
-  setIsAGameStarted,
+  setShowGameTitles
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -122,7 +121,6 @@ export default function TripleEmojiMatch({
     setIsGameStarted(false);
     setShowTripleEmojiMatch(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

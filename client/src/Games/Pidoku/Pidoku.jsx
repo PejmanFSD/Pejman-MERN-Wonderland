@@ -7,9 +7,7 @@ import ConfirmationBox from "../ConfirmationBox";
 export default function Pidoku({
   setShowPidoku,
   setShowGameTitles,
-  updateTotalPoint,
-  isAGameStarted,
-  setIsAGameStarted
+  updateTotalPoint
 }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -467,7 +465,6 @@ export default function Pidoku({
     setIsGameStarted(false);
     setShowPidoku(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

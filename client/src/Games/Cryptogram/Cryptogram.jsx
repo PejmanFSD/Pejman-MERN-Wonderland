@@ -7,9 +7,7 @@ import Result from "./Result";
 export default function Cryptogram({
   setShowCryptogram,
   setShowGameTitles,
-  updateTotalPoint,
-  isAGameStarted,
-  setIsAGameStarted
+  updateTotalPoint
 }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [adviceArray, setAdviceArray] = useState([]);
@@ -131,7 +129,6 @@ export default function Cryptogram({
     setIsGameStarted(false);
     setShowCryptogram(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

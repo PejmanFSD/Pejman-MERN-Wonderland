@@ -7,12 +7,11 @@ export default function Ad({
   adImages,
   adAuthor,
   currentUser,
-  isLoggingOut,
-  isAGameStarted
+  isLoggingOut
 }) {
   return (
     <div>
-      {currentUser && currentUser.role === "Admin" && !isLoggingOut && !isAGameStarted &&
+      {currentUser && currentUser.role === "Admin" && !isLoggingOut &&
         <Link to={`/ads/${adKey}`}>
         <div>{adCompany} - {adText}</div>
       </Link>
@@ -20,7 +19,7 @@ export default function Ad({
       {adImages && adImages.map((i) => (
         <img src={i.url} height="70px" />
       ))}
-      {currentUser && currentUser.role === "Admin" && !isLoggingOut && !isAGameStarted &&
+      {currentUser && currentUser.role === "Admin" && !isLoggingOut &&
         <div>Created by: {adAuthor?.username}</div>
       }
     </div>

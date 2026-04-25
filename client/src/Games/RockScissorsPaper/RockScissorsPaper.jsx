@@ -12,9 +12,7 @@ export default function RockScissorsPaper({
   setShowGameTitles,
   totalPoint,
   updateTotalPoint,
-  setShowRockScissorsPaper,
-  isAGameStarted,
-  setIsAGameStarted
+  setShowRockScissorsPaper
 }) {
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
@@ -95,7 +93,6 @@ export default function RockScissorsPaper({
   const toggleHomePageYes = () => {
     setShowRockScissorsPaper(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

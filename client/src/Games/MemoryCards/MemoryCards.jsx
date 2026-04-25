@@ -8,9 +8,7 @@ const imagesGroup = ["Animals", "Fruits", "Animation Characters", "Cars", "Movie
 export default function MemoryCards({
   setShowMemoryCards,
   setShowGameTitles,
-  updateTotalPoint,
-  isAGameStarted,
-  setIsAGameStarted
+  updateTotalPoint
 }) {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
@@ -165,7 +163,6 @@ export default function MemoryCards({
     setIsGameStarted(false);
     setShowMemoryCards(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

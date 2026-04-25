@@ -11,8 +11,6 @@ export default function Capitals({
   updateTotalPoint,
   setShowGameTitles,
   setShowCapitals,
-  isAGameStarted,
-  setIsAGameStarted
 }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
@@ -109,7 +107,6 @@ export default function Capitals({
     setIsGameStarted(false);
     setShowCapitals(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

@@ -28,8 +28,6 @@ export default function Home({
   currentUser,
   setCurrentUser,
   isLoggingOut,
-  isAGameStarted,
-  setIsAGameStarted,
   youShouldLoginMessage,
   setYouShouldLoginMessage,
   setError,
@@ -101,7 +99,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowRockScissorsPaper(true);
   };
   const toggleGuessNumber = () => {
@@ -111,7 +108,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowGuessNumber(true);
   };
   const toggleCapitals = () => {
@@ -121,7 +117,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowCapitals(true);
   };
   const toggleCryptogram = () => {
@@ -131,7 +126,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowCryptogram(true);
   };
   const toggleCrazy100 = () => {
@@ -141,7 +135,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowCrazy100(true);
   };
   const toggleMemoryCards = () => {
@@ -151,7 +144,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowMemoryCards(true);
   };
   const toggleNim = () => {
@@ -161,7 +153,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowNim(true);
   };
   const toggleHappyFlower = () => {
@@ -171,7 +162,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowHappyFlower(true);
   };
   const toggleXO = () => {
@@ -181,7 +171,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowXO(true);
   };
   const toggleKukuKube = () => {
@@ -191,7 +180,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowKukuKube(true);
   };
   const toggleTripleEmojiMatch = () => {
@@ -201,7 +189,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowTripleEmojiMatch(true);
   };
   const togglePidoku = () => {
@@ -211,7 +198,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowPidoku(true);
   };
   const toggleCounter = () => {
@@ -221,7 +207,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowCounter(true);
   };
   const togglePuzzle = () => {
@@ -231,7 +216,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowPuzzle(true);
   };
   const toggleBingo = () => {
@@ -241,7 +225,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowBingo(true);
   };
   const toggleTugOfWar = () => {
@@ -251,7 +234,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowTugOfWar(true);
   };
   const toggleMaze = () => {
@@ -261,8 +243,8 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowMaze(true);
+    navigate("/maze");
   };
   const toggleBirdHunter = () => {
     if (!currentUser) {
@@ -271,7 +253,6 @@ export default function Home({
       return;
     }
     setShowGameTitles(false);
-    setIsAGameStarted(true);
     setShowBirdHunter(true);
   };
   return (
@@ -281,9 +262,7 @@ export default function Home({
         setAds={setAds}
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
-        isAGameStarted={isAGameStarted}
       />
-      {!isAGameStarted &&
       <div>
         <div>The top 10 users with highest stars</div>
       <table border="2" cellPadding="5" style={{position: "relative", top: "5px"}}>
@@ -307,7 +286,6 @@ export default function Home({
         </tbody>
       </table>
       </div>
-        }
       <div>
         <div>
           {currentUser &&
@@ -319,7 +297,7 @@ export default function Home({
             currentUser?.totalPoint > 0 &&
             `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
         </div>
-        {currentUser?.totalPoint <= 5 && !isAGameStarted && (
+        {currentUser?.totalPoint <= 5 && (
           <div style={{position: "relative", top: "5px"}}>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
@@ -331,7 +309,7 @@ export default function Home({
             ))}
           </div>
         )}
-        {!showAllStars && currentUser?.totalPoint > 5 && !isAGameStarted && (
+        {!showAllStars && currentUser?.totalPoint > 5 && (
           <div style={{position: "relative", top: "5px"}}>
             {new Array(5).fill(null).map((i) => (
               <img
@@ -346,7 +324,7 @@ export default function Home({
             <button onClick={handleShowAllStars}>Show all stars</button>
           </div>
         )}
-        {showAllStars && currentUser?.totalPoint > 5 && !isAGameStarted && (
+        {showAllStars && currentUser?.totalPoint > 5 && (
           <div style={{position: "relative", top: "5px"}}>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
@@ -361,274 +339,236 @@ export default function Home({
           </div>
         )}
       </div>
-      {!showGameTitles && showRockScissorsPaper && isAGameStarted ? (
+      {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
           setShowGameTitles={setShowGameTitles}
           setShowRockScissorsPaper={setShowRockScissorsPaper}
           totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showRockScissorsPaper &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleRockScissorsPaper()} style={{position: "relative", top: "5px"}}>
             R - S - P
           </button>
         )
       )}
-      {!showGameTitles && showGuessNumber && isAGameStarted ? (
+      {!showGameTitles && showGuessNumber ? (
         <GuessNumber
           setShowGameTitles={setShowGameTitles}
           setShowGuessNumber={setShowGuessNumber}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showGuessNumber &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleGuessNumber()} style={{position: "relative", top: "5px"}}>Guess Number</button>
         )
       )}
-      {!showGameTitles && showCapitals && isAGameStarted ? (
+      {!showGameTitles && showCapitals ? (
         <Capitals
           setShowGameTitles={setShowGameTitles}
           setShowCapitals={setShowCapitals}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showCapitals &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleCapitals()} style={{position: "relative", top: "5px"}}>Capitals</button>
         )
       )}
-      {!showGameTitles && showCryptogram && isAGameStarted ? (
+      {!showGameTitles && showCryptogram ? (
         <Cryptogram
           setShowGameTitles={setShowGameTitles}
           setShowCryptogram={setShowCryptogram}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showCryptogram &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleCryptogram()} style={{position: "relative", top: "5px"}}>Cryptogram</button>
         )
       )}
-      {!showGameTitles && showCrazy100 && isAGameStarted ? (
+      {!showGameTitles && showCrazy100 ? (
         <Crazy100
           setShowGameTitles={setShowGameTitles}
           setShowCrazy100={setShowCrazy100}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showCrazy100 &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleCrazy100()} style={{position: "relative", top: "5px"}}>Crazy-100</button>
         )
       )}
-      {!showGameTitles && showMemoryCards && isAGameStarted ? (
+      {!showGameTitles && showMemoryCards ? (
         <MemoryCards
           setShowGameTitles={setShowGameTitles}
           setShowMemoryCards={setShowMemoryCards}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showMemoryCards &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleMemoryCards()} style={{position: "relative", top: "5px"}}>Memory Cards</button>
         )
       )}
-      {!showGameTitles && showNim && isAGameStarted ? (
+      {!showGameTitles && showNim ? (
         <Nim
           setShowGameTitles={setShowGameTitles}
           setShowNim={setShowNim}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showNim &&
-        !isAGameStarted && <button onClick={() => toggleNim()} style={{position: "relative", top: "5px"}}>Nim</button>
+        <button onClick={() => toggleNim()} style={{position: "relative", top: "5px"}}>Nim</button>
       )}
-      {!showGameTitles && showHappyFlower && isAGameStarted ? (
+      {!showGameTitles && showHappyFlower ? (
         <HappyFlower
           setShowGameTitles={setShowGameTitles}
           setShowHappyFlower={setShowHappyFlower}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showHappyFlower &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleHappyFlower()} style={{position: "relative", top: "5px"}}>Happy Flower</button>
         )
       )}
-      {!showGameTitles && showXO && isAGameStarted ? (
+      {!showGameTitles && showXO ? (
         <XO
           setShowGameTitles={setShowGameTitles}
           setShowXO={setShowXO}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showXO &&
-        !isAGameStarted && <button onClick={() => toggleXO()} style={{position: "relative", top: "5px"}}>X-O</button>
+        <button onClick={() => toggleXO()} style={{position: "relative", top: "5px"}}>X-O</button>
       )}
-      {!showGameTitles && showKukuKube && isAGameStarted ? (
+      {!showGameTitles && showKukuKube ? (
         <KukuKube
           setShowGameTitles={setShowGameTitles}
           setShowKukuKube={setShowKukuKube}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showKukuKube &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleKukuKube()} style={{position: "relative", top: "5px"}}>Kuku Kube</button>
         )
       )}
-      {!showGameTitles && showTripleEmojiMatch && isAGameStarted ? (
+      {!showGameTitles && showTripleEmojiMatch ? (
         <TripleEmojiMatch
           setShowGameTitles={setShowGameTitles}
           setShowTripleEmojiMatch={setShowTripleEmojiMatch}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showTripleEmojiMatch &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleTripleEmojiMatch()} style={{position: "relative", top: "5px"}}>
             Triple Emoji Match
           </button>
         )
       )}
-      {!showGameTitles && showPidoku && isAGameStarted ? (
+      {!showGameTitles && showPidoku ? (
         <Pidoku
           setShowGameTitles={setShowGameTitles}
           setShowPidoku={setShowPidoku}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showPidoku &&
-        !isAGameStarted && (
+        (
           <button onClick={() => togglePidoku()} style={{position: "relative", top: "5px"}}>Pidoku</button>
         )
       )}
-      {!showGameTitles && showCounter && isAGameStarted ? (
+      {!showGameTitles && showCounter ? (
         <Counter
           setShowGameTitles={setShowGameTitles}
           setShowCounter={setShowCounter}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showCounter &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleCounter()} style={{position: "relative", top: "5px"}}>Counter</button>
         )
       )}
-      {!showGameTitles && showPuzzle && isAGameStarted ? (
+      {!showGameTitles && showPuzzle ? (
         <Puzzle
           setShowGameTitles={setShowGameTitles}
           setShowPuzzle={setShowPuzzle}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showPuzzle &&
-        !isAGameStarted && (
+        (
           <button onClick={() => togglePuzzle()} style={{position: "relative", top: "5px"}}>Puzzle</button>
         )
       )}
-      {!showGameTitles && showBingo && isAGameStarted ? (
+      {!showGameTitles && showBingo ? (
         <Bingo
           setShowGameTitles={setShowGameTitles}
           setShowBingo={setShowBingo}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showBingo &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleBingo()} style={{position: "relative", top: "5px"}}>Bingo</button>
         )
       )}
-      {!showGameTitles && showTugOfWar && isAGameStarted ? (
+      {!showGameTitles && showTugOfWar ? (
         <TugOfWar
           setShowGameTitles={setShowGameTitles}
           setShowTugOfWar={setShowTugOfWar}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showTugOfWar &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleTugOfWar()} style={{position: "relative", top: "5px"}}>Tug of War</button>
         )
       )}
-      {!showGameTitles && showMaze && isAGameStarted ? (
+      {!showGameTitles && showMaze ? (
         <Maze
-          setShowGameTitles={setShowGameTitles}
-          setShowMaze={setShowMaze}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showMaze &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleMaze()} style={{position: "relative", top: "5px"}}>Maze</button>
         )
       )}
-      {!showGameTitles && showBirdHunter && isAGameStarted ? (
+      {!showGameTitles && showBirdHunter ? (
         <BirdHunter
           setShowGameTitles={setShowGameTitles}
           setShowBirdHunter={setShowBirdHunter}
           updateTotalPoint={updateTotalPoint}
-          isAGameStarted={isAGameStarted}
-          setIsAGameStarted={setIsAGameStarted}
         />
       ) : (
         showGameTitles &&
         !showBirdHunter &&
-        !isAGameStarted && (
+        (
           <button onClick={() => toggleBirdHunter()} style={{position: "relative", top: "5px"}}>Bird Hunter</button>
         )
       )}

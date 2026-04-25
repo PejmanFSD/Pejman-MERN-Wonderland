@@ -17,7 +17,7 @@ const array80To89 = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89];
 const array90To99 = [90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
 const allNumsArray = Array.from({ length: 99 }, (_, i) => i + 1);
 
-export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint, isAGameStarted, setIsAGameStarted}) {
+export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint}) {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [userColor, setUserColor] = useState("");
     const [allNums, setAllNums] = useState(allNumsArray);
@@ -216,7 +216,6 @@ export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint
     setIsGameStarted(false);
     setShowBingo(false);
     setShowGameTitles(true);
-    setIsAGameStarted(false);
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

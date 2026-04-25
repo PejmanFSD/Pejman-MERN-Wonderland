@@ -23,8 +23,6 @@ export default function Navbar({
   isDeleting,
   isLoggingOut,
   setIsLoggingOut,
-  isAGameStarted,
-  setIsAGameStarted,
   userCount,
   setUserCount,
   setFlash,
@@ -35,6 +33,7 @@ export default function Navbar({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const gameUrls = ["Bingo", "BirdHunter", "Capitals", "Counter", "Crazy100", "Cryptogram", "GuessNumber", "HappyFlower", "KukuKube", "/maze", "MemoryCards", "Nim", "Pidoku", "Puzzle", "RockScissorsPaper", "TripleEmojiMatch", "TugOfWar", "XO"];
   const handleLogout = () => {
     setIsLoggingOut(true);
   };
@@ -79,15 +78,14 @@ export default function Navbar({
         <strong>Pejman MERN Wonderland</strong>
       </div>
       <div>Number of registered users: {userCount}</div>
-      {currentUser && !isLoggingOut && !isAGameStarted && (
+      {currentUser && !isLoggingOut && (
         <div>Welcome, {currentUser.username}!</div>
       )}
       {/* "location.pathname" is the path of the current page */}
       {currentUser &&
-        location.pathname !== "/profile" &&
+        location.pathname !== "/profile" && !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -95,10 +93,9 @@ export default function Navbar({
             My Profile
           </button>
         )}
-      {location.pathname !== "/" &&
+      {location.pathname !== "/" && !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -106,12 +103,11 @@ export default function Navbar({
             Home Page
           </button>
         )}
-      {currentUser &&
+      {currentUser && !gameUrls.includes(location.pathname) &&
         currentUser.role === "Admin" &&
         location.pathname !== "/users" &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -119,12 +115,11 @@ export default function Navbar({
             All users
           </button>
         )}
-      {currentUser &&
+      {currentUser && !gameUrls.includes(location.pathname) &&
         currentUser.role === "Admin" &&
         location.pathname !== "/newAd" &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -132,11 +127,10 @@ export default function Navbar({
             Create new Ad
           </button>
         )}
-      {!currentUser &&
+      {!currentUser && !gameUrls.includes(location.pathname) &&
         location.pathname !== "/register" &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -144,11 +138,10 @@ export default function Navbar({
             Register
           </button>
         )}
-      {!currentUser &&
+      {!currentUser && !gameUrls.includes(location.pathname) &&
         location.pathname !== "/login" &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -156,10 +149,9 @@ export default function Navbar({
             Login
           </button>
         )}
-      {currentUser &&
+      {currentUser && !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
         !isDeleting &&
-        !isAGameStarted &&
         !isProfileEditing &&
         !isAdEditing &&
         !isCreatingAd && (
@@ -167,7 +159,8 @@ export default function Navbar({
             Logout
           </button>
         )}
-      {isLoggingOut && (
+      {isLoggingOut &&  !gameUrls.includes(location.pathname) &&
+      (
         <div>
           <div>Are you sure you want to logout?</div>
           <div>
