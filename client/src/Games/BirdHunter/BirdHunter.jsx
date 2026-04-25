@@ -4,12 +4,9 @@ import { getRandArr } from "../utils";
 import T1 from "./images/T1.jpg";
 import T2 from "./images/T2.jpg";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
-export default function BirdHunter({
-  setShowGameTitles,
-  setShowBirdHunter,
-  updateTotalPoint
-}) {
+export default function BirdHunter({updateTotalPoint}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [grounds, setGrounds] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -22,6 +19,7 @@ export default function BirdHunter({
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleStart = () => {
     setIsGameStarted(true);
     handleChooseGround();
@@ -54,9 +52,7 @@ export default function BirdHunter({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowBirdHunter(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

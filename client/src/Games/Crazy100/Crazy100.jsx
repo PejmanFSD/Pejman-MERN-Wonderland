@@ -4,12 +4,9 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import GameLevel from "../GameLevel";
 import Blocks from "./Blocks";
+import { useNavigate } from "react-router-dom";
 
-export default function Crazy100({
-  setShowGameTitles,
-  setShowCrazy100,
-  updateTotalPoint
-}) {
+export default function Crazy100({updateTotalPoint}) {
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
@@ -37,6 +34,8 @@ export default function Crazy100({
   const [seconds, setSeconds] = useState(50);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [is4Blocks, setIs4Blocks] = useState(true);
+
+  const navigate = useNavigate();
   const generateNums = () => {
     setIsGameStarted(true);
     let copyAllNums = [...allNums];
@@ -169,9 +168,7 @@ export default function Crazy100({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowCrazy100(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

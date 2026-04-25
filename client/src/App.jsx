@@ -223,7 +223,24 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/rock-scissors-paper" element={<RockScissorsPaper />} />
+          <Route path="/guess-number" element={<GuessNumber />} />
+          <Route path="/capitals" element={<Capitals />} />
+          <Route path="/cryptogram" element={<Cryptogram />} />
+          <Route path="/crazy-100" element={<Crazy100 />} />
+          <Route path="/memory-cards" element={<MemoryCards />} />
+          <Route path="/nim" element={<Nim />} />
+          <Route path="/happy-flower" element={<HappyFlower />} />
+          <Route path="/xo" element={<XO />} />
+          <Route path="/kuku-kube" element={<KukuKube />} />
+          <Route path="/triple-emoji-match" element={<TripleEmojiMatch />} />
+          <Route path="/pidoku" element={<Pidoku />} />
+          <Route path="/counter" element={<Counter />} />
+          <Route path="/puzzle" element={<Puzzle />} />
+          <Route path="/bingo" element={<Bingo />} />
+          <Route path="/tug-of-war" element={<TugOfWar />} />
           <Route path="/maze" element={<Maze />} />
+          <Route path="/bird-hunter" element={<BirdHunter />} />
         </Routes>
       </BrowserRouter>
     </div>

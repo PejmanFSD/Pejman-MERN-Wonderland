@@ -7,12 +7,9 @@ import Blank from "./images/Blank.jpg";
 import Cross from "./images/Cross.jpg";
 import Tick from "./images/Tick.jpg";
 import Current from "./images/Current.jpg";
+import { useNavigate } from "react-router-dom";
 
-export default function KukuKube({
-  updateTotalPoint,
-  setShowGameTitles,
-  setShowKukuKube
-}) {
+export default function KukuKube({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -28,6 +25,7 @@ export default function KukuKube({
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
+  const navigate = useNavigate();
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -102,9 +100,7 @@ export default function KukuKube({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowKukuKube(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

@@ -6,14 +6,10 @@ import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
 import { getRandNum } from "../utils";
+import { useNavigate } from "react-router-dom";
 const optionsArray = ["Rock", "Scissors", "Paper"];
 
-export default function RockScissorsPaper({
-  setShowGameTitles,
-  totalPoint,
-  updateTotalPoint,
-  setShowRockScissorsPaper
-}) {
+export default function RockScissorsPaper({updateTotalPoint}) {
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
   const [gameResult, setGameResult] = useState("");
@@ -27,6 +23,7 @@ export default function RockScissorsPaper({
     useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
 
+  const navigate = useNavigate();
   const runNormalMode = () => {
     setNormalMode(true);
     setExtremelySuperDifficultMode(false);
@@ -91,8 +88,7 @@ export default function RockScissorsPaper({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setShowRockScissorsPaper(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
@@ -213,7 +209,7 @@ export default function RockScissorsPaper({
             <div>{pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}</div>
             <h2>{gameResult}</h2>
             <h2>Your score: {score}</h2>
-            <h3>Your Total Point: {totalPoint}</h3>
+            {/* <h3>Your Total Point: {totalPoint}</h3> */}
           </div>
         )
       )}

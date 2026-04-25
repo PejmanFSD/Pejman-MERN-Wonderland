@@ -3,12 +3,9 @@ import { imagesArray } from "./imagesArray";
 import { getRandNumInRange } from "../utils";
 import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
+import { useNavigate } from "react-router-dom";
 
-export default function Counter({
-  updateTotalPoint,
-  setShowGameTitles,
-  setShowCounter
-}) {
+export default function Counter({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [gameArray, setGameArray] = useState([]);
@@ -31,6 +28,7 @@ export default function Counter({
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -146,9 +144,7 @@ export default function Counter({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowCounter(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

@@ -3,8 +3,9 @@ import Form from "./Form";
 import GuessTable from "./GuessTable";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
-export default function HappyFlower({updateTotalPoint, setShowHappyFlower, setShowGameTitles}) {
+export default function HappyFlower({updateTotalPoint}) {
   const [title, setTitle] = useState("");
   const [word, setWord] = useState("");
   const [wordWithNoSpace, setWordWithNoSpace] = useState([]);
@@ -19,6 +20,7 @@ export default function HappyFlower({updateTotalPoint, setShowHappyFlower, setSh
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleReset = () => {
     setTitle("");
     setWord("");
@@ -60,9 +62,7 @@ export default function HappyFlower({updateTotalPoint, setShowHappyFlower, setSh
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowHappyFlower(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

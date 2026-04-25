@@ -3,41 +3,14 @@ import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
 import Form from "./Form";
 import Result from "./Result";
+import { useNavigate } from "react-router-dom";
 
-export default function Cryptogram({
-  setShowCryptogram,
-  setShowGameTitles,
-  updateTotalPoint
-}) {
+export default function Cryptogram({updateTotalPoint}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [adviceArray, setAdviceArray] = useState([]);
   const [resultObj, setResultObj] = useState({
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-    e: 0,
-    f: 0,
-    g: 0,
-    h: 0,
-    i: 0,
-    j: 0,
-    k: 0,
-    l: 0,
-    m: 0,
-    n: 0,
-    o: 0,
-    p: 0,
-    q: 0,
-    r: 0,
-    s: 0,
-    t: 0,
-    u: 0,
-    v: 0,
-    w: 0,
-    x: 0,
-    y: 0,
-    z: 0,
+    a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0, h: 0, i: 0, j: 0, k: 0, l: 0, m: 0,
+    n: 0, o: 0, p: 0, q: 0, r: 0, s: 0, t: 0, u: 0, v: 0, w: 0, x: 0, y: 0, z: 0
   });
   const [inputs, setInputs] = useState({
     input1: "",
@@ -54,6 +27,8 @@ export default function Cryptogram({
   const [isOneChar, setIsOneChar] = useState(true);
   const [isAlreadyExist, setIsAlreadyExist] = useState(false);
   const [acceptedAsRepetition, setAcceptedAsRepetition] = useState([]);
+
+  const navigate = useNavigate();
   async function getAdvice() {
     setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
@@ -126,9 +101,7 @@ export default function Cryptogram({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowCryptogram(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

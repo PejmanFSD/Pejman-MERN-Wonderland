@@ -21,8 +21,9 @@ import V2 from "./images/V-2.jpg";
 import V3 from "./images/V-3.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
-export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTotalPoint}) {
+export default function TugOfWar({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -45,6 +46,7 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -242,9 +244,7 @@ export default function TugOfWar({setShowGameTitles, setShowTugOfWar, updateTota
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowTugOfWar(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

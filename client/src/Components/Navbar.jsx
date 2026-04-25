@@ -33,7 +33,12 @@ export default function Navbar({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const gameUrls = ["Bingo", "BirdHunter", "Capitals", "Counter", "Crazy100", "Cryptogram", "GuessNumber", "HappyFlower", "KukuKube", "/maze", "MemoryCards", "Nim", "Pidoku", "Puzzle", "RockScissorsPaper", "TripleEmojiMatch", "TugOfWar", "XO"];
+  const gameUrls = [
+    "/rock-scissors-paper", "/guess-number", "/capitals", "/cryptogram", "/crazy-100",
+    "/memory-cards", "/nim", "/happy-flower", "/xo", "/maze", "/kuku-kube",
+    "/triple-emoji-match", "/pidoku", "/counter", "/puzzle", "/bingo",
+    "/tug-of-war", "/bird-hunter"
+  ];
   const handleLogout = () => {
     setIsLoggingOut(true);
   };

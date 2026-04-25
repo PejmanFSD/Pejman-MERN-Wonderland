@@ -3,13 +3,10 @@ import Board from "./Board";
 import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
 import { fruits, characters, animals, cars, emojis, animations } from "./imagesGroup";
+import { useNavigate } from "react-router-dom";
 
 const imagesGroup = ["Animals", "Fruits", "Animation Characters", "Cars", "Movie Characters", "Emojis"];
-export default function MemoryCards({
-  setShowMemoryCards,
-  setShowGameTitles,
-  updateTotalPoint
-}) {
+export default function MemoryCards({updateTotalPoint}) {
   const [images, setImages] = useState([]);
   const [isImagesGroupChosen, setIsImagesGroupChosen] = useState(false);
   const [board, setBoard] = useState([]);
@@ -31,6 +28,8 @@ export default function MemoryCards({
   const [findMatchChance1, setFindMatchChance1] = useState(true);
   const [findMatchChance2, setFindMatchChance2] = useState(true);
   const [identicalIndexArray, setIdenticalIndexArray] = useState([]);
+
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -160,9 +159,7 @@ export default function MemoryCards({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowMemoryCards(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

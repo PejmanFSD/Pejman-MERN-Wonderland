@@ -100,6 +100,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowRockScissorsPaper(true);
+    navigate("/rock-scissors-paper");
   };
   const toggleGuessNumber = () => {
     if (!currentUser) {
@@ -109,6 +110,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowGuessNumber(true);
+    navigate("/guess-number");
   };
   const toggleCapitals = () => {
     if (!currentUser) {
@@ -118,6 +120,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowCapitals(true);
+    navigate("/capitals");
   };
   const toggleCryptogram = () => {
     if (!currentUser) {
@@ -127,6 +130,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowCryptogram(true);
+    navigate("/cryptogram");
   };
   const toggleCrazy100 = () => {
     if (!currentUser) {
@@ -136,6 +140,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowCrazy100(true);
+    navigate("/crazy-100");
   };
   const toggleMemoryCards = () => {
     if (!currentUser) {
@@ -145,6 +150,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowMemoryCards(true);
+    navigate("/memory-cards");
   };
   const toggleNim = () => {
     if (!currentUser) {
@@ -154,6 +160,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowNim(true);
+    navigate("/nim");
   };
   const toggleHappyFlower = () => {
     if (!currentUser) {
@@ -163,6 +170,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowHappyFlower(true);
+    navigate("/happy-flower");
   };
   const toggleXO = () => {
     if (!currentUser) {
@@ -172,6 +180,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowXO(true);
+    navigate("/xo");
   };
   const toggleKukuKube = () => {
     if (!currentUser) {
@@ -181,6 +190,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowKukuKube(true);
+    navigate("/kuku-kube");
   };
   const toggleTripleEmojiMatch = () => {
     if (!currentUser) {
@@ -190,6 +200,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowTripleEmojiMatch(true);
+    navigate("/triple-emoji-match");
   };
   const togglePidoku = () => {
     if (!currentUser) {
@@ -199,6 +210,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowPidoku(true);
+    navigate("/pidoku");
   };
   const toggleCounter = () => {
     if (!currentUser) {
@@ -208,6 +220,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowCounter(true);
+    navigate("/counter");
   };
   const togglePuzzle = () => {
     if (!currentUser) {
@@ -217,6 +230,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowPuzzle(true);
+    navigate("/puzzle");
   };
   const toggleBingo = () => {
     if (!currentUser) {
@@ -226,6 +240,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowBingo(true);
+    navigate("/bingo");
   };
   const toggleTugOfWar = () => {
     if (!currentUser) {
@@ -235,6 +250,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowTugOfWar(true);
+    navigate("/tug-of-war");
   };
   const toggleMaze = () => {
     if (!currentUser) {
@@ -254,6 +270,7 @@ export default function Home({
     }
     setShowGameTitles(false);
     setShowBirdHunter(true);
+    navigate("/bird-hunter");
   };
   return (
     <div>
@@ -341,9 +358,6 @@ export default function Home({
       </div>
       {!showGameTitles && showRockScissorsPaper ? (
         <RockScissorsPaper
-          setShowGameTitles={setShowGameTitles}
-          setShowRockScissorsPaper={setShowRockScissorsPaper}
-          totalPoint={totalPoint}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -357,8 +371,6 @@ export default function Home({
       )}
       {!showGameTitles && showGuessNumber ? (
         <GuessNumber
-          setShowGameTitles={setShowGameTitles}
-          setShowGuessNumber={setShowGuessNumber}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -370,8 +382,6 @@ export default function Home({
       )}
       {!showGameTitles && showCapitals ? (
         <Capitals
-          setShowGameTitles={setShowGameTitles}
-          setShowCapitals={setShowCapitals}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -383,8 +393,6 @@ export default function Home({
       )}
       {!showGameTitles && showCryptogram ? (
         <Cryptogram
-          setShowGameTitles={setShowGameTitles}
-          setShowCryptogram={setShowCryptogram}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -396,8 +404,6 @@ export default function Home({
       )}
       {!showGameTitles && showCrazy100 ? (
         <Crazy100
-          setShowGameTitles={setShowGameTitles}
-          setShowCrazy100={setShowCrazy100}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -409,8 +415,6 @@ export default function Home({
       )}
       {!showGameTitles && showMemoryCards ? (
         <MemoryCards
-          setShowGameTitles={setShowGameTitles}
-          setShowMemoryCards={setShowMemoryCards}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -422,8 +426,6 @@ export default function Home({
       )}
       {!showGameTitles && showNim ? (
         <Nim
-          setShowGameTitles={setShowGameTitles}
-          setShowNim={setShowNim}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -433,8 +435,6 @@ export default function Home({
       )}
       {!showGameTitles && showHappyFlower ? (
         <HappyFlower
-          setShowGameTitles={setShowGameTitles}
-          setShowHappyFlower={setShowHappyFlower}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -446,8 +446,6 @@ export default function Home({
       )}
       {!showGameTitles && showXO ? (
         <XO
-          setShowGameTitles={setShowGameTitles}
-          setShowXO={setShowXO}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -457,8 +455,6 @@ export default function Home({
       )}
       {!showGameTitles && showKukuKube ? (
         <KukuKube
-          setShowGameTitles={setShowGameTitles}
-          setShowKukuKube={setShowKukuKube}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -470,8 +466,6 @@ export default function Home({
       )}
       {!showGameTitles && showTripleEmojiMatch ? (
         <TripleEmojiMatch
-          setShowGameTitles={setShowGameTitles}
-          setShowTripleEmojiMatch={setShowTripleEmojiMatch}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -485,8 +479,6 @@ export default function Home({
       )}
       {!showGameTitles && showPidoku ? (
         <Pidoku
-          setShowGameTitles={setShowGameTitles}
-          setShowPidoku={setShowPidoku}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -498,8 +490,6 @@ export default function Home({
       )}
       {!showGameTitles && showCounter ? (
         <Counter
-          setShowGameTitles={setShowGameTitles}
-          setShowCounter={setShowCounter}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -511,8 +501,6 @@ export default function Home({
       )}
       {!showGameTitles && showPuzzle ? (
         <Puzzle
-          setShowGameTitles={setShowGameTitles}
-          setShowPuzzle={setShowPuzzle}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -524,8 +512,6 @@ export default function Home({
       )}
       {!showGameTitles && showBingo ? (
         <Bingo
-          setShowGameTitles={setShowGameTitles}
-          setShowBingo={setShowBingo}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -537,8 +523,6 @@ export default function Home({
       )}
       {!showGameTitles && showTugOfWar ? (
         <TugOfWar
-          setShowGameTitles={setShowGameTitles}
-          setShowTugOfWar={setShowTugOfWar}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -561,8 +545,6 @@ export default function Home({
       )}
       {!showGameTitles && showBirdHunter ? (
         <BirdHunter
-          setShowGameTitles={setShowGameTitles}
-          setShowBirdHunter={setShowBirdHunter}
           updateTotalPoint={updateTotalPoint}
         />
       ) : (

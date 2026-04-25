@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import UserBoard from "./UserBoard";
 import PejmanBoard from "./PejmanBoard";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
 const initialTens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -17,7 +18,7 @@ const array80To89 = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89];
 const array90To99 = [90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
 const allNumsArray = Array.from({ length: 99 }, (_, i) => i + 1);
 
-export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint}) {
+export default function Bingo({updateTotalPoint}) {
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [userColor, setUserColor] = useState("");
     const [allNums, setAllNums] = useState(allNumsArray);
@@ -43,6 +44,7 @@ export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint
     const [isTogglingReset, setIsTogglingReset] = useState(false);
     const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+    const navigate = useNavigate();
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
       setUserColor("red");
@@ -213,9 +215,7 @@ export default function Bingo({setShowGameTitles, setShowBingo, updateTotalPoint
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowBingo(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

@@ -6,12 +6,9 @@ import { emojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
 import { getRandArr } from "../utils";
+import { useNavigate } from "react-router-dom";
 
-export default function TripleEmojiMatch({
-  updateTotalPoint,
-  setShowTripleEmojiMatch,
-  setShowGameTitles
-}) {
+export default function TripleEmojiMatch({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -31,6 +28,7 @@ export default function TripleEmojiMatch({
   const [pair2Chance, setPair2Chance] = useState(true);
   const [pair2ChoseEmoji, setPair2ChoseEmoji] = useState(null);
 
+  const navigate = useNavigate();
   const runEasyMode = () => {
     setEmojis((currEmojis) => shuffleArray(currEmojis));
     setEasyMode(true);
@@ -118,9 +116,7 @@ export default function TripleEmojiMatch({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowTripleEmojiMatch(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

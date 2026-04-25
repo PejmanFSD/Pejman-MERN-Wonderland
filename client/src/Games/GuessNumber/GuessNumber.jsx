@@ -6,12 +6,9 @@ import UserGuess from "./UserGuess";
 import ConfirmationBox from "../ConfirmationBox";
 import Chances from "./Chances";
 import { getRandArr } from "../utils";
+import { useNavigate } from "react-router-dom";
 
-export default function GuessNumber({
-  setShowGameTitles,
-  setShowGuessNumber,
-  updateTotalPoint
-}) {
+export default function GuessNumber({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -30,6 +27,8 @@ export default function GuessNumber({
   const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [chancesNum, setChancesNum] = useState(0);
   const [isWin, setIsWin] = useState(false);
+
+  const navigate = useNavigate();
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -138,9 +137,7 @@ export default function GuessNumber({
     setIsTogglingReset(false);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowGuessNumber(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

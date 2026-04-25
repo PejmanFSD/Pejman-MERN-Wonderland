@@ -4,14 +4,11 @@ import GameLevel from "../GameLevel";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import countries from "./countries";
+import { useNavigate } from "react-router-dom";
 const countryNames = countries.map((c) => c.country);
 const capitalNames = countries.map((c) => c.capital);
 
-export default function Capitals({
-  updateTotalPoint,
-  setShowGameTitles,
-  setShowCapitals,
-}) {
+export default function Capitals({updateTotalPoint}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -36,6 +33,8 @@ export default function Capitals({
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isInputEmpty, setIsInputEmpty] = useState(false);
+
+  const navigate = useNavigate();
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -104,9 +103,7 @@ export default function Capitals({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowCapitals(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

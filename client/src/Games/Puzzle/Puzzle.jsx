@@ -17,12 +17,9 @@ import Numbers from "./images/Numbers/Numbers.jpg";
 import Pencils from "./images/Pencils/Pencils.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
-export default function Puzzle({
-  updateTotalPoint,
-  setShowGameTitles,
-  setShowPuzzle
-}) {
+export default function Puzzle({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -41,6 +38,7 @@ export default function Puzzle({
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -310,9 +308,7 @@ export default function Puzzle({
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowPuzzle(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);

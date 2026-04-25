@@ -2,8 +2,9 @@ import { useState } from "react";
 import Bowls from "./Bowls";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
-export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles }) {
+export default function Nim({ updateTotalPoint }) {
   const [standard, setStandard] = useState(false);
   const [misere, setMisere] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
@@ -25,6 +26,7 @@ export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles })
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleStandeardNim = () => {
     setStandard(true);
     setMisere(false);
@@ -55,9 +57,7 @@ export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles })
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
-    setIsGameStarted(false);
-    setShowNim(false);
-    setShowGameTitles(true);
+    navigate("/");
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
@@ -123,7 +123,6 @@ export default function Nim({ updateTotalPoint, setShowNim, setShowGameTitles })
           setIsTogglingReset={setIsTogglingReset}
           isTogglingHomePage={isTogglingHomePage}
           setIsTogglingHomePage={setIsTogglingHomePage}
-          setShowNim={setShowNim}
         />
       )}
       {!isTogglingReset &&
