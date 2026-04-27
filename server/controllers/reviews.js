@@ -1,10 +1,25 @@
 const Review = require("../models/review");
 
 module.exports.index = async (req, res) => {
-  const { game } = req.query;
-  const reviews = await Review.find({ game })
-    .populate("author", "username");
-  res.json(reviews);
+  const { game, page = 1 } = req.query;
+
+  const limit = 3; // 3 reviews in each paginated page
+  const skip = (page - 1) * limit; // The number of the review where we should go to a new page
+  const filter = game ? { game } : {}; // Filtering the reviews by their "game" attribute
+
+  const reviews = await Review.find(filter)
+    .populate("author", "username")
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  const total = await Review.countDocuments(filter);
+
+  res.json({
+    reviews,
+    currentPage: Number(page),
+    totalPages: Math.ceil(total / limit),
+  });
 };
 
 module.exports.createReview = async (req, res) => {

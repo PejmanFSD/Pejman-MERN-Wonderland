@@ -581,7 +581,7 @@ export default function Maze({updateTotalPoint}) {
           />
         </div>
       )}
-      <ReviewSection game="Maze" />
+      {isGameStarted && <ReviewSection game="Maze" />}
     </div>
   );
 }

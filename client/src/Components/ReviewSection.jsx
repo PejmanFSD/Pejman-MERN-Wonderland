@@ -4,18 +4,21 @@ export default function ReviewSection({ game }) {
   const [body, setBody] = useState("");
   const [rating, setRating] = useState(3); // The default value for rating is 3
   const [reviews, setReviews] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchReviews();
-  }, [game]);
+  }, [game, page]);
 
   const fetchReviews = async () => {
     try {
-      const res = await fetch(`/reviews?game=${game}`, {
+      const res = await fetch(`/reviews?game=${game}&page=${page}`, {
         credentials: "include", // For authentication
       });
       const data = await res.json();
-      setReviews(data);
+      setReviews(data.reviews);
+      setTotalPages(data.totalPages);
     } catch (err) {
       console.error(err);
     }
@@ -23,18 +26,18 @@ export default function ReviewSection({ game }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const res = await fetch("/reviews", {
+      const res = await fetch("/reviews", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         credentials: "include", // For sessions and cookies
         body: JSON.stringify({
-            body,
-            rating,
-            game, // Saving the specific game
+          body,
+          rating,
+          game, // Saving the specific game
         }),
-        });
+      });
 
       const data = await res.json();
 
@@ -47,7 +50,6 @@ export default function ReviewSection({ game }) {
       setRating(1);
       // Refreshing the reviews
       fetchReviews();
-
     } catch (err) {
       console.error(err);
     }
@@ -58,7 +60,7 @@ export default function ReviewSection({ game }) {
       <strong>Leave your comment</strong>
 
       <form onSubmit={handleSubmit}>
-        <label style={{marginTop: "10px"}}>Rating: {rating}</label>
+        <label style={{ marginTop: "10px" }}>Rating: {rating}</label>
         <br />
         <input
           type="range"
@@ -69,8 +71,9 @@ export default function ReviewSection({ game }) {
         />
         <br />
         <textarea
-          style={{marginTop: "10px"}}
-          rows="5" cols="25"
+          style={{ marginTop: "10px" }}
+          rows="5"
+          cols="25"
           value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Write your comment..."
@@ -79,14 +82,44 @@ export default function ReviewSection({ game }) {
         <br />
         <button type="submit">Submit</button>
       </form>
-      {reviews.map((r) => (
-        <div key={r._id}>
-          <div>{r.body}</div>
-          <small>Rating: {r.rating}</small>
-          <br />
-          <small>By: {r.author?.username}</small>
-        </div>
-      ))}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "15px",
+          marginTop: "20px",
+        }}
+      >
+        {reviews.map((r) => (
+          <div
+            key={r._id}
+            style={{
+              border: "1px solid #ccc",
+              padding: "10px",
+              borderRadius: "8px",
+            }}
+          >
+            <p>{r.body}</p>
+            <small>⭐ {r.rating}</small>
+            <br />
+            <small>By: {r.author?.username}</small>
+          </div>
+        ))}
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+          &#8592;
+        </button>
+        <span style={{ margin: "0 10px" }}>
+          Page {page} of {totalPages}
+        </span>
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          &#8594;
+        </button>
+      </div>
     </div>
   );
 }

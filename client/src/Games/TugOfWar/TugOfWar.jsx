@@ -22,6 +22,7 @@ import V3 from "./images/V-3.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function TugOfWar({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -1387,6 +1388,7 @@ export default function TugOfWar({updateTotalPoint}) {
             <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
         </div>
       }
+      {isGameStarted && <ReviewSection game="TugOfWar" />}
     </div>
   );
 }
