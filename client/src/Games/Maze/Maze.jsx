@@ -4,6 +4,7 @@ import Clock from "../HappyFlower/Images/Clock.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Maze({updateTotalPoint}) {
   const sceneRef = useRef(null);
@@ -580,6 +581,7 @@ export default function Maze({updateTotalPoint}) {
           />
         </div>
       )}
+      <ReviewSection game="Maze" />
     </div>
   );
 }

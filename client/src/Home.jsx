@@ -98,8 +98,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowRockScissorsPaper(true);
+    // setShowGameTitles(false);
+    // setShowRockScissorsPaper(true);
     navigate("/rock-scissors-paper");
   };
   const toggleGuessNumber = () => {
@@ -108,8 +108,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowGuessNumber(true);
+    // setShowGameTitles(false);
+    // setShowGuessNumber(true);
     navigate("/guess-number");
   };
   const toggleCapitals = () => {
@@ -118,8 +118,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowCapitals(true);
+    // setShowGameTitles(false);
+    // setShowCapitals(true);
     navigate("/capitals");
   };
   const toggleCryptogram = () => {
@@ -128,8 +128,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowCryptogram(true);
+    // setShowGameTitles(false);
+    // setShowCryptogram(true);
     navigate("/cryptogram");
   };
   const toggleCrazy100 = () => {
@@ -138,8 +138,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowCrazy100(true);
+    // setShowGameTitles(false);
+    // setShowCrazy100(true);
     navigate("/crazy-100");
   };
   const toggleMemoryCards = () => {
@@ -148,8 +148,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowMemoryCards(true);
+    // setShowGameTitles(false);
+    // setShowMemoryCards(true);
     navigate("/memory-cards");
   };
   const toggleNim = () => {
@@ -158,8 +158,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowNim(true);
+    // setShowGameTitles(false);
+    // setShowNim(true);
     navigate("/nim");
   };
   const toggleHappyFlower = () => {
@@ -168,8 +168,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowHappyFlower(true);
+    // setShowGameTitles(false);
+    // setShowHappyFlower(true);
     navigate("/happy-flower");
   };
   const toggleXO = () => {
@@ -178,8 +178,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowXO(true);
+    // setShowGameTitles(false);
+    // setShowXO(true);
     navigate("/xo");
   };
   const toggleKukuKube = () => {
@@ -188,8 +188,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowKukuKube(true);
+    // setShowGameTitles(false);
+    // setShowKukuKube(true);
     navigate("/kuku-kube");
   };
   const toggleTripleEmojiMatch = () => {
@@ -198,8 +198,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowTripleEmojiMatch(true);
+    // setShowGameTitles(false);
+    // setShowTripleEmojiMatch(true);
     navigate("/triple-emoji-match");
   };
   const togglePidoku = () => {
@@ -208,8 +208,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowPidoku(true);
+    // setShowGameTitles(false);
+    // setShowPidoku(true);
     navigate("/pidoku");
   };
   const toggleCounter = () => {
@@ -218,8 +218,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowCounter(true);
+    // setShowGameTitles(false);
+    // setShowCounter(true);
     navigate("/counter");
   };
   const togglePuzzle = () => {
@@ -228,8 +228,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowPuzzle(true);
+    // setShowGameTitles(false);
+    // setShowPuzzle(true);
     navigate("/puzzle");
   };
   const toggleBingo = () => {
@@ -238,8 +238,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowBingo(true);
+    // setShowGameTitles(false);
+    // setShowBingo(true);
     navigate("/bingo");
   };
   const toggleTugOfWar = () => {
@@ -248,8 +248,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowTugOfWar(true);
+    // setShowGameTitles(false);
+    // setShowTugOfWar(true);
     navigate("/tug-of-war");
   };
   const toggleMaze = () => {
@@ -258,8 +258,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowMaze(true);
+    // setShowGameTitles(false);
+    // setShowMaze(true);
     navigate("/maze");
   };
   const toggleBirdHunter = () => {
@@ -268,8 +268,8 @@ export default function Home({
       navigate("/login");
       return;
     }
-    setShowGameTitles(false);
-    setShowBirdHunter(true);
+    // setShowGameTitles(false);
+    // setShowBirdHunter(true);
     navigate("/bird-hunter");
   };
   return (
@@ -356,12 +356,11 @@ export default function Home({
           </div>
         )}
       </div>
-      {!showGameTitles && showRockScissorsPaper ? (
+      {showRockScissorsPaper ? (
         <RockScissorsPaper
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showRockScissorsPaper &&
         (
           <button onClick={() => toggleRockScissorsPaper()} style={{position: "relative", top: "5px"}}>
@@ -369,107 +368,97 @@ export default function Home({
           </button>
         )
       )}
-      {!showGameTitles && showGuessNumber ? (
+      {showGuessNumber ? (
         <GuessNumber
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showGuessNumber &&
         (
           <button onClick={() => toggleGuessNumber()} style={{position: "relative", top: "5px"}}>Guess Number</button>
         )
       )}
-      {!showGameTitles && showCapitals ? (
+      {showCapitals ? (
         <Capitals
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showCapitals &&
         (
           <button onClick={() => toggleCapitals()} style={{position: "relative", top: "5px"}}>Capitals</button>
         )
       )}
-      {!showGameTitles && showCryptogram ? (
+      {showCryptogram ? (
         <Cryptogram
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showCryptogram &&
         (
           <button onClick={() => toggleCryptogram()} style={{position: "relative", top: "5px"}}>Cryptogram</button>
         )
       )}
-      {!showGameTitles && showCrazy100 ? (
+      {showCrazy100 ? (
         <Crazy100
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showCrazy100 &&
         (
           <button onClick={() => toggleCrazy100()} style={{position: "relative", top: "5px"}}>Crazy-100</button>
         )
       )}
-      {!showGameTitles && showMemoryCards ? (
+      {showMemoryCards ? (
         <MemoryCards
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showMemoryCards &&
         (
           <button onClick={() => toggleMemoryCards()} style={{position: "relative", top: "5px"}}>Memory Cards</button>
         )
       )}
-      {!showGameTitles && showNim ? (
+      {showNim ? (
         <Nim
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showNim &&
         <button onClick={() => toggleNim()} style={{position: "relative", top: "5px"}}>Nim</button>
       )}
-      {!showGameTitles && showHappyFlower ? (
+      {showHappyFlower ? (
         <HappyFlower
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showHappyFlower &&
         (
           <button onClick={() => toggleHappyFlower()} style={{position: "relative", top: "5px"}}>Happy Flower</button>
         )
       )}
-      {!showGameTitles && showXO ? (
+      {showXO ? (
         <XO
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showXO &&
         <button onClick={() => toggleXO()} style={{position: "relative", top: "5px"}}>X-O</button>
       )}
-      {!showGameTitles && showKukuKube ? (
+      {showKukuKube ? (
         <KukuKube
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showKukuKube &&
         (
           <button onClick={() => toggleKukuKube()} style={{position: "relative", top: "5px"}}>Kuku Kube</button>
         )
       )}
-      {!showGameTitles && showTripleEmojiMatch ? (
+      {showTripleEmojiMatch ? (
         <TripleEmojiMatch
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showTripleEmojiMatch &&
         (
           <button onClick={() => toggleTripleEmojiMatch()} style={{position: "relative", top: "5px"}}>
@@ -477,78 +466,71 @@ export default function Home({
           </button>
         )
       )}
-      {!showGameTitles && showPidoku ? (
+      {showPidoku ? (
         <Pidoku
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showPidoku &&
         (
           <button onClick={() => togglePidoku()} style={{position: "relative", top: "5px"}}>Pidoku</button>
         )
       )}
-      {!showGameTitles && showCounter ? (
+      {showCounter ? (
         <Counter
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showCounter &&
         (
           <button onClick={() => toggleCounter()} style={{position: "relative", top: "5px"}}>Counter</button>
         )
       )}
-      {!showGameTitles && showPuzzle ? (
+      {showPuzzle ? (
         <Puzzle
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showPuzzle &&
         (
           <button onClick={() => togglePuzzle()} style={{position: "relative", top: "5px"}}>Puzzle</button>
         )
       )}
-      {!showGameTitles && showBingo ? (
+      {showBingo ? (
         <Bingo
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showBingo &&
         (
           <button onClick={() => toggleBingo()} style={{position: "relative", top: "5px"}}>Bingo</button>
         )
       )}
-      {!showGameTitles && showTugOfWar ? (
+      {showTugOfWar ? (
         <TugOfWar
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showTugOfWar &&
         (
           <button onClick={() => toggleTugOfWar()} style={{position: "relative", top: "5px"}}>Tug of War</button>
         )
       )}
-      {!showGameTitles && showMaze ? (
+      {showMaze ? (
         <Maze
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showMaze &&
         (
           <button onClick={() => toggleMaze()} style={{position: "relative", top: "5px"}}>Maze</button>
         )
       )}
-      {!showGameTitles && showBirdHunter ? (
+      {showBirdHunter ? (
         <BirdHunter
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
-        showGameTitles &&
         !showBirdHunter &&
         (
           <button onClick={() => toggleBirdHunter()} style={{position: "relative", top: "5px"}}>Bird Hunter</button>
