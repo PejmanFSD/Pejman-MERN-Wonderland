@@ -7,6 +7,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const User = require('./models/user');
+const Review = require('./models/review');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
@@ -16,6 +17,8 @@ const ExpressError = require('./utils/ExpressError');
 const userAuthRoutes = require('./routes/usersAuth.js');
 const userRoutes = require('./routes/users.js');
 const adRoutes = require('./routes/ads.js');
+const reviewRoutes = require('./routes/ads.js');
+const reviewRoutes = require('./routes/reviews.js');
 const cors = require('cors');
 const {handleUserErrors} = require("./middleware.js"); // In order to
 // have one central middleware to validate everything related to the users
@@ -78,6 +81,7 @@ app.use(async (req, res, next) => {
 app.use('/', userAuthRoutes);
 app.use('/users', userRoutes);
 app.use('/ads', adRoutes);
+app.use('/reviews', reviewRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

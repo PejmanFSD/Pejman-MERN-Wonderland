@@ -1,7 +1,9 @@
 const Ad = require("./models/ad");
+const Review = require("./models/review");
 const User = require("./models/user");
 const ExpressError = require("./utils/ExpressError");
 const { adSchema } = require("./schemas.js");
+const { reviewSchema } = require("./schemas.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.session.user_id) {
@@ -55,6 +57,15 @@ module.exports.validateAd = (req, res, next) => {
   }
 };
 
+module.exports.validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(el => el.message).join(",");
+    return res.status(400).json({ error: msg });
+  }
+  next();
+};
+
 module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
   // First find the ad:
@@ -67,6 +78,23 @@ module.exports.isAuthor = async (req, res, next) => {
     // req.flash('error', "You don't have the permission!");
     return res.status(403).json({
       error: "You're not the creator of this ad",
+    });
+  }
+  next();
+};
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id } = req.params;
+  // First find the review:
+  const review = await Review.findById(id);
+  if (!review) {
+    return res.status(404).json({ error: "Review not found" });
+  }
+  // Continue ONLY IF the logged-in user is the owner of the review:
+  if (!review.author.equals(req.session.user_id) && req.user.username !== "Pejman") {
+    // req.flash('error', "You don't have the permission!");
+    return res.status(403).json({
+      error: "You're not the author of this review",
     });
   }
   next();
@@ -120,5 +148,43 @@ module.exports.handleCreatingAdErrors = (err, req, res, next) => {
   }
   return res.status(500).json({
     error: err.message || "Server error"
+  });
+};
+
+module.exports.handleCreatingReviewErrors = (err, req, res, next) => {
+  if (err.name === "ValidationError") {
+    const errors = {};
+    // Collecting all the errors:
+    for (let field in err.errors) {
+      errors[field] = err.errors[field].message;
+    }
+    // Returning the errors:
+    return res.status(400).json({
+      type: "ValidationError",
+      errors
+    });
+  }
+  return res.status(500).json({
+    error: err.message || "Server error"
+  });
+};
+
+module.exports.canModifyReview = async (req, res, next) => {
+  const review = await Review.findById(req.params.id);
+
+  if (!review) {
+    return res.status(404).json({ error: "Review not found" });
+  }
+
+  if (
+    review.author.equals(req.user._id) ||
+    req.user.isAdmin ||
+    req.user.username === "Pejman"
+  ) {
+    return next();
+  }
+
+  return res.status(403).json({
+    error: "Not authorized",
   });
 };

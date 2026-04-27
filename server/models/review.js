@@ -1,23 +1,25 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-    text: {
+    body: {
         type: String,
-        required: [true, 'Review text cannot be blank'],
-        maxlength: [150, 'The maximum length of the Review text is 150 characters']
+        required: [true, 'Review text cannot be blank']
     },
-    userId: {
-        type: String,
-        required: [true, 'Review text cannot be blank'],
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-    reting: {
-        type: Number,
-        default: 3,
-        enum: [1, 2, 3, 4, 5],
+    rating: {
+        type: Number
     },
     game: {
         type: String,
-        enum: ["Bingo", "BirdHunter", "Capitals", "Counter", "Crazy100", "Cryptogram", "GuessNumber", "HappyFlower", "KukuKube", "Maze", "MemoryCards", "Nim", "Pidoku", "Puzzle", "RockScissorsPaper", "TripleEmojiMatch", "TugOfWar", "XO"]
+        enum: ["Bingo", "BirdHunter", "Capitals", "Counter",
+            "Crazy100", "Cryptogram", "GuessNumber",
+            "HappyFlower", "KukuKube", "Maze", "MemoryCards",
+            "Nim", "Pidoku", "Puzzle", "RockScissorsPaper",
+            "TripleEmojiMatch", "TugOfWar", "XO"],
+        index: true // Because we'll query by game
     }
 }, { timestamps: true })
 

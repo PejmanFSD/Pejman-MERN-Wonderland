@@ -18,3 +18,15 @@ module.exports.userSchema = Joi.object({
             .required()
     }).required()
 });
+
+module.exports.reviewSchema = Joi.object({
+  body: Joi.string().required(),
+  rating: Joi.number().min(0).max(5),
+  game: Joi.string().valid(
+    "Bingo", "BirdHunter", "Capitals", "Counter",
+    "Crazy100", "Cryptogram", "GuessNumber",
+    "HappyFlower", "KukuKube", "Maze", "MemoryCards",
+    "Nim", "Pidoku", "Puzzle", "RockScissorsPaper",
+    "TripleEmojiMatch", "TugOfWar", "XO"
+  ).required()
+});
