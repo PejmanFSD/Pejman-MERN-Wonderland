@@ -5,6 +5,7 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import countries from "./countries";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 const countryNames = countries.map((c) => c.country);
 const capitalNames = countries.map((c) => c.capital);
 
@@ -378,6 +379,7 @@ export default function Capitals({updateTotalPoint}) {
             toggleCancel={toggleHomePageCancel}
           />
         )}
+        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Capitals" />}
     </div>
   );
 }

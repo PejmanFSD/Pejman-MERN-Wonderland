@@ -5,6 +5,7 @@ import T1 from "./images/T1.jpg";
 import T2 from "./images/T2.jpg";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function BirdHunter({updateTotalPoint}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -169,6 +170,7 @@ export default function BirdHunter({updateTotalPoint}) {
           />
         </div>
       )}
+      {!isTogglingHomePage && isGameStarted && <ReviewSection game="BirdHunter" />}
     </div>
   );
 }

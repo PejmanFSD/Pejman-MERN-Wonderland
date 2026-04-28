@@ -4,6 +4,7 @@ import { getRandNumInRange } from "../utils";
 import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Counter({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -449,6 +450,7 @@ export default function Counter({updateTotalPoint}) {
             )}
           </div>
         )}
+        {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Counter" />}
     </div>
   );
 }

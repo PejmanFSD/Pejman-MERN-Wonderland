@@ -581,7 +581,7 @@ export default function Maze({updateTotalPoint}) {
           />
         </div>
       )}
-      {isGameStarted && <ReviewSection game="Maze" />}
+      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Maze" />}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import GameLevel from "../GameLevel";
 import Blocks from "./Blocks";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Crazy100({updateTotalPoint}) {
   const [nums, setNums] = useState([
@@ -488,6 +489,7 @@ export default function Crazy100({updateTotalPoint}) {
           </div>
         </div>
       )}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Crazy100" />}
     </div>
   );
 }

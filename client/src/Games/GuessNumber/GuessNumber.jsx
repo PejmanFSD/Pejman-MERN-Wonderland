@@ -7,6 +7,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import Chances from "./Chances";
 import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function GuessNumber({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -313,6 +314,7 @@ export default function GuessNumber({updateTotalPoint}) {
             toggleCancel={toggleHomePageCancel}
           />
         )}
+        {!isTogglingLevel && !isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="GuessNumber" />}
     </div>
   );
 }

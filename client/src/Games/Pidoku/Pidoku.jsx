@@ -4,6 +4,7 @@ import ModeExplaination from "../ModeExplaination";
 import { getRandArr } from "../utils";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Pidoku({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -940,6 +941,7 @@ export default function Pidoku({updateTotalPoint}) {
           />
         </div>
       )}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Pidoku" />}
     </div>
   );
 }

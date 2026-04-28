@@ -1388,7 +1388,7 @@ export default function TugOfWar({updateTotalPoint}) {
             <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
         </div>
       }
-      {isGameStarted && <ReviewSection game="TugOfWar" />}
+      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="TugOfWar" />}
     </div>
   );
 }

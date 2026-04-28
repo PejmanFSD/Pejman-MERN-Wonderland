@@ -7,9 +7,11 @@ import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
 import { getRandNum } from "../utils";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 const optionsArray = ["Rock", "Scissors", "Paper"];
 
 export default function RockScissorsPaper({updateTotalPoint}) {
+  const [isGameStarted, setIsGameStarted] = useState(false);
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
   const [gameResult, setGameResult] = useState("");
@@ -32,6 +34,9 @@ export default function RockScissorsPaper({updateTotalPoint}) {
     setExtremelySuperDifficultMode(true);
     setNormalMode(false);
   };
+  const handleStart = () => {
+    setIsGameStarted(true);
+  }
   const announcingTheWinner = (user, pejman) => {
     if (user === "" || pejman === "") return;
     else if (user === pejman) {
@@ -147,7 +152,7 @@ export default function RockScissorsPaper({updateTotalPoint}) {
   return (
     <div>
       <h2>Rock - Scissors - Paper</h2>
-      {!normalMode && !extremelySuperDifficultMode && !isTogglingHomePage && (
+      {!normalMode && !extremelySuperDifficultMode && !isGameStarted && !isTogglingHomePage && (
         <GameLevel
           mode1="Normal"
           mode1Function={runNormalMode}
@@ -163,7 +168,11 @@ export default function RockScissorsPaper({updateTotalPoint}) {
           <ModeExplaination message="Extremely-Super-Difficult Mode: If you beat Pejman, you'll get 1,000,000 stars!" />
         )
       )}
-      {!isTogglingHomePage &&
+      {!isGameStarted && (normalMode || extremelySuperDifficultMode) &&
+        <button onClick={handleStart}>Start</button>
+      }
+      {isGameStarted &&
+        !isTogglingHomePage &&
         !isTogglingReset &&
         !isTogglingLevel &&
         showImages &&
@@ -213,7 +222,7 @@ export default function RockScissorsPaper({updateTotalPoint}) {
           </div>
         )
       )}
-      {!showImages &&
+      {isGameStarted && !showImages &&
         !isTogglingHomePage &&
         tripleScore !== 3 &&
         (normalMode || extremelySuperDifficultMode) && (
@@ -223,7 +232,7 @@ export default function RockScissorsPaper({updateTotalPoint}) {
             toggleCancel={togglePlayAgainCancel}
           />
         )}
-      {!isTogglingHomePage &&
+      {isGameStarted && !isTogglingHomePage &&
         !isTogglingReset &&
         showImages &&
         (normalMode || extremelySuperDifficultMode) &&
@@ -236,7 +245,7 @@ export default function RockScissorsPaper({updateTotalPoint}) {
           toggleCancel={toggleResetCancel}
         />
       )}
-      {!isTogglingLevel &&
+      {isGameStarted && !isTogglingLevel &&
         (normalMode || extremelySuperDifficultMode) &&
         !isTogglingHomePage &&
         showImages &&
@@ -273,6 +282,7 @@ export default function RockScissorsPaper({updateTotalPoint}) {
           toggleCancel={toggleHomePageCancel}
         />
       )}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="RockScissorsPaper" />}
     </div>
   );
 }

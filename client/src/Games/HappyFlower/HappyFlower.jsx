@@ -4,6 +4,7 @@ import GuessTable from "./GuessTable";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function HappyFlower({updateTotalPoint}) {
   const [title, setTitle] = useState("");
@@ -198,6 +199,7 @@ export default function HappyFlower({updateTotalPoint}) {
           />
         </div>
       )}
+      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="HappyFlower" />}
     </div>
   );
 }

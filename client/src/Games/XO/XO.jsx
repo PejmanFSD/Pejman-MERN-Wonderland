@@ -12,6 +12,7 @@ import OU from "./Images/OU.jpg";
 import OP from "./Images/OP.jpg";
 import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 const signs = [S, X, O, XU, XP, OU, OP];
 
 export default function XO({ updateTotalPoint }) {
@@ -923,6 +924,7 @@ export default function XO({ updateTotalPoint }) {
           )}
         </div>
       )}
+      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="XO" />}
     </div>
   );
 }

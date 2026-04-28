@@ -3,6 +3,7 @@ import UserBoard from "./UserBoard";
 import PejmanBoard from "./PejmanBoard";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 const initialTens = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -750,6 +751,7 @@ export default function Bingo({updateTotalPoint}) {
                 </div>
             </div>
             }
+            {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Bingo" />}
         </div>
     )
 }

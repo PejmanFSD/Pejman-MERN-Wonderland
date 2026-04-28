@@ -4,6 +4,7 @@ import ModeExplaination from "../ModeExplaination";
 import Form from "./Form";
 import Result from "./Result";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Cryptogram({updateTotalPoint}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -57,32 +58,8 @@ export default function Cryptogram({updateTotalPoint}) {
     setIsGameStarted(false);
     setAdviceArray([]);
     setResultObj({
-      a: 0,
-      b: 0,
-      c: 0,
-      d: 0,
-      e: 0,
-      f: 0,
-      g: 0,
-      h: 0,
-      i: 0,
-      j: 0,
-      k: 0,
-      l: 0,
-      m: 0,
-      n: 0,
-      o: 0,
-      p: 0,
-      q: 0,
-      r: 0,
-      s: 0,
-      t: 0,
-      u: 0,
-      v: 0,
-      w: 0,
-      x: 0,
-      y: 0,
-      z: 0,
+      a: 0, b: 0, c: 0, d: 0, e: 0, f: 0, g: 0, h: 0, i: 0, j: 0, k: 0, l: 0, m: 0,
+      n: 0, o: 0, p: 0, q: 0, r: 0, s: 0, t: 0, u: 0, v: 0, w: 0, x: 0, y: 0, z: 0
     });
     setInputs({
       input1: "",
@@ -239,6 +216,7 @@ export default function Cryptogram({updateTotalPoint}) {
           toggleCancel={toggleHomePageCancel}
         />
       )}
+      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="Cryptogram" />}
     </div>
   );
 }

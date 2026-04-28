@@ -18,6 +18,7 @@ import Pencils from "./images/Pencils/Pencils.jpg";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Puzzle({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -604,6 +605,7 @@ export default function Puzzle({updateTotalPoint}) {
             </button>
           </div>
         )}
+        {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Puzzle" />}
     </div>
   );
 }

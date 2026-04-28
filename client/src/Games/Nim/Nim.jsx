@@ -3,6 +3,7 @@ import Bowls from "./Bowls";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function Nim({ updateTotalPoint }) {
   const [standard, setStandard] = useState(false);
@@ -140,6 +141,7 @@ export default function Nim({ updateTotalPoint }) {
             toggleCancel={toggleHomePageCancel}
           />
         )}
+        {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="Nim" />}
     </div>
   );
 }

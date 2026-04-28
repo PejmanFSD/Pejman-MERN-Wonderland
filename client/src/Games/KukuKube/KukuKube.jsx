@@ -8,6 +8,7 @@ import Cross from "./images/Cross.jpg";
 import Tick from "./images/Tick.jpg";
 import Current from "./images/Current.jpg";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function KukuKube({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -374,6 +375,7 @@ export default function KukuKube({updateTotalPoint}) {
             </div>
           </div>
         )}
+        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="KukuKube" />}
     </div>
   );
 }

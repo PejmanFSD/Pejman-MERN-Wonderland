@@ -4,6 +4,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
 import { fruits, characters, animals, cars, emojis, animations } from "./imagesGroup";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 const imagesGroup = ["Animals", "Fruits", "Animation Characters", "Cars", "Movie Characters", "Emojis"];
 export default function MemoryCards({updateTotalPoint}) {
@@ -456,6 +457,7 @@ export default function MemoryCards({updateTotalPoint}) {
           seeAllCardsChancePer={seeAllCardsChancePer}
         />
       )}
+      {!isTogglingHomePage && !isTogglingReset && isGameStarted && <ReviewSection game="MemoryCards" />}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
 import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
+import ReviewSection from "../../Components/ReviewSection";
 
 export default function TripleEmojiMatch({updateTotalPoint}) {
   const [easyMode, setEasyMode] = useState(false);
@@ -460,6 +461,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
             ))}
           </div>
         )}
+        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="TripleEmojiMatch" />}
     </div>
   );
 }
