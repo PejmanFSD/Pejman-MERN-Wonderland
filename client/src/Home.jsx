@@ -3,24 +3,24 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Ads from "./Components/ads/Ads";
 import Star from "./Games/Star.png";
-import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
-import GuessNumber from "./Games/GuessNumber/GuessNumber";
-import Capitals from "./Games/Capitals/Capitals";
-import Cryptogram from "./Games/Cryptogram/Cryptogram";
-import Crazy100 from "./Games/Crazy100/Crazy100";
-import MemoryCards from "./Games/MemoryCards/MemoryCards";
-import Nim from "./Games/Nim/Nim";
-import HappyFlower from "./Games/HappyFlower/HappyFlower";
-import XO from "./Games/XO/XO";
-import KukuKube from "./Games/KukuKube/KukuKube";
-import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
-import Pidoku from "./Games/Pidoku/Pidoku";
-import Counter from "./Games/Counter/Counter";
-import Puzzle from "./Games/Puzzle/Puzzle";
-import Bingo from "./Games/Bingo/Bingo";
-import TugOfWar from "./Games/TugOfWar/TugOfWar";
-import Maze from "./Games/Maze/Maze";
-import BirdHunter from "./Games/BirdHunter/BirdHunter";
+import RockScissorsPaperPage from "./Games/RockScissorsPaper/RockScissorsPaper";
+import GuessNumberPage from "./Games/GuessNumber/GuessNumber";
+import CapitalsPage from "./Games/Capitals/Capitals";
+import CryptogramPage from "./Games/Cryptogram/Cryptogram";
+import Crazy100Page from "./Games/Crazy100/Crazy100";
+import MemoryCardsPage from "./Games/MemoryCards/MemoryCards";
+import NimPage from "./Games/Nim/Nim";
+import HappyFlowerPage from "./Games/HappyFlower/HappyFlower";
+import XOPage from "./Games/XO/XO";
+import KukuKubePage from "./Games/KukuKube/KukuKube";
+import TripleEmojiMatchPage from "./Games/TripleEmojiMatch/TripleEmojiMatch";
+import PidokuPage from "./Games/Pidoku/Pidoku";
+import CounterPage from "./Games/Counter/Counter";
+import PuzzlePage from "./Games/Puzzle/Puzzle";
+import BingoPage from "./Games/Bingo/Bingo";
+import TugOfWarPage from "./Games/TugOfWar/TugOfWar";
+import MazePage from "./Games/Maze/Maze";
+import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 
 export default function Home({
   ads,
@@ -31,11 +31,14 @@ export default function Home({
   youShouldLoginMessage,
   setYouShouldLoginMessage,
   setError,
-  setFlash
+  setFlash,
+  rankedUsers,
+  setRankedUsers,
+  totalPoint,
+  setTotalPoint,
+  updateTotalPoint
 }) {
   const [showGameTitles, setShowGameTitles] = useState(true);
-  const [rankedUsers, setRankedUsers] = useState([]);
-  const [totalPoint, setTotalPoint] = useState(0);
   const [showAllStars, setShowAllStars] = useState(false);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
   const [showGuessNumber, setShowGuessNumber] = useState(false);
@@ -65,30 +68,6 @@ export default function Home({
     fetchUsers(); // Refetching when "page" changes
   }, []);
   const navigate = useNavigate();
-  const updateTotalPoint = async (i) => {
-    const newTotal = totalPoint + i;
-    setTotalPoint(newTotal);
-    try {
-      const res = await fetch("/users/update-points", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ points: i }), // sending the increment value (i)
-      });
-      const updatedUser = await res.json();
-      setFlash(updatedUser.message);
-      if (res.ok) {
-        setCurrentUser(updatedUser.user);
-      }
-      const res2 = await fetch("/users/topUsers");
-      const topUsers = await res2.json();
-      setRankedUsers(topUsers);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const handleShowAllStars = () => {
     setShowAllStars((currAllStars) => !currAllStars);
   };
@@ -98,8 +77,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowRockScissorsPaper(true);
     navigate("/rock-scissors-paper");
   };
   const toggleGuessNumber = () => {
@@ -108,8 +85,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowGuessNumber(true);
     navigate("/guess-number");
   };
   const toggleCapitals = () => {
@@ -118,8 +93,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowCapitals(true);
     navigate("/capitals");
   };
   const toggleCryptogram = () => {
@@ -128,8 +101,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowCryptogram(true);
     navigate("/cryptogram");
   };
   const toggleCrazy100 = () => {
@@ -138,8 +109,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowCrazy100(true);
     navigate("/crazy-100");
   };
   const toggleMemoryCards = () => {
@@ -148,8 +117,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowMemoryCards(true);
     navigate("/memory-cards");
   };
   const toggleNim = () => {
@@ -158,8 +125,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowNim(true);
     navigate("/nim");
   };
   const toggleHappyFlower = () => {
@@ -168,8 +133,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowHappyFlower(true);
     navigate("/happy-flower");
   };
   const toggleXO = () => {
@@ -178,8 +141,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowXO(true);
     navigate("/xo");
   };
   const toggleKukuKube = () => {
@@ -188,8 +149,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowKukuKube(true);
     navigate("/kuku-kube");
   };
   const toggleTripleEmojiMatch = () => {
@@ -198,8 +157,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowTripleEmojiMatch(true);
     navigate("/triple-emoji-match");
   };
   const togglePidoku = () => {
@@ -208,8 +165,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowPidoku(true);
     navigate("/pidoku");
   };
   const toggleCounter = () => {
@@ -218,8 +173,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowCounter(true);
     navigate("/counter");
   };
   const togglePuzzle = () => {
@@ -228,8 +181,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowPuzzle(true);
     navigate("/puzzle");
   };
   const toggleBingo = () => {
@@ -238,8 +189,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowBingo(true);
     navigate("/bingo");
   };
   const toggleTugOfWar = () => {
@@ -248,8 +197,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowTugOfWar(true);
     navigate("/tug-of-war");
   };
   const toggleMaze = () => {
@@ -258,8 +205,6 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowMaze(true);
     navigate("/maze");
   };
   const toggleBirdHunter = () => {
@@ -268,18 +213,10 @@ export default function Home({
       navigate("/login");
       return;
     }
-    // setShowGameTitles(false);
-    // setShowBirdHunter(true);
     navigate("/bird-hunter");
   };
   return (
     <div>
-      {/* <Ads
-        ads={ads}
-        setAds={setAds}
-        currentUser={currentUser}
-        isLoggingOut={isLoggingOut}
-      /> */}
       <div>
         <div>The top 10 users with highest stars</div>
       <table border="2" cellPadding="5" style={{position: "relative", top: "5px"}}>
@@ -357,7 +294,7 @@ export default function Home({
         )}
       </div>
       {showRockScissorsPaper ? (
-        <RockScissorsPaper
+        <RockScissorsPaperPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -369,7 +306,7 @@ export default function Home({
         )
       )}
       {showGuessNumber ? (
-        <GuessNumber
+        <GuessNumberPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -379,7 +316,7 @@ export default function Home({
         )
       )}
       {showCapitals ? (
-        <Capitals
+        <CapitalsPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -389,7 +326,7 @@ export default function Home({
         )
       )}
       {showCryptogram ? (
-        <Cryptogram
+        <CryptogramPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -399,7 +336,7 @@ export default function Home({
         )
       )}
       {showCrazy100 ? (
-        <Crazy100
+        <Crazy100Page
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -409,7 +346,7 @@ export default function Home({
         )
       )}
       {showMemoryCards ? (
-        <MemoryCards
+        <MemoryCardsPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -419,7 +356,7 @@ export default function Home({
         )
       )}
       {showNim ? (
-        <Nim
+        <NimPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -427,7 +364,7 @@ export default function Home({
         <button onClick={() => toggleNim()} style={{position: "relative", top: "5px"}}>Nim</button>
       )}
       {showHappyFlower ? (
-        <HappyFlower
+        <HappyFlowerPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -437,7 +374,7 @@ export default function Home({
         )
       )}
       {showXO ? (
-        <XO
+        <XOPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -445,7 +382,7 @@ export default function Home({
         <button onClick={() => toggleXO()} style={{position: "relative", top: "5px"}}>X-O</button>
       )}
       {showKukuKube ? (
-        <KukuKube
+        <KukuKubePage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -455,7 +392,7 @@ export default function Home({
         )
       )}
       {showTripleEmojiMatch ? (
-        <TripleEmojiMatch
+        <TripleEmojiMatchPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -467,7 +404,7 @@ export default function Home({
         )
       )}
       {showPidoku ? (
-        <Pidoku
+        <PidokuPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -477,7 +414,7 @@ export default function Home({
         )
       )}
       {showCounter ? (
-        <Counter
+        <CounterPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -487,7 +424,7 @@ export default function Home({
         )
       )}
       {showPuzzle ? (
-        <Puzzle
+        <PuzzlePage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -497,7 +434,7 @@ export default function Home({
         )
       )}
       {showBingo ? (
-        <Bingo
+        <BingoPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -507,7 +444,7 @@ export default function Home({
         )
       )}
       {showTugOfWar ? (
-        <TugOfWar
+        <TugOfWarPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -517,7 +454,7 @@ export default function Home({
         )
       )}
       {showMaze ? (
-        <Maze
+        <MazePage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (
@@ -527,7 +464,7 @@ export default function Home({
         )
       )}
       {showBirdHunter ? (
-        <BirdHunter
+        <BirdHunterPage
           updateTotalPoint={updateTotalPoint}
         />
       ) : (

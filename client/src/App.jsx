@@ -11,24 +11,24 @@ import AdEdit from "./Components/ads/AdEdit";
 import Users from "./Components/users/Users";
 import Profile from "./Components/users/Profile";
 import EditProfile from "./Components/users/EditProfile";
-import RockScissorsPaper from "./Games/RockScissorsPaper/RockScissorsPaper";
-import GuessNumber from "./Games/GuessNumber/GuessNumber";
-import Capitals from "./Games/Capitals/Capitals";
-import Cryptogram from "./Games/Cryptogram/Cryptogram";
-import Crazy100 from "./Games/Crazy100/Crazy100";
-import MemoryCards from "./Games/MemoryCards/MemoryCards";
-import Nim from "./Games/Nim/Nim";
-import HappyFlower from "./Games/HappyFlower/HappyFlower";
-import XO from "./Games/XO/XO";
-import KukuKube from "./Games/KukuKube/KukuKube";
-import TripleEmojiMatch from "./Games/TripleEmojiMatch/TripleEmojiMatch";
-import Pidoku from "./Games/Pidoku/Pidoku";
-import Counter from "./Games/Counter/Counter";
-import Puzzle from "./Games/Puzzle/Puzzle";
-import Bingo from "./Games/Bingo/Bingo";
-import TugOfWar from "./Games/TugOfWar/TugOfWar";
-import Maze from "./Games/Maze/Maze";
-import BirdHunter from "./Games/BirdHunter/BirdHunter";
+import RockScissorsPaperPage from "./Games/RockScissorsPaper/RockScissorsPaper";
+import GuessNumberPage from "./Games/GuessNumber/GuessNumber";
+import CapitalsPage from "./Games/Capitals/Capitals";
+import CryptogramPage from "./Games/Cryptogram/Cryptogram";
+import Crazy100Page from "./Games/Crazy100/Crazy100";
+import MemoryCardsPage from "./Games/MemoryCards/MemoryCards";
+import NimPage from "./Games/Nim/Nim";
+import HappyFlowerPage from "./Games/HappyFlower/HappyFlower";
+import XOPage from "./Games/XO/XO";
+import KukuKubePage from "./Games/KukuKube/KukuKube";
+import TripleEmojiMatchPage from "./Games/TripleEmojiMatch/TripleEmojiMatch";
+import PidokuPage from "./Games/Pidoku/Pidoku";
+import CounterPage from "./Games/Counter/Counter";
+import PuzzlePage from "./Games/Puzzle/Puzzle";
+import BingoPage from "./Games/Bingo/Bingo";
+import TugOfWarPage from "./Games/TugOfWar/TugOfWar";
+import MazePage from "./Games/Maze/Maze";
+import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -44,7 +44,33 @@ function App() {
   const [youShouldLoginMessage, setYouShouldLoginMessage] = useState(false);
   const [userCount, setUserCount] = useState(null);
   const [flash, setFlash] = useState(null);
+  const [rankedUsers, setRankedUsers] = useState([]);
+  const [totalPoint, setTotalPoint] = useState(0);
 
+  const updateTotalPoint = async (i) => {
+    const newTotal = totalPoint + i;
+    setTotalPoint(newTotal);
+    try {
+      const res = await fetch("/users/update-points", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ points: i }), // sending the increment value (i)
+      });
+      const updatedUser = await res.json();
+      setFlash(updatedUser.message);
+      if (res.ok) {
+        setCurrentUser(updatedUser.user);
+      }
+      const res2 = await fetch("/users/topUsers");
+      const topUsers = await res2.json();
+      setRankedUsers(topUsers);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     const restoreUser = async () => {
       try {
@@ -64,7 +90,6 @@ function App() {
     };
     restoreUser();
   }, []);
-
   useEffect(() => {
   if (flash) {
     const timer = setTimeout(() => {
@@ -74,7 +99,6 @@ function App() {
     return () => clearTimeout(timer);
   }
 }, [flash]);
-
   return (
     <div className="App">
       {flash && (
@@ -106,11 +130,11 @@ function App() {
           setIsCreatingAd={setIsCreatingAd}
         />
         <Ads
-                ads={ads}
-                setAds={setAds}
-                currentUser={currentUser}
-                isLoggingOut={isLoggingOut}
-              />
+          ads={ads}
+          setAds={setAds}
+          currentUser={currentUser}
+          isLoggingOut={isLoggingOut}
+        />
         <Routes>
           {!isLoggingOut && (
             <Route
@@ -126,6 +150,11 @@ function App() {
                   setYouShouldLoginMessage={setYouShouldLoginMessage}
                   setError={setError}
                   setFlash={setFlash}
+                  rankedUsers={rankedUsers}
+                  setRankedUsers={setRankedUsers}
+                  totalPoint={totalPoint}
+                  setTotalPoint={setTotalPoint}
+                  updateTotalPoint={updateTotalPoint}
                 />
               }
             />
@@ -230,24 +259,24 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/rock-scissors-paper" element={<RockScissorsPaper />} />
-          <Route path="/guess-number" element={<GuessNumber />} />
-          <Route path="/capitals" element={<Capitals />} />
-          <Route path="/cryptogram" element={<Cryptogram />} />
-          <Route path="/crazy-100" element={<Crazy100 />} />
-          <Route path="/memory-cards" element={<MemoryCards />} />
-          <Route path="/nim" element={<Nim />} />
-          <Route path="/happy-flower" element={<HappyFlower />} />
-          <Route path="/xo" element={<XO />} />
-          <Route path="/kuku-kube" element={<KukuKube />} />
-          <Route path="/triple-emoji-match" element={<TripleEmojiMatch />} />
-          <Route path="/pidoku" element={<Pidoku />} />
-          <Route path="/counter" element={<Counter />} />
-          <Route path="/puzzle" element={<Puzzle />} />
-          <Route path="/bingo" element={<Bingo />} />
-          <Route path="/tug-of-war" element={<TugOfWar />} />
-          <Route path="/maze" element={<Maze />} />
-          <Route path="/bird-hunter" element={<BirdHunter />} />
+          <Route path="/rock-scissors-paper" element={<RockScissorsPaperPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/guess-number" element={<GuessNumberPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/capitals" element={<CapitalsPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/cryptogram" element={<CryptogramPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/crazy-100" element={<Crazy100Page updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/memory-cards" element={<MemoryCardsPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/nim" element={<NimPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/happy-flower" element={<HappyFlowerPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/xo" element={<XOPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/kuku-kube" element={<KukuKubePage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/triple-emoji-match" element={<TripleEmojiMatchPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/pidoku" element={<PidokuPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/counter" element={<CounterPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/puzzle" element={<PuzzlePage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/bingo" element={<BingoPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/tug-of-war" element={<TugOfWarPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/maze" element={<MazePage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/bird-hunter" element={<BirdHunterPage updateTotalPoint={updateTotalPoint} />} />
         </Routes>
       </BrowserRouter>
     </div>
