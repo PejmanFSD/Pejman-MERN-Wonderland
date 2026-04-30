@@ -1,7 +1,7 @@
 import BirdHunter from './BirdHunter';
 
-export default function BirdHunterPage({updateTotalPoint}) {
+export default function BirdHunterPage({updateTotalPoint, currentUser}) {
     return (
-        <BirdHunter updateTotalPoint={updateTotalPoint} />
+        <BirdHunter updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

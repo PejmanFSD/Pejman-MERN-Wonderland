@@ -10,7 +10,10 @@ const reviewSchema = new mongoose.Schema({
         ref: 'User'
     },
     rating: {
-        type: Number
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
     },
     game: {
         type: String,

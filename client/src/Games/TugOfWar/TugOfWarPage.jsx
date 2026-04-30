@@ -1,7 +1,7 @@
 import TugOfWar from './TugOfWar';
 
-export default function TugOfWarPage({updateTotalPoint}) {
+export default function TugOfWarPage({updateTotalPoint, currentUser}) {
     return (
-        <TugOfWar updateTotalPoint={updateTotalPoint} />
+        <TugOfWar updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

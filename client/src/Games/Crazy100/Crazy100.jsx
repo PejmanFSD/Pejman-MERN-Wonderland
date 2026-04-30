@@ -7,7 +7,7 @@ import Blocks from "./Blocks";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function Crazy100({updateTotalPoint}) {
+export default function Crazy100({updateTotalPoint, currentUser}) {
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
@@ -489,7 +489,7 @@ export default function Crazy100({updateTotalPoint}) {
           </div>
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Crazy100" />}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Crazy100" currentUser={currentUser} />}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function Maze({updateTotalPoint}) {
+export default function Maze({updateTotalPoint, currentUser}) {
   const sceneRef = useRef(null);
   const hasWonRef = useRef(false);
   const isTimeUpRef = useRef(false);
@@ -581,7 +581,7 @@ export default function Maze({updateTotalPoint}) {
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Maze" />}
+      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Maze" currentUser={currentUser} />}
     </div>
   );
 }

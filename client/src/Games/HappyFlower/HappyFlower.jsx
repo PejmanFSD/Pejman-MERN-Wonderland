@@ -6,7 +6,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function HappyFlower({updateTotalPoint}) {
+export default function HappyFlower({updateTotalPoint, currentUser}) {
   const [title, setTitle] = useState("");
   const [word, setWord] = useState("");
   const [wordWithNoSpace, setWordWithNoSpace] = useState([]);
@@ -199,7 +199,7 @@ export default function HappyFlower({updateTotalPoint}) {
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="HappyFlower" />}
+      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="HappyFlower" currentUser={currentUser} />}
     </div>
   );
 }

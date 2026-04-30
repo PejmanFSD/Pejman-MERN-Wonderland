@@ -6,7 +6,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function Pidoku({updateTotalPoint}) {
+export default function Pidoku({updateTotalPoint, currentUser}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -941,7 +941,7 @@ export default function Pidoku({updateTotalPoint}) {
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Pidoku" />}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Pidoku" currentUser={currentUser} />}
     </div>
   );
 }

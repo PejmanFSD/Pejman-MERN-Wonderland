@@ -7,7 +7,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function BirdHunter({updateTotalPoint}) {
+export default function BirdHunter({updateTotalPoint, currentUser}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [grounds, setGrounds] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -170,7 +170,7 @@ export default function BirdHunter({updateTotalPoint}) {
           />
         </div>
       )}
-      {!isTogglingHomePage && isGameStarted && <ReviewSection game="BirdHunter" />}
+      {!isTogglingHomePage && isGameStarted && <ReviewSection game="BirdHunter" currentUser={currentUser} />}
     </div>
   );
 }

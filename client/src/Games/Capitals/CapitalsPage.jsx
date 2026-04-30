@@ -1,7 +1,7 @@
 import Capitals from './Capitals';
 
-export default function CapitalsPage({updateTotalPoint}) {
+export default function CapitalsPage({updateTotalPoint, currentUser}) {
     return (
-        <Capitals updateTotalPoint={updateTotalPoint} />
+        <Capitals updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

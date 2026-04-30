@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 const signs = [S, X, O, XU, XP, OU, OP];
 
-export default function XO({ updateTotalPoint }) {
+export default function XO({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -924,7 +924,7 @@ export default function XO({ updateTotalPoint }) {
           )}
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="XO" />}
+      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="XO" currentUser={currentUser} />}
     </div>
   );
 }

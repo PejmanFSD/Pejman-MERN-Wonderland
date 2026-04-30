@@ -259,24 +259,24 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/rock-scissors-paper" element={<RockScissorsPaperPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/guess-number" element={<GuessNumberPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/capitals" element={<CapitalsPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/cryptogram" element={<CryptogramPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/crazy-100" element={<Crazy100Page updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/memory-cards" element={<MemoryCardsPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/nim" element={<NimPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/happy-flower" element={<HappyFlowerPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/xo" element={<XOPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/kuku-kube" element={<KukuKubePage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/triple-emoji-match" element={<TripleEmojiMatchPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/pidoku" element={<PidokuPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/counter" element={<CounterPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/puzzle" element={<PuzzlePage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/bingo" element={<BingoPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/tug-of-war" element={<TugOfWarPage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/maze" element={<MazePage updateTotalPoint={updateTotalPoint} />} />
-          <Route path="/bird-hunter" element={<BirdHunterPage updateTotalPoint={updateTotalPoint} />} />
+          <Route path="/rock-scissors-paper" element={<RockScissorsPaperPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/guess-number" element={<GuessNumberPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/capitals" element={<CapitalsPage updateTotalPoint={updateTotalPoint} currentUser={currentUser}/>} />
+          <Route path="/cryptogram" element={<CryptogramPage updateTotalPoint={updateTotalPoint} currentUser={currentUser}/>} />
+          <Route path="/crazy-100" element={<Crazy100Page updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/memory-cards" element={<MemoryCardsPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/nim" element={<NimPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/happy-flower" element={<HappyFlowerPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/xo" element={<XOPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/kuku-kube" element={<KukuKubePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/triple-emoji-match" element={<TripleEmojiMatchPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/pidoku" element={<PidokuPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/counter" element={<CounterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/puzzle" element={<PuzzlePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/bingo" element={<BingoPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/tug-of-war" element={<TugOfWarPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/maze" element={<MazePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/bird-hunter" element={<BirdHunterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
         </Routes>
       </BrowserRouter>
     </div>

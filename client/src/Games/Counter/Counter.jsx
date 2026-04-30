@@ -6,7 +6,7 @@ import ModeExplaination from "../ModeExplaination";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function Counter({updateTotalPoint}) {
+export default function Counter({updateTotalPoint, currentUser}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [gameArray, setGameArray] = useState([]);
@@ -450,7 +450,7 @@ export default function Counter({updateTotalPoint}) {
             )}
           </div>
         )}
-        {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Counter" />}
+        {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Counter" currentUser={currentUser} />}
     </div>
   );
 }

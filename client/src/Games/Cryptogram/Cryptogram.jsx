@@ -6,7 +6,7 @@ import Result from "./Result";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function Cryptogram({updateTotalPoint}) {
+export default function Cryptogram({updateTotalPoint, currentUser}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [adviceArray, setAdviceArray] = useState([]);
   const [resultObj, setResultObj] = useState({
@@ -216,7 +216,7 @@ export default function Cryptogram({updateTotalPoint}) {
           toggleCancel={toggleHomePageCancel}
         />
       )}
-      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="Cryptogram" />}
+      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="Cryptogram" currentUser={currentUser} />}
     </div>
   );
 }

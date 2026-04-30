@@ -24,7 +24,7 @@ import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function TugOfWar({updateTotalPoint}) {
+export default function TugOfWar({updateTotalPoint, currentUser}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -1388,7 +1388,7 @@ export default function TugOfWar({updateTotalPoint}) {
             <button onClick={pejmanAct} style={{position: "relative", top: "5px"}}>Ok</button>
         </div>
       }
-      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="TugOfWar" />}
+      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="TugOfWar" currentUser={currentUser} />}
     </div>
   );
 }

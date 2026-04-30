@@ -9,7 +9,7 @@ import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function GuessNumber({updateTotalPoint}) {
+export default function GuessNumber({updateTotalPoint, currentUser}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -314,7 +314,7 @@ export default function GuessNumber({updateTotalPoint}) {
             toggleCancel={toggleHomePageCancel}
           />
         )}
-        {!isTogglingLevel && !isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="GuessNumber" />}
+        {!isTogglingLevel && !isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="GuessNumber" currentUser={currentUser} />}
     </div>
   );
 }

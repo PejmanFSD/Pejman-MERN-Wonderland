@@ -9,7 +9,7 @@ import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 
-export default function TripleEmojiMatch({updateTotalPoint}) {
+export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -461,7 +461,7 @@ export default function TripleEmojiMatch({updateTotalPoint}) {
             ))}
           </div>
         )}
-        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="TripleEmojiMatch" />}
+        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="TripleEmojiMatch" currentUser={currentUser} />}
     </div>
   );
 }

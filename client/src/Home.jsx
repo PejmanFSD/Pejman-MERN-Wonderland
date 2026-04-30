@@ -1,7 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Ads from "./Components/ads/Ads";
 import Star from "./Games/Star.png";
 import RockScissorsPaperPage from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumberPage from "./Games/GuessNumber/GuessNumber";
@@ -23,8 +22,6 @@ import MazePage from "./Games/Maze/Maze";
 import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 
 export default function Home({
-  ads,
-  setAds,
   currentUser,
   setCurrentUser,
   isLoggingOut,
@@ -38,7 +35,6 @@ export default function Home({
   setTotalPoint,
   updateTotalPoint
 }) {
-  const [showGameTitles, setShowGameTitles] = useState(true);
   const [showAllStars, setShowAllStars] = useState(false);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
   const [showGuessNumber, setShowGuessNumber] = useState(false);
@@ -296,6 +292,7 @@ export default function Home({
       {showRockScissorsPaper ? (
         <RockScissorsPaperPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showRockScissorsPaper &&
@@ -308,6 +305,7 @@ export default function Home({
       {showGuessNumber ? (
         <GuessNumberPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showGuessNumber &&
@@ -318,6 +316,7 @@ export default function Home({
       {showCapitals ? (
         <CapitalsPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showCapitals &&
@@ -328,6 +327,7 @@ export default function Home({
       {showCryptogram ? (
         <CryptogramPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showCryptogram &&
@@ -338,6 +338,7 @@ export default function Home({
       {showCrazy100 ? (
         <Crazy100Page
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showCrazy100 &&
@@ -348,6 +349,7 @@ export default function Home({
       {showMemoryCards ? (
         <MemoryCardsPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showMemoryCards &&
@@ -358,6 +360,7 @@ export default function Home({
       {showNim ? (
         <NimPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showNim &&
@@ -366,6 +369,7 @@ export default function Home({
       {showHappyFlower ? (
         <HappyFlowerPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showHappyFlower &&
@@ -376,6 +380,7 @@ export default function Home({
       {showXO ? (
         <XOPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showXO &&
@@ -384,6 +389,7 @@ export default function Home({
       {showKukuKube ? (
         <KukuKubePage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showKukuKube &&
@@ -394,6 +400,7 @@ export default function Home({
       {showTripleEmojiMatch ? (
         <TripleEmojiMatchPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showTripleEmojiMatch &&
@@ -406,6 +413,7 @@ export default function Home({
       {showPidoku ? (
         <PidokuPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showPidoku &&
@@ -416,6 +424,7 @@ export default function Home({
       {showCounter ? (
         <CounterPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showCounter &&
@@ -426,6 +435,7 @@ export default function Home({
       {showPuzzle ? (
         <PuzzlePage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showPuzzle &&
@@ -436,6 +446,7 @@ export default function Home({
       {showBingo ? (
         <BingoPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showBingo &&
@@ -446,6 +457,7 @@ export default function Home({
       {showTugOfWar ? (
         <TugOfWarPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showTugOfWar &&
@@ -456,6 +468,7 @@ export default function Home({
       {showMaze ? (
         <MazePage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showMaze &&
@@ -466,6 +479,7 @@ export default function Home({
       {showBirdHunter ? (
         <BirdHunterPage
           updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
         />
       ) : (
         !showBirdHunter &&

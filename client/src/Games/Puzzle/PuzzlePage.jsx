@@ -1,7 +1,7 @@
 import Puzzle from './Puzzle';
 
-export default function PuzzlePage({updateTotalPoint}) {
+export default function PuzzlePage({updateTotalPoint, currentUser}) {
     return (
-        <Puzzle updateTotalPoint={updateTotalPoint} />
+        <Puzzle updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

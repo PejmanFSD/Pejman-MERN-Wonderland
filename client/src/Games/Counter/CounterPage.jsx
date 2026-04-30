@@ -1,7 +1,7 @@
 import Counter from './Counter';
 
-export default function CounterPage({updateTotalPoint}) {
+export default function CounterPage({updateTotalPoint, currentUser}) {
     return (
-        <Counter updateTotalPoint={updateTotalPoint} />
+        <Counter updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

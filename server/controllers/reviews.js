@@ -8,10 +8,10 @@ module.exports.index = async (req, res) => {
   const filter = game ? { game } : {}; // Filtering the reviews by their "game" attribute
 
   const reviews = await Review.find(filter)
-    .populate("author", "username")
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate("author", "_id username");
 
   const total = await Review.countDocuments(filter);
 
@@ -83,9 +83,21 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.editReview = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const review = await Review.findById(id);
-    review.body = req.body.body;
-    review.rating = req.body.rating;
+    const review = await Review.findByIdAndUpdate(
+      id,
+      {
+        body: req.body.body,
+        rating: req.body.rating
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+    // const review = await Review.findById(id);
+    // review.body = req.body.body;
+    // review.rating = req.body.rating;
     await review.save();
     res.status(200).json({
       message: "Review updated successfully!",

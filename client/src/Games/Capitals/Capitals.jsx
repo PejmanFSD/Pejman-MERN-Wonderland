@@ -9,7 +9,7 @@ import ReviewSection from "../../Components/ReviewSection";
 const countryNames = countries.map((c) => c.country);
 const capitalNames = countries.map((c) => c.capital);
 
-export default function Capitals({updateTotalPoint}) {
+export default function Capitals({updateTotalPoint, currentUser}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -379,7 +379,7 @@ export default function Capitals({updateTotalPoint}) {
             toggleCancel={toggleHomePageCancel}
           />
         )}
-        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Capitals" />}
+        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Capitals" currentUser={currentUser} />}
     </div>
   );
 }

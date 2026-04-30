@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 const optionsArray = ["Rock", "Scissors", "Paper"];
 
-export default function RockScissorsPaper({updateTotalPoint}) {
+export default function RockScissorsPaper({updateTotalPoint, currentUser}) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userChoice, setUserChoice] = useState("");
   const [pejmanChoice, setPejmanChoice] = useState("");
@@ -282,7 +282,7 @@ export default function RockScissorsPaper({updateTotalPoint}) {
           toggleCancel={toggleHomePageCancel}
         />
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="RockScissorsPaper" />}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="RockScissorsPaper" currentUser={currentUser} />}
     </div>
   );
 }

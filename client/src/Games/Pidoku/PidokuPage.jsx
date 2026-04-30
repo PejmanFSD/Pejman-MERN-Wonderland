@@ -1,7 +1,7 @@
 import Pidoku from './Pidoku';
 
-export default function PidokuPage({updateTotalPoint}) {
+export default function PidokuPage({updateTotalPoint, currentUser}) {
     return (
-        <Pidoku updateTotalPoint={updateTotalPoint} />
+        <Pidoku updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

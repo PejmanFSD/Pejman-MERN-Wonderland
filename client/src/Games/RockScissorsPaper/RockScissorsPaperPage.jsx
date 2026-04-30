@@ -1,7 +1,7 @@
 import RockScissorsPaper from './RockScissorsPaper';
 
-export default function RockScissorsPaperPage({updateTotalPoint}) {
+export default function RockScissorsPaperPage({updateTotalPoint, currentUser}) {
     return (
-        <RockScissorsPaper updateTotalPoint={updateTotalPoint} />
+        <RockScissorsPaper updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

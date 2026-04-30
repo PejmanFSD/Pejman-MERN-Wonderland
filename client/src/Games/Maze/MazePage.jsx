@@ -1,7 +1,7 @@
 import Maze from './Maze';
 
-export default function MazePage({updateTotalPoint}) {
+export default function MazePage({updateTotalPoint, currentUser}) {
     return (
-        <Maze updateTotalPoint={updateTotalPoint} />
+        <Maze updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }

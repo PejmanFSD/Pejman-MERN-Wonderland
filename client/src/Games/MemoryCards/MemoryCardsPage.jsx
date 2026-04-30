@@ -1,7 +1,7 @@
 import MemoryCards from './MemoryCards';
 
-export default function MemoryCardsPage({updateTotalPoint}) {
+export default function MemoryCardsPage({updateTotalPoint, currentUser}) {
     return (
-        <MemoryCards updateTotalPoint={updateTotalPoint} />
+        <MemoryCards updateTotalPoint={updateTotalPoint} currentUser={currentUser} />
     )
 }
