@@ -6,7 +6,8 @@ export default function ReviewSection({ game, currentUser }) {
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // const [editing, setEditing] = useState({});
+  const [isReviewEditing, setIsReviewEditing] = useState(false);
+  // const [isediting, setIsEditing] = useState(false);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editBody, setEditBody] = useState("");
   const [editRating, setEditRating] = useState(1);
@@ -65,7 +66,7 @@ export default function ReviewSection({ game, currentUser }) {
       }
       // Reseting the form:
       setBody("");
-      setRating(1);
+      setRating(3);
       // Refreshing the reviews
       fetchReviews();
     } catch (err) {
@@ -73,61 +74,65 @@ export default function ReviewSection({ game, currentUser }) {
     }
   };
   const handleEdit = (review) => {
-    // setEditing({
-    //   id: review._id,
-    //   body: review.body,
-    //   rating: review.rating
-    // });
     setEditingReviewId(review._id);
     setEditBody(review.body);
     setEditRating(review.rating);
   };
   const handleUpdate = async (id) => {
+    setIsReviewEditing(true);
+    setError(null);
     console.log("Updating review:", id);
     try {
-      const res = await fetch(`/reviews/${id}`, {
+      const response = await fetch(`/reviews/${id}`, {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({
           body: editBody,
           rating: editRating,
         }),
       });
-      console.log("Response status:", res.status);
-      const data = await res.json();
-      console.log("Response data:", data);
-      if (!res.ok) {
-        console.error(data);
+      console.log("Response status:", response.status);
+      let json;
+      try {
+        json = await response.json();
+      } catch {
+        json = { error: "Invalid server response" };
+      }
+      if (!response.ok) {
+        // If the issue is with the adSchema limitations:
+        if (json.errors) {
+          const firstError = Object.values(json.errors)[0];
+          setError(firstError);
+        }
+        // If the issue is for something else (like the internet breakdown):
+        else {
+          setError(json.message || json.error || "Edit failed");
+        }
         return;
       }
-
+      // setFlash(json.message);
       setEditingReviewId(null);
-      // setEditing({});
-      fetchReviews(); // refresh
-    } catch (err) {
-      console.error(err);
+      setIsReviewEditing(false);
+      fetchReviews();
+      } catch (err) {
+      setError("Network error. Please try again.");
     }
   };
   const handleDelete = async (id) => {
-    // const confirmDelete = window.confirm("Delete this review?");
-    // if (!confirmDelete) return;
-
     try {
       const res = await fetch(`/reviews/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
-
       const data = await res.json();
-
       if (!res.ok) {
         console.error(data);
         return;
       }
-
+      // Refreshing the reviews for re-rendering them:
       fetchReviews();
     } catch (err) {
       console.error(err);
@@ -137,7 +142,6 @@ export default function ReviewSection({ game, currentUser }) {
   return (
     <div style={{ marginTop: "30px" }}>
       <strong>Leave your comment</strong>
-
       <form onSubmit={handleSubmit}>
         <label style={{ marginTop: "10px" }}>Rating: {rating}</label>
         <br />
@@ -203,10 +207,8 @@ const isAuthor =
                     value={editRating}
                     onChange={(e) => setEditRating(Number(e.target.value))}
                   />
-                  <button type="button">Save</button>
-                  {/* <button type="submit" onClick={() => handleUpdate(r._id)}>Save</button> */}
+                  <button type="submit">Save</button>
                   <button type="button" onClick={() => setEditingReviewId(null)}>
-                  {/* <button onClick={() => setEditing({})}> */}
                     Cancel
                   </button>
                 </form>

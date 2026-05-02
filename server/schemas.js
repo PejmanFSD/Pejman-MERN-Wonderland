@@ -30,3 +30,15 @@ module.exports.reviewSchema = Joi.object({
     "TripleEmojiMatch", "TugOfWar", "XO"
   ).required()
 });
+
+module.exports.createReviewSchema = Joi.object({
+  body: Joi.string().required(),
+  rating: Joi.number().min(1).max(5).required(),
+  game: Joi.string().required()
+});
+
+module.exports.updateReviewSchema = Joi.object({
+  body: Joi.string().required(),
+  rating: Joi.number().min(1).max(5).required(),
+  game: Joi.string().optional()
+});

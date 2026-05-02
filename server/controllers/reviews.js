@@ -95,9 +95,6 @@ module.exports.editReview = async (req, res, next) => {
     if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
-    // const review = await Review.findById(id);
-    // review.body = req.body.body;
-    // review.rating = req.body.rating;
     await review.save();
     res.status(200).json({
       message: "Review updated successfully!",
