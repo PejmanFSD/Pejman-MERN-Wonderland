@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ConfirmationBox from "../Games/ConfirmationBox";
 
 export default function ReviewSection({ game, currentUser }) {
   const [body, setBody] = useState("");
@@ -7,7 +8,8 @@ export default function ReviewSection({ game, currentUser }) {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isReviewEditing, setIsReviewEditing] = useState(false);
-  // const [isediting, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deletingReview, setDeletingReview] = useState(null);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editBody, setEditBody] = useState("");
   const [editRating, setEditRating] = useState(1);
@@ -121,7 +123,15 @@ export default function ReviewSection({ game, currentUser }) {
       setError("Network error. Please try again.");
     }
   };
-  const handleDelete = async (id) => {
+  const confirmDelete = (id) => {
+    setIsDeleting(true);
+    setDeletingReview(id);
+  }
+  const toggleDeleteCancel = () => {
+    setIsDeleting(false);
+    setDeletingReview(null);
+  }
+  const toggleDeleteYes = async (id) => {
     try {
       const res = await fetch(`/reviews/${id}`, {
         method: "DELETE",
@@ -137,6 +147,8 @@ export default function ReviewSection({ game, currentUser }) {
     } catch (err) {
       console.error(err);
     }
+    setIsDeleting(false);
+    setDeletingReview(null);
   };
 
   return (
@@ -220,12 +232,20 @@ const isAuthor =
               )}
               <br />
               <small>By: {r.author?.username}</small>
-              {(isAuthor || isAdmin) && (
+              {(isAuthor || isAdmin) && !isDeleting && (
                 <div style={{ marginTop: "10px" }}>
                   <button onClick={() => handleEdit(r)}>Edit</button>
-                  <button onClick={() => handleDelete(r._id)}>Delete</button>
+                  <button onClick={() => confirmDelete(r._id)}>Delete</button>
+                  {/* <button onClick={() => handleDelete(r._id)}>Delete</button> */}
                 </div>
               )}
+              {isDeleting && deletingReview === r._id &&
+                <ConfirmationBox
+                question="Are you sure you want to delete this review?"
+                toggleYes={() => toggleDeleteYes(r._id)}
+                toggleCancel={toggleDeleteCancel}
+                />
+              }
             </div>
           );
         })}
