@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../Games/ConfirmationBox";
+import StarRating from "./StarRating";
 
 export default function ReviewSection({ game, currentUser }) {
   const [body, setBody] = useState("");
-  const [rating, setRating] = useState(3); // The default value for rating is 3
+  const [newRating, setNewRating] = useState(1);
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -45,7 +46,7 @@ export default function ReviewSection({ game, currentUser }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!body.trim()) return;
-    if (rating < 1 || rating > 5) return;
+    if (newRating < 1 || newRating > 5) return;
     try {
       const res = await fetch("/reviews", {
         method: "POST",
@@ -55,7 +56,7 @@ export default function ReviewSection({ game, currentUser }) {
         credentials: "include", // For sessions and cookies
         body: JSON.stringify({
           body,
-          rating,
+          rating : newRating,
           game, // Saving the specific game
         }),
       });
@@ -68,7 +69,7 @@ export default function ReviewSection({ game, currentUser }) {
       }
       // Reseting the form:
       setBody("");
-      setRating(3);
+      setNewRating(1);
       // Refreshing the reviews
       fetchReviews();
     } catch (err) {
@@ -155,16 +156,7 @@ export default function ReviewSection({ game, currentUser }) {
     <div style={{ marginTop: "30px" }}>
       <strong>Leave your comment</strong>
       <form onSubmit={handleSubmit}>
-        <label style={{ marginTop: "10px" }}>Rating: {rating}</label>
-        <br />
-        <input
-          type="range"
-          min="1"
-          max="5"
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-        />
-        <br />
+        <StarRating rating={newRating} setRating={setNewRating} />
         <textarea
           style={{ marginTop: "10px" }}
           rows="5"
@@ -212,13 +204,7 @@ const isAuthor =
                     value={editBody}
                     onChange={(e) => setEditBody(e.target.value)}
                   />
-                  <input
-                    type="range"
-                    min="1"
-                    max="5"
-                    value={editRating}
-                    onChange={(e) => setEditRating(Number(e.target.value))}
-                  />
+                  <StarRating rating={editRating} setRating={setEditRating} />
                   <button type="submit">Save</button>
                   <button type="button" onClick={() => setEditingReviewId(null)}>
                     Cancel
@@ -226,17 +212,16 @@ const isAuthor =
                 </form>
               ) : (
                 <>
-                  <p>{r.body}</p>
+                  <div>{r.body}</div>
                   <small>⭐ {r.rating}</small>
+                  <br />
                 </>
               )}
-              <br />
               <small>By: {r.author?.username}</small>
               {(isAuthor || isAdmin) && !isDeleting && (
                 <div style={{ marginTop: "10px" }}>
                   <button onClick={() => handleEdit(r)}>Edit</button>
                   <button onClick={() => confirmDelete(r._id)}>Delete</button>
-                  {/* <button onClick={() => handleDelete(r._id)}>Delete</button> */}
                 </div>
               )}
               {isDeleting && deletingReview === r._id &&
