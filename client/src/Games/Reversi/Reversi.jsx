@@ -5,6 +5,7 @@ import Red from "./images/Red.jpg";
 import Green from "./images/Green.jpg";
 import Yellow from "./images/Yellow.jpg";
 import ReviewSection from "../../Components/ReviewSection";
+import Cell from "./Cell";
 
 export default function Reversi({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -12,6 +13,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [pejmanColor, setPejmanColor] = useState(null);
   const [isIdenticalColor, setIsIdenticalColor] = useState(false);
   const [isUserTurn, setIsUserTurn] = useState(false);
+  const [cells, setCells] = useState(
+    new Array(49)
+      .fill(null)
+      .map((el, idx) => ({ id: idx, src: White, isSelected: false })),
+  );
+  const [selectedCellsNum, setSelectedCellsNum] = useState(0);
+  const [selectionErrorMessage, setSelectionErrorMessage] = useState("");
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -48,6 +56,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setPejmanColor(null);
     setIsIdenticalColor(false);
   };
+  const handleSelectionErrorMessage = () => {
+    setSelectionErrorMessage("");
+  }
   return (
     <div>
       <h2>Reversi</h2>
@@ -92,16 +103,49 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <button onClick={handleOk}>Ok</button>
         </div>
       )}
-      {isGameStarted && (
+      {isGameStarted && selectionErrorMessage !== "" &&
         <div>
-          <div>
-            User: <img src={userColor} width="50px" />
-          </div>
-          <div>
-            Pejman: <img src={pejmanColor} width="50px" />
-          </div>
+            <div>{selectionErrorMessage}</div>
+            <button onClick={handleSelectionErrorMessage}>Ok</button>
         </div>
-      )}
+      }
+      {isGameStarted &&
+        cells.map((el, idx) =>
+          (idx + 1) % 7 !== 0 ? (
+            <div style={{ display: "inline" }}>
+              <Cell
+                id={el.id}
+                src={el.src}
+                isSelected={el.isSelected}
+                style={{ display: "inline" }}
+                userColor={userColor}
+                cells={cells}
+                setCells={setCells}
+                selectedCellsNum={selectedCellsNum}
+                setSelectedCellsNum={setSelectedCellsNum}
+                selectionErrorMessage={selectionErrorMessage}
+                setSelectionErrorMessage={setSelectionErrorMessage}
+              />
+            </div>
+          ) : (
+            <div style={{ display: "inline" }}>
+              <Cell
+                id={el.id}
+                src={el.src}
+                isSelected={el.isSelected}
+                style={{ display: "inline" }}
+                userColor={userColor}
+                cells={cells}
+                setCells={setCells}
+                selectedCellsNum={selectedCellsNum}
+                setSelectedCellsNum={setSelectedCellsNum}
+                selectionErrorMessage={selectionErrorMessage}
+                setSelectionErrorMessage={setSelectionErrorMessage}
+              />
+              <br />
+            </div>
+          ),
+        )}
       {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Reversi" currentUser={currentUser} />} */}
     </div>
   );
