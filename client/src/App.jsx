@@ -29,6 +29,7 @@ import BingoPage from "./Games/Bingo/Bingo";
 import TugOfWarPage from "./Games/TugOfWar/TugOfWar";
 import MazePage from "./Games/Maze/Maze";
 import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
+import ReversiPage from "./Games/Reversi/Reversi";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -274,6 +275,7 @@ function App() {
           <Route path="/counter" element={<CounterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/puzzle" element={<PuzzlePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/bingo" element={<BingoPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/reversi" element={<ReversiPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/tug-of-war" element={<TugOfWarPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/maze" element={<MazePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/bird-hunter" element={<BirdHunterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />

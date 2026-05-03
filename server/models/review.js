@@ -21,7 +21,7 @@ const reviewSchema = new mongoose.Schema({
             "Crazy100", "Cryptogram", "GuessNumber",
             "HappyFlower", "KukuKube", "Maze", "MemoryCards",
             "Nim", "Pidoku", "Puzzle", "RockScissorsPaper",
-            "TripleEmojiMatch", "TugOfWar", "XO"],
+            "TripleEmojiMatch", "TugOfWar", "XO", "Reversi"],
         index: true // Because we'll query by game
     }
 }, { timestamps: true })

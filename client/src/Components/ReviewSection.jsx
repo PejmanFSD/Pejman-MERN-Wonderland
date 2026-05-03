@@ -218,7 +218,7 @@ const isAuthor =
                 </>
               )}
               <small>By: {r.author?.username}</small>
-              {(isAuthor || isAdmin) && !isDeleting && (
+              {(isAuthor || isAdmin) && !isDeleting && !editingReviewId && (
                 <div style={{ marginTop: "10px" }}>
                   <button onClick={() => handleEdit(r)}>Edit</button>
                   <button onClick={() => confirmDelete(r._id)}>Delete</button>

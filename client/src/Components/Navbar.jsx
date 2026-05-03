@@ -37,7 +37,7 @@ export default function Navbar({
     "/rock-scissors-paper", "/guess-number", "/capitals", "/cryptogram", "/crazy-100",
     "/memory-cards", "/nim", "/happy-flower", "/xo", "/maze", "/kuku-kube",
     "/triple-emoji-match", "/pidoku", "/counter", "/puzzle", "/bingo",
-    "/tug-of-war", "/bird-hunter"
+    "/tug-of-war", "/bird-hunter", "/reversi"
   ];
   const handleLogout = () => {
     setIsLoggingOut(true);

@@ -19,7 +19,7 @@ export default function StarRating({ rating, setRating }) {
             style={{
               fontSize: "24px",
               color: isActive ? "gold" : "lightgray",
-              transition: "color 0.2s",
+              transition: "color 0.2s"
             }}
           >
             ★

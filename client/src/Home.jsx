@@ -20,6 +20,7 @@ import BingoPage from "./Games/Bingo/Bingo";
 import TugOfWarPage from "./Games/TugOfWar/TugOfWar";
 import MazePage from "./Games/Maze/Maze";
 import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
+import ReversiPage from "./Games/Reversi/Reversi";
 
 export default function Home({
   currentUser,
@@ -54,6 +55,7 @@ export default function Home({
   const [showTugOfWar, setShowTugOfWar] = useState(false);
   const [showMaze, setShowMaze] = useState(false);
   const [showBirdHunter, setShowBirdHunter] = useState(false);
+  const [showReversi, setShowReversi] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -210,6 +212,14 @@ export default function Home({
       return;
     }
     navigate("/bird-hunter");
+  };
+  const toggleReversi = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    navigate("/reversi");
   };
   return (
     <div>
@@ -485,6 +495,17 @@ export default function Home({
         !showBirdHunter &&
         (
           <button onClick={() => toggleBirdHunter()} style={{position: "relative", top: "5px"}}>Bird Hunter</button>
+        )
+      )}
+      {showReversi ? (
+        <ReversiPage
+          updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
+        />
+      ) : (
+        !showReversi &&
+        (
+          <button onClick={() => toggleReversi()} style={{position: "relative", top: "5px"}}>Reversi</button>
         )
       )}
     </div>
