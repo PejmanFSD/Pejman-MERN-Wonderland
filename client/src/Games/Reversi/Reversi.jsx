@@ -81,50 +81,92 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setSelectionErrorMessage("");
   };
   const handleAllowPejman = () => {
+    setLeftNeighborsId([]);
+    setLeftCellsPoint(0);
+    setRightNeighborsId([]);
+    setRightCellsPoint(0);
+    setUpNeighborsId([]);
+    setUpCellsPoint(0);
+    setDownNeighborsId([]);
+    setDownCellsPoint(0);
+    setUpLeftNeighborsId([]);
+    setUpLeftCellsPoint(0);
+    setUpRightNeighborsId([]);
+    setUpRightCellsPoint(0);
+    setDownLeftNeighborsId([]);
+    setDownLeftCellsPoint(0);
+    setDownRightNeighborsId([]);
+    setDownRightCellsPoint(0);
     setIsUserTurn(false);
     setAllowPejmanMessage(false);
   };
-  const creatingNeighbors = (id) => {
+  const creatingNeighbors = (id, side) => {
+    let leftNeighbors = [];
+    let rightNeighbors = [];
+    let upNeighbors = [];
+    let downNeighbors = [];
+    let upLeftNeighbors = [];
+    let upRightNeighbors = [];
+    let downLeftNeighbors = [];
+    let downRightNeighbors = [];
+    for (const c of cells) {
+        // Creating left neighbors:
+        if (c.id >= Math.floor(id / 7) * 7 && c.id < id && c.src !== White) {
+            leftNeighbors.push(c.id);
+        }
+        // Creating right neighbors:
+        if (c.id <= ((Math.floor(id / 7) * 7) + 6) && c.id > id && c.src !== White) {
+            rightNeighbors.push(c.id);
+        }
+        // Creating up neighbors:
+        if (c.id < id && (id - c.id) % 7 === 0 && c.src !== White) {
+            upNeighbors.push(c.id);
+        }
+        // Creating down neighbors:
+        if (c.id > id && (c.id - id) % 7 === 0 && c.src !== White) {
+            downNeighbors.push(c.id);
+        }
+        // Creating up-left neighbors:
+        if (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7 && c.src !== White) {
+            upLeftNeighbors.push(c.id);
+        }
+        // Creating up-right neighbors:
+        if (c.id < id && (id - c.id ) % 6 === 0 && c.id % 7 > id % 7 && c.src !== White) {
+            upRightNeighbors.push(c.id);
+        }
+        // Creating down-left neighbors:
+        if (c.id > id && (c.id - id ) % 6 === 0 && c.id % 7 < id % 7 && c.src !== White) {
+            downLeftNeighbors.push(c.id);
+        }
+        // Creating down-right neighbors:
+        if (c.id > id && (c.id - id ) % 8 === 0 && c.id % 7 > id % 7 && c.src !== White) {
+            downRightNeighbors.push(c.id);
+        }
+    }
     // Creating left neighbors:
-    setLeftNeighborsId(Array.from({ length: (id - 1) - (Math.floor(id / 7) * 7) + 1 }, (_, i) => i + (Math.floor(id / 7) * 7)));
+    setLeftNeighborsId(leftNeighbors);
+    setLeftCellsPoint(leftNeighbors.length);
     // Creating right neighbors:
-    setRightNeighborsId(Array.from({ length: ((Math.floor(id / 7) * 7) + 6) - (id + 1) + 1 }, (_, i) => i + (id + 1)));
+    setRightNeighborsId(rightNeighbors);
+    setRightCellsPoint(rightNeighbors.length);
     // Creating up neighbors:
-    for (const c of cells) {
-        if (c.id < id && (id - c.id) % 7 === 0) {
-            setUpNeighborsId(currUpNeighborsId => [...currUpNeighborsId, c.id]);
-        }
-    }
+    setUpNeighborsId(upNeighbors);
+    setUpCellsPoint(upNeighbors.length);
     // Creating down neighbors:
-    for (const c of cells) {
-        if (c.id > id && (c.id - id) % 7 === 0) {
-            setDownNeighborsId(currDownNeighborsId => [...currDownNeighborsId, c.id]);
-        }
-    }
+    setDownNeighborsId(downNeighbors);
+    setDownCellsPoint(downNeighbors.length);
     // Creating up-left neighbors:
-    for (const c of cells) {
-        if (c.id < id && (id - c.id) % 8 === 0) {
-            setUpLeftNeighborsId(currUpLeftNeighborsId => [...currUpLeftNeighborsId, c.id]);
-        }
-    }
+    setUpLeftNeighborsId(upLeftNeighbors);
+    setUpLeftCellsPoint(upLeftNeighbors.length);
     // Creating up-right neighbors:
-    for (const c of cells) {
-        if (c.id < id && (id - c.id ) % 6 === 0 && c.id % 7 > id % 7) {
-            setUpRightNeighborsId(currUpRightNeighborsId => [...currUpRightNeighborsId, c.id]);
-        }
-    }
+    setUpRightNeighborsId(upRightNeighbors);
+    setUpRightCellsPoint(upRightNeighbors.length);
     // Creating down-left neighbors:
-    for (const c of cells) {
-        if (c.id > id && (c.id - id ) % 6 === 0 && c.id % 7 < id % 7) {
-            setDownLeftNeighborsId(currDownLeftNeighborsId => [...currDownLeftNeighborsId, c.id]);
-        }
-    }
+    setDownLeftNeighborsId(downLeftNeighbors);
+    setDownLeftCellsPoint(downLeftNeighbors.length);
     // Creating down-right neighbors:
-    for (const c of cells) {
-        if (c.id > id && (c.id - id ) % 8 === 0 && c.id % 7 > id % 7) {
-            setDownRightNeighborsId(currDownRightNeighborsId => [...currDownRightNeighborsId, c.id]);
-        }
-    }
+    setDownRightNeighborsId(downRightNeighbors);
+    setDownRightCellsPoint(downRightNeighbors.length);
   }
   useEffect(() => {
     if (!isUserTurn && freeCellsIds.length < 49) {
@@ -145,6 +187,10 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         Left neighbors:
         {leftNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
       </div>
+      {/* <div>
+        Left Cells Point:
+        <div style={{display: "inline", color: "blue"}}> {leftCellsPoint}</div>
+      </div> */}
       <div>
         Right neighbors:
         {rightNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
