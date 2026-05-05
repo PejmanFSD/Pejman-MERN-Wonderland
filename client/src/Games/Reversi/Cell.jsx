@@ -1,3 +1,5 @@
+import White from "./images/White.jpg";
+
 export default function Cell({
   id,
   src,
@@ -8,7 +10,13 @@ export default function Cell({
   selectedCellsNum,
   setSelectedCellsNum,
   selectionErrorMessage,
-  setSelectionErrorMessage
+  setSelectionErrorMessage,
+  isUserTurn,
+  setIsUserTurn,
+  setFreeCellsIds,
+  allowPejmanMessage,
+  setAllowPejmanMessage,
+  creatingNeighbors
 }) {
     const isAtLeastOneNeighborSelected = (cellId) => {
         if ([8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33, 36, 37, 38, 39, 40].includes(cellId)) {
@@ -138,7 +146,10 @@ export default function Cell({
         c.id === id ? { ...c, src: userColor, isSelected: true } : c,
       ),
     );
+    creatingNeighbors(id);
     setSelectedCellsNum(currSelectedCellsNum => currSelectedCellsNum + 1);
+    setFreeCellsIds(currFreeCellsIds => currFreeCellsIds.filter(c => c !== id));
+    setAllowPejmanMessage(true);
   };
   return (
     <img
@@ -153,7 +164,7 @@ export default function Cell({
       style={{
         margin: "2px",
         boxSizing: "border-box",
-        pointerEvents: selectionErrorMessage === "" ? "" : "none"
+        pointerEvents: selectionErrorMessage === "" && isUserTurn && src === White && !allowPejmanMessage ? "" : "none"
       }}
     />
   );
