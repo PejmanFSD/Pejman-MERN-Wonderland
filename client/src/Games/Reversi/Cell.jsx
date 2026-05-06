@@ -13,10 +13,13 @@ export default function Cell({
   setSelectionErrorMessage,
   isUserTurn,
   setIsUserTurn,
+  freeCellsIds,
   setFreeCellsIds,
   allowPejmanMessage,
   setAllowPejmanMessage,
-  creatingNeighbors
+  creatingNeighbors,
+  chooseArrowMessage,
+  setChooseArrowMessage
 }) {
     const isAtLeastOneNeighborSelected = (cellId) => {
         if ([8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33, 36, 37, 38, 39, 40].includes(cellId)) {
@@ -149,7 +152,13 @@ export default function Cell({
     creatingNeighbors(id);
     setSelectedCellsNum(currSelectedCellsNum => currSelectedCellsNum + 1);
     setFreeCellsIds(currFreeCellsIds => currFreeCellsIds.filter(c => c !== id));
-    setAllowPejmanMessage(true);
+    setChooseArrowMessage(true);
+    if (freeCellsIds.length >= 48) {
+        setAllowPejmanMessage(true);
+    } else {
+        setChooseArrowMessage(true);
+    }
+    // setIsUserTurn(false);
   };
   return (
     <img

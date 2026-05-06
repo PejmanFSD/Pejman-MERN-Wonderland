@@ -6,7 +6,7 @@ import Green from "./images/Green.jpg";
 import Yellow from "./images/Yellow.jpg";
 import ReviewSection from "../../Components/ReviewSection";
 import Cell from "./Cell";
-import {getRandArr} from "../utils.js";
+import { getRandArr } from "../utils.js";
 
 export default function Reversi({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -17,10 +17,10 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [cells, setCells] = useState(
     new Array(49)
       .fill(null)
-      .map((el, idx) => ({ id: idx, src: White, isSelected: false }))
+      .map((el, idx) => ({ id: idx, src: White, isSelected: false })),
   );
   const [freeCellsIds, setFreeCellsIds] = useState(
-    Array.from({ length: 49 }, (_, i) => i)
+    Array.from({ length: 49 }, (_, i) => i),
   );
   const [selectedCellsNum, setSelectedCellsNum] = useState(0);
   const [leftNeighborsId, setLeftNeighborsId] = useState([]);
@@ -40,6 +40,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [downRightNeighborsId, setDownRightNeighborsId] = useState([]);
   const [downRightCellsPoint, setDownRightCellsPoint] = useState(0);
   const [selectionErrorMessage, setSelectionErrorMessage] = useState("");
+  const [chooseArrowMessage, setChooseArrowMessage] = useState(false);
   const [allowPejmanMessage, setAllowPejmanMessage] = useState(false);
 
   const handleUserColor = (e) => {
@@ -80,7 +81,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const handleSelectionErrorMessage = () => {
     setSelectionErrorMessage("");
   };
-  const handleAllowPejman = () => {
+  const resetNeighbors = () => {
     setLeftNeighborsId([]);
     setLeftCellsPoint(0);
     setRightNeighborsId([]);
@@ -97,8 +98,10 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setDownLeftCellsPoint(0);
     setDownRightNeighborsId([]);
     setDownRightCellsPoint(0);
+  };
+  const handleAllowPejman = () => {
+    resetNeighbors();
     setIsUserTurn(false);
-    setAllowPejmanMessage(false);
   };
   const creatingNeighbors = (id, side) => {
     let leftNeighbors = [];
@@ -110,38 +113,58 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     let downLeftNeighbors = [];
     let downRightNeighbors = [];
     for (const c of cells) {
-        // Creating left neighbors:
-        if (c.id >= Math.floor(id / 7) * 7 && c.id < id && c.src !== White) {
-            leftNeighbors.push(c.id);
-        }
-        // Creating right neighbors:
-        if (c.id <= ((Math.floor(id / 7) * 7) + 6) && c.id > id && c.src !== White) {
-            rightNeighbors.push(c.id);
-        }
-        // Creating up neighbors:
-        if (c.id < id && (id - c.id) % 7 === 0 && c.src !== White) {
-            upNeighbors.push(c.id);
-        }
-        // Creating down neighbors:
-        if (c.id > id && (c.id - id) % 7 === 0 && c.src !== White) {
-            downNeighbors.push(c.id);
-        }
-        // Creating up-left neighbors:
-        if (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7 && c.src !== White) {
-            upLeftNeighbors.push(c.id);
-        }
-        // Creating up-right neighbors:
-        if (c.id < id && (id - c.id ) % 6 === 0 && c.id % 7 > id % 7 && c.src !== White) {
-            upRightNeighbors.push(c.id);
-        }
-        // Creating down-left neighbors:
-        if (c.id > id && (c.id - id ) % 6 === 0 && c.id % 7 < id % 7 && c.src !== White) {
-            downLeftNeighbors.push(c.id);
-        }
-        // Creating down-right neighbors:
-        if (c.id > id && (c.id - id ) % 8 === 0 && c.id % 7 > id % 7 && c.src !== White) {
-            downRightNeighbors.push(c.id);
-        }
+      // Creating left neighbors:
+      if (c.id >= Math.floor(id / 7) * 7 && c.id < id && c.src !== White) {
+        leftNeighbors.push(c.id);
+      }
+      // Creating right neighbors:
+      if (c.id <= Math.floor(id / 7) * 7 + 6 && c.id > id && c.src !== White) {
+        rightNeighbors.push(c.id);
+      }
+      // Creating up neighbors:
+      if (c.id < id && (id - c.id) % 7 === 0 && c.src !== White) {
+        upNeighbors.push(c.id);
+      }
+      // Creating down neighbors:
+      if (c.id > id && (c.id - id) % 7 === 0 && c.src !== White) {
+        downNeighbors.push(c.id);
+      }
+      // Creating up-left neighbors:
+      if (
+        c.id < id &&
+        (id - c.id) % 8 === 0 &&
+        c.id % 7 < id % 7 &&
+        c.src !== White
+      ) {
+        upLeftNeighbors.push(c.id);
+      }
+      // Creating up-right neighbors:
+      if (
+        c.id < id &&
+        (id - c.id) % 6 === 0 &&
+        c.id % 7 > id % 7 &&
+        c.src !== White
+      ) {
+        upRightNeighbors.push(c.id);
+      }
+      // Creating down-left neighbors:
+      if (
+        c.id > id &&
+        (c.id - id) % 6 === 0 &&
+        c.id % 7 < id % 7 &&
+        c.src !== White
+      ) {
+        downLeftNeighbors.push(c.id);
+      }
+      // Creating down-right neighbors:
+      if (
+        c.id > id &&
+        (c.id - id) % 8 === 0 &&
+        c.id % 7 > id % 7 &&
+        c.src !== White
+      ) {
+        downRightNeighbors.push(c.id);
+      }
     }
     // Creating left neighbors:
     setLeftNeighborsId(leftNeighbors);
@@ -167,25 +190,82 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     // Creating down-right neighbors:
     setDownRightNeighborsId(downRightNeighbors);
     setDownRightCellsPoint(downRightNeighbors.length);
+  };
+  const handleWinUpLeftCells = () => {
+    setCells(currCells => currCells.map(c => upLeftNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinUpCells = () => {
+    setCells(currCells => currCells.map(c => upNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinUpRightCells = () => {
+    setCells(currCells => currCells.map(c => upRightNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinLeftCells = () => {
+    setCells(currCells => currCells.map(c => leftNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinRightCells = () => {
+    setCells(currCells => currCells.map(c => rightNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinDownLeftCells = () => {
+    setCells(currCells => currCells.map(c => downLeftNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinDownCells = () => {
+    setCells(currCells => currCells.map(c => downNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
+  }
+  const handleWinDownRightCells = () => {
+    setCells(currCells => currCells.map(c => downRightNeighborsId.includes(c.id) ? {...c, src: userColor, isSelected: true} : c));
+    setAllowPejmanMessage(true);
+    setIsUserTurn(false);
+    resetNeighbors();
   }
   useEffect(() => {
-    if (!isUserTurn && freeCellsIds.length < 49) {
-        const pejmanChoice = getRandArr(freeCellsIds);
-        setCells((currCells) =>
-            currCells.map((c) =>
-                c.id === pejmanChoice ? { ...c, src: pejmanColor, isSelected: true } : c
-            )
-        );
-        setFreeCellsIds(currFreeCellsIds => currFreeCellsIds.filter(c => c !== pejmanChoice));
-        setIsUserTurn(true);
+    if (!isUserTurn && freeCellsIds.length < 49 && allowPejmanMessage) {
+      const pejmanChoice = getRandArr(freeCellsIds);
+      setCells((currCells) =>
+        currCells.map((c) =>
+          c.id === pejmanChoice
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setFreeCellsIds((currFreeCellsIds) =>
+        currFreeCellsIds.filter((c) => c !== pejmanChoice),
+      );
+      setIsUserTurn(true);
+      setAllowPejmanMessage(false);
+      setChooseArrowMessage(false);
     }
   }, [isUserTurn]);
   return (
     <div>
       <h2>Reversi</h2>
+      <h3>{freeCellsIds.length}</h3>
       <div>
         Left neighbors:
-        {leftNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {leftNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       {/* <div>
         Left Cells Point:
@@ -193,31 +273,45 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       </div> */}
       <div>
         Right neighbors:
-        {rightNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {rightNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       <div>
         Up neighbors:
-        {upNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {upNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       <div>
         Down neighbors:
-        {downNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {downNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       <div>
         Up-Left neighbors:
-        {upLeftNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {upLeftNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       <div>
         Up-Right neighbors:
-        {upRightNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {upRightNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       <div>
         Down-Left neighbors:
-        {downLeftNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {downLeftNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       <div>
         Down-Right neighbors:
-        {downRightNeighborsId.map(n => <div style={{display: "inline", color: "red"}}> {n} - </div>)}
+        {downRightNeighborsId.map((n) => (
+          <div style={{ display: "inline", color: "red" }}> {n} - </div>
+        ))}
       </div>
       {!isGameStarted && !isIdenticalColor && (
         <div>
@@ -260,13 +354,16 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <button onClick={handleOk}>Ok</button>
         </div>
       )}
-      {isGameStarted && selectionErrorMessage !== "" &&
+      {isGameStarted && selectionErrorMessage !== "" && (
         <div>
-            <div>{selectionErrorMessage}</div>
-            <button onClick={handleSelectionErrorMessage}>Ok</button>
+          <div>{selectionErrorMessage}</div>
+          <button onClick={handleSelectionErrorMessage}>Ok</button>
         </div>
-      }
-      {freeCellsIds.map(c => <div style={{display: "inline"}}>{c} - </div>)}<br />
+      )}
+      {freeCellsIds.map((c) => (
+        <div style={{ display: "inline" }}>{c} - </div>
+      ))}
+      <br />
       {isGameStarted &&
         cells.map((el, idx) =>
           (idx + 1) % 7 !== 0 ? (
@@ -285,10 +382,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 setSelectionErrorMessage={setSelectionErrorMessage}
                 isUserTurn={isUserTurn}
                 setIsUserTurn={setIsUserTurn}
+                freeCellsIds={freeCellsIds}
                 setFreeCellsIds={setFreeCellsIds}
                 allowPejmanMessage={allowPejmanMessage}
                 setAllowPejmanMessage={setAllowPejmanMessage}
                 creatingNeighbors={creatingNeighbors}
+                chooseArrowMessage={chooseArrowMessage}
+                setChooseArrowMessage={setChooseArrowMessage}
               />
             </div>
           ) : (
@@ -307,22 +407,164 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 setSelectionErrorMessage={setSelectionErrorMessage}
                 isUserTurn={isUserTurn}
                 setIsUserTurn={setIsUserTurn}
+                freeCellsIds={freeCellsIds}
                 setFreeCellsIds={setFreeCellsIds}
                 allowPejmanMessage={allowPejmanMessage}
                 setAllowPejmanMessage={setAllowPejmanMessage}
                 creatingNeighbors={creatingNeighbors}
+                chooseArrowMessage={chooseArrowMessage}
+                setChooseArrowMessage={setChooseArrowMessage}
               />
               <br />
             </div>
           ),
         )}
-        <br />
-        {allowPejmanMessage &&
-            <div>
-                Allow Pejman to make his move
-                <button onClick={handleAllowPejman}>Ok</button>
-            </div>
-        }
+      <br />
+      {chooseArrowMessage && isUserTurn && freeCellsIds.length < 48 &&
+    <div>
+        <div>Choose the path you wan to get</div>
+      <div>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: "4px",
+          }}
+          onClick={handleWinUpLeftCells}
+          disabled={upLeftNeighborsId.length === 0}
+        >
+          &#8598;
+        </button>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={handleWinUpCells}
+          disabled={upNeighborsId.length === 0}
+        >
+          &#8593;
+        </button>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: "4px",
+          }}
+          onClick={handleWinUpRightCells}
+          disabled={upRightNeighborsId.length === 0}
+        >
+          &#8599;
+        </button>
+      </div>
+      <div>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={handleWinLeftCells}
+          disabled={leftNeighborsId.length === 0}
+        >
+          &#8592;
+        </button>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: "9px",
+          }}
+          disabled
+        ></button>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={handleWinRightCells}
+          disabled={rightNeighborsId.length === 0}
+        >
+          &#8594;
+        </button>
+      </div>
+      <div>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: "4px",
+          }}
+          onClick={handleWinDownLeftCells}
+          disabled={downLeftNeighborsId.length === 0}
+        >
+          &#8601;
+        </button>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={handleWinDownCells}
+          disabled={downNeighborsId.length === 0}
+        >
+          &#8595;
+        </button>
+        <button
+          style={{
+            width: "30px",
+            height: "30px",
+            margin: "3px",
+            display: "inline",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingBottom: "4px",
+          }}
+          onClick={handleWinDownRightCells}
+          disabled={downRightNeighborsId.length === 0}
+        >
+          &#8600;
+        </button>
+      </div>
+    </div>
+}
+      {allowPejmanMessage && (
+        <div>
+          Allow Pejman to make his move
+          <button onClick={handleAllowPejman}>Ok</button>
+        </div>
+      )}
       {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Reversi" currentUser={currentUser} />} */}
     </div>
   );
