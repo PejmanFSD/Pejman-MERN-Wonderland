@@ -44,6 +44,10 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [chooseArrowMessage, setChooseArrowMessage] = useState(false);
   const [allowPejmanMessage, setAllowPejmanMessage] = useState(false);
   const [allowPejmanChooseDirection, setAllowPejmanChooseDirection] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [userPoint, setUserPoint] = useState(0);
+  const [pejmanPoint, setPejmanPoint] = useState(0);
+  const [finalMessage, setFinalMessage] = useState("");
 
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
@@ -314,7 +318,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -326,7 +334,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -338,7 +350,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -350,7 +366,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -362,7 +382,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -374,7 +398,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -386,7 +414,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -398,7 +430,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           : c,
       ),
     );
-    setAllowPejmanMessage(true);
+    if (freeCellsIds.length !== 0) {
+        setAllowPejmanMessage(true);
+    } else {
+        setIsGameOver(true);
+    }
     setIsUserTurn(false);
     resetNeighbors();
   };
@@ -614,6 +650,27 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
     }
   }
+  const handleGameResult = () => {
+    setIsGameOver(false);
+    let up = 0;
+    let pp = 0;
+    for (const cell of cells) {
+        if (cell.src === userColor) {
+            up ++;
+            // setUserPoint(currUserPoint => currUserPoint + 1);
+        } else if (cell.src === pejmanColor) {
+            pp ++;
+            // setPejmanPoint(currPejmanPoint => currPejmanPoint + 1);
+        }
+    }
+    if (up > pp) {
+        setFinalMessage("You Win!");
+    } else {
+        setFinalMessage("You Loose!");
+    }
+    setUserPoint(up);
+    setPejmanPoint(pp);
+  }
   useEffect(() => {
     if (pejmanChoice !== null) {
         setCells((currCells) =>
@@ -633,9 +690,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   return (
     <div>
       <h2>Reversi</h2>
-      <div>Pejman Choice: {pejmanChoice}</div>
-      <h3>{freeCellsIds.length}</h3>
-      <div>
+      {/* <div>Pejman Choice: {pejmanChoice}</div> */}
+      {/* <h3>{freeCellsIds.length}</h3> */}
+      {/* <div>
         Left neighbors:
         {leftNeighborsId.map((n) => (
           <div style={{ display: "inline", color: "red" }}> {n} - </div>
@@ -682,7 +739,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         {downRightNeighborsId.map((n) => (
           <div style={{ display: "inline", color: "red" }}> {n} - </div>
         ))}
-      </div>
+      </div> */}
       {!isGameStarted && !isIdenticalColor && (
         <div>
           <div>
@@ -730,9 +787,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <button onClick={handleSelectionErrorMessage}>Ok</button>
         </div>
       )}
-      {freeCellsIds.map((c) => (
+      {/* {freeCellsIds.map((c) => (
         <div style={{ display: "inline" }}>{c} - </div>
-      ))}
+      ))} */}
       <br />
       {isGameStarted &&
         cells.map((el, idx) =>
@@ -963,6 +1020,19 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         <div>
             <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
             <button onClick={handlePejmanDirectionChoice}>Ok</button>
+        </div>
+      }
+      {isGameOver &&
+        <div>
+            <div>All the squares are taken, let's see who is the winner</div>
+            <button onClick={handleGameResult}>Ok</button>
+        </div>
+      }
+      {(pejmanPoint > 0 || userPoint > 0) &&
+        <div>
+            <div>{`You conquered ${userPoint} squares`}</div>
+            <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
+            <h3>{finalMessage}</h3>
         </div>
       }
       {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Reversi" currentUser={currentUser} />} */}

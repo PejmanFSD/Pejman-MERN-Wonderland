@@ -91,7 +91,8 @@ export default function Cell({
           selectionErrorMessage === "" &&
           isUserTurn &&
           src === White &&
-          !allowPejmanMessage
+          !allowPejmanMessage &&
+          !chooseArrowMessage
             ? ""
             : "none",
       }}
