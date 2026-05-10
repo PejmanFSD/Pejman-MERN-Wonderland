@@ -43,7 +43,8 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [selectionErrorMessage, setSelectionErrorMessage] = useState("");
   const [chooseArrowMessage, setChooseArrowMessage] = useState(false);
   const [allowPejmanMessage, setAllowPejmanMessage] = useState(false);
-  const [allowPejmanChooseDirection, setAllowPejmanChooseDirection] = useState(false);
+  const [allowPejmanChooseDirection, setAllowPejmanChooseDirection] =
+    useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [userPoint, setUserPoint] = useState(0);
   const [pejmanPoint, setPejmanPoint] = useState(0);
@@ -233,11 +234,19 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     let downRightNeighbors = [];
     for (const c of cells) {
       // Creating left neighbors:
-      if (c.id >= Math.floor(id / 7) * 7 && c.id < id && c.src === rivalSideColor) {
+      if (
+        c.id >= Math.floor(id / 7) * 7 &&
+        c.id < id &&
+        c.src === rivalSideColor
+      ) {
         leftNeighbors.push(c.id);
       }
       // Creating right neighbors:
-      if (c.id <= Math.floor(id / 7) * 7 + 6 && c.id > id && c.src === rivalSideColor) {
+      if (
+        c.id <= Math.floor(id / 7) * 7 + 6 &&
+        c.id > id &&
+        c.src === rivalSideColor
+      ) {
         rightNeighbors.push(c.id);
       }
       // Creating up neighbors:
@@ -319,9 +328,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -335,9 +344,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -351,9 +360,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -367,9 +376,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -383,9 +392,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -399,9 +408,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -415,9 +424,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
@@ -431,14 +440,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ),
     );
     if (freeCellsIds.length !== 0) {
-        setAllowPejmanMessage(true);
+      setAllowPejmanMessage(true);
     } else {
-        setIsGameOver(true);
+      setIsGameOver(true);
     }
     setIsUserTurn(false);
     resetNeighbors();
   };
-
   const choosingTheBestCell = (id, desiredPoint) => {
     let leftNeighbors = [];
     let rightNeighbors = [];
@@ -448,22 +456,62 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     let upRightNeighbors = [];
     let downLeftNeighbors = [];
     let downRightNeighbors = [];
+    let leftNeighborsNot5 = [];
+    let rightNeighborsNot5 = [];
+    let upNeighborsNot5 = [];
+    let downNeighborsNot5 = [];
+    let upLeftNeighborsNot5 = [];
+    let upRightNeighborsNot5 = [];
+    let downLeftNeighborsNot5 = [];
+    let downRightNeighborsNot5 = [];
     for (const c of cells) {
       // Creating left neighbors:
       if (c.id >= Math.floor(id / 7) * 7 && c.id < id && c.src === userColor) {
         leftNeighbors.push(c.id);
       }
+      if (
+        ((c.id >= Math.floor(id / 7) * 7 && c.id < id) ||
+          (c.id <= Math.floor(id / 7) * 7 + 6 && c.id > id)) &&
+        c.src !== White
+      ) {
+        leftNeighborsNot5.push(c.id);
+      }
       // Creating right neighbors:
-      if (c.id <= Math.floor(id / 7) * 7 + 6 && c.id > id && c.src === userColor) {
+      if (
+        c.id <= Math.floor(id / 7) * 7 + 6 &&
+        c.id > id &&
+        c.src === userColor
+      ) {
         rightNeighbors.push(c.id);
+      }
+      if (
+        ((c.id <= Math.floor(id / 7) * 7 + 6 && c.id > id) ||
+          (c.id >= Math.floor(id / 7) * 7 && c.id < id)) &&
+        c.src !== White
+      ) {
+        rightNeighborsNot5.push(c.id);
       }
       // Creating up neighbors:
       if (c.id < id && (id - c.id) % 7 === 0 && c.src === userColor) {
         upNeighbors.push(c.id);
       }
+      if (
+        ((c.id < id && (id - c.id) % 7 === 0) ||
+          (c.id > id && (c.id - id) % 7 === 0)) &&
+        c.src !== White
+      ) {
+        upNeighborsNot5.push(c.id);
+      }
       // Creating down neighbors:
       if (c.id > id && (c.id - id) % 7 === 0 && c.src === userColor) {
         downNeighbors.push(c.id);
+      }
+      if (
+        ((c.id > id && (c.id - id) % 7 === 0) ||
+          (c.id < id && (id - c.id) % 7 === 0)) &&
+        c.src !== White
+      ) {
+        downNeighborsNot5.push(c.id);
       }
       // Creating up-left neighbors:
       if (
@@ -474,6 +522,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ) {
         upLeftNeighbors.push(c.id);
       }
+      if (
+        ((c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7) ||
+          (c.id > id && (c.id - id) % 8 === 0 && c.id % 7 > id % 7)) &&
+        c.src !== White
+      ) {
+        upLeftNeighborsNot5.push(c.id);
+      }
       // Creating up-right neighbors:
       if (
         c.id < id &&
@@ -482,6 +537,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         c.src === userColor
       ) {
         upRightNeighbors.push(c.id);
+      }
+      if (
+        ((c.id < id && (id - c.id) % 6 === 0 && c.id % 7 > id % 7) ||
+          (c.id > id && (c.id - id) % 6 === 0 && c.id % 7 < id % 7)) &&
+        c.src !== White
+      ) {
+        upRightNeighborsNot5.push(c.id);
       }
       // Creating down-left neighbors:
       if (
@@ -492,6 +554,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ) {
         downLeftNeighbors.push(c.id);
       }
+      if (
+        ((c.id > id && (c.id - id) % 6 === 0 && c.id % 7 < id % 7) ||
+          (c.id < id && (id - c.id) % 6 === 0 && c.id % 7 > id % 7)) &&
+        c.src !== White
+      ) {
+        downLeftNeighborsNot5.push(c.id);
+      }
       // Creating down-right neighbors:
       if (
         c.id > id &&
@@ -501,179 +570,674 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       ) {
         downRightNeighbors.push(c.id);
       }
+      if (
+        ((c.id > id && (c.id - id) % 8 === 0 && c.id % 7 > id % 7) ||
+          (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7)) &&
+        c.src !== White
+      ) {
+        downRightNeighborsNot5.push(c.id);
+      }
     }
-    if (leftNeighbors.length === desiredPoint) {return leftNeighbors}
-    else if (rightNeighbors.length === desiredPoint) {return rightNeighbors}
-    else if (upNeighbors.length === desiredPoint) {return upNeighbors}
-    else if (downNeighbors.length === desiredPoint) {return downNeighbors}
-    else if (upLeftNeighbors.length === desiredPoint) {return upLeftNeighbors}
-    else if (upRightNeighbors.length === desiredPoint) {return upRightNeighbors}
-    else if (downLeftNeighbors.length === desiredPoint) {return downLeftNeighbors}
-    else if (downRightNeighbors.length === desiredPoint) {return downRightNeighbors}
-    else {return []}
-  }
+    if (
+      leftNeighbors.length === desiredPoint &&
+      leftNeighborsNot5.length !== 5
+    ) {
+      return leftNeighbors;
+    } else if (
+      rightNeighbors.length === desiredPoint &&
+      rightNeighborsNot5.length !== 5
+    ) {
+      return rightNeighbors;
+    } else if (
+      upNeighbors.length === desiredPoint &&
+      upNeighborsNot5.length !== 5
+    ) {
+      return upNeighbors;
+    } else if (
+      downNeighbors.length === desiredPoint &&
+      downNeighborsNot5.length !== 5
+    ) {
+      return downNeighbors;
+    } else if (
+      upLeftNeighbors.length === desiredPoint &&
+      upLeftNeighborsNot5.length !== 5
+    ) {
+      return upLeftNeighbors;
+    } else if (
+      upRightNeighbors.length === desiredPoint &&
+      upRightNeighborsNot5.length !== 5
+    ) {
+      return upRightNeighbors;
+    } else if (
+      downLeftNeighbors.length === desiredPoint &&
+      downLeftNeighborsNot5.length !== 5
+    ) {
+      return downLeftNeighbors;
+    } else if (
+      downRightNeighbors.length === desiredPoint &&
+      downRightNeighborsNot5.length !== 5
+    ) {
+      return downRightNeighbors;
+    } else {
+      return [];
+    }
+  };
   const handlePejmanChoice = () => {
     for (const cell of cells) {
-        if (isAtLeastOneNeighborSelected(cell.id) && cell.src === White && choosingTheBestCell(cell.id, 6).length > 0) {
-            setPejmanChoice(cell.id);
-            return;
-        }
+      if (
+        isAtLeastOneNeighborSelected(cell.id) &&
+        cell.src === White &&
+        choosingTheBestCell(cell.id, 6).length > 0
+      ) {
+        setPejmanChoice(cell.id);
+        return;
+      }
     }
     for (const cell of cells) {
-        if (isAtLeastOneNeighborSelected(cell.id) && cell.src === White && choosingTheBestCell(cell.id, 5).length > 0) {
-            setPejmanChoice(cell.id);
-            return;
-        }
+      if (
+        isAtLeastOneNeighborSelected(cell.id) &&
+        cell.src === White &&
+        choosingTheBestCell(cell.id, 5).length > 0
+      ) {
+        setPejmanChoice(cell.id);
+        return;
+      }
     }
     for (const cell of cells) {
-        if (isAtLeastOneNeighborSelected(cell.id) && cell.src === White && choosingTheBestCell(cell.id, 4).length > 0) {
-            setPejmanChoice(cell.id);
-            return;
-        }
+      if (
+        isAtLeastOneNeighborSelected(cell.id) &&
+        cell.src === White &&
+        choosingTheBestCell(cell.id, 4).length > 0
+      ) {
+        setPejmanChoice(cell.id);
+        return;
+      }
     }
     for (const cell of cells) {
-        if (isAtLeastOneNeighborSelected(cell.id) && cell.src === White && choosingTheBestCell(cell.id, 3).length > 0) {
-            setPejmanChoice(cell.id);
-            return;
-        }
+      if (
+        isAtLeastOneNeighborSelected(cell.id) &&
+        cell.src === White &&
+        choosingTheBestCell(cell.id, 3).length > 0
+      ) {
+        setPejmanChoice(cell.id);
+        return;
+      }
     }
     for (const cell of cells) {
-        if (isAtLeastOneNeighborSelected(cell.id) && cell.src === White && choosingTheBestCell(cell.id, 2).length > 0) {
-            setPejmanChoice(cell.id);
-            return;
-        }
+      if (
+        isAtLeastOneNeighborSelected(cell.id) &&
+        cell.src === White &&
+        choosingTheBestCell(cell.id, 2).length > 0
+      ) {
+        setPejmanChoice(cell.id);
+        return;
+      }
     }
     for (const cell of cells) {
-        if (isAtLeastOneNeighborSelected(cell.id) && cell.src === White && choosingTheBestCell(cell.id, 1).length > 0) {
-            setPejmanChoice(cell.id);
-            return;
-        }
+      if (
+        isAtLeastOneNeighborSelected(cell.id) &&
+        cell.src === White &&
+        choosingTheBestCell(cell.id, 1).length > 0
+      ) {
+        setPejmanChoice(cell.id);
+        return;
+      }
     }
     setPejmanChoice(getRandArr(freeCellsIds));
-  }
+  };
   const handlePejmanDirectionChoice = () => {
     if (leftNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => leftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          leftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (rightNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => rightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          rightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => upNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => downNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upLeftNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => upLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upRightNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => upRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downLeftNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => downLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downRightNeighborsId.length === 6) {
-        setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (leftNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => leftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          leftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (rightNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => rightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          rightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => upNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => downNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upLeftNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => upLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upRightNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => upRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downLeftNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => downLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downRightNeighborsId.length === 5) {
-        setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (leftNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => leftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          leftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (rightNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => rightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          rightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => upNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => downNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upLeftNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => upLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upRightNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => upRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downLeftNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => downLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downRightNeighborsId.length === 4) {
-        setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (leftNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => leftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          leftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (rightNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => rightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          rightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => upNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => downNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upLeftNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => upLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upRightNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => upRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downLeftNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => downLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downRightNeighborsId.length === 3) {
-        setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (leftNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => leftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          leftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (rightNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => rightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          rightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => upNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => downNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upLeftNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => upLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upRightNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => upRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downLeftNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => downLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downRightNeighborsId.length === 2) {
-        setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (leftNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => leftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          leftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (rightNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => rightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          rightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => upNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => downNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upLeftNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => upLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (upRightNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => upRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          upRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downLeftNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => downLeftNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downLeftNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     } else if (downRightNeighborsId.length === 1) {
-        setCells((currCells) => currCells.map((c) => downRightNeighborsId.includes(c.id) ? { ...c, src: pejmanColor, isSelected: true } : c)); setAllowPejmanChooseDirection(false); setIsUserTurn(true); return;
+      setCells((currCells) =>
+        currCells.map((c) =>
+          downRightNeighborsId.includes(c.id)
+            ? { ...c, src: pejmanColor, isSelected: true }
+            : c,
+        ),
+      );
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     }
-  }
+  };
   const handleGameResult = () => {
     setIsGameOver(false);
     let up = 0;
     let pp = 0;
     for (const cell of cells) {
-        if (cell.src === userColor) {
-            up ++;
-            // setUserPoint(currUserPoint => currUserPoint + 1);
-        } else if (cell.src === pejmanColor) {
-            pp ++;
-            // setPejmanPoint(currPejmanPoint => currPejmanPoint + 1);
-        }
+      if (cell.src === userColor) {
+        up++;
+      } else if (cell.src === pejmanColor) {
+        pp++;
+      }
     }
     if (up > pp) {
-        setFinalMessage("You Win!");
+      setFinalMessage("You Win!");
     } else {
-        setFinalMessage("You Loose!");
+      setFinalMessage("You Loose!");
     }
     setUserPoint(up);
     setPejmanPoint(pp);
-  }
+  };
   useEffect(() => {
     if (pejmanChoice !== null) {
-        setCells((currCells) =>
+      setCells((currCells) =>
         currCells.map((c) =>
           c.id === pejmanChoice
             ? { ...c, src: pejmanColor, isSelected: true }
@@ -1016,25 +1580,25 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {allowPejmanChooseDirection && 
+      {allowPejmanChooseDirection && (
         <div>
-            <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
-            <button onClick={handlePejmanDirectionChoice}>Ok</button>
+          <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
+          <button onClick={handlePejmanDirectionChoice}>Ok</button>
         </div>
-      }
-      {isGameOver &&
+      )}
+      {isGameOver && (
         <div>
-            <div>All the squares are taken, let's see who is the winner</div>
-            <button onClick={handleGameResult}>Ok</button>
+          <div>All the squares are taken, let's see who is the winner</div>
+          <button onClick={handleGameResult}>Ok</button>
         </div>
-      }
-      {(pejmanPoint > 0 || userPoint > 0) &&
+      )}
+      {(pejmanPoint > 0 || userPoint > 0) && (
         <div>
-            <div>{`You conquered ${userPoint} squares`}</div>
-            <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
-            <h3>{finalMessage}</h3>
+          <div>{`You conquered ${userPoint} squares`}</div>
+          <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
+          <h3>{finalMessage}</h3>
         </div>
-      }
+      )}
       {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Reversi" currentUser={currentUser} />} */}
     </div>
   );
