@@ -7,9 +7,12 @@ import Yellow from "./images/Yellow.jpg";
 import ReviewSection from "../../Components/ReviewSection";
 import Cell from "./Cell";
 import { getRandArr } from "../utils.js";
+import ModeExplaination from "../ModeExplaination";
 
 export default function Reversi({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [easyMode, setEasyMode] = useState(false);
+  const [normalMode, setNormalMode] = useState(false);
   const [userColor, setUserColor] = useState(null);
   const [pejmanColor, setPejmanColor] = useState(null);
   const [isIdenticalColor, setIsIdenticalColor] = useState(false);
@@ -24,21 +27,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   );
   const [selectedCellsNum, setSelectedCellsNum] = useState(0);
   const [leftNeighborsId, setLeftNeighborsId] = useState([]);
-  const [leftCellsPoint, setLeftCellsPoint] = useState(0);
   const [rightNeighborsId, setRightNeighborsId] = useState([]);
-  const [rightCellsPoint, setRightCellsPoint] = useState(0);
   const [upNeighborsId, setUpNeighborsId] = useState([]);
-  const [upCellsPoint, setUpCellsPoint] = useState(0);
   const [downNeighborsId, setDownNeighborsId] = useState([]);
-  const [downCellsPoint, setDownCellsPoint] = useState(0);
   const [upLeftNeighborsId, setUpLeftNeighborsId] = useState([]);
-  const [upLeftCellsPoint, setUpLeftCellsPoint] = useState(0);
   const [upRightNeighborsId, setUpRightNeighborsId] = useState([]);
-  const [upRightCellsPoint, setUpRightCellsPoint] = useState(0);
   const [downLeftNeighborsId, setDownLeftNeighborsId] = useState([]);
-  const [downLeftCellsPoint, setDownLeftCellsPoint] = useState(0);
   const [downRightNeighborsId, setDownRightNeighborsId] = useState([]);
-  const [downRightCellsPoint, setDownRightCellsPoint] = useState(0);
   const [pejmanChoice, setPejmanChoice] = useState(null);
   const [selectionErrorMessage, setSelectionErrorMessage] = useState("");
   const [chooseArrowMessage, setChooseArrowMessage] = useState(false);
@@ -50,6 +45,16 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [pejmanPoint, setPejmanPoint] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
 
+  const handleEasyMode = () => {
+    setEasyMode(true);
+    setNormalMode(false);
+    setIsUserTurn(true);
+  };
+  const handleNormalMode = () => {
+    setNormalMode(true);
+    setEasyMode(false);
+    setIsUserTurn(false);
+  };
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
       setUserColor(Red);
@@ -78,7 +83,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     } else {
       setIsGameStarted(true);
     }
-    setIsUserTurn(true);
+    if (easyMode) {
+        setIsUserTurn(true);
+    } else {
+        setIsUserTurn(false);
+    }
   };
   const handleOk = () => {
     setUserColor(null);
@@ -90,21 +99,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   };
   const resetNeighbors = () => {
     setLeftNeighborsId([]);
-    setLeftCellsPoint(0);
     setRightNeighborsId([]);
-    setRightCellsPoint(0);
     setUpNeighborsId([]);
-    setUpCellsPoint(0);
     setDownNeighborsId([]);
-    setDownCellsPoint(0);
     setUpLeftNeighborsId([]);
-    setUpLeftCellsPoint(0);
     setUpRightNeighborsId([]);
-    setUpRightCellsPoint(0);
     setDownLeftNeighborsId([]);
-    setDownLeftCellsPoint(0);
     setDownRightNeighborsId([]);
-    setDownRightCellsPoint(0);
   };
   const handleAllowPejman = () => {
     setIsUserTurn(false);
@@ -296,28 +297,20 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     }
     // Creating left neighbors:
     setLeftNeighborsId(leftNeighbors);
-    setLeftCellsPoint(leftNeighbors.length);
     // Creating right neighbors:
     setRightNeighborsId(rightNeighbors);
-    setRightCellsPoint(rightNeighbors.length);
     // Creating up neighbors:
     setUpNeighborsId(upNeighbors);
-    setUpCellsPoint(upNeighbors.length);
     // Creating down neighbors:
     setDownNeighborsId(downNeighbors);
-    setDownCellsPoint(downNeighbors.length);
     // Creating up-left neighbors:
     setUpLeftNeighborsId(upLeftNeighbors);
-    setUpLeftCellsPoint(upLeftNeighbors.length);
     // Creating up-right neighbors:
     setUpRightNeighborsId(upRightNeighbors);
-    setUpRightCellsPoint(upRightNeighbors.length);
     // Creating down-left neighbors:
     setDownLeftNeighborsId(downLeftNeighbors);
-    setDownLeftCellsPoint(downLeftNeighbors.length);
     // Creating down-right neighbors:
     setDownRightNeighborsId(downRightNeighbors);
-    setDownRightCellsPoint(downRightNeighbors.length);
   };
   const handleWinUpLeftCells = (color) => {
     setCells((currCells) =>
@@ -663,6 +656,10 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     }
   };
   const handlePejmanChoice = () => {
+    if (freeCellsIds.length === 49) {
+        setPejmanChoice(24);
+        return;
+    }
     for (const cell of cells) {
       if (
         isAtLeastOneNeighborSelected(cell.id) &&
@@ -726,6 +723,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setPejmanChoice(getRandArr(freeCellsIds));
   };
   const handlePejmanDirectionChoice = () => {
+    if (freeCellsIds.length === 48) {
+        setAllowPejmanChooseDirection(false);
+        setIsUserTurn(true);
+        return;
+    }
     if (leftNeighborsId.length === 6) {
       setCells((currCells) =>
         currCells.map((c) =>
@@ -1284,6 +1286,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             : c,
         ),
       );
+      setSelectedCellsNum((currSelectedCellsNum) => currSelectedCellsNum + 1);
       setFreeCellsIds((currFreeCellsIds) =>
         currFreeCellsIds.filter((c) => c !== pejmanChoice),
       );
@@ -1291,60 +1294,39 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       setAllowPejmanChooseDirection(true);
     }
   }, [pejmanChoice]);
+  useEffect(() => {
+if (freeCellsIds.length === 0 && normalMode) {
+      setIsGameOver(true);
+    }
+  }, [freeCellsIds]);
   return (
     <div>
       <h2>Reversi</h2>
-      {/* <div>Pejman Choice: {pejmanChoice}</div> */}
-      {/* <h3>{freeCellsIds.length}</h3> */}
-      {/* <div>
-        Left neighbors:
-        {leftNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Right neighbors:
-        {rightNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Up neighbors:
-        {upNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Down neighbors:
-        {downNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Up-Left neighbors:
-        {upLeftNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Up-Right neighbors:
-        {upRightNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Down-Left neighbors:
-        {downLeftNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div>
-      <div>
-        Down-Right neighbors:
-        {downRightNeighborsId.map((n) => (
-          <div style={{ display: "inline", color: "red" }}> {n} - </div>
-        ))}
-      </div> */}
-      {!isGameStarted && !isIdenticalColor && (
+      {easyMode &&
+            !normalMode
+            // &&
+            // !isTogglingReset &&
+            // !isTogglingHomePage &&
+            // !isTogglingLevel
+            ? (
+              <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
+            ) : (
+              !easyMode &&
+              normalMode &&
+            //   !isTogglingReset &&
+            //   !isTogglingHomePage &&
+            //   !isTogglingLevel &&
+              (
+                <ModeExplaination message="Normal Mode: Pejman starts the game, you will get one star if you win." />
+              )
+            )}
+      {!isGameStarted && !easyMode && !normalMode &&
+        <div>
+            <button onClick={handleEasyMode}>Easy Mode</button>
+            <button onClick={handleNormalMode}>Normal Mode</button>
+        </div>
+      }
+      {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
         <div>
           <div>
             <label htmlFor="userColor">Select a Color for yourself</label>
@@ -1376,7 +1358,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           </div>
         </div>
       )}
-      {!isGameStarted && userColor && pejmanColor && (
+      {!isGameStarted && (easyMode || normalMode) && userColor && pejmanColor && (
         <button onClick={handleStart}>Start the Game</button>
       )}
       {isIdenticalColor && (
@@ -1391,9 +1373,6 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <button onClick={handleSelectionErrorMessage}>Ok</button>
         </div>
       )}
-      {/* {freeCellsIds.map((c) => (
-        <div style={{ display: "inline" }}>{c} - </div>
-      ))} */}
       <br />
       {isGameStarted &&
         cells.map((el, idx) =>
@@ -1413,11 +1392,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 selectionErrorMessage={selectionErrorMessage}
                 setSelectionErrorMessage={setSelectionErrorMessage}
                 isUserTurn={isUserTurn}
-                setIsUserTurn={setIsUserTurn}
                 freeCellsIds={freeCellsIds}
                 setFreeCellsIds={setFreeCellsIds}
                 allowPejmanMessage={allowPejmanMessage}
-                setAllowPejmanMessage={setAllowPejmanMessage}
                 creatingNeighbors={creatingNeighbors}
                 chooseArrowMessage={chooseArrowMessage}
                 setChooseArrowMessage={setChooseArrowMessage}
@@ -1432,6 +1409,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 downRightNeighborsId={downRightNeighborsId}
                 pejmanChoice={pejmanChoice}
                 setPejmanChoice={setPejmanChoice}
+                easyMode={easyMode}
               />
             </div>
           ) : (
@@ -1450,11 +1428,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 selectionErrorMessage={selectionErrorMessage}
                 setSelectionErrorMessage={setSelectionErrorMessage}
                 isUserTurn={isUserTurn}
-                setIsUserTurn={setIsUserTurn}
                 freeCellsIds={freeCellsIds}
                 setFreeCellsIds={setFreeCellsIds}
                 allowPejmanMessage={allowPejmanMessage}
-                setAllowPejmanMessage={setAllowPejmanMessage}
                 creatingNeighbors={creatingNeighbors}
                 chooseArrowMessage={chooseArrowMessage}
                 setChooseArrowMessage={setChooseArrowMessage}
@@ -1469,6 +1445,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 downRightNeighborsId={downRightNeighborsId}
                 pejmanChoice={pejmanChoice}
                 setPejmanChoice={setPejmanChoice}
+                easyMode={easyMode}
               />
               <br />
             </div>
@@ -1620,9 +1597,21 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {allowPejmanChooseDirection && (
+      {freeCellsIds.length === 49 && normalMode && userColor && pejmanColor && isGameStarted && (
+        <div>
+          Allow Pejman to start the game
+          <button onClick={handleAllowPejman}>Ok</button>
+        </div>
+      )}
+      {allowPejmanChooseDirection && freeCellsIds.length !== 48 && freeCellsIds.length > 0 && (
         <div>
           <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
+          <button onClick={handlePejmanDirectionChoice}>Ok</button>
+        </div>
+      )}
+      {allowPejmanChooseDirection && freeCellsIds.length === 48 && (
+        <div>
+          <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
           <button onClick={handlePejmanDirectionChoice}>Ok</button>
         </div>
       )}

@@ -13,11 +13,9 @@ export default function Cell({
   selectionErrorMessage,
   setSelectionErrorMessage,
   isUserTurn,
-  setIsUserTurn,
   freeCellsIds,
   setFreeCellsIds,
   allowPejmanMessage,
-  setAllowPejmanMessage,
   creatingNeighbors,
   chooseArrowMessage,
   setChooseArrowMessage,
@@ -32,23 +30,27 @@ export default function Cell({
   downRightNeighborsId,
   pejmanChoice,
   setPejmanChoice,
+  easyMode
 }) {
   const handleClickCell = () => {
-    setPejmanChoice(null);
+    
     if (
       selectedCellsNum === 0 &&
-      ![16, 17, 18, 23, 24, 25, 30, 31, 32].includes(id)
+      ![16, 17, 18, 23, 24, 25, 30, 31, 32].includes(id) &&
+      easyMode
     ) {
       setSelectionErrorMessage(
         "For the start of the game, you should select one of the 9 central squares!",
       );
       return;
-    } else if (selectedCellsNum > 0 && !isAtLeastOneNeighborSelected(id)) {
+    }
+    if (selectedCellsNum > 0 && !isAtLeastOneNeighborSelected(id)) {
       setSelectionErrorMessage(
         "You should select a square that has at least one selected neighbor!",
       );
       return;
     }
+    setPejmanChoice(null);
     setCells((currCells) =>
       currCells.map((c) =>
         c.id === id ? { ...c, src: userColor, isSelected: true } : c,
@@ -67,6 +69,7 @@ export default function Cell({
       onClick={handleClickCell}
       width={selectionErrorMessage === "" ? "40px" : "25px"}
       border={
+        freeCellsIds.length === 0 ? "1px solid black" :
         selectionErrorMessage ===
           "For the start of the game, you should select one of the 9 central squares!" &&
         [16, 17, 18, 23, 24, 25, 30, 31, 32].includes(id)
