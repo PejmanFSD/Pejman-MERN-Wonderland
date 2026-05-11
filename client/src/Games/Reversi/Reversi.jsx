@@ -464,6 +464,14 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     let upRightNeighborsNot5 = [];
     let downLeftNeighborsNot5 = [];
     let downRightNeighborsNot5 = [];
+    let upLeftExistingNeighborsNot4 = [];
+    let upLeftFilledNeighborsNot4 = [];
+    let upRightExistingNeighborsNot4 = [];
+    let upRightFilledNeighborsNot4 = [];
+    let downLeftExistingNeighborsNot4 = [];
+    let downLeftFilledNeighborsNot4 = [];
+    let downRightExistingNeighborsNot4 = [];
+    let downRightFilledNeighborsNot4 = [];
     for (const c of cells) {
       // Creating left neighbors:
       if (c.id >= Math.floor(id / 7) * 7 && c.id < id && c.src === userColor) {
@@ -528,7 +536,14 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         c.src !== White
       ) {
         upLeftNeighborsNot5.push(c.id);
+        upLeftFilledNeighborsNot4.push(c.id);
       }
+      if (
+          (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7) ||
+          (c.id > id && (c.id - id) % 8 === 0 && c.id % 7 > id % 7)
+        ) {
+            upLeftExistingNeighborsNot4.push(c.id);
+        }
       // Creating up-right neighbors:
       if (
         c.id < id &&
@@ -544,6 +559,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         c.src !== White
       ) {
         upRightNeighborsNot5.push(c.id);
+        upRightFilledNeighborsNot4.push(c.id);
+      }
+      if (
+        (c.id < id && (id - c.id) % 6 === 0 && c.id % 7 > id % 7) ||
+        (c.id > id && (c.id - id) % 6 === 0 && c.id % 7 < id % 7)
+      ) {
+        upRightExistingNeighborsNot4.push(c.id);
       }
       // Creating down-left neighbors:
       if (
@@ -560,6 +582,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         c.src !== White
       ) {
         downLeftNeighborsNot5.push(c.id);
+        downLeftFilledNeighborsNot4.push(c.id);
+      }
+      if (
+        (c.id > id && (c.id - id) % 6 === 0 && c.id % 7 < id % 7) ||
+        (c.id < id && (id - c.id) % 6 === 0 && c.id % 7 > id % 7)
+      ) {
+        downLeftExistingNeighborsNot4.push(c.id);
       }
       // Creating down-right neighbors:
       if (
@@ -576,6 +605,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         c.src !== White
       ) {
         downRightNeighborsNot5.push(c.id);
+        downRightFilledNeighborsNot4.push(c.id);
+      }
+      if (
+        (c.id > id && (c.id - id) % 8 === 0 && c.id % 7 > id % 7) ||
+        (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7)
+      ) {
+        downRightExistingNeighborsNot4.push(c.id);
       }
     }
     if (
@@ -600,22 +636,26 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       return downNeighbors;
     } else if (
       upLeftNeighbors.length === desiredPoint &&
-      upLeftNeighborsNot5.length !== 5
+      upLeftNeighborsNot5.length !== 5 &&
+      (upLeftExistingNeighborsNot4.length === 5 && upLeftFilledNeighborsNot4.length !== 4)
     ) {
       return upLeftNeighbors;
     } else if (
       upRightNeighbors.length === desiredPoint &&
-      upRightNeighborsNot5.length !== 5
+      upRightNeighborsNot5.length !== 5 &&
+      (upRightExistingNeighborsNot4.length === 5 && upRightFilledNeighborsNot4.length !== 4)
     ) {
       return upRightNeighbors;
     } else if (
       downLeftNeighbors.length === desiredPoint &&
-      downLeftNeighborsNot5.length !== 5
+      downLeftNeighborsNot5.length !== 5 &&
+      (downLeftExistingNeighborsNot4.length === 5 && downLeftFilledNeighborsNot4.length !== 4)
     ) {
       return downLeftNeighbors;
     } else if (
       downRightNeighbors.length === desiredPoint &&
-      downRightNeighborsNot5.length !== 5
+      downRightNeighborsNot5.length !== 5 &&
+      (downRightExistingNeighborsNot4.length === 5 && downRightFilledNeighborsNot4.length !== 4)
     ) {
       return downRightNeighbors;
     } else {
