@@ -1389,7 +1389,26 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     if (freeCellsIds.length === 0 && normalMode) {
       setIsGameOver(true);
     }
-  }, [freeCellsIds]);
+  }, [freeCellsIds, isUserTurn]);
+  useEffect(() => {
+    if (
+      chooseArrowMessage &&
+      freeCellsIds.length < 48 &&
+      leftNeighborsId.length === 0 &&
+      rightNeighborsId.length === 0 &&
+      upNeighborsId.length === 0 &&
+      downNeighborsId.length === 0 &&
+      upLeftNeighborsId.length === 0 &&
+      upRightNeighborsId.length === 0 &&
+      downLeftNeighborsId.length === 0 &&
+      downRightNeighborsId.length === 0
+    ) {
+      setIsGameOver(true);
+      setFinalMessage(
+        "The square you just chose can't change the color of even one of the Pejman's squares, so ... Pejman wins!",
+      );
+    }
+  }, [chooseArrowMessage]);
   return (
     <div>
       <h2>Reversi</h2>
@@ -1841,10 +1860,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           </div>
         )}
       {finalMessage &&
-        finalMessage === "Pejman Wins!" &&
+        (finalMessage === "Pejman Wins!" ||
+          finalMessage ===
+            "The square you just chose can't change the color of even one of the Pejman's squares, so ... Pejman wins!") &&
         !isTogglingHomePage && (
           <div>
-            <h3>Pejman Wins!</h3>
+            <h3>{finalMessage}</h3>
             <div>Try Again?</div>
             <button onClick={handlePlayAgain}>Ok</button>
           </div>
