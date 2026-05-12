@@ -86,46 +86,44 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       setIsGameStarted(true);
     }
     if (easyMode) {
-        setIsUserTurn(true);
+      setIsUserTurn(true);
     } else {
-        setIsUserTurn(false);
+      setIsUserTurn(false);
     }
   };
-    const handlePlayAgain = () => {
-        if (easyMode) {
-            setIsUserTurn(true);
-        } else {
-            setIsUserTurn(false);
-        }
-        setCells(
-            new Array(49)
-            .fill(null)
-            .map((el, idx) => ({ id: idx, src: White, isSelected: false })),
-        );
-        setFreeCellsIds(
-            Array.from({ length: 49 }, (_, i) => i),
-        );
-        setSelectedCellsNum(0);
-        setLeftNeighborsId([]);
-        setRightNeighborsId([]);
-        setUpNeighborsId([]);
-        setDownNeighborsId([]);
-        setUpLeftNeighborsId([]);
-        setUpRightNeighborsId([]);
-        setDownLeftNeighborsId([]);
-        setDownRightNeighborsId([]);
-        setPejmanChoice(null);
-        setSelectionErrorMessage("");
-        setChooseArrowMessage(false);
-        setAllowPejmanMessage(false);
-        setAllowPejmanChooseDirection(false);
-        setIsGameOver(false);
-        setUserPoint(0);
-        setPejmanPoint(0);
-        setFinalMessage("");
-        setIsTogglingReset(false);
-        // setIsTogglingLevel(false);
-    };
+  const handlePlayAgain = () => {
+    if (easyMode) {
+      setIsUserTurn(true);
+    } else {
+      setIsUserTurn(false);
+    }
+    setCells(
+      new Array(49)
+        .fill(null)
+        .map((el, idx) => ({ id: idx, src: White, isSelected: false })),
+    );
+    setFreeCellsIds(Array.from({ length: 49 }, (_, i) => i));
+    setSelectedCellsNum(0);
+    setLeftNeighborsId([]);
+    setRightNeighborsId([]);
+    setUpNeighborsId([]);
+    setDownNeighborsId([]);
+    setUpLeftNeighborsId([]);
+    setUpRightNeighborsId([]);
+    setDownLeftNeighborsId([]);
+    setDownRightNeighborsId([]);
+    setPejmanChoice(null);
+    setSelectionErrorMessage("");
+    setChooseArrowMessage(false);
+    setAllowPejmanMessage(false);
+    setAllowPejmanChooseDirection(false);
+    setIsGameOver(false);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setFinalMessage("");
+    setIsTogglingReset(false);
+    // setIsTogglingLevel(false);
+  };
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
@@ -586,11 +584,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         upLeftFilledNeighborsNot4.push(c.id);
       }
       if (
-          (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7) ||
-          (c.id > id && (c.id - id) % 8 === 0 && c.id % 7 > id % 7)
-        ) {
-            upLeftExistingNeighborsNot4.push(c.id);
-        }
+        (c.id < id && (id - c.id) % 8 === 0 && c.id % 7 < id % 7) ||
+        (c.id > id && (c.id - id) % 8 === 0 && c.id % 7 > id % 7)
+      ) {
+        upLeftExistingNeighborsNot4.push(c.id);
+      }
       // Creating up-right neighbors:
       if (
         c.id < id &&
@@ -684,25 +682,29 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     } else if (
       upLeftNeighbors.length === desiredPoint &&
       upLeftNeighborsNot5.length !== 5 &&
-      (upLeftExistingNeighborsNot4.length === 5 && upLeftFilledNeighborsNot4.length !== 4)
+      upLeftExistingNeighborsNot4.length === 5 &&
+      upLeftFilledNeighborsNot4.length !== 4
     ) {
       return upLeftNeighbors;
     } else if (
       upRightNeighbors.length === desiredPoint &&
       upRightNeighborsNot5.length !== 5 &&
-      (upRightExistingNeighborsNot4.length === 5 && upRightFilledNeighborsNot4.length !== 4)
+      upRightExistingNeighborsNot4.length === 5 &&
+      upRightFilledNeighborsNot4.length !== 4
     ) {
       return upRightNeighbors;
     } else if (
       downLeftNeighbors.length === desiredPoint &&
       downLeftNeighborsNot5.length !== 5 &&
-      (downLeftExistingNeighborsNot4.length === 5 && downLeftFilledNeighborsNot4.length !== 4)
+      downLeftExistingNeighborsNot4.length === 5 &&
+      downLeftFilledNeighborsNot4.length !== 4
     ) {
       return downLeftNeighbors;
     } else if (
       downRightNeighbors.length === desiredPoint &&
       downRightNeighborsNot5.length !== 5 &&
-      (downRightExistingNeighborsNot4.length === 5 && downRightFilledNeighborsNot4.length !== 4)
+      downRightExistingNeighborsNot4.length === 5 &&
+      downRightFilledNeighborsNot4.length !== 4
     ) {
       return downRightNeighbors;
     } else {
@@ -711,8 +713,8 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   };
   const handlePejmanChoice = () => {
     if (freeCellsIds.length === 49) {
-        setPejmanChoice(24);
-        return;
+      setPejmanChoice(24);
+      return;
     }
     for (const cell of cells) {
       if (
@@ -778,9 +780,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   };
   const handlePejmanDirectionChoice = () => {
     if (freeCellsIds.length === 48) {
-        setAllowPejmanChooseDirection(false);
-        setIsUserTurn(true);
-        return;
+      setAllowPejmanChooseDirection(false);
+      setIsUserTurn(true);
+      return;
     }
     if (leftNeighborsId.length === 6) {
       setCells((currCells) =>
@@ -1324,11 +1326,11 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       }
     }
     if (up > pp) {
-        if (normalMode) {
-            setFinalMessage("You Win!");
-        } else {
-            setFinalMessage("You Win, but you don't get any stars!");
-        }
+      if (normalMode) {
+        setFinalMessage("You Win!");
+      } else {
+        setFinalMessage("You Win, but you don't get any stars!");
+      }
     } else {
       setFinalMessage("Pejman Wins!");
     }
@@ -1353,37 +1355,33 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     }
   }, [pejmanChoice]);
   useEffect(() => {
-if (freeCellsIds.length === 0 && normalMode) {
+    if (freeCellsIds.length === 0 && normalMode) {
       setIsGameOver(true);
     }
   }, [freeCellsIds]);
   return (
     <div>
       <h2>Reversi</h2>
-      {easyMode &&
-            !normalMode &&
-            !isTogglingReset
-            // &&
-            // !isTogglingHomePage &&
-            // !isTogglingLevel
-            ? (
-              <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
-            ) : (
-              !easyMode &&
-              normalMode &&
-              !isTogglingReset &&
-            //   !isTogglingHomePage &&
-            //   !isTogglingLevel &&
-              (
-                <ModeExplaination message="Normal Mode: Pejman starts the game, you will get one star if you win." />
-              )
-            )}
-      {!isGameStarted && !easyMode && !normalMode &&
+      {easyMode && !normalMode && !isTogglingReset ? (
+        // &&
+        // !isTogglingHomePage &&
+        // !isTogglingLevel
+        <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
+      ) : (
+        !easyMode &&
+        normalMode &&
+        !isTogglingReset && (
+          //   !isTogglingHomePage &&
+          //   !isTogglingLevel &&
+          <ModeExplaination message="Normal Mode: Pejman starts the game, you will get one star if you win." />
+        )
+      )}
+      {!isGameStarted && !easyMode && !normalMode && (
         <div>
-            <button onClick={handleEasyMode}>Easy Mode</button>
-            <button onClick={handleNormalMode}>Normal Mode</button>
+          <button onClick={handleEasyMode}>Easy Mode</button>
+          <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
-      }
+      )}
       {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
         <div>
           <div>
@@ -1416,9 +1414,10 @@ if (freeCellsIds.length === 0 && normalMode) {
           </div>
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && userColor && pejmanColor && (
-        <button onClick={handleStart}>Start the Game</button>
-      )}
+      {!isGameStarted &&
+        (easyMode || normalMode) &&
+        userColor &&
+        pejmanColor && <button onClick={handleStart}>Start the Game</button>}
       {isIdenticalColor && (
         <div>
           <div>You can't choose an identical color for both players</div>
@@ -1432,26 +1431,27 @@ if (freeCellsIds.length === 0 && normalMode) {
         </div>
       )}
       {isGameStarted &&
-                !isTogglingReset &&
-                finalMessage === "" &&
-                // !isTogglingHomePage &&
-                // !isTogglingLevel &&
-                (easyMode || normalMode) && (
-                <div>
-                    <button onClick={toggleReset}>Reset the Game</button>
-                </div>
-                )}
-            {isTogglingReset && finalMessage === "" && (
-                <div>
-                  <ConfirmationBox
-                      question="Are you sure you want to reset the game?"
-                      toggleYes={toggleResetYes}
-                      toggleCancel={toggleResetCancel}
-                  />
-                </div>
-            )}
+        !isTogglingReset &&
+        finalMessage === "" &&
+        // !isTogglingHomePage &&
+        // !isTogglingLevel &&
+        (easyMode || normalMode) && (
+          <div>
+            <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+        )}
+      {isTogglingReset && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
+        </div>
+      )}
       <br />
-      {isGameStarted && !isTogglingReset &&
+      {isGameStarted &&
+        !isTogglingReset &&
         cells.map((el, idx) =>
           (idx + 1) % 7 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -1531,169 +1531,184 @@ if (freeCellsIds.length === 0 && normalMode) {
           ),
         )}
       <br />
-      {chooseArrowMessage && isUserTurn && freeCellsIds.length < 48 && !isTogglingReset && (
-        <div>
-          <div>Choose the path you wan to conquer</div>
+      {chooseArrowMessage &&
+        isUserTurn &&
+        freeCellsIds.length < 48 &&
+        !isTogglingReset && (
           <div>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingBottom: "4px",
-              }}
-              onClick={() => handleWinUpLeftCells(userColor)}
-              disabled={upLeftNeighborsId.length === 0}
-            >
-              &#8598;
-            </button>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onClick={() => handleWinUpCells(userColor)}
-              disabled={upNeighborsId.length === 0}
-            >
-              &#8593;
-            </button>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingBottom: "4px",
-              }}
-              onClick={() => handleWinUpRightCells(userColor)}
-              disabled={upRightNeighborsId.length === 0}
-            >
-              &#8599;
-            </button>
+            <div>Choose the path you wan to conquer</div>
+            <div>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "4px",
+                }}
+                onClick={() => handleWinUpLeftCells(userColor)}
+                disabled={upLeftNeighborsId.length === 0}
+              >
+                &#8598;
+              </button>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => handleWinUpCells(userColor)}
+                disabled={upNeighborsId.length === 0}
+              >
+                &#8593;
+              </button>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "4px",
+                }}
+                onClick={() => handleWinUpRightCells(userColor)}
+                disabled={upRightNeighborsId.length === 0}
+              >
+                &#8599;
+              </button>
+            </div>
+            <div>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => handleWinLeftCells(userColor)}
+                disabled={leftNeighborsId.length === 0}
+              >
+                &#8592;
+              </button>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "9px",
+                }}
+                disabled
+              ></button>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => handleWinRightCells(userColor)}
+                disabled={rightNeighborsId.length === 0}
+              >
+                &#8594;
+              </button>
+            </div>
+            <div>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "4px",
+                }}
+                onClick={() => handleWinDownLeftCells(userColor)}
+                disabled={downLeftNeighborsId.length === 0}
+              >
+                &#8601;
+              </button>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => handleWinDownCells(userColor)}
+                disabled={downNeighborsId.length === 0}
+              >
+                &#8595;
+              </button>
+              <button
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  margin: "3px",
+                  display: "inline",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "4px",
+                }}
+                onClick={() => handleWinDownRightCells(userColor)}
+                disabled={downRightNeighborsId.length === 0}
+              >
+                &#8600;
+              </button>
+            </div>
           </div>
+        )}
+      {(allowPejmanMessage || freeCellsIds.length === 48) &&
+        !pejmanChoice &&
+        !isTogglingReset && (
           <div>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onClick={() => handleWinLeftCells(userColor)}
-              disabled={leftNeighborsId.length === 0}
-            >
-              &#8592;
-            </button>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingBottom: "9px",
-              }}
-              disabled
-            ></button>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onClick={() => handleWinRightCells(userColor)}
-              disabled={rightNeighborsId.length === 0}
-            >
-              &#8594;
-            </button>
+            Allow Pejman to make his move
+            <button onClick={handleAllowPejman}>Ok</button>
           </div>
+        )}
+      {freeCellsIds.length === 49 &&
+        normalMode &&
+        userColor &&
+        pejmanColor &&
+        isGameStarted &&
+        !isTogglingReset && (
           <div>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingBottom: "4px",
-              }}
-              onClick={() => handleWinDownLeftCells(userColor)}
-              disabled={downLeftNeighborsId.length === 0}
-            >
-              &#8601;
-            </button>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onClick={() => handleWinDownCells(userColor)}
-              disabled={downNeighborsId.length === 0}
-            >
-              &#8595;
-            </button>
-            <button
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "3px",
-                display: "inline",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingBottom: "4px",
-              }}
-              onClick={() => handleWinDownRightCells(userColor)}
-              disabled={downRightNeighborsId.length === 0}
-            >
-              &#8600;
-            </button>
+            Allow Pejman to start the game
+            <button onClick={handleAllowPejman}>Ok</button>
           </div>
-        </div>
-      )}
-      {(allowPejmanMessage || freeCellsIds.length === 48) && !pejmanChoice && !isTogglingReset && (
-        <div>
-          Allow Pejman to make his move
-          <button onClick={handleAllowPejman}>Ok</button>
-        </div>
-      )}
-      {freeCellsIds.length === 49 && normalMode && userColor && pejmanColor && isGameStarted && !isTogglingReset && (
-        <div>
-          Allow Pejman to start the game
-          <button onClick={handleAllowPejman}>Ok</button>
-        </div>
-      )}
-      {allowPejmanChooseDirection && freeCellsIds.length !== 48 && freeCellsIds.length > 0 && !isTogglingReset && (
-        <div>
-          <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
-          <button onClick={handlePejmanDirectionChoice}>Ok</button>
-        </div>
-      )}
-      {allowPejmanChooseDirection && freeCellsIds.length === 48 && !isTogglingReset && (
-        <div>
-          <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
-          <button onClick={handlePejmanDirectionChoice}>Ok</button>
-        </div>
-      )}
+        )}
+      {allowPejmanChooseDirection &&
+        freeCellsIds.length !== 48 &&
+        freeCellsIds.length > 0 &&
+        !isTogglingReset && (
+          <div>
+            <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
+            <button onClick={handlePejmanDirectionChoice}>Ok</button>
+          </div>
+        )}
+      {allowPejmanChooseDirection &&
+        freeCellsIds.length === 48 &&
+        !isTogglingReset && (
+          <div>
+            <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
+            <button onClick={handlePejmanDirectionChoice}>Ok</button>
+          </div>
+        )}
       {isGameOver && finalMessage === "" && !isTogglingReset && (
         <div>
           <div>All the squares are taken, let's see who is the winner</div>
@@ -1706,22 +1721,24 @@ if (freeCellsIds.length === 0 && normalMode) {
           <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
         </div>
       )}
-      {finalMessage && (finalMessage === "You Win!" || finalMessage === "You Win, but you don't get any stars!") &&
-    //   !isTogglingHomePage &&
-        <div>
+      {finalMessage &&
+        (finalMessage === "You Win!" ||
+          finalMessage === "You Win, but you don't get any stars!") && (
+          //   !isTogglingHomePage &&
+          <div>
             <h3>You Win!</h3>
             <div>Play Again?</div>
             <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      }
-      {finalMessage && finalMessage === "Pejman Wins!" &&
-    //   !isTogglingHomePage &&
+          </div>
+        )}
+      {finalMessage && finalMessage === "Pejman Wins!" && (
+        //   !isTogglingHomePage &&
         <div>
-            <h3>Pejman Wins!</h3>
-            <div>Try Again?</div>
-            <button onClick={handlePlayAgain}>Ok</button>
+          <h3>Pejman Wins!</h3>
+          <div>Try Again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
         </div>
-      }
+      )}
       {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Reversi" currentUser={currentUser} />} */}
     </div>
   );
