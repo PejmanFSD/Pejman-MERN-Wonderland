@@ -9,6 +9,7 @@ import Cell from "./Cell";
 import { getRandArr } from "../utils.js";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
 export default function Reversi({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -47,7 +48,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -124,6 +127,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setFinalMessage("");
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -157,6 +161,15 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    navigate("/");
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   const handleOk = () => {
     setUserColor(null);
@@ -1379,15 +1392,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   return (
     <div>
       <h2>Reversi</h2>
-      {easyMode && !normalMode && !isTogglingReset && !isTogglingLevel ? (
-        // !isTogglingHomePage &&
+      {easyMode && !normalMode && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage ? (
         <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
       ) : (
         !easyMode &&
         normalMode &&
         !isTogglingReset &&
-        !isTogglingLevel && (
-          //   !isTogglingHomePage &&
+        !isTogglingLevel && !isTogglingHomePage && (
           <ModeExplaination message="Normal Mode: Pejman starts the game, you will get one star if you win." />
         )
       )}
@@ -1400,7 +1411,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {!isGameStarted &&
         !isIdenticalColor &&
         (easyMode || normalMode) &&
-        !isTogglingLevel && (
+        (
           <div>
             <div>
               <label htmlFor="userColor">Select a Color for yourself</label>
@@ -1453,7 +1464,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         selectionErrorMessage !== "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             <div>{selectionErrorMessage}</div>
             <button onClick={handleSelectionErrorMessage}>Ok</button>
@@ -1462,9 +1473,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         !isTogglingReset &&
         finalMessage === "" &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
-        (easyMode || normalMode) && (
+        (easyMode || normalMode) && !isIdenticalColor && (
           <div>
             <button onClick={toggleReset}>Reset the Game</button>
           </div>
@@ -1481,7 +1492,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         (easyMode || normalMode) &&
         !isTogglingReset &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         finalMessage === "" &&
         !isIdenticalColor && (
@@ -1506,10 +1517,30 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
+      {isGameStarted && !isTogglingHomePage &&
+                          !isTogglingReset &&
+                          !isTogglingLevel &&
+                          finalMessage === "" && !isIdenticalColor && (
+                            <div>
+                              <button onClick={() => toggleHomePage()}>
+                                Back to the home page
+                              </button>
+                            </div>
+                          )}
+                        {isTogglingHomePage && finalMessage === "" && (
+                          <div>
+                            <ConfirmationBox
+                              question="Are you sure you want to go back to Home Page?"
+                              toggleYes={toggleHomePageYes}
+                              toggleCancel={toggleHomePageCancel}
+                            />
+                          </div>
+                        )}
       <br />
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         cells.map((el, idx) =>
           (idx + 1) % 7 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -1593,7 +1624,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         isUserTurn &&
         freeCellsIds.length < 48 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             <div>Choose the path you wan to conquer</div>
             <div>
@@ -1735,7 +1766,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {(allowPejmanMessage || freeCellsIds.length === 48) &&
         !pejmanChoice &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             Allow Pejman to make his move
             <button onClick={handleAllowPejman}>Ok</button>
@@ -1747,7 +1778,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         pejmanColor &&
         isGameStarted &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             Allow Pejman to start the game
             <button onClick={handleAllowPejman}>Ok</button>
@@ -1757,7 +1788,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         freeCellsIds.length !== 48 &&
         freeCellsIds.length > 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
             <button onClick={handlePejmanDirectionChoice}>Ok</button>
@@ -1766,7 +1797,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {allowPejmanChooseDirection &&
         freeCellsIds.length === 48 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
             <button onClick={handlePejmanDirectionChoice}>Ok</button>
@@ -1775,7 +1806,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {isGameOver &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             <div>All the squares are taken, let's see who is the winner</div>
             <button onClick={handleGameResult}>Ok</button>
@@ -1783,7 +1814,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         )}
       {(pejmanPoint > 0 || userPoint > 0) &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel && !isTogglingHomePage && (
           <div>
             <div>{`You conquered ${userPoint} squares`}</div>
             <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
@@ -1791,16 +1822,14 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         )}
       {finalMessage &&
         (finalMessage === "You Win!" ||
-          finalMessage === "You Win, but you don't get any stars!") && (
-          //   !isTogglingHomePage &&
+          finalMessage === "You Win, but you don't get any stars!") && !isTogglingHomePage && (
           <div>
             <h3>You Win!</h3>
             <div>Play Again?</div>
             <button onClick={handlePlayAgain}>Ok</button>
           </div>
         )}
-      {finalMessage && finalMessage === "Pejman Wins!" && (
-        //   !isTogglingHomePage &&
+      {finalMessage && finalMessage === "Pejman Wins!" && !isTogglingHomePage && (
         <div>
           <h3>Pejman Wins!</h3>
           <div>Try Again?</div>
