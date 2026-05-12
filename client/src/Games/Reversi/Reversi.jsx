@@ -8,6 +8,7 @@ import ReviewSection from "../../Components/ReviewSection";
 import Cell from "./Cell";
 import { getRandArr } from "../utils.js";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
 export default function Reversi({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -123,7 +124,25 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         setPejmanPoint(0);
         setFinalMessage("");
         setIsTogglingReset(false);
+        // setIsTogglingLevel(false);
     };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    setIsGameStarted(false);
+    setIsUserTurn(false);
+    setEasyMode(false);
+    setNormalMode(false);
+    setUserColor("");
+    setPejmanColor("");
+    setIsIdenticalColor(false);
+    setIsTogglingReset(false);
+    handlePlayAgain();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
+  };
   const handleOk = () => {
     setUserColor(null);
     setPejmanColor(null);
@@ -1342,9 +1361,9 @@ if (freeCellsIds.length === 0 && normalMode) {
     <div>
       <h2>Reversi</h2>
       {easyMode &&
-            !normalMode
+            !normalMode &&
+            !isTogglingReset
             // &&
-            // !isTogglingReset &&
             // !isTogglingHomePage &&
             // !isTogglingLevel
             ? (
@@ -1352,7 +1371,7 @@ if (freeCellsIds.length === 0 && normalMode) {
             ) : (
               !easyMode &&
               normalMode &&
-            //   !isTogglingReset &&
+              !isTogglingReset &&
             //   !isTogglingHomePage &&
             //   !isTogglingLevel &&
               (
@@ -1406,14 +1425,33 @@ if (freeCellsIds.length === 0 && normalMode) {
           <button onClick={handleOk}>Ok</button>
         </div>
       )}
-      {isGameStarted && selectionErrorMessage !== "" && (
+      {isGameStarted && selectionErrorMessage !== "" && !isTogglingReset && (
         <div>
           <div>{selectionErrorMessage}</div>
           <button onClick={handleSelectionErrorMessage}>Ok</button>
         </div>
       )}
-      <br />
       {isGameStarted &&
+                !isTogglingReset &&
+                finalMessage === "" &&
+                // !isTogglingHomePage &&
+                // !isTogglingLevel &&
+                (easyMode || normalMode) && (
+                <div>
+                    <button onClick={toggleReset}>Reset the Game</button>
+                </div>
+                )}
+            {isTogglingReset && finalMessage === "" && (
+                <div>
+                  <ConfirmationBox
+                      question="Are you sure you want to reset the game?"
+                      toggleYes={toggleResetYes}
+                      toggleCancel={toggleResetCancel}
+                  />
+                </div>
+            )}
+      <br />
+      {isGameStarted && !isTogglingReset &&
         cells.map((el, idx) =>
           (idx + 1) % 7 !== 0 ? (
             <div style={{ display: "inline" }}>
@@ -1493,7 +1531,7 @@ if (freeCellsIds.length === 0 && normalMode) {
           ),
         )}
       <br />
-      {chooseArrowMessage && isUserTurn && freeCellsIds.length < 48 && (
+      {chooseArrowMessage && isUserTurn && freeCellsIds.length < 48 && !isTogglingReset && (
         <div>
           <div>Choose the path you wan to conquer</div>
           <div>
@@ -1632,37 +1670,37 @@ if (freeCellsIds.length === 0 && normalMode) {
           </div>
         </div>
       )}
-      {(allowPejmanMessage || freeCellsIds.length === 48) && !pejmanChoice && (
+      {(allowPejmanMessage || freeCellsIds.length === 48) && !pejmanChoice && !isTogglingReset && (
         <div>
           Allow Pejman to make his move
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {freeCellsIds.length === 49 && normalMode && userColor && pejmanColor && isGameStarted && (
+      {freeCellsIds.length === 49 && normalMode && userColor && pejmanColor && isGameStarted && !isTogglingReset && (
         <div>
           Allow Pejman to start the game
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
       )}
-      {allowPejmanChooseDirection && freeCellsIds.length !== 48 && freeCellsIds.length > 0 && (
+      {allowPejmanChooseDirection && freeCellsIds.length !== 48 && freeCellsIds.length > 0 && !isTogglingReset && (
         <div>
           <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
           <button onClick={handlePejmanDirectionChoice}>Ok</button>
         </div>
       )}
-      {allowPejmanChooseDirection && freeCellsIds.length === 48 && (
+      {allowPejmanChooseDirection && freeCellsIds.length === 48 && !isTogglingReset && (
         <div>
           <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
           <button onClick={handlePejmanDirectionChoice}>Ok</button>
         </div>
       )}
-      {isGameOver && finalMessage === "" && (
+      {isGameOver && finalMessage === "" && !isTogglingReset && (
         <div>
           <div>All the squares are taken, let's see who is the winner</div>
           <button onClick={handleGameResult}>Ok</button>
         </div>
       )}
-      {(pejmanPoint > 0 || userPoint > 0) && (
+      {(pejmanPoint > 0 || userPoint > 0) && !isTogglingReset && (
         <div>
           <div>{`You conquered ${userPoint} squares`}</div>
           <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
