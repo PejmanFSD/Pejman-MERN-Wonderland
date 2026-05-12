@@ -44,6 +44,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [userPoint, setUserPoint] = useState(0);
   const [pejmanPoint, setPejmanPoint] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -89,6 +90,40 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         setIsUserTurn(false);
     }
   };
+    const handlePlayAgain = () => {
+        if (easyMode) {
+            setIsUserTurn(true);
+        } else {
+            setIsUserTurn(false);
+        }
+        setCells(
+            new Array(49)
+            .fill(null)
+            .map((el, idx) => ({ id: idx, src: White, isSelected: false })),
+        );
+        setFreeCellsIds(
+            Array.from({ length: 49 }, (_, i) => i),
+        );
+        setSelectedCellsNum(0);
+        setLeftNeighborsId([]);
+        setRightNeighborsId([]);
+        setUpNeighborsId([]);
+        setDownNeighborsId([]);
+        setUpLeftNeighborsId([]);
+        setUpRightNeighborsId([]);
+        setDownLeftNeighborsId([]);
+        setDownRightNeighborsId([]);
+        setPejmanChoice(null);
+        setSelectionErrorMessage("");
+        setChooseArrowMessage(false);
+        setAllowPejmanMessage(false);
+        setAllowPejmanChooseDirection(false);
+        setIsGameOver(false);
+        setUserPoint(0);
+        setPejmanPoint(0);
+        setFinalMessage("");
+        setIsTogglingReset(false);
+    };
   const handleOk = () => {
     setUserColor(null);
     setPejmanColor(null);
@@ -1259,7 +1294,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     }
   };
   const handleGameResult = () => {
-    setIsGameOver(false);
+    setIsGameOver(true);
     let up = 0;
     let pp = 0;
     for (const cell of cells) {
@@ -1270,9 +1305,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       }
     }
     if (up > pp) {
-      setFinalMessage("You Win!");
+        if (normalMode) {
+            setFinalMessage("You Win!");
+        } else {
+            setFinalMessage("You Win, but you don't get any stars!");
+        }
     } else {
-      setFinalMessage("You Loose!");
+      setFinalMessage("Pejman Wins!");
     }
     setUserPoint(up);
     setPejmanPoint(pp);
@@ -1410,6 +1449,7 @@ if (freeCellsIds.length === 0 && normalMode) {
                 pejmanChoice={pejmanChoice}
                 setPejmanChoice={setPejmanChoice}
                 easyMode={easyMode}
+                isGameOver={isGameOver}
               />
             </div>
           ) : (
@@ -1446,6 +1486,7 @@ if (freeCellsIds.length === 0 && normalMode) {
                 pejmanChoice={pejmanChoice}
                 setPejmanChoice={setPejmanChoice}
                 easyMode={easyMode}
+                isGameOver={isGameOver}
               />
               <br />
             </div>
@@ -1454,7 +1495,7 @@ if (freeCellsIds.length === 0 && normalMode) {
       <br />
       {chooseArrowMessage && isUserTurn && freeCellsIds.length < 48 && (
         <div>
-          <div>Choose the path you wan to get</div>
+          <div>Choose the path you wan to conquer</div>
           <div>
             <button
               style={{
@@ -1615,7 +1656,7 @@ if (freeCellsIds.length === 0 && normalMode) {
           <button onClick={handlePejmanDirectionChoice}>Ok</button>
         </div>
       )}
-      {isGameOver && (
+      {isGameOver && finalMessage === "" && (
         <div>
           <div>All the squares are taken, let's see who is the winner</div>
           <button onClick={handleGameResult}>Ok</button>
@@ -1625,9 +1666,24 @@ if (freeCellsIds.length === 0 && normalMode) {
         <div>
           <div>{`You conquered ${userPoint} squares`}</div>
           <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
-          <h3>{finalMessage}</h3>
         </div>
       )}
+      {finalMessage && (finalMessage === "You Win!" || finalMessage === "You Win, but you don't get any stars!") &&
+    //   !isTogglingHomePage &&
+        <div>
+            <h3>You Win!</h3>
+            <div>Play Again?</div>
+            <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      }
+      {finalMessage && finalMessage === "Pejman Wins!" &&
+    //   !isTogglingHomePage &&
+        <div>
+            <h3>Pejman Wins!</h3>
+            <div>Try Again?</div>
+            <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      }
       {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Reversi" currentUser={currentUser} />} */}
     </div>
   );
