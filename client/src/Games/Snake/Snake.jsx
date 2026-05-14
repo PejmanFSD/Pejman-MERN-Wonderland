@@ -10,7 +10,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [gameOver, setGameOver] = useState(false);
   // Even the initial location of the food is a random location:
   const [food, setFood] = useState(generateFood());
-
+  const [delay, setDelay] = useState(145);
+  const [userPoint, setUserPoint] = useState(0);
   //  Moving the snake:
   const moveSnake = () => {
     // In each moment, one of the parameters of x or y is either
@@ -53,6 +54,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       // If the snake gets the food, don't remove the last element of the array,
       // just generate a new random food:
       setFood(generateFood());
+      setUserPoint((currUserPoint) => currUserPoint + 1);
+      setDelay((currDelay) => currDelay - 3);
     } else {
       // If the snake doesn't get the food, remove the last element of the array:
       newSnake.pop();
@@ -70,7 +73,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     if (gameOver) return;
     const interval = setInterval(() => {
       moveSnake();
-    }, 150);
+    }, delay);
     return () => clearInterval(interval);
   }, [snake, direction, gameOver]);
   // Keyboard controls
@@ -103,6 +106,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     }, 250);
     return () => clearInterval(interval);
   }, [snake, direction, gameOver]);
+  // Creating the board:
   const cells = [];
   for (let y = 0; y < gridSize; y++) {
     for (let x = 0; x < gridSize; x++) {
@@ -132,6 +136,21 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     >
       <h2>Snake</h2>
       {gameOver && <h4>You loose!</h4>}
+      <div style={{ color: "green" }}><strong>Your Point: {userPoint}</strong></div>
+      <br />
+      <div
+        style={{
+          display: "flex",
+          gap: "4px",
+        }}
+      >
+        {new Array(40)
+          .fill(null)
+          .map((s, i) =>
+            i < userPoint ? <div key={i}>🟢</div> : <div key={i}>⚪</div>,
+          )}
+      </div>
+      <br />
       <div
         style={{
           display: "grid",
