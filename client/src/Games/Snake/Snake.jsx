@@ -8,16 +8,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   // The moment the game starts, the snake doesn't move:
   const [direction, setDirection] = useState({ x: 0, y: 0 });
   const [gameOver, setGameOver] = useState(false);
+  // Even the initial location of the food is a random location:
+  const [food, setFood] = useState(generateFood());
 
-  // Game loop:
-  useEffect(() => {
-    if (gameOver) return;
-    const interval = setInterval(() => {
-      moveSnake();
-    }, 150);
-
-    return () => clearInterval(interval);
-  }, [snake, direction, gameOver]);
   //  Moving the snake:
   const moveSnake = () => {
     // In each moment, one of the parameters of x or y is either
@@ -34,12 +27,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       y: head.y + direction.y,
     };
     // Wall collision:
-    if (
-      newHead.x < 0 ||
-      newHead.y < 0 ||
-      newHead.x >= 20 ||
-      newHead.y >= 20
-    ) {
+    if (newHead.x < 0 || newHead.y < 0 || newHead.x >= 20 || newHead.y >= 20) {
       setGameOver(true);
       return;
     }
@@ -47,9 +35,31 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     // (...snake => de-structured snake):
     const newSnake = [newHead, ...snake];
     // And remove the last element of the array unless the snake gets the food:
-    newSnake.pop();
+    // Eat food
+    if (newHead.x === food.x && newHead.y === food.y) {
+        // If the snake gets the food, don't remove the last element of the array,
+        // just generate a new random food:
+      setFood(generateFood());
+    } else {
+        // If the snake doesn't get the food, remove the last element of the array:
+      newSnake.pop();
+    }
     setSnake(newSnake);
   };
+  function generateFood() {
+  return {
+    x: Math.floor(Math.random() * 20),
+    y: Math.floor(Math.random() * 20),
+  };
+}
+  // Game loop:
+  useEffect(() => {
+    if (gameOver) return;
+    const interval = setInterval(() => {
+      moveSnake();
+    }, 150);
+    return () => clearInterval(interval);
+  }, [snake, direction, gameOver]);
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -67,23 +77,34 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         setDirection({ x: 1, y: 0 });
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [direction]);
+  // Game loop:
+  useEffect(() => {
+    if (gameOver) return;
+    const interval = setInterval(() => {
+      moveSnake();
+    }, 150);
+    return () => clearInterval(interval);
+  }, [snake, direction, gameOver]);
   const cells = [];
   for (let y = 0; y < 20; y++) {
     for (let x = 0; x < 20; x++) {
       const isSnake = snake.some(
         (segment) => segment.x === x && segment.y === y,
       );
+      const isFood = food.x === x && food.y === y;
       cells.push(
         <div
           key={`${x}-${y}`}
-          style={{ width: "20px", height: "20px", background: isSnake ? "lime" : "#1e1e1e" }}
+          style={{
+            width: "20px",
+            height: "20px",
+            background: isSnake ? "lime" : isFood ? "red" : "#1e1e1e",
+          }}
         />,
       );
     }
