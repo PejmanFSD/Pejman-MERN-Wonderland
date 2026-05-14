@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ReviewSection from "../../Components/ReviewSection";
-
+const gridSize = 20;
 export default function Snake({ updateTotalPoint, currentUser }) {
   // The snake is an array of grids (an array of objects). At first
   // it's only one grid that is located in the { x: 0, y: 0 } location:
@@ -27,9 +27,22 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       y: head.y + direction.y,
     };
     // Wall collision:
-    if (newHead.x < 0 || newHead.y < 0 || newHead.x >= 20 || newHead.y >= 20) {
+    if (
+      newHead.x < 0 ||
+      newHead.y < 0 ||
+      newHead.x >= gridSize ||
+      newHead.y >= gridSize
+    ) {
       setGameOver(true);
       return;
+    }
+    // Self collision; if the location of any of the  grids(segments)
+    // of the snake is equal to the location of the head, the user looses:
+    for (let segment of snake) {
+      if (segment.x === newHead.x && segment.y === newHead.y) {
+        setGameOver(true);
+        return;
+      }
     }
     // If no collisions happen, then add the new head to the snake's array
     // (...snake => de-structured snake):
@@ -37,21 +50,21 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     // And remove the last element of the array unless the snake gets the food:
     // Eat food
     if (newHead.x === food.x && newHead.y === food.y) {
-        // If the snake gets the food, don't remove the last element of the array,
-        // just generate a new random food:
+      // If the snake gets the food, don't remove the last element of the array,
+      // just generate a new random food:
       setFood(generateFood());
     } else {
-        // If the snake doesn't get the food, remove the last element of the array:
+      // If the snake doesn't get the food, remove the last element of the array:
       newSnake.pop();
     }
     setSnake(newSnake);
   };
   function generateFood() {
-  return {
-    x: Math.floor(Math.random() * 20),
-    y: Math.floor(Math.random() * 20),
-  };
-}
+    return {
+      x: Math.floor(Math.random() * gridSize),
+      y: Math.floor(Math.random() * gridSize),
+    };
+  }
   // Game loop:
   useEffect(() => {
     if (gameOver) return;
@@ -87,12 +100,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     if (gameOver) return;
     const interval = setInterval(() => {
       moveSnake();
-    }, 150);
+    }, 250);
     return () => clearInterval(interval);
   }, [snake, direction, gameOver]);
   const cells = [];
-  for (let y = 0; y < 20; y++) {
-    for (let x = 0; x < 20; x++) {
+  for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
       const isSnake = snake.some(
         (segment) => segment.x === x && segment.y === y,
       );
