@@ -21,6 +21,7 @@ import TugOfWarPage from "./Games/TugOfWar/TugOfWar";
 import MazePage from "./Games/Maze/Maze";
 import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 import ReversiPage from "./Games/Reversi/Reversi";
+import SnakePage from "./Games/Snake/Snake";
 
 export default function Home({
   currentUser,
@@ -56,6 +57,7 @@ export default function Home({
   const [showMaze, setShowMaze] = useState(false);
   const [showBirdHunter, setShowBirdHunter] = useState(false);
   const [showReversi, setShowReversi] = useState(false);
+  const [showSnake, setShowSnake] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -220,6 +222,14 @@ export default function Home({
       return;
     }
     navigate("/reversi");
+  };
+    const toggleSnake = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    navigate("/snake");
   };
   return (
     <div>
@@ -506,6 +516,17 @@ export default function Home({
         !showReversi &&
         (
           <button onClick={() => toggleReversi()} style={{position: "relative", top: "5px"}}>Reversi</button>
+        )
+      )}
+      {showSnake ? (
+        <SnakePage
+          updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
+        />
+      ) : (
+        !showSnake &&
+        (
+          <button onClick={() => toggleSnake()} style={{position: "relative", top: "5px"}}>Snake</button>
         )
       )}
     </div>

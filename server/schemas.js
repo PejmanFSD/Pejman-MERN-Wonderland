@@ -27,7 +27,7 @@ module.exports.reviewSchema = Joi.object({
     "Crazy100", "Cryptogram", "GuessNumber",
     "HappyFlower", "KukuKube", "Maze", "MemoryCards",
     "Nim", "Pidoku", "Puzzle", "RockScissorsPaper",
-    "TripleEmojiMatch", "TugOfWar", "XO", "Reversi"
+    "TripleEmojiMatch", "TugOfWar", "XO", "Reversi", "Snake"
   ).required()
 });
 

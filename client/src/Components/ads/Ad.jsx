@@ -14,7 +14,7 @@ export default function Ad({
     "/rock-scissors-paper", "/guess-number", "/capitals", "/cryptogram", "/crazy-100",
     "/memory-cards", "/nim", "/happy-flower", "/xo", "/maze", "/kuku-kube",
     "/triple-emoji-match", "/pidoku", "/counter", "/puzzle", "/bingo",
-    "/tug-of-war", "/bird-hunter", "/reversi"
+    "/tug-of-war", "/bird-hunter", "/reversi", "/snake"
   ];
   return (
     <div>
