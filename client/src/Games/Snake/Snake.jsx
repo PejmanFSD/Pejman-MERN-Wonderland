@@ -7,17 +7,23 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [snake, setSnake] = useState([{ x: 0, y: 0 }]);
   // The moment the game starts, the snake doesn't move:
   const [direction, setDirection] = useState({ x: 0, y: 0 });
+  const [gameOver, setGameOver] = useState(false);
 
   // Game loop:
   useEffect(() => {
+    if (gameOver) return;
     const interval = setInterval(() => {
       moveSnake();
     }, 150);
 
     return () => clearInterval(interval);
-  }, [snake, direction]);
+  }, [snake, direction, gameOver]);
   //  Moving the snake:
   const moveSnake = () => {
+    // In each moment, one of the parameters of x or y is either
+    // 1 or -1, so when both of them are 0, it means that either
+    // the game is over or it hasn't started yet:
+    if (direction.x === 0 && direction.y === 0) return;
     // The head of the snake is always the first
     // element of the array:
     const head = snake[0];
@@ -27,7 +33,17 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       x: head.x + direction.x,
       y: head.y + direction.y,
     };
-    // If none of the collisions happens, then add the new head to the snake's array
+    // Wall collision:
+    if (
+      newHead.x < 0 ||
+      newHead.y < 0 ||
+      newHead.x >= 20 ||
+      newHead.y >= 20
+    ) {
+      setGameOver(true);
+      return;
+    }
+    // If no collisions happen, then add the new head to the snake's array
     // (...snake => de-structured snake):
     const newSnake = [newHead, ...snake];
     // And remove the last element of the array unless the snake gets the food:
@@ -81,6 +97,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       }}
     >
       <h2>Snake</h2>
+      {gameOver && <h4>You loose!</h4>}
       <div
         style={{
           display: "grid",
