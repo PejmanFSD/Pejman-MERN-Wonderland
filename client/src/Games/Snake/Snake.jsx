@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ReviewSection from "../../Components/ReviewSection";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
+import { useNavigate } from "react-router-dom";
 
 const gridSize = 20;
 
@@ -21,7 +22,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -43,7 +46,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setFinalMessage("");
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
-    //   setIsTogglingHomePage(false);
+    setIsTogglingHomePage(false);
   };
   const toggleReset = () => {
     setDirection({ x: 0, y: 0 });
@@ -73,6 +76,16 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleHomePage = () => {
+    setDirection({ x: 0, y: 0 });
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    navigate("/");
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   //  Moving the snake:
   const moveSnake = () => {
@@ -153,28 +166,28 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     if (finalMessage === "") {
       const handleKeyDown = (e) => {
         if (e.key === "ArrowUp") {
-          if (isTogglingReset || isTogglingLevel) {
+          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
             setDirection({ x: 0, y: 0 });
           } else {
             if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
             setDirection({ x: 0, y: -1 });
           }
         } else if (e.key === "ArrowDown") {
-          if (isTogglingReset || isTogglingLevel) {
+          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
             setDirection({ x: 0, y: 0 });
           } else {
             if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
             setDirection({ x: 0, y: 1 });
           }
         } else if (e.key === "ArrowLeft") {
-          if (isTogglingReset || isTogglingLevel) {
+          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
             setDirection({ x: 0, y: 0 });
           } else {
             if (direction.x === 1) return; // Don't kill the snake if it shifts to the opposite direction
             setDirection({ x: -1, y: 0 });
           }
         } else if (e.key === "ArrowRight") {
-          if (isTogglingReset || isTogglingLevel) {
+          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
             setDirection({ x: 0, y: 0 });
           } else {
             if (direction.x === -1) return; // Don't kill the snake if it shifts to the opposite direction
@@ -237,30 +250,28 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       <h2>Snake</h2>
       {easyMode && !normalMode
         ? !isTogglingReset &&
-          !isTogglingLevel && (
-            //   !isTogglingHomePage
+          !isTogglingLevel && !isTogglingHomePage && (
             <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
           )
         : !easyMode &&
           normalMode &&
           !isTogglingReset &&
-          !isTogglingLevel && (
-            // !isTogglingHomePage &&
+          !isTogglingLevel && !isTogglingHomePage && (
             <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each apple, you get one star if you win." />
           )}
-      {!isGameStarted && !easyMode && !normalMode && (
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && (
+      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && !isTogglingHomePage && (
         <button onClick={handleStart}>Start the Game</button>
       )}
       {isGameStarted &&
         !isTogglingReset &&
         finalMessage === "" &&
-        //   !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
@@ -279,7 +290,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         (easyMode || normalMode) &&
         !isTogglingReset &&
-        //   !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         finalMessage === "" && (
           <div>
@@ -303,6 +314,26 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
+      {
+        !isTogglingHomePage &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        (
+          <div>
+            <button onClick={() => toggleHomePage()}>
+              Back to the home page
+            </button>
+          </div>
+        )}
+      {isTogglingHomePage && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        </div>
+      )}
       {isGameStarted && (easyMode || normalMode) && (
         <div
           style={{
@@ -314,7 +345,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           {finalMessage &&
             (finalMessage === "You Win!" ||
               finalMessage === "You Win, but you don't get any stars!") && (
-              // !isTogglingHomePage &&
+              !isTogglingHomePage &&
               <div>
                 <h3>{finalMessage}</h3>
                 <div>Play Again?</div>
@@ -322,7 +353,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               </div>
             )}
           {finalMessage && finalMessage === "You loose!" && (
-            // !isTogglingHomePage &&
+            !isTogglingHomePage &&
             <div>
               <h3>{finalMessage}</h3>
               <div>Try Again?</div>
