@@ -23,6 +23,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [directions, setDirections] = useState([]);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -40,6 +41,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setIsGameStarted(true);
     setSnake([{ x: 0, y: 0 }]);
     setDirection({ x: 0, y: 0 });
+    setDirections((currDirections) => [...currDirections, "None"]);
     setFood(generateFood());
     setDelay(145);
     setUserPoint(0);
@@ -50,6 +52,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   };
   const toggleReset = () => {
     setDirection({ x: 0, y: 0 });
+    setDirections((currDirections) => [...currDirections, "None"]);
     setIsTogglingReset(true);
   };
   const toggleResetYes = () => {
@@ -62,6 +65,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   };
   const toggleLevel = () => {
     setDirection({ x: 0, y: 0 });
+    setDirections((currDirections) => [...currDirections, "None"]);
     setIsTogglingLevel(true);
   };
   const toggleLevelYes = () => {
@@ -79,6 +83,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   };
   const toggleHomePage = () => {
     setDirection({ x: 0, y: 0 });
+    setDirections((currDirections) => [...currDirections, "None"]);
     setIsTogglingHomePage(true);
   };
   const toggleHomePageYes = () => {
@@ -112,6 +117,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       // setIsGameStarted(false);
       setFinalMessage("You loose!");
       setDirection({ x: 0, y: 0 });
+      setDirections((currDirections) => [...currDirections, "None"]);
       return;
     }
     // Self collision; if the location of any of the  grids(segments)
@@ -121,6 +127,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         // setIsGameStarted(false);
         setFinalMessage("You loose!");
         setDirection({ x: 0, y: 0 });
+        setDirections((currDirections) => [...currDirections, "None"]);
         return;
       }
     }
@@ -165,33 +172,96 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   useEffect(() => {
     if (finalMessage === "") {
       const handleKeyDown = (e) => {
-        if (e.key === "ArrowUp") {
-          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
-            setDirection({ x: 0, y: 0 });
+        if (
+          directions.length > 0 &&
+          directions[directions.length - 1] === "None"
+        ) {
+          if (e.key === " ") {
+            for (let i = directions.length - 1; i >= 0; i--) {
+              if (directions[i] !== "None") {
+                if (directions[i] == "Up") {
+                  setDirection({ x: 0, y: -1 });
+                  setDirections((currDirections) => [...currDirections, "Up"]);
+                  break;
+                }
+              }
+
+              if (directions[i] !== "None") {
+                if (directions[i] == "Down") {
+                  setDirection({ x: 0, y: 1 });
+                  setDirections((currDirections) => [
+                    ...currDirections,
+                    "Down",
+                  ]);
+                  break;
+                }
+              }
+
+              if (directions[i] !== "None") {
+                if (directions[i] == "Left") {
+                  setDirection({ x: -1, y: 0 });
+                  setDirections((currDirections) => [
+                    ...currDirections,
+                    "Left",
+                  ]);
+                  break;
+                }
+              }
+
+              if (directions[i] !== "None") {
+                if (directions[i] == "Right") {
+                  setDirection({ x: 1, y: 0 });
+                  setDirections((currDirections) => [
+                    ...currDirections,
+                    "Right",
+                  ]);
+                  break;
+                }
+              }
+            }
           } else {
-            if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
-            setDirection({ x: 0, y: -1 });
+            return;
           }
-        } else if (e.key === "ArrowDown") {
-          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+        } else {
+          if (e.key === " ") {
             setDirection({ x: 0, y: 0 });
-          } else {
-            if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
-            setDirection({ x: 0, y: 1 });
-          }
-        } else if (e.key === "ArrowLeft") {
-          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
-            setDirection({ x: 0, y: 0 });
-          } else {
-            if (direction.x === 1) return; // Don't kill the snake if it shifts to the opposite direction
-            setDirection({ x: -1, y: 0 });
-          }
-        } else if (e.key === "ArrowRight") {
-          if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
-            setDirection({ x: 0, y: 0 });
-          } else {
-            if (direction.x === -1) return; // Don't kill the snake if it shifts to the opposite direction
-            setDirection({ x: 1, y: 0 });
+            setDirections((currDirections) => [...currDirections, "None"]);
+          } else if (e.key === "ArrowUp") {
+            if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+              setDirection({ x: 0, y: 0 });
+              setDirections((currDirections) => [...currDirections, "None"]);
+            } else {
+              if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
+              setDirection({ x: 0, y: -1 });
+              setDirections((currDirections) => [...currDirections, "Up"]);
+            }
+          } else if (e.key === "ArrowDown") {
+            if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+              setDirection({ x: 0, y: 0 });
+              setDirections((currDirections) => [...currDirections, "None"]);
+            } else {
+              if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
+              setDirection({ x: 0, y: 1 });
+              setDirections((currDirections) => [...currDirections, "Down"]);
+            }
+          } else if (e.key === "ArrowLeft") {
+            if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+              setDirection({ x: 0, y: 0 });
+              setDirections((currDirections) => [...currDirections, "None"]);
+            } else {
+              if (direction.x === 1) return; // Don't kill the snake if it shifts to the opposite direction
+              setDirection({ x: -1, y: 0 });
+              setDirections((currDirections) => [...currDirections, "Left"]);
+            }
+          } else if (e.key === "ArrowRight") {
+            if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+              setDirection({ x: 0, y: 0 });
+              setDirections((currDirections) => [...currDirections, "None"]);
+            } else {
+              if (direction.x === -1) return; // Don't kill the snake if it shifts to the opposite direction
+              setDirection({ x: 1, y: 0 });
+              setDirections((currDirections) => [...currDirections, "Right"]);
+            }
           }
         }
       };
@@ -207,9 +277,11 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       if (easyMode) {
         setFinalMessage("You Win, but you don't get any stars!");
         setDirection({ x: 0, y: 0 });
+        setDirections((currDirections) => [...currDirections, "None"]);
       } else if (normalMode) {
         setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
+        setDirections((currDirections) => [...currDirections, "None"]);
         updateTotalPoint(1);
       }
     }
@@ -251,13 +323,15 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       <h2>Snake</h2>
       {easyMode && !normalMode
         ? !isTogglingReset &&
-          !isTogglingLevel && !isTogglingHomePage && (
+          !isTogglingLevel &&
+          !isTogglingHomePage && (
             <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
           )
         : !easyMode &&
           normalMode &&
           !isTogglingReset &&
-          !isTogglingLevel && !isTogglingHomePage && (
+          !isTogglingLevel &&
+          !isTogglingHomePage && (
             <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each apple, you get one star if you win." />
           )}
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
@@ -266,9 +340,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingLevel && !isTogglingHomePage && (
-        <button onClick={handleStart}>Start the Game</button>
-      )}
+      {!isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <button onClick={handleStart}>Start the Game</button>
+        )}
       {isGameStarted &&
         !isTogglingReset &&
         finalMessage === "" &&
@@ -315,17 +392,13 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
-      {
-        !isTogglingHomePage &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        (
-          <div>
-            <button onClick={() => toggleHomePage()}>
-              Back to the home page
-            </button>
-          </div>
-        )}
+      {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+        <div>
+          <button onClick={() => toggleHomePage()}>
+            Back to the home page
+          </button>
+        </div>
+      )}
       {isTogglingHomePage && (
         <div>
           <ConfirmationBox
@@ -345,22 +418,23 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         >
           {finalMessage &&
             (finalMessage === "You Win!" ||
-              finalMessage === "You Win, but you don't get any stars!") && (
-              !isTogglingHomePage &&
+              finalMessage === "You Win, but you don't get any stars!") &&
+            !isTogglingHomePage && (
               <div>
                 <h3>{finalMessage}</h3>
                 <div>Play Again?</div>
                 <button onClick={handlePlayAgain}>Ok</button>
               </div>
             )}
-          {finalMessage && finalMessage === "You loose!" && (
-            !isTogglingHomePage &&
-            <div>
-              <h3>{finalMessage}</h3>
-              <div>Try Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
-            </div>
-          )}
+          {finalMessage &&
+            finalMessage === "You loose!" &&
+            !isTogglingHomePage && (
+              <div>
+                <h3>{finalMessage}</h3>
+                <div>Try Again?</div>
+                <button onClick={handlePlayAgain}>Ok</button>
+              </div>
+            )}
           <br />
           <div
             style={{
@@ -405,7 +479,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           </div>
         </div>
       )}
-      {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Snake" currentUser={currentUser} />}
+      {isGameStarted && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
+        <ReviewSection game="Snake" currentUser={currentUser} />
+      )}
     </div>
   );
 }
