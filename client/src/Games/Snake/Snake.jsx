@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReviewSection from "../../Components/ReviewSection";
 import ModeExplaination from "../ModeExplaination";
+import ConfirmationBox from "../ConfirmationBox";
 
 const gridSize = 20;
 
@@ -18,6 +19,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [delay, setDelay] = useState(145);
   const [userPoint, setUserPoint] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
+  const [isTogglingReset, setIsTogglingReset] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -38,9 +40,21 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setDelay(145);
     setUserPoint(0);
     setFinalMessage("");
-    //   setIsTogglingReset(false);
+    setIsTogglingReset(false);
     //   setIsTogglingLevel(false);
     //   setIsTogglingHomePage(false);
+  };
+  const toggleReset = () => {
+    setDirection({ x: 0, y: 0 });
+    setIsTogglingReset(true);
+  };
+  const toggleResetYes = () => {
+    setIsGameStarted(false);
+    setIsTogglingReset(false);
+    handlePlayAgain();
+  };
+  const toggleResetCancel = () => {
+    setIsTogglingReset(false);
   };
   //  Moving the snake:
   const moveSnake = () => {
@@ -64,7 +78,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       newHead.x >= gridSize ||
       newHead.y >= gridSize
     ) {
-      //   setIsGameStarted(false);
+      // setIsGameStarted(false);
       setFinalMessage("You loose!");
       setDirection({ x: 0, y: 0 });
       return;
@@ -92,8 +106,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       }
       setUserPoint((currUserPoint) => currUserPoint + 1);
       if (normalMode) {
-          setDelay((currDelay) => currDelay - 3);
-        }
+        setDelay((currDelay) => currDelay - 3);
+      }
     } else {
       // If the snake doesn't get the food, remove the last element of the array:
       newSnake.pop();
@@ -121,17 +135,33 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     if (finalMessage === "") {
       const handleKeyDown = (e) => {
         if (e.key === "ArrowUp") {
-          if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
-          setDirection({ x: 0, y: -1 });
+          if (isTogglingReset) {
+            setDirection({ x: 0, y: 0 });
+          } else {
+            if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
+            setDirection({ x: 0, y: -1 });
+          }
         } else if (e.key === "ArrowDown") {
-          if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
-          setDirection({ x: 0, y: 1 });
+          if (isTogglingReset) {
+            setDirection({ x: 0, y: 0 });
+          } else {
+            if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
+            setDirection({ x: 0, y: 1 });
+          }
         } else if (e.key === "ArrowLeft") {
-          if (direction.x === 1) return; // Don't kill the snake if it shifts to the opposite direction
-          setDirection({ x: -1, y: 0 });
+          if (isTogglingReset) {
+            setDirection({ x: 0, y: 0 });
+          } else {
+            if (direction.x === 1) return; // Don't kill the snake if it shifts to the opposite direction
+            setDirection({ x: -1, y: 0 });
+          }
         } else if (e.key === "ArrowRight") {
-          if (direction.x === -1) return; // Don't kill the snake if it shifts to the opposite direction
-          setDirection({ x: 1, y: 0 });
+          if (isTogglingReset) {
+            setDirection({ x: 0, y: 0 });
+          } else {
+            if (direction.x === -1) return; // Don't kill the snake if it shifts to the opposite direction
+            setDirection({ x: 1, y: 0 });
+          }
         }
       };
       window.addEventListener("keydown", handleKeyDown);
@@ -187,20 +217,19 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   return (
     <div>
       <h2>Snake</h2>
-      {easyMode && !normalMode ? (
-        //   !isTogglingReset &&
-        //   !isTogglingLevel &&
-        //   !isTogglingHomePage
-        <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
-      ) : (
-        !easyMode &&
-        normalMode && (
-          // !isTogglingReset &&
-          // !isTogglingLevel &&
-          // !isTogglingHomePage &&
-          <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each apple, you get one star if you win." />
-        )
-      )}
+      {easyMode && !normalMode
+        ? !isTogglingReset && (
+            //   !isTogglingLevel &&
+            //   !isTogglingHomePage
+            <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
+          )
+        : !easyMode &&
+          normalMode &&
+          !isTogglingReset && (
+            // !isTogglingLevel &&
+            // !isTogglingHomePage &&
+            <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each apple, you get one star if you win." />
+          )}
       {!isGameStarted && !easyMode && !normalMode && (
         <div>
           <button onClick={handleEasyMode}>Easy Mode</button>
@@ -209,8 +238,26 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       )}
       {!isGameStarted && (easyMode || normalMode) && (
         // !isTogglingLevel &&
-        // !isIdenticalColor &&
         <button onClick={handleStart}>Start the Game</button>
+      )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        finalMessage === "" &&
+        //   !isTogglingHomePage &&
+        //   !isTogglingLevel &&
+        (easyMode || normalMode) && (
+          <div>
+            <button onClick={toggleReset}>Reset the Game</button>
+          </div>
+        )}
+      {isTogglingReset && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to reset the game?"
+            toggleYes={toggleResetYes}
+            toggleCancel={toggleResetCancel}
+          />
+        </div>
       )}
       {isGameStarted && (easyMode || normalMode) && (
         <div
