@@ -205,11 +205,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   useEffect(() => {
     if (userPoint === 40) {
       if (easyMode) {
-        setDirection({ x: 0, y: 0 });
         setFinalMessage("You Win, but you don't get any stars!");
-      } else if (normalMode) {
         setDirection({ x: 0, y: 0 });
+      } else if (normalMode) {
         setFinalMessage("You Win!");
+        setDirection({ x: 0, y: 0 });
+        updateTotalPoint(1);
       }
     }
   }, [userPoint]);
@@ -404,7 +405,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           </div>
         </div>
       )}
-      {/* {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Snake" currentUser={currentUser} />} */}
+      {isGameStarted && !isTogglingReset && !isTogglingHomePage && <ReviewSection game="Snake" currentUser={currentUser} />}
     </div>
   );
 }
