@@ -31,6 +31,7 @@ import MazePage from "./Games/Maze/Maze";
 import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 import ReversiPage from "./Games/Reversi/Reversi";
 import SnakePage from "./Games/Snake/Snake";
+import BlackJackPage from "./Games/BlackJack/BlackJack";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -281,6 +282,7 @@ function App() {
           <Route path="/tug-of-war" element={<TugOfWarPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/maze" element={<MazePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
           <Route path="/bird-hunter" element={<BirdHunterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/blackJack" element={<BlackJackPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
         </Routes>
       </BrowserRouter>
     </div>

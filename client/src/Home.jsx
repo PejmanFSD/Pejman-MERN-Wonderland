@@ -22,6 +22,7 @@ import MazePage from "./Games/Maze/Maze";
 import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 import ReversiPage from "./Games/Reversi/Reversi";
 import SnakePage from "./Games/Snake/Snake";
+import BlackJackPage from "./Games/BlackJack/BlackJack";
 
 export default function Home({
   currentUser,
@@ -58,6 +59,7 @@ export default function Home({
   const [showBirdHunter, setShowBirdHunter] = useState(false);
   const [showReversi, setShowReversi] = useState(false);
   const [showSnake, setShowSnake] = useState(false);
+  const [showBlackJack, setShowBlackJack] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -223,13 +225,21 @@ export default function Home({
     }
     navigate("/reversi");
   };
-    const toggleSnake = () => {
+  const toggleSnake = () => {
     if (!currentUser) {
       setYouShouldLoginMessage(true);
       navigate("/login");
       return;
     }
     navigate("/snake");
+  };
+  const toggleBlackJack = () => {
+    if (!currentUser) {
+      setYouShouldLoginMessage(true);
+      navigate("/login");
+      return;
+    }
+    navigate("/blackJack");
   };
   return (
     <div>
@@ -527,6 +537,17 @@ export default function Home({
         !showSnake &&
         (
           <button onClick={() => toggleSnake()} style={{position: "relative", top: "5px"}}>Snake</button>
+        )
+      )}
+      {showBlackJack ? (
+        <BlackJackPage
+          updateTotalPoint={updateTotalPoint}
+          currentUser={currentUser}
+        />
+      ) : (
+        !showBlackJack &&
+        (
+          <button onClick={() => toggleBlackJack()} style={{position: "relative", top: "5px"}}>BlackJack</button>
         )
       )}
     </div>
