@@ -22,6 +22,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [roundNum, setRoundNum] = useState(1);
   const [isRoundOver, setIsRoundOver] = useState(false);
   const [isRaising, setIsRaising] = useState(false);
+  const [allowStand, setAllowStand] = useState(true);
   const [raise, setRaise] = useState(0);
   const [roundMessage, setRoundMessage] = useState("");
 
@@ -56,6 +57,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setUserPoint((currUserPoint) => currUserPoint + deck[0].point);
     setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
     setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
+    setAllowStand(true);
   };
   const handleBet = (e) => {
     setBet(Number(e.target.value));
@@ -78,12 +80,14 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setBet((currBet) => currBet + raise);
     setUserChipsNum((currUserChipsNum) => currUserChipsNum - raise);
     setPejmanChipsNum((currPejmanChipsNum) => currPejmanChipsNum - raise);
+    setAllowStand(false);
   };
   const cancelRaising = () => {
     setIsRaising(false);
   };
   const handleStand = () => {
     setIsUserTurn(false);
+    setAllowStand(true);
   };
   const handleAllowPejman = () => {
     setAllowPejmanMove(true);
@@ -285,7 +289,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         userHand.length >= 1 &&
         isBetMade &&
         !isRaising && (
-          <button onClick={renderRaisingForm} disabled={userHand.length === 1}>
+          <button onClick={renderRaisingForm}>
             Raise
           </button>
         )}
@@ -295,10 +299,11 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         userHand.length >= 1 &&
         isBetMade &&
         !isRaising && (
-          <button onClick={handleStand} disabled={userHand.length === 1}>
+          <button onClick={handleStand} disabled={!allowStand}>
             Stand
           </button>
         )}
+        {!allowStand && <div style={{color: "gray", fontSize: "15px"}}>You can't stand after raising!</div>}
       {isRaising && (
         <div>
           <form onSubmit={submitRaise}>
