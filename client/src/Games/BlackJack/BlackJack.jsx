@@ -16,7 +16,6 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [pejmanHand, setPejmanHand] = useState([]);
   const [userPoint, setUserPoint] = useState(0);
   const [pejmanPoint, setPejmanPoint] = useState(0);
-  const [allowPejmanMove, setAllowPejmanMove] = useState(true);
   const [bet, setBet] = useState(0);
   const [isBetMade, setIsBetMade] = useState(false);
   const [roundNum, setRoundNum] = useState(1);
@@ -90,7 +89,16 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setAllowStand(true);
   };
   const handleAllowPejman = () => {
-    setAllowPejmanMove(true);
+      if (pejmanPoint < 18) {
+        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
+        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
+        setDeck((currDeck) =>
+          currDeck.filter((c) => currDeck.indexOf(c) !== 0),
+        );
+        setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
+      } else {
+        setIsRoundOver(true);
+      }
   };
   const handleRoundOver = () => {
     let tempUserChipsNum = userChipsNum;
@@ -139,24 +147,13 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsUserTurn(true);
     setIsBetMade(false);
     setIsRaising(false);
-    setAllowPejmanMove(false);
     setRoundMessage(tempRoundMessage);
   };
-  useEffect(() => {
-    if (!isUserTurn && allowPejmanMove) {
-      if (pejmanPoint < 18) {
-        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
-        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
-        setDeck((currDeck) =>
-          currDeck.filter((c) => currDeck.indexOf(c) !== 0),
-        );
-        setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
-        setAllowPejmanMove(false);
-      } else {
+useEffect(() => {
+    if (pejmanPoint >= 17) {
         setIsRoundOver(true);
-      }
     }
-  }, [isUserTurn, allowPejmanMove]);
+}, [pejmanPoint]);
   useEffect(() => {
     if (userPoint >= 21) {
       setIsRoundOver(true);
@@ -303,7 +300,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             Stand
           </button>
         )}
-        {!allowStand && <div style={{color: "gray", fontSize: "15px"}}>You can't stand after raising!</div>}
+        {!allowStand && <div style={{color: "gray", fontSize: "15px"}}>You can't stand right after raising!</div>}
       {isRaising && (
         <div>
           <form onSubmit={submitRaise}>
@@ -326,7 +323,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           <button onClick={cancelRaising}>Cancel the raise</button>
         </div>
       )}
-      {isGameStarted && !isUserTurn && !allowPejmanMove && (
+      {isGameStarted && !isUserTurn && !isRoundOver && (
         <div>
           <div>
             {pejmanHand.length === 0
