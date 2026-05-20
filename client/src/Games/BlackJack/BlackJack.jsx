@@ -24,6 +24,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [allowStand, setAllowStand] = useState(true);
   const [raise, setRaise] = useState(0);
   const [roundMessage, setRoundMessage] = useState("");
+  const [finalMessage, setFinalMessage] = useState("");
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -51,12 +52,18 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     return arr;
   };
   const getNewCardForUser = () => {
+    // if (userChipsNum === 0) {
+    //   setFinalMessage("Pejman wins the game!");
+    // } else if (pejmanChipsNum === 0) {
+    //   setFinalMessage("You win the game!");
+    // } else {
     setRoundMessage("");
     setUserHand((currUserHand) => [...currUserHand, deck[0]]);
     setUserPoint((currUserPoint) => currUserPoint + deck[0].point);
     setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
     setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
     setAllowStand(true);
+    // }
   };
   const handleBet = (e) => {
     setBet(Number(e.target.value));
@@ -89,16 +96,14 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setAllowStand(true);
   };
   const handleAllowPejman = () => {
-      if (pejmanPoint < 18) {
-        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
-        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
-        setDeck((currDeck) =>
-          currDeck.filter((c) => currDeck.indexOf(c) !== 0),
-        );
-        setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
-      } else {
-        setIsRoundOver(true);
-      }
+    if (pejmanPoint < 18) {
+      setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
+      setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
+      setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
+      setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
+    } else {
+      setIsRoundOver(true);
+    }
   };
   const handleRoundOver = () => {
     let tempUserChipsNum = userChipsNum;
@@ -149,32 +154,41 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsRaising(false);
     setRoundMessage(tempRoundMessage);
   };
-useEffect(() => {
+  useEffect(() => {
     if (pejmanPoint >= 17) {
-        setIsRoundOver(true);
+      setIsRoundOver(true);
     }
-}, [pejmanPoint]);
+  }, [pejmanPoint]);
   useEffect(() => {
     if (userPoint >= 21) {
       setIsRoundOver(true);
     }
   }, [userHand]);
+  useEffect(() => {
+    if (userChipsNum === 0 && !isBetMade) {
+      setFinalMessage("Pejman wins the game!");
+    } else if (pejmanChipsNum === 0 && !isBetMade) {
+      setFinalMessage("You win the game!");
+    }
+  }, [userChipsNum, pejmanChipsNum]);
   return (
     <div>
       <h2>BlackJack</h2>
-      {easyMode && !normalMode ? (
+      {easyMode && !normalMode && finalMessage === "" ? (
         // !isTogglingReset &&
         // !isTogglingLevel &&
         // !isTogglingHomePage &&
         <ModeExplaination message="Easy Mode: Pejman doesn't memorize the cards and if both hands have the same value, you win the round. You get one star if you win." />
       ) : (
         !easyMode &&
-        normalMode && (
-          //   !isTogglingReset &&
-          //   !isTogglingLevel &&
-          //   !isTogglingHomePage &&
-          <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three star if you win." />
-        )
+        normalMode &&
+        finalMessage ===
+          ""(
+            //   !isTogglingReset &&
+            //   !isTogglingLevel &&
+            //   !isTogglingHomePage &&
+            <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three star if you win." />,
+          )
       )}
       {!isGameStarted && !easyMode && !normalMode && (
         <div>
@@ -194,18 +208,21 @@ useEffect(() => {
         usedCards.map((c, i) => (
           <img src={usedCards[i].imgSrc} height="45px" />
         ))}
-      {isGameStarted && <div>Round: {roundNum}</div>}
+      {isGameStarted && finalMessage === "" && <div>Round: {roundNum}</div>}
       {isGameStarted && (
         //   isBetMade &&
         <div style={{ color: "red" }}>bet: {bet}</div>
       )}
       {isGameStarted && <div style={{ color: "red" }}>raise: {raise}</div>}
-      {isGameStarted && userHand.length > 0 && (
-        <div style={{ color: "red" }}>User's Point: {userPoint}</div>
+      {isGameStarted && userHand.length > 0 && finalMessage === "" && (
+        <div style={{ color: "red" }}>The value of your hand: {userPoint}</div>
       )}
-      {isGameStarted && pejmanHand.length > 0 && (
-        <div style={{ color: "red" }}>Pejman's Point: {pejmanPoint}</div>
+      {isGameStarted && pejmanHand.length > 0 && finalMessage === "" && (
+        <div style={{ color: "red" }}>
+          The value of Pejman's hand: {pejmanPoint}
+        </div>
       )}
+      {/* Pejman's chips */}
       {isGameStarted && (
         <div>
           {new Array(pejmanChipsNum).fill(null).map((c) => (
@@ -213,7 +230,9 @@ useEffect(() => {
           ))}
         </div>
       )}
+      {/* Pejman's hand */}
       {isGameStarted &&
+        finalMessage === "" &&
         // isUserTurn &&
         new Array(pejmanHand.length)
           .fill(null)
@@ -225,15 +244,21 @@ useEffect(() => {
             />
           ))}
       <br />
-      {isGameStarted && isBetMade && (
+      {/* Bet */}
+      {isGameStarted && isBetMade && finalMessage === "" && (
         <div>
           {new Array(2 * bet).fill(null).map((c) => (
             <img src={chips[0]} height="50px" />
           ))}
         </div>
       )}
+      {/* Round Message */}
+      {/* {roundMessage && <h3>{finalMessage !== "" ? `The result of the final round: ${roundMessage}` : {roundMessage}}</h3>} */}
+      {finalMessage !== "" && roundMessage && <h3>The result of the final round:</h3>}
       {roundMessage && <h3>{roundMessage}</h3>}
+      {/* User's hand */}
       {isGameStarted &&
+        finalMessage === "" &&
         // isUserTurn &&
         new Array(userHand.length)
           .fill(null)
@@ -245,6 +270,7 @@ useEffect(() => {
             />
           ))}
       <br />
+      {/* User's chips */}
       {isGameStarted && (
         <div>
           {new Array(userChipsNum).fill(null).map((c) => (
@@ -252,9 +278,18 @@ useEffect(() => {
           ))}
         </div>
       )}
-      {isGameStarted && isUserTurn && userHand.length === 0 && (
-        <button onClick={getNewCardForUser}>{`Start round ${roundNum}`}</button>
-      )}
+      {/* New round's button / Final button */}
+      {isGameStarted &&
+        isUserTurn &&
+        userHand.length === 0 &&
+        finalMessage === "" && (
+          <button onClick={getNewCardForUser}>
+            {userChipsNum === 0 || pejmanChipsNum === 0
+              ? "Show the final result of the game"
+              : `Start round ${roundNum}`}
+          </button>
+        )}
+      {/* First bet form */}
       {isGameStarted && isUserTurn && userHand.length === 1 && !isBetMade && (
         <form onSubmit={submitBet}>
           <div>
@@ -274,19 +309,25 @@ useEffect(() => {
           {bet > 0 && <button>Submit your bet</button>}
         </form>
       )}
+      {/* The 3 buttons */}
       {isGameStarted &&
         isUserTurn &&
         !isRoundOver &&
         userHand.length >= 1 &&
         isBetMade &&
-        !isRaising && <button onClick={getNewCardForUser}>Hit</button>}
+        !isRaising &&
+        finalMessage === "" && <button onClick={getNewCardForUser}>Hit</button>}
       {isGameStarted &&
         isUserTurn &&
         !isRoundOver &&
         userHand.length >= 1 &&
         isBetMade &&
-        !isRaising && (
-          <button onClick={renderRaisingForm}>
+        !isRaising &&
+        finalMessage === "" && (
+          <button
+            onClick={renderRaisingForm}
+            disabled={userChipsNum === 0 || pejmanChipsNum === 0}
+          >
             Raise
           </button>
         )}
@@ -295,12 +336,43 @@ useEffect(() => {
         !isRoundOver &&
         userHand.length >= 1 &&
         isBetMade &&
-        !isRaising && (
+        !isRaising &&
+        finalMessage === "" && (
           <button onClick={handleStand} disabled={!allowStand}>
             Stand
           </button>
         )}
-        {!allowStand && <div style={{color: "gray", fontSize: "15px"}}>You can't stand right after raising!</div>}
+      {isGameStarted &&
+        isUserTurn &&
+        !isRoundOver &&
+        userHand.length >= 1 &&
+        isBetMade &&
+        !isRaising &&
+        finalMessage === "" &&
+        userChipsNum === 0 && (
+          <div style={{ color: "gray", fontSize: "15px" }}>
+            You can't raise anymore because you don't have any gambling chips!
+          </div>
+        )}
+      {isGameStarted &&
+        isUserTurn &&
+        !isRoundOver &&
+        userHand.length >= 1 &&
+        isBetMade &&
+        !isRaising &&
+        finalMessage === "" &&
+        pejmanChipsNum === 0 && (
+          <div style={{ color: "gray", fontSize: "15px" }}>
+            You can't raise anymore because Pejman doesn't have any gambling
+            chips!
+          </div>
+        )}
+      {!allowStand && finalMessage === "" && (
+        <div style={{ color: "gray", fontSize: "15px" }}>
+          You can't stand right after raising!
+        </div>
+      )}
+      {/* Raising form */}
       {isRaising && (
         <div>
           <form onSubmit={submitRaise}>
@@ -323,7 +395,8 @@ useEffect(() => {
           <button onClick={cancelRaising}>Cancel the raise</button>
         </div>
       )}
-      {isGameStarted && !isUserTurn && !isRoundOver && (
+      {/* Allow Pejman button */}
+      {isGameStarted && !isUserTurn && !isRoundOver && finalMessage === "" && (
         <div>
           <div>
             {pejmanHand.length === 0
@@ -336,36 +409,54 @@ useEffect(() => {
       {isRoundOver &&
       userPoint < 21 &&
       pejmanPoint < 21 &&
-      (userHand.length > 0 || pejmanHand.length > 0) ? (
+      finalMessage === "" &&
+      (userHand.length > 0 || pejmanHand.length > 0) &&
+      (userChipsNum === 0 || pejmanChipsNum === 0) ? (
+        <div>Pejman is done hitting.</div>
+      ) : isRoundOver &&
+        userPoint < 21 &&
+        pejmanPoint < 21 &&
+        finalMessage === "" &&
+        (userHand.length > 0 || pejmanHand.length > 0) &&
+        userChipsNum > 0 &&
+        pejmanChipsNum > 0 ? (
         <div>
-          Pejman is done hitting. let's see who is the winner of this round
+          Pejman is done hitting. let's see who is the winner of this round.
         </div>
       ) : isRoundOver &&
         userPoint > 21 &&
         pejmanPoint < 21 &&
+        finalMessage === "" &&
         (userHand.length > 0 || pejmanHand.length > 0) ? (
         <div>You busted!</div>
       ) : isRoundOver &&
         userPoint === 21 &&
         pejmanPoint < 21 &&
+        finalMessage === "" &&
         (userHand.length > 0 || pejmanHand.length > 0) ? (
         <div>Well done! BlackJack! &#128512;</div>
       ) : isRoundOver &&
         pejmanPoint > 21 &&
         userPoint < 21 &&
+        finalMessage === "" &&
         (userHand.length > 0 || pejmanHand.length > 0) ? (
         <div>Pejman is busted!</div>
       ) : (
         isRoundOver &&
         pejmanPoint === 21 &&
         userPoint < 21 &&
+        finalMessage === "" &&
         (userHand.length > 0 || pejmanHand.length > 0) && (
           <div>Pejman is BlackJack!</div>
         )
       )}
+      {(userChipsNum === 0 || pejmanChipsNum === 0) && isRoundOver && (
+        <div>And the game is over, let's see who is the winner.</div>
+      )}
       {isRoundOver && (userHand.length > 0 || pejmanHand.length > 0) && (
         <button onClick={handleRoundOver}>Ok</button>
       )}
+      {finalMessage !== "" && <h3>{finalMessage}</h3>}
       {/* {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
