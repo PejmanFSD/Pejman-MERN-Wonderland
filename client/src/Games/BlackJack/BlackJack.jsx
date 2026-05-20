@@ -52,18 +52,12 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     return arr;
   };
   const getNewCardForUser = () => {
-    // if (userChipsNum === 0) {
-    //   setFinalMessage("Pejman wins the game!");
-    // } else if (pejmanChipsNum === 0) {
-    //   setFinalMessage("You win the game!");
-    // } else {
     setRoundMessage("");
     setUserHand((currUserHand) => [...currUserHand, deck[0]]);
     setUserPoint((currUserPoint) => currUserPoint + deck[0].point);
     setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
     setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
     setAllowStand(true);
-    // }
   };
   const handleBet = (e) => {
     setBet(Number(e.target.value));
@@ -110,32 +104,65 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     let tempPejmanChipsNum = pejmanChipsNum;
     const tempBet = bet;
     let tempRoundMessage;
+
     if (userPoint === 21 && pejmanPoint !== 21) {
       tempUserChipsNum = userChipsNum + 2 * tempBet;
-      tempRoundMessage = `The value of your hand is ${userPoint} (BlackJack). You Win this round!`;
+      if (tempPejmanChipsNum !== 0) {
+        tempRoundMessage = `The value of your hand is ${userPoint} (BlackJack). You win this round!`;
+      } else {
+        tempRoundMessage = `The value of your hand was ${userPoint} (BlackJack). You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+      }
     } else if (pejmanPoint === 21 && userPoint !== 21) {
       tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-      tempRoundMessage = `The value of Pejman's hand is ${pejmanPoint} (BlackJack). Pejman Wins this round!`;
+      if (tempUserChipsNum !== 0) {
+        tempRoundMessage = `The value of Pejman's hand is ${pejmanPoint} (BlackJack). Pejman wins this round!`;
+      } else {
+        tempRoundMessage = `The value of Pejman's hand was ${pejmanPoint} (BlackJack). Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+      }
     } else if (userPoint > 21 && pejmanPoint <= 21) {
       tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-      tempRoundMessage = `The value of your hand is ${userPoint} (Busted). Pejman Wins this round!`;
+      if (tempUserChipsNum !== 0) {
+        tempRoundMessage = `The value of your hand is ${userPoint} (Busted). Pejman wins this round!`;
+      } else {
+        tempRoundMessage = `The value of your hand was ${userPoint} (Busted). Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+      }
     } else if (pejmanPoint > 21 && userPoint <= 21) {
       tempUserChipsNum = userChipsNum + 2 * tempBet;
-      tempRoundMessage = `The value of Pejman's hand is ${pejmanPoint} (Busted). You Win this round!`;
+      if (tempPejmanChipsNum !== 0) {
+        tempRoundMessage = `The value of Pejman's hand is ${pejmanPoint} (Busted). You win this round!`;
+      } else {
+        tempRoundMessage = `The value of Pejman's hand was ${pejmanPoint} (Busted). You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+      }
     } else if (userPoint < 21 && pejmanPoint < 21) {
       if (userPoint > pejmanPoint) {
         tempUserChipsNum = userChipsNum + 2 * tempBet;
-        tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint}. You Win this round!`;
+        if (tempPejmanChipsNum !== 0) {
+          tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint}. You win this round!`;
+        } else {
+          tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint}. You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+        }
       } else if (userPoint < pejmanPoint) {
         tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-        tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint}. Pejman Wins this round!`;
+        if (tempUserChipsNum !== 0) {
+          tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint}. Pejman wins this round!`;
+        } else {
+          tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint}. Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+        }
       } else if (userPoint === pejmanPoint) {
         if (easyMode) {
           tempUserChipsNum = userChipsNum + 2 * tempBet;
-          tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint} too. It's "Easy Mode", so you Win this round!`;
+          if (tempPejmanChipsNum !== 0) {
+            tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint} too. It's "Easy Mode", so you win this round!`;
+          } else {
+            tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint} too. It was "Easy Mode", so you won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+          }
         } else {
           tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-          tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint} too. It's "Normal Mode", so Pejman Wins this round!`;
+          if (tempUserChipsNum !== 0) {
+            tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint} too. It's "Normal Mode", so Pejman wins this round!`;
+          } else {
+            tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint} too. It was "Normal Mode", so Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+          }
         }
       }
     }
@@ -211,7 +238,10 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isGameStarted && finalMessage === "" && <div>Round: {roundNum}</div>}
       {isGameStarted && (
         //   isBetMade &&
-        <div style={{ color: "red" }}>bet: {bet}</div>
+        <div>
+          <div style={{ color: "red" }}>bet: {bet}</div>
+          <div style={{ color: "red" }}>round: {roundNum}</div>
+        </div>
       )}
       {isGameStarted && <div style={{ color: "red" }}>raise: {raise}</div>}
       {isGameStarted && userHand.length > 0 && finalMessage === "" && (
@@ -253,9 +283,17 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         </div>
       )}
       {/* Round Message */}
-      {/* {roundMessage && <h3>{finalMessage !== "" ? `The result of the final round: ${roundMessage}` : {roundMessage}}</h3>} */}
-      {finalMessage !== "" && roundMessage && <h3>The result of the final round:</h3>}
-      {roundMessage && <h3>{roundMessage}</h3>}
+      {finalMessage !== "" && roundMessage && roundNum > 2 ? (
+        <h4>The result of the final round:</h4>
+      ) : (
+        finalMessage !== "" &&
+        roundMessage &&
+        roundNum === 2 && (
+          <h4>The game had only one round and its result is:</h4>
+        )
+      )}
+      {roundMessage && <h4>{roundMessage}</h4>}
+      {finalMessage !== "" && <h3>{finalMessage}</h3>}
       {/* User's hand */}
       {isGameStarted &&
         finalMessage === "" &&
@@ -349,7 +387,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         isBetMade &&
         !isRaising &&
         finalMessage === "" &&
-        userChipsNum === 0 && (
+        userChipsNum === 0 &&
+        pejmanChipsNum > 0 && (
           <div style={{ color: "gray", fontSize: "15px" }}>
             You can't raise anymore because you don't have any gambling chips!
           </div>
@@ -361,10 +400,25 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         isBetMade &&
         !isRaising &&
         finalMessage === "" &&
-        pejmanChipsNum === 0 && (
+        pejmanChipsNum === 0 &&
+        userChipsNum > 0 && (
           <div style={{ color: "gray", fontSize: "15px" }}>
             You can't raise anymore because Pejman doesn't have any gambling
             chips!
+          </div>
+        )}
+      {isGameStarted &&
+        isUserTurn &&
+        !isRoundOver &&
+        userHand.length >= 1 &&
+        isBetMade &&
+        !isRaising &&
+        finalMessage === "" &&
+        pejmanChipsNum === 0 &&
+        userChipsNum === 0 && (
+          <div style={{ color: "gray", fontSize: "15px" }}>
+            You can't raise anymore because neither you nor Pejman don't have
+            any gambling chips!
           </div>
         )}
       {!allowStand && finalMessage === "" && (
@@ -450,13 +504,18 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           <div>Pejman is BlackJack!</div>
         )
       )}
-      {(userChipsNum === 0 || pejmanChipsNum === 0) && isRoundOver && (
-        <div>And the game is over, let's see who is the winner.</div>
-      )}
+      {((userChipsNum === 0 && userPoint < pejmanPoint && pejmanPoint < 22) ||
+        (userChipsNum === 0 && userPoint > 21) ||
+        (pejmanChipsNum === 0 && pejmanPoint < userPoint && userPoint < 22) ||
+        (pejmanChipsNum === 0 && pejmanPoint > 21) ||
+        (userChipsNum === 0 && userPoint === pejmanPoint && normalMode) ||
+        (pejmanChipsNum === 0 && pejmanPoint === userPoint && easyMode)) &&
+        isRoundOver && (
+          <div>And the game is over, let's see who is the winner.</div>
+        )}
       {isRoundOver && (userHand.length > 0 || pejmanHand.length > 0) && (
         <button onClick={handleRoundOver}>Ok</button>
       )}
-      {finalMessage !== "" && <h3>{finalMessage}</h3>}
       {/* {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
