@@ -380,7 +380,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         isUserTurn &&
         userHand.length === 0 &&
-        finalMessage === "" && (
+        finalMessage === "" && !isAce && (
           <button onClick={getNewCardForUser}>
             {userChipsNum === 0 || pejmanChipsNum === 0
               ? "Show the final result of the game"
