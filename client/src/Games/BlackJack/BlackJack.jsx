@@ -25,6 +25,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [raise, setRaise] = useState(0);
   const [roundMessage, setRoundMessage] = useState("");
   const [finalMessage, setFinalMessage] = useState("");
+  const [isAce, setIsAce] = useState(false);
 
   const handleEasyMode = () => {
     setEasyMode(true);
@@ -53,11 +54,33 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   };
   const getNewCardForUser = () => {
     setRoundMessage("");
+    if (deck[0].point === 0) {
+      setIsAce(true);
+      return;
+    }
     setUserHand((currUserHand) => [...currUserHand, deck[0]]);
     setUserPoint((currUserPoint) => currUserPoint + deck[0].point);
     setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
     setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
     setAllowStand(true);
+  };
+  const handleOne = () => {
+    setDeck((prevDeck) =>
+      prevDeck.map((card) =>
+        deck.indexOf(card) === 0 ? { ...card, point: 1 } : card,
+      ),
+    );
+    setIsAce(false);
+    getNewCardForUser();
+  };
+  const handleEleven = () => {
+    setDeck((prevDeck) =>
+      prevDeck.map((card) =>
+        deck.indexOf(card) === 0 ? { ...card, point: 11 } : card,
+      ),
+    );
+    setIsAce(false);
+    getNewCardForUser();
   };
   const handleBet = (e) => {
     setBet(Number(e.target.value));
@@ -90,6 +113,24 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setAllowStand(true);
   };
   const handleAllowPejman = () => {
+    setIsAce(false);
+    if (deck[0].point === 0) {
+      setIsAce(true);
+      if (pejmanPoint + 11 < 22) {
+        setDeck((prevDeck) =>
+          prevDeck.map((card) =>
+            deck.indexOf(card) === 0 ? { ...card, point: 11 } : card,
+          ),
+        );
+      } else {
+        setDeck((prevDeck) =>
+          prevDeck.map((card) =>
+            deck.indexOf(card) === 0 ? { ...card, point: 1 } : card,
+          ),
+        );
+      }
+      return;
+    }
     if (pejmanPoint < 18) {
       setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
       setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
@@ -209,13 +250,12 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       ) : (
         !easyMode &&
         normalMode &&
-        finalMessage ===
-          ""(
-            //   !isTogglingReset &&
-            //   !isTogglingLevel &&
-            //   !isTogglingHomePage &&
-            <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three star if you win." />,
-          )
+        finalMessage === "" && (
+          //   !isTogglingReset &&
+          //   !isTogglingLevel &&
+          //   !isTogglingHomePage &&
+          <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three star if you win." />
+        )
       )}
       {!isGameStarted && !easyMode && !normalMode && (
         <div>
@@ -237,10 +277,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         ))}
       {isGameStarted && finalMessage === "" && <div>Round: {roundNum}</div>}
       {isGameStarted && (
-        //   isBetMade &&
         <div>
           <div style={{ color: "red" }}>bet: {bet}</div>
-          <div style={{ color: "red" }}>round: {roundNum}</div>
         </div>
       )}
       {isGameStarted && <div style={{ color: "red" }}>raise: {raise}</div>}
@@ -263,7 +301,6 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {/* Pejman's hand */}
       {isGameStarted &&
         finalMessage === "" &&
-        // isUserTurn &&
         new Array(pejmanHand.length)
           .fill(null)
           .map((c, i) => (
@@ -289,7 +326,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         finalMessage !== "" &&
         roundMessage &&
         roundNum === 2 && (
-          <h4>The game had only one round and its result is:</h4>
+          <h4>The game had only one round with the following result:</h4>
         )
       )}
       {roundMessage && <h4>{roundMessage}</h4>}
@@ -297,7 +334,6 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {/* User's hand */}
       {isGameStarted &&
         finalMessage === "" &&
-        // isUserTurn &&
         new Array(userHand.length)
           .fill(null)
           .map((c, i) => (
@@ -354,14 +390,16 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         userHand.length >= 1 &&
         isBetMade &&
         !isRaising &&
-        finalMessage === "" && <button onClick={getNewCardForUser}>Hit</button>}
+        finalMessage === "" &&
+        !isAce && <button onClick={getNewCardForUser}>Hit</button>}
       {isGameStarted &&
         isUserTurn &&
         !isRoundOver &&
         userHand.length >= 1 &&
         isBetMade &&
         !isRaising &&
-        finalMessage === "" && (
+        finalMessage === "" &&
+        !isAce && (
           <button
             onClick={renderRaisingForm}
             disabled={userChipsNum === 0 || pejmanChipsNum === 0}
@@ -375,11 +413,30 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         userHand.length >= 1 &&
         isBetMade &&
         !isRaising &&
-        finalMessage === "" && (
+        finalMessage === "" &&
+        !isAce && (
           <button onClick={handleStand} disabled={!allowStand}>
             Stand
           </button>
         )}
+      {isAce && isUserTurn && (
+        <div>
+          <div>
+            You're next card is an Ace, do you want it to have the value of 1 or
+            11?
+          </div>
+          <button onClick={handleOne}>1</button>
+          <button onClick={handleEleven}>11</button>
+        </div>
+      )}
+      {isAce && !isUserTurn && (
+        <div>
+          <div>
+            {`Pejman's next card is an Ace and he wants it to have the value of ${deck[0].point}`}
+          </div>
+          <button onClick={handleAllowPejman}>Ok</button>
+        </div>
+      )}
       {isGameStarted &&
         isUserTurn &&
         !isRoundOver &&
@@ -450,16 +507,20 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         </div>
       )}
       {/* Allow Pejman button */}
-      {isGameStarted && !isUserTurn && !isRoundOver && finalMessage === "" && (
-        <div>
+      {isGameStarted &&
+        !isUserTurn &&
+        !isRoundOver &&
+        finalMessage === "" &&
+        !isAce && (
           <div>
-            {pejmanHand.length === 0
-              ? "Allow Pejman to start his turn"
-              : "Allow Pejman To make his next move"}
+            <div>
+              {pejmanHand.length === 0
+                ? "Allow Pejman to start his turn"
+                : "Allow Pejman To make his next move"}
+            </div>
+            <button onClick={handleAllowPejman}>Ok</button>
           </div>
-          <button onClick={handleAllowPejman}>Ok</button>
-        </div>
-      )}
+        )}
       {isRoundOver &&
       userPoint < 21 &&
       pejmanPoint < 21 &&
