@@ -116,7 +116,13 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsAce(false);
     if (deck[0].point === 0) {
       setIsAce(true);
-      if (pejmanPoint + 11 < 22) {
+      if (pejmanHand.length === 1 && pejmanPoint + 11 === 22) {
+        setDeck((prevDeck) =>
+          prevDeck.map((card) =>
+            deck.indexOf(card) === 0 ? { ...card, point: 11 } : card,
+          ),
+        );
+      } else if (pejmanPoint + 11 < 22) {
         setDeck((prevDeck) =>
           prevDeck.map((card) =>
             deck.indexOf(card) === 0 ? { ...card, point: 11 } : card,
@@ -146,7 +152,23 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     const tempBet = bet;
     let tempRoundMessage;
 
-    if (userPoint === 21 && pejmanPoint !== 21) {
+    if (userPoint === 22 && userHand.length === 2) {
+      tempUserChipsNum = userChipsNum + 2 * tempBet;
+      if (tempPejmanChipsNum !== 0) {
+        tempRoundMessage =
+          "Your hand is double-Aces! The value of your hand is NOT 22, it's 21 :) (BlackJack). You win this round!";
+      } else {
+        tempRoundMessage = `Your hand is double-Aces! The value of your hand is NOT 22, it's 21 :) (BlackJack). You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+      }
+    } else if (pejmanPoint === 22 && pejmanHand.length === 2) {
+      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
+      if (tempUserChipsNum !== 0) {
+        tempRoundMessage =
+          "Pejman's hand is double-Aces! The value of his hand is NOT 22, it's 21 :) (BlackJack). Pejman wins this round!";
+      } else {
+        tempRoundMessage = `Pejman's hand is double-Aces! The value of his hand is NOT 22, it's 21 :) (BlackJack). Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
+      }
+    } else if (userPoint === 21 && pejmanPoint !== 21) {
       tempUserChipsNum = userChipsNum + 2 * tempBet;
       if (tempPejmanChipsNum !== 0) {
         tempRoundMessage = `The value of your hand is ${userPoint} (BlackJack). You win this round!`;
@@ -241,6 +263,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   }, [userChipsNum, pejmanChipsNum]);
   return (
     <div>
+        <div>userHand.length: {userHand.length}</div>
+        <div>pejmanHand.length: {pejmanHand.length}</div>
       <h2>BlackJack</h2>
       {easyMode && !normalMode && finalMessage === "" ? (
         // !isTogglingReset &&
@@ -422,8 +446,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isAce && isUserTurn && (
         <div>
           <div>
-            You're next card is an Ace, do you want it to have the value of 1 or
-            11?
+            {`${userPoint === 0 ? "You're first card" : "You're next card"} is an Ace, do you want it to have the value of 1 or 11?`}
           </div>
           <button onClick={handleOne}>1</button>
           <button onClick={handleEleven}>11</button>
@@ -432,7 +455,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isAce && !isUserTurn && (
         <div>
           <div>
-            {`Pejman's next card is an Ace and he wants it to have the value of ${deck[0].point}`}
+            {`${pejmanPoint === 0 ? "Pejman's first card" : "Pejman's next card"} is an Ace, and he wants it to have the value of ${deck[0].point}`}
           </div>
           <button onClick={handleAllowPejman}>Ok</button>
         </div>
@@ -542,26 +565,38 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         userPoint > 21 &&
         pejmanPoint < 21 &&
         finalMessage === "" &&
+        userHand.length > 2 &&
         (userHand.length > 0 || pejmanHand.length > 0) ? (
         <div>You busted!</div>
-      ) : isRoundOver &&
-        userPoint === 21 &&
-        pejmanPoint < 21 &&
-        finalMessage === "" &&
-        (userHand.length > 0 || pejmanHand.length > 0) ? (
+      ) : (isRoundOver &&
+          userPoint === 21 &&
+          pejmanPoint < 21 &&
+          finalMessage === "" &&
+          (userHand.length > 0 || pejmanHand.length > 0)) ||
+        (isRoundOver &&
+          userPoint === 22 &&
+          userHand.length === 2 &&
+          finalMessage === "" &&
+          (userHand.length > 0 || pejmanHand.length > 0)) ? (
         <div>Well done! BlackJack! &#128512;</div>
       ) : isRoundOver &&
         pejmanPoint > 21 &&
         userPoint < 21 &&
         finalMessage === "" &&
+        pejmanHand.length > 2 &&
         (userHand.length > 0 || pejmanHand.length > 0) ? (
         <div>Pejman is busted!</div>
       ) : (
-        isRoundOver &&
-        pejmanPoint === 21 &&
-        userPoint < 21 &&
-        finalMessage === "" &&
-        (userHand.length > 0 || pejmanHand.length > 0) && (
+        ((isRoundOver &&
+          pejmanPoint === 21 &&
+          userPoint < 21 &&
+          finalMessage === "" &&
+          (userHand.length > 0 || pejmanHand.length > 0)) ||
+          (isRoundOver &&
+            pejmanPoint === 22 &&
+            pejmanHand.length === 2 &&
+            finalMessage === "" &&
+            (userHand.length > 0 || pejmanHand.length > 0))) && (
           <div>Pejman is BlackJack!</div>
         )
       )}
