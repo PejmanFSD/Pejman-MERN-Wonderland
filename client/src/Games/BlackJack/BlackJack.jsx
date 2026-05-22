@@ -53,6 +53,24 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     }
     return arr;
   };
+  const normalModeRiskManagement = (distance) => {
+    let goodRisk = 0;
+    let badRisk = 0;
+    for (const card of deck) {
+      if (Number(card.point) <= distance) {
+        goodRisk++;
+      } else {
+        badRisk++;
+      }
+    }
+    console.log("good risk: ", goodRisk);
+    console.log("bad risk: ", badRisk);
+    if (goodRisk >= badRisk) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const getNewCardForUser = () => {
     setRoundMessage("");
     if (deck[0].point === 0) {
@@ -129,13 +147,28 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       }
       return;
     }
-    if (pejmanPoint < 18) {
-      setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
-      setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
-      setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
-      setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
-    } else {
-      setIsRoundOver(true);
+    if (easyMode) {
+      if (pejmanPoint < 18) {
+        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
+        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
+        setDeck((currDeck) =>
+          currDeck.filter((c) => currDeck.indexOf(c) !== 0),
+        );
+        setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
+      } else {
+        setIsRoundOver(true);
+      }
+    } else if (normalMode) {
+      if (normalModeRiskManagement(21 - pejmanPoint)) {
+        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
+        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
+        setDeck((currDeck) =>
+          currDeck.filter((c) => currDeck.indexOf(c) !== 0),
+        );
+        setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
+      } else {
+        setIsRoundOver(true);
+      }
     }
   };
   const handleRoundOver = () => {
@@ -248,7 +281,12 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsDeckFinished(false);
   };
   useEffect(() => {
-    if (pejmanPoint >= 17) {
+    if (easyMode && pejmanPoint >= 17) {
+      setIsRoundOver(true);
+    }
+  }, [pejmanPoint]);
+  useEffect(() => {
+    if (normalMode && !normalModeRiskManagement(21 - pejmanPoint)) {
       setIsRoundOver(true);
     }
   }, [pejmanPoint]);
@@ -276,13 +314,13 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   }, [deck]);
   useEffect(() => {
     if (deck.length + usedCards.length !== 52) {
-        let currUsedCards = [];
-        for (const card of deckArray) {
-            if (!deck.map(c => c.imgSrc).includes(card.imgSrc)) {
-                currUsedCards.push(card);
-            }
+      let currUsedCards = [];
+      for (const card of deckArray) {
+        if (!deck.map((c) => c.imgSrc).includes(card.imgSrc)) {
+          currUsedCards.push(card);
         }
-        setUsedCards(currUsedCards);
+      }
+      setUsedCards(currUsedCards);
     }
   }, [deck, usedCards]);
   return (
@@ -317,19 +355,21 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       <div>Deck:</div>
       {isGameStarted &&
         deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)}
-        <br />
+      <br />
       {isGameStarted &&
-        deck.map((c, i) => <div style={{display: "inline"}}>{deck[i].point} - </div>)}
+        deck.map((c, i) => (
+          <div style={{ display: "inline" }}>{deck[i].point} - </div>
+        ))}
       <br />
       <div>Used Cards:</div>
       {isGameStarted &&
         usedCards.map((c, i) => (
           <img src={usedCards[i].imgSrc} height="65px" />
         ))}
-        <br />
+      <br />
       {isGameStarted &&
         usedCards.map((c, i) => (
-          <div style={{display: "inline"}}>{usedCards[i].point} - </div>
+          <div style={{ display: "inline" }}>{usedCards[i].point} - </div>
         ))}
       {isGameStarted && finalMessage === "" && <div>Round: {roundNum}</div>}
       {isGameStarted && (
