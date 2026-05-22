@@ -68,7 +68,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const handleAce = (i) => {
     setDeck((prevDeck) =>
       prevDeck.map((card) =>
-        deck.indexOf(card) === 0 ? { ...card, point: Number(i) } : card,
+        prevDeck.indexOf(card) === 0 ? { ...card, point: Number(i) } : card,
       ),
     );
     setIsAce(false);
@@ -239,9 +239,9 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const ShuffleCardsAndContinue = () => {
     let newDeck = [];
     for (const card of usedCards) {
-        if (!userHand.includes(card) && !pejmanHand.includes(card)) {
-            newDeck.push(card);
-        }
+      if (!userHand.includes(card) && !pejmanHand.includes(card)) {
+        newDeck.push(card);
+      }
     }
     setDeck(shuffleArray(newDeck));
     setUsedCards([]);
@@ -274,10 +274,19 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       setIsDeckFinished(true);
     }
   }, [deck]);
+  useEffect(() => {
+    if (deck.length + usedCards.length !== 52) {
+        let currUsedCards = [];
+        for (const card of deckArray) {
+            if (!deck.map(c => c.imgSrc).includes(card.imgSrc)) {
+                currUsedCards.push(card);
+            }
+        }
+        setUsedCards(currUsedCards);
+    }
+  }, [deck, usedCards]);
   return (
     <div>
-      <div>userHand.length: {userHand.length}</div>
-      <div>pejmanHand.length: {pejmanHand.length}</div>
       <h2>BlackJack</h2>
       {easyMode && !normalMode && finalMessage === "" ? (
         // !isTogglingReset &&
@@ -307,12 +316,20 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       )}
       <div>Deck:</div>
       {isGameStarted &&
-        deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)}{" "}
+        deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)}
+        <br />
+      {isGameStarted &&
+        deck.map((c, i) => <div style={{display: "inline"}}>{deck[i].point} - </div>)}
       <br />
       <div>Used Cards:</div>
       {isGameStarted &&
         usedCards.map((c, i) => (
           <img src={usedCards[i].imgSrc} height="65px" />
+        ))}
+        <br />
+      {isGameStarted &&
+        usedCards.map((c, i) => (
+          <div style={{display: "inline"}}>{usedCards[i].point} - </div>
         ))}
       {isGameStarted && finalMessage === "" && <div>Round: {roundNum}</div>}
       {isGameStarted && (
@@ -396,7 +413,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         isUserTurn &&
         userHand.length === 0 &&
         finalMessage === "" &&
-        !isAce && !isDeckFinished && (
+        !isAce &&
+        !isDeckFinished && (
           <button onClick={getNewCardForUser}>
             {userChipsNum === 0 || pejmanChipsNum === 0
               ? "Show the final result of the game"
@@ -404,25 +422,29 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           </button>
         )}
       {/* First bet form */}
-      {isGameStarted && isUserTurn && userHand.length === 1 && !isBetMade && !isDeckFinished && (
-        <form onSubmit={submitBet}>
-          <div>
-            <label htmlFor="bet">Make your bets</label>
-            <select onChange={handleBet} name="bet" id="bet">
-              <option value={bet} disabled selected>
-                🔽
-              </option>
-              {Array.from(
-                { length: Math.min(userChipsNum, pejmanChipsNum) },
-                (_, i) => i + 1,
-              ).map((i) => (
-                <option>{i}</option>
-              ))}
-            </select>
-          </div>
-          {bet > 0 && <button>Submit your bet</button>}
-        </form>
-      )}
+      {isGameStarted &&
+        isUserTurn &&
+        userHand.length === 1 &&
+        !isBetMade &&
+        !isDeckFinished && (
+          <form onSubmit={submitBet}>
+            <div>
+              <label htmlFor="bet">Make your bets</label>
+              <select onChange={handleBet} name="bet" id="bet">
+                <option value={bet} disabled selected>
+                  🔽
+                </option>
+                {Array.from(
+                  { length: Math.min(userChipsNum, pejmanChipsNum) },
+                  (_, i) => i + 1,
+                ).map((i) => (
+                  <option>{i}</option>
+                ))}
+              </select>
+            </div>
+            {bet > 0 && <button>Submit your bet</button>}
+          </form>
+        )}
       {/* The 3 buttons */}
       {isGameStarted &&
         isUserTurn &&
@@ -553,7 +575,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isUserTurn &&
         !isRoundOver &&
         finalMessage === "" &&
-        !isAce && !isDeckFinished && (
+        !isAce &&
+        !isDeckFinished && (
           <div>
             <div>
               {pejmanHand.length === 0
@@ -568,7 +591,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       pejmanPoint < 21 &&
       finalMessage === "" &&
       (userHand.length > 0 || pejmanHand.length > 0) &&
-      (userChipsNum === 0 || pejmanChipsNum === 0) && !isDeckFinished ? (
+      (userChipsNum === 0 || pejmanChipsNum === 0) &&
+      !isDeckFinished ? (
         <div>Pejman is done hitting.</div>
       ) : isRoundOver &&
         userPoint < 21 &&
@@ -576,7 +600,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         finalMessage === "" &&
         (userHand.length > 0 || pejmanHand.length > 0) &&
         userChipsNum > 0 &&
-        pejmanChipsNum > 0 && !isDeckFinished ? (
+        pejmanChipsNum > 0 &&
+        !isDeckFinished ? (
         <div>
           Pejman is done hitting. let's see who is the winner of this round.
         </div>
@@ -585,7 +610,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         pejmanPoint < 21 &&
         finalMessage === "" &&
         userHand.length > 2 &&
-        (userHand.length > 0 || pejmanHand.length > 0) && !isDeckFinished ? (
+        (userHand.length > 0 || pejmanHand.length > 0) &&
+        !isDeckFinished ? (
         <div>You busted!</div>
       ) : (isRoundOver &&
           userPoint === 21 &&
@@ -596,14 +622,16 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           userPoint === 22 &&
           userHand.length === 2 &&
           finalMessage === "" &&
-          (userHand.length > 0 || pejmanHand.length > 0)) && !isDeckFinished ? (
+          (userHand.length > 0 || pejmanHand.length > 0) &&
+          !isDeckFinished) ? (
         <div>Well done! BlackJack! &#128512;</div>
       ) : isRoundOver &&
         pejmanPoint > 21 &&
         userPoint < 21 &&
         finalMessage === "" &&
         pejmanHand.length > 2 &&
-        (userHand.length > 0 || pejmanHand.length > 0) && !isDeckFinished ? (
+        (userHand.length > 0 || pejmanHand.length > 0) &&
+        !isDeckFinished ? (
         <div>Pejman is busted!</div>
       ) : (
         ((isRoundOver &&
@@ -615,9 +643,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             pejmanPoint === 22 &&
             pejmanHand.length === 2 &&
             finalMessage === "" &&
-            (userHand.length > 0 || pejmanHand.length > 0))) && !isDeckFinished && (
-          <div>Pejman is BlackJack!</div>
-        )
+            (userHand.length > 0 || pejmanHand.length > 0))) &&
+        !isDeckFinished && <div>Pejman is BlackJack!</div>
       )}
       {((userChipsNum === 0 && userPoint < pejmanPoint && pejmanPoint < 22) ||
         (userChipsNum === 0 && userPoint > 21) ||
