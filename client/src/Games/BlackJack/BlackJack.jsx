@@ -4,6 +4,8 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { deckArray, chips, clubs, diamonds, hearts, spades } from "./images";
 import { useNavigate } from "react-router-dom";
+import Back from "./images/Back.jpg";
+import StartDeck from "./images/Start-Deck.png";
 
 export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -363,6 +365,11 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       setFinalMessage("Pejman wins the game!");
     } else if (pejmanChipsNum === 0 && !isBetMade) {
       setFinalMessage("You win the game!");
+      if (easyMode) {
+        updateTotalPoint(1);
+      } else {
+        updateTotalPoint(3);
+      }
     }
   }, [userChipsNum, pejmanChipsNum]);
   useEffect(() => {
@@ -401,7 +408,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           !isTogglingReset &&
           !isTogglingLevel &&
           !isTogglingHomePage && (
-            <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three star if you win." />
+            <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three stars if you win." />
           )}
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
@@ -413,7 +420,11 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         (easyMode || normalMode) &&
         !isTogglingLevel &&
         !isTogglingHomePage && (
-          <button onClick={handleStart}>Start the Game</button>
+          <div>
+            <button onClick={handleStart}>Start the Game</button>
+            <br />
+            <img src={StartDeck} />
+          </div>
         )}
       {isGameStarted &&
         !isTogglingReset &&
@@ -480,14 +491,30 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
+      {/* {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
         <div>Deck:</div>
-      )}
+      )} */}
+      {/* {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage &&
+        deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)} */}
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
         !isTogglingHomePage &&
-        deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)}
+        deck.map((c, i) =>
+          (i + 1) % 13 !== 0 ? (
+            <div style={{ display: "inline" }}>
+              <img src={Back} height="55px" style={{ margin: "2px" }} />
+            </div>
+          ) : (
+            <div style={{ display: "inline" }}>
+              <img src={Back} height="55px" style={{ margin: "2px" }} />
+              <br />
+            </div>
+          ),
+        )}
       <br />
       {isGameStarted &&
         !isTogglingReset &&
@@ -500,13 +527,34 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
         <div>Used Cards:</div>
       )}
-      {isGameStarted &&
+      {/* {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
         !isTogglingHomePage &&
         usedCards.map((c, i) => (
           <img src={usedCards[i].imgSrc} height="65px" />
-        ))}
+        ))} */}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage &&
+        usedCards.map((c, i) =>
+          !userHand.includes(c) &&
+          !pejmanHand.includes(c) &&
+          (i + 1) % 13 !== 0 ? (
+            <div style={{ display: "inline" }}>
+              <img src={Back} height="55px" style={{ margin: "2px" }} />
+            </div>
+          ) : (
+            !userHand.includes(c) &&
+            !pejmanHand.includes(c) && (
+              <div style={{ display: "inline" }}>
+                <img src={Back} height="55px" style={{ margin: "2px" }} />
+                <br />
+              </div>
+            )
+          ),
+        )}
       <br />
       {isGameStarted &&
         !isTogglingReset &&
@@ -534,14 +582,15 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isTogglingHomePage && (
           <div style={{ color: "red" }}>raise: {raise}</div>
         )}
+      {/* Pejman's chips */}
       {isGameStarted &&
-        userHand.length > 0 &&
-        finalMessage === "" &&
         !isTogglingReset &&
         !isTogglingLevel &&
         !isTogglingHomePage && (
-          <div style={{ color: "red" }}>
-            The value of your hand: {userPoint}
+          <div>
+            {new Array(pejmanChipsNum).fill(null).map((c) => (
+              <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
+            ))}
           </div>
         )}
       {isGameStarted &&
@@ -552,17 +601,6 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isTogglingHomePage && (
           <div style={{ color: "red" }}>
             The value of Pejman's hand: {pejmanPoint}
-          </div>
-        )}
-      {/* Pejman's chips */}
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            {new Array(pejmanChipsNum).fill(null).map((c) => (
-              <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
-            ))}
           </div>
         )}
       {/* Pejman's hand */}
@@ -649,6 +687,16 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             />
           ))}
       <br />
+      {isGameStarted &&
+        userHand.length > 0 &&
+        finalMessage === "" &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <div style={{ color: "red" }}>
+            The value of your hand: {userPoint}
+          </div>
+        )}
       {/* User's chips */}
       {isGameStarted &&
         !isTogglingReset &&
@@ -991,13 +1039,12 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             </button>
           </div>
         )}
-      {/* {isGameStarted &&
+      {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
-        !isTogglingHomePage &&
-        (
+        !isTogglingHomePage && (
           <ReviewSection game="Snake" currentUser={currentUser} />
-        )} */}
+        )}
     </div>
   );
 }
