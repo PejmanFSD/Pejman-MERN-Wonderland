@@ -280,6 +280,28 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setUsedCards([]);
     setIsDeckFinished(false);
   };
+  const handlePlayAgain = () => {
+    setDeck(shuffleArray(deckArray));
+    setIsUserTurn(true);
+    setUsedCards([]);
+    setUserChipsNum(7);
+    setPejmanChipsNum(7);
+    setUserHand([]);
+    setPejmanHand([]);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setBet(0);
+    setIsBetMade(false);
+    setRoundNum(1);
+    setIsRoundOver(false);
+    setIsRaising(false);
+    setAllowStand(true);
+    setRaise(0);
+    setRoundMessage("");
+    setFinalMessage("");
+    setIsAce(false);
+    setIsDeckFinished(false);
+  };
   useEffect(() => {
     if (easyMode && pejmanPoint >= 17) {
       setIsRoundOver(true);
@@ -427,6 +449,20 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       )}
       {roundMessage && <h4>{roundMessage}</h4>}
       {finalMessage !== "" && <h3>{finalMessage}</h3>}
+      {finalMessage && finalMessage === "You win the game!" && (
+        // !isTogglingHomePage &&
+        <div>
+          <div>Play Again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
+      {finalMessage && finalMessage === "Pejman wins the game!" && (
+        // !isTogglingHomePage &&
+        <div>
+          <div>Try Again?</div>
+          <button onClick={handlePlayAgain}>Ok</button>
+        </div>
+      )}
       {/* User's hand */}
       {isGameStarted &&
         finalMessage === "" &&
