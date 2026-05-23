@@ -3,6 +3,7 @@ import ReviewSection from "../../Components/ReviewSection";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { deckArray, chips, clubs, diamonds, hearts, spades } from "./images";
+import { useNavigate } from "react-router-dom";
 
 export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -30,7 +31,9 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [isDeckFinished, setIsDeckFinished] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
 
+  const navigate = useNavigate();
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
@@ -304,6 +307,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsDeckFinished(false);
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -329,6 +333,15 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
+  };
+  const toggleHomePage = () => {
+    setIsTogglingHomePage(true);
+  };
+  const toggleHomePageYes = () => {
+    navigate("/");
+  };
+  const toggleHomePageCancel = () => {
+    setIsTogglingHomePage(false);
   };
   useEffect(() => {
     if (easyMode && pejmanPoint >= 17) {
@@ -378,33 +391,34 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       <h2>BlackJack</h2>
       {easyMode && !normalMode && finalMessage === ""
         ? !isTogglingReset &&
-          !isTogglingLevel && (
-            // !isTogglingHomePage &&
+          !isTogglingLevel &&
+          !isTogglingHomePage && (
             <ModeExplaination message="Easy Mode: Pejman doesn't memorize the cards and if both hands have the same value, you win the round. You get one star if you win." />
           )
         : !easyMode &&
           normalMode &&
           finalMessage === "" &&
           !isTogglingReset &&
-          !isTogglingLevel && (
-            //   !isTogglingHomePage &&
+          !isTogglingLevel &&
+          !isTogglingHomePage && (
             <ModeExplaination message="Normal Mode: Pejman memorizes the cards and if both hands have the same value, Pejman wins the round. You get three star if you win." />
           )}
-      {!isGameStarted && !easyMode && !normalMode && (
+      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
           <button onClick={handleEasyMode}>Easy Mode</button>
           <button onClick={handleNormalMode}>Normal Mode</button>
         </div>
       )}
-      {!isGameStarted && (easyMode || normalMode) && (
-        // !isTogglingLevel &&
-        // !isTogglingHomePage &&
-        <button onClick={handleStart}>Start the Game</button>
-      )}
+      {!isGameStarted &&
+        (easyMode || normalMode) &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <button onClick={handleStart}>Start the Game</button>
+        )}
       {isGameStarted &&
         !isTogglingReset &&
         finalMessage === "" &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         (easyMode || normalMode) && (
           <div>
@@ -423,7 +437,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         (easyMode || normalMode) &&
         !isTogglingReset &&
-        // !isTogglingHomePage &&
+        !isTogglingHomePage &&
         !isTogglingLevel &&
         finalMessage === "" && (
           <div>
@@ -447,23 +461,49 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
-      {!isTogglingReset && !isTogglingLevel && <div>Deck:</div>}
+      {!isTogglingHomePage &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        finalMessage === "" && (
+          <div>
+            <button onClick={() => toggleHomePage()}>
+              Back to the home page
+            </button>
+          </div>
+        )}
+      {isTogglingHomePage && finalMessage === "" && (
+        <div>
+          <ConfirmationBox
+            question="Are you sure you want to go back to Home Page?"
+            toggleYes={toggleHomePageYes}
+            toggleCancel={toggleHomePageCancel}
+          />
+        </div>
+      )}
+      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
+        <div>Deck:</div>
+      )}
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)}
       <br />
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         deck.map((c, i) => (
           <div style={{ display: "inline" }}>{deck[i].point} - </div>
         ))}
       <br />
-      {!isTogglingReset && !isTogglingLevel && <div>Used Cards:</div>}
+      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
+        <div>Used Cards:</div>
+      )}
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         usedCards.map((c, i) => (
           <img src={usedCards[i].imgSrc} height="65px" />
         ))}
@@ -471,26 +511,35 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         usedCards.map((c, i) => (
           <div style={{ display: "inline" }}>{usedCards[i].point} - </div>
         ))}
       {isGameStarted &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && <div>Round: {roundNum}</div>}
-      {isGameStarted && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          <div style={{ color: "red" }}>bet: {bet}</div>
-        </div>
-      )}
-      {isGameStarted && !isTogglingReset && !isTogglingLevel && (
-        <div style={{ color: "red" }}>raise: {raise}</div>
-      )}
+        !isTogglingLevel &&
+        !isTogglingHomePage && <div>Round: {roundNum}</div>}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <div>
+            <div style={{ color: "red" }}>bet: {bet}</div>
+          </div>
+        )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <div style={{ color: "red" }}>raise: {raise}</div>
+        )}
       {isGameStarted &&
         userHand.length > 0 &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div style={{ color: "red" }}>
             The value of your hand: {userPoint}
           </div>
@@ -499,24 +548,29 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         pejmanHand.length > 0 &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div style={{ color: "red" }}>
             The value of Pejman's hand: {pejmanPoint}
           </div>
         )}
       {/* Pejman's chips */}
-      {isGameStarted && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          {new Array(pejmanChipsNum).fill(null).map((c) => (
-            <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
-          ))}
-        </div>
-      )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <div>
+            {new Array(pejmanChipsNum).fill(null).map((c) => (
+              <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
+            ))}
+          </div>
+        )}
       {/* Pejman's hand */}
       {isGameStarted &&
         finalMessage === "" &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         new Array(pejmanHand.length)
           .fill(null)
           .map((c, i) => (
@@ -532,7 +586,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         isBetMade &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             {new Array(2 * bet).fill(null).map((c) => (
               <img src={chips[0]} height="50px" />
@@ -544,40 +599,46 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       roundMessage &&
       roundNum > 2 &&
       !isTogglingReset &&
-      !isTogglingLevel ? (
+      !isTogglingLevel &&
+      !isTogglingHomePage ? (
         <h4>The result of the final round:</h4>
       ) : (
         finalMessage !== "" &&
         roundMessage &&
         roundNum === 2 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <h4>The game had only one round with the following result:</h4>
         )
       )}
-      {roundMessage && !isTogglingReset && !isTogglingLevel && (
-        <h4>{roundMessage}</h4>
-      )}
-      {finalMessage !== "" && <h3>{finalMessage}</h3>}
-      {finalMessage && finalMessage === "You win the game!" && (
-        // !isTogglingHomePage &&
-        <div>
-          <div>Play Again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {finalMessage && finalMessage === "Pejman wins the game!" && (
-        // !isTogglingHomePage &&
-        <div>
-          <div>Try Again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
+      {roundMessage &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && <h4>{roundMessage}</h4>}
+      {finalMessage !== "" && !isTogglingHomePage && <h3>{finalMessage}</h3>}
+      {finalMessage &&
+        finalMessage === "You win the game!" &&
+        !isTogglingHomePage && (
+          <div>
+            <div>Play Again?</div>
+            <button onClick={handlePlayAgain}>Ok</button>
+          </div>
+        )}
+      {finalMessage &&
+        finalMessage === "Pejman wins the game!" &&
+        !isTogglingHomePage && (
+          <div>
+            <div>Try Again?</div>
+            <button onClick={handlePlayAgain}>Ok</button>
+          </div>
+        )}
       {/* User's hand */}
       {isGameStarted &&
         finalMessage === "" &&
         !isTogglingReset &&
         !isTogglingLevel &&
+        !isTogglingHomePage &&
         new Array(userHand.length)
           .fill(null)
           .map((c, i) => (
@@ -589,13 +650,16 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           ))}
       <br />
       {/* User's chips */}
-      {isGameStarted && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          {new Array(userChipsNum).fill(null).map((c) => (
-            <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
-          ))}
-        </div>
-      )}
+      {isGameStarted &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <div>
+            {new Array(userChipsNum).fill(null).map((c) => (
+              <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
+            ))}
+          </div>
+        )}
       {/* New round's button / Final button */}
       {isGameStarted &&
         isUserTurn &&
@@ -604,7 +668,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isAce &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <button onClick={getNewCardForUser}>
             {userChipsNum === 0 || pejmanChipsNum === 0
               ? "Show the final result of the game"
@@ -618,7 +683,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isBetMade &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <form onSubmit={submitBet}>
             <div>
               <label htmlFor="bet">Make your bets</label>
@@ -648,7 +714,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isAce &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && <button onClick={getNewCardForUser}>Hit</button>}
+        !isTogglingLevel &&
+        !isTogglingHomePage && <button onClick={getNewCardForUser}>Hit</button>}
       {isGameStarted &&
         isUserTurn &&
         !isRoundOver &&
@@ -659,7 +726,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isAce &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <button
             onClick={renderRaisingForm}
             disabled={userChipsNum === 0 || pejmanChipsNum === 0}
@@ -677,7 +745,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isAce &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <button onClick={handleStand} disabled={!allowStand}>
             Stand
           </button>
@@ -686,7 +755,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         isUserTurn &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             <div>
               {`${userPoint === 0 ? "You're first card" : "You're next card"} is an Ace, do you want it to have the value of 1 or 11?`}
@@ -699,7 +769,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isUserTurn &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             <div>
               {`${pejmanPoint === 0 ? "Pejman's first card" : "Pejman's next card"} is an Ace, and he wants it to have the value of ${deck[0].point}`}
@@ -717,7 +788,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         userChipsNum === 0 &&
         pejmanChipsNum > 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div style={{ color: "gray", fontSize: "15px" }}>
             You can't raise anymore because you don't have any gambling chips!
           </div>
@@ -732,7 +804,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         pejmanChipsNum === 0 &&
         userChipsNum > 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div style={{ color: "gray", fontSize: "15px" }}>
             You can't raise anymore because Pejman doesn't have any gambling
             chips!
@@ -748,7 +821,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         pejmanChipsNum === 0 &&
         userChipsNum === 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div style={{ color: "gray", fontSize: "15px" }}>
             You can't raise anymore because neither you nor Pejman don't have
             any gambling chips!
@@ -757,34 +831,38 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {!allowStand &&
         finalMessage === "" &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div style={{ color: "gray", fontSize: "15px" }}>
             You can't stand right after raising!
           </div>
         )}
       {/* Raising form */}
-      {isRaising && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          <form onSubmit={submitRaise}>
-            <div>
-              <label htmlFor="raise">How much do you want to raise?</label>
-              <select onChange={handleRaise} name="raise" id="raise">
-                <option value={raise} disabled selected>
-                  🔽
-                </option>
-                {Array.from(
-                  { length: Math.min(userChipsNum, pejmanChipsNum) },
-                  (_, i) => i + 1,
-                ).map((i) => (
-                  <option>{i}</option>
-                ))}
-              </select>
-            </div>
-            <button disabled={raise === 0}>Update the raise</button>
-          </form>
-          <button onClick={cancelRaising}>Cancel the raise</button>
-        </div>
-      )}
+      {isRaising &&
+        !isTogglingReset &&
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
+          <div>
+            <form onSubmit={submitRaise}>
+              <div>
+                <label htmlFor="raise">How much do you want to raise?</label>
+                <select onChange={handleRaise} name="raise" id="raise">
+                  <option value={raise} disabled selected>
+                    🔽
+                  </option>
+                  {Array.from(
+                    { length: Math.min(userChipsNum, pejmanChipsNum) },
+                    (_, i) => i + 1,
+                  ).map((i) => (
+                    <option>{i}</option>
+                  ))}
+                </select>
+              </div>
+              <button disabled={raise === 0}>Update the raise</button>
+            </form>
+            <button onClick={cancelRaising}>Cancel the raise</button>
+          </div>
+        )}
       {/* Allow Pejman button */}
       {isGameStarted &&
         !isUserTurn &&
@@ -793,7 +871,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         !isAce &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             <div>
               {pejmanHand.length === 0
@@ -811,7 +890,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       (userChipsNum === 0 || pejmanChipsNum === 0) &&
       !isDeckFinished &&
       !isTogglingReset &&
-      !isTogglingLevel ? (
+      !isTogglingLevel &&
+      !isTogglingHomePage ? (
         <div>Pejman is done hitting.</div>
       ) : isRoundOver &&
         userPoint < 21 &&
@@ -822,7 +902,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         pejmanChipsNum > 0 &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel ? (
+        !isTogglingLevel &&
+        !isTogglingHomePage ? (
         <div>
           Pejman is done hitting. let's see who is the winner of this round.
         </div>
@@ -834,7 +915,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         (userHand.length > 0 || pejmanHand.length > 0) &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel ? (
+        !isTogglingLevel &&
+        !isTogglingHomePage ? (
         <div>You busted!</div>
       ) : ((isRoundOver &&
           userPoint === 21 &&
@@ -849,7 +931,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isDeckFinished)) &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel ? (
+        !isTogglingLevel &&
+        !isTogglingHomePage ? (
         <div>Well done! BlackJack! &#128512;</div>
       ) : isRoundOver &&
         pejmanPoint > 21 &&
@@ -859,7 +942,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         (userHand.length > 0 || pejmanHand.length > 0) &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel ? (
+        !isTogglingLevel &&
+        !isTogglingHomePage ? (
         <div>Pejman is busted!</div>
       ) : (
         ((isRoundOver &&
@@ -874,7 +958,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             (userHand.length > 0 || pejmanHand.length > 0))) &&
         !isDeckFinished &&
         !isTogglingReset &&
-        !isTogglingLevel && <div>Pejman is BlackJack!</div>
+        !isTogglingLevel &&
+        !isTogglingHomePage && <div>Pejman is BlackJack!</div>
       )}
       {((userChipsNum === 0 && userPoint < pejmanPoint && pejmanPoint < 22) ||
         (userChipsNum === 0 && userPoint > 21) ||
@@ -884,18 +969,21 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
         (pejmanChipsNum === 0 && pejmanPoint === userPoint && easyMode)) &&
         isRoundOver &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>And the game is over, let's see who is the winner.</div>
         )}
       {isRoundOver &&
         (userHand.length > 0 || pejmanHand.length > 0) &&
         !isTogglingReset &&
-        !isTogglingLevel && <button onClick={handleRoundOver}>Ok</button>}
+        !isTogglingLevel &&
+        !isTogglingHomePage && <button onClick={handleRoundOver}>Ok</button>}
       {isDeckFinished &&
         userChipsNum > 0 &&
         pejmanChipsNum > 0 &&
         !isTogglingReset &&
-        !isTogglingLevel && (
+        !isTogglingLevel &&
+        !isTogglingHomePage && (
           <div>
             <div>There's no card left!</div>
             <button onClick={ShuffleCardsAndContinue}>
