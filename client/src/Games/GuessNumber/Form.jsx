@@ -26,9 +26,6 @@ export default function Form({
   const [isAlreadyGuessed, setIsAlreadyGuessed] = useState(false);
   const [isInputEmpty, setIsInputEmpty] = useState(false);
   const handleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
     const { name, value } = e.target;
     if (value === "-") {
       setIsDigitNegative(true);
@@ -40,7 +37,7 @@ export default function Form({
       setIsFirstDigitZero(true);
     } else if (value.charCodeAt(0) > 57 || value.charCodeAt(0) < 48) {
       setIsInt(false);
-    } else if (evaluateRepetitive(name, value)) {
+    } else if (evaluateRepetitive(name, value) && value !== "") {
       setIsDigitRepetitive(true);
     }
     setInputs((currInputs) => {
@@ -367,7 +364,7 @@ export default function Form({
       )}
       {!isInt && (
         <div>
-          <p>You can enter only a number!</p>
+          <p>You should enter only a number!</p>
           <button onClick={handleIsInt}>OK</button>
         </div>
       )}

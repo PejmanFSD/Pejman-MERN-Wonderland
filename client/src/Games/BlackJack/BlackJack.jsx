@@ -423,7 +423,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           <div>
             <button onClick={handleStart}>Start the Game</button>
             <br />
-            <img src={StartDeck} />
+            <img src={StartDeck} height="400px"/>
           </div>
         )}
       {isGameStarted &&
