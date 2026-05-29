@@ -23,10 +23,10 @@ export default function AboutRockScissorsPaper({setIsAboutPage}) {
       </ul>
       <h4>Game Modes</h4>
       <div>
-      - Normal Mode: Defeat Pejman 3 times in a row to earn 1 star.
+      <strong>- Normal Mode:</strong><br />Defeat Pejman 3 times in a row to earn 1 star.
       </div>
       <div>
-      - Extremely-Super-Difficult Mode: Beat Pejman just once to earn an
+      <strong>- Extremely-Super-Difficult Mode:</strong><br />Beat Pejman just once to earn an
       incredible 1,000,000 stars!
       </div>
       <button onClick={handleGamePage}>Back to the Game</button>

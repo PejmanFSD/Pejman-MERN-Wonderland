@@ -17,9 +17,6 @@ export default function Chances({
   toggleResetCancel,
   isTogglingHomePage,
 }) {
-  const toggleReset = () => {
-    setIsTogglingReset(true);
-  };
   const handleOk = () => {
     if (easyMode) {
       updateTotalPoint(1);
@@ -106,23 +103,6 @@ export default function Chances({
           </div>
           <button onClick={() => handleOk()}>Ok</button>
         </div>
-      )}
-      {!isWin &&
-        userGuess[0] &&
-        chancesNum !== 0 &&
-        !isTogglingLevel &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <button onClick={() => toggleReset()} disabled={isTogglingLevel}>
-            Reset the Game
-          </button>
-        )}
-      {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
-        <ConfirmationBox
-          question="Are you sure you want to reset the game?"
-          toggleYes={toggleResetYes}
-          toggleCancel={toggleResetCancel}
-        />
       )}
     </div>
   );

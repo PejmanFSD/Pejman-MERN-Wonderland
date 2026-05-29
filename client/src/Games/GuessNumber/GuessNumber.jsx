@@ -8,8 +8,10 @@ import Chances from "./Chances";
 import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutGuessNumber from "./AboutGuessNumber";
 
-export default function GuessNumber({updateTotalPoint, currentUser}) {
+export default function GuessNumber({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -133,6 +135,9 @@ export default function GuessNumber({updateTotalPoint, currentUser}) {
     }
     setIsTogglingLevel(false);
   };
+  const toggleReset = () => {
+    setIsTogglingReset(true);
+  };
   const toggleResetYes = () => {
     reset();
     setIsTogglingReset(false);
@@ -148,6 +153,9 @@ export default function GuessNumber({updateTotalPoint, currentUser}) {
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
+  };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
   };
   useEffect(
     function () {
@@ -172,150 +180,169 @@ export default function GuessNumber({updateTotalPoint, currentUser}) {
       };
       handleWin();
     },
-    [num, userGuess, userGuessStatus, chancesNum]
+    [num, userGuess, userGuessStatus, chancesNum],
   );
   return (
     <div>
-      <h2>Guess Number</h2>
-      {!easyMode && !normalMode && !isTogglingHomePage && (
-        <GameLevel
-          mode1="Easy"
-          mode1Function={runEasyMode}
-          mode2="Normal"
-          mode2Function={runNormalMode}
-          runEasyMode={runEasyMode}
-          runNormalMode={runNormalMode}
-        />
+      {isAboutPage && <AboutGuessNumber setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
+        <div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Guess Number</button>
+          )}
+          <h2>Guess Number</h2>
+          {!easyMode && !normalMode && !isTogglingHomePage && (
+            <GameLevel
+              mode1="Easy"
+              mode1Function={runEasyMode}
+              mode2="Normal"
+              mode2Function={runNormalMode}
+              runEasyMode={runEasyMode}
+              runNormalMode={runNormalMode}
+            />
+          )}
+          {easyMode && !normalMode ? (
+            <ModeExplaination
+              message="Easy Mode: The colorful circles appear in the exact order of each
+            digit. You have 5 chances. You get one star if you win."
+            />
+          ) : (
+            !easyMode &&
+            normalMode && (
+              <ModeExplaination
+                message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances.
+            You get five stars if you win."
+              />
+            )
+          )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingHomePage && (
+              <button onClick={() => generateRandNum()}>Start the Game</button>
+            )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            !isWin &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <button onClick={() => toggleLevel()}>{`Switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }`}</button>
+            )}
+          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+            <ConfirmationBox
+              question={`Are you sure you want to switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }?`}
+              toggleYes={toggleLevelYes}
+              toggleCancel={toggleLevelCancel}
+              easyMode={easyMode}
+            />
+          )}
+          {!isWin &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <button onClick={() => toggleHomePage()}>
+                Back to the home page
+              </button>
+            )}
+          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+            isTogglingHomePage && (
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            )}
+          {!isWin &&
+            userGuess[0] &&
+            chancesNum !== 0 &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <button onClick={() => toggleReset()} disabled={isTogglingLevel}>
+                Reset the Game
+              </button>
+            )}
+          {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
+            <ConfirmationBox
+              question="Are you sure you want to reset the game?"
+              toggleYes={toggleResetYes}
+              toggleCancel={toggleResetCancel}
+            />
+          )}
+          {/* <div>num: {num}</div> */}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <UserGuess
+                userGuess={userGuess}
+                userGuessStatus={userGuessStatus}
+                easyMode={easyMode}
+                normalMode={normalMode}
+              />
+            )}
+          {isGameStarted && chancesNum > 0 && (
+            <Form
+              inputs={inputs}
+              setInputs={setInputs}
+              chancesNum={chancesNum}
+              setChancesNum={setChancesNum}
+              setUserGuess={setUserGuess}
+              updateUserGuess={updateUserGuess}
+              updateUserGuessStatus={updateUserGuessStatus}
+              userGuess={userGuess}
+              userGuessStatus={userGuessStatus}
+              num={num}
+              convertArrayToString={convertArrayToString}
+              setIsWin={setIsWin}
+              isWin={isWin}
+              allUserGuesses={allUserGuesses}
+              setAllUserGuesses={setAllUserGuesses}
+              isTogglingLevel={isTogglingLevel}
+              isTogglingReset={isTogglingReset}
+              isTogglingHomePage={isTogglingHomePage}
+            />
+          )}
+          {isGameStarted && (
+            <Chances
+              chancesNum={chancesNum}
+              setChancesNum={setChancesNum}
+              num={num}
+              setNum={setNum}
+              setInputs={setInputs}
+              setUserGuess={setUserGuess}
+              setUserGuessStatus={setUserGuessStatus}
+              setAllUserGuesses={setAllUserGuesses}
+              generateRandNum={generateRandNum}
+              reset={reset}
+              isWin={isWin}
+              userGuess={userGuess}
+              setIsWin={setIsWin}
+              easyMode={easyMode}
+              normalMode={normalMode}
+              updateTotalPoint={updateTotalPoint}
+              isGameStarted={isGameStarted}
+              toggleResetYes={toggleResetYes}
+              toggleResetCancel={toggleResetCancel}
+              isTogglingLevel={isTogglingLevel}
+              isTogglingReset={isTogglingReset}
+              setIsTogglingReset={setIsTogglingReset}
+              isTogglingHomePage={isTogglingHomePage}
+            />
+          )}
+          <br></br>
+          {!isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            isGameStarted && (
+              <ReviewSection game="GuessNumber" currentUser={currentUser} />
+            )}
+        </div>
       )}
-      {easyMode && !normalMode ? (
-        <ModeExplaination
-          message="Easy Mode: The colorful circles appear in the exact order of each
-          digit. You have 5 chances. You get one star if you win."
-        />
-      ) : (
-        !easyMode &&
-        normalMode && (
-          <ModeExplaination message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances.
-          You get five stars if you win." />
-        )
-      )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingHomePage && (
-        <button onClick={() => generateRandNum()}>Start the Game</button>
-      )}
-      {isGameStarted &&
-        num &&
-        !isWin &&
-        chancesNum !== 0 &&
-        (easyMode || normalMode) && (
-          <div>
-            <h5>Guess the chosen four-digits number</h5>
-            <h5>Rules:</h5>
-            <h5>1- The first digit can't be 0</h5>
-            <h5>2- None of the digits can be greater than 9</h5>
-            <h5>3- None of the digits can be negative</h5>
-            <h5>4- None of the digits can be decimal</h5>
-            <h5>5- The digits can't be repetitive</h5>
-          </div>
-        )}
-      {/* <div>num: {num}</div> */}
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <UserGuess
-            userGuess={userGuess}
-            userGuessStatus={userGuessStatus}
-            easyMode={easyMode}
-            normalMode={normalMode}
-          />
-        )}
-      {isGameStarted && chancesNum > 0 && (
-        <Form
-          inputs={inputs}
-          setInputs={setInputs}
-          chancesNum={chancesNum}
-          setChancesNum={setChancesNum}
-          setUserGuess={setUserGuess}
-          updateUserGuess={updateUserGuess}
-          updateUserGuessStatus={updateUserGuessStatus}
-          userGuess={userGuess}
-          userGuessStatus={userGuessStatus}
-          num={num}
-          convertArrayToString={convertArrayToString}
-          setIsWin={setIsWin}
-          isWin={isWin}
-          allUserGuesses={allUserGuesses}
-          setAllUserGuesses={setAllUserGuesses}
-          isTogglingLevel={isTogglingLevel}
-          isTogglingReset={isTogglingReset}
-          isTogglingHomePage={isTogglingHomePage}
-        />
-      )}
-      {isGameStarted && (
-        <Chances
-          chancesNum={chancesNum}
-          setChancesNum={setChancesNum}
-          num={num}
-          setNum={setNum}
-          setInputs={setInputs}
-          setUserGuess={setUserGuess}
-          setUserGuessStatus={setUserGuessStatus}
-          setAllUserGuesses={setAllUserGuesses}
-          generateRandNum={generateRandNum}
-          reset={reset}
-          isWin={isWin}
-          userGuess={userGuess}
-          setIsWin={setIsWin}
-          easyMode={easyMode}
-          normalMode={normalMode}
-          updateTotalPoint={updateTotalPoint}
-          isGameStarted={isGameStarted}
-          toggleResetYes={toggleResetYes}
-          toggleResetCancel={toggleResetCancel}
-          isTogglingLevel={isTogglingLevel}
-          isTogglingReset={isTogglingReset}
-          setIsTogglingReset={setIsTogglingReset}
-          isTogglingHomePage={isTogglingHomePage}
-        />
-      )}
-      <br></br>
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        !isWin &&
-        !isTogglingLevel &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <button onClick={() => toggleLevel()}>{`Switch to ${
-            easyMode ? "Normal Mode" : "Easy Mode"
-          }`}</button>
-        )}
-      {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-        <ConfirmationBox
-          question={`Are you sure you want to switch to ${
-            easyMode ? "Normal Mode" : "Easy Mode"
-          }?`}
-          toggleYes={toggleLevelYes}
-          toggleCancel={toggleLevelCancel}
-          easyMode={easyMode}
-        />
-      )}
-      {!isWin &&
-        !isTogglingLevel &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <button onClick={() => toggleHomePage()}>
-            Back to the home page
-          </button>
-        )}
-      {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
-        isTogglingHomePage && (
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        )}
-        {!isTogglingLevel && !isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="GuessNumber" currentUser={currentUser} />}
     </div>
   );
 }
