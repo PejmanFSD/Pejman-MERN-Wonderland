@@ -103,8 +103,11 @@ export default function HappyFlower({updateTotalPoint, currentUser}) {
     if (mistakesNum === 0 && userGuess.length > 0) {
       setIsWin(true);
       handleStopTimer();
-      if (normalMode) {
+      if (easyMode) {
         updateTotalPoint(1);
+      }
+      else if (normalMode) {
+        updateTotalPoint(3);
       }
     }
   }, [userGuess]);
@@ -118,10 +121,10 @@ export default function HappyFlower({updateTotalPoint, currentUser}) {
         </div>
       )}
       {easyMode && !isTogglingHomePage && (
-        <ModeExplaination message="Easy Mode: You will not get any star if you win, because there's no time limitation." />
+        <ModeExplaination message="Easy Mode: You'll get one star if you guess the word, there's no time limitation." />
       )}
       {normalMode && !isTogglingHomePage && (
-        <ModeExplaination message="Normal Mode: You'll get a star if you guess the word in 60 seconds." />
+        <ModeExplaination message="Normal Mode: You'll get three stars if you guess the word in 60 seconds." />
       )}
       {isTimerRunning && isWin === "" && normalMode && !isTogglingReset && !isTogglingHomePage && (
         <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>

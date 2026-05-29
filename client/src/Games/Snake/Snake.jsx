@@ -179,7 +179,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           if (e.key === " ") {
             for (let i = directions.length - 1; i >= 0; i--) {
               if (directions[i] !== "None") {
-                if (directions[i] == "Up") {
+                if (directions[i] === "Up") {
                   setDirection({ x: 0, y: -1 });
                   setDirections((currDirections) => [...currDirections, "Up"]);
                   break;
@@ -187,7 +187,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               }
 
               if (directions[i] !== "None") {
-                if (directions[i] == "Down") {
+                if (directions[i] === "Down") {
                   setDirection({ x: 0, y: 1 });
                   setDirections((currDirections) => [
                     ...currDirections,
@@ -198,7 +198,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               }
 
               if (directions[i] !== "None") {
-                if (directions[i] == "Left") {
+                if (directions[i] === "Left") {
                   setDirection({ x: -1, y: 0 });
                   setDirections((currDirections) => [
                     ...currDirections,
@@ -209,7 +209,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               }
 
               if (directions[i] !== "None") {
-                if (directions[i] == "Right") {
+                if (directions[i] === "Right") {
                   setDirection({ x: 1, y: 0 });
                   setDirections((currDirections) => [
                     ...currDirections,
@@ -282,7 +282,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
-        updateTotalPoint(1);
+        updateTotalPoint(3);
       }
     }
   }, [userPoint]);
@@ -332,7 +332,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           !isTogglingReset &&
           !isTogglingLevel &&
           !isTogglingHomePage && (
-            <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each apple, you get one star if you win." />
+            <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each food, you get three stars if you win." />
           )}
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>

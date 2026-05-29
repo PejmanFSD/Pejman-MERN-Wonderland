@@ -1,17 +1,20 @@
 export default function ({ filledSquares, color }) {
   return (
-    <div style={{ display: "center", backgroundColor: "lightblue" }}>
-      <table style={{ margin: "5px" }}>
-        <tbody>
+    <div style={{ display: "center", backgroundColor: "black" }}>
+      <div style={{ margin: "3px" }}>
+        <div>
           {Array.from({ length: 5 }).map((_, rowIndex) => (
-            <tr key={rowIndex}>
+            <div key={rowIndex}>
               {Array.from({ length: 5 }).map((_, colIndex) => (
-                <td
+                <div
                   key={colIndex}
                   id={`cell-${rowIndex}-${colIndex}`}
                   style={{
                     display: "inline",
-                    margin: "1px",
+                    // marginLeft: "1px",
+                    // marginRight: "1px",
+                    // marginTop: "1px",
+                    // marginBottom: "1px",
                     border: "1px solid black",
                     fontSize: "15px",
                     backgroundColor: filledSquares.includes(
@@ -25,12 +28,12 @@ export default function ({ filledSquares, color }) {
                   }}
                 >
                   ---
-                </td>
+                </div>
               ))}
-            </tr>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 }

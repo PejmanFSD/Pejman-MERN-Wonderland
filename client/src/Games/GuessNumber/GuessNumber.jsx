@@ -190,12 +190,13 @@ export default function GuessNumber({updateTotalPoint, currentUser}) {
       {easyMode && !normalMode ? (
         <ModeExplaination
           message="Easy Mode: The colorful circles appear in the exact order of each
-          digit. You have 5 chances."
+          digit. You have 5 chances. You get one star if you win."
         />
       ) : (
         !easyMode &&
         normalMode && (
-          <ModeExplaination message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances." />
+          <ModeExplaination message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances.
+          You get five stars if you win." />
         )
       )}
       {!isGameStarted && (easyMode || normalMode) && !isTogglingHomePage && (

@@ -28,13 +28,16 @@ export default function Cryptogram({updateTotalPoint, currentUser}) {
   const [isOneChar, setIsOneChar] = useState(true);
   const [isAlreadyExist, setIsAlreadyExist] = useState(false);
   const [acceptedAsRepetition, setAcceptedAsRepetition] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   async function getAdvice() {
+    setIsLoading(true);
     setIsGameStarted(true);
     const res = await fetch("https://api.adviceslip.com/advice");
     const data = await res.json();
     convertStringIntoArray(data.slip.advice);
+    setIsLoading(false);
   }
   const convertStringIntoArray = (str) => {
     for (let i = 0; i < str.length; i++) {
@@ -145,6 +148,8 @@ export default function Cryptogram({updateTotalPoint, currentUser}) {
           setIsAlreadyExist={setIsAlreadyExist}
           acceptedAsRepetition={acceptedAsRepetition}
           setAcceptedAsRepetition={setAcceptedAsRepetition}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
       )}
       {isGameStarted &&
@@ -155,19 +160,19 @@ export default function Cryptogram({updateTotalPoint, currentUser}) {
         !isInputEmpty &&
         isOneChar &&
         !isAlreadyExist && (
-          <button onClick={() => toggleReset()}>Reset the Game</button>
+          <button onClick={() => toggleReset()} disabled={isLoading}>Reset the Game</button>
         )}
       {!isGameStarted &&
         !isTogglingReset &&
         isWin === true &&
         !isTogglingHomePage && (
-          <button onClick={() => toggleReset()}>Play Again</button>
+          <button onClick={toggleResetYes}>Play Again</button>
         )}
       {!isGameStarted &&
         !isTogglingReset &&
         isWin === false &&
         !isTogglingHomePage && (
-          <button onClick={() => toggleReset()}>Try Again</button>
+          <button onClick={toggleResetYes}>Try Again</button>
         )}
       {isTogglingReset && (
         <ConfirmationBox

@@ -12,6 +12,7 @@ export default function Square({
   setAvailableSquares,
   isTogglingReset,
   isTogglingHomePage,
+  isTogglingLevel
 }) {
   const handleClickSquare = () => {
     setSquares((currSquares) =>
@@ -33,6 +34,7 @@ export default function Square({
           (!isUserTurn ||
             imgSrc !== signs[0] ||
             isTogglingReset ||
+            isTogglingLevel ||
             isTogglingHomePage) &&
           "none",
         opacity:

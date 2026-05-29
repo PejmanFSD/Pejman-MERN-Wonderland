@@ -243,9 +243,9 @@ export default function MemoryCards({updateTotalPoint, currentUser}) {
     if (pair === images.length && seconds > 0 && pair !== 0) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(1);
-      } else if (hardMode) {
         updateTotalPoint(2);
+      } else if (hardMode) {
+        updateTotalPoint(5);
       }
       handleStopTimer();
     }
@@ -293,10 +293,10 @@ export default function MemoryCards({updateTotalPoint, currentUser}) {
         isWin === "" &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <ModeExplaination message="Normal Mode: You'll get 1 star if you win." />
+          <ModeExplaination message="Normal Mode: You'll get 2 stars if you win." />
         )}
       {hardMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
-        <ModeExplaination message="Hard Mode: You'll get 2 stars if you win." />
+        <ModeExplaination message="Hard Mode: You'll get 5 stars if you win." />
       )}
       {isGameStarted &&
         !isTogglingHomePage &&

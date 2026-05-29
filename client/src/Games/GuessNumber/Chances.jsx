@@ -24,7 +24,7 @@ export default function Chances({
     if (easyMode) {
       updateTotalPoint(1);
     } else if (normalMode) {
-      updateTotalPoint(3);
+      updateTotalPoint(5);
     }
     reset();
   };

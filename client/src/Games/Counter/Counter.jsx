@@ -83,11 +83,11 @@ export default function Counter({updateTotalPoint, currentUser}) {
       parseInt(userAnswers.answer2) === quizArray[1].repetition &&
       parseInt(userAnswers.answer3) === quizArray[2].repetition
     ) {
+      setFinalMessage("You Win!");
       if (normalMode) {
-        setFinalMessage("You Win!");
         updateTotalPoint(1);
       } else if (easyMode) {
-        setFinalMessage("You Win, but you don't get any stars!");
+        updateTotalPoint(4);
       }
     } else {
       setFinalMessage("You Loose!");
@@ -211,14 +211,14 @@ export default function Counter({updateTotalPoint, currentUser}) {
       !isTogglingReset &&
       !isTogglingHomePage &&
       !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: There are only 5 images. You won't get any stars if you win." />
+        <ModeExplaination message="Easy Mode: There are only 5 images. You will get one star if you win." />
       ) : (
         !easyMode &&
         normalMode &&
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: There are 16 images. You will get one star if you win." />
+          <ModeExplaination message="Normal Mode: There are 16 images. You will get four stars if you win." />
         )
       )}
       {!isGameStarted &&
@@ -442,7 +442,7 @@ export default function Counter({updateTotalPoint, currentUser}) {
                 <button onClick={handlePlayAgain}>Ok</button>
               </div>
             )}
-            {finalMessage && finalMessage !== "You Loose!" && (
+            {finalMessage && finalMessage === "You Win!" && (
               <div>
                 <div>Play Again?</div>
                 <button onClick={handlePlayAgain}>Ok</button>

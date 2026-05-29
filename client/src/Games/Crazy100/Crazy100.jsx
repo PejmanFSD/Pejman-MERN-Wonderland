@@ -32,7 +32,7 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
-  const [seconds, setSeconds] = useState(50);
+  const [seconds, setSeconds] = useState(120);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [is4Blocks, setIs4Blocks] = useState(true);
 
@@ -194,7 +194,7 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
     if (sum === 100) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(4);
       }
     }
     if (sum !== 100) {
@@ -235,7 +235,7 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(50);
+    setSeconds(120);
     setIsTimerRunning(false);
   };
   const handle4Blocks = () => {
@@ -294,7 +294,7 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: You will get one star if you win in 50 seconds." />
+          <ModeExplaination message="Normal Mode: You will get four stars if you win in 120 seconds." />
         )
       )}
       {isWin === true &&

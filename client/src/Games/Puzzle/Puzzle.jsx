@@ -365,11 +365,12 @@ export default function Puzzle({updateTotalPoint, currentUser}) {
     ) {
       if (easyMode) {
         handleStopTimer();
-        setFinalMessage("You Win, but you don't get any stars!");
+        setFinalMessage("You Win!");
+        updateTotalPoint(1);
       } else if (normalMode) {
         handleStopTimer();
         setFinalMessage("You Win!");
-        updateTotalPoint(1);
+        updateTotalPoint(4);
       }
     }
   }, [imageGroup]);
@@ -386,14 +387,14 @@ export default function Puzzle({updateTotalPoint, currentUser}) {
         ? !isTogglingReset &&
           !isTogglingHomePage &&
           !isTogglingLevel && (
-            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+            <ModeExplaination message="Easy Mode: You will get one star if you win." />
           )
         : !easyMode &&
           normalMode &&
           !isTogglingReset &&
           !isTogglingHomePage &&
           !isTogglingLevel && (
-            <ModeExplaination message="Normal Mode: You will get one star if you win." />
+            <ModeExplaination message="Normal Mode: You will get four stars if you win." />
           )}
       {isGameStarted &&
         !isTogglingReset &&
@@ -460,8 +461,7 @@ export default function Puzzle({updateTotalPoint, currentUser}) {
         </div>
       )}
       {finalMessage && <h2>{finalMessage}</h2>}
-      {(finalMessage === "You Win, but you don't get any stars!" ||
-        finalMessage === "You Win!") && (
+      {finalMessage === "You Win!" && (
         <div>
           <div>Play again?</div>
           <button onClick={handlePlayAgain}>Ok</button>

@@ -34,7 +34,7 @@ export default function BirdHunter({updateTotalPoint, currentUser}) {
     setIsGameStarted(false);
     if (userScore > 13) {
       setFinalMessage("You Win!");
-      updateTotalPoint(1);
+      updateTotalPoint(2);
     } else {
       setFinalMessage("You Loose!");
     }
@@ -60,6 +60,7 @@ export default function BirdHunter({updateTotalPoint, currentUser}) {
   };
   return (
     <div>
+      <h2>Bird Hunter</h2>
       {grounds.map((g) => (
         <div style={{ display: "inline" }}>{g}-</div>
       ))}

@@ -60,6 +60,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
   const [isWin, setIsWin] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [redArray, setRedArray] = useState([]);
   const [greenArray, setGreenArray] = useState([]);
 
@@ -130,6 +131,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
     setIsWin("");
     setRedArray([]);
     setGreenArray([]);
+    setIsTogglingReset(false);
+    setIsTogglingHomePage(false);
+    setIsTogglingLevel(false);
   };
   const allowPejman = () => {
     setIsPejmanTurn(true);
@@ -139,18 +143,18 @@ export default function XO({ updateTotalPoint, currentUser }) {
       setFilledSquaresByUser,
       userChoices,
       userSign,
-      setUserPoint
+      setUserPoint,
     );
     handlePlayerPoints(
       setFilledSquaresByPejman,
       pejmanChoices,
       pejmanSign,
-      setPejmanPoint
+      setPejmanPoint,
     );
     announcingTheGameResult();
   };
   const announcingTheGameResult = () => {
-      if (userPoint > pejmanPoint) {
+    if (userPoint > pejmanPoint) {
       setIsWin(true);
       if (normalMode) {
         updateTotalPoint(1);
@@ -159,57 +163,12 @@ export default function XO({ updateTotalPoint, currentUser }) {
       setIsWin(false);
     }
     setIsGameStarted(false);
-  }
+  };
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
   const toggleResetYes = () => {
-    setIsGameStarted(false);
-    setSquares([
-      { id: 0, owner: "", imgSrc: signs[0] },
-      { id: 1, owner: "", imgSrc: signs[0] },
-      { id: 2, owner: "", imgSrc: signs[0] },
-      { id: 3, owner: "", imgSrc: signs[0] },
-      { id: 4, owner: "", imgSrc: signs[0] },
-      { id: 5, owner: "", imgSrc: signs[0] },
-      { id: 6, owner: "", imgSrc: signs[0] },
-      { id: 7, owner: "", imgSrc: signs[0] },
-      { id: 8, owner: "", imgSrc: signs[0] },
-      { id: 9, owner: "", imgSrc: signs[0] },
-      { id: 10, owner: "", imgSrc: signs[0] },
-      { id: 11, owner: "", imgSrc: signs[0] },
-      { id: 12, owner: "", imgSrc: signs[0] },
-      { id: 13, owner: "", imgSrc: signs[0] },
-      { id: 14, owner: "", imgSrc: signs[0] },
-      { id: 15, owner: "", imgSrc: signs[0] },
-      { id: 16, owner: "", imgSrc: signs[0] },
-      { id: 17, owner: "", imgSrc: signs[0] },
-      { id: 18, owner: "", imgSrc: signs[0] },
-      { id: 19, owner: "", imgSrc: signs[0] },
-      { id: 20, owner: "", imgSrc: signs[0] },
-      { id: 21, owner: "", imgSrc: signs[0] },
-      { id: 22, owner: "", imgSrc: signs[0] },
-      { id: 23, owner: "", imgSrc: signs[0] },
-      { id: 24, owner: "", imgSrc: signs[0] },
-    ]);
-    setAvailableSquares([]);
-    setUserChoices([]);
-    setPejmanChoices([]);
-    setUserPoint(0);
-    setPejmanPoint(0);
-    setFilledSquaresByUser([]);
-    setFilledSquaresByPejman([]);
-    setIsWin("");
-    if (easyMode) {
-      setIsUserTurn(true);
-      setIsPejmanTurn(false);
-    } else if (normalMode) {
-      setIsPejmanTurn(true);
-      setIsUserTurn(false);
-    }
-    setIsTogglingReset(false);
-    setRedArray([]);
-    setGreenArray([]);
+    handleReset();
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
@@ -223,11 +182,27 @@ export default function XO({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+    }
+    handleReset();
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
+  };
   const handlePlayerPoints = (
     filledSquareFunction,
     choicesArray,
     sign,
-    setPointFunction
+    setPointFunction,
   ) => {
     filledSquareFunction([]);
     const choicesIndexes = choicesArray.map((item) => item.id);
@@ -365,13 +340,13 @@ export default function XO({ updateTotalPoint, currentUser }) {
         greenSquares.includes(s.id) && isUserTurn && sign === signs[1]
           ? { ...s, imgSrc: signs[3] }
           : greenSquares.includes(s.id) && isUserTurn && sign === signs[2]
-          ? { ...s, imgSrc: signs[5] }
-          : greenSquares.includes(s.id) && isPejmanTurn && sign === signs[1]
-          ? { ...s, imgSrc: signs[4] }
-          : greenSquares.includes(s.id) && isPejmanTurn && sign === signs[2]
-          ? { ...s, imgSrc: signs[6] }
-          : s
-      )
+            ? { ...s, imgSrc: signs[5] }
+            : greenSquares.includes(s.id) && isPejmanTurn && sign === signs[1]
+              ? { ...s, imgSrc: signs[4] }
+              : greenSquares.includes(s.id) && isPejmanTurn && sign === signs[2]
+                ? { ...s, imgSrc: signs[6] }
+                : s,
+      ),
     );
     setPointFunction(greenSquares.length / 3);
   };
@@ -390,66 +365,326 @@ export default function XO({ updateTotalPoint, currentUser }) {
     } else if (isPejmanTurn && normalMode && pejmanChoices.length !== 0) {
       setRedArray([]);
       setGreenArray([]);
-      const handleCrucialArray = (playerIndexes, idx1, idx2, idx3, rivalIndexes, setArray) => {
-        if (playerIndexes.includes(idx1) && playerIndexes.includes(idx2) && !playerIndexes.includes(idx3) && !rivalIndexes.includes(idx3)) {
-            setArray(currRedArray => [...currRedArray, idx3 ]);
-          }
-      }
+      const handleCrucialArray = (
+        playerIndexes,
+        idx1,
+        idx2,
+        idx3,
+        rivalIndexes,
+        setArray,
+      ) => {
+        if (
+          playerIndexes.includes(idx1) &&
+          playerIndexes.includes(idx2) &&
+          !playerIndexes.includes(idx3) &&
+          !rivalIndexes.includes(idx3)
+        ) {
+          setArray((currRedArray) => [...currRedArray, idx3]);
+        }
+      };
       const userIndexes = userChoices.map((item) => item.id);
       const pejmanIndexes = pejmanChoices.map((item) => item.id);
       const allIndexes = squares.map((item) => item.id);
       // Creating the red array:
       for (const i of allIndexes) {
         if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
-          handleCrucialArray(userIndexes, i-6, i, i+6, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-6, i+6, i, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i, i+6, i-6, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-4, i, i+4, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-4, i+4, i, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i, i+4, i-4, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-5, i, i+5, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-5, i+5, i, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i, i+5, i-5, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-1, i, i+1, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-1, i+1, i, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i, i+1, i-1, pejmanIndexes, setRedArray);
-        }
-        else if ([1, 2, 3, 21, 22, 23].includes(i)) {
-          handleCrucialArray(userIndexes, i-1, i, i+1, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i-1, i+1, i, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i, i+1, i-1, pejmanIndexes, setRedArray);
-        }
-        else if ([5, 9, 10, 14, 15, 19].includes(i)) {
-          handleCrucialArray(userIndexes, i-5, i, i+5, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i+5, i-5, i, pejmanIndexes, setRedArray);
-          handleCrucialArray(userIndexes, i, i+5, i-5, pejmanIndexes, setRedArray);
+          handleCrucialArray(
+            userIndexes,
+            i - 6,
+            i,
+            i + 6,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 6,
+            i + 6,
+            i,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i,
+            i + 6,
+            i - 6,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 4,
+            i,
+            i + 4,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 4,
+            i + 4,
+            i,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i,
+            i + 4,
+            i - 4,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 5,
+            i,
+            i + 5,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 5,
+            i + 5,
+            i,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i,
+            i + 5,
+            i - 5,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 1,
+            i,
+            i + 1,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 1,
+            i + 1,
+            i,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i,
+            i + 1,
+            i - 1,
+            pejmanIndexes,
+            setRedArray,
+          );
+        } else if ([1, 2, 3, 21, 22, 23].includes(i)) {
+          handleCrucialArray(
+            userIndexes,
+            i - 1,
+            i,
+            i + 1,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i - 1,
+            i + 1,
+            i,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i,
+            i + 1,
+            i - 1,
+            pejmanIndexes,
+            setRedArray,
+          );
+        } else if ([5, 9, 10, 14, 15, 19].includes(i)) {
+          handleCrucialArray(
+            userIndexes,
+            i - 5,
+            i,
+            i + 5,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i + 5,
+            i - 5,
+            i,
+            pejmanIndexes,
+            setRedArray,
+          );
+          handleCrucialArray(
+            userIndexes,
+            i,
+            i + 5,
+            i - 5,
+            pejmanIndexes,
+            setRedArray,
+          );
         }
       }
       // Creating the green array:
       for (const i of allIndexes) {
         if ([6, 7, 8, 11, 12, 13, 16, 17, 18].includes(i)) {
-          handleCrucialArray(pejmanIndexes, i-6, i, i+6, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-6, i+6, i, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i, i+6, i-6, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-4, i, i+4, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-4, i+4, i, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i, i+4, i-4, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-5, i, i+5, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-5, i+5, i, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i, i+5, i-5, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-1, i, i+1, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-1, i+1, i, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i, i+1, i-1, userIndexes, setGreenArray);
-        }
-        else if ([1, 2, 3, 21, 22, 23].includes(i)) {
-          handleCrucialArray(pejmanIndexes, i-1, i, i+1, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i-1, i+1, i, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i, i+1, i-1, userIndexes, setGreenArray);
-        }
-        else if ([5, 9, 10, 14, 15, 19].includes(i)) {
-          handleCrucialArray(pejmanIndexes, i-5, i, i+5, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i+5, i-5, i, userIndexes, setGreenArray);
-          handleCrucialArray(pejmanIndexes, i, i+5, i-5, userIndexes, setGreenArray);
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 6,
+            i,
+            i + 6,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 6,
+            i + 6,
+            i,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i,
+            i + 6,
+            i - 6,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 4,
+            i,
+            i + 4,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 4,
+            i + 4,
+            i,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i,
+            i + 4,
+            i - 4,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 5,
+            i,
+            i + 5,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 5,
+            i + 5,
+            i,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i,
+            i + 5,
+            i - 5,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 1,
+            i,
+            i + 1,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 1,
+            i + 1,
+            i,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i,
+            i + 1,
+            i - 1,
+            userIndexes,
+            setGreenArray,
+          );
+        } else if ([1, 2, 3, 21, 22, 23].includes(i)) {
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 1,
+            i,
+            i + 1,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 1,
+            i + 1,
+            i,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i,
+            i + 1,
+            i - 1,
+            userIndexes,
+            setGreenArray,
+          );
+        } else if ([5, 9, 10, 14, 15, 19].includes(i)) {
+          handleCrucialArray(
+            pejmanIndexes,
+            i - 5,
+            i,
+            i + 5,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i + 5,
+            i - 5,
+            i,
+            userIndexes,
+            setGreenArray,
+          );
+          handleCrucialArray(
+            pejmanIndexes,
+            i,
+            i + 5,
+            i - 5,
+            userIndexes,
+            setGreenArray,
+          );
         }
       }
       // Considering the 4-5 conditions:
@@ -457,37 +692,61 @@ export default function XO({ updateTotalPoint, currentUser }) {
       if (redArray.length === 0 && greenArray.length === 0) {
         for (const i of [6, 7, 8, 11, 12, 13, 16, 17, 18]) {
           if (pejmanIndexes.includes(i)) {
-            if (!pejmanIndexes.includes(i-6) && !userIndexes.includes(i-6)) {
-              console.log('Condition 1A, i-6: ', i-6);
-              newPejmanChoice = i-6;
+            if (
+              !pejmanIndexes.includes(i - 6) &&
+              !userIndexes.includes(i - 6)
+            ) {
+              console.log("Condition 1A, i-6: ", i - 6);
+              newPejmanChoice = i - 6;
               break;
-            } else if (!pejmanIndexes.includes(i+6) && !userIndexes.includes(i+6)) {
-              console.log('Condition 1B, i+6: ', i+6);
-              newPejmanChoice = i+6;
+            } else if (
+              !pejmanIndexes.includes(i + 6) &&
+              !userIndexes.includes(i + 6)
+            ) {
+              console.log("Condition 1B, i+6: ", i + 6);
+              newPejmanChoice = i + 6;
               break;
-            } else if (!pejmanIndexes.includes(i-4) && !userIndexes.includes(i-4)) {
-              console.log('Condition 1C, i-4: ', i-4);
-              newPejmanChoice = i-4;
+            } else if (
+              !pejmanIndexes.includes(i - 4) &&
+              !userIndexes.includes(i - 4)
+            ) {
+              console.log("Condition 1C, i-4: ", i - 4);
+              newPejmanChoice = i - 4;
               break;
-            } else if (!pejmanIndexes.includes(i+4) && !userIndexes.includes(i+4)) {
-              console.log('Condition 1D, i+4: ', i+4);
-              newPejmanChoice = i+4;
+            } else if (
+              !pejmanIndexes.includes(i + 4) &&
+              !userIndexes.includes(i + 4)
+            ) {
+              console.log("Condition 1D, i+4: ", i + 4);
+              newPejmanChoice = i + 4;
               break;
-            } else if (!pejmanIndexes.includes(i-1) && !userIndexes.includes(i-1)) {
-              console.log('Condition 1E, i-1: ', i-1);
-              newPejmanChoice = i-1;
+            } else if (
+              !pejmanIndexes.includes(i - 1) &&
+              !userIndexes.includes(i - 1)
+            ) {
+              console.log("Condition 1E, i-1: ", i - 1);
+              newPejmanChoice = i - 1;
               break;
-            } else if (!pejmanIndexes.includes(i+1) && !userIndexes.includes(i+1)) {
-              console.log('Condition 1F, i+1: ', i+1);
-              newPejmanChoice = i+1;
+            } else if (
+              !pejmanIndexes.includes(i + 1) &&
+              !userIndexes.includes(i + 1)
+            ) {
+              console.log("Condition 1F, i+1: ", i + 1);
+              newPejmanChoice = i + 1;
               break;
-            } else if (!pejmanIndexes.includes(i-5) && !userIndexes.includes(i-5)) {
-              console.log('Condition 1G, i-5: ', i-5);
-              newPejmanChoice = i-5;
+            } else if (
+              !pejmanIndexes.includes(i - 5) &&
+              !userIndexes.includes(i - 5)
+            ) {
+              console.log("Condition 1G, i-5: ", i - 5);
+              newPejmanChoice = i - 5;
               break;
-            } else if (!pejmanIndexes.includes(i+5) && !userIndexes.includes(i+5)) {
-              console.log('Condition 1H, i+5: ', i+5);
-              newPejmanChoice = i+5;
+            } else if (
+              !pejmanIndexes.includes(i + 5) &&
+              !userIndexes.includes(i + 5)
+            ) {
+              console.log("Condition 1H, i+5: ", i + 5);
+              newPejmanChoice = i + 5;
               break;
             }
           }
@@ -498,7 +757,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
         // Sorting the "greenArray" based on the repetition of the elements:
         // 1️⃣ Count frequencies:
         const greenFreq = new Map();
-        greenArray.forEach(idx => {
+        greenArray.forEach((idx) => {
           greenFreq.set(idx, (greenFreq.get(idx) || 0) + 1);
         });
         // 2️⃣ Sort by frequency (desc):
@@ -506,27 +765,32 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = greenFreq.get(b) - greenFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log('Condition 2, sorted greenArray: ', sortedGreenArray);
+        console.log("Condition 2, sorted greenArray: ", sortedGreenArray);
         for (const s of sortedGreenArray) {
           if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
-            console.log('Condition 2A, chosen element: ', s);
+            console.log("Condition 2A, chosen element: ", s);
             newPejmanChoice = s;
             break;
           }
         }
       }
       // Condition 3:
-      else if (redArray.length === 1 && greenArray.length === 0 && !pejmanIndexes.includes(redArray[0]) && !userIndexes.includes(redArray[0])) {
+      else if (
+        redArray.length === 1 &&
+        greenArray.length === 0 &&
+        !pejmanIndexes.includes(redArray[0]) &&
+        !userIndexes.includes(redArray[0])
+      ) {
         newPejmanChoice = redArray[0];
-        console.log('Condition 3 - redArray[0]: ', redArray[0]);
+        console.log("Condition 3 - redArray[0]: ", redArray[0]);
       }
       // Condition 4:
       else if (redArray.length > 1) {
-        console.log('Condition 4: Before Sorting');
+        console.log("Condition 4: Before Sorting");
         // Sorting the "redArray" based on the repetition of the elements:
         // 1️⃣ Count frequencies:
         const redFreq = new Map();
-        redArray.forEach(idx => {
+        redArray.forEach((idx) => {
           redFreq.set(idx, (redFreq.get(idx) || 0) + 1);
         });
         // 2️⃣ Sort by frequency (desc):
@@ -534,11 +798,11 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = redFreq.get(b) - redFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log('Condition 4, sorted redArray: ', sortedRedArray);
+        console.log("Condition 4, sorted redArray: ", sortedRedArray);
         // Sorting the "greenArray" based on the repetition of the elements:
         // 1️⃣ Count frequencies:
         const greenFreq = new Map();
-        greenArray.forEach(idx => {
+        greenArray.forEach((idx) => {
           greenFreq.set(idx, (greenFreq.get(idx) || 0) + 1);
         });
         // 2️⃣ Sort by frequency (desc):
@@ -546,21 +810,32 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = greenFreq.get(b) - greenFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log('Condition 4, sorted greenArray: ', sortedGreenArray);
+        console.log("Condition 4, sorted greenArray: ", sortedGreenArray);
         if (
-          (greenArray.length > 1 && sortedGreenArray[0] === sortedGreenArray[1] && !pejmanIndexes.includes(sortedGreenArray[0]) && !userIndexes.includes(sortedGreenArray[0]))
-          ||
-          (greenArray.length > 1 && sortedRedArray[0] !== sortedRedArray[1] && !pejmanIndexes.includes(sortedGreenArray[0]) && !userIndexes.includes(sortedGreenArray[0]))
+          (greenArray.length > 1 &&
+            sortedGreenArray[0] === sortedGreenArray[1] &&
+            !pejmanIndexes.includes(sortedGreenArray[0]) &&
+            !userIndexes.includes(sortedGreenArray[0])) ||
+          (greenArray.length > 1 &&
+            sortedRedArray[0] !== sortedRedArray[1] &&
+            !pejmanIndexes.includes(sortedGreenArray[0]) &&
+            !userIndexes.includes(sortedGreenArray[0]))
         ) {
-          console.log('Condition 4A, sortedGreenArray[0]: ', sortedGreenArray[0]);
+          console.log(
+            "Condition 4A, sortedGreenArray[0]: ",
+            sortedGreenArray[0],
+          );
           newPejmanChoice = sortedGreenArray[0];
-        } else if (!pejmanIndexes.includes(sortedRedArray[0]) && !userIndexes.includes(sortedRedArray[0])) {
-          console.log('Condition 4B, sortedRedArray[0]: ', sortedRedArray[0]);
+        } else if (
+          !pejmanIndexes.includes(sortedRedArray[0]) &&
+          !userIndexes.includes(sortedRedArray[0])
+        ) {
+          console.log("Condition 4B, sortedRedArray[0]: ", sortedRedArray[0]);
           newPejmanChoice = sortedRedArray[0];
         } else {
           for (const s of sortedRedArray) {
             if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
-              console.log('Condition 4C, chosen element: ', s);
+              console.log("Condition 4C, chosen element: ", s);
               newPejmanChoice = s;
               break;
             }
@@ -568,11 +843,11 @@ export default function XO({ updateTotalPoint, currentUser }) {
         }
       }
       // Condition 5:
-       else if (greenArray.length > 1) {
+      else if (greenArray.length > 1) {
         // Sorting the "greenArray" based on the repetition of the elements:
         // 1️⃣ Count frequencies:
         const greenFreq = new Map();
-        greenArray.forEach(idx => {
+        greenArray.forEach((idx) => {
           greenFreq.set(idx, (greenFreq.get(idx) || 0) + 1);
         });
         // 2️⃣ Sort by frequency (desc):
@@ -580,26 +855,25 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = greenFreq.get(b) - greenFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log('Condition 5, sorted greenArray: ', sortedGreenArray);
+        console.log("Condition 5, sorted greenArray: ", sortedGreenArray);
         for (const s of sortedGreenArray) {
           if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
-            console.log('Condition 5A, chosen element: ', s);
+            console.log("Condition 5A, chosen element: ", s);
             newPejmanChoice = s;
             break;
           }
         }
-       }
-      else if (newPejmanChoice === null) {
-          console.log('Condition ZZZ');
-          newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
+      } else if (newPejmanChoice === null) {
+        console.log("Condition ZZZ");
+        newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
       }
     }
     setSquares((currSquares) =>
       currSquares.map((s) =>
         s.id === newPejmanChoice
           ? { ...s, imgSrc: pejmanSign, owner: "Pejman" }
-          : s
-      )
+          : s,
+      ),
     );
     setIsUserTurn(true);
     setPejmanChoices(squares.filter((s) => s.owner === "Pejman"));
@@ -611,14 +885,14 @@ export default function XO({ updateTotalPoint, currentUser }) {
         setFilledSquaresByUser,
         userChoices,
         userSign,
-        setUserPoint
+        setUserPoint,
       );
     } else if (isPejmanTurn) {
       handlePlayerPoints(
         setFilledSquaresByPejman,
         pejmanChoices,
         pejmanSign,
-        setPejmanPoint
+        setPejmanPoint,
       );
     }
   }, [isUserTurn, isPejmanTurn]);
@@ -640,12 +914,12 @@ export default function XO({ updateTotalPoint, currentUser }) {
           </div>
         </div>
       )}
-      {easyMode && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
+      {easyMode && isWin === "" && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
         <ModeExplaination message="Easy Mode: In his turn, Pejman chooses a square randomly. You won't get any stars if you win." />
       )}
       {normalMode &&
         isWin === "" &&
-        !isTogglingReset &&
+        !isTogglingReset && !isTogglingLevel &&
         !isTogglingHomePage && (
           <ModeExplaination message="Normal Mode: In his turn, Pejman chooses a square with a strategy. You'll get 1 star if you win." />
         )}
@@ -691,7 +965,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
       </div>
       {isWin === "" &&
         isGameStarted &&
-        !isTogglingReset &&
+        !isTogglingReset && !isTogglingLevel &&
         !isTogglingHomePage && (
           <div
             style={{
@@ -703,7 +977,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
         )}
       {isWin === "" &&
         isGameStarted &&
-        !isTogglingReset &&
+        !isTogglingReset && !isTogglingLevel &&
         !isTogglingHomePage && (
           <div
             style={{
@@ -750,6 +1024,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                   normalMode={normalMode}
                   isTogglingReset={isTogglingReset}
                   isTogglingHomePage={isTogglingHomePage}
+                  isTogglingLevel={isTogglingLevel}
                 />
               }
             </div>
@@ -772,15 +1047,16 @@ export default function XO({ updateTotalPoint, currentUser }) {
                   normalMode={normalMode}
                   isTogglingReset={isTogglingReset}
                   isTogglingHomePage={isTogglingHomePage}
+                  isTogglingLevel={isTogglingLevel}
                 />
               }
               <br></br>
             </div>
-          )
+          ),
         )}
       {isGameStarted &&
         !isUserTurn &&
-        !isTogglingReset &&
+        !isTogglingReset && !isTogglingLevel &&
         !isTogglingHomePage &&
         (availableSquares.length !== 0 ? (
           <div>
@@ -800,7 +1076,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
       {isGameStarted &&
         isUserTurn &&
         availableSquares.length === 0 &&
-        !isTogglingReset &&
+        !isTogglingReset && !isTogglingLevel &&
         !isTogglingHomePage && (
           <div>
             <div>The game is finished. Let's see who is the winner.</div>
@@ -809,7 +1085,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
         )}
       {isGameStarted &&
         isWin === "" &&
-        !isTogglingReset &&
+        !isTogglingReset && !isTogglingLevel &&
         !isTogglingHomePage &&
         (easyMode || normalMode) &&
         userSign !== "" && (
@@ -826,7 +1102,34 @@ export default function XO({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
-      {!isTogglingHomePage && !isTogglingReset && (
+      {isGameStarted &&
+        isWin === "" &&
+        (easyMode || normalMode) &&
+        !isTogglingReset &&
+        !isTogglingHomePage &&
+        !isTogglingLevel && (
+          <div>
+            <button
+              style={{
+                display: "inline",
+              }}
+              onClick={() => toggleLevel()}
+            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+          </div>
+        )}
+      {isTogglingLevel && (
+        <div>
+          <ConfirmationBox
+            question={`Are you sure you want to switch to ${
+              easyMode ? "Normal Mode" : "Easy Mode"
+            }?`}
+            toggleYes={toggleLevelYes}
+            toggleCancel={toggleLevelCancel}
+            easyMode={easyMode}
+          />
+        </div>
+      )}
+      {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
         <div>
           <button onClick={() => toggleHomePage()}>
             Back to the home page
@@ -842,7 +1145,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
           />
         </div>
       )}
-      {userPoint > 0 && !isTogglingReset && !isTogglingHomePage && (
+      {userPoint > 0 && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
         <div>
           <div>
             {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
@@ -879,11 +1182,11 @@ export default function XO({ updateTotalPoint, currentUser }) {
                     />
                   </div>
                 </div>
-              )
+              ),
           )}
         </div>
       )}
-      {pejmanPoint > 0 && !isTogglingReset && !isTogglingHomePage && (
+      {pejmanPoint > 0 && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
         <div>
           <div>
             {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
@@ -920,11 +1223,13 @@ export default function XO({ updateTotalPoint, currentUser }) {
                     />
                   </div>
                 </div>
-              )
+              ),
           )}
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="XO" currentUser={currentUser} />}
+      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && (
+        <ReviewSection game="XO" currentUser={currentUser} />
+      )}
     </div>
   );
 }

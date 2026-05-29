@@ -153,11 +153,39 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     if (easyMode) {
       setEasyMode(false);
       setNormalMode(true);
+      setIsUserTurn(false);
     } else if (normalMode) {
       setNormalMode(false);
       setEasyMode(true);
+      setIsUserTurn(true);
     }
-    handlePlayAgain();
+    setCells(
+      new Array(49)
+        .fill(null)
+        .map((el, idx) => ({ id: idx, src: White, isSelected: false })),
+    );
+    setFreeCellsIds(Array.from({ length: 49 }, (_, i) => i));
+    setSelectedCellsNum(0);
+    setLeftNeighborsId([]);
+    setRightNeighborsId([]);
+    setUpNeighborsId([]);
+    setDownNeighborsId([]);
+    setUpLeftNeighborsId([]);
+    setUpRightNeighborsId([]);
+    setDownLeftNeighborsId([]);
+    setDownRightNeighborsId([]);
+    setPejmanChoice(null);
+    setSelectionErrorMessage("");
+    setChooseArrowMessage(false);
+    setAllowPejmanMessage(false);
+    setAllowPejmanChooseDirection(false);
+    setIsGameOver(false);
+    setUserPoint(0);
+    setPejmanPoint(0);
+    setFinalMessage("");
+    setIsTogglingReset(false);
+    setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
@@ -1358,7 +1386,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     if (up > pp) {
       if (normalMode) {
         setFinalMessage("You Win!");
-        updateTotalPoint(1);
+        updateTotalPoint(3);
       } else {
         setFinalMessage("You Win, but you don't get any stars!");
       }
@@ -1424,7 +1452,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         !isTogglingReset &&
         !isTogglingLevel &&
         !isTogglingHomePage && (
-          <ModeExplaination message="Normal Mode: Pejman starts the game, you will get one star if you win." />
+          <ModeExplaination message="Normal Mode: Pejman starts the game, you will get three stars if you win." />
         )
       )}
       {!isGameStarted && !easyMode && !normalMode && (

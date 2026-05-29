@@ -67,7 +67,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
     <div>
       <h2>Nim</h2>
       {standard && !isTogglingHomePage && (
-        <ModeExplaination message="Standard Nim: Get the last ball and win." />
+        <ModeExplaination message="Standard Nim: Get the last ball and win the game!" />
       )}
       {misere && !isTogglingHomePage && (
         <ModeExplaination message="Misere Nim: Get the last ball and loose!" />
@@ -76,7 +76,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
         <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly. You'll get 1 star if you win." />
       )}
       {normalMode && !isTogglingHomePage && (
-        <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy! You'll get 3 stars if you win." />
+        <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy! You'll get 4 stars if you win." />
       )}
       {!standard && !misere && !isTogglingHomePage && (
         <div>

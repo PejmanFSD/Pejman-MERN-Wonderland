@@ -19,11 +19,13 @@ export default function Form({
   setIsAlreadyExist,
   acceptedAsRepetition,
   setAcceptedAsRepetition,
+  isLoading,
+  setIsLoading
 }) {
   const handleChange = (e) => {
-    if (e.target.value.length === 0) {
-      return;
-    }
+    // if (e.target.value.length === 0) {
+    //   return;
+    // }
     const { name, value } = e.target;
     if (evaluateRepetitive(name, value)) {
       setIsCharRepetitive(true);
@@ -76,13 +78,13 @@ export default function Form({
     setIsGameStarted(false);
   };
   const evaluateRepetitive = (name, value) => {
-    if (value === inputs.input1 && name !== "input1") {
+    if (value && value === inputs.input1 && name !== "input1") {
       return true;
-    } else if (value === inputs.input2 && name !== "input2") {
+    } else if (value && value === inputs.input2 && name !== "input2") {
       return true;
-    } else if (value === inputs.input3 && name !== "input3") {
+    } else if (value && value === inputs.input3 && name !== "input3") {
       return true;
-    } else if (value === inputs.input4 && name !== "input4") {
+    } else if (value && value === inputs.input4 && name !== "input4") {
       return true;
     } else {
       return false;
@@ -157,6 +159,7 @@ export default function Form({
   };
   return (
     <div>
+      {isLoading ? <h3 style={{color: "gray"}}>Loading ...</h3> :
       <form onSubmit={handleSubmit}>
         {adviceArray.map((a) =>
           Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
@@ -262,6 +265,7 @@ export default function Form({
             </div>
           )}
       </form>
+      }
       {isCharRepetitive && (
         <div>
           <p>The values can't be repetitive!</p>

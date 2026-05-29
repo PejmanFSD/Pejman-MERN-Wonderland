@@ -190,8 +190,10 @@ export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
     if (i === 0) {
       setIsWin(true);
       setIsTimerRunning(false);
-      if (normalMode) {
-        updateTotalPoint(1);
+      if (easyMode) {
+        updateTotalPoint(2);
+      } else if (normalMode) {
+        updateTotalPoint(5);
       }
     }
   }, [emojis]);
@@ -244,14 +246,14 @@ export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
       !isTogglingReset &&
       !isTogglingHomePage &&
       !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: There's no timer. You won't get any stars if you win." />
+        <ModeExplaination message="Easy Mode: There's no timer. You will get two stars if you win." />
       ) : (
         !easyMode &&
         normalMode &&
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: Find all the matches in 720 seconds. You will get one star if you win." />
+          <ModeExplaination message="Normal Mode: Find all the matches in 720 seconds. You will get five stars if you win." />
         )
       )}
       {isTimerRunning && isWin === "" && normalMode && (

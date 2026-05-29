@@ -59,7 +59,7 @@ export default function Capitals({updateTotalPoint, currentUser}) {
     if (misMatch === 0) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(3);
       }
     } else {
       setIsWin(false);
@@ -224,7 +224,7 @@ export default function Capitals({updateTotalPoint, currentUser}) {
         !isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: You will get one star if you win in 45 seconds." />
+          <ModeExplaination message="Normal Mode: You will get three stars if you win in 45 seconds." />
         )
       )}
       {isWin === true &&
