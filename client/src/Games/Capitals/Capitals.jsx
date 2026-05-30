@@ -6,10 +6,12 @@ import ConfirmationBox from "../ConfirmationBox";
 import countries from "./countries";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutCapitals from "./AboutCapitals";
 const countryNames = countries.map((c) => c.country);
 const capitalNames = countries.map((c) => c.capital);
 
-export default function Capitals({updateTotalPoint, currentUser}) {
+export default function Capitals({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -159,10 +161,10 @@ export default function Capitals({updateTotalPoint, currentUser}) {
   };
   const handleShow = () => {
     setQuestionCapitals((currQuestionCapitals) =>
-      shuffleArray(currQuestionCapitals)
+      shuffleArray(currQuestionCapitals),
     );
     questionCapitals.map((el) =>
-      setAnswer((currAnswer) => [...currAnswer, el])
+      setAnswer((currAnswer) => [...currAnswer, el]),
     );
     setShow(true);
     handleResetTimer();
@@ -179,6 +181,9 @@ export default function Capitals({updateTotalPoint, currentUser}) {
   const handleIsInputEmpty = () => {
     setIsInputEmpty(false);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   useEffect(() => {
     setPack((currPack) => shuffleArray(currPack));
     let interval;
@@ -191,195 +196,233 @@ export default function Capitals({updateTotalPoint, currentUser}) {
   }, [isTimerRunning]);
   return (
     <div>
-      <h2>Capitals</h2>
-      {isGameStarted &&
-        show &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-            {seconds}
-          </h3>
-        )}
-      {!easyMode && !normalMode && !isTogglingHomePage && !isTogglingLevel && (
-        <GameLevel
-          mode1="Easy"
-          mode1Function={runEasyMode}
-          mode2="Normal"
-          mode2Function={runNormalMode}
-          runEasyMode={runEasyMode}
-          runNormalMode={runNormalMode}
-        />
-      )}
-      {easyMode &&
-      !normalMode &&
-      !isTogglingReset &&
-      !isTogglingHomePage &&
-      !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-      ) : (
-        !easyMode &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: You will get three stars if you win in 45 seconds." />
-        )
-      )}
-      {isWin === true &&
-        seconds > 0 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <h1>You Win</h1>}
-      {isWin === false &&
-        seconds > 0 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <h1>You Loose</h1>}
-      {seconds < 1 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <h1>Time's up!</h1>}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <button onClick={() => handleStart()}>Start the Game</button>
-        )}
-      <h3>Answer:</h3>
-      {/* {answer.map((el) => (
-        <div>{el}</div>
-      ))} */}
-      {isGameStarted &&
-        show &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <h3>Countries</h3>
-            {questionCountries.map((qc) => (
-              <div>{qc}</div>
-            ))}
-          </div>
-        )}
-      {isGameStarted &&
-        !show &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <h4>
-              7 countries are chosen for you, guess their capitals correctly and
-              win the game
-            </h4>
-            <button onClick={() => handleShow()}>Ok</button>
-          </div>
-        )}
-      {isGameStarted &&
-        show &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <Form
-            inputs={inputs}
-            seconds={seconds}
-            questionCountries={questionCountries}
-            questionCapitals={questionCapitals}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            isInputEmpty={isInputEmpty}
-            isWin={isWin}
-          />
-        )}
-      {isInputEmpty && (
+      {isAboutPage && <AboutCapitals setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <p>You shouldn't leave any dropdown unselected!</p>
-          <button onClick={handleIsInputEmpty}>OK</button>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Capitals</button>
+          )}
+          <h2>Capitals</h2>
+          {isGameStarted &&
+            show &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+                {seconds}
+              </h3>
+            )}
+          {!easyMode &&
+            !normalMode &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <GameLevel
+                mode1="Easy"
+                mode1Function={runEasyMode}
+                mode2="Normal"
+                mode2Function={runNormalMode}
+                runEasyMode={runEasyMode}
+                runNormalMode={runNormalMode}
+              />
+            )}
+          {easyMode &&
+          !normalMode &&
+          !isTogglingReset &&
+          !isTogglingHomePage &&
+          !isTogglingLevel ? (
+            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+          ) : (
+            !easyMode &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <ModeExplaination message="Normal Mode: You will get three stars if you win in 45 seconds." />
+            )
+          )}
+          {isGameStarted &&
+            show &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            !isInputEmpty &&
+            isWin === "" &&
+            seconds > 0 && (
+              <button onClick={() => toggleReset()}>Reset the game</button>
+            )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" &&
+            seconds > 0 && (
+              <ConfirmationBox
+                question={"Are you sure you want to reset the game?"}
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isInputEmpty && (
+              <button onClick={() => toggleLevel()}>{`Switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }`}</button>
+            )}
+          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+            <ConfirmationBox
+              question={`Are you sure you want to switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }?`}
+              toggleYes={toggleLevelYes}
+              toggleCancel={toggleLevelCancel}
+            />
+          )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <button onClick={() => handleStart()}>Start the Game</button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            !isInputEmpty && (
+              <button onClick={() => toggleHomePage()}>
+                Back to the home page
+              </button>
+            )}
+          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+            !isTogglingLevel &&
+            isTogglingHomePage && (
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            )}
+          {isWin === true &&
+            seconds > 0 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <h1>You Win</h1>}
+          {isGameStarted &&
+            // show &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            !isInputEmpty &&
+            isWin === true && (
+              <button onClick={() => toggleResetYes()}>Play Again</button>
+            )}
+          {isWin === false &&
+            seconds > 0 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <h1>You Loose</h1>}
+          {seconds < 1 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <h1>Time's up!</h1>}
+          {isGameStarted &&
+            // show &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            !isInputEmpty &&
+            (isWin === false || seconds < 1) && (
+              <button onClick={() => toggleResetYes()}>Try Again</button>
+            )}
+          {/*<h3>Answer:</h3>
+            {answer.map((el) => (
+            <div>{el}</div>
+          ))} */}
+          {isGameStarted &&
+            show &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" &&
+            seconds > 0 && (
+              <div>
+                <h3>Countries</h3>
+                {questionCountries.map((qc) => (
+                  <div>{qc}</div>
+                ))}
+              </div>
+            )}
+          {isGameStarted &&
+            !show &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                <h4>
+                  7 countries are chosen for you, guess their capitals correctly
+                  and win the game
+                </h4>
+                <button onClick={() => handleShow()}>Ok</button>
+              </div>
+            )}
+          {isGameStarted &&
+            show &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" &&
+            seconds > 0 && (
+              <Form
+                inputs={inputs}
+                seconds={seconds}
+                questionCountries={questionCountries}
+                questionCapitals={questionCapitals}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                isInputEmpty={isInputEmpty}
+                isWin={isWin}
+              />
+            )}
+          {isInputEmpty && (
+            <div>
+              <p>You shouldn't leave any dropdown unselected!</p>
+              <button onClick={handleIsInputEmpty}>OK</button>
+            </div>
+          )}
+          {(isWin !== "" || seconds < 1) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            questionCountries.map((c, i) =>
+              Object.values(inputs)[i] ? (
+                <h3>
+                  {`You chose ${Object.values(inputs)[i]} as the capital of ${
+                    questionCountries[i]
+                  }`}{" "}
+                  {Object.values(inputs)[i] === answer[i]
+                    ? "✅"
+                    : `❌ -> The correct answer is: ${answer[i]}`}
+                </h3>
+              ) : (
+                <h3>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
+              ),
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <ReviewSection game="Capitals" currentUser={currentUser} />
+            )}
         </div>
       )}
-      {(isWin !== "" || seconds < 1) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        questionCountries.map((c, i) =>
-          Object.values(inputs)[i] ? (
-            <h3>
-              {`You chose ${Object.values(inputs)[i]} as the capital of ${
-                questionCountries[i]
-              }`}{" "}
-              {Object.values(inputs)[i] === answer[i]
-                ? "✅"
-                : `❌ -> The correct answer is: ${answer[i]}`}
-            </h3>
-          ) : (
-            <h3>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
-          )
-        )}
-      {isGameStarted &&
-        show &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        !isInputEmpty && (
-          <button onClick={() => toggleReset()}>
-            {isWin === "" && seconds > 0 ? "Reset" : "Play Again"}
-          </button>
-        )}
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <ConfirmationBox
-            question={
-              isWin === "" && seconds > 0
-                ? "Are you sure you want to reset the game?"
-                : "Play again?"
-            }
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        )}
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isInputEmpty && (
-          <button onClick={() => toggleLevel()}>{`Switch to ${
-            easyMode ? "Normal Mode" : "Easy Mode"
-          }`}</button>
-        )}
-      {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-        <ConfirmationBox
-          question={`Are you sure you want to switch to ${
-            easyMode ? "Normal Mode" : "Easy Mode"
-          }?`}
-          toggleYes={toggleLevelYes}
-          toggleCancel={toggleLevelCancel}
-        />
-      )}
-      {!isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        !isInputEmpty && (
-          <button onClick={() => toggleHomePage()}>
-            Back to the home page
-          </button>
-        )}
-      {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
-        !isTogglingLevel &&
-        isTogglingHomePage && (
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        )}
-        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Capitals" currentUser={currentUser} />}
     </div>
   );
 }
