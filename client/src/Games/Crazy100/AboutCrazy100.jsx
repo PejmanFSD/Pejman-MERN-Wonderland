@@ -1,0 +1,48 @@
+export default function AboutCrazy100({ setIsAboutPage }) {
+  const handleGamePage = () => {
+    setIsAboutPage(false);
+  };
+  return (
+    <div>
+      <h2>About Crazy-100</h2>
+      <h4>How to Play</h4>
+      <div>
+        In this game, 16 numbers are randomly generated for you.
+        <br />
+        Your challenge is to select exactly 4 numbers whose total sum equals
+        100.
+        <br />
+        To play:
+        <br />
+        Click a number to select it.
+        <br />
+        Click a selected number again to deselect it.
+        <br />
+      </div>
+      <h4>Game Modes</h4>
+      <div>
+        <strong>- Easy Mode:</strong>
+        <br />
+        No time limit (Perfect for practice and learning).
+        <br />
+        Winning does not award any stars.
+        <br />
+        <strong>- Normal Mode:</strong>
+        <br />
+        You have 120 seconds to find the correct 4 numbers.
+        <br />
+        Win the game to earn 4 stars.
+        <br />
+        <strong>Important Rule</strong>
+        <br />
+        <div>You must select exactly 4 numbers, no more and no less.</div>
+        <em>
+          (If you are an employer, feel free to test the validation by selecting
+          more or fewer than 4 numbers to explore the variety of functionalities
+          in the application).
+        </em>
+      </div>
+      <button onClick={handleGamePage}>Back to the Game</button>
+    </div>
+  );
+}
