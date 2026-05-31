@@ -8,8 +8,10 @@ import Skull from "./images/Skull.jpg";
 import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutTripleEmojiMatch from "./AboutTripleEmojiMatch";
 
-export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
+export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -35,7 +37,7 @@ export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
     setEasyMode(true);
     setNormalMode(false);
     setIsGameStarted(true);
-        for (const emoji of emojis) {
+    for (const emoji of emojis) {
       if (!emoji.isSelected) {
         setAvailableEmojis((currAvailableEmojis) => [
           ...currAvailableEmojis,
@@ -50,7 +52,7 @@ export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
     setEasyMode(false);
     setIsGameStarted(true);
     setIsTimerRunning(true);
-        for (const emoji of emojis) {
+    for (const emoji of emojis) {
       if (!emoji.isSelected) {
         setAvailableEmojis((currAvailableEmojis) => [
           ...currAvailableEmojis,
@@ -151,6 +153,9 @@ export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
     setPair2ChoseEmoji(getRandArr(availableEmojis));
     setPair2Chance(false);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   useEffect(() => {
     setAvailableEmojis([]);
     for (const emoji of emojis) {
@@ -234,236 +239,255 @@ export default function TripleEmojiMatch({updateTotalPoint, currentUser}) {
   }, [seconds]);
   return (
     <div>
-      <h2>Triple Emoji Match</h2>
-      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
+      {isAboutPage && <AboutTripleEmojiMatch setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <button onClick={runEasyMode}>Easy Mode</button>
-          <button onClick={runNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {easyMode &&
-      !normalMode &&
-      !isTogglingReset &&
-      !isTogglingHomePage &&
-      !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: There's no timer. You will get two stars if you win." />
-      ) : (
-        !easyMode &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: Find all the matches in 720 seconds. You will get five stars if you win." />
-        )
-      )}
-      {isTimerRunning && isWin === "" && normalMode && (
-        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-          {seconds}
-        </h3>
-      )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        isWin === "" &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && isWin === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        isWin === "" && (
-          <div>
-            <button onClick={() => toggleHomePage()}>
-              Back to the home page
-            </button>
-          </div>
-        )}
-      {isTogglingHomePage && isWin === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {(easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        isWin === "" && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-              }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        isWin === "" && (
-          <button onClick={add30Seconds} disabled={!addTimeChanse}>
-            add 30 seconds
-          </button>
-        )}
-      {(normalMode || easyMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        isWin === "" &&
-        !tripleMatch && (
-          <button onClick={showPair1} disabled={!pair1Chance}>
-            Show me a triple match
-          </button>
-        )}
-      {(normalMode || easyMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        isWin === "" &&
-        !tripleMatch && (
-          <button onClick={showPair2} disabled={!pair2Chance}>
-            Show me a triple match
-          </button>
-        )}
-      {isTogglingLevel && isWin === "" && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {isWin === false && (
-        <div>
-          <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You lose!"}</h2>
-          <div>Try Again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {isWin === true && (
-        <div>
-          <h2>You Win!</h2>
-          <div>Play Again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {isGameStarted &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(7, auto)",
-              justifyContent: "center",
-              position: "relative",
-              top: "7px",
-            }}
-          >
-            {selectedEmojis.map((selectedEmoji) => (
-              <Emoji
-                key={selectedEmojis.indexOf(selectedEmoji)}
-                imgId={selectedEmojis.indexOf(selectedEmoji)}
-                imgSrc={selectedEmoji.image}
-                emojis={emojis}
-                setEmojis={setEmojis}
-                selectedEmojis={selectedEmojis}
-                setSelectedEmojis={setSelectedEmojis}
-                tripleMatch={tripleMatch}
-                isWin={isWin}
-                isSelected={true}
-                setAvailableEmojis={setAvailableEmojis}
-              />
-            ))}
-          </div>
-        )}
-      {tripleMatch === true &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <div>Well Done! You found a tripleMatch</div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Triple Emoji Match</button>
+          )}
+          <h2>Triple Emoji Match</h2>
+          {!isGameStarted &&
+            !easyMode &&
+            !normalMode &&
+            !isTogglingHomePage && (
+              <div>
+                <button onClick={runEasyMode}>Easy Mode</button>
+                <button onClick={runNormalMode}>Normal Mode</button>
+              </div>
+            )}
+          {easyMode &&
+          !normalMode &&
+          !isTogglingReset &&
+          !isTogglingHomePage &&
+          !isTogglingLevel ? (
+            <ModeExplaination message="Easy Mode: There's no timer. You will get two stars if you win." />
+          ) : (
+            !easyMode &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <ModeExplaination message="Normal Mode: Find all the matches in 720 seconds. You will get five stars if you win." />
+            )
+          )}
+          {isTimerRunning && isWin === "" && normalMode && (
+            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+              {seconds}
+            </h3>
+          )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            isWin === "" &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && isWin === "" && (
             <div>
-              {selectedEmojis.map(
-                (s) =>
-                  s.repetitionNum === 3 && (
-                    <img
-                      src={s.image}
-                      style={{
-                        position: "relative",
-                        top: "7px",
-                        width: "60px",
-                        margin: "3px",
-                        border: "1px solid red",
-                      }}
-                    />
-                  ),
-              )}
-            </div>
-            <button
-              onClick={handleTripleMatch}
-              style={{ position: "relative", top: "7px" }}
-            >
-              Ok
-            </button>
-          </div>
-        )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div
-            style={{
-              position: "relative",
-              top: "15px",
-              display: "grid",
-              gridTemplateColumns: "repeat(21, auto)",
-              justifyContent: "center",
-            }}
-          >
-            {emojis.map((emoji) => (
-              <Emoji
-                key={emoji.id}
-                imgId={emoji.id}
-                imgSrc={emoji.image}
-                emojis={emojis}
-                setEmojis={setEmojis}
-                selectedEmojis={selectedEmojis}
-                setSelectedEmojis={setSelectedEmojis}
-                tripleMatch={tripleMatch}
-                isWin={isWin}
-                isSelected={false}
-                pair1ChoseEmoji={pair1ChoseEmoji}
-                pair2ChoseEmoji={pair2ChoseEmoji}
-                setAvailableEmojis={setAvailableEmojis}
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
               />
-            ))}
-          </div>
-        )}
-        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="TripleEmojiMatch" currentUser={currentUser} />}
+            </div>
+          )}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            isWin === "" && (
+              <div>
+                <button onClick={() => toggleHomePage()}>
+                  Back to the home page
+                </button>
+              </div>
+            )}
+          {isTogglingHomePage && isWin === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {(easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" && (
+              <button onClick={add30Seconds} disabled={!addTimeChanse}>
+                add 30 seconds
+              </button>
+            )}
+          {(normalMode || easyMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" &&
+            !tripleMatch && (
+              <button onClick={showPair1} disabled={!pair1Chance}>
+                Show me a triple match
+              </button>
+            )}
+          {(normalMode || easyMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" &&
+            !tripleMatch && (
+              <button onClick={showPair2} disabled={!pair2Chance}>
+                Show me a triple match
+              </button>
+            )}
+          {isTogglingLevel && isWin === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isWin === false && (
+            <div>
+              <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You lose!"}</h2>
+              <div>Try Again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {isWin === true && (
+            <div>
+              <h2>You Win!</h2>
+              <div>Play Again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {isGameStarted &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(7, auto)",
+                  justifyContent: "center",
+                  position: "relative",
+                  top: "7px",
+                }}
+              >
+                {selectedEmojis.map((selectedEmoji) => (
+                  <Emoji
+                    key={selectedEmojis.indexOf(selectedEmoji)}
+                    imgId={selectedEmojis.indexOf(selectedEmoji)}
+                    imgSrc={selectedEmoji.image}
+                    emojis={emojis}
+                    setEmojis={setEmojis}
+                    selectedEmojis={selectedEmojis}
+                    setSelectedEmojis={setSelectedEmojis}
+                    tripleMatch={tripleMatch}
+                    isWin={isWin}
+                    isSelected={true}
+                    setAvailableEmojis={setAvailableEmojis}
+                  />
+                ))}
+              </div>
+            )}
+          {tripleMatch === true &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                <div>Well Done! You found a tripleMatch</div>
+                <div>
+                  {selectedEmojis.map(
+                    (s) =>
+                      s.repetitionNum === 3 && (
+                        <img
+                          src={s.image}
+                          style={{
+                            position: "relative",
+                            top: "7px",
+                            width: "60px",
+                            margin: "3px",
+                            border: "1px solid red",
+                          }}
+                        />
+                      ),
+                  )}
+                </div>
+                <button
+                  onClick={handleTripleMatch}
+                  style={{ position: "relative", top: "7px" }}
+                >
+                  Ok
+                </button>
+              </div>
+            )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div
+                style={{
+                  position: "relative",
+                  top: "15px",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(21, auto)",
+                  justifyContent: "center",
+                }}
+              >
+                {emojis.map((emoji) => (
+                  <Emoji
+                    key={emoji.id}
+                    imgId={emoji.id}
+                    imgSrc={emoji.image}
+                    emojis={emojis}
+                    setEmojis={setEmojis}
+                    selectedEmojis={selectedEmojis}
+                    setSelectedEmojis={setSelectedEmojis}
+                    tripleMatch={tripleMatch}
+                    isWin={isWin}
+                    isSelected={false}
+                    pair1ChoseEmoji={pair1ChoseEmoji}
+                    pair2ChoseEmoji={pair2ChoseEmoji}
+                    setAvailableEmojis={setAvailableEmojis}
+                  />
+                ))}
+              </div>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <ReviewSection
+                game="TripleEmojiMatch"
+                currentUser={currentUser}
+              />
+            )}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-export default function AboutGuessNumber({ setIsAboutPage }) {
+export default function AboutKukuKube({ setIsAboutPage }) {
   const handleGamePage = () => {
     setIsAboutPage(false);
   };
