@@ -41,7 +41,8 @@ export default function Square({
           (!isUserTurn && userChoices.length !== 0) ||
           availableSquares.length === 0 ||
           isTogglingReset ||
-          isTogglingHomePage
+          isTogglingHomePage ||
+          isTogglingLevel
             ? 0.2
             : 1,
         border: "1px solid black",

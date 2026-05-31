@@ -13,9 +13,11 @@ import OP from "./Images/OP.jpg";
 import { getRandArr } from "../utils";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutXO from "./AboutXO";
 const signs = [S, X, O, XU, XP, OU, OP];
 
 export default function XO({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -349,6 +351,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
       ),
     );
     setPointFunction(greenSquares.length / 3);
+  };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
   };
   useEffect(() => {
     setAvailableSquares(squares.filter((s) => s.owner === ""));
@@ -898,38 +903,114 @@ export default function XO({ updateTotalPoint, currentUser }) {
   }, [isUserTurn, isPejmanTurn]);
   return (
     <div>
-      <h2>X-O</h2>
-      {!easyMode && !normalMode && !isTogglingHomePage && (
+      {isAboutPage && <AboutXO setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <button onClick={handleEasyMode}>Easy</button>
-          <button onClick={handleNormalMode}>Normal</button>
-        </div>
-      )}
-      {userSign === "" && (easyMode || normalMode) && !isTogglingHomePage && (
-        <div>
-          Choose One:
-          <div>
-            <button onClick={userX}>X</button>
-            <button onClick={userO}>O</button>
-          </div>
-        </div>
-      )}
-      {easyMode && isWin === "" && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
-        <ModeExplaination message="Easy Mode: In his turn, Pejman chooses a square randomly. You won't get any stars if you win." />
-      )}
-      {normalMode &&
-        isWin === "" &&
-        !isTogglingReset && !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <ModeExplaination message="Normal Mode: In his turn, Pejman chooses a square with a strategy. You'll get 1 star if you win." />
-        )}
-      {userSign !== "" &&
-        !isGameStarted &&
-        isWin === "" &&
-        !isTogglingHomePage && (
-          <button onClick={handleStart}>Start the Game</button>
-        )}
-      {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About X-O</button>
+          )}
+          <h2>X-O</h2>
+          {!easyMode && !normalMode && !isTogglingHomePage && (
+            <div>
+              <button onClick={handleEasyMode}>Easy</button>
+              <button onClick={handleNormalMode}>Normal</button>
+            </div>
+          )}
+          {userSign === "" &&
+            (easyMode || normalMode) &&
+            !isTogglingHomePage && (
+              <div>
+                Choose One:
+                <div>
+                  <button onClick={userX}>X</button>
+                  <button onClick={userO}>O</button>
+                </div>
+              </div>
+            )}
+          {easyMode &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <ModeExplaination message="Easy Mode: In his turn, Pejman chooses a square randomly. You won't get any stars if you win." />
+            )}
+          {normalMode &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <ModeExplaination message="Normal Mode: In his turn, Pejman chooses a square with a strategy. You'll get 1 star if you win." />
+            )}
+          {userSign !== "" &&
+            !isGameStarted &&
+            isWin === "" &&
+            !isTogglingHomePage && (
+              <button onClick={handleStart}>Start the Game</button>
+            )}
+          {isGameStarted &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            (easyMode || normalMode) &&
+            userSign !== "" && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isGameStarted &&
+            isWin === "" &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isTogglingLevel && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+            <div>
+              <button onClick={() => toggleHomePage()}>
+                Back to the home page
+              </button>
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         isPejmanTurn: {isPejmanTurn ? "T" : "F"}
       </div>
@@ -951,284 +1032,240 @@ export default function XO({ updateTotalPoint, currentUser }) {
           <div style={{ display: "inline" }}>{s.id}-</div>
         ))}
       </div> */}
-      <div style={{ color: "gray" }}>
-        Red Array:{" "}
-        {redArray.map((s) => (
-          <div style={{ display: "inline" }}>{s}-</div>
-        ))}
-      </div>
-      <div style={{ color: "gray" }}>
-        Green Array:{" "}
-        {greenArray.map((s) => (
-          <div style={{ display: "inline" }}>{s}-</div>
-        ))}
-      </div>
-      {isWin === "" &&
-        isGameStarted &&
-        !isTogglingReset && !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div
-            style={{
-              opacity: !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
-            }}
-          >
-            Your Point: {userPoint}
+          <div style={{ color: "gray" }}>
+            Red Array:{" "}
+            {redArray.map((s) => (
+              <div style={{ display: "inline" }}>{s}-</div>
+            ))}
           </div>
-        )}
-      {isWin === "" &&
-        isGameStarted &&
-        !isTogglingReset && !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div
-            style={{
-              opacity: !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
-            }}
-          >
-            Pejman's Point: {pejmanPoint}
+          <div style={{ color: "gray" }}>
+            Green Array:{" "}
+            {greenArray.map((s) => (
+              <div style={{ display: "inline" }}>{s}-</div>
+            ))}
           </div>
-        )}
-      {isWin === true && !isTogglingHomePage && (
-        <div>
-          <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-          <h2>You Win!</h2>
-          <div>Play Again?</div>
-          <button onClick={handleReset}>Ok</button>
-        </div>
-      )}
-      {isWin === false && !isTogglingHomePage && (
-        <div>
-          <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-          <h2>You loose!</h2>
-          <div>Try Again?</div>
-          <button onClick={handleReset}>Ok</button>
-        </div>
-      )}
-      {isGameStarted &&
-        new Array(25).fill(null).map((square, idx) =>
-          (idx + 1) % 5 !== 0 ? (
-            <div style={{ display: "inline", margin: "2px" }}>
-              {
-                <Square
-                  imgSrc={squares[idx].imgSrc}
-                  idx={squares[idx].id}
-                  signs={signs}
-                  userSign={userSign}
-                  setSquares={setSquares}
-                  isUserTurn={isUserTurn}
-                  setIsUserTurn={setIsUserTurn}
-                  squares={squares}
-                  userChoices={userChoices}
-                  pejmanChoices={pejmanChoices}
-                  availableSquares={availableSquares}
-                  setAvailableSquares={setAvailableSquares}
-                  normalMode={normalMode}
-                  isTogglingReset={isTogglingReset}
-                  isTogglingHomePage={isTogglingHomePage}
-                  isTogglingLevel={isTogglingLevel}
-                />
-              }
+          {isWin === "" &&
+            isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div
+                style={{
+                  opacity:
+                    !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
+                }}
+              >
+                Your Point: {userPoint}
+              </div>
+            )}
+          {isWin === "" &&
+            isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div
+                style={{
+                  opacity:
+                    !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
+                }}
+              >
+                Pejman's Point: {pejmanPoint}
+              </div>
+            )}
+          {isWin === true && !isTogglingHomePage && (
+            <div>
+              <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
+              <h2>You Win!</h2>
+              <div>Play Again?</div>
+              <button onClick={handleReset}>Ok</button>
             </div>
-          ) : (
-            <div style={{ display: "inline", margin: "2px" }}>
-              {
-                <Square
-                  imgSrc={squares[idx].imgSrc}
-                  idx={squares[idx].id}
-                  signs={signs}
-                  userSign={userSign}
-                  setSquares={setSquares}
-                  isUserTurn={isUserTurn}
-                  setIsUserTurn={setIsUserTurn}
-                  squares={squares}
-                  userChoices={userChoices}
-                  pejmanChoices={pejmanChoices}
-                  availableSquares={availableSquares}
-                  setAvailableSquares={setAvailableSquares}
-                  normalMode={normalMode}
-                  isTogglingReset={isTogglingReset}
-                  isTogglingHomePage={isTogglingHomePage}
-                  isTogglingLevel={isTogglingLevel}
-                />
-              }
-              <br></br>
+          )}
+          {isWin === false && !isTogglingHomePage && (
+            <div>
+              <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
+              <h2>You loose!</h2>
+              <div>Try Again?</div>
+              <button onClick={handleReset}>Ok</button>
             </div>
-          ),
-        )}
-      {isGameStarted &&
-        !isUserTurn &&
-        !isTogglingReset && !isTogglingLevel &&
-        !isTogglingHomePage &&
-        (availableSquares.length !== 0 ? (
-          <div>
-            <div>{`Allow Pejman to ${
-              normalMode && pejmanChoices.length === 0
-                ? "start the game"
-                : "make his move"
-            }`}</div>
-            <button onClick={allowPejman}>Ok</button>
-          </div>
-        ) : (
-          <div>
-            <div>The game is finished. Let's see who is the winner.</div>
-            <button onClick={handleFinalPlayerPoints}>Ok</button>
-          </div>
-        ))}
-      {isGameStarted &&
-        isUserTurn &&
-        availableSquares.length === 0 &&
-        !isTogglingReset && !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>The game is finished. Let's see who is the winner.</div>
-            <button onClick={handleFinalPlayerPoints}>Ok</button>
-          </div>
-        )}
-      {isGameStarted &&
-        isWin === "" &&
-        !isTogglingReset && !isTogglingLevel &&
-        !isTogglingHomePage &&
-        (easyMode || normalMode) &&
-        userSign !== "" && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {isGameStarted &&
-        isWin === "" &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-              }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isTogglingLevel && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          <button onClick={() => toggleHomePage()}>
-            Back to the home page
-          </button>
-        </div>
-      )}
-      {isTogglingHomePage && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {userPoint > 0 && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
-        <div>
-          <div>
-            {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
-              userPoint > 1 ? "s" : ""
-            } for having the following match${userPoint > 1 ? "es" : ""}: `}
-          </div>
-          {filledSquaresByUser.map(
-            (f, i) =>
-              i % 3 === 0 && (
-                <div
-                  style={{
-                    display: "inline-block",
-                    border: "1px solid black",
-                    margin: "5px",
-                    color: "lightblue",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      color: "lightblue",
-                    }}
-                  >
-                    <SquareDetails
-                      filledSquares={[
-                        filledSquaresByUser[i],
-                        filledSquaresByUser[i + 1],
-                        filledSquaresByUser[i + 2],
-                      ]}
-                      color="green"
-                      style={{ color: "lightblue" }}
+          )}
+          {isGameStarted &&
+            new Array(25).fill(null).map((square, idx) =>
+              (idx + 1) % 5 !== 0 ? (
+                <div style={{ display: "inline", margin: "2px" }}>
+                  {
+                    <Square
+                      imgSrc={squares[idx].imgSrc}
+                      idx={squares[idx].id}
+                      signs={signs}
+                      userSign={userSign}
+                      setSquares={setSquares}
+                      isUserTurn={isUserTurn}
+                      setIsUserTurn={setIsUserTurn}
+                      squares={squares}
+                      userChoices={userChoices}
+                      pejmanChoices={pejmanChoices}
+                      availableSquares={availableSquares}
+                      setAvailableSquares={setAvailableSquares}
+                      normalMode={normalMode}
+                      isTogglingReset={isTogglingReset}
+                      isTogglingHomePage={isTogglingHomePage}
+                      isTogglingLevel={isTogglingLevel}
                     />
-                  </div>
+                  }
+                </div>
+              ) : (
+                <div style={{ display: "inline", margin: "2px" }}>
+                  {
+                    <Square
+                      imgSrc={squares[idx].imgSrc}
+                      idx={squares[idx].id}
+                      signs={signs}
+                      userSign={userSign}
+                      setSquares={setSquares}
+                      isUserTurn={isUserTurn}
+                      setIsUserTurn={setIsUserTurn}
+                      squares={squares}
+                      userChoices={userChoices}
+                      pejmanChoices={pejmanChoices}
+                      availableSquares={availableSquares}
+                      setAvailableSquares={setAvailableSquares}
+                      normalMode={normalMode}
+                      isTogglingReset={isTogglingReset}
+                      isTogglingHomePage={isTogglingHomePage}
+                      isTogglingLevel={isTogglingLevel}
+                    />
+                  }
+                  <br></br>
                 </div>
               ),
-          )}
-        </div>
-      )}
-      {pejmanPoint > 0 && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
-        <div>
-          <div>
-            {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
-              pejmanPoint > 1 ? "s" : ""
-            } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
-          </div>
-          {filledSquaresByPejman.map(
-            (f, i) =>
-              i % 3 === 0 && (
-                <div
-                  style={{
-                    display: "inline-block",
-                    border: "1px solid black",
-                    margin: "5px",
-                    color: "lightblue",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      color: "lightblue",
-                    }}
-                  >
-                    <SquareDetails
-                      filledSquares={[
-                        filledSquaresByPejman[i],
-                        filledSquaresByPejman[i + 1],
-                        filledSquaresByPejman[i + 2],
-                      ]}
-                      color="brown"
-                      style={{ color: "lightblue" }}
-                    />
-                  </div>
+            )}
+          {isGameStarted &&
+            !isUserTurn &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            (availableSquares.length !== 0 ? (
+              <div>
+                <div>{`Allow Pejman to ${
+                  normalMode && pejmanChoices.length === 0
+                    ? "start the game"
+                    : "make his move"
+                }`}</div>
+                <button onClick={allowPejman}>Ok</button>
+              </div>
+            ) : (
+              <div>
+                <div>The game is finished. Let's see who is the winner.</div>
+                <button onClick={handleFinalPlayerPoints}>Ok</button>
+              </div>
+            ))}
+          {isGameStarted &&
+            isUserTurn &&
+            availableSquares.length === 0 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>The game is finished. Let's see who is the winner.</div>
+                <button onClick={handleFinalPlayerPoints}>Ok</button>
+              </div>
+            )}
+
+          {userPoint > 0 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>
+                  {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
+                    userPoint > 1 ? "s" : ""
+                  } for having the following match${userPoint > 1 ? "es" : ""}: `}
                 </div>
-              ),
-          )}
+                {filledSquaresByUser.map(
+                  (f, i) =>
+                    i % 3 === 0 && (
+                      <div
+                        style={{
+                          display: "inline-block",
+                          border: "1px solid black",
+                          margin: "5px",
+                          color: "lightblue",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            color: "lightblue",
+                          }}
+                        >
+                          <SquareDetails
+                            filledSquares={[
+                              filledSquaresByUser[i],
+                              filledSquaresByUser[i + 1],
+                              filledSquaresByUser[i + 2],
+                            ]}
+                            color="green"
+                            style={{ color: "lightblue" }}
+                          />
+                        </div>
+                      </div>
+                    ),
+                )}
+              </div>
+            )}
+          {pejmanPoint > 0 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>
+                  {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
+                    pejmanPoint > 1 ? "s" : ""
+                  } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
+                </div>
+                {filledSquaresByPejman.map(
+                  (f, i) =>
+                    i % 3 === 0 && (
+                      <div
+                        style={{
+                          display: "inline-block",
+                          border: "1px solid black",
+                          margin: "5px",
+                          color: "lightblue",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            color: "lightblue",
+                          }}
+                        >
+                          <SquareDetails
+                            filledSquares={[
+                              filledSquaresByPejman[i],
+                              filledSquaresByPejman[i + 1],
+                              filledSquaresByPejman[i + 2],
+                            ]}
+                            color="brown"
+                            style={{ color: "lightblue" }}
+                          />
+                        </div>
+                      </div>
+                    ),
+                )}
+              </div>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <ReviewSection game="XO" currentUser={currentUser} />
+            )}
         </div>
-      )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && (
-        <ReviewSection game="XO" currentUser={currentUser} />
       )}
     </div>
   );
