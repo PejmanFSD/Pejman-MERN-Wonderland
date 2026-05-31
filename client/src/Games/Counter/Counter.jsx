@@ -5,8 +5,10 @@ import ConfirmationBox from "../ConfirmationBox";
 import ModeExplaination from "../ModeExplaination";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutCounter from "./AboutCounter";
 
 export default function Counter({updateTotalPoint, currentUser}) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [gameArray, setGameArray] = useState([]);
@@ -150,6 +152,9 @@ export default function Counter({updateTotalPoint, currentUser}) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   useEffect(() => {
     if (easyMode) {
       setGameArray(
@@ -199,6 +204,14 @@ export default function Counter({updateTotalPoint, currentUser}) {
   }, [isGameStarted]);
   return (
     <div>
+{isAboutPage && (
+        <AboutCounter setIsAboutPage={setIsAboutPage} />
+      )}
+{!isAboutPage && (
+<div>
+  {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Counter</button>
+          )}
       <h2>Counter</h2>
       {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
         <div>
@@ -451,6 +464,9 @@ export default function Counter({updateTotalPoint, currentUser}) {
           </div>
         )}
         {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Counter" currentUser={currentUser} />}
+</div>)}
+    
+    
     </div>
   );
 }
