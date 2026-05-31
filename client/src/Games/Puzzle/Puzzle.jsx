@@ -19,8 +19,10 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutPuzzle from "./AboutPuzzle";
 
-export default function Puzzle({updateTotalPoint, currentUser}) {
+export default function Puzzle({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -320,6 +322,9 @@ export default function Puzzle({updateTotalPoint, currentUser}) {
     setSeconds(400);
     setIsTimerRunning(false);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -376,236 +381,252 @@ export default function Puzzle({updateTotalPoint, currentUser}) {
   }, [imageGroup]);
   return (
     <div>
-      <h2>Puzzle</h2>
-      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
+      {isAboutPage && <AboutPuzzle setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <button onClick={handleEasyMode}>Easy Mode</button>
-          <button onClick={handleNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {easyMode && !normalMode
-        ? !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel && (
-            <ModeExplaination message="Easy Mode: You will get one star if you win." />
-          )
-        : !easyMode &&
-          normalMode &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel && (
-            <ModeExplaination message="Normal Mode: You will get four stars if you win." />
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Puzzle</button>
           )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        finalMessage === "" &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {(easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-              }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isTogglingLevel && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button onClick={() => toggleHomePage()}>
-              Back to the home page
-            </button>
-          </div>
-        )}
-      {isTogglingHomePage && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {finalMessage && <h2>{finalMessage}</h2>}
-      {finalMessage === "You Win!" && (
-        <div>
-          <div>Play again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {finalMessage === "Time's Up!" && (
-        <div>
-          <div>Try again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {isGameStarted && normalMode && (
-        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-          {seconds}
-        </h3>
-      )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <label htmlFor="imageGroup"></label>
-            <select
-              onChange={handleImageGroup}
-              name="imageGroup"
-              id="imageGroup"
-            >
-              <option value={imageGroup} disabled selected>
-                Select an image group
-              </option>
-              {[
-                "Balloons",
-                "Ghost",
-                "Lion",
-                "Mansion",
-                "Numbers",
-                "Pencils",
-              ].map((c) => (
-                <option>{c}</option>
-              ))}
-            </select>
-          </div>
-        )}
-      {!isGameStarted &&
-        imageGroup.length !== 0 &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <button onClick={handleStart}>Start the Game</button>
-        )}
-      {isGameStarted &&
-        isImageGroupChosen &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <img
-            src={mainImage}
-            style={{
-              width: "150px",
-              border: "1px solid black",
-              position: "relative",
-              top: "5px",
-              display: "inline",
-              opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
-            }}
-          />
-        )}
-      {isGameStarted &&
-        isImageGroupChosen &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div
-            style={{
-              position: "relative",
-              top: "5px",
-              display: "grid",
-              gridTemplateColumns: "repeat(5, auto)",
-              justifyContent: "center",
-            }}
-          >
-            {imageGroup.map((cell) => (
-              <Cell
-                imageSrc={cell.image}
-                setIsActiveUpButton={setIsActiveUpButton}
-                setIsActiveLeftButton={setIsActiveLeftButton}
-                setIsActiveDownButton={setIsActiveDownButton}
-                setIsActiveRightButton={setIsActiveRightButton}
-                imageGroup={imageGroup}
-                setImageGroup={setImageGroup}
-                isAnImageClicked={isAnImageClicked}
-                setIsAnImageClicked={setIsAnImageClicked}
-                finalMessage={finalMessage}
+          <h2>Puzzle</h2>
+          {!isGameStarted &&
+            !easyMode &&
+            !normalMode &&
+            !isTogglingHomePage && (
+              <div>
+                <button onClick={handleEasyMode}>Easy Mode</button>
+                <button onClick={handleNormalMode}>Normal Mode</button>
+              </div>
+            )}
+          {easyMode && !normalMode
+            ? !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <ModeExplaination message="Easy Mode: You will get one star if you win." />
+              )
+            : !easyMode &&
+              normalMode &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <ModeExplaination message="Normal Mode: You will get four stars if you win." />
+              )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            finalMessage === "" &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
               />
-            ))}
-          </div>
-        )}
-      {isGameStarted &&
-        finalMessage === "" &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <button
-              onClick={handleUp}
-              style={{ position: "relative", top: "20px" }}
-              disabled={
-                isActiveUpButton === false || isAnImageClicked === false
-              }
-            >
-              &#8593;
-            </button>
-            <br />
-            <button
-              onClick={handleLeft}
-              style={{ position: "relative", top: "20px" }}
-              disabled={
-                isActiveLeftButton === false || isAnImageClicked === false
-              }
-            >
-              &#8592;
-            </button>
-            <button
-              onClick={handleDown}
-              style={{ position: "relative", top: "20px" }}
-              disabled={
-                isActiveDownButton === false || isAnImageClicked === false
-              }
-            >
-              &#8595;
-            </button>
-            <button
-              onClick={handleRight}
-              style={{ position: "relative", top: "20px" }}
-              disabled={
-                isActiveRightButton === false || isAnImageClicked === false
-              }
-            >
-              &#8594;
-            </button>
-          </div>
-        )}
-        {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Puzzle" currentUser={currentUser} />}
+            </div>
+          )}
+          {(easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button onClick={() => toggleHomePage()}>
+                  Back to the home page
+                </button>
+              </div>
+            )}
+          {isTogglingHomePage && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {finalMessage && <h2>{finalMessage}</h2>}
+          {finalMessage === "You Win!" && (
+            <div>
+              <div>Play again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {finalMessage === "Time's Up!" && (
+            <div>
+              <div>Try again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {isGameStarted && normalMode && (
+            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+              {seconds}
+            </h3>
+          )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <label htmlFor="imageGroup"></label>
+                <select
+                  onChange={handleImageGroup}
+                  name="imageGroup"
+                  id="imageGroup"
+                >
+                  <option value={imageGroup} disabled selected>
+                    Select an image group
+                  </option>
+                  {[
+                    "Balloons",
+                    "Ghost",
+                    "Lion",
+                    "Mansion",
+                    "Numbers",
+                    "Pencils",
+                  ].map((c) => (
+                    <option>{c}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+          {!isGameStarted &&
+            imageGroup.length !== 0 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <button onClick={handleStart}>Start the Game</button>
+            )}
+          {isGameStarted &&
+            isImageGroupChosen &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <img
+                src={mainImage}
+                style={{
+                  width: "150px",
+                  border: "1px solid black",
+                  position: "relative",
+                  top: "5px",
+                  display: "inline",
+                  opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
+                }}
+              />
+            )}
+          {isGameStarted &&
+            isImageGroupChosen &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div
+                style={{
+                  position: "relative",
+                  top: "5px",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(5, auto)",
+                  justifyContent: "center",
+                }}
+              >
+                {imageGroup.map((cell) => (
+                  <Cell
+                    imageSrc={cell.image}
+                    setIsActiveUpButton={setIsActiveUpButton}
+                    setIsActiveLeftButton={setIsActiveLeftButton}
+                    setIsActiveDownButton={setIsActiveDownButton}
+                    setIsActiveRightButton={setIsActiveRightButton}
+                    imageGroup={imageGroup}
+                    setImageGroup={setImageGroup}
+                    isAnImageClicked={isAnImageClicked}
+                    setIsAnImageClicked={setIsAnImageClicked}
+                    finalMessage={finalMessage}
+                  />
+                ))}
+              </div>
+            )}
+          {isGameStarted &&
+            finalMessage === "" &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <button
+                  onClick={handleUp}
+                  style={{ position: "relative", top: "20px" }}
+                  disabled={
+                    isActiveUpButton === false || isAnImageClicked === false
+                  }
+                >
+                  &#8593;
+                </button>
+                <br />
+                <button
+                  onClick={handleLeft}
+                  style={{ position: "relative", top: "20px" }}
+                  disabled={
+                    isActiveLeftButton === false || isAnImageClicked === false
+                  }
+                >
+                  &#8592;
+                </button>
+                <button
+                  onClick={handleDown}
+                  style={{ position: "relative", top: "20px" }}
+                  disabled={
+                    isActiveDownButton === false || isAnImageClicked === false
+                  }
+                >
+                  &#8595;
+                </button>
+                <button
+                  onClick={handleRight}
+                  style={{ position: "relative", top: "20px" }}
+                  disabled={
+                    isActiveRightButton === false || isAnImageClicked === false
+                  }
+                >
+                  &#8594;
+                </button>
+              </div>
+            )}
+          {!isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            isGameStarted && (
+              <ReviewSection game="Puzzle" currentUser={currentUser} />
+            )}
+        </div>
+      )}
     </div>
   );
 }
