@@ -9,8 +9,10 @@ import Tick from "./images/Tick.jpg";
 import Current from "./images/Current.jpg";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutKukuKube from "./AboutKukuKube";
 
-export default function KukuKube({updateTotalPoint, currentUser}) {
+export default function KukuKube({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -130,252 +132,272 @@ export default function KukuKube({updateTotalPoint, currentUser}) {
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   return (
     <div>
-      <h2>Kuku Kube</h2>
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
-        <h4>In each step, find the square with the unique color</h4>
-      )}
-      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
+      {isAboutPage && <AboutKukuKube setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <button onClick={runEasyMode}>Easy Mode</button>
-          <button onClick={runNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {easyMode &&
-      !normalMode &&
-      !isTogglingReset &&
-      !isTogglingHomePage &&
-      !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-      ) : (
-        !easyMode &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: You will get one star if you win." />
-        )
-      )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <label htmlFor="color"></label>
-            <select onChange={handleColor} name="color" id="color">
-              <option value={color} disabled selected>
-                Select a Color
-              </option>
-              {["Red", "Green", "Blue"].map((c) => (
-                <option>{c}</option>
-              ))}
-            </select>
-          </div>
-        )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        isColorChosen &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <button onClick={handleStart}>Start the Game</button>
-        )}
-      <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
-      <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-              }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {(easyMode || normalMode) && isTogglingLevel && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          <button onClick={() => toggleHomePage()}>
-            Back to the home page
-          </button>
-        </div>
-      )}
-      {isTogglingHomePage && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {step > 0 &&
-        isColorChosen &&
-        isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <div>Step {step}</div>}
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        new Array(squareNum).fill(null).map((el, idx) =>
-          (idx + 1) % squareNum ** 0.5 !== 0 ? (
-            <div style={{ display: "inline" }}>
-              <Square
-                easyMode={easyMode}
-                red={color.red}
-                green={color.green}
-                blue={color.blue}
-                opacity={idx + 1 === uniqueSquare ? step * 0.072 : 1}
-                text={idx + 1}
-                userChoice={userChoice}
-                setUserChoice={setUserChoice}
-                isStepPassed={isStepPassed}
-                uniqueSquare={uniqueSquare}
-                isUniqueSquareRevealed={isUniqueSquareRevealed}
-              />
-            </div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Kuku Kube</button>
+          )}
+          <h2>Kuku Kube</h2>
+          {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
+            <h4>In each step, find the square with the unique color</h4>
+          )}
+          {!isGameStarted &&
+            !easyMode &&
+            !normalMode &&
+            !isTogglingHomePage && (
+              <div>
+                <button onClick={runEasyMode}>Easy Mode</button>
+                <button onClick={runNormalMode}>Normal Mode</button>
+              </div>
+            )}
+          {easyMode &&
+          !normalMode &&
+          !isTogglingReset &&
+          !isTogglingHomePage &&
+          !isTogglingLevel ? (
+            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
           ) : (
-            <div style={{ display: "inline" }}>
-              <Square
-                easyMode={easyMode}
-                red={color.red}
-                green={color.green}
-                blue={color.blue}
-                opacity={idx + 1 === uniqueSquare ? step * 0.072 : 1}
-                text={idx + 1}
-                userChoice={userChoice}
-                setUserChoice={setUserChoice}
-                isStepPassed={isStepPassed}
-                uniqueSquare={uniqueSquare}
-                isUniqueSquareRevealed={isUniqueSquareRevealed}
+            !easyMode &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <ModeExplaination message="Normal Mode: You will get one star if you win." />
+            )
+          )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                <label htmlFor="color"></label>
+                <select onChange={handleColor} name="color" id="color">
+                  <option value={color} disabled selected>
+                    Select a Color
+                  </option>
+                  {["Red", "Green", "Blue"].map((c) => (
+                    <option>{c}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            isColorChosen &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <button onClick={handleStart}>Start the Game</button>
+            )}
+          <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
+          <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
               />
-              <br></br>
             </div>
-          ),
-        )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        new Array(12).fill(null).map((el, idx) => (
-          <img
-            style={{
-              height: "19px",
-              position: "relative",
-              top: "30px",
-              margin: "2px",
-            }}
-            src={
-              idx === step - 1 &&
-              isUniqueSquareRevealed &&
-              userChoice === uniqueSquare
-                ? Tick
-                : idx === step - 1 &&
-                    isUniqueSquareRevealed &&
-                    userChoice !== uniqueSquare
-                  ? Cross
-                  : idx === step - 1 && (userChoice || !isUniqueSquareRevealed)
-                    ? Current
-                    : idx < step - 1
-                      ? Tick
-                      : Blank
-            }
-          />
-        ))}
-      <br></br>
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <button
-            onClick={submitUserChoice}
-            style={{ position: "relative", top: "50px" }}
-            disabled={!userChoice || isStepPassed !== null}
-          >
-            Submit
-          </button>
-        )}
-      {isGameStarted &&
-        isStepPassed === true &&
-        userChoice &&
-        step !== 12 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div style={{ position: "relative", top: "60px" }}>
-            Well Done! You guessed correctly!
+          )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {(easyMode || normalMode) && isTogglingLevel && (
             <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+            <div>
+              <button onClick={() => toggleHomePage()}>
+                Back to the home page
+              </button>
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {step > 0 &&
+            isColorChosen &&
+            isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <div>Step {step}</div>}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            new Array(squareNum).fill(null).map((el, idx) =>
+              (idx + 1) % squareNum ** 0.5 !== 0 ? (
+                <div style={{ display: "inline" }}>
+                  <Square
+                    easyMode={easyMode}
+                    red={color.red}
+                    green={color.green}
+                    blue={color.blue}
+                    opacity={idx + 1 === uniqueSquare ? step * 0.072 : 1}
+                    text={idx + 1}
+                    userChoice={userChoice}
+                    setUserChoice={setUserChoice}
+                    isStepPassed={isStepPassed}
+                    uniqueSquare={uniqueSquare}
+                    isUniqueSquareRevealed={isUniqueSquareRevealed}
+                  />
+                </div>
+              ) : (
+                <div style={{ display: "inline" }}>
+                  <Square
+                    easyMode={easyMode}
+                    red={color.red}
+                    green={color.green}
+                    blue={color.blue}
+                    opacity={idx + 1 === uniqueSquare ? step * 0.072 : 1}
+                    text={idx + 1}
+                    userChoice={userChoice}
+                    setUserChoice={setUserChoice}
+                    isStepPassed={isStepPassed}
+                    uniqueSquare={uniqueSquare}
+                    isUniqueSquareRevealed={isUniqueSquareRevealed}
+                  />
+                  <br></br>
+                </div>
+              ),
+            )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            new Array(12).fill(null).map((el, idx) => (
+              <img
+                style={{
+                  height: "19px",
+                  position: "relative",
+                  top: "30px",
+                  margin: "2px",
+                }}
+                src={
+                  idx === step - 1 &&
+                  isUniqueSquareRevealed &&
+                  userChoice === uniqueSquare
+                    ? Tick
+                    : idx === step - 1 &&
+                        isUniqueSquareRevealed &&
+                        userChoice !== uniqueSquare
+                      ? Cross
+                      : idx === step - 1 &&
+                          (userChoice || !isUniqueSquareRevealed)
+                        ? Current
+                        : idx < step - 1
+                          ? Tick
+                          : Blank
+                }
+              />
+            ))}
+          <br></br>
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
               <button
-                onClick={handleNextStep}
-              >{`Go to Step ${step + 1}`}</button>
-            </div>
-          </div>
-        )}
-      {isGameStarted &&
-        isStepPassed === true &&
-        userChoice &&
-        step === 12 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div style={{ position: "relative", top: "60px" }}>
-            {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
-            <div>
-              <div>Play Again?</div>
-              <button onClick={handleReset}>Ok</button>
-            </div>
-          </div>
-        )}
-      {isGameStarted &&
-        isStepPassed === false &&
-        userChoice &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div style={{ position: "relative", top: "60px" }}>
-            Sorry! You didn't guess correctly!
-            <div>
-              <div>Try Again?</div>
-              <button onClick={handleReset}>Ok</button>
-            </div>
-          </div>
-        )}
-        {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="KukuKube" currentUser={currentUser} />}
+                onClick={submitUserChoice}
+                style={{ position: "relative", top: "50px" }}
+                disabled={!userChoice || isStepPassed !== null}
+              >
+                Submit
+              </button>
+            )}
+          {isGameStarted &&
+            isStepPassed === true &&
+            userChoice &&
+            step !== 12 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div style={{ position: "relative", top: "60px" }}>
+                Well Done! You guessed correctly!
+                <div>
+                  <button
+                    onClick={handleNextStep}
+                  >{`Go to Step ${step + 1}`}</button>
+                </div>
+              </div>
+            )}
+          {isGameStarted &&
+            isStepPassed === true &&
+            userChoice &&
+            step === 12 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div style={{ position: "relative", top: "60px" }}>
+                {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
+                <div>
+                  <div>Play Again?</div>
+                  <button onClick={handleReset}>Ok</button>
+                </div>
+              </div>
+            )}
+          {isGameStarted &&
+            isStepPassed === false &&
+            userChoice &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div style={{ position: "relative", top: "60px" }}>
+                Sorry! You didn't guess correctly!
+                <div>
+                  <div>Try Again?</div>
+                  <button onClick={handleReset}>Ok</button>
+                </div>
+              </div>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <ReviewSection game="KukuKube" currentUser={currentUser} />
+            )}
+        </div>
+      )}
     </div>
   );
 }
