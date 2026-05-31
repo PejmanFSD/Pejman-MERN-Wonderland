@@ -5,8 +5,10 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutHappyFlower from "./AboutHappyFlower";
 
-export default function HappyFlower({updateTotalPoint, currentUser}) {
+export default function HappyFlower({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [title, setTitle] = useState("");
   const [word, setWord] = useState("");
   const [wordWithNoSpace, setWordWithNoSpace] = useState([]);
@@ -68,6 +70,9 @@ export default function HappyFlower({updateTotalPoint, currentUser}) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   useEffect(() => {
     let interval;
     if (isTimerRunning && normalMode) {
@@ -105,104 +110,128 @@ export default function HappyFlower({updateTotalPoint, currentUser}) {
       handleStopTimer();
       if (easyMode) {
         updateTotalPoint(1);
-      }
-      else if (normalMode) {
+      } else if (normalMode) {
         updateTotalPoint(3);
       }
     }
   }, [userGuess]);
   return (
     <div>
-      <h2>Happy Flower</h2>
-      {!easyMode && !normalMode && !isTogglingHomePage && (
+      {isAboutPage && <AboutHappyFlower setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <button onClick={handleEasy}>Easy</button>
-          <button onClick={handleNormal}>Normal</button>
-        </div>
-      )}
-      {easyMode && !isTogglingHomePage && (
-        <ModeExplaination message="Easy Mode: You'll get one star if you guess the word, there's no time limitation." />
-      )}
-      {normalMode && !isTogglingHomePage && (
-        <ModeExplaination message="Normal Mode: You'll get three stars if you guess the word in 60 seconds." />
-      )}
-      {isTimerRunning && isWin === "" && normalMode && !isTogglingReset && !isTogglingHomePage && (
-        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-          {seconds}
-        </h3>
-      )}
-      {(easyMode || normalMode) && isWin === "" && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          <button onClick={() => toggleReset()}>Reset the Game</button>
-        </div>
-      )}
-      {isTogglingReset && !isTogglingHomePage && (
-        <ConfirmationBox
-          question="Are you sure you want to reset the game?"
-          toggleYes={toggleResetYes}
-          toggleCancel={toggleResetCancel}
-        />
-      )}
-      {!isTogglingReset && !isTogglingHomePage && (
-        <button onClick={() => toggleHomePage()}>Back to the home page</button>
-      )}
-      {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
-        isTogglingHomePage && (
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        )}
-      {!isGameStarted && (easyMode || normalMode) && !isTogglingReset && !isTogglingHomePage && (
-        <Form
-          title={title}
-          setTitle={setTitle}
-          word={word}
-          setWord={setWord}
-          setWordWithNoSpace={setWordWithNoSpace}
-          setIsGameStarted={setIsGameStarted}
-          setSeconds={setSeconds}
-          handleStartTimer={handleStartTimer}
-        />
-      )}
-      <div style={{ color: "gray" }}>
-        {title} - {word} - {word.length} - {wordWithNoSpace} - {userGuess} -{" "}
-        {isWin ? "T" : "F"}
-      </div>
-      <div>
-        {normalMode && seconds < 1 && !isTogglingReset && !isTogglingHomePage && <h2>Time's Up!</h2>}
-        {isWin === false && !isTogglingHomePage && (
-          <div>
-            <h2>You loose!</h2>
-            <h3>{`The name of the ${title} is "${word}"`}</h3>
-            <div>Try again?</div>
-            <button onClick={handleReset}>Ok</button>
+          {!isTogglingHomePage && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Happy Flower</button>
+          )}
+          <h2>Happy Flower</h2>
+          {!easyMode && !normalMode && !isTogglingHomePage && (
+            <div>
+              <button onClick={handleEasy}>Easy</button>
+              <button onClick={handleNormal}>Normal</button>
+            </div>
+          )}
+          {easyMode && !isTogglingHomePage && (
+            <ModeExplaination message="Easy Mode: You'll get one star if you guess the word, there's no time limitation." />
+          )}
+          {normalMode && !isTogglingHomePage && (
+            <ModeExplaination message="Normal Mode: You'll get three stars if you guess the word in 60 seconds." />
+          )}
+          {isTimerRunning &&
+            isWin === "" &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+                {seconds}
+              </h3>
+            )}
+          {(easyMode || normalMode) &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <div>
+                <button onClick={() => toggleReset()}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && !isTogglingHomePage && (
+            <ConfirmationBox
+              question="Are you sure you want to reset the game?"
+              toggleYes={toggleResetYes}
+              toggleCancel={toggleResetCancel}
+            />
+          )}
+          {!isTogglingReset && !isTogglingHomePage && (
+            <button onClick={() => toggleHomePage()}>
+              Back to the home page
+            </button>
+          )}
+          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+            isTogglingHomePage && (
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <Form
+                title={title}
+                setTitle={setTitle}
+                word={word}
+                setWord={setWord}
+                setWordWithNoSpace={setWordWithNoSpace}
+                setIsGameStarted={setIsGameStarted}
+                setSeconds={setSeconds}
+                handleStartTimer={handleStartTimer}
+              />
+            )}
+          <div style={{ color: "gray" }}>
+            {title} - {word} - {word.length} - {wordWithNoSpace} - {userGuess} -{" "}
+            {isWin ? "T" : "F"}
           </div>
-        )}
-        {isWin === true && !isTogglingHomePage && (
           <div>
-            <h2>You Win!</h2>
-            <div>Play again?</div>
-            <button onClick={handleReset}>Ok</button>
+            {normalMode &&
+              seconds < 1 &&
+              !isTogglingReset &&
+              !isTogglingHomePage && <h2>Time's Up!</h2>}
+            {isWin === false && !isTogglingHomePage && (
+              <div>
+                <h2>You loose!</h2>
+                <h3>{`The name of the ${title} is "${word}"`}</h3>
+                <div>Try again?</div>
+                <button onClick={handleReset}>Ok</button>
+              </div>
+            )}
+            {isWin === true && !isTogglingHomePage && (
+              <div>
+                <h2>You Win!</h2>
+                <div>Play again?</div>
+                <button onClick={handleReset}>Ok</button>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-      {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-        <div>
-          {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
-          <GuessTable
-            word={word}
-            userGuess={userGuess}
-            setUserGuess={setUserGuess}
-            userMistakes={userMistakes}
-            setUserMistakes={setUserMistakes}
-            isWin={isWin}
-            seconds={seconds}
-          />
+          {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
+            <div>
+              {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
+              <GuessTable
+                word={word}
+                userGuess={userGuess}
+                setUserGuess={setUserGuess}
+                userMistakes={userMistakes}
+                setUserMistakes={setUserMistakes}
+                isWin={isWin}
+                seconds={seconds}
+              />
+            </div>
+          )}
+          {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
+            <ReviewSection game="HappyFlower" currentUser={currentUser} />
+          )}
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && isGameStarted && <ReviewSection game="HappyFlower" currentUser={currentUser} />}
     </div>
   );
 }
