@@ -1,0 +1,65 @@
+export default function AboutPidoku({ setIsAboutPage }) {
+  const handleGamePage = () => {
+    setIsAboutPage(false);
+  };
+  return (
+    <div>
+      <h2>About Pidoku</h2>
+      <div>
+        In this game, you first choose a color for yourself and a different
+        color for Pejman.
+        <br />
+        Both players must have different colors.
+        <br />
+        <em>
+          (If you are an employer, feel free to test selecting the same color
+          for both players to explore the application's validation features and
+          unique error handling).
+        </em>
+      </div>
+      <h4>How to Play</h4>
+      The game is played on a 5 × 5 board containing 25 cells. Players take
+      turns selecting cells on the board.
+      <br />
+      Each selected cell changes to the player’s chosen color and a number also
+      appears inside the cell;
+      <br />
+      This number represents the order of the player's moves:
+      <br />
+      First move → 1<br />
+      Second move → 2<br />
+      Third move → 3<br />
+      And so on
+      <br />
+      Each player selects 12 cells, meaning 24 cells in total will eventually be
+      filled.
+      <br />
+      At that point, one cell remains empty. This cell is called the decisive
+      cell.
+      <h4>Scoring System</h4>
+      The numbers inside the cells surrounding the decisive cell are used to
+      calculate the final scores:
+      <br />
+      - The sum of the numbers in your colored cells becomes your total score.
+      <br />
+      - The sum of the numbers in Pejman’s colored cells becomes his total
+      score.
+      <br />
+      The player with the higher total score wins the game.
+      <h4>Game Modes</h4>
+      <strong>- Easy Mode:</strong>
+      <br />
+      - Pejman selects cells randomly during his turn.
+      <br />
+      - Winning does not award any stars.
+      <br />
+      <strong>- Normal Mode:</strong>
+      <br />
+      - Pejman uses a strategy to choose his moves.
+      <br />
+      - Win the game to earn 1 star.
+      <br />
+      <button onClick={handleGamePage}>Back to the Game</button>
+    </div>
+  );
+}
