@@ -3,10 +3,14 @@ import ReviewSection from "../../Components/ReviewSection";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import Play from "./Play.png";
+import Pause from "./Pause.png";
+import AboutSnake from "./AboutSnake";
 
 const gridSize = 20;
 
 export default function Snake({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -158,6 +162,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       y: Math.floor(Math.random() * gridSize),
     };
   }
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   // Game loop:
   useEffect(() => {
     if (!isGameStarted) return;
@@ -320,167 +327,195 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   }
   return (
     <div>
-      <h2>Snake</h2>
-      {easyMode && !normalMode
-        ? !isTogglingReset &&
-          !isTogglingLevel &&
-          !isTogglingHomePage && (
-            <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
-          )
-        : !easyMode &&
-          normalMode &&
-          !isTogglingReset &&
-          !isTogglingLevel &&
-          !isTogglingHomePage && (
-            <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each food, you get three stars if you win." />
+      {isAboutPage && <AboutSnake setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
+        <div>
+          {!isTogglingHomePage &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            direction.x === 0 &&
+            direction.y === 0 && (
+              <button onClick={handleAboutPage}>About Snake</button>
+            )}
+          <h2>Snake</h2>
+          {easyMode && !normalMode
+            ? !isTogglingReset &&
+              !isTogglingLevel &&
+              !isTogglingHomePage && (
+                <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
+              )
+            : !easyMode &&
+              normalMode &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              !isTogglingHomePage && (
+                <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each food, you get three stars if you win." />
+              )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            finalMessage === "" &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
           )}
-      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
-        <div>
-          <button onClick={handleEasyMode}>Easy Mode</button>
-          <button onClick={handleNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <button onClick={handleStart}>Start the Game</button>
-        )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        finalMessage === "" &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+            <div>
+              <button onClick={() => toggleHomePage()}>
+                Back to the home page
+              </button>
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {!isGameStarted &&
+            !easyMode &&
+            !normalMode &&
+            !isTogglingHomePage && (
+              <div>
+                <button onClick={handleEasyMode}>Easy Mode</button>
+                <button onClick={handleNormalMode}>Normal Mode</button>
+              </div>
+            )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <button onClick={handleStart}>Start the Game</button>
+            )}
+          {isGameStarted && (easyMode || normalMode) && (
+            <div
               style={{
-                display: "inline",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isTogglingLevel && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          <button onClick={() => toggleHomePage()}>
-            Back to the home page
-          </button>
-        </div>
-      )}
-      {isTogglingHomePage && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {isGameStarted && (easyMode || normalMode) && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {finalMessage &&
-            (finalMessage === "You Win!" ||
-              finalMessage === "You Win, but you don't get any stars!") &&
-            !isTogglingHomePage && (
-              <div>
-                <h3>{finalMessage}</h3>
-                <div>Play Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+            >
+              {finalMessage &&
+                (finalMessage === "You Win!" ||
+                  finalMessage === "You Win, but you don't get any stars!") &&
+                !isTogglingHomePage && (
+                  <div>
+                    <h3>{finalMessage}</h3>
+                    <div>Play Again?</div>
+                    <button onClick={handlePlayAgain}>Ok</button>
+                  </div>
+                )}
+              {finalMessage &&
+                finalMessage === "You loose!" &&
+                !isTogglingHomePage && (
+                  <div>
+                    <h3>{finalMessage}</h3>
+                    <div>Try Again?</div>
+                    <button onClick={handlePlayAgain}>Ok</button>
+                  </div>
+                )}
+              <br />
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                }}
+              >
+                {new Array(20)
+                  .fill(null)
+                  .map((s, i) =>
+                    i < userPoint ? (
+                      <div key={i}>⚫</div>
+                    ) : (
+                      <div key={i}>⚪</div>
+                    ),
+                  )}
               </div>
-            )}
-          {finalMessage &&
-            finalMessage === "You loose!" &&
-            !isTogglingHomePage && (
-              <div>
-                <h3>{finalMessage}</h3>
-                <div>Try Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                }}
+              >
+                {new Array(20)
+                  .fill(null)
+                  .map((s, i) =>
+                    i + 20 < userPoint ? (
+                      <div key={i}>⚫</div>
+                    ) : (
+                      <div key={i}>⚪</div>
+                    ),
+                  )}
               </div>
+              <br />
+              <strong>Pause / Resume the game with the "Space" key</strong>
+              {direction.x === 0 && direction.y === 0 ? (
+                <img src={Pause} width="40px" style={{ margin: "10px" }} />
+              ) : (
+                <img src={Play} width="40px" style={{ margin: "10px" }} />
+              )}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(20, 20px)",
+                  gridTemplateRows: "repeat(20, 20px)",
+                  gap: "1px",
+                  background: "#333",
+                  padding: "5px",
+                }}
+              >
+                {cells}
+              </div>
+            </div>
+          )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <ReviewSection game="Snake" currentUser={currentUser} />
             )}
-          <br />
-          <div
-            style={{
-              display: "flex",
-              gap: "4px",
-            }}
-          >
-            {new Array(20)
-              .fill(null)
-              .map((s, i) =>
-                i < userPoint ? <div key={i}>⚫</div> : <div key={i}>⚪</div>,
-              )}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "4px",
-            }}
-          >
-            {new Array(20)
-              .fill(null)
-              .map((s, i) =>
-                i + 20 < userPoint ? (
-                  <div key={i}>⚫</div>
-                ) : (
-                  <div key={i}>⚪</div>
-                ),
-              )}
-          </div>
-          <br />
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(20, 20px)",
-              gridTemplateRows: "repeat(20, 20px)",
-              gap: "1px",
-              background: "#333",
-              padding: "5px",
-            }}
-          >
-            {cells}
-          </div>
         </div>
-      )}
-      {isGameStarted && !isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
-        <ReviewSection game="Snake" currentUser={currentUser} />
       )}
     </div>
   );
