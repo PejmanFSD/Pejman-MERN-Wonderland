@@ -10,8 +10,10 @@ import { getRandArr } from "../utils.js";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
+import AboutReversi from "./AboutReversi.jsx";
 
 export default function Reversi({ updateTotalPoint, currentUser }) {
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -1396,6 +1398,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setUserPoint(up);
     setPejmanPoint(pp);
   };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
+  };
   useEffect(() => {
     if (pejmanChoice !== null) {
       setCells((currCells) =>
@@ -1439,471 +1444,485 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   }, [chooseArrowMessage]);
   return (
     <div>
-      <h2>Reversi</h2>
-      {easyMode &&
-      !normalMode &&
-      !isTogglingReset &&
-      !isTogglingLevel &&
-      !isTogglingHomePage ? (
-        <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
-      ) : (
-        !easyMode &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <ModeExplaination message="Normal Mode: Pejman starts the game, you will get three stars if you win." />
-        )
-      )}
-      {!isGameStarted && !easyMode && !normalMode && (
+      {isAboutPage && <AboutReversi setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
         <div>
-          <button onClick={handleEasyMode}>Easy Mode</button>
-          <button onClick={handleNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
-        <div>
-          <div>
-            <label htmlFor="userColor">Select a Color for yourself</label>
-            <br></br>
-            <select onChange={handleUserColor} name="userColor" id="userColor">
-              <option value={userColor} disabled selected>
-                🔽🔽🔽
-              </option>
-              {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                <option>{c}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="pejmanColor">Select a Color for Pejman</label>
-            <br></br>
-            <select
-              onChange={handlePejmanColor}
-              name="pejmanColor"
-              id="pejmanColor"
-            >
-              <option value={pejmanColor} disabled selected>
-                🔽🔽🔽
-              </option>
-              {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                <option>{c}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        userColor &&
-        pejmanColor &&
-        !isTogglingLevel &&
-        !isIdenticalColor && (
-          <button onClick={handleStart}>Start the Game</button>
-        )}
-      {isIdenticalColor && !isTogglingReset && !isTogglingLevel && (
-        <div>
-          <div>You can't choose an identical color for both players</div>
-          <button onClick={handleOk}>Ok</button>
-        </div>
-      )}
-      {isGameStarted &&
-        selectionErrorMessage !== "" &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>{selectionErrorMessage}</div>
-            <button onClick={handleSelectionErrorMessage}>Ok</button>
-          </div>
-        )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        finalMessage === "" &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) &&
-        !isIdenticalColor && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        finalMessage === "" &&
-        !isIdenticalColor && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-              }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isTogglingLevel && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {isGameStarted &&
-        !isTogglingHomePage &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        finalMessage === "" &&
-        !isIdenticalColor && (
-          <div>
-            <button onClick={() => toggleHomePage()}>
-              Back to the home page
-            </button>
-          </div>
-        )}
-      {isTogglingHomePage && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      <br />
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage &&
-        cells.map((el, idx) =>
-          (idx + 1) % 7 !== 0 ? (
-            <div style={{ display: "inline" }}>
-              <Cell
-                id={el.id}
-                src={el.src}
-                isSelected={el.isSelected}
-                style={{ display: "inline" }}
-                userColor={userColor}
-                cells={cells}
-                setCells={setCells}
-                pejmanColor={pejmanColor}
-                selectedCellsNum={selectedCellsNum}
-                setSelectedCellsNum={setSelectedCellsNum}
-                selectionErrorMessage={selectionErrorMessage}
-                setSelectionErrorMessage={setSelectionErrorMessage}
-                isUserTurn={isUserTurn}
-                freeCellsIds={freeCellsIds}
-                setFreeCellsIds={setFreeCellsIds}
-                allowPejmanMessage={allowPejmanMessage}
-                creatingNeighbors={creatingNeighbors}
-                chooseArrowMessage={chooseArrowMessage}
-                setChooseArrowMessage={setChooseArrowMessage}
-                isAtLeastOneNeighborSelected={isAtLeastOneNeighborSelected}
-                leftNeighborsId={leftNeighborsId}
-                rightNeighborsId={rightNeighborsId}
-                upNeighborsId={upNeighborsId}
-                downNeighborsId={downNeighborsId}
-                upLeftNeighborsId={upLeftNeighborsId}
-                upRightNeighborsId={upRightNeighborsId}
-                downLeftNeighborsId={downLeftNeighborsId}
-                downRightNeighborsId={downRightNeighborsId}
-                pejmanChoice={pejmanChoice}
-                setPejmanChoice={setPejmanChoice}
-                easyMode={easyMode}
-                isGameOver={isGameOver}
-              />
-            </div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Reversi</button>
+          )}
+          <h2>Reversi</h2>
+          {easyMode &&
+          !normalMode &&
+          !isTogglingReset &&
+          !isTogglingLevel &&
+          !isTogglingHomePage ? (
+            <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
           ) : (
-            <div style={{ display: "inline" }}>
-              <Cell
-                id={el.id}
-                src={el.src}
-                isSelected={el.isSelected}
-                style={{ display: "inline" }}
-                userColor={userColor}
-                cells={cells}
-                setCells={setCells}
-                pejmanColor={pejmanColor}
-                selectedCellsNum={selectedCellsNum}
-                setSelectedCellsNum={setSelectedCellsNum}
-                selectionErrorMessage={selectionErrorMessage}
-                setSelectionErrorMessage={setSelectionErrorMessage}
-                isUserTurn={isUserTurn}
-                freeCellsIds={freeCellsIds}
-                setFreeCellsIds={setFreeCellsIds}
-                allowPejmanMessage={allowPejmanMessage}
-                creatingNeighbors={creatingNeighbors}
-                chooseArrowMessage={chooseArrowMessage}
-                setChooseArrowMessage={setChooseArrowMessage}
-                isAtLeastOneNeighborSelected={isAtLeastOneNeighborSelected}
-                leftNeighborsId={leftNeighborsId}
-                rightNeighborsId={rightNeighborsId}
-                upNeighborsId={upNeighborsId}
-                downNeighborsId={downNeighborsId}
-                upLeftNeighborsId={upLeftNeighborsId}
-                upRightNeighborsId={upRightNeighborsId}
-                downLeftNeighborsId={downLeftNeighborsId}
-                downRightNeighborsId={downRightNeighborsId}
-                pejmanChoice={pejmanChoice}
-                setPejmanChoice={setPejmanChoice}
-                easyMode={easyMode}
-                isGameOver={isGameOver}
+            !easyMode &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <ModeExplaination message="Normal Mode: Pejman starts the game, you will get three stars if you win." />
+            )
+          )}
+          {!isGameStarted && !easyMode && !normalMode && (
+            <div>
+              <button onClick={handleEasyMode}>Easy Mode</button>
+              <button onClick={handleNormalMode}>Normal Mode</button>
+            </div>
+          )}
+          {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
+            <div>
+              <div>
+                <label htmlFor="userColor">Select a Color for yourself</label>
+                <br></br>
+                <select
+                  onChange={handleUserColor}
+                  name="userColor"
+                  id="userColor"
+                >
+                  <option value={userColor} disabled selected>
+                    🔽🔽🔽
+                  </option>
+                  {["Red", "Green", "Blue", "Yellow"].map((c) => (
+                    <option>{c}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="pejmanColor">Select a Color for Pejman</label>
+                <br></br>
+                <select
+                  onChange={handlePejmanColor}
+                  name="pejmanColor"
+                  id="pejmanColor"
+                >
+                  <option value={pejmanColor} disabled selected>
+                    🔽🔽🔽
+                  </option>
+                  {["Red", "Green", "Blue", "Yellow"].map((c) => (
+                    <option>{c}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            userColor &&
+            pejmanColor &&
+            !isTogglingLevel &&
+            !isIdenticalColor && (
+              <button onClick={handleStart}>Start the Game</button>
+            )}
+          {isIdenticalColor && !isTogglingReset && !isTogglingLevel && (
+            <div>
+              <div>You can't choose an identical color for both players</div>
+              <button onClick={handleOk}>Ok</button>
+            </div>
+          )}
+          {isGameStarted &&
+            selectionErrorMessage !== "" &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>{selectionErrorMessage}</div>
+                <button onClick={handleSelectionErrorMessage}>Ok</button>
+              </div>
+            )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            finalMessage === "" &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) &&
+            !isIdenticalColor && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
               />
-              <br />
             </div>
-          ),
-        )}
-      <br />
-      {chooseArrowMessage &&
-        isUserTurn &&
-        freeCellsIds.length < 48 &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>Choose the path you wan to conquer</div>
+          )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            finalMessage === "" &&
+            !isIdenticalColor && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isTogglingLevel && finalMessage === "" && (
             <div>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: "4px",
-                }}
-                onClick={() => handleWinUpLeftCells(userColor)}
-                disabled={upLeftNeighborsId.length === 0}
-              >
-                &#8598;
-              </button>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onClick={() => handleWinUpCells(userColor)}
-                disabled={upNeighborsId.length === 0}
-              >
-                &#8593;
-              </button>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: "4px",
-                }}
-                onClick={() => handleWinUpRightCells(userColor)}
-                disabled={upRightNeighborsId.length === 0}
-              >
-                &#8599;
-              </button>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
             </div>
+          )}
+          {isGameStarted &&
+            !isTogglingHomePage &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            finalMessage === "" &&
+            !isIdenticalColor && (
+              <div>
+                <button onClick={() => toggleHomePage()}>
+                  Back to the home page
+                </button>
+              </div>
+            )}
+          {isTogglingHomePage && finalMessage === "" && (
             <div>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onClick={() => handleWinLeftCells(userColor)}
-                disabled={leftNeighborsId.length === 0}
-              >
-                &#8592;
-              </button>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: "9px",
-                }}
-                disabled
-              ></button>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onClick={() => handleWinRightCells(userColor)}
-                disabled={rightNeighborsId.length === 0}
-              >
-                &#8594;
-              </button>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
             </div>
-            <div>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: "4px",
-                }}
-                onClick={() => handleWinDownLeftCells(userColor)}
-                disabled={downLeftNeighborsId.length === 0}
-              >
-                &#8601;
-              </button>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onClick={() => handleWinDownCells(userColor)}
-                disabled={downNeighborsId.length === 0}
-              >
-                &#8595;
-              </button>
-              <button
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  margin: "3px",
-                  display: "inline",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: "4px",
-                }}
-                onClick={() => handleWinDownRightCells(userColor)}
-                disabled={downRightNeighborsId.length === 0}
-              >
-                &#8600;
-              </button>
-            </div>
-          </div>
-        )}
-      {(allowPejmanMessage || freeCellsIds.length === 48) &&
-        !pejmanChoice &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            Allow Pejman to make his move
-            <button onClick={handleAllowPejman}>Ok</button>
-          </div>
-        )}
-      {freeCellsIds.length === 49 &&
-        normalMode &&
-        userColor &&
-        pejmanColor &&
-        isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            Allow Pejman to start the game
-            <button onClick={handleAllowPejman}>Ok</button>
-          </div>
-        )}
-      {allowPejmanChooseDirection &&
-        freeCellsIds.length !== 48 &&
-        freeCellsIds.length > 0 &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
-            <button onClick={handlePejmanDirectionChoice}>Ok</button>
-          </div>
-        )}
-      {allowPejmanChooseDirection &&
-        freeCellsIds.length === 48 &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
-            <button onClick={handlePejmanDirectionChoice}>Ok</button>
-          </div>
-        )}
-      {isGameOver &&
-        finalMessage === "" &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>All the squares are taken, let's see who is the winner</div>
-            <button onClick={handleGameResult}>Ok</button>
-          </div>
-        )}
-      {(pejmanPoint > 0 || userPoint > 0) &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <div>{`You conquered ${userPoint} squares`}</div>
-            <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
-          </div>
-        )}
-      {finalMessage &&
-        (finalMessage === "You Win!" ||
-          finalMessage === "You Win, but you don't get any stars!") &&
-        !isTogglingHomePage && (
-          <div>
-            <h3>You Win!</h3>
-            <div>Play Again?</div>
-            <button onClick={handlePlayAgain}>Ok</button>
-          </div>
-        )}
-      {finalMessage &&
-        (finalMessage === "Pejman Wins!" ||
-          finalMessage ===
-            "The square you just chose can't change the color of even one of the Pejman's squares, so ... Pejman wins!") &&
-        !isTogglingHomePage && (
-          <div>
-            <h3>{finalMessage}</h3>
-            <div>Try Again?</div>
-            <button onClick={handlePlayAgain}>Ok</button>
-          </div>
-        )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <ReviewSection game="Reversi" currentUser={currentUser} />
-        )}
+          )}
+          <br />
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            cells.map((el, idx) =>
+              (idx + 1) % 7 !== 0 ? (
+                <div style={{ display: "inline" }}>
+                  <Cell
+                    id={el.id}
+                    src={el.src}
+                    isSelected={el.isSelected}
+                    style={{ display: "inline" }}
+                    userColor={userColor}
+                    cells={cells}
+                    setCells={setCells}
+                    pejmanColor={pejmanColor}
+                    selectedCellsNum={selectedCellsNum}
+                    setSelectedCellsNum={setSelectedCellsNum}
+                    selectionErrorMessage={selectionErrorMessage}
+                    setSelectionErrorMessage={setSelectionErrorMessage}
+                    isUserTurn={isUserTurn}
+                    freeCellsIds={freeCellsIds}
+                    setFreeCellsIds={setFreeCellsIds}
+                    allowPejmanMessage={allowPejmanMessage}
+                    creatingNeighbors={creatingNeighbors}
+                    chooseArrowMessage={chooseArrowMessage}
+                    setChooseArrowMessage={setChooseArrowMessage}
+                    isAtLeastOneNeighborSelected={isAtLeastOneNeighborSelected}
+                    leftNeighborsId={leftNeighborsId}
+                    rightNeighborsId={rightNeighborsId}
+                    upNeighborsId={upNeighborsId}
+                    downNeighborsId={downNeighborsId}
+                    upLeftNeighborsId={upLeftNeighborsId}
+                    upRightNeighborsId={upRightNeighborsId}
+                    downLeftNeighborsId={downLeftNeighborsId}
+                    downRightNeighborsId={downRightNeighborsId}
+                    pejmanChoice={pejmanChoice}
+                    setPejmanChoice={setPejmanChoice}
+                    easyMode={easyMode}
+                    isGameOver={isGameOver}
+                  />
+                </div>
+              ) : (
+                <div style={{ display: "inline" }}>
+                  <Cell
+                    id={el.id}
+                    src={el.src}
+                    isSelected={el.isSelected}
+                    style={{ display: "inline" }}
+                    userColor={userColor}
+                    cells={cells}
+                    setCells={setCells}
+                    pejmanColor={pejmanColor}
+                    selectedCellsNum={selectedCellsNum}
+                    setSelectedCellsNum={setSelectedCellsNum}
+                    selectionErrorMessage={selectionErrorMessage}
+                    setSelectionErrorMessage={setSelectionErrorMessage}
+                    isUserTurn={isUserTurn}
+                    freeCellsIds={freeCellsIds}
+                    setFreeCellsIds={setFreeCellsIds}
+                    allowPejmanMessage={allowPejmanMessage}
+                    creatingNeighbors={creatingNeighbors}
+                    chooseArrowMessage={chooseArrowMessage}
+                    setChooseArrowMessage={setChooseArrowMessage}
+                    isAtLeastOneNeighborSelected={isAtLeastOneNeighborSelected}
+                    leftNeighborsId={leftNeighborsId}
+                    rightNeighborsId={rightNeighborsId}
+                    upNeighborsId={upNeighborsId}
+                    downNeighborsId={downNeighborsId}
+                    upLeftNeighborsId={upLeftNeighborsId}
+                    upRightNeighborsId={upRightNeighborsId}
+                    downLeftNeighborsId={downLeftNeighborsId}
+                    downRightNeighborsId={downRightNeighborsId}
+                    pejmanChoice={pejmanChoice}
+                    setPejmanChoice={setPejmanChoice}
+                    easyMode={easyMode}
+                    isGameOver={isGameOver}
+                  />
+                  <br />
+                </div>
+              ),
+            )}
+          <br />
+          {chooseArrowMessage &&
+            isUserTurn &&
+            freeCellsIds.length < 48 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>Choose the path you wan to conquer</div>
+                <div>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "4px",
+                    }}
+                    onClick={() => handleWinUpLeftCells(userColor)}
+                    disabled={upLeftNeighborsId.length === 0}
+                  >
+                    &#8598;
+                  </button>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={() => handleWinUpCells(userColor)}
+                    disabled={upNeighborsId.length === 0}
+                  >
+                    &#8593;
+                  </button>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "4px",
+                    }}
+                    onClick={() => handleWinUpRightCells(userColor)}
+                    disabled={upRightNeighborsId.length === 0}
+                  >
+                    &#8599;
+                  </button>
+                </div>
+                <div>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={() => handleWinLeftCells(userColor)}
+                    disabled={leftNeighborsId.length === 0}
+                  >
+                    &#8592;
+                  </button>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "9px",
+                    }}
+                    disabled
+                  ></button>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={() => handleWinRightCells(userColor)}
+                    disabled={rightNeighborsId.length === 0}
+                  >
+                    &#8594;
+                  </button>
+                </div>
+                <div>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "4px",
+                    }}
+                    onClick={() => handleWinDownLeftCells(userColor)}
+                    disabled={downLeftNeighborsId.length === 0}
+                  >
+                    &#8601;
+                  </button>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={() => handleWinDownCells(userColor)}
+                    disabled={downNeighborsId.length === 0}
+                  >
+                    &#8595;
+                  </button>
+                  <button
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "3px",
+                      display: "inline",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "4px",
+                    }}
+                    onClick={() => handleWinDownRightCells(userColor)}
+                    disabled={downRightNeighborsId.length === 0}
+                  >
+                    &#8600;
+                  </button>
+                </div>
+              </div>
+            )}
+          {(allowPejmanMessage || freeCellsIds.length === 48) &&
+            !pejmanChoice &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                Allow Pejman to make his move
+                <button onClick={handleAllowPejman}>Ok</button>
+              </div>
+            )}
+          {freeCellsIds.length === 49 &&
+            normalMode &&
+            userColor &&
+            pejmanColor &&
+            isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                Allow Pejman to start the game
+                <button onClick={handleAllowPejman}>Ok</button>
+              </div>
+            )}
+          {allowPejmanChooseDirection &&
+            freeCellsIds.length !== 48 &&
+            freeCellsIds.length > 0 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
+                <button onClick={handlePejmanDirectionChoice}>Ok</button>
+              </div>
+            )}
+          {allowPejmanChooseDirection &&
+            freeCellsIds.length === 48 &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
+                <button onClick={handlePejmanDirectionChoice}>Ok</button>
+              </div>
+            )}
+          {isGameOver &&
+            finalMessage === "" &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>
+                  All the squares are taken, let's see who is the winner
+                </div>
+                <button onClick={handleGameResult}>Ok</button>
+              </div>
+            )}
+          {(pejmanPoint > 0 || userPoint > 0) &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <div>
+                <div>{`You conquered ${userPoint} squares`}</div>
+                <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
+              </div>
+            )}
+          {finalMessage &&
+            (finalMessage === "You Win!" ||
+              finalMessage === "You Win, but you don't get any stars!") &&
+            !isTogglingHomePage && (
+              <div>
+                <h3>You Win!</h3>
+                <div>Play Again?</div>
+                <button onClick={handlePlayAgain}>Ok</button>
+              </div>
+            )}
+          {finalMessage &&
+            (finalMessage === "Pejman Wins!" ||
+              finalMessage ===
+                "The square you just chose can't change the color of even one of the Pejman's squares, so ... Pejman wins!") &&
+            !isTogglingHomePage && (
+              <div>
+                <h3>{finalMessage}</h3>
+                <div>Try Again?</div>
+                <button onClick={handlePlayAgain}>Ok</button>
+              </div>
+            )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <ReviewSection game="Reversi" currentUser={currentUser} />
+            )}
+        </div>
+      )}
     </div>
   );
 }
