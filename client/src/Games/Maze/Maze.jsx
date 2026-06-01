@@ -5,11 +5,13 @@ import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
+import AboutMaze from "./AboutMaze";
 
-export default function Maze({updateTotalPoint, currentUser}) {
+export default function Maze({ updateTotalPoint, currentUser }) {
   const sceneRef = useRef(null);
   const hasWonRef = useRef(false);
   const isTimeUpRef = useRef(false);
+  const [isAboutPage, setIsAboutPage] = useState(false);
   const [cellsHorizontal, setCellsHorizontal] = useState(5);
   const [cellsVertical, setCellsVertical] = useState(3);
   const [easyMode, setEasyMode] = useState(false);
@@ -117,6 +119,9 @@ export default function Maze({updateTotalPoint, currentUser}) {
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
+  };
+  const handleAboutPage = () => {
+    setIsAboutPage(true);
   };
   useEffect(() => {
     isTimeUpRef.current = isTimeUp;
@@ -426,162 +431,179 @@ export default function Maze({updateTotalPoint, currentUser}) {
 
   return (
     <div>
-      <h2>Maze</h2>
-      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
-        <div style={{ position: "relative", top: "5px" }}>
-          <button onClick={handleEasyMode}>Easy Mode</button>
-          <button onClick={handleNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {easyMode && !normalMode
-        ? !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel && (
-            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-          )
-        : !easyMode &&
-          normalMode &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel && (
-            <ModeExplaination message="Normal Mode: You will get one star if you win." />
+      {isAboutPage && <AboutMaze setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
+        <div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+            <button onClick={handleAboutPage}>About Maze</button>
           )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <button
-            onClick={handleStart}
-            style={{ position: "relative", top: "5px" }}
-          >
-            Start the Game
-          </button>
-        )}
-      {finalMessage && !isTogglingHomePage && <h2>{finalMessage}</h2>}
-      {finalMessage === "Time's Up!" && !isTogglingHomePage && (
-        <img src={Clock} width="50px" />
-      )}
-      {hasWon && !isTogglingHomePage && (
-        <div>
-          <div>Play Again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {seconds < 1 && !isTogglingHomePage && (
-        <div>
-          <div>Try Again?</div>
-          <button onClick={handlePlayAgain}>Ok</button>
-        </div>
-      )}
-      {isGameStarted && normalMode && (
-        <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-          {seconds}
-        </h3>
-      )}
-      {isGameStarted && (
-        <div ref={sceneRef} style={{ position: "relative", top: "15px" }} />
-      )}
-      {isGameStarted &&
-        !isTogglingReset &&
-        finalMessage === "" &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) && (
-          <div>
-            <button
+          <h2>Maze</h2>
+          {!isGameStarted &&
+            !easyMode &&
+            !normalMode &&
+            !isTogglingHomePage && (
+              <div style={{ position: "relative", top: "5px" }}>
+                <button onClick={handleEasyMode}>Easy Mode</button>
+                <button onClick={handleNormalMode}>Normal Mode</button>
+              </div>
+            )}
+          {easyMode && !normalMode
+            ? !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+              )
+            : !easyMode &&
+              normalMode &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <ModeExplaination message="Normal Mode: You will get one star if you win." />
+              )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <button
+                onClick={handleStart}
+                style={{ position: "relative", top: "5px" }}
+              >
+                Start the Game
+              </button>
+            )}
+          {finalMessage && !isTogglingHomePage && <h2>{finalMessage}</h2>}
+          {finalMessage === "Time's Up!" && !isTogglingHomePage && (
+            <img src={Clock} width="50px" />
+          )}
+          {hasWon && !isTogglingHomePage && (
+            <div>
+              <div>Play Again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {seconds < 1 && !isTogglingHomePage && (
+            <div>
+              <div>Try Again?</div>
+              <button onClick={handlePlayAgain}>Ok</button>
+            </div>
+          )}
+          {isGameStarted && normalMode && (
+            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+              {seconds}
+            </h3>
+          )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            finalMessage === "" &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                    position: "relative",
+                    top: "15px",
+                  }}
+                  onClick={toggleReset}
+                >
+                  Reset the Game
+                </button>
+              </div>
+            )}
+          {isTogglingReset && finalMessage === "" && (
+            <div
               style={{
                 display: "inline",
                 position: "relative",
                 top: "15px",
               }}
-              onClick={toggleReset}
             >
-              Reset the Game
-            </button>
-          </div>
-        )}
-      {isTogglingReset && finalMessage === "" && (
-        <div
-          style={{
-            display: "inline",
-            position: "relative",
-            top: "15px",
-          }}
-        >
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {(easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {(easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                    position: "relative",
+                    top: "15px",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isTogglingLevel && finalMessage === "" && (
+            <div
               style={{
                 display: "inline",
                 position: "relative",
                 top: "15px",
               }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isTogglingLevel && finalMessage === "" && (
-        <div
-          style={{
-            display: "inline",
-            position: "relative",
-            top: "15px",
-          }}
-        >
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-                position: "relative",
-                top: "15px",
-              }}
-              onClick={() => toggleHomePage()}
             >
-              Back to the home page
-            </button>
-          </div>
-        )}
-      {isTogglingHomePage && finalMessage === "" && (
-        <div
-          style={{
-            display: "inline",
-            position: "relative",
-            top: "15px",
-          }}
-        >
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                    position: "relative",
+                    top: "15px",
+                  }}
+                  onClick={() => toggleHomePage()}
+                >
+                  Back to the home page
+                </button>
+              </div>
+            )}
+          {isTogglingHomePage && finalMessage === "" && (
+            <div
+              style={{
+                display: "inline",
+                position: "relative",
+                top: "15px",
+              }}
+            >
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          <br />
+          {isGameStarted && (
+            <div ref={sceneRef} style={{ position: "relative", top: "15px" }} />
+          )}
+          {!isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            isGameStarted && (
+              <ReviewSection game="Maze" currentUser={currentUser} />
+            )}
         </div>
       )}
-      {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Maze" currentUser={currentUser} />}
     </div>
   );
 }
