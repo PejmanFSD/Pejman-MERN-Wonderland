@@ -40,6 +40,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -324,6 +325,9 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     let interval;
@@ -620,9 +624,23 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
               </div>
             )}
           {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "25px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage &&
-            isGameStarted && (
+            isGameStarted &&
+            showReviews && (
               <ReviewSection game="Puzzle" currentUser={currentUser} />
             )}
         </div>

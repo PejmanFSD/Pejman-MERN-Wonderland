@@ -22,6 +22,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleReset = () => {
@@ -72,6 +73,9 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     let interval;
@@ -228,8 +232,23 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <ReviewSection game="HappyFlower" currentUser={currentUser} />
+            <button
+              onClick={handleReviewSection}
+              style={{ position: "relative", top: "120px" }}
+            >
+              {showReviews
+                ? "Hide the Reviews Section"
+                : "Show the Reviews Section"}
+            </button>
           )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            isGameStarted &&
+            showReviews && (
+              <div style={{ position: "relative", top: "95px" }}>
+                <ReviewSection game="HappyFlower" currentUser={currentUser} />
+              </div>
+            )}
         </div>
       )}
     </div>

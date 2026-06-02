@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 import AboutCounter from "./AboutCounter";
 
-export default function Counter({updateTotalPoint, currentUser}) {
+export default function Counter({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
@@ -30,6 +30,7 @@ export default function Counter({updateTotalPoint, currentUser}) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -155,6 +156,9 @@ export default function Counter({updateTotalPoint, currentUser}) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   useEffect(() => {
     if (easyMode) {
       setGameArray(
@@ -204,269 +208,285 @@ export default function Counter({updateTotalPoint, currentUser}) {
   }, [isGameStarted]);
   return (
     <div>
-{isAboutPage && (
-        <AboutCounter setIsAboutPage={setIsAboutPage} />
-      )}
-{!isAboutPage && (
-<div>
-  {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+      {isAboutPage && <AboutCounter setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
+        <div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
             <button onClick={handleAboutPage}>About Counter</button>
           )}
-      <h2>Counter</h2>
-      {!isGameStarted && !easyMode && !normalMode && !isTogglingHomePage && (
-        <div>
-          <button onClick={handleEasyMode}>Easy Mode</button>
-          <button onClick={handleNormalMode}>Normal Mode</button>
-        </div>
-      )}
-      {easyMode &&
-      !normalMode &&
-      !isTogglingReset &&
-      !isTogglingHomePage &&
-      !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: There are only 5 images. You will get one star if you win." />
-      ) : (
-        !easyMode &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: There are 16 images. You will get four stars if you win." />
-        )
-      )}
-      {!isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <button onClick={handleStart}>Start the Game</button>
-        )}
-      {/* {gameArray.map((el) => (
+          <h2>Counter</h2>
+          {!isGameStarted &&
+            !easyMode &&
+            !normalMode &&
+            !isTogglingHomePage && (
+              <div>
+                <button onClick={handleEasyMode}>Easy Mode</button>
+                <button onClick={handleNormalMode}>Normal Mode</button>
+              </div>
+            )}
+          {easyMode &&
+          !normalMode &&
+          !isTogglingReset &&
+          !isTogglingHomePage &&
+          !isTogglingLevel ? (
+            <ModeExplaination message="Easy Mode: There are only 5 images. You will get one star if you win." />
+          ) : (
+            !easyMode &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <ModeExplaination message="Normal Mode: There are 16 images. You will get four stars if you win." />
+            )
+          )}
+          {!isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <button onClick={handleStart}>Start the Game</button>
+            )}
+          {/* {gameArray.map((el) => (
         <div style={{ display: "inline", color: "gray" }}>{el.repetition} - </div>
       ))} */}
-      {isGameStarted &&
-        !isTogglingReset &&
-        finalMessage === "" &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        (easyMode || normalMode) && (
-          <div>
-            <button onClick={toggleReset}>Reset the Game</button>
-          </div>
-        )}
-      {isTogglingReset && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {(easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button
-              style={{
-                display: "inline",
-              }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isTogglingLevel && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingHomePage &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        finalMessage === "" && (
-          <div>
-            <button onClick={() => toggleHomePage()}>
-              Back to the home page
-            </button>
-          </div>
-        )}
-      {isTogglingHomePage && finalMessage === "" && (
-        <div>
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {finalGameArray.map((el, i) => (
-        <img
-          src={finalGameArray[i].image}
-          style={{
-            width: "40px",
-            border: "1px solid black",
-            margin: "3px",
-          }}
-        />
-      ))}
-      <div>
-        {isGameStarted && isSlideShowStarted && countdown > 0 && (
-          <h1>{countdown}</h1>
-        )}
-        {isGameStarted && isSlideShowStarted && countdown === -1 && (
-          <h1>Go!</h1>
-        )}
-        {isGameStarted &&
-          isSlideShowStarted &&
-          countdown === 0 &&
-          showImage &&
-          finalGameArray[currentIndex] && (
-            <img
-              src={finalGameArray[currentIndex].image}
-              style={{
-                width: "80px",
-                border: "1px solid black",
-                margin: "5px",
-              }}
-              alt=""
-              width="80px"
-            />
+          {isGameStarted &&
+            !isTogglingReset &&
+            finalMessage === "" &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            (easyMode || normalMode) && (
+              <div>
+                <button onClick={toggleReset}>Reset the Game</button>
+              </div>
+            )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
           )}
-      </div>
-      {isGameStarted &&
-        !isSlideShowStarted &&
-        quizArray.map((i) => (
-          <div style={{ display: "inline" }}>
-            {/* <img
+          {(easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            finalMessage === "" && (
+              <div>
+                <button onClick={() => toggleHomePage()}>
+                  Back to the home page
+                </button>
+              </div>
+            )}
+          {isTogglingHomePage && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {finalGameArray.map((el, i) => (
+            <img
+              src={finalGameArray[i].image}
+              style={{
+                width: "40px",
+                border: "1px solid black",
+                margin: "3px",
+              }}
+            />
+          ))}
+          <div>
+            {isGameStarted && isSlideShowStarted && countdown > 0 && (
+              <h1>{countdown}</h1>
+            )}
+            {isGameStarted && isSlideShowStarted && countdown === -1 && (
+              <h1>Go!</h1>
+            )}
+            {isGameStarted &&
+              isSlideShowStarted &&
+              countdown === 0 &&
+              showImage &&
+              finalGameArray[currentIndex] && (
+                <img
+                  src={finalGameArray[currentIndex].image}
+                  style={{
+                    width: "80px",
+                    border: "1px solid black",
+                    margin: "5px",
+                  }}
+                  alt=""
+                  width="80px"
+                />
+              )}
+          </div>
+          {isGameStarted &&
+            !isSlideShowStarted &&
+            quizArray.map((i) => (
+              <div style={{ display: "inline" }}>
+                {/* <img
               src={i.image}
               style={{ width: "60px", border: "1px solid red", margin: "4px" }}
             /> */}
-            <div style={{ display: "inline", color: "gray" }}>
-              {i.repetition}
-            </div>
-            {/* <div style={{ display: "inline", color: "gray" }}>{i.name}***</div> */}
-          </div>
-        ))}
-      {isGameStarted &&
-        !isSlideShowStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage &&
-        quizArray.map((i) => (
-          <div style={{ display: "inline" }}>
-            <img
-              src={i.image}
-              style={{
-                width: "60px",
-                border: "1px solid black",
-                margin: "4px",
-              }}
-            />
-          </div>
-        ))}
-      {isGameStarted &&
-        !isSlideShowStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
-              <select
-                onChange={handleQuestion1}
-                name="question1"
-                id="question1"
-              >
-                <option value={userAnswers.answer1} disabled selected>
-                  🔽
-                </option>
-                {[1, 2, 3].map((i) => (
-                  <option disabled={isResult}>{i}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="question2">{`How many ${quizArray[1].name} did you see?`}</label>
-              <select
-                onChange={handleQuestion2}
-                name="question2"
-                id="question2"
-              >
-                <option value={userAnswers.answer2} disabled selected>
-                  🔽
-                </option>
-                {[1, 2, 3].map((i) => (
-                  <option disabled={isResult}>{i}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="question3">{`How many ${quizArray[2].name} did you see?`}</label>
-              <select
-                onChange={handleQuestion3}
-                name="question3"
-                id="question3"
-              >
-                <option value={userAnswers.answer3} disabled selected>
-                  🔽
-                </option>
-                {[1, 2, 3].map((i) => (
-                  <option disabled={isResult}>{i}</option>
-                ))}
-              </select>
-            </div>
-            {!isResult && <button>Submit</button>}
-          </form>
-        )}
-      {isResult &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage && (
-          <div>
-            <strong>
-              {parseInt(userAnswers.answer1) === quizArray[0].repetition
-                ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed correctly! ✅`
-                : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed wrong! ❌`}
-            </strong>
-            <br />
-            <strong>
-              {parseInt(userAnswers.answer2) === quizArray[1].repetition
-                ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed correctly! ✅`
-                : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed wrong! ❌`}
-            </strong>
-            <br />
-            <strong>
-              {parseInt(userAnswers.answer3) === quizArray[2].repetition
-                ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed correctly! ✅`
-                : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
-            </strong>
-            <h2>{finalMessage}</h2>
-            {finalMessage === "You Loose!" && (
+                <div style={{ display: "inline", color: "gray" }}>
+                  {i.repetition}
+                </div>
+                {/* <div style={{ display: "inline", color: "gray" }}>{i.name}***</div> */}
+              </div>
+            ))}
+          {isGameStarted &&
+            !isSlideShowStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            quizArray.map((i) => (
+              <div style={{ display: "inline" }}>
+                <img
+                  src={i.image}
+                  style={{
+                    width: "60px",
+                    border: "1px solid black",
+                    margin: "4px",
+                  }}
+                />
+              </div>
+            ))}
+          {isGameStarted &&
+            !isSlideShowStarted &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
+              <form onSubmit={handleSubmit}>
+                <div>
+                  <label htmlFor="question1">{`How many ${quizArray[0].name} did you see?`}</label>
+                  <select
+                    onChange={handleQuestion1}
+                    name="question1"
+                    id="question1"
+                  >
+                    <option value={userAnswers.answer1} disabled selected>
+                      🔽
+                    </option>
+                    {[1, 2, 3].map((i) => (
+                      <option disabled={isResult}>{i}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="question2">{`How many ${quizArray[1].name} did you see?`}</label>
+                  <select
+                    onChange={handleQuestion2}
+                    name="question2"
+                    id="question2"
+                  >
+                    <option value={userAnswers.answer2} disabled selected>
+                      🔽
+                    </option>
+                    {[1, 2, 3].map((i) => (
+                      <option disabled={isResult}>{i}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="question3">{`How many ${quizArray[2].name} did you see?`}</label>
+                  <select
+                    onChange={handleQuestion3}
+                    name="question3"
+                    id="question3"
+                  >
+                    <option value={userAnswers.answer3} disabled selected>
+                      🔽
+                    </option>
+                    {[1, 2, 3].map((i) => (
+                      <option disabled={isResult}>{i}</option>
+                    ))}
+                  </select>
+                </div>
+                {!isResult && <button>Submit</button>}
+              </form>
+            )}
+          {isResult &&
+            !isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage && (
               <div>
-                <div>Try Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+                <strong>
+                  {parseInt(userAnswers.answer1) === quizArray[0].repetition
+                    ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed correctly! ✅`
+                    : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition}➡️ You guessed wrong! ❌`}
+                </strong>
+                <br />
+                <strong>
+                  {parseInt(userAnswers.answer2) === quizArray[1].repetition
+                    ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed correctly! ✅`
+                    : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition}➡️ You guessed wrong! ❌`}
+                </strong>
+                <br />
+                <strong>
+                  {parseInt(userAnswers.answer3) === quizArray[2].repetition
+                    ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed correctly! ✅`
+                    : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
+                </strong>
+                <h2>{finalMessage}</h2>
+                {finalMessage === "You Loose!" && (
+                  <div>
+                    <div>Try Again?</div>
+                    <button onClick={handlePlayAgain}>Ok</button>
+                  </div>
+                )}
+                {finalMessage && finalMessage === "You Win!" && (
+                  <div>
+                    <div>Play Again?</div>
+                    <button onClick={handlePlayAgain}>Ok</button>
+                  </div>
+                )}
               </div>
             )}
-            {finalMessage && finalMessage === "You Win!" && (
-              <div>
-                <div>Play Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
-              </div>
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button onClick={handleReviewSection}>
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
             )}
-          </div>
-        )}
-        {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && isGameStarted && <ReviewSection game="Counter" currentUser={currentUser} />}
-</div>)}
-    
-    
+          {!isTogglingReset &&
+            !isTogglingLevel &&
+            !isTogglingHomePage &&
+            isGameStarted &&
+            showReviews && (
+              <ReviewSection game="Counter" currentUser={currentUser} />
+            )}
+        </div>
+      )}
     </div>
   );
 }

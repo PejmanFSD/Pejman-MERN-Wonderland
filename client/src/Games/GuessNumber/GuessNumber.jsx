@@ -30,6 +30,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
   const [userGuessStatus, setUserGuessStatus] = useState([]);
   const [chancesNum, setChancesNum] = useState(0);
   const [isWin, setIsWin] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const runEasyMode = () => {
@@ -156,6 +157,9 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(
     function () {
@@ -334,11 +338,22 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               isTogglingHomePage={isTogglingHomePage}
             />
           )}
-          <br></br>
+          <br />
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button onClick={handleReviewSection}>
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
           {!isTogglingLevel &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            isGameStarted && (
+            isGameStarted &&
+            showReviews && (
               <ReviewSection game="GuessNumber" currentUser={currentUser} />
             )}
         </div>

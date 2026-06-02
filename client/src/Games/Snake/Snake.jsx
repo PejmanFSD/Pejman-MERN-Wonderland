@@ -28,6 +28,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [directions, setDirections] = useState([]);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -165,6 +166,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   // Game loop:
   useEffect(() => {
     if (!isGameStarted) return;
@@ -184,6 +188,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           directions[directions.length - 1] === "None"
         ) {
           if (e.key === " ") {
+            e.preventDefault();
             for (let i = directions.length - 1; i >= 0; i--) {
               if (directions[i] !== "None") {
                 if (directions[i] === "Up") {
@@ -231,6 +236,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           }
         } else {
           if (e.key === " ") {
+            e.preventDefault();
             setDirection({ x: 0, y: 0 });
             setDirections((currDirections) => [...currDirections, "None"]);
           } else if (e.key === "ArrowUp") {
@@ -509,10 +515,21 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button onClick={handleReviewSection}>
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingLevel &&
-            !isTogglingHomePage && (
+            !isTogglingHomePage &&
+            showReviews && (
               <ReviewSection game="Snake" currentUser={currentUser} />
             )}
         </div>

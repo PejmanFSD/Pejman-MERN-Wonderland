@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
 import AboutCrazy100 from "./AboutCrazy100";
 
-export default function Crazy100({updateTotalPoint, currentUser}) {
+export default function Crazy100({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
@@ -17,14 +17,14 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
     { number: "", blockNum: "" },
   ]);
   const [allNums, setAllNums] = useState(
-    Array.from({ length: 33 }, (_, i) => i + 1)
+    Array.from({ length: 33 }, (_, i) => i + 1),
   );
   const [extraNums, setExtraNums] = useState(
-    Array.from({ length: 99 }, (_, i) => i + 1)
+    Array.from({ length: 99 }, (_, i) => i + 1),
   );
   const [chosenExtraNums, setChosenExtraNums] = useState([]);
   const [blockNums, setBlockNums] = useState(
-    Array.from({ length: 16 }, (_, i) => i)
+    Array.from({ length: 16 }, (_, i) => i),
   );
   const [answer, setAnswer] = useState([]);
   const [isWin, setIsWin] = useState("");
@@ -37,6 +37,7 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
   const [seconds, setSeconds] = useState(120);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [is4Blocks, setIs4Blocks] = useState(true);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const generateNums = () => {
@@ -58,7 +59,7 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
           pickedNums[2].number;
       }
       const newBlockNums =
-      copyblockNums[Math.floor(Math.random() * copyblockNums.length)];
+        copyblockNums[Math.floor(Math.random() * copyblockNums.length)];
       pickedNums.push({ number: newNum, blockNum: newBlockNums });
       copyAllNums = copyAllNums.filter((n) => n !== newNum);
       copyblockNums = copyblockNums.filter((r) => r !== newBlockNums);
@@ -119,8 +120,8 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
             (chosenNum) =>
               chosenNum.number.toString() === e.target.innerText.toString()
                 ? { ...chosenNum, clicked: toggleClicked(chosenExtraNum) } // update only this object
-                : chosenNum // leave the other objects unchanged
-          )
+                : chosenNum, // leave the other objects unchanged
+          ),
         );
       }
     }
@@ -138,8 +139,8 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
             (num) =>
               num.number.toString() === e.target.innerText.toString()
                 ? { ...num, clicked: toggleClicked(num) } // update only this object
-                : num // leave the other objects unchanged
-          )
+                : num, // leave the other objects unchanged
+          ),
         );
       }
     }
@@ -246,6 +247,9 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -257,253 +261,275 @@ export default function Crazy100({updateTotalPoint, currentUser}) {
   }, [isTimerRunning]);
   return (
     <div>
-{isAboutPage && (
-        <AboutCrazy100 setIsAboutPage={setIsAboutPage} />
-      )}
-{!isAboutPage && (
-<div>
-  {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+      {isAboutPage && <AboutCrazy100 setIsAboutPage={setIsAboutPage} />}
+      {!isAboutPage && (
+        <div>
+          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
             <button onClick={handleAboutPage}>About Crazy-100</button>
           )}
-      <h2>Crazy-100</h2>
-      {!easyMode && !normalMode && !isTogglingHomePage && (
-        <GameLevel
-          mode1="Easy"
-          mode1Function={runEasyMode}
-          mode2="Normal"
-          mode2Function={runNormalMode}
-          runEasyMode={runEasyMode}
-          runNormalMode={runNormalMode}
-        />
-      )}
-      {isGameStarted &&
-        isWin === "" &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <h3>Among the 16 numbers, choose 4 of them whose sum equals 100.</h3>
-        )}
-      {isGameStarted &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-            {seconds}
-          </h3>
-        )}
-      {easyMode &&
-      !normalMode &&
-      isWin === "" &&
-      !isTogglingReset &&
-      !isTogglingHomePage &&
-      !isTogglingLevel ? (
-        <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-      ) : (
-        !easyMode &&
-        normalMode &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <ModeExplaination message="Normal Mode: You will get four stars if you win in 120 seconds." />
-        )
-      )}
-      {isGameStarted &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel &&
-        seconds > 0 &&
-        is4Blocks && (
-          <div>
-            <button
-              onClick={toggleReset}
-              // style={{ position: "relative", top: "30px" }}
+          <h2>Crazy-100</h2>
+          {!easyMode && !normalMode && !isTogglingHomePage && (
+            <GameLevel
+              mode1="Easy"
+              mode1Function={runEasyMode}
+              mode2="Normal"
+              mode2Function={runNormalMode}
+              runEasyMode={runEasyMode}
+              runNormalMode={runNormalMode}
+            />
+          )}
+          {isGameStarted &&
+            isWin === "" &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <h3>
+                Among the 16 numbers, choose 4 of them whose sum equals 100.
+              </h3>
+            )}
+          {isGameStarted &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+                {seconds}
+              </h3>
+            )}
+          {easyMode &&
+          !normalMode &&
+          isWin === "" &&
+          !isTogglingReset &&
+          !isTogglingHomePage &&
+          !isTogglingLevel ? (
+            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+          ) : (
+            !easyMode &&
+            normalMode &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <ModeExplaination message="Normal Mode: You will get four stars if you win in 120 seconds." />
+            )
+          )}
+          {isGameStarted &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel &&
+            seconds > 0 &&
+            is4Blocks && (
+              <div>
+                <button
+                  onClick={toggleReset}
+                  // style={{ position: "relative", top: "30px" }}
+                >
+                  Reset the Game
+                </button>
+              </div>
+            )}
+          {isTogglingReset && (
+            <div
+            // style={{
+            //   position: "relative",
+            //   top: "20px",
+            // }}
             >
-              Reset the Game
-            </button>
-          </div>
-        )}
-      {isTogglingReset && (
-        <div
-          // style={{
-          //   position: "relative",
-          //   top: "20px",
-          // }}
-        >
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        </div>
-      )}
-      {isGameStarted &&
-        (easyMode || normalMode) &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        is4Blocks && (
-          <div>
-            <button
-              // style={{
-              //   display: "inline",
-              //   position: "relative",
-              //   top: "30px",
-              // }}
-              onClick={() => toggleLevel()}
-            >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-          </div>
-        )}
-      {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-        <div>
-          <ConfirmationBox
-            question={`Are you sure you want to switch to ${
-              easyMode ? "Normal Mode" : "Easy Mode"
-            }?`}
-            toggleYes={toggleLevelYes}
-            toggleCancel={toggleLevelCancel}
-            easyMode={easyMode}
-          />
-        </div>
-      )}
-      {!isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        is4Blocks && (
-          <div>
-            <button
-              // style={{
-              //   display: "inline",
-              //   position: "relative",
-              //   top: "30px",
-              // }}
-              onClick={() => toggleHomePage()}
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            is4Blocks && (
+              <div>
+                <button
+                  // style={{
+                  //   display: "inline",
+                  //   position: "relative",
+                  //   top: "30px",
+                  // }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              </div>
+            )}
+          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            is4Blocks && (
+              <div>
+                <button
+                  // style={{
+                  //   display: "inline",
+                  //   position: "relative",
+                  //   top: "30px",
+                  // }}
+                  onClick={() => toggleHomePage()}
+                >
+                  Back to the home page
+                </button>
+              </div>
+            )}
+          {isTogglingHomePage && (
+            <div
+            // style={{
+            //   position: "relative",
+            //   top: "30px",
+            // }}
             >
-              Back to the home page
-            </button>
-          </div>
-        )}
-      {isTogglingHomePage && (
-        <div
-          // style={{
-          //   position: "relative",
-          //   top: "30px",
-          // }}
-        >
-          <ConfirmationBox
-            question="Are you sure you want to go back to Home Page?"
-            toggleYes={toggleHomePageYes}
-            toggleCancel={toggleHomePageCancel}
-          />
-        </div>
-      )}
-      {isWin === true &&
-        seconds > 0 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <h1>You Win</h1>}
-      {isWin === false &&
-        seconds > 0 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <h1>You Loose</h1>}
-      {seconds < 1 &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && <h1>Time's up!</h1>}
-      {/* {!isTogglingReset &&
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
+          {isWin === true &&
+            seconds > 0 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <h1>You Win</h1>}
+          {isWin === false &&
+            seconds > 0 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <h1>You Loose</h1>}
+          {seconds < 1 &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && <h1>Time's up!</h1>}
+          {/* {!isTogglingReset &&
         !isTogglingHomePage &&
         !isTogglingLevel &&
         answer.map((a) => <div>{a}</div>)} */}
-      {!isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel && (
-          <div>
-            <button onClick={() => generateNums()}>Start</button>
-          </div>
-        )}
-      {isGameStarted &&
-        !isTogglingLevel &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <Blocks
-            nums={nums}
-            chosenExtraNums={chosenExtraNums}
-            blockNums={blockNums}
-            isWin={isWin}
-            seconds={seconds}
-            handleClickNum={handleClickNum}
-            handleClickChosenExtraNum={handleClickChosenExtraNum}
-          />
-        )}
-      {isGameStarted &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel &&
-        seconds > 0 &&
-        is4Blocks && (
-          <div>
-            <button
-              onClick={handleSubmit}
-              style={{ position: "relative", top: "30px" }}
-              disabled={answer.length === 0}
+          {!isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel && (
+              <div>
+                <button onClick={() => generateNums()}>Start</button>
+              </div>
+            )}
+          {isGameStarted &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <Blocks
+                nums={nums}
+                chosenExtraNums={chosenExtraNums}
+                blockNums={blockNums}
+                isWin={isWin}
+                seconds={seconds}
+                handleClickNum={handleClickNum}
+                handleClickChosenExtraNum={handleClickChosenExtraNum}
+              />
+            )}
+          {isGameStarted &&
+            isWin === "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            seconds > 0 &&
+            is4Blocks && (
+              <div>
+                <button
+                  onClick={handleSubmit}
+                  style={{ position: "relative", top: "30px" }}
+                  disabled={answer.length === 0}
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          {isWin !== "" &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            (easyMode || normalMode) &&
+            !isTogglingLevel && (
+              <div>
+                <button
+                  onClick={toggleResetYes}
+                  style={{ position: "relative", top: "30px" }}
+                >
+                  {isWin ? "Play Again" : "Try Again"}
+                </button>
+              </div>
+            )}
+          {seconds < 1 &&
+            normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                <button
+                  onClick={toggleResetYes}
+                  style={{ position: "relative", top: "30px" }}
+                >
+                  Try Again
+                </button>
+              </div>
+            )}
+          {!is4Blocks && (
+            <div
+              style={{
+                position: "relative",
+                top: "30px",
+              }}
             >
-              Done
-            </button>
-          </div>
-        )}
-      {isWin !== "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        (easyMode || normalMode) &&
-        !isTogglingLevel && (
-          <div>
-            <button
-              onClick={toggleResetYes}
-              style={{ position: "relative", top: "30px" }}
-            >
-              {isWin ? "Play Again" : "Try Again"}
-            </button>
-          </div>
-        )}
-      {seconds < 1 &&
-        normalMode &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        !isTogglingLevel && (
-          <div>
-            <button
-              onClick={toggleResetYes}
-              style={{ position: "relative", top: "30px" }}
-            >
-              Try Again
-            </button>
-          </div>
-        )}
-      {!is4Blocks && (
-        <div
-          style={{
-            position: "relative",
-            top: "30px",
-          }}
-        >
-          {`You chose ${answer.length} number${
-            answer.length > 1 ? "s" : ""
-          }, you should choose only 4 numbers, no more no less!`}
-          <div>
-            <button onClick={handle4Blocks}>Ok</button>
-          </div>
+              {`You chose ${answer.length} number${
+                answer.length > 1 ? "s" : ""
+              }, you should choose only 4 numbers, no more no less!`}
+              <div>
+                <button onClick={handle4Blocks}>Ok</button>
+              </div>
+            </div>
+          )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "40px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted &&
+            showReviews && (
+              <div style={{ position: "relative", top: "15px" }}>
+                <ReviewSection game="Crazy100" currentUser={currentUser} />
+              </div>
+            )}
         </div>
       )}
-      {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && isGameStarted && <ReviewSection game="Crazy100" currentUser={currentUser} />}
-</div>)}
     </div>
   );
 }

@@ -28,6 +28,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -122,6 +123,9 @@ export default function Maze({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     isTimeUpRef.current = isTimeUp;
@@ -434,9 +438,12 @@ export default function Maze({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutMaze setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Maze</button>
-          )}
+          {!isTogglingHomePage &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isGameStarted && (
+              <button onClick={handleAboutPage}>About Maze</button>
+            )}
           <h2>Maze</h2>
           {!isGameStarted &&
             !easyMode &&
@@ -597,9 +604,23 @@ export default function Maze({ updateTotalPoint, currentUser }) {
             <div ref={sceneRef} style={{ position: "relative", top: "15px" }} />
           )}
           {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "25px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage &&
-            isGameStarted && (
+            isGameStarted &&
+            showReviews && (
               <ReviewSection game="Maze" currentUser={currentUser} />
             )}
         </div>

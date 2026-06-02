@@ -45,6 +45,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
   const [findMatchChance1, setFindMatchChance1] = useState(true);
   const [findMatchChance2, setFindMatchChance2] = useState(true);
   const [identicalIndexArray, setIdenticalIndexArray] = useState([]);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -252,6 +253,9 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     let interval;
@@ -492,9 +496,19 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               seeAllCardsChancePer={seeAllCardsChancePer}
             />
           )}
-          {!isTogglingHomePage && !isTogglingReset && isGameStarted && (
-            <ReviewSection game="MemoryCards" currentUser={currentUser} />
+          {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
+            <button onClick={handleReviewSection}>
+              {showReviews
+                ? "Hide the Reviews Section"
+                : "Show the Reviews Section"}
+            </button>
           )}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            isGameStarted &&
+            showReviews && (
+              <ReviewSection game="MemoryCards" currentUser={currentUser} />
+            )}
         </div>
       )}
     </div>

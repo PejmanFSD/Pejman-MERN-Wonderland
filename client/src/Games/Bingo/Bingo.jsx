@@ -46,6 +46,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleUserColor = (e) => {
@@ -385,6 +386,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     setPejman1Nums((currPejman1Nums) =>
@@ -1852,9 +1856,24 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
-          {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-            <ReviewSection game="Bingo" currentUser={currentUser} />
+          {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
+            <button
+              onClick={handleReviewSection}
+              style={{ position: "relative", top: "35px" }}
+            >
+              {showReviews
+                ? "Hide the Reviews Section"
+                : "Show the Reviews Section"}
+            </button>
           )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            showReviews && (
+              <div style={{ position: "relative", top: "10px" }}>
+                <ReviewSection game="Bingo" currentUser={currentUser} />
+              </div>
+            )}
         </div>
       )}
     </div>

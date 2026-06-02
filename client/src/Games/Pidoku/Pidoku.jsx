@@ -96,6 +96,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const runEasyMode = () => {
@@ -526,6 +527,9 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   useEffect(() => {
     if (isShowTime) {
       const star = freeSquares[0];
@@ -866,6 +870,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingLevel && (
               <button onClick={handleGameResult}>Show the Game Result</button>
             )}
+          <br />
           {isGameResult &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -961,11 +966,24 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                 <button onClick={handlePlayAgain}>Try Again</button>
               </div>
             )}
-
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "10px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted &&
+            showReviews && (
               <ReviewSection game="Pidoku" currentUser={currentUser} />
             )}
         </div>

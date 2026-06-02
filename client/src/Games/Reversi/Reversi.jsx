@@ -51,6 +51,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleEasyMode = () => {
@@ -1401,6 +1402,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   useEffect(() => {
     if (pejmanChoice !== null) {
       setCells((currCells) =>
@@ -1915,10 +1919,21 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 <button onClick={handlePlayAgain}>Ok</button>
               </div>
             )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button onClick={handleReviewSection}>
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingLevel &&
-            !isTogglingHomePage && (
+            !isTogglingHomePage &&
+            showReviews && (
               <ReviewSection game="Reversi" currentUser={currentUser} />
             )}
         </div>

@@ -27,6 +27,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const runEasyMode = () => {
@@ -135,6 +136,9 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   return (
     <div>
       {isAboutPage && <AboutKukuKube setIsAboutPage={setIsAboutPage} />}
@@ -221,9 +225,9 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingLevel && (
               <div>
                 <button
-                  style={{
-                    display: "inline",
-                  }}
+                  // style={{
+                  //   display: "inline",
+                  // }}
                   onClick={() => toggleLevel()}
                 >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
               </div>
@@ -332,19 +336,20 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                 }
               />
             ))}
-          <br></br>
+          <br />
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <button
                 onClick={submitUserChoice}
-                style={{ position: "relative", top: "50px" }}
+                style={{ position: "relative", top: "30px" }}
                 disabled={!userChoice || isStepPassed !== null}
               >
                 Submit
               </button>
             )}
+          <br />
           {isGameStarted &&
             isStepPassed === true &&
             userChoice &&
@@ -352,7 +357,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <div style={{ position: "relative", top: "60px" }}>
+              <div style={{ position: "relative", top: "30px" }}>
                 Well Done! You guessed correctly!
                 <div>
                   <button
@@ -394,7 +399,23 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <ReviewSection game="KukuKube" currentUser={currentUser} />
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "65px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted &&
+            showReviews && (
+              <div style={{ position: "relative", top: "40px" }}>
+                <ReviewSection game="KukuKube" currentUser={currentUser} />
+              </div>
             )}
         </div>
       )}

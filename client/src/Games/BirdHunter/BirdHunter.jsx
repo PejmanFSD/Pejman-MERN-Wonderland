@@ -21,6 +21,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
   const [userScore, setUserScore] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleStart = () => {
@@ -63,12 +64,15 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
+  };
   return (
     <div>
       {isAboutPage && <AboutBirdHunter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && (
+          {!isTogglingHomePage && !isGameStarted && (
             <button onClick={handleAboutPage}>About Bird Hunter</button>
           )}
           <h2>Bird Hunter</h2>
@@ -222,8 +226,14 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
               <button onClick={handlePlayAgain}>Ok</button>
             </div>
           )}
-
           {!isTogglingHomePage && isGameStarted && (
+            <button onClick={handleReviewSection}>
+              {showReviews
+                ? "Hide the Reviews Section"
+                : "Show the Reviews Section"}
+            </button>
+          )}
+          {!isTogglingHomePage && isGameStarted && showReviews && (
             <ReviewSection game="BirdHunter" currentUser={currentUser} />
           )}
         </div>

@@ -28,7 +28,6 @@ export default function Nim({ updateTotalPoint, currentUser }) {
   const [isUserTurn, setIsUserTurn] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
-
   const [bowls, setBowls] = useState([
     { bowlId: 1, bowlName: "bowl1", ballsNum: 0, isBowlSelected: false },
     { bowlId: 2, bowlName: "bowl2", ballsNum: 0, isBowlSelected: false },
@@ -50,6 +49,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
   const [allTurns, setAllTurns] = useState([]);
   const [allBallsNum, setAllBallsNum] = useState(0);
   const [isWin, setIsWin] = useState("");
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const handleStandeardNim = () => {
@@ -132,6 +132,9 @@ export default function Nim({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   return (
     <div>
@@ -295,8 +298,18 @@ export default function Nim({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <ReviewSection game="Nim" currentUser={currentUser} />
+            <button onClick={handleReviewSection}>
+              {showReviews
+                ? "Hide the Reviews Section"
+                : "Show the Reviews Section"}
+            </button>
           )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            isGameStarted &&
+            showReviews && (
+              <ReviewSection game="Nim" currentUser={currentUser} />
+            )}
         </div>
       )}
     </div>

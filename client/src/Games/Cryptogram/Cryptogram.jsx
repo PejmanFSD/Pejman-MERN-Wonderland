@@ -55,6 +55,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
   const [isAlreadyExist, setIsAlreadyExist] = useState(false);
   const [acceptedAsRepetition, setAcceptedAsRepetition] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   async function getAdvice() {
@@ -138,6 +139,9 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(
     function () {
@@ -284,8 +288,18 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
             ))}
           </div>
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <ReviewSection game="Cryptogram" currentUser={currentUser} />
+            <button onClick={handleReviewSection}>
+              {showReviews
+                ? "Hide the Reviews Section"
+                : "Show the Reviews Section"}
+            </button>
           )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            isGameStarted &&
+            showReviews && (
+              <ReviewSection game="Cryptogram" currentUser={currentUser} />
+            )}
         </div>
       )}
     </div>

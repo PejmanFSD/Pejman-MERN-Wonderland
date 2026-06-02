@@ -30,6 +30,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
   const [pair1ChoseEmoji, setPair1ChoseEmoji] = useState(null);
   const [pair2Chance, setPair2Chance] = useState(true);
   const [pair2ChoseEmoji, setPair2ChoseEmoji] = useState(null);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const runEasyMode = () => {
@@ -155,6 +156,9 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     setAvailableEmojis([]);
@@ -418,7 +422,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <div>
+              <div style={{ position: "relative", top: "10px" }}>
                 <div>Well Done! You found a tripleMatch</div>
                 <div>
                   {selectedEmojis.map(
@@ -452,7 +456,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               <div
                 style={{
                   position: "relative",
-                  top: "15px",
+                  top: "25px",
                   display: "grid",
                   gridTemplateColumns: "repeat(21, auto)",
                   justifyContent: "center",
@@ -481,6 +485,20 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "25px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted &&
+            showReviews && (
               <ReviewSection
                 game="TripleEmojiMatch"
                 currentUser={currentUser}

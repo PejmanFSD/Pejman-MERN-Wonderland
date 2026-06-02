@@ -65,6 +65,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [redArray, setRedArray] = useState([]);
   const [greenArray, setGreenArray] = useState([]);
+  const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
   const userX = () => {
@@ -354,6 +355,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
+  };
+  const handleReviewSection = () => {
+    setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
     setAvailableSquares(squares.filter((s) => s.owner === ""));
@@ -1263,6 +1267,17 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
+              <button onClick={handleReviewSection}>
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted &&
+            showReviews && (
               <ReviewSection game="XO" currentUser={currentUser} />
             )}
         </div>

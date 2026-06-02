@@ -32,7 +32,8 @@ export default function AboutSnake({ setIsAboutPage }) {
       <br />
       <h4>Pause Feature</h4>
       You can pause and resume the game at any time by pressing the Space key on
-      your keyboard.
+      your keyboard.<br />
+      ⚠️ Be careful! Don't press the Space key before the game starts!
       <h4>Game Modes</h4>
       <strong>- Easy Mode:</strong>
       <br />
