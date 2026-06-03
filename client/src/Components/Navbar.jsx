@@ -104,32 +104,6 @@ export default function Navbar({
         <div>Welcome, {currentUser.username}!</div>
       )}
       {/* "location.pathname" is the path of the current page */}
-      {location.pathname !== "/about-wonderland" &&
-        !gameUrls.includes(location.pathname) &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd && (
-          <button
-            onClick={() => navigate("/about-wonderland")}
-            disabled={error}
-          >
-            About Wonderland
-          </button>
-        )}
-      {currentUser &&
-        location.pathname !== "/profile" &&
-        !gameUrls.includes(location.pathname) &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd && (
-          <button onClick={() => navigate("/profile")} disabled={error}>
-            My Profile
-          </button>
-        )}
       {location.pathname !== "/" &&
         !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
@@ -141,7 +115,19 @@ export default function Navbar({
             Home Page
           </button>
         )}
-      {currentUser &&
+        {currentUser &&
+        location.pathname !== "/profile" &&
+        !gameUrls.includes(location.pathname) &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button onClick={() => navigate("/profile")} disabled={error}>
+            My Profile
+          </button>
+        )}
+        {currentUser &&
         !gameUrls.includes(location.pathname) &&
         currentUser.role === "Admin" &&
         location.pathname !== "/users" &&
@@ -154,7 +140,7 @@ export default function Navbar({
             All users
           </button>
         )}
-      {currentUser &&
+        {currentUser &&
         !gameUrls.includes(location.pathname) &&
         currentUser.role === "Admin" &&
         location.pathname !== "/newAd" &&
@@ -165,6 +151,20 @@ export default function Navbar({
         !isCreatingAd && (
           <button onClick={renderCreateAdPage} disabled={error}>
             Create new Ad
+          </button>
+        )}
+      {location.pathname !== "/about-wonderland" &&
+        !gameUrls.includes(location.pathname) &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button
+            onClick={() => navigate("/about-wonderland")}
+            disabled={error}
+          >
+            About Wonderland
           </button>
         )}
       {!currentUser &&

@@ -94,7 +94,7 @@ export default function Users({
       {!isDeleting && !isLoggingOut && (
         <div>
           Sort by:
-          <select onChange={(e) => setSortBy(e.target.value)}>
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
             <option value="Username">Username</option>
             <option value="Stars">Stars</option>
           </select>
