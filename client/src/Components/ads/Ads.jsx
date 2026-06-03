@@ -2,7 +2,7 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import Ad from './Ad';
 
-export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEditing}) {
+export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEditing, isDeleting}) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const fetchAds = async () => {
@@ -47,6 +47,7 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEd
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
         isProfileEditing={isProfileEditing}
+        isDeleting={isDeleting}
       />
       {ads.length > 1 &&
         <div>

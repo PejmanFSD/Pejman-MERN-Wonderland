@@ -8,6 +8,7 @@ export default function Users({
   setUsers,
   error,
   setError,
+  isLoggingOut,
   isDeleting,
   setIsDeleting,
   currentUser,
@@ -19,6 +20,8 @@ export default function Users({
   // For searching a specific user:
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("Username");
+  const [userToDelete, setUserToDelete] = useState(null);
+
   const navigate = useNavigate();
   const fetchUsers = async (page = 1, search = "") => {
     let response;
@@ -78,7 +81,8 @@ export default function Users({
   };
   return (
     <div>
-      <input
+      {!isDeleting && !isLoggingOut &&
+        <input
         type="text"
         placeholder="Search user..."
         value={search}
@@ -86,7 +90,9 @@ export default function Users({
           setSearch(e.target.value);
           setPage(1);
         }}
-      />
+        />
+      }
+{!isDeleting && !isLoggingOut &&
       <div>
         Sort by:
         <select onChange={(e) => setSortBy(e.target.value)}>
@@ -94,9 +100,10 @@ export default function Users({
           <option value="Stars">Stars</option>
         </select>
       </div>
-      {!users || (users && users.length === 0) ? (
+}
+      {(!users || (users && users.length === 0)) && !isLoggingOut ? (
         <div>No users available</div>
-      ) : (
+      ) : (!isLoggingOut &&
         <table border="1" cellPadding="10" style={{ width: "90%" }}>
           <thead>
             <tr>
@@ -165,7 +172,7 @@ export default function Users({
           </tbody>
         </table>
       )}
-      {!isDeleting && users && users.length > 0 && (
+      {!isDeleting && users && users.length > 0 && !isLoggingOut && (
         <div style={{ marginTop: "20px" }}>
           <button disabled={page === 1} onClick={() => setPage(page - 1)}>
             Previous

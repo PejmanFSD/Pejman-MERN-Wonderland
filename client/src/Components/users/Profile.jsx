@@ -3,7 +3,7 @@ import {
   useLocation // For hiding the button of the current page
 } from "react-router-dom";
 
-export default function Profile({ currentUser, setIsProfileEditing }) {
+export default function Profile({ currentUser, setIsProfileEditing, isLoggingOut }) {
   const navigate = useNavigate();
   const location = useLocation();
   const handleEditMyProfile = () => {
@@ -12,7 +12,7 @@ export default function Profile({ currentUser, setIsProfileEditing }) {
   }
   return (
     <div>
-      {currentUser && (
+      {currentUser && !isLoggingOut && (
         <div>
           <div>Username: {currentUser.username}</div>
           <div>Role: {currentUser.role}</div>

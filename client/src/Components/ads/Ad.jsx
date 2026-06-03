@@ -8,7 +8,8 @@ export default function Ad({
   adAuthor,
   currentUser,
   isLoggingOut,
-  isProfileEditing
+  isProfileEditing,
+  isDeleting
 }) {
   const location = useLocation();
   const gameUrls = [
@@ -19,7 +20,7 @@ export default function Ad({
   ];
   return (
     <div>
-      {currentUser && currentUser.role === "Admin" && !isLoggingOut && !isProfileEditing && !gameUrls.includes(location.pathname) &&
+      {currentUser && currentUser.role === "Admin" && !isLoggingOut && !isProfileEditing && !isDeleting && !gameUrls.includes(location.pathname) &&
         <Link to={`/ads/${adKey}`}>
         <div>{adCompany} - {adText}</div>
       </Link>

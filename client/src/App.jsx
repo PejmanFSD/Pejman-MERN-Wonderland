@@ -136,6 +136,7 @@ function App() {
           currentUser={currentUser}
           isLoggingOut={isLoggingOut}
           isProfileEditing={isProfileEditing}
+          isDeleting={isDeleting}
         />
         <Routes>
           {!isLoggingOut && (
@@ -173,6 +174,7 @@ function App() {
                   error={error}
                   setError={setError}
                   setIsProfileEditing={setIsProfileEditing}
+                  isLoggingOut={isLoggingOut}
                 />
               </ProtectedRoute>
             }
@@ -265,6 +267,7 @@ function App() {
                   setUsers={setUsers}
                   error={error}
                   setError={setError}
+                  isLoggingOut={isLoggingOut}
                   isDeleting={isDeleting}
                   setIsDeleting={setIsDeleting}
                   currentUser={currentUser}
