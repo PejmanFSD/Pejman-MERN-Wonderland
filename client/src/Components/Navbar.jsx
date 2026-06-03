@@ -34,10 +34,27 @@ export default function Navbar({
   const navigate = useNavigate();
   const location = useLocation();
   const gameUrls = [
-    "/rock-scissors-paper", "/guess-number", "/capitals", "/cryptogram", "/crazy-100",
-    "/memory-cards", "/nim", "/happy-flower", "/xo", "/maze", "/kuku-kube",
-    "/triple-emoji-match", "/pidoku", "/counter", "/puzzle", "/bingo",
-    "/tug-of-war", "/bird-hunter", "/reversi", "/snake", "/blackJack"
+    "/rock-scissors-paper",
+    "/guess-number",
+    "/capitals",
+    "/cryptogram",
+    "/crazy-100",
+    "/memory-cards",
+    "/nim",
+    "/happy-flower",
+    "/xo",
+    "/maze",
+    "/kuku-kube",
+    "/triple-emoji-match",
+    "/pidoku",
+    "/counter",
+    "/puzzle",
+    "/bingo",
+    "/tug-of-war",
+    "/bird-hunter",
+    "/reversi",
+    "/snake",
+    "/blackJack",
   ];
   const handleLogout = () => {
     setIsLoggingOut(true);
@@ -87,8 +104,23 @@ export default function Navbar({
         <div>Welcome, {currentUser.username}!</div>
       )}
       {/* "location.pathname" is the path of the current page */}
+      {location.pathname !== "/about-wonderland" &&
+        !gameUrls.includes(location.pathname) &&
+        !isLoggingOut &&
+        !isDeleting &&
+        !isProfileEditing &&
+        !isAdEditing &&
+        !isCreatingAd && (
+          <button
+            onClick={() => navigate("/about-wonderland")}
+            disabled={error}
+          >
+            About Wonderland
+          </button>
+        )}
       {currentUser &&
-        location.pathname !== "/profile" && !gameUrls.includes(location.pathname) &&
+        location.pathname !== "/profile" &&
+        !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
         !isDeleting &&
         !isProfileEditing &&
@@ -98,7 +130,8 @@ export default function Navbar({
             My Profile
           </button>
         )}
-      {location.pathname !== "/" && !gameUrls.includes(location.pathname) &&
+      {location.pathname !== "/" &&
+        !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
         !isDeleting &&
         !isProfileEditing &&
@@ -108,7 +141,8 @@ export default function Navbar({
             Home Page
           </button>
         )}
-      {currentUser && !gameUrls.includes(location.pathname) &&
+      {currentUser &&
+        !gameUrls.includes(location.pathname) &&
         currentUser.role === "Admin" &&
         location.pathname !== "/users" &&
         !isLoggingOut &&
@@ -120,7 +154,8 @@ export default function Navbar({
             All users
           </button>
         )}
-      {currentUser && !gameUrls.includes(location.pathname) &&
+      {currentUser &&
+        !gameUrls.includes(location.pathname) &&
         currentUser.role === "Admin" &&
         location.pathname !== "/newAd" &&
         !isLoggingOut &&
@@ -132,7 +167,8 @@ export default function Navbar({
             Create new Ad
           </button>
         )}
-      {!currentUser && !gameUrls.includes(location.pathname) &&
+      {!currentUser &&
+        !gameUrls.includes(location.pathname) &&
         location.pathname !== "/register" &&
         !isLoggingOut &&
         !isDeleting &&
@@ -143,7 +179,8 @@ export default function Navbar({
             Register
           </button>
         )}
-      {!currentUser && !gameUrls.includes(location.pathname) &&
+      {!currentUser &&
+        !gameUrls.includes(location.pathname) &&
         location.pathname !== "/login" &&
         !isLoggingOut &&
         !isDeleting &&
@@ -154,7 +191,8 @@ export default function Navbar({
             Login
           </button>
         )}
-      {currentUser && !gameUrls.includes(location.pathname) &&
+      {currentUser &&
+        !gameUrls.includes(location.pathname) &&
         !isLoggingOut &&
         !isDeleting &&
         !isProfileEditing &&
@@ -164,8 +202,7 @@ export default function Navbar({
             Logout
           </button>
         )}
-      {isLoggingOut &&  !gameUrls.includes(location.pathname) &&
-      (
+      {isLoggingOut && !gameUrls.includes(location.pathname) && (
         <div>
           <div>Are you sure you want to logout?</div>
           <div>

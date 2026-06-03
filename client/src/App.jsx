@@ -11,6 +11,7 @@ import AdEdit from "./Components/ads/AdEdit";
 import Users from "./Components/users/Users";
 import Profile from "./Components/users/Profile";
 import EditProfile from "./Components/users/EditProfile";
+import AboutWonderland from "./Components/AboutWonderland";
 import RockScissorsPaperPage from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumberPage from "./Games/GuessNumber/GuessNumber";
 import CapitalsPage from "./Games/Capitals/Capitals";
@@ -94,21 +95,17 @@ function App() {
     restoreUser();
   }, []);
   useEffect(() => {
-  if (flash) {
-    const timer = setTimeout(() => {
-      setFlash(null);
-    }, 3000);
+    if (flash) {
+      const timer = setTimeout(() => {
+        setFlash(null);
+      }, 3000);
 
-    return () => clearTimeout(timer);
-  }
-}, [flash]);
+      return () => clearTimeout(timer);
+    }
+  }, [flash]);
   return (
     <div className="App">
-      {flash && (
-        <div>
-          {flash}
-        </div>
-      )}
+      {flash && <div>{flash}</div>}
       <BrowserRouter>
         <Navbar
           currentUser={currentUser}
@@ -241,7 +238,14 @@ function App() {
           />
           <Route
             path="/ads/:id/edit"
-            element={<AdEdit error={error} setError={setError} setFlash={setFlash} setIsAdEditing={setIsAdEditing}/>}
+            element={
+              <AdEdit
+                error={error}
+                setError={setError}
+                setFlash={setFlash}
+                setIsAdEditing={setIsAdEditing}
+              />
+            }
           />
           <Route
             path="/users"
@@ -262,27 +266,196 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/rock-scissors-paper" element={<RockScissorsPaperPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/guess-number" element={<GuessNumberPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/capitals" element={<CapitalsPage updateTotalPoint={updateTotalPoint} currentUser={currentUser}/>} />
-          <Route path="/cryptogram" element={<CryptogramPage updateTotalPoint={updateTotalPoint} currentUser={currentUser}/>} />
-          <Route path="/crazy-100" element={<Crazy100Page updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/memory-cards" element={<MemoryCardsPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/nim" element={<NimPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/happy-flower" element={<HappyFlowerPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/xo" element={<XOPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/kuku-kube" element={<KukuKubePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/triple-emoji-match" element={<TripleEmojiMatchPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/pidoku" element={<PidokuPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/counter" element={<CounterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/puzzle" element={<PuzzlePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/bingo" element={<BingoPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/reversi" element={<ReversiPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/snake" element={<SnakePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/tug-of-war" element={<TugOfWarPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/maze" element={<MazePage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/bird-hunter" element={<BirdHunterPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
-          <Route path="/blackJack" element={<BlackJackPage updateTotalPoint={updateTotalPoint} currentUser={currentUser} />} />
+          <Route path="/about-wonderland" element={<AboutWonderland />} />
+          <Route
+            path="/rock-scissors-paper"
+            element={
+              <RockScissorsPaperPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/guess-number"
+            element={
+              <GuessNumberPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/capitals"
+            element={
+              <CapitalsPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/cryptogram"
+            element={
+              <CryptogramPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/crazy-100"
+            element={
+              <Crazy100Page
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/memory-cards"
+            element={
+              <MemoryCardsPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/nim"
+            element={
+              <NimPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/happy-flower"
+            element={
+              <HappyFlowerPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/xo"
+            element={
+              <XOPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/kuku-kube"
+            element={
+              <KukuKubePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/triple-emoji-match"
+            element={
+              <TripleEmojiMatchPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/pidoku"
+            element={
+              <PidokuPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/counter"
+            element={
+              <CounterPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/puzzle"
+            element={
+              <PuzzlePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/bingo"
+            element={
+              <BingoPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/reversi"
+            element={
+              <ReversiPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/snake"
+            element={
+              <SnakePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/tug-of-war"
+            element={
+              <TugOfWarPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/maze"
+            element={
+              <MazePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/bird-hunter"
+            element={
+              <BirdHunterPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
+          <Route
+            path="/blackJack"
+            element={
+              <BlackJackPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
