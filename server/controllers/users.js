@@ -89,6 +89,7 @@ module.exports.topAllUsers = async (req, res) => {
   const totalUsers = await User.countDocuments();
   const totalPages = Math.ceil(totalUsers / limit);
   const rankedAllUsers = users.map((user, index) => ({
+    _id: user._id,
     username: user.username,
     role: user.role,
     totalPoint: user.totalPoint,

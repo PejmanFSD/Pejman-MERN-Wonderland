@@ -20,7 +20,6 @@ export default function Users({
   // For searching a specific user:
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("Username");
-  const [userToDelete, setUserToDelete] = useState(null);
 
   const navigate = useNavigate();
   const fetchUsers = async (page = 1, search = "") => {
@@ -81,96 +80,97 @@ export default function Users({
   };
   return (
     <div>
-      {!isDeleting && !isLoggingOut &&
+      {!isDeleting && !isLoggingOut && (
         <input
-        type="text"
-        placeholder="Search user..."
-        value={search}
-        onChange={(e) => {
-          setSearch(e.target.value);
-          setPage(1);
-        }}
+          type="text"
+          placeholder="Search user..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
         />
-      }
-{!isDeleting && !isLoggingOut &&
-      <div>
-        Sort by:
-        <select onChange={(e) => setSortBy(e.target.value)}>
-          <option value="Username">Username</option>
-          <option value="Stars">Stars</option>
-        </select>
-      </div>
-}
+      )}
+      {!isDeleting && !isLoggingOut && (
+        <div>
+          Sort by:
+          <select onChange={(e) => setSortBy(e.target.value)}>
+            <option value="Username">Username</option>
+            <option value="Stars">Stars</option>
+          </select>
+        </div>
+      )}
       {(!users || (users && users.length === 0)) && !isLoggingOut ? (
         <div>No users available</div>
-      ) : (!isLoggingOut &&
-        <table border="1" cellPadding="10" style={{ width: "90%" }}>
-          <thead>
-            <tr>
-              <th style={{ width: "12%" }}>Username</th>
-              <th style={{ width: "7%" }}>Role</th>
-              <th style={{ width: "5%" }}>Number of Stars</th>
-              <th style={{ width: "36%" }}>Message</th>
-              <th style={{ width: "30%" }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.username}</td>
-                <td>{user.username === "Pejman" ? "The Boss!" : user.role}</td>
-                <td>
-                  {user.username === "Pejman" ? (
-                    <div>&#128526;</div>
-                  ) : (
-                    user.totalPoint
-                  )}
-                </td>
-                <td>{user.message}</td>
-                <td>
-                  {user.username === "Pejman" && !isDeleting ? (
-                    <div>No Action for Pejman &#128526;</div>
-                  ) : currentUser.username === "Pejman" && !isDeleting ? (
-                    <button
-                      onClick={() => handleDelete(user._id)}
-                      style={{ display: "inline" }}
-                    >
-                      Delete
-                    </button>
-                  ) : user.role === "Admin" && !isDeleting ? (
-                    <div>Admin &#128515;</div>
-                  ) : (
-                    !isDeleting && (
+      ) : (
+        !isLoggingOut && (
+          <table border="1" cellPadding="10" style={{ width: "90%" }}>
+            <thead>
+              <tr>
+                <th style={{ width: "12%" }}>Username</th>
+                <th style={{ width: "7%" }}>Role</th>
+                <th style={{ width: "5%" }}>Number of Stars</th>
+                <th style={{ width: "36%" }}>Message</th>
+                <th style={{ width: "30%" }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.username}</td>
+                  <td>
+                    {user.username === "Pejman" ? "The Boss!" : user.role}
+                  </td>
+                  <td>
+                    {user.username === "Pejman" ? (
+                      <div>&#128526;</div>
+                    ) : (
+                      user.totalPoint
+                    )}
+                  </td>
+                  <td>{user.message}</td>
+                  <td>
+                    {user.username === "Pejman" && !isDeleting ? (
+                      <div>No Action for Pejman &#128526;</div>
+                    ) : currentUser.username === "Pejman" && !isDeleting ? (
                       <button
                         onClick={() => handleDelete(user._id)}
                         style={{ display: "inline" }}
                       >
                         Delete
                       </button>
-                    )
-                  )}
-                  {isDeleting && deletingUser === user._id && (
-                    <div style={{ display: "inline", marginLeft: "8px" }}>
-                      {`Delete ${users.find((u) => u._id === user._id).username}?`}
-                      <button
-                        onClick={() => handleDeleteYes(user._id)}
-                        style={{ marginLeft: "8px" }}
-                      >
-                        Yes
-                      </button>
-                      <button
-                        onClick={handleDeleteNo}
-                        style={{ marginLeft: "4px" }}
-                      >
-                        No
-                      </button>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    ) : user.role === "Admin" && !isDeleting ? (
+                      <div>Admin &#128515;</div>
+                    ) : (
+                      !isDeleting && (
+                        <button
+                          onClick={() => handleDelete(user._id)}
+                          style={{ display: "inline" }}
+                        >
+                          Delete
+                        </button>
+                      )
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )
+      )}
+      {isDeleting && deletingUser && (
+        <div style={{ display: "inline", marginLeft: "8px" }}>
+          {`Are you sure you want to delete ${users.find((u) => u._id === deletingUser).username}?`}
+          <button
+            onClick={() => handleDeleteYes(deletingUser)}
+            style={{ marginLeft: "8px" }}
+          >
+            Yes
+          </button>
+          <button onClick={handleDeleteNo} style={{ marginLeft: "4px" }}>
+            No
+          </button>
+        </div>
       )}
       {!isDeleting && users && users.length > 0 && !isLoggingOut && (
         <div style={{ marginTop: "20px" }}>
