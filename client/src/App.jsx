@@ -39,6 +39,7 @@ function App() {
   const [ads, setAds] = useState([]);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [passwordError, setPasswordError] = useState("");
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCreatingAd, setIsCreatingAd] = useState(false);
@@ -134,6 +135,7 @@ function App() {
           setAds={setAds}
           currentUser={currentUser}
           isLoggingOut={isLoggingOut}
+          isProfileEditing={isProfileEditing}
         />
         <Routes>
           {!isLoggingOut && (
@@ -186,6 +188,10 @@ function App() {
                   setCurrentUser={setCurrentUser}
                   setFlash={setFlash}
                   setIsProfileEditing={setIsProfileEditing}
+                  error={error}
+                  passwordError={passwordError}
+                  setError={setError}
+                  setPasswordError={setPasswordError}
                 />
               </ProtectedRoute>
             }
