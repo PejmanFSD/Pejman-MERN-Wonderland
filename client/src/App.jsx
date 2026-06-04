@@ -7,6 +7,7 @@ import Navbar from "./Components/Navbar";
 import Register from "./Components/users/Register";
 import Login from "./Components/users/Login";
 import AdDetails from "./Components/ads/AdDetails";
+import AdForm from "./Components/ads/AdForm";
 import AdEdit from "./Components/ads/AdEdit";
 import Users from "./Components/users/Users";
 import Profile from "./Components/users/Profile";
@@ -136,8 +137,33 @@ function App() {
           currentUser={currentUser}
           isLoggingOut={isLoggingOut}
           isProfileEditing={isProfileEditing}
+          isCreatingAd={isCreatingAd}
           isDeleting={isDeleting}
+          isAdEditing={isAdEditing}
+          error={error}
         />
+        <Routes>
+          <Route
+            path="/newAd"
+            element={
+              <ProtectedRoute
+                currentUser={currentUser}
+                isAuthChecked={isAuthChecked}
+              >
+                <AdForm
+                  error={error}
+                  setError={setError}
+                  currentUser={currentUser}
+                  onAdCreated={(newAd) => {
+                    setAds((currAds) => [newAd, ...currAds]);
+                  }}
+                  setFlash={setFlash}
+                  setIsCreatingAd={setIsCreatingAd}
+                />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
         <Routes>
           {!isLoggingOut && (
             <Route

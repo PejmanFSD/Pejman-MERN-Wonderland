@@ -2,7 +2,7 @@ import "../../App.css";
 import { useState, useEffect } from "react";
 import Ad from './Ad';
 
-export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEditing, isDeleting}) {
+export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEditing, isDeleting, isCreatingAd, isAdEditing, error}) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const fetchAds = async () => {
@@ -47,12 +47,15 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEd
         currentUser={currentUser}
         isLoggingOut={isLoggingOut}
         isProfileEditing={isProfileEditing}
+        isCreatingAd={isCreatingAd}
         isDeleting={isDeleting}
+        isAdEditing={isAdEditing}
+        error={error}
       />
       {ads.length > 1 &&
         <div>
-        <button onClick={handlePrevious}>&#8592;</button>
-        <button onClick={handleNext}>&#8594;</button>
+        <button onClick={handlePrevious} disabled={error}>&#8592;</button>
+        <button onClick={handleNext} disabled={error}>&#8594;</button>
       </div>
       }
     </div>
