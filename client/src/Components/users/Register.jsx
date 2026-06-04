@@ -147,16 +147,16 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
         />
       </div>
       <div>
-        <div style={{ color: passwordStrenghtStatus.length ? "green" : "pink" }}>
+        <div style={{ color: passwordStrenghtStatus.length ? "black" : "gray" }}>
           {passwordStrenghtStatus.length ? "✔" : "✖"} at least 8 characters
         </div>
-        <div style={{ color: passwordStrenghtStatus.upper ? "green" : "pink" }}>
+        <div style={{ color: passwordStrenghtStatus.upper ? "black" : "gray" }}>
           {passwordStrenghtStatus.upper ? "✔" : "✖"} one uppercase letter
         </div>
-        <div style={{ color: passwordStrenghtStatus.lower ? "green" : "pink" }}>
+        <div style={{ color: passwordStrenghtStatus.lower ? "black" : "gray" }}>
           {passwordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
         </div>
-        <div style={{ color: passwordStrenghtStatus.number ? "green" : "pink" }}>
+        <div style={{ color: passwordStrenghtStatus.number ? "black" : "gray" }}>
           {passwordStrenghtStatus.number ? "✔" : "✖"} one number
         </div>
       </div>
@@ -182,7 +182,13 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
           required
         ></textarea>
       </div>
+      <br />
+      <div>If you're an employer, please:</div>
+      <div>- Signup as an "admin" (the Admin secret is <strong>PejmanFSD</strong>).</div>
+      <div>- Read the "For employers" section.</div>
+      <br />
       <div>
+        Signup as:
         <select value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="Player">Player</option>
           <option value="Admin">Admin</option>
@@ -198,10 +204,10 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
       </div>
       <button disabled={password !== confirmPassword || username === "" || password === "" || message === ""}>Sign Up</button>
       {password && confirmPassword && password !== confirmPassword && (
-        <p style={{ color: "pink" }}>✖ Passwords do not match</p>
+        <p style={{ color: "gray" }}>✖ Passwords do not match</p>
       )}
       {password && confirmPassword && password === confirmPassword && (
-        <p style={{ color: "green" }}>✔ Passwords match</p>
+        <p style={{ color: "black" }}>✔ Passwords match</p>
       )}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>

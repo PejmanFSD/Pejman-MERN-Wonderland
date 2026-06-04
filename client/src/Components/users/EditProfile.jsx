@@ -238,7 +238,7 @@ export default function EditProfile({
             <div>
             <div
               style={{
-                color: newPasswordStrenghtStatus.length ? "black" : "lightgray",
+                color: newPasswordStrenghtStatus.length ? "black" : "gray",
               }}
             >
               {newPasswordStrenghtStatus.length ? "✔" : "✖"} at least 8
@@ -246,21 +246,21 @@ export default function EditProfile({
             </div>
             <div
               style={{
-                color: newPasswordStrenghtStatus.upper ? "black" : "lightgray",
+                color: newPasswordStrenghtStatus.upper ? "black" : "gray",
               }}
               >
               {newPasswordStrenghtStatus.upper ? "✔" : "✖"} one uppercase letter
             </div>
             <div
               style={{
-                color: newPasswordStrenghtStatus.lower ? "black" : "lightgray",
+                color: newPasswordStrenghtStatus.lower ? "black" : "gray",
               }}
               >
               {newPasswordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
             </div>
             <div
               style={{
-                color: newPasswordStrenghtStatus.number ? "black" : "lightgray",
+                color: newPasswordStrenghtStatus.number ? "black" : "gray",
               }}
               >
               {newPasswordStrenghtStatus.number ? "✔" : "✖"} one number
@@ -272,7 +272,7 @@ export default function EditProfile({
             <p style={{ color: "black" }}><strong>✔ New passwords match</strong></p>
           )}
           {newPassword && confirmNewPassword && passwordMatch === false && (
-            <p style={{ color: "lightgray" }}><strong>✖ New passwords do not match</strong></p>
+            <p style={{ color: "gray" }}><strong>✖ New passwords do not match</strong></p>
           )}
         </div>
       )}
