@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Bowls from "./Bowls";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
@@ -136,6 +136,9 @@ export default function Nim({ updateTotalPoint, currentUser }) {
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  useEffect(() => {
+          document.title = "Nim";
+      }, []);
   return (
     <div>
       {isAboutPage && <AboutNim setIsAboutPage={setIsAboutPage} />}

@@ -2104,6 +2104,9 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
       setFinalMessage("Pejman Wins!");
     }
   }, [pejmanScore]);
+  useEffect(() => {
+        document.title = "Tug of War";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutTugOfWar setIsAboutPage={setIsAboutPage} />}

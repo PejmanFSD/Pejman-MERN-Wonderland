@@ -119,6 +119,9 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
       }
     }
   }, [userGuess]);
+  useEffect(() => {
+        document.title = "Happy Flower";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutHappyFlower setIsAboutPage={setIsAboutPage} />}

@@ -158,6 +158,9 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
     },
     [userChoice, pejmanChoice],
   );
+  useEffect(() => {
+        document.title = "Rock-Scissors-Paper";
+    }, []);
   return (
     <div>
       {isAboutPage && (

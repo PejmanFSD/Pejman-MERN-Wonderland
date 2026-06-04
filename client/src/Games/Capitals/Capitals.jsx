@@ -198,6 +198,9 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     }
     return () => clearInterval(interval);
   }, [isTimerRunning]);
+  useEffect(() => {
+        document.title = "Capitals";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutCapitals setIsAboutPage={setIsAboutPage} />}

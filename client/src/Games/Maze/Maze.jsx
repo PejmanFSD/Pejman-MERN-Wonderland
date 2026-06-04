@@ -432,7 +432,9 @@ export default function Maze({ updateTotalPoint, currentUser }) {
       render.textures = {};
     };
   }, [isGameStarted, gameKey]);
-
+  useEffect(() => {
+        document.title = "Maze";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutMaze setIsAboutPage={setIsAboutPage} />}

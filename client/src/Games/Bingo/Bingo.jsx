@@ -1572,6 +1572,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       updateTotalPoint(1);
     }
   }, [finalMessage]);
+  useEffect(() => {
+        document.title = "Bingo";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutBingo setIsAboutPage={setIsAboutPage} />}

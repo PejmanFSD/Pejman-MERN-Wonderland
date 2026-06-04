@@ -301,7 +301,9 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/about-wonderland" element={<AboutWonderland />} />
+          {!isLoggingOut && (
+            <Route path="/about-wonderland" element={<AboutWonderland />} />
+          )}
           <Route
             path="/rock-scissors-paper"
             element={

@@ -241,6 +241,9 @@ export default function Home({
     }
     navigate("/blackJack");
   };
+  useEffect(() => {
+        document.title = "Pejman MERN Wonderland";
+    }, []);
   return (
     <div>
       <div>

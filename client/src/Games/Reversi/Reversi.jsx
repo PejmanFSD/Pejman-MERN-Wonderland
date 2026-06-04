@@ -1446,6 +1446,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       );
     }
   }, [chooseArrowMessage]);
+  useEffect(() => {
+        document.title = "Reversi";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutReversi setIsAboutPage={setIsAboutPage} />}

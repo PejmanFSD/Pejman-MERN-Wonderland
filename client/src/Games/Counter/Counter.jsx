@@ -206,6 +206,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
       return () => clearInterval(interval);
     }
   }, [isGameStarted]);
+  useEffect(() => {
+        document.title = "Counter";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutCounter setIsAboutPage={setIsAboutPage} />}

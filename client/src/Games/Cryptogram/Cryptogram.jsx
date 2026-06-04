@@ -166,6 +166,9 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
     },
     [adviceArray],
   );
+  useEffect(() => {
+        document.title = "Cryptogram";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutCryptogram setIsAboutPage={setIsAboutPage} />}

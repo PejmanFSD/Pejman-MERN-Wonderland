@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Square from "./Square";
 import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
@@ -139,6 +139,9 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  useEffect(() => {
+          document.title = "Kuku Kube";
+      }, []);
   return (
     <div>
       {isAboutPage && <AboutKukuKube setIsAboutPage={setIsAboutPage} />}

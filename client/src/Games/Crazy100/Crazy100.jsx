@@ -259,6 +259,9 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
     }
     return () => clearInterval(interval);
   }, [isTimerRunning]);
+  useEffect(() => {
+        document.title = "Crazy-100";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutCrazy100 setIsAboutPage={setIsAboutPage} />}

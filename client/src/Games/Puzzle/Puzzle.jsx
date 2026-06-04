@@ -383,6 +383,9 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
       }
     }
   }, [imageGroup]);
+  useEffect(() => {
+        document.title = "Puzzle";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutPuzzle setIsAboutPage={setIsAboutPage} />}

@@ -331,6 +331,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       );
     }
   }
+  useEffect(() => {
+        document.title = "Snake";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutSnake setIsAboutPage={setIsAboutPage} />}

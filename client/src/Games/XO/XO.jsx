@@ -905,6 +905,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
       );
     }
   }, [isUserTurn, isPejmanTurn]);
+  useEffect(() => {
+        document.title = "X-O";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutXO setIsAboutPage={setIsAboutPage} />}

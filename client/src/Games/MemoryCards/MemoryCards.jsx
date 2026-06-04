@@ -301,6 +301,9 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
       setVisibleCards([]);
     }
   }, [identicalIndexArray]);
+  useEffect(() => {
+        document.title = "Memory Cards";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutMemoryCards setIsAboutPage={setIsAboutPage} />}

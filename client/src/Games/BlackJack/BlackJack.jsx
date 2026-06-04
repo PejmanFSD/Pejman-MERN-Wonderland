@@ -402,6 +402,9 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       setUsedCards(currUsedCards);
     }
   }, [deck, usedCards]);
+  useEffect(() => {
+        document.title = "BlackJack";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutBlackJack setIsAboutPage={setIsAboutPage} />}

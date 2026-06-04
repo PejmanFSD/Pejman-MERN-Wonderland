@@ -241,6 +241,9 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
       setIsTimerRunning(false);
     }
   }, [seconds]);
+  useEffect(() => {
+        document.title = "Triple Emoji Match";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutTripleEmojiMatch setIsAboutPage={setIsAboutPage} />}

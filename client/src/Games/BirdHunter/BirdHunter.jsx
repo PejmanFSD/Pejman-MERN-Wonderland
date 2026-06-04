@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HuntingGround from "./HuntingGround";
 import { getRandArr } from "../utils";
 import T1 from "./images/T1.jpg";
@@ -67,6 +67,9 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  useEffect(() => {
+          document.title = "Bird Hunter";
+      }, []);
   return (
     <div>
       {isAboutPage && <AboutBirdHunter setIsAboutPage={setIsAboutPage} />}

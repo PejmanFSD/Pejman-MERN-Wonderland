@@ -186,6 +186,9 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
     },
     [num, userGuess, userGuessStatus, chancesNum],
   );
+  useEffect(() => {
+        document.title = "Guess Number";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutGuessNumber setIsAboutPage={setIsAboutPage} />}

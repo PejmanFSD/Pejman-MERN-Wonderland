@@ -622,6 +622,9 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
       }
     }
   }, [userPoint, pejmanPoint]);
+  useEffect(() => {
+        document.title = "Pidoku";
+    }, []);
   return (
     <div>
       {isAboutPage && <AboutPidoku setIsAboutPage={setIsAboutPage} />}
