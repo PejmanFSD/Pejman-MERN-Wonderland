@@ -2365,12 +2365,12 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div style={{ position: "relative", top: "20px" }}>
                 {dice === 0 && <div>Rolling the Dice ...</div>}
-                {dice === 1 && <img src={Dice1} width="50px" />}
-                {dice === 2 && <img src={Dice2} width="50px" />}
-                {dice === 3 && <img src={Dice3} width="50px" />}
-                {dice === 4 && <img src={Dice4} width="50px" />}
-                {dice === 5 && <img src={Dice5} width="50px" />}
-                {dice === 6 && <img src={Dice6} width="50px" />}
+                {dice === 1 && <img src={Dice1} width="50px" alt="1" />}
+                {dice === 2 && <img src={Dice2} width="50px" alt="2" />}
+                {dice === 3 && <img src={Dice3} width="50px" alt="3" />}
+                {dice === 4 && <img src={Dice4} width="50px" alt="4" />}
+                {dice === 5 && <img src={Dice5} width="50px" alt="5" />}
+                {dice === 6 && <img src={Dice6} width="50px" alt="6" />}
               </div>
             )}
           {isGameStarted &&

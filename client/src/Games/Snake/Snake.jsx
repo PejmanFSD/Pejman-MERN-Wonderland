@@ -497,9 +497,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               <br />
               <strong>Pause / Resume the game with the "Space" key</strong>
               {direction.x === 0 && direction.y === 0 ? (
-                <img src={Pause} width="40px" style={{ margin: "10px" }} />
+                <img src={Pause} width="40px" style={{ margin: "10px" }} alt="" />
               ) : (
-                <img src={Play} width="40px" style={{ margin: "10px" }} />
+                <img src={Play} width="40px" style={{ margin: "10px" }} alt="" />
               )}
               <div
                 style={{

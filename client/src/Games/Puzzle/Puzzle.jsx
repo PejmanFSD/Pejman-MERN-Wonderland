@@ -546,6 +546,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                   display: "inline",
                   opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
                 }}
+                alt=""
               />
             )}
           {isGameStarted &&

@@ -506,7 +506,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               <div>
                 <button onClick={handleStart}>Start the Game</button>
                 <br />
-                <img src={StartDeck} height="400px" />
+                <img src={StartDeck} height="400px" alt="" />
               </div>
             )}
           {/* {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
@@ -524,11 +524,11 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             deck.map((c, i) =>
               (i + 1) % 13 !== 0 ? (
                 <div style={{ display: "inline" }}>
-                  <img src={Back} height="55px" style={{ margin: "2px" }} />
+                  <img src={Back} height="55px" style={{ margin: "2px" }} alt="" />
                 </div>
               ) : (
                 <div style={{ display: "inline" }}>
-                  <img src={Back} height="55px" style={{ margin: "2px" }} />
+                  <img src={Back} height="55px" style={{ margin: "2px" }} alt="" />
                   <br />
                 </div>
               ),
@@ -561,13 +561,13 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !pejmanHand.includes(c) &&
               (i + 1) % 13 !== 0 ? (
                 <div style={{ display: "inline" }}>
-                  <img src={Back} height="55px" style={{ margin: "2px" }} />
+                  <img src={Back} height="55px" style={{ margin: "2px" }} alt="" />
                 </div>
               ) : (
                 !userHand.includes(c) &&
                 !pejmanHand.includes(c) && (
                   <div style={{ display: "inline" }}>
-                    <img src={Back} height="55px" style={{ margin: "2px" }} />
+                    <img src={Back} height="55px" style={{ margin: "2px" }} alt="" />
                     <br />
                   </div>
                 )
@@ -607,7 +607,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 {new Array(pejmanChipsNum).fill(null).map((c) => (
-                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
+                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} alt="" />
                 ))}
               </div>
             )}
@@ -634,6 +634,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   src={pejmanHand[i].imgSrc}
                   height="120px"
                   style={{ margin: "2px" }}
+                  alt=""
                 />
               ))}
           <br />
@@ -646,7 +647,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 {new Array(2 * bet).fill(null).map((c) => (
-                  <img src={chips[0]} height="50px" />
+                  <img src={chips[0]} height="50px" alt="" />
                 ))}
               </div>
             )}
@@ -704,6 +705,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   src={userHand[i].imgSrc}
                   height="120px"
                   style={{ margin: "2px" }}
+                  alt=""
                 />
               ))}
           <br />
@@ -724,7 +726,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 {new Array(userChipsNum).fill(null).map((c) => (
-                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} />
+                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} alt="" />
                 ))}
               </div>
             )}

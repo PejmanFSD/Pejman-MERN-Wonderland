@@ -378,6 +378,7 @@ export default function Cell({
         margin: "1px",
       }}
       src={imageSrc}
+      alt=""
     />
   );
 }

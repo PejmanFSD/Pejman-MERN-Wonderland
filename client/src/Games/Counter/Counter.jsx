@@ -320,6 +320,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 border: "1px solid black",
                 margin: "3px",
               }}
+              alt=""
             />
           ))}
           <div>
@@ -374,6 +375,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     border: "1px solid black",
                     margin: "4px",
                   }}
+                  alt=""
                 />
               </div>
             ))}

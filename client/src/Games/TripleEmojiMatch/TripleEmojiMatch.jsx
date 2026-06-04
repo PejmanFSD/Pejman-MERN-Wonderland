@@ -437,6 +437,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                             margin: "3px",
                             border: "1px solid red",
                           }}
+                          alt=""
                         />
                       ),
                   )}

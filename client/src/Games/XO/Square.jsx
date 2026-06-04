@@ -47,6 +47,7 @@ export default function Square({
             : 1,
         border: "1px solid black",
       }}
+      alt=""
       onClick={handleClickSquare}
     />
   );

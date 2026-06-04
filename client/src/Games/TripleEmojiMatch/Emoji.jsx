@@ -58,6 +58,7 @@ export default function Emoji({
           opacity: tripleMatch || isWin !== "" ? 0.5 : 1,
         }}
         onClick={handleClickEmoji}
+        alt=""
       />
     </div>
   );

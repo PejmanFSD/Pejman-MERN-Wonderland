@@ -480,7 +480,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
             )}
           {finalMessage && !isTogglingHomePage && <h2>{finalMessage}</h2>}
           {finalMessage === "Time's Up!" && !isTogglingHomePage && (
-            <img src={Clock} width="50px" />
+            <img src={Clock} width="50px" alt="" />
           )}
           {hasWon && !isTogglingHomePage && (
             <div>

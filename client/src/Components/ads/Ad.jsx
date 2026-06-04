@@ -55,7 +55,7 @@ export default function Ad({
             </div>
           </Link>
         )}
-      {adImages && adImages.map((i) => <img src={i.url} height="70px" />)}
+      {adImages && adImages.map((i) => <img src={i.url} height="70px" alt=""/>)}
       {currentUser &&
         currentUser.role === "Admin" &&
         !isLoggingOut &&

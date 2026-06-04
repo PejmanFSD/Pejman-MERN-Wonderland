@@ -258,6 +258,7 @@ export default function GuessTable({
               ? Flower5
               : userMistakes.length === 5 && Flower6
           }
+          alt=""
         />
       </div>
     </div>

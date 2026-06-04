@@ -334,6 +334,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                           ? Tick
                           : Blank
                 }
+                alt=""
               />
             ))}
           <br />

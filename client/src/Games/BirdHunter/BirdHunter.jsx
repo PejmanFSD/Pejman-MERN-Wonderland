@@ -115,6 +115,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                       <img
                         src={T1}
                         height={isTogglingHomePage ? "30px" : "55px"}
+                        alt=""
                       />
                       <HuntingGround
                         grounds={grounds}
@@ -133,6 +134,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                       <img
                         src={T2}
                         height={isTogglingHomePage ? "30px" : "55px"}
+                        alt=""
                       />
                     </div>
                   ))}
@@ -151,6 +153,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                       <img
                         src={T1}
                         height={isTogglingHomePage ? "30px" : "55px"}
+                        alt=""
                       />
                       <HuntingGround
                         grounds={grounds}
@@ -169,6 +172,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                       <img
                         src={T2}
                         height={isTogglingHomePage ? "30px" : "55px"}
+                        alt=""
                       />
                     </div>
                   ))}
