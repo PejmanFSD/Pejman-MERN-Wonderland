@@ -71,10 +71,10 @@ export default function Board({
   );
   return (
     <div>
-      {board.map((row) =>
-        row.map((card) =>
+      {board.map((row, i) =>
+        row.map((card, j) =>
           card[0] !== ncols - 1 ? (
-            <div style={{ display: "inline" }}>
+            <div style={{ display: "inline" }} key={`${i}-${j}`}>
               {
                 <Card
                   visibleCards={visibleCards}
@@ -105,7 +105,7 @@ export default function Board({
               }
             </div>
           ) : (
-            <div style={{ display: "inline" }}>
+            <div style={{ display: "inline" }} key={`${i}-${j}`}>
               {
                 <Card
                   visibleCards={visibleCards}

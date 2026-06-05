@@ -105,7 +105,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <div style={{ display: "flex", gap: "50px" }}>
                 <div style={{ display: "inline" }}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((el) => (
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((el, idx) => (
                     <div
                       style={{
                         display: "flex",
@@ -114,6 +114,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                         margin: "5px",
                         padding: "7px",
                       }}
+                      key={idx}
                     >
                       <img
                         src={T1}
@@ -143,7 +144,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                   ))}
                 </div>
                 <div style={{ display: "inline" }}>
-                  {[9, 10, 11, 12, 13, 14, 15, 16].map((el) => (
+                  {[9, 10, 11, 12, 13, 14, 15, 16].map((el, idx) => (
                     <div
                       style={{
                         display: "flex",
@@ -152,6 +153,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                         margin: "5px",
                         padding: "7px",
                       }}
+                      key={idx}
                     >
                       <img
                         src={T1}

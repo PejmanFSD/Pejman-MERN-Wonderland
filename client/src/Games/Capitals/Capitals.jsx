@@ -361,8 +361,8 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             seconds > 0 && (
               <div>
                 <h3>Countries</h3>
-                {questionCountries.map((qc) => (
-                  <div>{qc}</div>
+                {questionCountries.map((qc, i) => (
+                  <div key={i}>{qc}</div>
                 ))}
               </div>
             )}
@@ -410,7 +410,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             questionCountries.map((c, i) =>
               Object.values(inputs)[i] ? (
-                <h3>
+                <h3 key={i}>
                   {`You chose ${Object.values(inputs)[i]} as the capital of ${
                     questionCountries[i]
                   }`}{" "}
@@ -419,7 +419,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                     : `❌ -> The correct answer is: ${answer[i]}`}
                 </h3>
               ) : (
-                <h3>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
+                <h3 key={i}>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
               ),
             )}
           {!isTogglingReset &&

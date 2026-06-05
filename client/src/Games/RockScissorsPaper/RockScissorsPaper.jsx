@@ -286,8 +286,8 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             (normalMode || extremelySuperDifficultMode) &&
             new Array(tripleScore)
               .fill(null)
-              .map((s) => (
-                <div style={{ display: "inline", fontSize: "70px" }}>❁</div>
+              .map((s, i) => (
+                <div style={{ display: "inline", fontSize: "70px" }} key={i}>❁</div>
               ))}
           {isGameStarted &&
           tripleScore === 3 &&

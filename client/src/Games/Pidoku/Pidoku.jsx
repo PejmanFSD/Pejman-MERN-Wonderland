@@ -757,8 +757,8 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     <option value={userColor} disabled selected>
                       🔽🔽🔽
                     </option>
-                    {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                      <option>{c}</option>
+                    {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
+                      <option key={i}>{c}</option>
                     ))}
                   </select>
                 </div>
@@ -775,8 +775,8 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     <option value={pejmanColor} disabled selected>
                       🔽🔽🔽
                     </option>
-                    {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                      <option>{c}</option>
+                    {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
+                      <option key={i}>{c}</option>
                     ))}
                   </select>
                 </div>
@@ -803,7 +803,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             new Array(25).fill(null).map((el, idx) =>
               (idx + 1) % 5 !== 0 ? (
-                <div style={{ display: "inline" }}>
+                <div style={{ display: "inline" }} key={idx}>
                   <Square
                     userNums={userNums}
                     setUserNums={setUserNums}
@@ -884,7 +884,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                   {userPoint !== 0 && "("}
                 </div>
                 {finalSquares.map(
-                  (fs) =>
+                  (fs, i) =>
                     squares.find((s) => s.id === fs).owner === "User" && (
                       <div
                         style={{
@@ -898,6 +898,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                           padding: "7px",
                           border: "4px solid black",
                         }}
+                        key={i}
                       >
                         {squares.find((s) => s.id === fs).text < 10
                           ? `0${squares.find((s) => s.id === fs).text}`
@@ -913,7 +914,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                   {pejmanPoint !== 0 && "("}
                 </div>
                 {finalSquares.map(
-                  (fs) =>
+                  (fs, i) =>
                     squares.find((s) => s.id === fs).owner === "Pejman" && (
                       <div
                         style={{
@@ -927,6 +928,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                           padding: "7px",
                           border: "4px solid black",
                         }}
+                        key={i}
                       >
                         {squares.find((s) => s.id === fs).text < 10
                           ? `0${squares.find((s) => s.id === fs).text}`

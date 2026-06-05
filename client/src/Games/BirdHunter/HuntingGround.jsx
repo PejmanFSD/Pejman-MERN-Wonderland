@@ -82,6 +82,7 @@ export default function HuntingGround({
           setNumOfDoneGrounds={setNumOfDoneGrounds}
           setUserScore={setUserScore}
           isTogglingHomePage={isTogglingHomePage}
+          key={index}
         />
       ))}
     </div>

@@ -7,7 +7,7 @@ export default function UserGuess({
   return (
     <div>
       {new Array(easyMode ? 5 : 10).fill(null).map((el, i) => (
-        <div>
+        <div key={i}>
           <p style={{ display: "inline" }}>
             {userGuess
               .slice(4 * i, 4 * i + 4)

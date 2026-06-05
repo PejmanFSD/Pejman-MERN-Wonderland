@@ -20,6 +20,8 @@ const array80To89 = [80, 81, 82, 83, 84, 85, 86, 87, 88, 89];
 const array90To99 = [90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
 const allNumsArray = Array.from({ length: 99 }, (_, i) => i + 1);
 
+const mainColors = ["Red", "Green", "Blue"];
+
 export default function Bingo({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
@@ -1660,8 +1662,8 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 <option value={userColor} disabled selected>
                   🔽🔽🔽
                 </option>
-                {["Red", "Green", "Blue"].map((c) => (
-                  <option>{c}</option>
+                {mainColors.map((c) => (
+                  <option key={mainColors.indexOf(c)}>{c}</option>
                 ))}
               </select>
             </div>
@@ -1723,6 +1725,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                     border: "1px solid black",
                     opacity: finalMessage === "" ? 1 : 0.3,
                   }}
+                  key={selectedNums.indexOf(n)}
                 >
                   {n}
                 </div>

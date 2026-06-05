@@ -288,6 +288,7 @@ export default function Home({
                 width="18px"
                 alt="Star"
                 style={{ margin: "2px" }}
+                key={i}
               />
             ))}
           </div>
@@ -300,9 +301,10 @@ export default function Home({
                 width="18px"
                 alt="Star"
                 style={{ margin: "2px" }}
+                key={i}
               />
             ))}
-            <div style={{ display: "inline", color: "red" }}>...</div>
+            <div style={{ display: "inline" }}>...</div>
             <br />
             <button onClick={handleShowAllStars}>Show all stars</button>
           </div>
@@ -315,6 +317,7 @@ export default function Home({
                 width="18px"
                 alt="Star"
                 style={{ margin: "2px" }}
+                key={i}
               />
             ))}
             <br />

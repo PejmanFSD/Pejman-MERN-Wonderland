@@ -526,7 +526,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             deck.map((c, i) =>
               (i + 1) % 13 !== 0 ? (
-                <div style={{ display: "inline" }}>
+                <div style={{ display: "inline" }} key={i}>
                   <img src={Back} height="55px" style={{ margin: "2px" }} alt="" />
                 </div>
               ) : (
@@ -542,7 +542,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage &&
             deck.map((c, i) => (
-              <div style={{ display: "inline" }}>{deck[i].point} - </div>
+              <div style={{ display: "inline" }} key={i}>{deck[i].point} - </div>
             ))}
           <br />
           {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
@@ -563,7 +563,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !userHand.includes(c) &&
               !pejmanHand.includes(c) &&
               (i + 1) % 13 !== 0 ? (
-                <div style={{ display: "inline" }}>
+                <div style={{ display: "inline" }} key={i}>
                   <img src={Back} height="55px" style={{ margin: "2px" }} alt="" />
                 </div>
               ) : (
@@ -582,7 +582,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage &&
             usedCards.map((c, i) => (
-              <div style={{ display: "inline" }}>{usedCards[i].point} - </div>
+              <div style={{ display: "inline" }} key={i}>{usedCards[i].point} - </div>
             ))}
           {isGameStarted &&
             finalMessage === "" &&
@@ -609,8 +609,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                {new Array(pejmanChipsNum).fill(null).map((c) => (
-                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} alt="" />
+                {new Array(pejmanChipsNum).fill(null).map((c, i) => (
+                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} alt="" key={i} />
                 ))}
               </div>
             )}
@@ -638,6 +638,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   height="120px"
                   style={{ margin: "2px" }}
                   alt=""
+                  key={i}
                 />
               ))}
           <br />
@@ -649,8 +650,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                {new Array(2 * bet).fill(null).map((c) => (
-                  <img src={chips[0]} height="50px" alt="" />
+                {new Array(2 * bet).fill(null).map((c, i) => (
+                  <img src={chips[0]} height="50px" alt="" key={i}/>
                 ))}
               </div>
             )}
@@ -709,6 +710,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   height="120px"
                   style={{ margin: "2px" }}
                   alt=""
+                  key={i}
                 />
               ))}
           <br />
@@ -728,8 +730,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                {new Array(userChipsNum).fill(null).map((c) => (
-                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} alt="" />
+                {new Array(userChipsNum).fill(null).map((c, i) => (
+                  <img src={chips[1]} height="50px" style={{ margin: "2px" }} alt="" key={i} />
                 ))}
               </div>
             )}
@@ -768,8 +770,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     {Array.from(
                       { length: Math.min(userChipsNum, pejmanChipsNum) },
                       (_, i) => i + 1,
-                    ).map((i) => (
-                      <option>{i}</option>
+                    ).map((i, idx) => (
+                      <option key={idx}>{i}</option>
                     ))}
                   </select>
                 </div>
@@ -931,8 +933,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       {Array.from(
                         { length: Math.min(userChipsNum, pejmanChipsNum) },
                         (_, i) => i + 1,
-                      ).map((i) => (
-                        <option>{i}</option>
+                      ).map((i, idx) => (
+                        <option key={idx}>{i}</option>
                       ))}
                     </select>
                   </div>

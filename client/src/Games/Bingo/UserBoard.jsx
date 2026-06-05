@@ -43,6 +43,7 @@ export default function UserBoard({
                 setUser3Nums={setUser3Nums}
                 setYouMissedMessage={setYouMissedMessage}
                 finalMessage={finalMessage}
+                key={idx}
             />
           ))}
         </div>

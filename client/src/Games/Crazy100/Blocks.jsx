@@ -10,7 +10,7 @@ export default function Blocks({
 }) {
   return (
     <div>
-      {table.map((t) =>
+      {table.map((t, i) =>
         blockNums.includes(t) ? (
           <button
             style={{
@@ -24,6 +24,7 @@ export default function Blocks({
             }}
             onClick={handleClickChosenExtraNum}
             disabled={isWin !== "" || seconds < 1}
+            key={i}
           >
             {chosenExtraNums[t]?.number}
           </button>
@@ -45,6 +46,7 @@ export default function Blocks({
             }}
             onClick={handleClickNum}
             disabled={isWin !== "" || seconds < 1}
+            key={i}
           >
             {nums.find((obj) => obj.blockNum === t)?.number}
           </button>

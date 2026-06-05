@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Bowl from "./Bowl";
-import ConfirmationBox from "../ConfirmationBox";
 import { getRandNum, getRandArr } from "../utils";
 
 export default function Bowls({
@@ -671,7 +670,7 @@ export default function Bowls({
           {Array(5)
             .fill(null)
             .map((bowl, idx) => (
-              <div>
+              <div key={idx}>
                 <label htmlFor={`bowl${idx + 1}`}></label>
                 {`Select the number of balls for bowl ${idx + 1}`}
                 <select
@@ -682,8 +681,8 @@ export default function Bowls({
                   <option value={bowls[idx].ballsNum} disabled selected>
                     {`bowl ${idx + 1}`}
                   </option>
-                  {Array.from({ length: 7 }, (_, i) => i + 1).map((o) => (
-                    <option>{o}</option>
+                  {Array.from({ length: 7 }, (_, i) => i + 1).map((o, i) => (
+                    <option key={i}>{o}</option>
                   ))}
                 </select>
               </div>
@@ -719,6 +718,7 @@ export default function Bowls({
                 setIsTogglingReset={setIsTogglingReset}
                 isTogglingHomePage={isTogglingHomePage}
                 isWin={isWin}
+                key={idx}
               />
             ),
         )}
@@ -742,6 +742,7 @@ export default function Bowls({
                 setIsTogglingReset={setIsTogglingReset}
                 isTogglingHomePage={isTogglingHomePage}
                 isWin={isWin}
+                key={idx}
               />
             ),
         )}
@@ -786,8 +787,8 @@ export default function Bowls({
                     .ballsNum,
                 },
                 (_, i) => i + 1,
-              ).map((o) => (
-                <option value={o > 1 ? o : 1}>{o}</option>
+              ).map((o, i) => (
+                <option value={o > 1 ? o : 1} key={i}>{o}</option>
               ))}
             </select>
             <br></br>
@@ -838,8 +839,8 @@ export default function Bowls({
       <div style={{ color: "gray" }}>All Balls Num: {allBallsNum}</div> */}
       {!isTogglingReset && !isTogglingHomePage && (
         <div>
-          {allTurns.map((b) => (
-            <div>
+          {allTurns.map((b, i) => (
+            <div key={i}>
               {`Move ${allTurns.indexOf(b) + 1}: `}
               {b.side === "User" ? "You" : "Pejman"}
               {` took ${b.ballsNum} ball${b.ballsNum > 1 ? "s" : ""} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}

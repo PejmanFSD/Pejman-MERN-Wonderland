@@ -69,6 +69,7 @@ export default function Match({
             opacity: finalMessage === "" ? 1 : 0.6
           }}
           alt=""
+          key={idx}
         />
       ))}
       {userColor === "Red" && isUserTurn && dice > 0 && finalMessage === "" && (

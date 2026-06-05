@@ -2322,8 +2322,8 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
                   <option value={userColor} disabled selected>
                     🔽🔽🔽
                   </option>
-                  {["Red", "Blue"].map((c) => (
-                    <option>{c}</option>
+                  {["Red", "Blue"].map((c, i) => (
+                    <option key={i}>{c}</option>
                   ))}
                 </select>
               </div>

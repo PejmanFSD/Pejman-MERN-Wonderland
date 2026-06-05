@@ -357,8 +357,8 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                   <option value="" disabled selected>
                     Select the images Group
                   </option>
-                  {imagesGroup.map((group) => (
-                    <option>{group}</option>
+                  {imagesGroup.map((group, i) => (
+                    <option key={i}>{group}</option>
                   ))}
                 </select>
               </div>

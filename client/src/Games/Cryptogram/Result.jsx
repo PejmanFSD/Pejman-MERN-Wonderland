@@ -20,11 +20,11 @@ export default function Result({
         !isTogglingHomePage &&
         resultMessageStatus.map((r, idx) =>
           r === true ? (
-            <p>{`For code ${idx + 1}, you chose ${
+            <p key={idx}>{`For code ${idx + 1}, you chose ${
               Object.values(inputs)[idx]
             } ✅`}</p>
           ) : (
-            <div>
+            <div key={idx}>
               <p>{`For code ${idx + 1}, you chose ${
                 Object.values(inputs)[idx]
               } ❌. The correct answer is: ${Object.keys(resultObj)[idx]}.`}</p>
@@ -51,7 +51,7 @@ export default function Result({
         )}
       {!isTogglingReset && !isTogglingHomePage && isWin !== "" && (
         <div>
-          {adviceArray.map((a) => (
+          {adviceArray.map((a, i) => (
             <h2
               style={{
                 display: "inline",
@@ -59,6 +59,7 @@ export default function Result({
                 textDecoration:
                   acceptedAsRepetition.includes(a) && "red underline",
               }}
+              key={i}
             >
               {a}
             </h2>

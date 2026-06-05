@@ -1041,14 +1041,14 @@ export default function XO({ updateTotalPoint, currentUser }) {
       </div> */}
           <div style={{ color: "gray" }}>
             Red Array:{" "}
-            {redArray.map((s) => (
-              <div style={{ display: "inline" }}>{s}-</div>
+            {redArray.map((s, i) => (
+              <div style={{ display: "inline" }} key={i}>{s}-</div>
             ))}
           </div>
           <div style={{ color: "gray" }}>
             Green Array:{" "}
-            {greenArray.map((s) => (
-              <div style={{ display: "inline" }}>{s}-</div>
+            {greenArray.map((s, i) => (
+              <div style={{ display: "inline" }} key={i}>{s}-</div>
             ))}
           </div>
           {isWin === "" &&
@@ -1117,6 +1117,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                       isTogglingReset={isTogglingReset}
                       isTogglingHomePage={isTogglingHomePage}
                       isTogglingLevel={isTogglingLevel}
+                      key={idx}
                     />
                   }
                 </div>
@@ -1198,6 +1199,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                           margin: "5px",
                           color: "lightblue",
                         }}
+                        key={i}
                       >
                         <div
                           style={{
@@ -1242,6 +1244,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                           margin: "5px",
                           color: "lightblue",
                         }}
+                        key={i}
                       >
                         <div
                           style={{

@@ -188,8 +188,8 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                   <option value={color} disabled selected>
                     Select a Color
                   </option>
-                  {["Red", "Green", "Blue"].map((c) => (
-                    <option>{c}</option>
+                  {["Red", "Green", "Blue"].map((c, i) => (
+                    <option key={i}>{c}</option>
                   ))}
                 </select>
               </div>
@@ -275,7 +275,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             new Array(squareNum).fill(null).map((el, idx) =>
               (idx + 1) % squareNum ** 0.5 !== 0 ? (
-                <div style={{ display: "inline" }}>
+                <div style={{ display: "inline" }} key={idx}>
                   <Square
                     easyMode={easyMode}
                     red={color.red}
@@ -291,7 +291,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                   />
                 </div>
               ) : (
-                <div style={{ display: "inline" }}>
+                <div style={{ display: "inline" }} key={idx}>
                   <Square
                     easyMode={easyMode}
                     red={color.red}
@@ -338,6 +338,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                           : Blank
                 }
                 alt=""
+                key={idx}
               />
             ))}
           <br />

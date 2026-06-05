@@ -521,8 +521,8 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     "Mansion",
                     "Numbers",
                     "Pencils",
-                  ].map((c) => (
-                    <option>{c}</option>
+                  ].map((c, i) => (
+                    <option key={i}>{c}</option>
                   ))}
                 </select>
               </div>
@@ -566,7 +566,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                   justifyContent: "center",
                 }}
               >
-                {imageGroup.map((cell) => (
+                {imageGroup.map((cell, idx) => (
                   <Cell
                     imageSrc={cell.image}
                     setIsActiveUpButton={setIsActiveUpButton}
@@ -578,6 +578,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     isAnImageClicked={isAnImageClicked}
                     setIsAnImageClicked={setIsAnImageClicked}
                     finalMessage={finalMessage}
+                    key={idx}
                   />
                 ))}
               </div>

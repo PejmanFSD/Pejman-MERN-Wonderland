@@ -1492,8 +1492,8 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   <option value={userColor} disabled selected>
                     🔽🔽🔽
                   </option>
-                  {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                    <option>{c}</option>
+                  {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
+                    <option key={i}>{c}</option>
                   ))}
                 </select>
               </div>
@@ -1508,8 +1508,8 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   <option value={pejmanColor} disabled selected>
                     🔽🔽🔽
                   </option>
-                  {["Red", "Green", "Blue", "Yellow"].map((c) => (
-                    <option>{c}</option>
+                  {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
+                    <option key={i}>{c}</option>
                   ))}
                 </select>
               </div>
@@ -1615,7 +1615,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             cells.map((el, idx) =>
               (idx + 1) % 7 !== 0 ? (
-                <div style={{ display: "inline" }}>
+                <div style={{ display: "inline" }} key={idx}>
                   <Cell
                     id={el.id}
                     src={el.src}

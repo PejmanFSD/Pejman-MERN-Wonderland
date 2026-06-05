@@ -107,11 +107,11 @@ export default function Users({
           <table border="1" cellPadding="10" style={{ width: "90%" }}>
             <thead>
               <tr>
-                <th style={{ width: "12%" }}>Username</th>
+                <th style={{ width: "15%" }}>Username</th>
                 <th style={{ width: "7%" }}>Role</th>
-                <th style={{ width: "5%" }}>Number of Stars</th>
-                <th style={{ width: "36%" }}>Message</th>
-                <th style={{ width: "30%" }}>Actions</th>
+                <th style={{ width: "9%" }}>Number of Stars</th>
+                <th style={{ width: "44%" }}>Message</th>
+                <th style={{ width: "15%" }}>Actions</th>
               </tr>
             </thead>
             <tbody>

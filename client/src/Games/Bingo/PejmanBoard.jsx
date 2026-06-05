@@ -20,6 +20,7 @@ export default function PejmanBoard({ nums, selectedNums, finalMessage }) {
                 isWinnerCell={nums[idx].isWinnerCell}
                 isSelected={nums[idx].isSelected}
                 finalMessage={finalMessage}
+                key={idx}
             />
           ))}
         </div>

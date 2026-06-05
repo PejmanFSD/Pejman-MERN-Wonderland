@@ -11,7 +11,7 @@ export default function Form({
   return (
     <form onSubmit={handleSubmit}>
       {questionCountries.map((el, i) => (
-        <div>
+        <div key={i}>
           <label htmlFor={`input${i + 1}`}></label>
           <select
             onChange={handleChange}
@@ -22,8 +22,8 @@ export default function Form({
             <option value={Object.values(inputs)[i]} disabled selected>
               {`Select the Capital of ${questionCountries[i]}`}
             </option>
-            {questionCapitals.map((c) => (
-              <option>{c}</option>
+            {questionCapitals.map((c, i) => (
+              <option key={i}>{c}</option>
             ))}
           </select>
         </div>

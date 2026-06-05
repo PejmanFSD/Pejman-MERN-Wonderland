@@ -42,6 +42,7 @@ export default function GuessTable({
               position: "relative",
               top: "25px",
             }}
+            key={idx}
           >
             {(userGuess.includes(word[idx]) ||
               userGuess.includes(word[idx].toLowerCase())) &&
@@ -51,7 +52,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 109 - 97 + 1 }, (_, index) => index + 97).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -67,6 +68,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -75,7 +77,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 122 - 110 + 1 }, (_, index) => index + 110).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -91,6 +93,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -99,7 +102,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 57 - 48 + 1 }, (_, index) => index + 48).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -115,6 +118,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -123,7 +127,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 47 - 33 + 1 }, (_, index) => index + 33).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -139,6 +143,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -147,7 +152,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 126 - 123 + 1 }, (_, index) => index + 123).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -163,6 +168,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -171,7 +177,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 64 - 58 + 1 }, (_, index) => index + 58).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -187,6 +193,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -195,7 +202,7 @@ export default function GuessTable({
       </div>
       <div>
         {Array.from({ length: 96 - 91 + 1 }, (_, index) => index + 91).map(
-          (b) => (
+          (b, i) => (
             <button
               onClick={addChar}
               name={String.fromCharCode(b)}
@@ -211,6 +218,7 @@ export default function GuessTable({
                 userMistakes.includes(String.fromCharCode(b)) ||
                 isWin !== ""
               }
+              key={i}
             >
               {String.fromCharCode(b)}
             </button>
@@ -229,6 +237,7 @@ export default function GuessTable({
               top: "80px",
               color: "red",
             }}
+            key={idx}
           >
             {userMistakes && userMistakes[idx]}
           </div>

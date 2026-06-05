@@ -324,6 +324,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 margin: "3px",
               }}
               alt=""
+              key={i}
             />
           ))}
           <div>
@@ -352,8 +353,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
           </div>
           {isGameStarted &&
             !isSlideShowStarted &&
-            quizArray.map((i) => (
-              <div style={{ display: "inline" }}>
+            quizArray.map((i, idx) => (
+              <div style={{ display: "inline" }} key={idx}>
                 {/* <img
               src={i.image}
               style={{ width: "60px", border: "1px solid red", margin: "4px" }}
@@ -369,7 +370,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage &&
-            quizArray.map((i) => (
+            quizArray.map((i, idx) => (
               <div style={{ display: "inline" }}>
                 <img
                   src={i.image}
@@ -379,6 +380,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     margin: "4px",
                   }}
                   alt=""
+                  key={idx}
                 />
               </div>
             ))}
@@ -398,8 +400,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     <option value={userAnswers.answer1} disabled selected>
                       🔽
                     </option>
-                    {[1, 2, 3].map((i) => (
-                      <option disabled={isResult}>{i}</option>
+                    {[1, 2, 3].map((i, idx) => (
+                      <option disabled={isResult} key={idx}>{i}</option>
                     ))}
                   </select>
                 </div>
@@ -413,8 +415,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     <option value={userAnswers.answer2} disabled selected>
                       🔽
                     </option>
-                    {[1, 2, 3].map((i) => (
-                      <option disabled={isResult}>{i}</option>
+                    {[1, 2, 3].map((i, idx) => (
+                      <option disabled={isResult} key={idx}>{i}</option>
                     ))}
                   </select>
                 </div>
@@ -428,8 +430,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     <option value={userAnswers.answer3} disabled selected>
                       🔽
                     </option>
-                    {[1, 2, 3].map((i) => (
-                      <option disabled={isResult}>{i}</option>
+                    {[1, 2, 3].map((i, idx) => (
+                      <option disabled={isResult} key={idx}>{i}</option>
                     ))}
                   </select>
                 </div>

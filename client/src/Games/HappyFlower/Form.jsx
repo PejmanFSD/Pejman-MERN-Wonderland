@@ -48,8 +48,8 @@ export default function Form({
         <option disabled selected>
           ⬇️
         </option>
-        {titles.map((t) => (
-          <option>{t}</option>
+        {titles.map((t, i) => (
+          <option key={i}>{t}</option>
         ))}
       </select>
       <div>{title && <button>Done</button>}</div>

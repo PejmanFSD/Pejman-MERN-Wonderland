@@ -403,7 +403,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                   top: "7px",
                 }}
               >
-                {selectedEmojis.map((selectedEmoji) => (
+                {selectedEmojis.map((selectedEmoji, idx) => (
                   <Emoji
                     key={selectedEmojis.indexOf(selectedEmoji)}
                     imgId={selectedEmojis.indexOf(selectedEmoji)}
@@ -429,7 +429,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 <div>Well Done! You found a tripleMatch</div>
                 <div>
                   {selectedEmojis.map(
-                    (s) =>
+                    (s, i) =>
                       s.repetitionNum === 3 && (
                         <img
                           src={s.image}
@@ -441,6 +441,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                             border: "1px solid red",
                           }}
                           alt=""
+                          key={i}
                         />
                       ),
                   )}
@@ -466,7 +467,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                   justifyContent: "center",
                 }}
               >
-                {emojis.map((emoji) => (
+                {emojis.map((emoji, i) => (
                   <Emoji
                     key={emoji.id}
                     imgId={emoji.id}
