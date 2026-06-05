@@ -53,7 +53,6 @@ module.exports.showAd = async (req, res) => {
   const { id } = req.params;
   // const ad = await Ad.findById(id).populate('author');
   const ad = await Ad.findById(id);
-  console.log(ad);
   if (!ad) {
     // req.flash('error', "Can't find that ad!");
     return res.status(404).json({ error: "Ad not found" });

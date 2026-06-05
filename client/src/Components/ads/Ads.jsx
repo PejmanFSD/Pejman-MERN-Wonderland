@@ -14,7 +14,6 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEd
           throw new Error("Failed to fetch ads");
         }
         const data = await response.json();
-        console.log("DATA FROM SERVER:", data);
         setAds(data);
       } catch (error) {
         console.error(error.message);

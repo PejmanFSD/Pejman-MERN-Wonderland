@@ -6,14 +6,12 @@ const { adSchema } = require("./schemas.js");
 const { reviewSchema, createReviewSchema, updateReviewSchema } = require("./schemas.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
-  console.log("➡️ isLoggedIn hit");
   if (!req.session.user_id) {
     // req.session.returnTo = req.originalUrl; // Storing the url that the user is trying to reach
     // req.flash('error', 'You should login!');
     // return res.redirect('/login');
     return;
   }
-  console.log("✔️ isLoggedIn passed");
   next();
 };
 // In order to stop the already logged-in users to login again or register:
@@ -172,7 +170,6 @@ module.exports.handleCreatingReviewErrors = (err, req, res, next) => {
 };
 
 module.exports.canModifyReview = async (req, res, next) => {
-  console.log("➡️ canModifyReview hit");
   if (!req.session.user_id) {
     return res.status(401).json({ error: "Unauthorized" });
   }
@@ -184,7 +181,6 @@ module.exports.canModifyReview = async (req, res, next) => {
   const isAdmin =
       req.user && (req.user.role === "Admin" || req.user.username === "Pejman");
   if (isOwner || isAdmin) {
-    console.log("✔️ canModifyReview passed");
     return next();
   }
   return res.status(403).json({
@@ -203,14 +199,11 @@ module.exports.validateCreateReview = (req, res, next) => {
 };
 
 module.exports.validateUpdateReview = (req, res, next) => {
-  console.log("➡️ validateUpdateReview running");
-  console.log("updateReviewSchema:", updateReviewSchema);
   const { error } = updateReviewSchema.validate(req.body);
   if (error) {
     return res.status(400).json({
       error: error.details.map(el => el.message).join(", ")
     });
   }
-  console.log("✔️ validateUpdateReview passed");
   next();
 };

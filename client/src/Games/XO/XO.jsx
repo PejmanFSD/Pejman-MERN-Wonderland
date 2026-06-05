@@ -705,56 +705,48 @@ export default function XO({ updateTotalPoint, currentUser }) {
               !pejmanIndexes.includes(i - 6) &&
               !userIndexes.includes(i - 6)
             ) {
-              console.log("Condition 1A, i-6: ", i - 6);
               newPejmanChoice = i - 6;
               break;
             } else if (
               !pejmanIndexes.includes(i + 6) &&
               !userIndexes.includes(i + 6)
             ) {
-              console.log("Condition 1B, i+6: ", i + 6);
               newPejmanChoice = i + 6;
               break;
             } else if (
               !pejmanIndexes.includes(i - 4) &&
               !userIndexes.includes(i - 4)
             ) {
-              console.log("Condition 1C, i-4: ", i - 4);
               newPejmanChoice = i - 4;
               break;
             } else if (
               !pejmanIndexes.includes(i + 4) &&
               !userIndexes.includes(i + 4)
             ) {
-              console.log("Condition 1D, i+4: ", i + 4);
               newPejmanChoice = i + 4;
               break;
             } else if (
               !pejmanIndexes.includes(i - 1) &&
               !userIndexes.includes(i - 1)
             ) {
-              console.log("Condition 1E, i-1: ", i - 1);
               newPejmanChoice = i - 1;
               break;
             } else if (
               !pejmanIndexes.includes(i + 1) &&
               !userIndexes.includes(i + 1)
             ) {
-              console.log("Condition 1F, i+1: ", i + 1);
               newPejmanChoice = i + 1;
               break;
             } else if (
               !pejmanIndexes.includes(i - 5) &&
               !userIndexes.includes(i - 5)
             ) {
-              console.log("Condition 1G, i-5: ", i - 5);
               newPejmanChoice = i - 5;
               break;
             } else if (
               !pejmanIndexes.includes(i + 5) &&
               !userIndexes.includes(i + 5)
             ) {
-              console.log("Condition 1H, i+5: ", i + 5);
               newPejmanChoice = i + 5;
               break;
             }
@@ -774,10 +766,8 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = greenFreq.get(b) - greenFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log("Condition 2, sorted greenArray: ", sortedGreenArray);
         for (const s of sortedGreenArray) {
           if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
-            console.log("Condition 2A, chosen element: ", s);
             newPejmanChoice = s;
             break;
           }
@@ -791,11 +781,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
         !userIndexes.includes(redArray[0])
       ) {
         newPejmanChoice = redArray[0];
-        console.log("Condition 3 - redArray[0]: ", redArray[0]);
       }
       // Condition 4:
       else if (redArray.length > 1) {
-        console.log("Condition 4: Before Sorting");
         // Sorting the "redArray" based on the repetition of the elements:
         // 1️⃣ Count frequencies:
         const redFreq = new Map();
@@ -807,7 +795,6 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = redFreq.get(b) - redFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log("Condition 4, sorted redArray: ", sortedRedArray);
         // Sorting the "greenArray" based on the repetition of the elements:
         // 1️⃣ Count frequencies:
         const greenFreq = new Map();
@@ -819,7 +806,6 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = greenFreq.get(b) - greenFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log("Condition 4, sorted greenArray: ", sortedGreenArray);
         if (
           (greenArray.length > 1 &&
             sortedGreenArray[0] === sortedGreenArray[1] &&
@@ -830,21 +816,15 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !pejmanIndexes.includes(sortedGreenArray[0]) &&
             !userIndexes.includes(sortedGreenArray[0]))
         ) {
-          console.log(
-            "Condition 4A, sortedGreenArray[0]: ",
-            sortedGreenArray[0],
-          );
           newPejmanChoice = sortedGreenArray[0];
         } else if (
           !pejmanIndexes.includes(sortedRedArray[0]) &&
           !userIndexes.includes(sortedRedArray[0])
         ) {
-          console.log("Condition 4B, sortedRedArray[0]: ", sortedRedArray[0]);
           newPejmanChoice = sortedRedArray[0];
         } else {
           for (const s of sortedRedArray) {
             if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
-              console.log("Condition 4C, chosen element: ", s);
               newPejmanChoice = s;
               break;
             }
@@ -864,16 +844,13 @@ export default function XO({ updateTotalPoint, currentUser }) {
           const diff = greenFreq.get(b) - greenFreq.get(a);
           return diff !== 0 ? diff : a - b;
         });
-        console.log("Condition 5, sorted greenArray: ", sortedGreenArray);
         for (const s of sortedGreenArray) {
           if (!pejmanIndexes.includes(s) && !userIndexes.includes(s)) {
-            console.log("Condition 5A, chosen element: ", s);
             newPejmanChoice = s;
             break;
           }
         }
       } else if (newPejmanChoice === null) {
-        console.log("Condition ZZZ");
         newPejmanChoice = getRandArr(availableSquares.map((item) => item.id));
       }
     }

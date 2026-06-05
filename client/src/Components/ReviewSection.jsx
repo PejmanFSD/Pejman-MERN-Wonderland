@@ -26,7 +26,6 @@ export default function ReviewSection({ game, currentUser }) {
   }, [game, page]);
 
   const fetchReviews = async () => {
-    console.log("currentUser:", currentUser);
     setLoading(true);
     setError(null);
     try {
@@ -84,7 +83,6 @@ export default function ReviewSection({ game, currentUser }) {
   const handleUpdate = async (id) => {
     setIsReviewEditing(true);
     setError(null);
-    console.log("Updating review:", id);
     try {
       const response = await fetch(`/reviews/${id}`, {
         method: "PUT",
@@ -97,7 +95,6 @@ export default function ReviewSection({ game, currentUser }) {
           rating: editRating,
         }),
       });
-      console.log("Response status:", response.status);
       let json;
       try {
         json = await response.json();
