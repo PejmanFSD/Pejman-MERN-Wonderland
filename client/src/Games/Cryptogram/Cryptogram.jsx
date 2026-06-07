@@ -217,7 +217,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
             isOneChar &&
             !isAlreadyExist && (
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             )}
           {isTogglingHomePage && (

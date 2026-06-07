@@ -152,7 +152,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
             <ModeExplaination message="Standard Nim: Get the last ball and win the game!" />
           )}
           {misere && !isTogglingHomePage && (
-            <ModeExplaination message="Misere Nim: Get the last ball and loose!" />
+            <ModeExplaination message="Misere Nim: Get the last ball and lose!" />
           )}
           {easyMode && !isTogglingHomePage && (
             <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly. You'll get 1 star if you win." />
@@ -162,7 +162,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
           )}
           {!isTogglingReset && !isTogglingHomePage && (
             <button onClick={() => toggleHomePage()}>
-              Back to the home page
+              Back to home page
             </button>
           )}
           {isFillingTheBowlsByUserFinished &&
@@ -284,7 +284,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
           )}
           {isWin === false && !isTogglingHomePage && (
             <div>
-              <h2>You Loose!</h2>
+              <h2>Pejman Wins!</h2>
               <h3>{`Because ${standard ? "Pejman" : "you"} picked the last ball`}</h3>
             </div>
           )}

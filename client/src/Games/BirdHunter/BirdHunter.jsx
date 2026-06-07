@@ -39,7 +39,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
       setFinalMessage("You Win!");
       updateTotalPoint(2);
     } else {
-      setFinalMessage("You Loose!");
+      setFinalMessage("You Lose!");
     }
   };
   const handlePlayAgain = () => {
@@ -88,7 +88,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}
@@ -229,7 +229,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
               <button onClick={handlePlayAgain}>Ok</button>
             </div>
           )}
-          {finalMessage === "You Loose!" && !isTogglingHomePage && (
+          {finalMessage === "You Lose!" && !isTogglingHomePage && (
             <div>
               <div>Try Again!</div>
               <button onClick={handlePlayAgain}>Ok</button>

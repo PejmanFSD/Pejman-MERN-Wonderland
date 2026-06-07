@@ -169,7 +169,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
           )}
           {!isTogglingReset && !isTogglingHomePage && (
             <button onClick={() => toggleHomePage()}>
-              Back to the home page
+              Back to home page
             </button>
           )}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
@@ -206,7 +206,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage && <h2>Time's Up!</h2>}
             {isWin === false && !isTogglingHomePage && (
               <div>
-                <h2>You loose!</h2>
+                <h2>You Lose!</h2>
                 <h3>{`The name of the ${title} is "${word}"`}</h3>
                 <div>Try again?</div>
                 <button onClick={handleReset}>Ok</button>

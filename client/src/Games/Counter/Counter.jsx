@@ -93,7 +93,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
         updateTotalPoint(4);
       }
     } else {
-      setFinalMessage("You Loose!");
+      setFinalMessage("You Lose!");
     }
     setIsResult(true);
   };
@@ -302,7 +302,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             finalMessage === "" && (
               <div>
                 <button onClick={() => toggleHomePage()}>
-                  Back to the home page
+                  Back to home page
                 </button>
               </div>
             )}
@@ -461,7 +461,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition}➡️ You guessed wrong! ❌`}
                 </strong>
                 <h2>{finalMessage}</h2>
-                {finalMessage === "You Loose!" && (
+                {finalMessage === "You Lose!" && (
                   <div>
                     <div>Try Again?</div>
                     <button onClick={handlePlayAgain}>Ok</button>

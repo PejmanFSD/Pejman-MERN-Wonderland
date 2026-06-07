@@ -725,7 +725,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}
@@ -947,7 +947,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h2>You Win!</h2>
+                <h2>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
                 <button onClick={handlePlayAgain}>Play Again</button>
               </div>
             )}
@@ -967,7 +967,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h2>You Loose!</h2>
+                <h2>Pejman Wins!</h2>
                 <button onClick={handlePlayAgain}>Try Again</button>
               </div>
             )}

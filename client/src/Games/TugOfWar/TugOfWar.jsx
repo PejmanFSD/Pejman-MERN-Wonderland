@@ -2180,7 +2180,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             finalMessage === "" && (
               <div>
                 <button onClick={() => toggleHomePage()} disabled={dice === 0}>
-                  Back to the home page
+                  Back to home page
                 </button>
               </div>
             )}
@@ -2197,7 +2197,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             finalMessage === "You Win!" &&
             !isTogglingHomePage && (
               <div>
-                <h3>You Win!</h3>
+                <h3>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
                 <div>Play Again?</div>
                 <button onClick={handlePlayAgain}>Ok</button>
               </div>

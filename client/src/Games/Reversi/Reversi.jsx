@@ -1595,7 +1595,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isIdenticalColor && (
               <div>
                 <button onClick={() => toggleHomePage()}>
-                  Back to the home page
+                  Back to home page
                 </button>
               </div>
             )}

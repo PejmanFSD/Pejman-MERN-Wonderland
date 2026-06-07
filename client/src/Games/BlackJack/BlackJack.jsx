@@ -480,7 +480,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             finalMessage === "" && (
               <div>
                 <button onClick={() => toggleHomePage()}>
-                  Back to the home page
+                  Back to home page
                 </button>
               </div>
             )}

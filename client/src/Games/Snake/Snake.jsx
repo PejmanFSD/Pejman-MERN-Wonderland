@@ -120,17 +120,17 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       newHead.y >= gridSize
     ) {
       // setIsGameStarted(false);
-      setFinalMessage("You loose!");
+      setFinalMessage("You Lose!");
       setDirection({ x: 0, y: 0 });
       setDirections((currDirections) => [...currDirections, "None"]);
       return;
     }
     // Self collision; if the location of any of the  grids(segments)
-    // of the snake is equal to the location of the head, the user looses:
+    // of the snake is equal to the location of the head, the user loses:
     for (let segment of snake) {
       if (segment.x === newHead.x && segment.y === newHead.y) {
         // setIsGameStarted(false);
-        setFinalMessage("You loose!");
+        setFinalMessage("You Lose!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
         return;
@@ -314,7 +314,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
             width: "20px",
             height: "20px",
             background:
-              isSnake && finalMessage === "You loose!"
+              isSnake && finalMessage === "You Lose!"
                 ? "gray"
                 : isSnake && finalMessage === ""
                   ? "lime"
@@ -409,7 +409,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}
@@ -456,7 +456,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   </div>
                 )}
               {finalMessage &&
-                finalMessage === "You loose!" &&
+                finalMessage === "You Lose!" &&
                 !isTogglingHomePage && (
                   <div>
                     <h3>{finalMessage}</h3>

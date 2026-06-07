@@ -75,7 +75,7 @@ export default function Chances({
         !isTogglingReset &&
         !isTogglingHomePage && (
           <div style={{ color: "red" }}>
-            Warning! You only have one chane left!
+            Warning! You only have one chance left!
           </div>
         )}
       {chancesNum === 0 &&
@@ -84,7 +84,7 @@ export default function Chances({
         !isTogglingReset &&
         !isTogglingHomePage && (
           <div>
-            <div style={{ color: "gray" }}>Sorry! You loose!</div>
+            <div style={{ color: "gray" }}>You Lose!</div>
             <div style={{ color: "gray" }}>{`The number was: ${num
               .toString()
               .replaceAll(",", "")}`}</div>
@@ -93,10 +93,7 @@ export default function Chances({
         )}
       {isWin && (
         <div>
-          <div style={{ color: "green" }}>
-            Well Done! You won the {easyMode ? "Easy" : normalMode && "Normal"}{" "}
-            Mode.
-          </div>
+          <div style={{ color: "green" }}>You Win!</div>
           <div style={{ color: "green" }}>
             Your total point increases by{" "}
             {easyMode ? "one" : normalMode && "three"}.

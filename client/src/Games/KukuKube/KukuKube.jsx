@@ -250,7 +250,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}
@@ -379,7 +379,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div style={{ position: "relative", top: "60px" }}>
-                {`You Win! ${normalMode ? "You get 1 star :)" : "But you won't get any stars :("}`}
+                {`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}
                 <div>
                   <div>Play Again?</div>
                   <button onClick={handleReset}>Ok</button>
@@ -393,7 +393,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div style={{ position: "relative", top: "60px" }}>
-                Sorry! You didn't guess correctly!
+                Sorry! You didn't guess correctly! You Lose!
                 <div>
                   <div>Try Again?</div>
                   <button onClick={handleReset}>Ok</button>

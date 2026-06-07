@@ -30,7 +30,7 @@ export default function AboutMaze({ setIsAboutPage }) {
       <br />
       - Maze grid size: 21 × 35
       <br />
-      - You have 140 seconds to complete the maze
+      - You have 180 seconds to complete the maze
       <br />
       - Win the game to earn 1 star
       <br />

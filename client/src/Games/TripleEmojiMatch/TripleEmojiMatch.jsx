@@ -307,7 +307,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
             isWin === "" && (
               <div>
                 <button onClick={() => toggleHomePage()}>
-                  Back to the home page
+                  Back to home page
                 </button>
               </div>
             )}
@@ -377,7 +377,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
           )}
           {isWin === false && (
             <div>
-              <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You lose!"}</h2>
+              <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You Lose!"}</h2>
               <div>Try Again?</div>
               <button onClick={handlePlayAgain}>Ok</button>
             </div>

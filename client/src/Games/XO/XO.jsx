@@ -981,7 +981,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}
@@ -1059,7 +1059,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
           {isWin === true && !isTogglingHomePage && (
             <div>
               <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-              <h2>You Win!</h2>
+              <h2>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
               <div>Play Again?</div>
               <button onClick={handleReset}>Ok</button>
             </div>
@@ -1067,7 +1067,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
           {isWin === false && !isTogglingHomePage && (
             <div>
               <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-              <h2>You loose!</h2>
+              <h2>Pejman Wins!</h2>
               <div>Try Again?</div>
               <button onClick={handleReset}>Ok</button>
             </div>

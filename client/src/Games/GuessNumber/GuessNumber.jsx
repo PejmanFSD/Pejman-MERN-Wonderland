@@ -252,7 +252,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage && (
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             )}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&

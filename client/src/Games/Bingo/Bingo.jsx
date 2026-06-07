@@ -1607,7 +1607,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingReset && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}

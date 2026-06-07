@@ -748,7 +748,7 @@ export default function Bowls({
         )}
       </div>
       {/* {isWin === true && !isTogglingHomePage && <div><h2>You Win!</h2><h3>{`Because ${standard ? 'you' : 'Pejman'} picked the last ball`}</h3></div>}
-      {isWin === false && !isTogglingHomePage && <div><h2>You Loose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
+      {isWin === false && !isTogglingHomePage && <div><h2>You Lose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
       {isWin === true && !isTogglingHomePage && <div><div>Play again?</div><button onClick={handleReset}>Ok</button></div>}
       {isWin === false && !isTogglingHomePage && <div><div>Try again?</div><button onClick={handleReset}>Ok</button></div>} */}
       {isFillingTheBowlsByUserFinished &&

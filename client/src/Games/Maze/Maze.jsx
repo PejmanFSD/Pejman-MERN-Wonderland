@@ -18,7 +18,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [hasWon, setHasWon] = useState(false);
-  const [seconds, setSeconds] = useState(140);
+  const [seconds, setSeconds] = useState(180);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [finalMessage, setFinalMessage] = useState("");
   const [gameKey, setGameKey] = useState(0); // For reseting the game
@@ -53,7 +53,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(140);
+    setSeconds(180);
     setIsTimerRunning(false);
   };
   const handlePlayAgain = () => {
@@ -63,7 +63,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
     } else if (normalMode) {
       setCellsHorizontal(35);
       setCellsVertical(21);
-      setSeconds(140);
+      setSeconds(180);
       setIsTimerRunning(true);
     }
     setIsTogglingReset(false);
@@ -92,7 +92,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
       setNormalMode(true);
       setCellsHorizontal(35);
       setCellsVertical(21);
-      setSeconds(140);
+      setSeconds(180);
       setIsTimerRunning(true);
     } else if (normalMode) {
       setNormalMode(false);
@@ -350,7 +350,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
     const ball = Bodies.circle(
       unitLengthX / 2 + width / 160,
       unitLengthY / 2 + width / 160,
-      0.3 * ballRadius,
+      0.15 * ballRadius,
       {
         label: "ball",
         isStatic: true,
@@ -582,7 +582,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
                   }}
                   onClick={() => toggleHomePage()}
                 >
-                  Back to the home page
+                  Back to home page
                 </button>
               </div>
             )}

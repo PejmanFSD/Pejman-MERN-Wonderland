@@ -243,7 +243,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             showImages &&
             !isTogglingLevel && (
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             )}
           {isTogglingHomePage && (

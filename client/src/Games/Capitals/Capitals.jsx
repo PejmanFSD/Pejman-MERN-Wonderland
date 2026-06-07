@@ -302,7 +302,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isInputEmpty && (
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             )}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
@@ -318,7 +318,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             seconds > 0 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            !isTogglingLevel && <h1>You Win</h1>}
+            !isTogglingLevel && <h1>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>}
           {isGameStarted &&
             // show &&
             (easyMode || normalMode) &&
@@ -333,7 +333,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             seconds > 0 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            !isTogglingLevel && <h1>You Loose</h1>}
+            !isTogglingLevel && <h1>You Lose</h1>}
           {seconds < 1 &&
             !isTogglingReset &&
             !isTogglingHomePage &&

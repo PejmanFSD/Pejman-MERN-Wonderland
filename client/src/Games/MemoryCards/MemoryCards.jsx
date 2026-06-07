@@ -368,8 +368,11 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
-          {!isTogglingHomePage && !isTogglingReset && (
-            <h2>{isWin === true && "You Win!"}</h2>
+{!isTogglingHomePage && !isTogglingReset && isWin === true && easyMode && (
+            <h2>You Win but you don't get any stars!</h2>
+          )}
+{!isTogglingHomePage && !isTogglingReset && isWin === true && (normalMode || hardMode) && (
+            <h2>You Win!</h2>
           )}
           {!isTogglingHomePage && !isTogglingReset && (
             <h2>{isWin === false && "Time's Up!"}</h2>
@@ -412,7 +415,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingReset && (
             <div>
               <button onClick={() => toggleHomePage()}>
-                Back to the home page
+                Back to home page
               </button>
             </div>
           )}

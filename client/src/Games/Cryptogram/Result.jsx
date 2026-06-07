@@ -14,7 +14,7 @@ export default function Result({
         <h1>You Win</h1>
       )}
       {!isTogglingReset && !isTogglingHomePage && isWin === false && (
-        <h1>You Loose</h1>
+        <h1>You Lose</h1>
       )}
       {!isTogglingReset &&
         !isTogglingHomePage &&
