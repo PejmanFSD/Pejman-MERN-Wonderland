@@ -1456,9 +1456,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
         <div>
           <h2>Reversi</h2>
           <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Reversi</button>
-            )}
+            {!isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              isGameStarted && (
+                <button onClick={handleAboutPage}>About Reversi</button>
+              )}
             {isGameStarted &&
               (easyMode || normalMode) &&
               !isTogglingReset &&

@@ -2114,14 +2114,18 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
         <div>
           <h2>Tug of War</h2>
           <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Tug of War</button>
-            )}
+            {!isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              isGameStarted && (
+                <button onClick={handleAboutPage}>About Tug of War</button>
+              )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
               !isTogglingHomePage &&
               !isTogglingLevel &&
-              finalMessage === "" && (
+              finalMessage === "" &&
+              isGameStarted && (
                 <button
                   style={{
                     display: "inline",
@@ -2135,7 +2139,8 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               !isTogglingHomePage &&
               !isTogglingLevel &&
-              (easyMode || normalMode) && (
+              (easyMode || normalMode) &&
+              isGameStarted && (
                 <button onClick={toggleReset} disabled={dice === 0}>
                   Reset the Game
                 </button>
@@ -2143,7 +2148,8 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
-              finalMessage === "" && (
+              finalMessage === "" &&
+              isGameStarted && (
                 <button onClick={() => toggleHomePage()} disabled={dice === 0}>
                   Back to home page
                 </button>
@@ -2325,7 +2331,9 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             userColor !== "" &&
             !isTogglingReset &&
             !isTogglingLevel &&
-            !isTogglingHomePage && <button onClick={handleStart}>Start</button>}
+            !isTogglingHomePage && (
+              <button onClick={handleStart}>Start the game</button>
+            )}
           {isGameStarted &&
             isUserTurn &&
             !isDiceUpdated &&

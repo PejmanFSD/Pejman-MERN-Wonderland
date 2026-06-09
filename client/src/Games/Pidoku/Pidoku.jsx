@@ -632,13 +632,17 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
         <div>
           <h2>Pidoku</h2>
           <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Pidoku</button>
-            )}
+            {!isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              isGameStarted && (
+                <button onClick={handleAboutPage}>About Pidoku</button>
+              )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
               !isTogglingHomePage &&
-              !isTogglingLevel && (
+              !isTogglingLevel &&
+              isGameStarted && (
                 <button
                   style={{
                     display: "inline",
@@ -651,14 +655,18 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isGameResult &&
               !isTogglingHomePage &&
               !isTogglingLevel &&
-              (easyMode || normalMode) && (
+              (easyMode || normalMode) &&
+              isGameStarted && (
                 <button onClick={toggleReset}>Reset the Game</button>
               )}
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
+            {!isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              isGameStarted && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
           </div>
           {(easyMode || normalMode) && isTogglingLevel && (
             <div>
