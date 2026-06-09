@@ -167,33 +167,47 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
     [adviceArray],
   );
   useEffect(() => {
-        document.title = "Cryptogram";
-    }, []);
+    document.title = "Cryptogram";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutCryptogram setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Cryptogram</button>
-          )}
           <h2>Cryptogram</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Cryptogram</button>
+            )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              isWin === "" &&
+              !isTogglingHomePage &&
+              !isCharRepetitive &&
+              !isInputEmpty &&
+              isOneChar &&
+              !isAlreadyExist && (
+                <button onClick={() => toggleReset()} disabled={isLoading}>
+                  Reset the Game
+                </button>
+              )}
+            {!isTogglingReset &&
+              !isTogglingHomePage &&
+              !isCharRepetitive &&
+              !isInputEmpty &&
+              isOneChar &&
+              !isAlreadyExist && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
           {isWin === "" && !isTogglingReset && !isTogglingHomePage && (
             <ModeExplaination message="Find the 4 missing letters of the advice, win the game and get one star." />
           )}
-          {isGameStarted &&
-            !isTogglingReset &&
-            isWin === "" &&
-            !isTogglingHomePage &&
-            !isCharRepetitive &&
-            !isInputEmpty &&
-            isOneChar &&
-            !isAlreadyExist && (
-              <button onClick={() => toggleReset()} disabled={isLoading}>
-                Reset the Game
-              </button>
-            )}
-
+          {!isGameStarted && isWin === "" && !isTogglingHomePage && (
+            <button onClick={getAdvice}>Start</button>
+          )}
           {isTogglingReset && (
             <ConfirmationBox
               question={
@@ -207,19 +221,6 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               toggleCancel={toggleResetCancel}
             />
           )}
-          {!isGameStarted && isWin === "" && !isTogglingHomePage && (
-            <button onClick={getAdvice}>Start</button>
-          )}
-          {!isTogglingReset &&
-            !isTogglingHomePage &&
-            !isCharRepetitive &&
-            !isInputEmpty &&
-            isOneChar &&
-            !isAlreadyExist && (
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
           {isTogglingHomePage && (
             <ConfirmationBox
               question="Are you sure you want to go back to Home Page?"

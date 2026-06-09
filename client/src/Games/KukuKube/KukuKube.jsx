@@ -140,19 +140,69 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
-          document.title = "Kuku Kube";
-      }, []);
+    document.title = "Kuku Kube";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutKukuKube setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Kuku Kube</button>
-          )}
           <h2>Kuku Kube</h2>
-          {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
-            <h4>In each step, find the square with the unique color</h4>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Kuku Kube</button>
+            )}
+            {isGameStarted &&
+              (easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <button
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+              <button onClick={() => toggleHomePage()}>
+                Back to home page
+              </button>
+            )}
+          </div>
+          {(easyMode || normalMode) && isTogglingLevel && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
           )}
           {!isGameStarted &&
             !easyMode &&
@@ -203,66 +253,6 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             )}
           <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
           <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
-          {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            (easyMode || normalMode) && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {isGameStarted &&
-            (easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <div>
-                <button
-                  // style={{
-                  //   display: "inline",
-                  // }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
-          {(easyMode || normalMode) && isTogglingLevel && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-            <div>
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            </div>
-          )}
-          {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
           {step > 0 &&
             isColorChosen &&
             isGameStarted &&

@@ -332,21 +332,84 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     }
   }
   useEffect(() => {
-        document.title = "Snake";
-    }, []);
+    document.title = "Snake";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutSnake setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage &&
-            !isTogglingLevel &&
-            !isTogglingReset &&
-            direction.x === 0 &&
-            direction.y === 0 && (
-              <button onClick={handleAboutPage}>About Snake</button>
-            )}
           <h2>Snake</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              direction.x === 0 &&
+              direction.y === 0 && (
+                <button onClick={handleAboutPage}>About Snake</button>
+              )}
+            {isGameStarted &&
+              (easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              finalMessage === "" &&
+              direction.x === 0 &&
+              direction.y === 0 && (
+                <button onClick={() => toggleLevel()}>
+                  {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
+                </button>
+              )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) &&
+              direction.x === 0 &&
+              direction.y === 0 && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              direction.x === 0 &&
+              direction.y === 0 && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {easyMode && !normalMode
             ? !isTogglingReset &&
               !isTogglingLevel &&
@@ -360,68 +423,6 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage && (
                 <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each food, you get three stars if you win." />
               )}
-          {isGameStarted &&
-            !isTogglingReset &&
-            finalMessage === "" &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            (easyMode || normalMode) && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {isGameStarted &&
-            (easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            finalMessage === "" && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
-          {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-            <div>
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            </div>
-          )}
-          {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
@@ -500,9 +501,19 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               <br />
               <strong>Pause / Resume the game with the "Space" key</strong>
               {direction.x === 0 && direction.y === 0 ? (
-                <img src={Pause} width="40px" style={{ margin: "10px" }} alt="" />
+                <img
+                  src={Pause}
+                  width="40px"
+                  style={{ margin: "10px" }}
+                  alt=""
+                />
               ) : (
-                <img src={Play} width="40px" style={{ margin: "10px" }} alt="" />
+                <img
+                  src={Play}
+                  width="40px"
+                  style={{ margin: "10px" }}
+                  alt=""
+                />
               )}
               <div
                 style={{

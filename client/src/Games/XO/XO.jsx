@@ -883,17 +883,76 @@ export default function XO({ updateTotalPoint, currentUser }) {
     }
   }, [isUserTurn, isPejmanTurn]);
   useEffect(() => {
-        document.title = "X-O";
-    }, []);
+    document.title = "X-O";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutXO setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About X-O</button>
-          )}
           <h2>X-O</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About X-O</button>
+            )}
+            {isGameStarted &&
+              isWin === "" &&
+              (easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              )}
+            {isGameStarted &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              !isTogglingHomePage &&
+              (easyMode || normalMode) &&
+              userSign !== "" && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+              <button onClick={() => toggleHomePage()}>
+                Back to home page
+              </button>
+            )}
+          </div>
+          {isTogglingLevel && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
             <div>
               <button onClick={handleEasyMode}>Easy</button>
@@ -931,69 +990,6 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <button onClick={handleStart}>Start the Game</button>
             )}
-          {isGameStarted &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            (easyMode || normalMode) &&
-            userSign !== "" && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {isGameStarted &&
-            isWin === "" &&
-            (easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
-          {isTogglingLevel && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-            <div>
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            </div>
-          )}
-          {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
           {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
       <div style={{ color: "gray" }}>
         isPejmanTurn: {isPejmanTurn ? "T" : "F"}
@@ -1019,13 +1015,17 @@ export default function XO({ updateTotalPoint, currentUser }) {
           <div style={{ color: "gray" }}>
             Red Array:{" "}
             {redArray.map((s, i) => (
-              <div style={{ display: "inline" }} key={i}>{s}-</div>
+              <div style={{ display: "inline" }} key={i}>
+                {s}-
+              </div>
             ))}
           </div>
           <div style={{ color: "gray" }}>
             Green Array:{" "}
             {greenArray.map((s, i) => (
-              <div style={{ display: "inline" }} key={i}>{s}-</div>
+              <div style={{ display: "inline" }} key={i}>
+                {s}-
+              </div>
             ))}
           </div>
           {isWin === "" &&

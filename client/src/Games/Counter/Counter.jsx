@@ -207,17 +207,77 @@ export default function Counter({ updateTotalPoint, currentUser }) {
     }
   }, [isGameStarted]);
   useEffect(() => {
-        document.title = "Counter";
-    }, []);
+    document.title = "Counter";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutCounter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Counter</button>
-          )}
           <h2>Counter</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Counter</button>
+            )}
+            {(easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              finalMessage === "" && (
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              finalMessage === "" && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
@@ -251,70 +311,6 @@ export default function Counter({ updateTotalPoint, currentUser }) {
           {/* {gameArray.map((el) => (
         <div style={{ display: "inline", color: "gray" }}>{el.repetition} - </div>
       ))} */}
-          {isGameStarted &&
-            !isTogglingReset &&
-            finalMessage === "" &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            (easyMode || normalMode) && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {(easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            finalMessage === "" && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
-          {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            finalMessage === "" && (
-              <div>
-                <button onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              </div>
-            )}
-          {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
           {finalGameArray.map((el, i) => (
             <img
               src={finalGameArray[i].image}
@@ -401,7 +397,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                       🔽
                     </option>
                     {[1, 2, 3].map((i, idx) => (
-                      <option disabled={isResult} key={idx}>{i}</option>
+                      <option disabled={isResult} key={idx}>
+                        {i}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -416,7 +414,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                       🔽
                     </option>
                     {[1, 2, 3].map((i, idx) => (
-                      <option disabled={isResult} key={idx}>{i}</option>
+                      <option disabled={isResult} key={idx}>
+                        {i}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -431,7 +431,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                       🔽
                     </option>
                     {[1, 2, 3].map((i, idx) => (
-                      <option disabled={isResult} key={idx}>{i}</option>
+                      <option disabled={isResult} key={idx}>
+                        {i}
+                      </option>
                     ))}
                   </select>
                 </div>

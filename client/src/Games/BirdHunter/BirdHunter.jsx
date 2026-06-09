@@ -68,30 +68,24 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
-          document.title = "Bird Hunter";
-      }, []);
+    document.title = "Bird Hunter";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutBirdHunter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isGameStarted && (
-            <button onClick={handleAboutPage}>About Bird Hunter</button>
-          )}
           <h2>Bird Hunter</h2>
-          {/* {grounds.map((g) => (
-        <div style={{ display: "inline" }}>{g}-</div>
-      ))} */}
-          {/* <div>chosenGround: {chosenGround}</div> */}
-          {/* <div>numOfDoneGrounds: {numOfDoneGrounds}</div> */}
-          {/* <div>userScore: {userScore}</div> */}
-          {!isTogglingHomePage && (
-            <div>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isGameStarted && (
+              <button onClick={handleAboutPage}>About Bird Hunter</button>
+            )}
+            {!isTogglingHomePage && (
               <button onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
-            </div>
-          )}
+            )}
+          </div>
           {isTogglingHomePage && (
             <div>
               <ConfirmationBox

@@ -1447,17 +1447,79 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     }
   }, [chooseArrowMessage]);
   useEffect(() => {
-        document.title = "Reversi";
-    }, []);
+    document.title = "Reversi";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutReversi setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Reversi</button>
-          )}
           <h2>Reversi</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Reversi</button>
+            )}
+            {isGameStarted &&
+              (easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              finalMessage === "" &&
+              !isIdenticalColor && (
+                <button onClick={() => toggleLevel()}>
+                  {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
+                </button>
+              )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) &&
+              !isIdenticalColor && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {isGameStarted &&
+              !isTogglingHomePage &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              finalMessage === "" &&
+              !isIdenticalColor && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {easyMode &&
           !normalMode &&
           !isTogglingReset &&
@@ -1539,76 +1601,6 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 <button onClick={handleSelectionErrorMessage}>Ok</button>
               </div>
             )}
-          {isGameStarted &&
-            !isTogglingReset &&
-            finalMessage === "" &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            (easyMode || normalMode) &&
-            !isIdenticalColor && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {isGameStarted &&
-            (easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            finalMessage === "" &&
-            !isIdenticalColor && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
-          {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
-          {isGameStarted &&
-            !isTogglingHomePage &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            finalMessage === "" &&
-            !isIdenticalColor && (
-              <div>
-                <button onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              </div>
-            )}
-          {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
-          <br />
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingLevel &&

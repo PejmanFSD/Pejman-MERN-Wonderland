@@ -20,6 +20,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
   const [seconds, setSeconds] = useState(60);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
+  const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [showReviews, setShowReviews] = useState(true);
@@ -38,6 +39,8 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
     setIsTimerRunning(false);
     handleResetTimer();
     setIsTogglingReset(false);
+    setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
   };
   const handleEasy = () => {
     setEasyMode(true);
@@ -70,6 +73,34 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
   };
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
+  };
+  const toggleLevel = () => {
+    setIsTogglingLevel(true);
+  };
+  const toggleLevelYes = () => {
+    setIsGameStarted(false);
+    if (easyMode) {
+      setEasyMode(false);
+      setNormalMode(true);
+    } else if (normalMode) {
+      setNormalMode(false);
+      setEasyMode(true);
+    }
+    setTitle("");
+    setWord("");
+    setWordWithNoSpace([]);
+    setIsGameStarted(false);
+    setUserGuess([]);
+    setUserMistakes([]);
+    setIsWin("");
+    setIsTimerRunning(false);
+    handleResetTimer();
+    setIsTogglingReset(false);
+    setIsTogglingLevel(false);
+    setIsTogglingHomePage(false);
+  };
+  const toggleLevelCancel = () => {
+    setIsTogglingLevel(false);
   };
   const handleAboutPage = () => {
     setIsAboutPage(true);
@@ -120,17 +151,64 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
     }
   }, [userGuess]);
   useEffect(() => {
-        document.title = "Happy Flower";
-    }, []);
+    document.title = "Happy Flower";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutHappyFlower setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Happy Flower</button>
-          )}
           <h2>Happy Flower</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
+              <button onClick={handleAboutPage}>About Happy Flower</button>
+            )}
+            {(easyMode || normalMode) &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <button
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              )}
+            {(easyMode || normalMode) &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel && (
+                <button onClick={() => toggleReset()}>Reset the Game</button>
+              )}
+            {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
+              <button onClick={() => toggleHomePage()}>
+                Back to home page
+              </button>
+            )}
+          </div>
+          {isTogglingLevel && !isTogglingHomePage && (
+            <ConfirmationBox
+              question={`Are you sure you want to switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }?`}
+              toggleYes={toggleLevelYes}
+              toggleCancel={toggleLevelCancel}
+            />
+          )}
+          {isTogglingReset && !isTogglingHomePage && (
+            <ConfirmationBox
+              question="Are you sure you want to reset the game?"
+              toggleYes={toggleResetYes}
+              toggleCancel={toggleResetCancel}
+            />
+          )}
+          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+            isTogglingHomePage && (
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
             <div>
               <button onClick={handleEasy}>Easy</button>
@@ -143,47 +221,16 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
           {normalMode && !isTogglingHomePage && (
             <ModeExplaination message="Normal Mode: You'll get three stars if you guess the word in 60 seconds." />
           )}
-          {isTimerRunning &&
-            isWin === "" &&
-            normalMode &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
-                {seconds}
-              </h3>
-            )}
-          {(easyMode || normalMode) &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <div>
-                <button onClick={() => toggleReset()}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && !isTogglingHomePage && (
-            <ConfirmationBox
-              question="Are you sure you want to reset the game?"
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
+          {isTimerRunning && isWin === "" && normalMode && (
+            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+              {seconds}
+            </h3>
           )}
-          {!isTogglingReset && !isTogglingHomePage && (
-            <button onClick={() => toggleHomePage()}>
-              Back to home page
-            </button>
-          )}
-          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
-            isTogglingHomePage && (
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingReset &&
-            !isTogglingHomePage && (
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
               <Form
                 title={title}
                 setTitle={setTitle}
@@ -203,7 +250,8 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
             {normalMode &&
               seconds < 1 &&
               !isTogglingReset &&
-              !isTogglingHomePage && <h2>Time's Up!</h2>}
+              !isTogglingHomePage &&
+              !isTogglingLevel && <h2>Time's Up!</h2>}
             {isWin === false && !isTogglingHomePage && (
               <div>
                 <h2>You Lose!</h2>
@@ -220,32 +268,39 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
               </div>
             )}
           </div>
-          {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-            <div>
-              {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
-              <GuessTable
-                word={word}
-                userGuess={userGuess}
-                setUserGuess={setUserGuess}
-                userMistakes={userMistakes}
-                setUserMistakes={setUserMistakes}
-                isWin={isWin}
-                seconds={seconds}
-              />
-            </div>
-          )}
-          {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <button
-              onClick={handleReviewSection}
-              style={{ position: "relative", top: "120px" }}
-            >
-              {showReviews
-                ? "Hide the Reviews Section"
-                : "Show the Reviews Section"}
-            </button>
-          )}
+          {isGameStarted &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel && (
+              <div>
+                {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
+                <GuessTable
+                  word={word}
+                  userGuess={userGuess}
+                  setUserGuess={setUserGuess}
+                  userMistakes={userMistakes}
+                  setUserMistakes={setUserMistakes}
+                  isWin={isWin}
+                  seconds={seconds}
+                />
+              </div>
+            )}
           {!isTogglingReset &&
             !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isGameStarted && (
+              <button
+                onClick={handleReviewSection}
+                style={{ position: "relative", top: "120px" }}
+              >
+                {showReviews
+                  ? "Hide the Reviews Section"
+                  : "Show the Reviews Section"}
+              </button>
+            )}
+          {!isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
             isGameStarted &&
             showReviews && (
               <div style={{ position: "relative", top: "95px" }}>

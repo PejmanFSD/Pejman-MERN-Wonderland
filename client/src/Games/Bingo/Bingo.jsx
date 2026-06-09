@@ -1575,26 +1575,31 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
     }
   }, [finalMessage]);
   useEffect(() => {
-        document.title = "Bingo";
-    }, []);
+    document.title = "Bingo";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutBingo setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Bingo</button>
-          )}
           <h2>Bingo</h2>
-          {isGameStarted &&
-            !isTogglingReset &&
-            finalMessage === "" &&
-            userColor !== "" &&
-            !isTogglingHomePage && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Bingo</button>
             )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+              userColor !== "" &&
+              !isTogglingHomePage && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage && !isTogglingReset && (
+              <button onClick={() => toggleHomePage()}>
+                Back to home page
+              </button>
+            )}
+          </div>
           {isTogglingReset && (
             <div>
               <ConfirmationBox
@@ -1602,13 +1607,6 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 toggleYes={toggleResetYes}
                 toggleCancel={toggleResetCancel}
               />
-            </div>
-          )}
-          {!isTogglingHomePage && !isTogglingReset && (
-            <div>
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
             </div>
           )}
           {isTogglingHomePage && (

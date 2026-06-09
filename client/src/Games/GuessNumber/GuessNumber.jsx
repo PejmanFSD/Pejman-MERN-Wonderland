@@ -187,17 +187,75 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
     [num, userGuess, userGuessStatus, chancesNum],
   );
   useEffect(() => {
-        document.title = "Guess Number";
-    }, []);
+    document.title = "Guess Number";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutGuessNumber setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Guess Number</button>
-          )}
           <h2>Guess Number</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Guess Number</button>
+            )}
+            {isGameStarted &&
+              (easyMode || normalMode) &&
+              !isWin &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <button onClick={() => toggleLevel()}>{`Switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }`}</button>
+              )}
+            {!isWin &&
+              userGuess[0] &&
+              chancesNum !== 0 &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <button
+                  onClick={() => toggleReset()}
+                  disabled={isTogglingLevel}
+                >
+                  Reset the Game
+                </button>
+              )}
+            {!isWin &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+            <ConfirmationBox
+              question={`Are you sure you want to switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }?`}
+              toggleYes={toggleLevelYes}
+              toggleCancel={toggleLevelCancel}
+              easyMode={easyMode}
+            />
+          )}
+          {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
+            <ConfirmationBox
+              question="Are you sure you want to reset the game?"
+              toggleYes={toggleResetYes}
+              toggleCancel={toggleResetCancel}
+            />
+          )}
+          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+            isTogglingHomePage && (
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
             <GameLevel
               mode1="Easy"
@@ -227,59 +285,6 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <button onClick={() => generateRandNum()}>Start the Game</button>
             )}
-          {isGameStarted &&
-            (easyMode || normalMode) &&
-            !isWin &&
-            !isTogglingLevel &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <button onClick={() => toggleLevel()}>{`Switch to ${
-                easyMode ? "Normal Mode" : "Easy Mode"
-              }`}</button>
-            )}
-          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-            <ConfirmationBox
-              question={`Are you sure you want to switch to ${
-                easyMode ? "Normal Mode" : "Easy Mode"
-              }?`}
-              toggleYes={toggleLevelYes}
-              toggleCancel={toggleLevelCancel}
-              easyMode={easyMode}
-            />
-          )}
-          {!isWin &&
-            !isTogglingLevel &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
-          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
-            isTogglingHomePage && (
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            )}
-          {!isWin &&
-            userGuess[0] &&
-            chancesNum !== 0 &&
-            !isTogglingLevel &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <button onClick={() => toggleReset()} disabled={isTogglingLevel}>
-                Reset the Game
-              </button>
-            )}
-          {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
-            <ConfirmationBox
-              question="Are you sure you want to reset the game?"
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
-          )}
           {/* <div>num: {num}</div> */}
           {isGameStarted &&
             !isTogglingReset &&

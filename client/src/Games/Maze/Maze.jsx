@@ -433,20 +433,77 @@ export default function Maze({ updateTotalPoint, currentUser }) {
     };
   }, [isGameStarted, gameKey]);
   useEffect(() => {
-        document.title = "Maze";
-    }, []);
+    document.title = "Maze";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutMaze setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage &&
-            !isTogglingLevel &&
-            !isTogglingReset &&
-            !isGameStarted && (
-              <button onClick={handleAboutPage}>About Maze</button>
-            )}
           <h2>Maze</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              !isGameStarted && (
+                <button onClick={handleAboutPage}>About Maze</button>
+              )}
+            {(easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              finalMessage === "" && (
+                <button onClick={() => toggleLevel()}>
+                  {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
+                </button>
+              )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              finalMessage === "" &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              finalMessage === "" && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isTogglingLevel && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && finalMessage === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
@@ -501,107 +558,6 @@ export default function Maze({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
-          {isGameStarted &&
-            !isTogglingReset &&
-            finalMessage === "" &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            (easyMode || normalMode) && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                    position: "relative",
-                    top: "15px",
-                  }}
-                  onClick={toggleReset}
-                >
-                  Reset the Game
-                </button>
-              </div>
-            )}
-          {isTogglingReset && finalMessage === "" && (
-            <div
-              style={{
-                display: "inline",
-                position: "relative",
-                top: "15px",
-              }}
-            >
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {(easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            finalMessage === "" && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                    position: "relative",
-                    top: "15px",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
-          {isTogglingLevel && finalMessage === "" && (
-            <div
-              style={{
-                display: "inline",
-                position: "relative",
-                top: "15px",
-              }}
-            >
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            finalMessage === "" && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                    position: "relative",
-                    top: "15px",
-                  }}
-                  onClick={() => toggleHomePage()}
-                >
-                  Back to home page
-                </button>
-              </div>
-            )}
-          {isTogglingHomePage && finalMessage === "" && (
-            <div
-              style={{
-                display: "inline",
-                position: "relative",
-                top: "15px",
-              }}
-            >
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
-          <br />
           {isGameStarted && (
             <div ref={sceneRef} style={{ position: "relative", top: "15px" }} />
           )}

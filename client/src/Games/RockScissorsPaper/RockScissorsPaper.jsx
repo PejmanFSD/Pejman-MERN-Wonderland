@@ -159,8 +159,8 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
     [userChoice, pejmanChoice],
   );
   useEffect(() => {
-        document.title = "Rock-Scissors-Paper";
-    }, []);
+    document.title = "Rock-Scissors-Paper";
+  }, []);
   return (
     <div>
       {isAboutPage && (
@@ -168,10 +168,68 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
       )}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Rock-Scissors-Paper</button>
-          )}
           <h2>Rock - Scissors - Paper</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>
+                About Rock-Scissors-Paper
+              </button>
+            )}
+            {isGameStarted &&
+              !isTogglingLevel &&
+              (normalMode || extremelySuperDifficultMode) &&
+              !isTogglingHomePage &&
+              showImages &&
+              !isTogglingReset && (
+                <button onClick={() => toggleLevel()}>{`Switch to ${
+                  extremelySuperDifficultMode
+                    ? "Normal Mode"
+                    : "extremely-Super-Difficult Mode"
+                }`}</button>
+              )}
+            {isGameStarted &&
+              !isTogglingHomePage &&
+              !isTogglingReset &&
+              showImages &&
+              (normalMode || extremelySuperDifficultMode) &&
+              !isTogglingLevel &&
+              score !== 0 && (
+                <button onClick={() => toggleReset()}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage &&
+              !isTogglingReset &&
+              showImages &&
+              !isTogglingLevel && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isTogglingLevel && (
+            <ConfirmationBox
+              question={`Are you sure you want to switch to ${
+                extremelySuperDifficultMode
+                  ? "Normal Mode"
+                  : "extremely-Super-Difficult Mode"
+              }?`}
+              toggleYes={toggleLevelYes}
+              toggleCancel={toggleLevelCancel}
+            />
+          )}
+          {isTogglingReset && (
+            <ConfirmationBox
+              question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
+              toggleYes={toggleResetYes}
+              toggleCancel={toggleResetCancel}
+            />
+          )}
+          {isTogglingHomePage && (
+            <ConfirmationBox
+              question="Are you sure you want to go back to Home Page?"
+              toggleYes={toggleHomePageYes}
+              toggleCancel={toggleHomePageCancel}
+            />
+          )}
           {!normalMode &&
             !extremelySuperDifficultMode &&
             !isGameStarted &&
@@ -204,58 +262,6 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           {isGameStarted &&
             !isTogglingHomePage &&
             !isTogglingReset &&
-            showImages &&
-            (normalMode || extremelySuperDifficultMode) &&
-            !isTogglingLevel &&
-            score !== 0 && <button onClick={() => toggleReset()}>Reset</button>}
-          {isTogglingReset && (
-            <ConfirmationBox
-              question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
-          )}
-          {isGameStarted &&
-            !isTogglingLevel &&
-            (normalMode || extremelySuperDifficultMode) &&
-            !isTogglingHomePage &&
-            showImages &&
-            !isTogglingReset && (
-              <button onClick={() => toggleLevel()}>{`Switch to ${
-                extremelySuperDifficultMode
-                  ? "Normal Mode"
-                  : "extremely-Super-Difficult Mode"
-              }`}</button>
-            )}
-          {isTogglingLevel && (
-            <ConfirmationBox
-              question={`Are you sure you want to switch to ${
-                extremelySuperDifficultMode
-                  ? "Normal Mode"
-                  : "extremely-Super-Difficult Mode"
-              }?`}
-              toggleYes={toggleLevelYes}
-              toggleCancel={toggleLevelCancel}
-            />
-          )}
-          {!isTogglingHomePage &&
-            !isTogglingReset &&
-            showImages &&
-            !isTogglingLevel && (
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
-          {isTogglingHomePage && (
-            <ConfirmationBox
-              question="Are you sure you want to go back to Home Page?"
-              toggleYes={toggleHomePageYes}
-              toggleCancel={toggleHomePageCancel}
-            />
-          )}
-          {isGameStarted &&
-            !isTogglingHomePage &&
-            !isTogglingReset &&
             !isTogglingLevel &&
             showImages &&
             (normalMode || extremelySuperDifficultMode) && (
@@ -284,11 +290,11 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             (normalMode || extremelySuperDifficultMode) &&
-            new Array(tripleScore)
-              .fill(null)
-              .map((s, i) => (
-                <div style={{ display: "inline", fontSize: "70px" }} key={i}>❁</div>
-              ))}
+            new Array(tripleScore).fill(null).map((s, i) => (
+              <div style={{ display: "inline", fontSize: "70px" }} key={i}>
+                ❁
+              </div>
+            ))}
           {isGameStarted &&
           tripleScore === 3 &&
           !isTogglingHomePage &&

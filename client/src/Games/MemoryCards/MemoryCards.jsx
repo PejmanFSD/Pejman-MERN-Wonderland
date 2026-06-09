@@ -302,17 +302,50 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
     }
   }, [identicalIndexArray]);
   useEffect(() => {
-        document.title = "Memory Cards";
-    }, []);
+    document.title = "Memory Cards";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutMemoryCards setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Memory Cards</button>
-          )}
           <h2>Memory Cards</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Memory Cards</button>
+            )}
+            {showBoard &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              (easyMode || normalMode || hardMode) &&
+              seconds > 0 && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage && !isTogglingReset && (
+              <button onClick={() => toggleHomePage()}>
+                Back to home page
+              </button>
+            )}
+          </div>
+          {isTogglingReset && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {!isGameStarted && !isTogglingHomePage && (
             <button onClick={handleEasyMode}>Easy</button>
           )}
@@ -368,12 +401,14 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
-{!isTogglingHomePage && !isTogglingReset && isWin === true && easyMode && (
-            <h2>You Win but you don't get any stars!</h2>
-          )}
-{!isTogglingHomePage && !isTogglingReset && isWin === true && (normalMode || hardMode) && (
-            <h2>You Win!</h2>
-          )}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            isWin === true &&
+            easyMode && <h2>You Win but you don't get any stars!</h2>}
+          {!isTogglingHomePage &&
+            !isTogglingReset &&
+            isWin === true &&
+            (normalMode || hardMode) && <h2>You Win!</h2>}
           {!isTogglingHomePage && !isTogglingReset && (
             <h2>{isWin === false && "Time's Up!"}</h2>
           )}
@@ -393,41 +428,6 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                 <button onClick={toggleResetYes}>Try Again</button>
               </div>
             )}
-          {showBoard &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            (easyMode || normalMode || hardMode) &&
-            seconds > 0 && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage && !isTogglingReset && (
-            <div>
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            </div>
-          )}
-          {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
           {isGameStarted &&
             isWin === "" &&
             isTimerRunning &&

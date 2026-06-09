@@ -137,44 +137,32 @@ export default function Nim({ updateTotalPoint, currentUser }) {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
   useEffect(() => {
-          document.title = "Nim";
-      }, []);
+    document.title = "Nim";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutNim setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Nim</button>
-          )}
           <h2>Nim</h2>
-          {standard && !isTogglingHomePage && (
-            <ModeExplaination message="Standard Nim: Get the last ball and win the game!" />
-          )}
-          {misere && !isTogglingHomePage && (
-            <ModeExplaination message="Misere Nim: Get the last ball and lose!" />
-          )}
-          {easyMode && !isTogglingHomePage && (
-            <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly. You'll get 1 star if you win." />
-          )}
-          {normalMode && !isTogglingHomePage && (
-            <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy! You'll get 4 stars if you win." />
-          )}
-          {!isTogglingReset && !isTogglingHomePage && (
-            <button onClick={() => toggleHomePage()}>
-              Back to home page
-            </button>
-          )}
-          {isFillingTheBowlsByUserFinished &&
-            (easyMode || normalMode) &&
-            (standard || misere) &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <div>
-                <button onClick={() => toggleReset()}>Reset the Game</button>
-              </div>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Nim</button>
             )}
+            {isFillingTheBowlsByUserFinished &&
+              (easyMode || normalMode) &&
+              (standard || misere) &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <button onClick={() => toggleReset()}>Reset the Game</button>
+              )}
+            {!isTogglingReset && !isTogglingHomePage && (
+              <button onClick={() => toggleHomePage()}>
+                Back to home page
+              </button>
+            )}
+          </div>
           {isTogglingReset && (
             <ConfirmationBox
               question="Are you sure you want to reset the game?"
@@ -190,6 +178,19 @@ export default function Nim({ updateTotalPoint, currentUser }) {
                 toggleCancel={toggleHomePageCancel}
               />
             )}
+          {standard && !isTogglingHomePage && (
+            <ModeExplaination message="Standard Nim: Get the last ball and win the game!" />
+          )}
+          {misere && !isTogglingHomePage && (
+            <ModeExplaination message="Misere Nim: Get the last ball and lose!" />
+          )}
+          {easyMode && !isTogglingHomePage && (
+            <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly. You'll get 1 star if you win." />
+          )}
+          {normalMode && !isTogglingHomePage && (
+            <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy! You'll get 4 stars if you win." />
+          )}
+
           {!standard && !misere && !isTogglingHomePage && (
             <div>
               <button onClick={handleStandeardNim}>Standeard Nim</button>

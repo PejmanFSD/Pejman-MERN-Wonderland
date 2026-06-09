@@ -242,17 +242,79 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
     }
   }, [seconds]);
   useEffect(() => {
-        document.title = "Triple Emoji Match";
-    }, []);
+    document.title = "Triple Emoji Match";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutTripleEmojiMatch setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Triple Emoji Match</button>
-          )}
           <h2>Triple Emoji Match</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>
+                About Triple Emoji Match
+              </button>
+            )}
+            {(easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              isWin === "" && (
+                <button
+                  style={{
+                    display: "inline",
+                  }}
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+              )}
+            {isGameStarted &&
+              !isTogglingReset &&
+              isWin === "" &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              (easyMode || normalMode) && (
+                <button onClick={toggleReset}>Reset the Game</button>
+              )}
+            {!isTogglingHomePage &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              isWin === "" && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isTogglingLevel && isWin === "" && (
+            <div>
+              <ConfirmationBox
+                question={`Are you sure you want to switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }?`}
+                toggleYes={toggleLevelYes}
+                toggleCancel={toggleLevelCancel}
+                easyMode={easyMode}
+              />
+            </div>
+          )}
+          {isTogglingReset && isWin === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to reset the game?"
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            </div>
+          )}
+          {isTogglingHomePage && isWin === "" && (
+            <div>
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            </div>
+          )}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
@@ -282,58 +344,6 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
-          {isGameStarted &&
-            !isTogglingReset &&
-            isWin === "" &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            (easyMode || normalMode) && (
-              <div>
-                <button onClick={toggleReset}>Reset the Game</button>
-              </div>
-            )}
-          {isTogglingReset && isWin === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            </div>
-          )}
-          {!isTogglingHomePage &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            isWin === "" && (
-              <div>
-                <button onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              </div>
-            )}
-          {isTogglingHomePage && isWin === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            </div>
-          )}
-          {(easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            isWin === "" && (
-              <div>
-                <button
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              </div>
-            )}
           {normalMode &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -363,18 +373,6 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 Show me a triple match
               </button>
             )}
-          {isTogglingLevel && isWin === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
-            </div>
-          )}
           {isWin === false && (
             <div>
               <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You Lose!"}</h2>

@@ -199,17 +199,79 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     return () => clearInterval(interval);
   }, [isTimerRunning]);
   useEffect(() => {
-        document.title = "Capitals";
-    }, []);
+    document.title = "Capitals";
+  }, []);
   return (
     <div>
       {isAboutPage && <AboutCapitals setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-            <button onClick={handleAboutPage}>About Capitals</button>
-          )}
           <h2>Capitals</h2>
+          <div className="four-buttons-container">
+            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
+              <button onClick={handleAboutPage}>About Capitals</button>
+            )}
+            {isGameStarted &&
+              (easyMode || normalMode) &&
+              !isTogglingLevel &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isInputEmpty && (
+                <button onClick={() => toggleLevel()}>{`Switch to ${
+                  easyMode ? "Normal Mode" : "Easy Mode"
+                }`}</button>
+              )}
+            {isGameStarted &&
+              show &&
+              (easyMode || normalMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isInputEmpty &&
+              isWin === "" &&
+              seconds > 0 && (
+                <button onClick={() => toggleReset()}>Reset the game</button>
+              )}
+            {!isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              !isInputEmpty && (
+                <button onClick={() => toggleHomePage()}>
+                  Back to home page
+                </button>
+              )}
+          </div>
+          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
+            <ConfirmationBox
+              question={`Are you sure you want to switch to ${
+                easyMode ? "Normal Mode" : "Easy Mode"
+              }?`}
+              toggleYes={toggleLevelYes}
+              toggleCancel={toggleLevelCancel}
+            />
+          )}
+          {isGameStarted &&
+            (easyMode || normalMode) &&
+            isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" &&
+            seconds > 0 && (
+              <ConfirmationBox
+                question={"Are you sure you want to reset the game?"}
+                toggleYes={toggleResetYes}
+                toggleCancel={toggleResetCancel}
+              />
+            )}
+          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
+            !isTogglingLevel &&
+            isTogglingHomePage && (
+              <ConfirmationBox
+                question="Are you sure you want to go back to Home Page?"
+                toggleYes={toggleHomePageYes}
+                toggleCancel={toggleHomePageCancel}
+              />
+            )}
           {isGameStarted &&
             show &&
             normalMode &&
@@ -248,77 +310,19 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               <ModeExplaination message="Normal Mode: You will get three stars if you win in 45 seconds." />
             )
           )}
-          {isGameStarted &&
-            show &&
-            (easyMode || normalMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            !isInputEmpty &&
-            isWin === "" &&
-            seconds > 0 && (
-              <button onClick={() => toggleReset()}>Reset the game</button>
-            )}
-          {isGameStarted &&
-            (easyMode || normalMode) &&
-            isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            isWin === "" &&
-            seconds > 0 && (
-              <ConfirmationBox
-                question={"Are you sure you want to reset the game?"}
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
-            )}
-          {isGameStarted &&
-            (easyMode || normalMode) &&
-            !isTogglingLevel &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isInputEmpty && (
-              <button onClick={() => toggleLevel()}>{`Switch to ${
-                easyMode ? "Normal Mode" : "Easy Mode"
-              }`}</button>
-            )}
-          {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-            <ConfirmationBox
-              question={`Are you sure you want to switch to ${
-                easyMode ? "Normal Mode" : "Easy Mode"
-              }?`}
-              toggleYes={toggleLevelYes}
-              toggleCancel={toggleLevelCancel}
-            />
-          )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <button onClick={() => handleStart()}>Start the Game</button>
             )}
-          {!isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            !isInputEmpty && (
-              <button onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
-          {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
-            !isTogglingLevel &&
-            isTogglingHomePage && (
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
-            )}
           {isWin === true &&
             seconds > 0 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            !isTogglingLevel && <h1>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>}
+            !isTogglingLevel && (
+              <h1>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
+            )}
           {isGameStarted &&
             // show &&
             (easyMode || normalMode) &&
@@ -419,7 +423,9 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                     : `❌ -> The correct answer is: ${answer[i]}`}
                 </h3>
               ) : (
-                <h3 key={i}>{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
+                <h3
+                  key={i}
+                >{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
               ),
             )}
           {!isTogglingReset &&
