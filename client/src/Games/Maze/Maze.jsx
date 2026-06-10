@@ -73,6 +73,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
     setHasWon(false);
     setGameKey((currGameKey) => currGameKey + 1);
     setFinalMessage("");
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -108,6 +109,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
     setHasWon(false);
     setGameKey((currGameKey) => currGameKey + 1);
     setFinalMessage("");
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

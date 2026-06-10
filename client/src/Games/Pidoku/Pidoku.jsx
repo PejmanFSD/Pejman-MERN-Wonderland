@@ -449,6 +449,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
     setFinalSquares([]);
     setIsShowTime(false);
     setIsGameResult(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -520,6 +521,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
     setIsShowTime(false);
     setIsGameResult(false);
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

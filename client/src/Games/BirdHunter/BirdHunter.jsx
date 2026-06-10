@@ -51,6 +51,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
     setUserScore(0);
     setFinalMessage("");
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);

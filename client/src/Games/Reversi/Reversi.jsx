@@ -131,6 +131,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);
@@ -189,6 +190,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

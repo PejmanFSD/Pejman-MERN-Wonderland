@@ -164,6 +164,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
     setIsWin("");
     handleResetTimer();
     setIsTogglingReset(false);
+    setShowReviews(true);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
@@ -231,6 +232,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
     setIsWin("");
     handleResetTimer();
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

@@ -120,6 +120,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
     setAllTurns([]);
     setAllBallsNum(0);
     setIsWin("");
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);

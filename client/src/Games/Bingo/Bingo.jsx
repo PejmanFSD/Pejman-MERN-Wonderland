@@ -367,6 +367,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
     setMissedNumOnBoard3(null);
     setIsTogglingReset(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);

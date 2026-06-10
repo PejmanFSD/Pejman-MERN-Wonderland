@@ -54,6 +54,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setDirection({ x: 0, y: 0 });

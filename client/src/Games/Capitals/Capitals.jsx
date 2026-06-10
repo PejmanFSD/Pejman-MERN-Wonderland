@@ -99,6 +99,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     setPack((currPack) => shuffleArray(currPack));
     setIsTogglingReset(false);
     handleResetTimer();
+    setShowReviews(true);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
@@ -142,6 +143,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     handleResetTimer();
     setPack((currPack) => shuffleArray(currPack));
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

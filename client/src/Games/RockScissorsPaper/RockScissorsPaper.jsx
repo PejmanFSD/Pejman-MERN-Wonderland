@@ -111,6 +111,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
     setPejmanChoice("");
     setGameResult("");
     setIsTogglingReset(false);
+    setShowReviews(true);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
@@ -141,6 +142,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
       setNormalMode(true);
     }
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

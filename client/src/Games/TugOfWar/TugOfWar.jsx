@@ -290,7 +290,6 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
     setDice(-1);
     setIsUserTurn(true);
   };
-
   const handlePlayAgain = () => {
     setIsUserTurn(true);
     setDice(-1);
@@ -368,6 +367,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
     setFinalMessage("");
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);

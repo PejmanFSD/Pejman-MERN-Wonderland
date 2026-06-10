@@ -137,6 +137,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingHomePage(false);
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const allowPejman = () => {
     setIsPejmanTurn(true);

@@ -41,6 +41,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const handleEasy = () => {
     setEasyMode(true);
@@ -98,6 +99,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

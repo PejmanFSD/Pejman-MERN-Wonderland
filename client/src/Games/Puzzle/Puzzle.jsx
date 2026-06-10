@@ -282,6 +282,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
     setIsTimerRunning(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);

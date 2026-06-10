@@ -104,6 +104,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
     setUserGuessStatus([]);
     generateRandNum();
     setIsWin(false);
+    setShowReviews(true);
   };
   const toggleLevel = () => {
     setIsTogglingLevel(true);
@@ -135,6 +136,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
       setChancesNum(5);
     }
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);

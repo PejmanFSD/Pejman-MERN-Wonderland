@@ -68,6 +68,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
     setIsUniqueSquareRevealed(false);
     setIsGameStarted(false);
     setIsTogglingReset(false);
+    setShowReviews(true);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
@@ -129,6 +130,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
     setIsStepPassed(null);
     setIsUniqueSquareRevealed(false);
     setIsTogglingLevel(false);
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);

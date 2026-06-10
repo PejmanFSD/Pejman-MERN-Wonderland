@@ -313,6 +313,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsTogglingReset(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
+    setShowReviews(true);
   };
   const toggleReset = () => {
     setIsTogglingReset(true);

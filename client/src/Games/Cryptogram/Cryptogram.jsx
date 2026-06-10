@@ -124,6 +124,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
     setResultMessageStatus([]);
     setIsWin("");
     setIsTogglingReset(false);
+    setShowReviews(true);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);

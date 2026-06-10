@@ -210,6 +210,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
     setAddSecondsChance(true);
     handleResetTimer();
     setIsTogglingReset(false);
+    setShowReviews(true);
   };
   const toggleResetCancel = () => {
     setIsTogglingReset(false);

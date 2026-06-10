@@ -97,6 +97,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
         ]);
       }
     }
+    setShowReviews(true);
   };
   const shuffleArray = (array) => {
     const newArray = [...array];
