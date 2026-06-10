@@ -33,7 +33,7 @@ export default function AboutCapitals({ setIsAboutPage }) {
       You have 45 seconds to guess all capitals.
       <br />
       Win the game to earn 3 stars.
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

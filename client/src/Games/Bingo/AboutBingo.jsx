@@ -82,6 +82,7 @@ export default function AboutBingo({ setIsAboutPage }) {
 
       <h4>Reward</h4>
       <div>Win the game to earn 1 star.</div>
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

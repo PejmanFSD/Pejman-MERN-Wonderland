@@ -8,15 +8,20 @@ export default function AboutPuzzle({ setIsAboutPage }) {
       <div>
         In this game, you can choose from 6 different puzzles, each based on an
         image divided into smaller pieces:
+        <br />
+        - Balloons
+        <br />
+        - Ghost
+        <br />
+        - Lion
+        <br />
+        - Mansion
+        <br />
+        - Pencils
+        <br />
+        - Numbers
+        <br />
       </div>
-      <ul>
-        <li>Balloons</li>
-        <li>Ghost</li>
-        <li>Lion</li>
-        <li>Mansion</li>
-        <li>Pencils</li>
-        <li>Numbers</li>
-      </ul>
       <div>Each puzzle image is split into 25 small pieces.</div>
       <h4>How to Play</h4>
       <div>
@@ -55,7 +60,7 @@ export default function AboutPuzzle({ setIsAboutPage }) {
         (If you are an employer, try the “Numbers” puzzle, it is the easiest
         one).
       </em>
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

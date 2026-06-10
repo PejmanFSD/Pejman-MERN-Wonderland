@@ -33,7 +33,7 @@ export default function AboutBirdHunter({ setIsAboutPage }) {
       win you must successfully shoot at least 14 birds.
       <br />
       Win the game to earn 1 star.
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

@@ -8,15 +8,20 @@ export default function AboutHappyFlower({ setIsAboutPage }) {
       <div>
         In this game, you begin by choosing one of the following categories:
       </div>
-      <ul>
-        <li>Animal</li>
-        <li>Color</li>
-        <li>Car</li>
-        <li>Job</li>
-        <li>Book</li>
-        <li>Country</li>
-        <li>City</li>
-      </ul>
+      - Animal
+      <br />
+      - Color
+      <br />
+      - Car
+      <br />
+      - Job
+      <br />
+      - Book
+      <br />
+      - Country
+      <br />
+      - City
+      <br />
       <div>
         After selecting a category, the game chooses a hidden word related to
         that category.
@@ -64,9 +69,8 @@ export default function AboutHappyFlower({ setIsAboutPage }) {
       <strong>- Normal Mode:</strong>
       <br />
       - You have 60 seconds to guess the word.
-      <br />
-      - Win the game to earn 3 stars.
-      <br />
+      <br />- Win the game to earn 3 stars.
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

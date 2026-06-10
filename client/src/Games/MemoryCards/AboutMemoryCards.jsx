@@ -21,14 +21,17 @@ export default function AboutMemoryCards({ setIsAboutPage }) {
       <h4>Picture Categories</h4>
       <div>
         You can choose from several fun categories for the card images:
-        <ul>
-          <li>Animals</li>
-          <li>Fruits</li>
-          <li>Cars</li>
-          <li>Emojis</li>
-          <li>Movie Characters</li>
-          <li>Animation Characters</li>
-        </ul>
+        <br />
+        - Animals
+        <br />
+        - Fruits
+        <br />
+        - Cars
+        <br />
+        - Emojis
+        <br />
+        - Movie Characters
+        <br />- Animation Characters
       </div>
       <h4>Game Modes</h4>
       <strong>- Easy Mode:</strong>
@@ -70,7 +73,7 @@ export default function AboutMemoryCards({ setIsAboutPage }) {
       <br />
       These buttons reveal the matching card for a card you have already
       selected (To use these buttons, one card must already be revealed).
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

@@ -46,7 +46,7 @@ export default function AboutSnake({ setIsAboutPage }) {
       - The snake becomes faster after each food collected
       <br />
       - Win the game to earn 3 stars
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

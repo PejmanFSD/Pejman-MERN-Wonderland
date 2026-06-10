@@ -49,7 +49,7 @@ export default function AboutTripleEmojiMatch({ setIsAboutPage }) {
       <br />
       - Matching Emoji Finder: These buttons reveal a complete triple match to
       help you progress through the game.
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

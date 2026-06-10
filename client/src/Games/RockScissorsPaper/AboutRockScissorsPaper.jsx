@@ -32,6 +32,7 @@ export default function AboutRockScissorsPaper({ setIsAboutPage }) {
         <br />
         Beat Pejman just once to earn an incredible 1,000,000 stars!
       </div>
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

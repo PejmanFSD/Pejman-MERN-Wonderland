@@ -40,7 +40,7 @@ export default function AboutXO({ setIsAboutPage }) {
       - Pejman uses a strategy to choose his moves.
       <br />
       - Win the game to earn 1 star.
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

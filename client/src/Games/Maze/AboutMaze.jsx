@@ -33,7 +33,7 @@ export default function AboutMaze({ setIsAboutPage }) {
       - You have 180 seconds to complete the maze
       <br />
       - Win the game to earn 1 star
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

@@ -106,7 +106,7 @@ export default function AboutBlackJack({ setIsAboutPage }) {
       - If both hands have equal value, Pejman wins the round.
       <br />
       - Win the game to earn 3 stars.
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );

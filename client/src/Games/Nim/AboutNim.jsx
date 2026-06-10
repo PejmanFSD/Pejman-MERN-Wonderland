@@ -50,7 +50,7 @@ export default function AboutNim({ setIsAboutPage }) {
       to remove.
       <br />
       Win the game to earn 4 stars.
-      <br />
+      <h4>Please rate the game and leave a comment 🙂 </h4>
       <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );
