@@ -15,7 +15,6 @@ import Lion from "./images/Lion/Lion.jpg";
 import Mansion from "./images/Mansion/Mansion.jpg";
 import Numbers from "./images/Numbers/Numbers.jpg";
 import Pencils from "./images/Pencils/Pencils.jpg";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
@@ -457,35 +456,29 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div
+                className="four-buttons-container"
+                style={{ marginTop: "15px" }}
+              >
                 <button onClick={handleEasyMode}>Easy Mode</button>
                 <button onClick={handleNormalMode}>Normal Mode</button>
               </div>
             )}
-          {easyMode && !normalMode
-            ? !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <ModeExplaination message="Easy Mode: You will get one star if you win." />
-              )
-            : !easyMode &&
-              normalMode &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <ModeExplaination message="Normal Mode: You will get four stars if you win." />
-              )}
           {finalMessage && <h2>{finalMessage}</h2>}
           {finalMessage === "You Win!" && (
             <div>
               <div>Play again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {finalMessage === "Time's Up!" && (
             <div>
               <div>Try again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {isGameStarted && normalMode && (
@@ -493,6 +486,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
+          <br />
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingReset &&
@@ -504,6 +498,11 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                   onChange={handleImageGroup}
                   name="imageGroup"
                   id="imageGroup"
+                  style={{
+                    textAlign: "center",
+                    width: "170px",
+                    height: "25px",
+                  }}
                 >
                   <option value={imageGroup} disabled selected>
                     Select an image group
@@ -526,7 +525,9 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart}>Start the Game</button>
+              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+                Start the Game
+              </button>
             )}
           {isGameStarted &&
             isImageGroupChosen &&
@@ -585,7 +586,13 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
               <div>
                 <button
                   onClick={handleUp}
-                  style={{ position: "relative", top: "20px" }}
+                  style={{
+                    position: "relative",
+                    top: "20px",
+                    margin: "3px",
+                    width: "35px",
+                    height: "35px",
+                  }}
                   disabled={
                     isActiveUpButton === false || isAnImageClicked === false
                   }
@@ -595,7 +602,13 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                 <br />
                 <button
                   onClick={handleLeft}
-                  style={{ position: "relative", top: "20px" }}
+                  style={{
+                    position: "relative",
+                    top: "20px",
+                    margin: "3px",
+                    width: "35px",
+                    height: "35px",
+                  }}
                   disabled={
                     isActiveLeftButton === false || isAnImageClicked === false
                   }
@@ -604,7 +617,13 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                 </button>
                 <button
                   onClick={handleDown}
-                  style={{ position: "relative", top: "20px" }}
+                  style={{
+                    position: "relative",
+                    top: "20px",
+                    margin: "3px",
+                    width: "35px",
+                    height: "35px",
+                  }}
                   disabled={
                     isActiveDownButton === false || isAnImageClicked === false
                   }
@@ -613,7 +632,13 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                 </button>
                 <button
                   onClick={handleRight}
-                  style={{ position: "relative", top: "20px" }}
+                  style={{
+                    position: "relative",
+                    top: "20px",
+                    margin: "3px",
+                    width: "35px",
+                    height: "35px",
+                  }}
                   disabled={
                     isActiveRightButton === false || isAnImageClicked === false
                   }
@@ -622,6 +647,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

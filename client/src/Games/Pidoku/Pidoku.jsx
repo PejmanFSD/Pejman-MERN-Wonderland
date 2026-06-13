@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Square from "./Square";
-import ModeExplaination from "../ModeExplaination";
 import { getRandArr } from "../utils";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
@@ -704,26 +703,11 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div className="four-buttons-container">
                 <button onClick={runEasyMode}>Easy Mode</button>
                 <button onClick={runNormalMode}>Normal Mode</button>
               </div>
             )}
-          {easyMode &&
-          !normalMode &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel ? (
-            <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the squares randomly. You won't get any stars if you win." />
-          ) : (
-            !easyMode &&
-            normalMode &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the squares with a strategy. You will get one star if you win." />
-            )
-          )}
           {!isGameStarted &&
             !isIdenticalColor &&
             (easyMode || normalMode) &&
@@ -739,6 +723,12 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     onChange={handleUserColor}
                     name="userColor"
                     id="userColor"
+                    style={{
+                      textAlign: "center",
+                      width: "100px",
+                      height: "25px",
+                      margin: "5px",
+                    }}
                   >
                     <option value={userColor} disabled selected>
                       🔽🔽🔽
@@ -748,6 +738,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     ))}
                   </select>
                 </div>
+                <br />
                 <div>
                   <label htmlFor="pejmanColor">
                     Select a Color for Pejman{" "}
@@ -757,6 +748,12 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     onChange={handlePejmanColor}
                     name="pejmanColor"
                     id="pejmanColor"
+                    style={{
+                      textAlign: "center",
+                      width: "100px",
+                      height: "25px",
+                      margin: "5px",
+                    }}
                   >
                     <option value={pejmanColor} disabled selected>
                       🔽🔽🔽
@@ -775,14 +772,19 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isIdenticalColor &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <button onClick={handleStart}>Start the Game</button>
+              <button onClick={handleStart} style={{ marginTop: "20px" }}>
+                Start the Game
+              </button>
             )}
           {isIdenticalColor && !isTogglingHomePage && !isTogglingLevel && (
             <div>
               <div>You can't choose an identical color for both players</div>
-              <button onClick={handleOk}>Ok</button>
+              <button onClick={handleOk} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
+          <br />
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -827,6 +829,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                 </div>
               ),
             )}
+          <br />
           {isGameStarted &&
             !isUserTurn &&
             !isTogglingReset &&
@@ -834,7 +837,12 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingLevel && (
               <div>
                 <div>Allow Pejman to make his move</div>
-                <button onClick={handleAllowPejman}>Ok</button>
+                <button
+                  onClick={handleAllowPejman}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
           {freeSquares.length === 1 &&
@@ -847,7 +855,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                   All 24 squares are selected, the result of the game relies on
                   the squares around the last empty one
                 </div>
-                <button onClick={handleShowTime}>
+                <button onClick={handleShowTime} style={{ marginTop: "10px" }}>
                   Show the decisive squares
                 </button>
               </div>
@@ -957,6 +965,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                 <button onClick={handlePlayAgain}>Try Again</button>
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

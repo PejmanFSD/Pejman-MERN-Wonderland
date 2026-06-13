@@ -43,16 +43,18 @@ export default function Form({
   };
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="titles">Select one of the titles</label>
-      <select onChange={handleChange}>
+      <select
+        onChange={handleChange}
+        style={{ textAlign: "center", width: "200px", height: "25px" }}
+      >
         <option disabled selected>
-          ⬇️
+          Select one of the titles
         </option>
         {titles.map((t, i) => (
           <option key={i}>{t}</option>
         ))}
       </select>
-      <div>{title && <button>Done</button>}</div>
+      <div>{title && <button style={{ marginTop: "15px" }}>Done</button>}</div>
     </form>
   );
 }

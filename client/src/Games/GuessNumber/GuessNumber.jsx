@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import GameLevel from "../GameLevel";
-import ModeExplaination from "../ModeExplaination";
 import UserGuess from "./UserGuess";
 import ConfirmationBox from "../ConfirmationBox";
 import Chances from "./Chances";
@@ -31,6 +30,14 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
   const [chancesNum, setChancesNum] = useState(0);
   const [isWin, setIsWin] = useState(false);
   const [showReviews, setShowReviews] = useState(true);
+  const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
+  const [isOneDigit, setIsOneDigit] = useState(true);
+  const [isDigitNegative, setIsDigitNegative] = useState(false);
+  const [isDigitDecimal, setIsDigitDecimal] = useState(false);
+  const [isDigitRepetitive, setIsDigitRepetitive] = useState(false);
+  const [isInt, setIsInt] = useState(true);
+  const [isAlreadyGuessed, setIsAlreadyGuessed] = useState(false);
+  const [isInputEmpty, setIsInputEmpty] = useState(false);
 
   const navigate = useNavigate();
   const runEasyMode = () => {
@@ -199,7 +206,21 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
           <h2>Guess Number</h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Guess Number</button>
+              <button
+                onClick={handleAboutPage}
+                disabled={
+                  isFirstDigitZero ||
+                  !isOneDigit ||
+                  isDigitNegative ||
+                  isDigitDecimal ||
+                  isDigitRepetitive ||
+                  !isInt ||
+                  isAlreadyGuessed ||
+                  isInputEmpty
+                }
+              >
+                About Guess Number
+              </button>
             )}
             {isGameStarted &&
               (easyMode || normalMode) &&
@@ -207,7 +228,19 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               !isTogglingHomePage && (
-                <button onClick={() => toggleLevel()}>{`Switch to ${
+                <button
+                  onClick={() => toggleLevel()}
+                  disabled={
+                    isFirstDigitZero ||
+                    !isOneDigit ||
+                    isDigitNegative ||
+                    isDigitDecimal ||
+                    isDigitRepetitive ||
+                    !isInt ||
+                    isAlreadyGuessed ||
+                    isInputEmpty
+                  }
+                >{`Switch to ${
                   easyMode ? "Normal Mode" : "Easy Mode"
                 }`}</button>
               )}
@@ -219,7 +252,17 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage && (
                 <button
                   onClick={() => toggleReset()}
-                  disabled={isTogglingLevel}
+                  disabled={
+                    isTogglingLevel ||
+                    isFirstDigitZero ||
+                    !isOneDigit ||
+                    isDigitNegative ||
+                    isDigitDecimal ||
+                    isDigitRepetitive ||
+                    !isInt ||
+                    isAlreadyGuessed ||
+                    isInputEmpty
+                  }
                 >
                   Reset the Game
                 </button>
@@ -228,7 +271,19 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               !isTogglingHomePage && (
-                <button onClick={() => toggleHomePage()}>
+                <button
+                  onClick={() => toggleHomePage()}
+                  disabled={
+                    isFirstDigitZero ||
+                    !isOneDigit ||
+                    isDigitNegative ||
+                    isDigitDecimal ||
+                    isDigitRepetitive ||
+                    !isInt ||
+                    isAlreadyGuessed ||
+                    isInputEmpty
+                  }
+                >
                   Back to home page
                 </button>
               )}
@@ -268,20 +323,6 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               runNormalMode={runNormalMode}
             />
           )}
-          {easyMode && !normalMode ? (
-            <ModeExplaination
-              message="Easy Mode: The colorful circles appear in the exact order of each
-            digit. You have 5 chances. You get one star if you win."
-            />
-          ) : (
-            !easyMode &&
-            normalMode && (
-              <ModeExplaination
-                message="Normal Mode: The colorful circles don't appear in the order of digits.  You have 10 chances.
-            You get five stars if you win."
-              />
-            )
-          )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage && (
@@ -319,6 +360,22 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               isTogglingLevel={isTogglingLevel}
               isTogglingReset={isTogglingReset}
               isTogglingHomePage={isTogglingHomePage}
+              isFirstDigitZero={isFirstDigitZero}
+              setIsFirstDigitZero={setIsFirstDigitZero}
+              isOneDigit={isOneDigit}
+              setIsOneDigit={setIsOneDigit}
+              isDigitNegative={isDigitNegative}
+              setIsDigitNegative={setIsDigitNegative}
+              isDigitDecimal={isDigitDecimal}
+              setIsDigitDecimal={setIsDigitDecimal}
+              isDigitRepetitive={isDigitRepetitive}
+              setIsDigitRepetitive={setIsDigitRepetitive}
+              isInt={isInt}
+              setIsInt={setIsInt}
+              isAlreadyGuessed={isAlreadyGuessed}
+              setIsAlreadyGuessed={setIsAlreadyGuessed}
+              isInputEmpty={isInputEmpty}
+              setIsInputEmpty={setIsInputEmpty}
             />
           )}
           {isGameStarted && (

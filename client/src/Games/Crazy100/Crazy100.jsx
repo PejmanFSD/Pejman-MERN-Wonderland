@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getRandArr } from "../utils";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import GameLevel from "../GameLevel";
 import Blocks from "./Blocks";
@@ -362,23 +361,6 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 {seconds}
               </h3>
             )}
-          {easyMode &&
-          !normalMode &&
-          isWin === "" &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel ? (
-            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-          ) : (
-            !easyMode &&
-            normalMode &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <ModeExplaination message="Normal Mode: You will get four stars if you win in 120 seconds." />
-            )
-          )}
           {isWin === true &&
             seconds > 0 &&
             !isTogglingReset &&

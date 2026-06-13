@@ -1626,10 +1626,10 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             isGameStarted &&
             !isTogglingHomePage && (
               <div>
-                <div>Play again</div>
+                <div>Play again?</div>
                 <button
                   onClick={handlePlayAgain}
-                  style={{ position: "relative", top: "5px" }}
+                  style={{ position: "relative", top: "5px", margin: "10px" }}
                 >
                   Ok
                 </button>
@@ -1639,16 +1639,15 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             isGameStarted &&
             !isTogglingHomePage && (
               <div>
-                <div>Try again</div>
+                <div>Try again?</div>
                 <button
                   onClick={handlePlayAgain}
-                  style={{ position: "relative", top: "5px" }}
+                  style={{ position: "relative", top: "5px", margin: "10px" }}
                 >
                   Ok
                 </button>
               </div>
             )}
-
           {!isGameStarted && userColor === "" && !isTogglingHomePage && (
             <div>
               <label htmlFor="userColor">Select a Color</label>
@@ -1657,6 +1656,12 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 onChange={handleUserColor}
                 name="userColor"
                 id="userColor"
+                style={{
+                  textAlign: "center",
+                  width: "100px",
+                  height: "25px",
+                  marginTop: "10px",
+                }}
               >
                 <option value={userColor} disabled selected>
                   🔽🔽🔽
@@ -1668,7 +1673,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {!isGameStarted && userColor !== "" && !isTogglingHomePage && (
-            <button onClick={handleStart}>Start</button>
+            <button onClick={handleStart} style={{ marginTop: "15px" }}>
+              Start the game
+            </button>
           )}
           {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
             <div>
@@ -1696,7 +1703,11 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               {finalMessage === "" && (
                 <button
                   onClick={pickRandomNumber}
-                  style={{ position: "relative", top: "10px" }}
+                  style={{
+                    position: "relative",
+                    top: "10px",
+                    marginTop: "15px",
+                  }}
                 >{`Choose number ${numCounter}`}</button>
               )}
             </div>
@@ -1709,6 +1720,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 display: "grid",
                 gridTemplateColumns: "repeat(15, auto)",
                 justifyContent: "center",
+                marginTop: "15px",
               }}
             >
               {selectedNums.map((n) => (
@@ -1732,9 +1744,13 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-            <div style={{ position: "relative", top: "5px" }}>
-              <div style={{ position: "relative", top: "5px" }}>
-                Pejman's boards:
+            <div
+              style={{ position: "relative", top: "5px", marginTop: "10px" }}
+            >
+              <div
+                style={{ position: "relative", top: "5px", marginTop: "10px" }}
+              >
+                <strong>Pejman's boards:</strong>
               </div>
               <div
                 style={{
@@ -1774,7 +1790,14 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <div style={{ color: "red", position: "relative", top: "15px" }}>
+              <div
+                style={{
+                  color: "red",
+                  position: "relative",
+                  top: "15px",
+                  marginTop: "10px",
+                }}
+              >
                 {`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}{" "}
                 &#128533;
               </div>
@@ -1784,7 +1807,14 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <div style={{ color: "red", position: "relative", top: "15px" }}>
+              <div
+                style={{
+                  color: "red",
+                  position: "relative",
+                  top: "15px",
+                  marginTop: "10px",
+                }}
+              >
                 {`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}{" "}
                 &#128533;
               </div>
@@ -1794,15 +1824,24 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <div style={{ color: "red", position: "relative", top: "15px" }}>
+              <div
+                style={{
+                  color: "red",
+                  position: "relative",
+                  top: "15px",
+                  marginTop: "10px",
+                }}
+              >
                 {`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}{" "}
                 &#128533;
               </div>
             )}
           {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-            <div style={{ position: "relative", top: "15px" }}>
+            <div
+              style={{ position: "relative", top: "15px", marginTop: "10px" }}
+            >
               <div style={{ position: "relative", top: "5px" }}>
-                Your boards:
+                <strong>Your boards:</strong>
               </div>
               <div
                 style={{
@@ -1861,6 +1900,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
             <button
               onClick={handleReviewSection}

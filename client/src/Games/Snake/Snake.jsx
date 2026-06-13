@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ReviewSection from "../../Components/ReviewSection";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import Play from "./Play.png";
@@ -43,7 +42,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setIsGameStarted(true);
   };
   const handlePlayAgain = () => {
-    setIsGameStarted(true);
+    setIsGameStarted(false);
     setSnake([{ x: 0, y: 0 }]);
     setDirection({ x: 0, y: 0 });
     setDirections((currDirections) => [...currDirections, "None"]);
@@ -284,7 +283,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         window.removeEventListener("keydown", handleKeyDown);
       };
     }
-  }, [direction]);
+  }, [direction, finalMessage]);
   // The winning condition:
   useEffect(() => {
     if (userPoint === 40) {
@@ -411,24 +410,14 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               />
             </div>
           )}
-          {easyMode && !normalMode
-            ? !isTogglingReset &&
-              !isTogglingLevel &&
-              !isTogglingHomePage && (
-                <ModeExplaination message="Easy Mode: The snake's speed doesn't increase, you won't get any stars if you win." />
-              )
-            : !easyMode &&
-              normalMode &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              !isTogglingHomePage && (
-                <ModeExplaination message="Normal Mode: The snake's speed increases after reaching each food, you get three stars if you win." />
-              )}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div
+                className="four-buttons-container"
+                style={{ marginTop: "15px" }}
+              >
                 <button onClick={handleEasyMode}>Easy Mode</button>
                 <button onClick={handleNormalMode}>Normal Mode</button>
               </div>
@@ -437,7 +426,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
             (easyMode || normalMode) &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart}>Start the Game</button>
+              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+                Start the Game
+              </button>
             )}
           {isGameStarted && (easyMode || normalMode) && (
             <div
@@ -454,7 +445,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   <div>
                     <h3>{finalMessage}</h3>
                     <div>Play Again?</div>
-                    <button onClick={handlePlayAgain}>Ok</button>
+                    <button
+                      onClick={handlePlayAgain}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Ok
+                    </button>
                   </div>
                 )}
               {finalMessage &&
@@ -463,7 +459,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   <div>
                     <h3>{finalMessage}</h3>
                     <div>Try Again?</div>
-                    <button onClick={handlePlayAgain}>Ok</button>
+                    <button
+                      onClick={handlePlayAgain}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Ok
+                    </button>
                   </div>
                 )}
               <br />
@@ -530,6 +531,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

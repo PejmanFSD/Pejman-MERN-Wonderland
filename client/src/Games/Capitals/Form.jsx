@@ -9,7 +9,10 @@ export default function Form({
   isWin,
 }) {
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      style={{ marginTop: "7px", marginBottom: "7px" }}
+    >
       {questionCountries.map((el, i) => (
         <div key={i}>
           <label htmlFor={`input${i + 1}`}></label>
@@ -18,6 +21,13 @@ export default function Form({
             name={`input${i + 1}`}
             id={`input${i + 1}`}
             disabled={isInputEmpty}
+            style={{
+              width: "480px",
+              height: "22px",
+              textAlign: "center",
+              marginTop: "7px",
+              marginBottom: "7px",
+            }}
           >
             <option value={Object.values(inputs)[i]} disabled selected>
               {`Select the Capital of ${questionCountries[i]}`}
@@ -28,7 +38,9 @@ export default function Form({
           </select>
         </div>
       ))}
-      {isWin === "" && seconds > 0 && !isInputEmpty && <button>Done</button>}
+      {isWin === "" && seconds > 0 && !isInputEmpty && (
+        <button style={{ marginTop: "12px" }}>Done</button>
+      )}
     </form>
   );
 }

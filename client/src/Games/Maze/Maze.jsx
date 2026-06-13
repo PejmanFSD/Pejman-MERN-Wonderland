@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Matter from "matter-js";
 import Clock from "../HappyFlower/Images/Clock.jpg";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
@@ -510,32 +509,19 @@ export default function Maze({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div style={{ position: "relative", top: "5px" }}>
+              <div
+                className="four-buttons-container"
+                style={{ marginTop: "15px" }}
+              >
                 <button onClick={handleEasyMode}>Easy Mode</button>
                 <button onClick={handleNormalMode}>Normal Mode</button>
               </div>
             )}
-          {easyMode && !normalMode
-            ? !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-              )
-            : !easyMode &&
-              normalMode &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <ModeExplaination message="Normal Mode: You will get one star if you win." />
-              )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button
-                onClick={handleStart}
-                style={{ position: "relative", top: "5px" }}
-              >
+              <button onClick={handleStart} style={{ marginTop: "15px" }}>
                 Start the Game
               </button>
             )}
@@ -546,13 +532,17 @@ export default function Maze({ updateTotalPoint, currentUser }) {
           {hasWon && !isTogglingHomePage && (
             <div>
               <div>Play Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {seconds < 1 && !isTogglingHomePage && (
             <div>
               <div>Try Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {isGameStarted && normalMode && (

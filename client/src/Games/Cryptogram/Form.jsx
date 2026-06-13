@@ -20,7 +20,7 @@ export default function Form({
   acceptedAsRepetition,
   setAcceptedAsRepetition,
   isLoading,
-  setIsLoading
+  setIsLoading,
 }) {
   const handleChange = (e) => {
     // if (e.target.value.length === 0) {
@@ -98,7 +98,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -118,7 +118,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -151,7 +151,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -159,86 +159,23 @@ export default function Form({
   };
   return (
     <div>
-      {isLoading ? <h3 style={{color: "gray"}}>Loading ...</h3> :
-      <form onSubmit={handleSubmit}>
-        {adviceArray.map((a) =>
-          Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
-            Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-            0 ? (
-              <div style={{ display: "inline" }}>
-                <label htmlFor="input1"></label>
-                <input
-                  type="text"
-                  placeholder={!isCharRepetitive && "1"}
-                  name="input1"
-                  id="input1"
-                  value={inputs.input1}
-                  onChange={handleChange}
-                  style={{ width: "15px", height: "30px" }}
-                  disabled={
-                    !isGameStarted ||
-                    isCharRepetitive ||
-                    isInputEmpty ||
-                    !isOneChar ||
-                    isAlreadyExist
-                  }
-                />
-              </div>
-            ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-              1 ? (
-              <div style={{ display: "inline" }}>
-                <label htmlFor="input2"></label>
-                <input
-                  type="text"
-                  placeholder={!isCharRepetitive && "2"}
-                  name="input2"
-                  id="input2"
-                  value={inputs.input2}
-                  onChange={handleChange}
-                  style={{ width: "15px", height: "30px" }}
-                  disabled={
-                    !isGameStarted ||
-                    isCharRepetitive ||
-                    isInputEmpty ||
-                    !isOneChar ||
-                    isAlreadyExist
-                  }
-                />
-              </div>
-            ) : Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-              2 ? (
-              <div style={{ display: "inline" }}>
-                <label htmlFor="input3"></label>
-                <input
-                  type="text"
-                  placeholder={!isCharRepetitive && "3"}
-                  name="input3"
-                  id="input3"
-                  value={inputs.input3}
-                  onChange={handleChange}
-                  style={{ width: "15px", height: "30px" }}
-                  disabled={
-                    !isGameStarted ||
-                    isCharRepetitive ||
-                    isInputEmpty ||
-                    !isOneChar ||
-                    isAlreadyExist
-                  }
-                />
-              </div>
-            ) : (
+      {isLoading ? (
+        <h3 style={{ color: "gray" }}>Loading ...</h3>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          {adviceArray.map((a) =>
+            Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
               Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-                3 && (
+              0 ? (
                 <div style={{ display: "inline" }}>
-                  <label htmlFor="input4"></label>
+                  <label htmlFor="input1"></label>
                   <input
                     type="text"
-                    placeholder={!isCharRepetitive && "4"}
-                    name="input4"
-                    id="input4"
-                    value={inputs.input4}
+                    placeholder={!isCharRepetitive && "1"}
+                    name="input1"
+                    id="input1"
+                    value={inputs.input1}
                     onChange={handleChange}
-                    style={{ width: "15px", height: "30px" }}
                     disabled={
                       !isGameStarted ||
                       isCharRepetitive ||
@@ -246,26 +183,121 @@ export default function Form({
                       !isOneChar ||
                       isAlreadyExist
                     }
+                    style={{
+                      textAlign: "center",
+                      width: "15px",
+                      height: "17px",
+                      margin: "2px",
+                      position: "relative",
+                      top: "-3px",
+                    }}
                   />
                 </div>
+              ) : Object.keys(resultObj)
+                  .slice(0, 4)
+                  .indexOf(a.toLowerCase()) === 1 ? (
+                <div style={{ display: "inline" }}>
+                  <label htmlFor="input2"></label>
+                  <input
+                    type="text"
+                    placeholder={!isCharRepetitive && "2"}
+                    name="input2"
+                    id="input2"
+                    value={inputs.input2}
+                    onChange={handleChange}
+                    disabled={
+                      !isGameStarted ||
+                      isCharRepetitive ||
+                      isInputEmpty ||
+                      !isOneChar ||
+                      isAlreadyExist
+                    }
+                    style={{
+                      textAlign: "center",
+                      width: "15px",
+                      height: "17px",
+                      margin: "2px",
+                      position: "relative",
+                      top: "-3px",
+                    }}
+                  />
+                </div>
+              ) : Object.keys(resultObj)
+                  .slice(0, 4)
+                  .indexOf(a.toLowerCase()) === 2 ? (
+                <div style={{ display: "inline" }}>
+                  <label htmlFor="input3"></label>
+                  <input
+                    type="text"
+                    placeholder={!isCharRepetitive && "3"}
+                    name="input3"
+                    id="input3"
+                    value={inputs.input3}
+                    onChange={handleChange}
+                    disabled={
+                      !isGameStarted ||
+                      isCharRepetitive ||
+                      isInputEmpty ||
+                      !isOneChar ||
+                      isAlreadyExist
+                    }
+                    style={{
+                      textAlign: "center",
+                      width: "15px",
+                      height: "17px",
+                      margin: "2px",
+                      position: "relative",
+                      top: "-3px",
+                    }}
+                  />
+                </div>
+              ) : (
+                Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
+                  3 && (
+                  <div style={{ display: "inline" }}>
+                    <label htmlFor="input4"></label>
+                    <input
+                      type="text"
+                      placeholder={!isCharRepetitive && "4"}
+                      name="input4"
+                      id="input4"
+                      value={inputs.input4}
+                      onChange={handleChange}
+                      disabled={
+                        !isGameStarted ||
+                        isCharRepetitive ||
+                        isInputEmpty ||
+                        !isOneChar ||
+                        isAlreadyExist
+                      }
+                      style={{
+                        textAlign: "center",
+                        width: "15px",
+                        height: "17px",
+                        margin: "2px",
+                        position: "relative",
+                        top: "-3px",
+                      }}
+                    />
+                  </div>
+                )
               )
-            )
-          ) : (
-            <h2 style={{ display: "inline" }}>{a}</h2>
-          )
-        )}
-        {isGameStarted &&
-          isWin === "" &&
-          !isCharRepetitive &&
-          !isInputEmpty &&
-          isOneChar &&
-          !isAlreadyExist && (
-            <div>
-              <button>Done</button>
-            </div>
+            ) : (
+              <h2 style={{ display: "inline", margin: "2px" }}>{a}</h2>
+            ),
           )}
-      </form>
-      }
+          {isGameStarted &&
+            isWin === "" &&
+            !isCharRepetitive &&
+            !isInputEmpty &&
+            isOneChar &&
+            !isAlreadyExist && (
+              <div>
+                <button>Done</button>
+              </div>
+            )}
+        </form>
+      )}
       {isCharRepetitive && (
         <div>
           <p>The values can't be repetitive!</p>
@@ -285,13 +317,23 @@ export default function Form({
         </div>
       )}
       {isAlreadyExist && !isCharRepetitive && (
-        <div>
+        <div style={{ margin: "10px" }}>
           <div>The visible letters are not the ones that you should guess!</div>
           <div>
             Are you sure you want to guess the letter that is already visible?
           </div>
-          <button onClick={handleIsAlreadyExistYes}>Yes</button>
-          <button onClick={handleIsAlreadyExistCancel}>Cancel</button>
+          <button
+            onClick={handleIsAlreadyExistYes}
+            style={{ marginTop: "10px", marginLeft: "4px", marginRight: "4px" }}
+          >
+            Yes
+          </button>
+          <button
+            onClick={handleIsAlreadyExistCancel}
+            style={{ marginTop: "10px", marginLeft: "4px", marginRight: "4px" }}
+          >
+            Cancel
+          </button>
         </div>
       )}
     </div>

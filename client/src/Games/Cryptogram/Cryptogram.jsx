@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
-import ModeExplaination from "../ModeExplaination";
 import Form from "./Form";
 import Result from "./Result";
 import { useNavigate } from "react-router-dom";
@@ -203,9 +202,6 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
                 </button>
               )}
           </div>
-          {isWin === "" && !isTogglingReset && !isTogglingHomePage && (
-            <ModeExplaination message="Find the 4 missing letters of the advice, win the game and get one star." />
-          )}
           {!isGameStarted && isWin === "" && !isTogglingHomePage && (
             <button onClick={getAdvice}>Start</button>
           )}
@@ -239,18 +235,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
             isTogglingHomePage={isTogglingHomePage}
             acceptedAsRepetition={acceptedAsRepetition}
           />
-          {!isGameStarted &&
-            !isTogglingReset &&
-            isWin === true &&
-            !isTogglingHomePage && (
-              <button onClick={toggleResetYes}>Play Again</button>
-            )}
-          {!isGameStarted &&
-            !isTogglingReset &&
-            isWin === false &&
-            !isTogglingHomePage && (
-              <button onClick={toggleResetYes}>Try Again</button>
-            )}
+
           {!isTogglingReset && !isTogglingHomePage && (
             <Form
               handleChange={handleChange}
@@ -278,7 +263,19 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               setIsLoading={setIsLoading}
             />
           )}
-          <div>
+          {!isGameStarted &&
+            !isTogglingReset &&
+            isWin === true &&
+            !isTogglingHomePage && (
+              <button onClick={toggleResetYes}>Play Again</button>
+            )}
+          {!isGameStarted &&
+            !isTogglingReset &&
+            isWin === false &&
+            !isTogglingHomePage && (
+              <button onClick={toggleResetYes}>Try Again</button>
+            )}
+          {/* <div>
             {Object.values(inputs).map((value, index) => (
               <div style={{ color: "gray" }} key={index}>{`input${
                 index + 1
@@ -291,7 +288,8 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
                 {key}: {value}
               </div>
             ))}
-          </div>
+          </div> */}
+          <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
             <button onClick={handleReviewSection}>
               {showReviews

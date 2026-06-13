@@ -55,7 +55,7 @@ export default function Ad({
             </div>
           </Link>
         )}
-      {adImages && adImages.map((i) => <img src={i.url} height="70px" alt="" key={adImages.indexOf(i)} style={{border: "1px solid black", margin: "2px"}} />)}
+      {adImages && adImages.map((i) => <img src={i.url} height="70px" alt="" key={adImages.indexOf(i)} style={{margin: "2px"}} />)}
       {currentUser &&
         currentUser.role === "Admin" &&
         !isLoggingOut &&

@@ -221,13 +221,17 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           {finalMessage === "You Win!" && !isTogglingHomePage && (
             <div>
               <div>Play Again!</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {finalMessage === "You Lose!" && !isTogglingHomePage && (
             <div>
               <div>Try Again!</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {!isTogglingHomePage && isGameStarted && (

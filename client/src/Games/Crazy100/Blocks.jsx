@@ -21,6 +21,7 @@ export default function Blocks({
               position: "relative",
               top: "20px",
               background: chosenExtraNums[t]?.clicked && "gray",
+              margin: "3px",
             }}
             onClick={handleClickChosenExtraNum}
             disabled={isWin !== "" || seconds < 1}
@@ -42,7 +43,8 @@ export default function Blocks({
                 (isWin === "" || isWin === true)
                   ? "gray"
                   : isWin === false && "lightblue",
-              color: "red",
+              // color: "red",
+              margin: "3px",
             }}
             onClick={handleClickNum}
             disabled={isWin !== "" || seconds < 1}
@@ -50,7 +52,7 @@ export default function Blocks({
           >
             {nums.find((obj) => obj.blockNum === t)?.number}
           </button>
-        )
+        ),
       )}
     </div>
   );

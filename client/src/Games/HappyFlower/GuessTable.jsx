@@ -30,17 +30,18 @@ export default function GuessTable({
     }
   };
   return (
-    <div>
+    <div style={{ marginTop: "10px" }}>
       <div>
         {new Array(word.length).fill(null).map((letter, idx) => (
           <div
             style={{
-              width: "25px",
+              width: "35px",
               display: "inline",
               border: word[idx] !== " " && "1px solid black",
-              padding: "10px",
+              padding: "15px",
               position: "relative",
               top: "25px",
+              margin: "5px",
             }}
             key={idx}
           >
@@ -62,6 +63,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -72,7 +74,7 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
@@ -87,6 +89,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -97,7 +100,7 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
@@ -112,6 +115,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -122,7 +126,7 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
@@ -137,6 +141,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -147,7 +152,7 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
@@ -162,6 +167,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -172,7 +178,7 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
@@ -187,6 +193,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -197,7 +204,7 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
@@ -212,6 +219,7 @@ export default function GuessTable({
                 top: "50px",
                 width: isWin === "" ? "30px" : "25px",
                 height: isWin === "" ? "30px" : "25px",
+                margin: "3px",
               }}
               disabled={
                 userGuess.includes(String.fromCharCode(b)) ||
@@ -222,17 +230,19 @@ export default function GuessTable({
             >
               {String.fromCharCode(b)}
             </button>
-          )
+          ),
         )}
       </div>
       <div>
         {new Array(5).fill(null).map((letter, idx) => (
           <div
             style={{
+              width: "35px",
+              margin: "5px",
               width: "25px",
               display: "inline",
               border: "1px solid black",
-              padding: "10px",
+              padding: "15px",
               position: "relative",
               top: "80px",
               color: "red",
@@ -254,18 +264,18 @@ export default function GuessTable({
             isWin === true
               ? Flower7
               : seconds < 1
-              ? Clock
-              : userMistakes.length === 0
-              ? Flower1
-              : userMistakes.length === 1
-              ? Flower2
-              : userMistakes.length === 2
-              ? Flower3
-              : userMistakes.length === 3
-              ? Flower4
-              : userMistakes.length === 4
-              ? Flower5
-              : userMistakes.length === 5 && Flower6
+                ? Clock
+                : userMistakes.length === 0
+                  ? Flower1
+                  : userMistakes.length === 1
+                    ? Flower2
+                    : userMistakes.length === 2
+                      ? Flower3
+                      : userMistakes.length === 3
+                        ? Flower4
+                        : userMistakes.length === 4
+                          ? Flower5
+                          : userMistakes.length === 5 && Flower6
           }
           alt=""
         />

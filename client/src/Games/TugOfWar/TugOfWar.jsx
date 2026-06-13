@@ -19,7 +19,6 @@ import Red5 from "./images/Red-5.jpg";
 import V1 from "./images/V-1.jpg";
 import V2 from "./images/V-2.jpg";
 import V3 from "./images/V-3.jpg";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
@@ -2185,12 +2184,12 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               />
             </div>
           )}
-          <div style={{ color: "red" }}>Dice: {dice}</div>
+
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div className="four-buttons-container">
                 <button onClick={handleEasyMode}>Easy Mode</button>
                 <button onClick={handleNormalMode}>Normal Mode</button>
               </div>
@@ -2201,7 +2200,9 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               <div>
                 <h3>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
                 <div>Play Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
           {finalMessage &&
@@ -2210,29 +2211,17 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               <div>
                 <h3>Pejman Wins!</h3>
                 <div>Try Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
-          {easyMode && !normalMode && finalMessage === ""
-            ? !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <ModeExplaination message="Easy Mode: Pejman chooses the match randomly. You won't get any stars if you win." />
-              )
-            : !easyMode &&
-              normalMode &&
-              finalMessage === "" &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <ModeExplaination message="Normal Mode: Pejman chooses the match with a strategy. You will get one star if you win." />
-              )}
           {isGameStarted &&
             userColor === "Blue" &&
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div style={{ margin: "15px" }}>
                 <div style={{ color: "blue", display: "inline" }}>
                   <strong>{`Your Point: ${userScore}`}</strong>
                 </div>
@@ -2246,7 +2235,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div style={{ margin: "15px" }}>
                 <div style={{ color: "blue", display: "inline" }}>
                   <strong>{`Pejman's Point: ${pejmanScore}`}</strong>
                 </div>
@@ -2316,6 +2305,12 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
                   onChange={handleUserColor}
                   name="userColor"
                   id="userColor"
+                  style={{
+                    textAlign: "center",
+                    width: "90px",
+                    height: "25px",
+                    marginTop: "10px",
+                  }}
                 >
                   <option value={userColor} disabled selected>
                     🔽🔽🔽
@@ -2332,7 +2327,9 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart}>Start the game</button>
+              <button onClick={handleStart} style={{ marginTop: "10px" }}>
+                Start the game
+              </button>
             )}
           {isGameStarted &&
             isUserTurn &&
@@ -2344,6 +2341,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               <button
                 style={{ position: "relative", top: "15px" }}
                 onClick={rollDice}
+                style={{ marginTop: "30px" }}
               >
                 Roll the Dice
               </button>
@@ -2358,7 +2356,9 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div style={{ position: "relative", top: "15px" }}>
                 <div>Allow Pejman to roll the dice</div>
-                <button onClick={rollDice}>Ok</button>
+                <button onClick={rollDice} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
           {isGameStarted &&
@@ -2418,12 +2418,13 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
                 <div>Allow Pejman to make his move</div>
                 <button
                   onClick={pejmanAct}
-                  style={{ position: "relative", top: "5px" }}
+                  style={{ position: "relative", top: "5px", marginTop: "5px" }}
                 >
                   Ok
                 </button>
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

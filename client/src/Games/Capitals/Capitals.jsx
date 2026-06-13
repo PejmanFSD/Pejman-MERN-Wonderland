@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import GameLevel from "../GameLevel";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import countries from "./countries";
 import { useNavigate } from "react-router-dom";
@@ -297,21 +296,6 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 runNormalMode={runNormalMode}
               />
             )}
-          {easyMode &&
-          !normalMode &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel ? (
-            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-          ) : (
-            !easyMode &&
-            normalMode &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <ModeExplaination message="Normal Mode: You will get three stars if you win in 45 seconds." />
-            )
-          )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage &&
@@ -368,7 +352,16 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               <div>
                 <h3>Countries</h3>
                 {questionCountries.map((qc, i) => (
-                  <div key={i}>{qc}</div>
+                  <div
+                    key={i}
+                    style={{
+                      display: "inline",
+                      marginLeft: "10px",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {qc}
+                  </div>
                 ))}
               </div>
             )}
@@ -416,20 +409,21 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             questionCountries.map((c, i) =>
               Object.values(inputs)[i] ? (
-                <h3 key={i}>
+                <h4 key={i}>
                   {`You chose ${Object.values(inputs)[i]} as the capital of ${
                     questionCountries[i]
                   }`}{" "}
                   {Object.values(inputs)[i] === answer[i]
-                    ? "✅"
-                    : `❌ -> The correct answer is: ${answer[i]}`}
-                </h3>
+                    ? "✔"
+                    : `✖ ➜ The correct answer is: ${answer[i]}`}
+                </h4>
               ) : (
-                <h3
+                <h4
                   key={i}
-                >{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h3>
+                >{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h4>
               ),
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

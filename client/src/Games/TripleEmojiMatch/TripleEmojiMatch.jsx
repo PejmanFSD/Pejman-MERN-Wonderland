@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Emoji from "./Emoji";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { emojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
@@ -320,74 +319,69 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div
+                className="four-buttons-container"
+                style={{ marginTop: "15px" }}
+              >
                 <button onClick={runEasyMode}>Easy Mode</button>
                 <button onClick={runNormalMode}>Normal Mode</button>
               </div>
             )}
-          {easyMode &&
-          !normalMode &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel ? (
-            <ModeExplaination message="Easy Mode: There's no timer. You will get two stars if you win." />
-          ) : (
-            !easyMode &&
-            normalMode &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <ModeExplaination message="Normal Mode: Find all the matches in 720 seconds. You will get five stars if you win." />
-            )
-          )}
           {isTimerRunning && isWin === "" && normalMode && (
             <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
               {seconds}
             </h3>
           )}
-          {normalMode &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            isWin === "" && (
-              <button onClick={add30Seconds} disabled={!addTimeChanse}>
-                add 30 seconds
-              </button>
-            )}
-          {(normalMode || easyMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            isWin === "" &&
-            !tripleMatch && (
-              <button onClick={showPair1} disabled={!pair1Chance}>
-                Show me a triple match
-              </button>
-            )}
-          {(normalMode || easyMode) &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            isWin === "" &&
-            !tripleMatch && (
-              <button onClick={showPair2} disabled={!pair2Chance}>
-                Show me a triple match
-              </button>
-            )}
+          <div className="four-buttons-container" style={{ marginTop: "15px" }}>
+            {normalMode &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              isWin === "" && (
+                <button onClick={add30Seconds} disabled={!addTimeChanse}>
+                  add 30 seconds
+                </button>
+              )}
+            {(normalMode || easyMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              isWin === "" &&
+              !tripleMatch && (
+                <button onClick={showPair1} disabled={!pair1Chance}>
+                  Show me a triple match
+                </button>
+              )}
+            {(normalMode || easyMode) &&
+              !isTogglingReset &&
+              !isTogglingHomePage &&
+              !isTogglingLevel &&
+              isWin === "" &&
+              !tripleMatch && (
+                <button onClick={showPair2} disabled={!pair2Chance}>
+                  Show me a triple match
+                </button>
+              )}
+          </div>
           {isWin === false && (
             <div>
               <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You Lose!"}</h2>
               <div>Try Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "15px" }}>
+                Ok
+              </button>
             </div>
           )}
           {isWin === true && (
             <div>
               <h2>You Win!</h2>
               <div>Play Again?</div>
-              <button onClick={handlePlayAgain}>Ok</button>
+              <button onClick={handlePlayAgain} style={{ marginTop: "15px" }}>
+                Ok
+              </button>
             </div>
           )}
+          <br />
           {isGameStarted &&
             isWin === "" &&
             !isTogglingReset &&
@@ -485,6 +479,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 ))}
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

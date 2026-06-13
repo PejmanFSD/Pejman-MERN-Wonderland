@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import ConfirmationBox from "../ConfirmationBox";
 import GameLevel from "../GameLevel";
-import ModeExplaination from "../ModeExplaination";
 import Rock from "./Rock.png";
 import Scissors from "./Scissors.png";
 import Paper from "./Paper.png";
@@ -43,7 +42,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
   const announcingTheWinner = (user, pejman) => {
     if (user === "" || pejman === "") return;
     else if (user === pejman) {
-      setGameResult("No winner, try again");
+      setGameResult("No winner!");
     } else if (user === "Rock" && pejman === "Scissors") {
       setGameResult("You win!");
       updateScore(1);
@@ -174,7 +173,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
               <button onClick={handleAboutPage}>
-                About Rock-Scissors-Paper
+                About Rock - Scissors - Paper
               </button>
             )}
             {isGameStarted &&
@@ -243,24 +242,9 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
                 mode2Function={runExtremelySuperDifficultMode}
               />
             )}
-          {normalMode &&
-          !extremelySuperDifficultMode &&
-          !isTogglingHomePage &&
-          !isTogglingLevel &&
-          !isTogglingReset ? (
-            <ModeExplaination message="Normal Mode: If you win Pejman 3 times in a row, you'll get one star." />
-          ) : (
-            extremelySuperDifficultMode &&
-            !normalMode &&
-            !isTogglingHomePage &&
-            !isTogglingLevel &&
-            !isTogglingReset && (
-              <ModeExplaination message="Extremely-Super-Difficult Mode: If you beat Pejman, you'll get 1,000,000 stars!" />
-            )
-          )}
           {!isGameStarted &&
             (normalMode || extremelySuperDifficultMode) &&
-            !isTogglingHomePage && <button onClick={handleStart}>Start</button>}
+            !isTogglingHomePage && <button onClick={handleStart} style={{marginTop: "10px"}}>Start</button>}
           {isGameStarted &&
             !isTogglingHomePage &&
             !isTogglingReset &&
@@ -273,18 +257,21 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
                   width="150px"
                   alt="Rock"
                   onClick={() => handleUserChoice("Rock")}
+                  style={{margin: "15px"}}
                 />
                 <img
                   src={Scissors}
                   width="150px"
                   alt="Scissors"
                   onClick={() => handleUserChoice("Scissors")}
+                  style={{margin: "15px"}}
                 />
                 <img
                   src={Paper}
                   width="150px"
                   alt="Paper"
                   onClick={() => handleUserChoice("Paper")}
+                  style={{margin: "15px"}}
                 />
               </div>
             )}
@@ -339,7 +326,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button onClick={handleReviewSection} style={{marginTop: "25px"}}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}

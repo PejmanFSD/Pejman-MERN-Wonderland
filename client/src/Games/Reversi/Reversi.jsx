@@ -7,7 +7,6 @@ import Yellow from "./images/Yellow.jpg";
 import ReviewSection from "../../Components/ReviewSection";
 import Cell from "./Cell";
 import { getRandArr } from "../utils.js";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import AboutReversi from "./AboutReversi.jsx";
@@ -1525,23 +1524,8 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               />
             </div>
           )}
-          {easyMode &&
-          !normalMode &&
-          !isTogglingReset &&
-          !isTogglingLevel &&
-          !isTogglingHomePage ? (
-            <ModeExplaination message="Easy Mode: You start the game, you won't get any stars if you win." />
-          ) : (
-            !easyMode &&
-            normalMode &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <ModeExplaination message="Normal Mode: Pejman starts the game, you will get three stars if you win." />
-            )
-          )}
           {!isGameStarted && !easyMode && !normalMode && (
-            <div>
+            <div className="four-buttons-container">
               <button onClick={handleEasyMode}>Easy Mode</button>
               <button onClick={handleNormalMode}>Normal Mode</button>
             </div>
@@ -1555,6 +1539,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   onChange={handleUserColor}
                   name="userColor"
                   id="userColor"
+                  style={{
+                    margin: "10px",
+                    textAlign: "center",
+                    width: "90px",
+                    height: "25px",
+                  }}
                 >
                   <option value={userColor} disabled selected>
                     🔽🔽🔽
@@ -1571,6 +1561,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   onChange={handlePejmanColor}
                   name="pejmanColor"
                   id="pejmanColor"
+                  style={{
+                    margin: "10px",
+                    textAlign: "center",
+                    width: "90px",
+                    height: "25px",
+                  }}
                 >
                   <option value={pejmanColor} disabled selected>
                     🔽🔽🔽
@@ -1588,12 +1584,16 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             pejmanColor &&
             !isTogglingLevel &&
             !isIdenticalColor && (
-              <button onClick={handleStart}>Start the Game</button>
+              <button onClick={handleStart} style={{ marginTop: "10px" }}>
+                Start the Game
+              </button>
             )}
           {isIdenticalColor && !isTogglingReset && !isTogglingLevel && (
             <div>
               <div>You can't choose an identical color for both players</div>
-              <button onClick={handleOk}>Ok</button>
+              <button onClick={handleOk} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {isGameStarted &&
@@ -1603,9 +1603,15 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 <div>{selectionErrorMessage}</div>
-                <button onClick={handleSelectionErrorMessage}>Ok</button>
+                <button
+                  onClick={handleSelectionErrorMessage}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
+          <br />
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingLevel &&
@@ -1697,6 +1703,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 <div>Choose the path you wan to conquer</div>
+                <br />
                 <div>
                   <button
                     style={{
@@ -1839,8 +1846,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                Allow Pejman to make his move
-                <button onClick={handleAllowPejman}>Ok</button>
+                <div>Allow Pejman to make his move</div>
+                <button
+                  onClick={handleAllowPejman}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
           {freeCellsIds.length === 49 &&
@@ -1852,8 +1864,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                Allow Pejman to start the game
-                <button onClick={handleAllowPejman}>Ok</button>
+                <div>Allow Pejman to start the game</div>
+                <button
+                  onClick={handleAllowPejman}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
           {allowPejmanChooseDirection &&
@@ -1864,7 +1881,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
-                <button onClick={handlePejmanDirectionChoice}>Ok</button>
+                <button
+                  onClick={handlePejmanDirectionChoice}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
           {allowPejmanChooseDirection &&
@@ -1874,7 +1896,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
-                <button onClick={handlePejmanDirectionChoice}>Ok</button>
+                <button
+                  onClick={handlePejmanDirectionChoice}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
           {isGameOver &&
@@ -1886,7 +1913,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 <div>
                   All the squares are taken, let's see who is the winner
                 </div>
-                <button onClick={handleGameResult}>Ok</button>
+                <button
+                  onClick={handleGameResult}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             )}
           {(pejmanPoint > 0 || userPoint > 0) &&
@@ -1905,7 +1937,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <h3>You Win!</h3>
                 <div>Play Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
           {finalMessage &&
@@ -1916,9 +1950,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <h3>{finalMessage}</h3>
                 <div>Try Again?</div>
-                <button onClick={handlePlayAgain}>Ok</button>
+                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

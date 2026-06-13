@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Square from "./Square";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { getRandNum } from "../utils";
 import Blank from "./images/Blank.jpg";
@@ -218,33 +217,27 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div className="four-buttons-container">
                 <button onClick={runEasyMode}>Easy Mode</button>
                 <button onClick={runNormalMode}>Normal Mode</button>
               </div>
             )}
-          {easyMode &&
-          !normalMode &&
-          !isTogglingReset &&
-          !isTogglingHomePage &&
-          !isTogglingLevel ? (
-            <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
-          ) : (
-            !easyMode &&
-            normalMode &&
-            !isTogglingReset &&
-            !isTogglingHomePage &&
-            !isTogglingLevel && (
-              <ModeExplaination message="Normal Mode: You will get one star if you win." />
-            )
-          )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
                 <label htmlFor="color"></label>
-                <select onChange={handleColor} name="color" id="color">
+                <select
+                  onChange={handleColor}
+                  name="color"
+                  id="color"
+                  style={{
+                    textAlign: "center",
+                    width: "140px",
+                    height: "25px",
+                  }}
+                >
                   <option value={color} disabled selected>
                     Select a Color
                   </option>
@@ -259,16 +252,18 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             isColorChosen &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <button onClick={handleStart}>Start the Game</button>
+              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+                Start the Game
+              </button>
             )}
-          <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
-          <div style={{ color: "gray" }}>User's choice: {userChoice}</div>
+          {/* <div style={{ color: "gray" }}>The chosen square: {uniqueSquare}</div>
+          <div style={{ color: "gray" }}>User's choice: {userChoice}</div> */}
           {step > 0 &&
             isColorChosen &&
             isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            !isTogglingLevel && <div>Step {step}</div>}
+            !isTogglingLevel && <h2>Step {step}</h2>}
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -348,7 +343,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingLevel && (
               <button
                 onClick={submitUserChoice}
-                style={{ position: "relative", top: "30px" }}
+                style={{ position: "relative", top: "30px", margin: "10px" }}
                 disabled={!userChoice || isStepPassed !== null}
               >
                 Submit
@@ -362,11 +357,14 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <div style={{ position: "relative", top: "30px" }}>
+              <div
+                style={{ position: "relative", top: "30px", margin: "10px" }}
+              >
                 Well Done! You guessed correctly!
                 <div>
                   <button
                     onClick={handleNextStep}
+                    style={{ margin: "10px" }}
                   >{`Go to Step ${step + 1}`}</button>
                 </div>
               </div>
@@ -379,10 +377,12 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div style={{ position: "relative", top: "60px" }}>
-                {`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}
+                <h3>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
                 <div>
                   <div>Play Again?</div>
-                  <button onClick={handleReset}>Ok</button>
+                  <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                    Ok
+                  </button>
                 </div>
               </div>
             )}
@@ -393,13 +393,16 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div style={{ position: "relative", top: "60px" }}>
-                Sorry! You didn't guess correctly! You Lose!
+                <h3>Sorry! You didn't guess correctly! You Lose!</h3>
                 <div>
                   <div>Try Again?</div>
-                  <button onClick={handleReset}>Ok</button>
+                  <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                    Ok
+                  </button>
                 </div>
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

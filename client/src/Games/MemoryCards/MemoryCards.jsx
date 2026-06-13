@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Board from "./Board";
 import ConfirmationBox from "../ConfirmationBox";
-import ModeExplaination from "../ModeExplaination";
 import {
   fruits,
   characters,
@@ -347,33 +346,17 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               />
             </div>
           )}
-          {!isGameStarted && !isTogglingHomePage && (
-            <button onClick={handleEasyMode}>Easy</button>
-          )}
-          {!isGameStarted && !isTogglingHomePage && (
-            <button onClick={handleNormalMode}>Normal</button>
-          )}
-          {!isGameStarted && !isTogglingHomePage && (
-            <button onClick={handleHardMode}>Hard</button>
-          )}
-          {easyMode &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <ModeExplaination message="Easy Mode: You won't get any stars if you win." />
+          <div className="four-buttons-container" style={{ marginTop: "15px" }}>
+            {!isGameStarted && !isTogglingHomePage && (
+              <button onClick={handleEasyMode}>Easy</button>
             )}
-          {normalMode &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <ModeExplaination message="Normal Mode: You'll get 2 stars if you win." />
+            {!isGameStarted && !isTogglingHomePage && (
+              <button onClick={handleNormalMode}>Normal</button>
             )}
-          {hardMode &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingHomePage && (
-              <ModeExplaination message="Hard Mode: You'll get 5 stars if you win." />
+            {!isGameStarted && !isTogglingHomePage && (
+              <button onClick={handleHardMode}>Hard</button>
             )}
+          </div>
           {isGameStarted &&
             !isTogglingHomePage &&
             !isTogglingReset &&
@@ -382,11 +365,18 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                 {!isImagesGroupChosen && (
                   <label htmlFor="images">Select the images Group</label>
                 )}
+                <br />
                 <select
                   onChange={handleChangeImages}
                   name="images"
                   id="images"
                   disabled={isImagesGroupChosen}
+                  style={{
+                    margin: "10px",
+                    width: "200px",
+                    height: "25px",
+                    textAlign: "center",
+                  }}
                 >
                   <option value="" disabled selected>
                     Select the images Group
@@ -429,51 +419,53 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                 <button onClick={toggleResetYes}>Try Again</button>
               </div>
             )}
-          {isGameStarted &&
-            isWin === "" &&
-            isTimerRunning &&
-            !isTogglingHomePage &&
-            !isTogglingReset && (
-              <button onClick={add15Seconds} disabled={!addSecondsChance}>
-                Add 15 seconds
-              </button>
-            )}
-          {isGameStarted &&
-            isWin === "" &&
-            showBoard &&
-            !isTogglingHomePage &&
-            !isTogglingReset && (
-              <button
-                onClick={seeAllCards}
-                disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}
-              >
-                See all cards for 3 seconds
-              </button>
-            )}
-          {isGameStarted &&
-            isWin === "" &&
-            showBoard &&
-            !isTogglingHomePage &&
-            !isTogglingReset && (
-              <button
-                onClick={findMatch1}
-                disabled={!findMatchChance1 || visibleCards.length !== 1}
-              >
-                Reveal the identical card
-              </button>
-            )}
-          {isGameStarted &&
-            isWin === "" &&
-            showBoard &&
-            !isTogglingHomePage &&
-            !isTogglingReset && (
-              <button
-                onClick={findMatch2}
-                disabled={!findMatchChance2 || visibleCards.length !== 1}
-              >
-                Reveal the identical card
-              </button>
-            )}
+          <div className="four-buttons-container">
+            {isGameStarted &&
+              isWin === "" &&
+              isTimerRunning &&
+              !isTogglingHomePage &&
+              !isTogglingReset && (
+                <button onClick={add15Seconds} disabled={!addSecondsChance}>
+                  Add 15 seconds
+                </button>
+              )}
+            {isGameStarted &&
+              isWin === "" &&
+              showBoard &&
+              !isTogglingHomePage &&
+              !isTogglingReset && (
+                <button
+                  onClick={seeAllCards}
+                  disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}
+                >
+                  See all cards for 3 seconds
+                </button>
+              )}
+            {isGameStarted &&
+              isWin === "" &&
+              showBoard &&
+              !isTogglingHomePage &&
+              !isTogglingReset && (
+                <button
+                  onClick={findMatch1}
+                  disabled={!findMatchChance1 || visibleCards.length !== 1}
+                >
+                  Reveal the identical card
+                </button>
+              )}
+            {isGameStarted &&
+              isWin === "" &&
+              showBoard &&
+              !isTogglingHomePage &&
+              !isTogglingReset && (
+                <button
+                  onClick={findMatch2}
+                  disabled={!findMatchChance2 || visibleCards.length !== 1}
+                >
+                  Reveal the identical card
+                </button>
+              )}
+          </div>
           {isGameStarted && (
             <Board
               images={images}
@@ -503,6 +495,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               seeAllCardsChancePer={seeAllCardsChancePer}
             />
           )}
+          <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
             <button onClick={handleReviewSection}>
               {showReviews

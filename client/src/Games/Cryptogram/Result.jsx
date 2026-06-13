@@ -20,14 +20,14 @@ export default function Result({
         !isTogglingHomePage &&
         resultMessageStatus.map((r, idx) =>
           r === true ? (
-            <p key={idx}>{`For code ${idx + 1}, you chose ${
+            <h3 key={idx}>{`For code ${idx + 1}, you chose ${
               Object.values(inputs)[idx]
-            } ✅`}</p>
+            } ✔`}</h3>
           ) : (
             <div key={idx}>
-              <p>{`For code ${idx + 1}, you chose ${
+              <h3>{`For code ${idx + 1}, you chose ${
                 Object.values(inputs)[idx]
-              } ❌. The correct answer is: ${Object.keys(resultObj)[idx]}.`}</p>
+              } ✖ ➜ The correct answer is: ${Object.keys(resultObj)[idx]}`}</h3>
               {acceptedAsRepetition.includes(Object.values(inputs)[idx]) && (
                 <div>
                   <p style={{ display: "inline" }}>
@@ -47,7 +47,7 @@ export default function Result({
                 </div>
               )}
             </div>
-          )
+          ),
         )}
       {!isTogglingReset && !isTogglingHomePage && isWin !== "" && (
         <div>

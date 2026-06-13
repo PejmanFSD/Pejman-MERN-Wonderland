@@ -665,6 +665,14 @@ export default function Bowls({
   }, [allBallsNum]);
   return (
     <div>
+      {isFillingTheBowlsByUserFinished &&
+        !isFillingTheBowlsByPejmanFinished &&
+        !isTogglingReset &&
+        !isTogglingHomePage && (
+          <button onClick={startFillingPejmanBowls}>
+            Allow Pejman to fill his bowls
+          </button>
+        )}
       {!isFillingTheBowlsByUserFinished && !isTogglingHomePage && (
         <form onSubmit={handleSubmit}>
           {Array(5)
@@ -672,11 +680,12 @@ export default function Bowls({
             .map((bowl, idx) => (
               <div key={idx}>
                 <label htmlFor={`bowl${idx + 1}`}></label>
-                {`Select the number of balls for bowl ${idx + 1}`}
+                {`Select the number of balls for bowl ${idx + 1} `}
                 <select
                   onChange={handleChange}
                   name={`bowl${idx + 1}`}
                   id={`bowl${idx + 1}`}
+                  style={{ textAlign: "center", width: "80px" }}
                 >
                   <option value={bowls[idx].ballsNum} disabled selected>
                     {`bowl ${idx + 1}`}
@@ -695,6 +704,7 @@ export default function Bowls({
               bowls[3].ballsNum === 0 ||
               bowls[4].ballsNum === 0
             }
+            style={{ marginTop: "10px" }}
           >
             Done
           </button>
@@ -747,29 +757,18 @@ export default function Bowls({
             ),
         )}
       </div>
-      {/* {isWin === true && !isTogglingHomePage && <div><h2>You Win!</h2><h3>{`Because ${standard ? 'you' : 'Pejman'} picked the last ball`}</h3></div>}
-      {isWin === false && !isTogglingHomePage && <div><h2>You Lose!</h2><h3>{`Because ${standard ? 'Pejman' : 'you'} picked the last ball`}</h3></div>}
-      {isWin === true && !isTogglingHomePage && <div><div>Play again?</div><button onClick={handleReset}>Ok</button></div>}
-      {isWin === false && !isTogglingHomePage && <div><div>Try again?</div><button onClick={handleReset}>Ok</button></div>} */}
-      {isFillingTheBowlsByUserFinished &&
-        !isFillingTheBowlsByPejmanFinished &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <button onClick={startFillingPejmanBowls}>
-            Allow Pejman fills his bowls
-          </button>
-        )}
       {selectedUserBowl !== 0 &&
         isUserTurn &&
         !isTogglingReset &&
         !isTogglingHomePage && (
           <form onSubmit={handleUserMove}>
             <label htmlFor={selectedUserBowl.toString()}></label>
-            {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it?`}
+            {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it? `}
             <select
               onChange={handleChangeSelectedUserBowl}
               name={selectedUserBowl.toString()}
               id={selectedUserBowl.toString()}
+              style={{ textAlign: "center", width: "40px" }}
             >
               <option
                 value={
@@ -778,6 +777,7 @@ export default function Bowls({
                 }
                 disabled
                 selected
+                style={{ textAlign: "center" }}
               >
                 ⬇️
               </option>
@@ -788,11 +788,19 @@ export default function Bowls({
                 },
                 (_, i) => i + 1,
               ).map((o, i) => (
-                <option value={o > 1 ? o : 1} key={i}>{o}</option>
+                <option
+                  value={o > 1 ? o : 1}
+                  key={i}
+                  style={{ textAlign: "center" }}
+                >
+                  {o}
+                </option>
               ))}
             </select>
             <br></br>
-            {isUserTurn && userPickNum > 0 && <button>Done</button>}
+            {isUserTurn && userPickNum > 0 && (
+              <button style={{ marginTop: "10px" }}>Done</button>
+            )}
           </form>
         )}
       {!selectedUserBowl &&
@@ -809,38 +817,16 @@ export default function Bowls({
         !isTogglingReset &&
         !isTogglingHomePage && (
           <div>
-            <div>Allow Pejman to choose one of the un-empty bowls</div>
-            <button onClick={handlePejmanMove}>Ok</button>
+            <div>Allow Pejman to make his move</div>
+            <button onClick={handlePejmanMove} style={{ marginTop: "10px" }}>
+              Ok
+            </button>
           </div>
         )}
-      {/* {isFillingTheBowlsByUserFinished &&
-        (easyMode || normalMode) &&
-        (standard || misere) &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage &&
-        <div>
-          <button onClick={() => toggleReset()}>Reset the Game</button>
-        </div>
-      }
-      {isTogglingReset &&
-        (
-          <ConfirmationBox
-            question="Are you sure you want to reset the game?"
-            toggleYes={toggleResetYes}
-            toggleCancel={toggleResetCancel}
-          />
-        )} */}
-      {/* <div style={{ color: "gray" }}>User Bowl: {selectedUserBowl}</div>
-      <div style={{ color: "gray" }}>User PickNum: {userPickNum}</div>
-      <div style={{ color: "gray" }}>Pejman Bowl: {selectedPejmanBowl}</div>
-      <div style={{ color: "gray" }}>Pejman PickNum: {pejmanPickNum}</div>
-      <div style={{ color: "gray" }}>{isUserTurn ? "User's turn" : "Pejman's turn"}</div>
-      <div style={{ color: "gray" }}>All Balls Num: {allBallsNum}</div> */}
       {!isTogglingReset && !isTogglingHomePage && (
         <div>
           {allTurns.map((b, i) => (
-            <div key={i}>
+            <div key={i} style={{ marginTop: "10px" }}>
               {`Move ${allTurns.indexOf(b) + 1}: `}
               {b.side === "User" ? "You" : "Pejman"}
               {` took ${b.ballsNum} ball${b.ballsNum > 1 ? "s" : ""} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}

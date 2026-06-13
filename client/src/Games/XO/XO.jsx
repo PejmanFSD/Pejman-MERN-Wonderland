@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Square from "./Square";
 import SquareDetails from "./SquareDetails";
 import ConfirmationBox from "../ConfirmationBox";
-import ModeExplaination from "../ModeExplaination";
 import S from "./Images/S.jpg";
 import X from "./Images/X.jpg";
 import XU from "./Images/XU.jpg";
@@ -955,7 +954,10 @@ export default function XO({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
-            <div>
+            <div
+              className="four-buttons-container"
+              style={{ marginTop: "15px" }}
+            >
               <button onClick={handleEasyMode}>Easy</button>
               <button onClick={handleNormalMode}>Normal</button>
             </div>
@@ -963,72 +965,25 @@ export default function XO({ updateTotalPoint, currentUser }) {
           {userSign === "" &&
             (easyMode || normalMode) &&
             !isTogglingHomePage && (
-              <div>
+              <div style={{ marginTop: "10px" }}>
                 Choose One:
-                <div>
+                <div
+                  className="four-buttons-container"
+                  style={{ marginTop: "10px" }}
+                >
                   <button onClick={userX}>X</button>
                   <button onClick={userO}>O</button>
                 </div>
               </div>
             )}
-          {easyMode &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <ModeExplaination message="Easy Mode: In his turn, Pejman chooses a square randomly. You won't get any stars if you win." />
-            )}
-          {normalMode &&
-            isWin === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <ModeExplaination message="Normal Mode: In his turn, Pejman chooses a square with a strategy. You'll get 1 star if you win." />
-            )}
           {userSign !== "" &&
             !isGameStarted &&
             isWin === "" &&
             !isTogglingHomePage && (
-              <button onClick={handleStart}>Start the Game</button>
+              <button onClick={handleStart} style={{ marginTop: "10px" }}>
+                Start the Game
+              </button>
             )}
-          {/* <div style={{ color: "gray" }}>isUserTurn: {isUserTurn ? "T" : "F"}</div>
-      <div style={{ color: "gray" }}>
-        isPejmanTurn: {isPejmanTurn ? "T" : "F"}
-      </div>
-      <div style={{ color: "gray" }}>
-        Available Squares:{" "}
-        {availableSquares.map((s) => (
-          <div style={{ display: "inline" }}>{s.id}-</div>
-        ))}
-      </div>
-      <div style={{ color: "gray" }}>
-        User Choices:{" "}
-        {userChoices.map((s) => (
-          <div style={{ display: "inline" }}>{s.id}-</div>
-        ))}
-      </div>
-      <div style={{ color: "gray" }}>
-        Pejman Choices:{" "}
-        {pejmanChoices.map((s) => (
-          <div style={{ display: "inline" }}>{s.id}-</div>
-        ))}
-      </div> */}
-          <div style={{ color: "gray" }}>
-            Red Array:{" "}
-            {redArray.map((s, i) => (
-              <div style={{ display: "inline" }} key={i}>
-                {s}-
-              </div>
-            ))}
-          </div>
-          <div style={{ color: "gray" }}>
-            Green Array:{" "}
-            {greenArray.map((s, i) => (
-              <div style={{ display: "inline" }} key={i}>
-                {s}-
-              </div>
-            ))}
-          </div>
           {isWin === "" &&
             isGameStarted &&
             !isTogglingReset &&
@@ -1038,6 +993,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                 style={{
                   opacity:
                     !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
+                  marginTop: "10px",
                 }}
               >
                 Your Point: {userPoint}
@@ -1052,6 +1008,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                 style={{
                   opacity:
                     !isUserTurn || availableSquares.length === 0 ? 0.2 : 1,
+                  marginTop: "5px",
                 }}
               >
                 Pejman's Point: {pejmanPoint}
@@ -1062,7 +1019,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
               <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
               <h2>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
               <div>Play Again?</div>
-              <button onClick={handleReset}>Ok</button>
+              <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {isWin === false && !isTogglingHomePage && (
@@ -1073,6 +1032,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
               <button onClick={handleReset}>Ok</button>
             </div>
           )}
+          <br />
           {isGameStarted &&
             new Array(25).fill(null).map((square, idx) =>
               (idx + 1) % 5 !== 0 ? (
@@ -1137,14 +1097,22 @@ export default function XO({ updateTotalPoint, currentUser }) {
                     ? "start the game"
                     : "make his move"
                 }`}</div>
-                <button onClick={allowPejman}>Ok</button>
+                <button onClick={allowPejman} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             ) : (
               <div>
                 <div>The game is finished. Let's see who is the winner.</div>
-                <button onClick={handleFinalPlayerPoints}>Ok</button>
+                <button
+                  onClick={handleFinalPlayerPoints}
+                  style={{ marginTop: "10px" }}
+                >
+                  Ok
+                </button>
               </div>
             ))}
+          <br />
           {isGameStarted &&
             isUserTurn &&
             availableSquares.length === 0 &&
@@ -1156,7 +1124,6 @@ export default function XO({ updateTotalPoint, currentUser }) {
                 <button onClick={handleFinalPlayerPoints}>Ok</button>
               </div>
             )}
-
           {userPoint > 0 &&
             !isTogglingReset &&
             !isTogglingLevel &&
@@ -1167,6 +1134,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                     userPoint > 1 ? "s" : ""
                   } for having the following match${userPoint > 1 ? "es" : ""}: `}
                 </div>
+                <br />
                 {filledSquaresByUser.map(
                   (f, i) =>
                     i % 3 === 0 && (
@@ -1202,6 +1170,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                 )}
               </div>
             )}
+          <br />
           {pejmanPoint > 0 &&
             !isTogglingReset &&
             !isTogglingLevel &&
@@ -1212,6 +1181,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                     pejmanPoint > 1 ? "s" : ""
                   } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
                 </div>
+                <br />
                 {filledSquaresByPejman.map(
                   (f, i) =>
                     i % 3 === 0 && (
@@ -1247,6 +1217,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                 )}
               </div>
             )}
+          <br />
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&

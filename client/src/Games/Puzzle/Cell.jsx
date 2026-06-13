@@ -375,7 +375,7 @@ export default function Cell({
             ? "none"
             : "",
         opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
-        margin: "1px",
+        margin: "2px",
       }}
       src={imageSrc}
       alt=""

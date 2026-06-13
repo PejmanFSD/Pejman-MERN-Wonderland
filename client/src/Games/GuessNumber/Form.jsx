@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function Form({
   inputs,
   setInputs,
@@ -16,15 +14,23 @@ export default function Form({
   isTogglingLevel,
   isTogglingReset,
   isTogglingHomePage,
+  isFirstDigitZero,
+  setIsFirstDigitZero,
+  isOneDigit,
+  setIsOneDigit,
+  isDigitNegative,
+  setIsDigitNegative,
+  isDigitDecimal,
+  setIsDigitDecimal,
+  isDigitRepetitive,
+  setIsDigitRepetitive,
+  isInt,
+  setIsInt,
+  isAlreadyGuessed,
+  setIsAlreadyGuessed,
+  isInputEmpty,
+  setIsInputEmpty,
 }) {
-  const [isFirstDigitZero, setIsFirstDigitZero] = useState(false);
-  const [isOneDigit, setIsOneDigit] = useState(true);
-  const [isDigitNegative, setIsDigitNegative] = useState(false);
-  const [isDigitDecimal, setIsDigitDecimal] = useState(false);
-  const [isDigitRepetitive, setIsDigitRepetitive] = useState(false);
-  const [isInt, setIsInt] = useState(true);
-  const [isAlreadyGuessed, setIsAlreadyGuessed] = useState(false);
-  const [isInputEmpty, setIsInputEmpty] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (value === "-") {
@@ -55,7 +61,7 @@ export default function Form({
     }
     if (
       allUserGuesses.includes(
-        Object.values(inputs).toString().replaceAll(",", "")
+        Object.values(inputs).toString().replaceAll(",", ""),
       )
     ) {
       setIsAlreadyGuessed(true);
@@ -99,7 +105,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -113,7 +119,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -127,7 +133,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -154,7 +160,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -171,7 +177,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -185,7 +191,7 @@ export default function Form({
             return [key, ""];
           }
           return [key, value];
-        })
+        }),
       );
       return updatedInputs;
     });
@@ -228,6 +234,7 @@ export default function Form({
               id="input1"
               value={inputs.input1}
               onChange={handleChange}
+              style={{ width: "90px", textAlign: "center", margin: "7px" }}
             />
             <label htmlFor="input2"></label>
             <input
@@ -257,6 +264,7 @@ export default function Form({
               id="input2"
               value={inputs.input2}
               onChange={handleChange}
+              style={{ width: "90px", textAlign: "center", margin: "7px" }}
             />
             <label htmlFor="input3"></label>
             <input
@@ -286,6 +294,7 @@ export default function Form({
               id="input3"
               value={inputs.input3}
               onChange={handleChange}
+              style={{ width: "90px", textAlign: "center", margin: "7px" }}
             />
             <label htmlFor="input4"></label>
             <input
@@ -315,7 +324,9 @@ export default function Form({
               id="input4"
               value={inputs.input4}
               onChange={handleChange}
+              style={{ width: "90px", textAlign: "center", margin: "7px" }}
             />
+            <br />
             <button
               disabled={
                 isFirstDigitZero ||

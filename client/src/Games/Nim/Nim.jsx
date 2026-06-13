@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Bowls from "./Bowls";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
@@ -147,7 +146,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
         <div>
           <h2>Nim</h2>
           <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingReset && (
+            {!isTogglingHomePage && !isTogglingReset && !isGameStarted && (
               <button onClick={handleAboutPage}>About Nim</button>
             )}
             {isFillingTheBowlsByUserFinished &&
@@ -179,21 +178,11 @@ export default function Nim({ updateTotalPoint, currentUser }) {
                 toggleCancel={toggleHomePageCancel}
               />
             )}
-          {standard && !isTogglingHomePage && (
-            <ModeExplaination message="Standard Nim: Get the last ball and win the game!" />
-          )}
-          {misere && !isTogglingHomePage && (
-            <ModeExplaination message="Misere Nim: Get the last ball and lose!" />
-          )}
-          {easyMode && !isTogglingHomePage && (
-            <ModeExplaination message="Easy Mode: In his turn, Pejman chooses the bowl and the number of balls randomly. You'll get 1 star if you win." />
-          )}
-          {normalMode && !isTogglingHomePage && (
-            <ModeExplaination message="Normal Mode: In his turn, Pejman chooses the bowl and the number of balls with a strategy! You'll get 4 stars if you win." />
-          )}
-
           {!standard && !misere && !isTogglingHomePage && (
-            <div>
+            <div
+              className="four-buttons-container"
+              style={{ marginTop: "15px" }}
+            >
               <button onClick={handleStandeardNim}>Standeard Nim</button>
               <button onClick={handleMisereNim}>Misère Nim</button>
             </div>
@@ -202,7 +191,10 @@ export default function Nim({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div>
+              <div
+                className="four-buttons-container"
+                style={{ marginTop: "15px" }}
+              >
                 <button onClick={handleEasy}>Easy</button>
                 <button onClick={handleNormal}>Normal</button>
               </div>
@@ -210,10 +202,14 @@ export default function Nim({ updateTotalPoint, currentUser }) {
           {!isFillingTheBowlsByUserStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage && (
-              <button onClick={startFillingUserBowls}>
+              <button
+                onClick={startFillingUserBowls}
+                style={{ marginTop: "15px" }}
+              >
                 Start Filling your Bowls with Balls
               </button>
             )}
+          <br />
           {isFillingTheBowlsByPejmanFinished &&
             !isGameStarted &&
             !isTogglingReset &&
@@ -293,15 +289,20 @@ export default function Nim({ updateTotalPoint, currentUser }) {
           {isWin === true && !isTogglingHomePage && (
             <div>
               <div>Play again?</div>
-              <button onClick={handleReset}>Ok</button>
+              <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
           {isWin === false && !isTogglingHomePage && (
             <div>
               <div>Try again?</div>
-              <button onClick={handleReset}>Ok</button>
+              <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                Ok
+              </button>
             </div>
           )}
+          <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
             <button onClick={handleReviewSection}>
               {showReviews

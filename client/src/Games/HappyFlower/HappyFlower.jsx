@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Form from "./Form";
 import GuessTable from "./GuessTable";
-import ModeExplaination from "../ModeExplaination";
 import ConfirmationBox from "../ConfirmationBox";
 import { useNavigate } from "react-router-dom";
 import ReviewSection from "../../Components/ReviewSection";
@@ -212,22 +211,20 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
               />
             )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
-            <div>
+            <div
+              className="four-buttons-container"
+              style={{ marginTop: "15px" }}
+            >
               <button onClick={handleEasy}>Easy</button>
               <button onClick={handleNormal}>Normal</button>
             </div>
-          )}
-          {easyMode && !isTogglingHomePage && (
-            <ModeExplaination message="Easy Mode: You'll get one star if you guess the word, there's no time limitation." />
-          )}
-          {normalMode && !isTogglingHomePage && (
-            <ModeExplaination message="Normal Mode: You'll get three stars if you guess the word in 60 seconds." />
           )}
           {isTimerRunning && isWin === "" && normalMode && (
             <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
               {seconds}
             </h3>
           )}
+          <br />
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingReset &&
@@ -244,10 +241,10 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
                 handleStartTimer={handleStartTimer}
               />
             )}
-          <div style={{ color: "gray" }}>
+          {/* <div style={{ color: "gray" }}>
             {title} - {word} - {word.length} - {wordWithNoSpace} - {userGuess} -{" "}
             {isWin ? "T" : "F"}
-          </div>
+          </div> */}
           <div>
             {normalMode &&
               seconds < 1 &&
@@ -259,14 +256,18 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
                 <h2>You Lose!</h2>
                 <h3>{`The name of the ${title} is "${word}"`}</h3>
                 <div>Try again?</div>
-                <button onClick={handleReset}>Ok</button>
+                <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
             {isWin === true && !isTogglingHomePage && (
               <div>
                 <h2>You Win!</h2>
                 <div>Play again?</div>
-                <button onClick={handleReset}>Ok</button>
+                <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                  Ok
+                </button>
               </div>
             )}
           </div>

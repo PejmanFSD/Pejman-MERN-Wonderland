@@ -1,5 +1,3 @@
-import ConfirmationBox from "../ConfirmationBox";
-
 export default function Chances({
   chancesNum,
   num,
@@ -33,8 +31,8 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div style={{ color: "blue" }}>
-            You have 10 chances to find the number
+          <div>
+            <strong>You have 10 chances to find the number</strong>
           </div>
         )}
       {chancesNum === 5 &&
@@ -43,8 +41,8 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div style={{ color: "blue" }}>
-            You have 5 chances to find the number
+          <div>
+            <strong>You have 5 chances to find the number</strong>
           </div>
         )}
       {chancesNum > 1 &&
@@ -54,9 +52,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div
-            style={{ color: "blue" }}
-          >{`You have ${chancesNum} chances left`}</div>
+          <div>
+            <strong>{`You have ${chancesNum} chances left`}</strong>
+          </div>
         )}
       {chancesNum > 1 &&
         chancesNum < 5 &&
@@ -65,9 +63,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div
-            style={{ color: "blue" }}
-          >{`You have ${chancesNum} chances left`}</div>
+          <div>
+            <strong>{`You have ${chancesNum} chances left`}</strong>
+          </div>
         )}
       {chancesNum === 1 &&
         !isWin &&
@@ -75,7 +73,7 @@ export default function Chances({
         !isTogglingReset &&
         !isTogglingHomePage && (
           <div style={{ color: "red" }}>
-            Warning! You only have one chance left!
+            <strong>Warning! You only have one chance left!</strong>
           </div>
         )}
       {chancesNum === 0 &&
@@ -84,20 +82,18 @@ export default function Chances({
         !isTogglingReset &&
         !isTogglingHomePage && (
           <div>
-            <div style={{ color: "gray" }}>You Lose!</div>
-            <div style={{ color: "gray" }}>{`The number was: ${num
-              .toString()
-              .replaceAll(",", "")}`}</div>
+            <h3>You Lose!</h3>
+            <h3>{`The number was: ${num.toString().replaceAll(",", "")}`}</h3>
             <button onClick={() => reset()}>Try again</button>
           </div>
         )}
       {isWin && (
         <div>
-          <div style={{ color: "green" }}>You Win!</div>
-          <div style={{ color: "green" }}>
+          <h3>You Win!</h3>
+          <h3>
             Your total point increases by{" "}
-            {easyMode ? "one" : normalMode && "three"}.
-          </div>
+            {easyMode ? "one" : normalMode && "five"}.
+          </h3>
           <button onClick={() => handleOk()}>Ok</button>
         </div>
       )}
