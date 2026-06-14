@@ -18,7 +18,7 @@ export default function Profile({ currentUser, setIsProfileEditing, isLoggingOut
           <div>Role: {currentUser.role}</div>
           <div>Message: {currentUser.message}</div>
           <div>Number of stars: {currentUser.totalPoint}</div>
-          <button onClick={handleEditMyProfile}>
+          <button onClick={handleEditMyProfile} style={{marginTop: "7px"}}>
             Edit My Profile
           </button>
         </div>

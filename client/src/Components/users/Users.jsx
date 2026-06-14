@@ -80,33 +80,44 @@ export default function Users({
   };
   return (
     <div>
-      {!isDeleting && !isLoggingOut && (
-        <input
-          type="text"
-          placeholder="Search user..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setPage(1);
-          }}
-        />
-      )}
-      {!isDeleting && !isLoggingOut && (
-        <div>
-          Sort by:
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="Username">Username</option>
-            <option value="Stars">Stars</option>
-          </select>
-        </div>
-      )}
+      <br />
+      <div className="four-buttons-container">
+        {!isDeleting && !isLoggingOut && (
+          <div>
+            <input
+              type="text"
+              placeholder="Search user..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+              style={{height: "25px"}}
+            />
+          </div>
+        )}
+        {!isDeleting && !isLoggingOut && (
+          <div>
+            {`Sort by: `}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              style={{ textAlign: "center", width: "120px", height: "30px" }}
+            >
+              <option value="Username">Username</option>
+              <option value="Stars">Stars</option>
+            </select>
+          </div>
+        )}
+      </div>
+      <br />
       {(!users || (users && users.length === 0)) && !isLoggingOut ? (
         <div>No users available</div>
       ) : (
         !isLoggingOut && (
           <table border="1" cellPadding="10" style={{ width: "90%" }}>
             <thead>
-              <tr>
+              <tr style={{height: "40px"}}>
                 <th style={{ width: "15%" }}>Username</th>
                 <th style={{ width: "7%" }}>Role</th>
                 <th style={{ width: "9%" }}>Number of Stars</th>
@@ -116,7 +127,7 @@ export default function Users({
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id}>
+                <tr key={user._id} style={{height: "40px"}}>
                   <td>{user.username}</td>
                   <td>
                     {user.username === "Pejman" ? "The Boss!" : user.role}
@@ -135,7 +146,6 @@ export default function Users({
                     ) : currentUser.username === "Pejman" && !isDeleting ? (
                       <button
                         onClick={() => handleDelete(user._id)}
-                        style={{ display: "inline" }}
                       >
                         Delete
                       </button>
@@ -159,22 +169,22 @@ export default function Users({
         )
       )}
       {isDeleting && deletingUser && (
-        <div style={{ display: "inline", marginLeft: "8px" }}>
+        <div style={{ marginTop: "15px" }}>
           {`Are you sure you want to delete ${users.find((u) => u._id === deletingUser).username}?`}
           <button
             onClick={() => handleDeleteYes(deletingUser)}
-            style={{ marginLeft: "8px" }}
+            style={{ marginLeft: "10px", width: "40px", height: "25px" }}
           >
             Yes
           </button>
-          <button onClick={handleDeleteNo} style={{ marginLeft: "4px" }}>
+          <button onClick={handleDeleteNo} style={{ marginLeft: "7px", width: "40px", height: "25px" }}>
             No
           </button>
         </div>
       )}
       {!isDeleting && users && users.length > 0 && !isLoggingOut && (
         <div style={{ marginTop: "20px" }}>
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          <button disabled={page === 1} onClick={() => setPage(page - 1)} style={{ width: "80px", height: "25px" }}>
             Previous
           </button>
           <span style={{ margin: "0 10px" }}>
@@ -183,6 +193,7 @@ export default function Users({
           <button
             disabled={page === totalPages}
             onClick={() => setPage(page + 1)}
+            style={{ width: "80px", height: "25px" }}
           >
             Next
           </button>

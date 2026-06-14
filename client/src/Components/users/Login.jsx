@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export default function Login({onLogin, youShouldLoginMessage, setYouShouldLoginMessage, setFlash}) {
+export default function Login({
+  onLogin,
+  youShouldLoginMessage,
+  setYouShouldLoginMessage,
+  setFlash,
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -19,7 +24,7 @@ export default function Login({onLogin, youShouldLoginMessage, setYouShouldLogin
         },
         body: JSON.stringify({
           username,
-          password
+          password,
         }),
       });
       const json = await response.json();
@@ -42,28 +47,45 @@ export default function Login({onLogin, youShouldLoginMessage, setYouShouldLogin
   return (
     <form onSubmit={handleSubmit}>
       <h3>Login</h3>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          onChange={(e) => setUsername(e.target.value)}
-          id="username"
-          name="username"
-          value={username}
-          required
-        />
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            id="username"
+            name="username"
+            value={username}
+            required
+            style={{
+              textAlign: "center",
+              width: "150px",
+              height: "25px",
+              marginTop: "7px",
+            }}
+          />
+        </div>
       </div>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          id="password"
-          name="password"
-          value={password}
-          required
-        />
+        <div>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            name="password"
+            value={password}
+            required
+            style={{
+              textAlign: "center",
+              width: "150px",
+              height: "25px",
+              marginTop: "7px",
+            }}
+          />
+        </div>
       </div>
+      <br />
       <button>Login</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </form>

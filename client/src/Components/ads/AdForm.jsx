@@ -2,7 +2,14 @@ import { useState, useEffect, useRef } from "react";
 // For returning to the Home Page automatically when the new ad is created
 import { useNavigate } from "react-router-dom";
 
-export default function AdForm({ onAdCreated, currentUser, error, setError, setFlash, setIsCreatingAd }) {
+export default function AdForm({
+  onAdCreated,
+  currentUser,
+  error,
+  setError,
+  setFlash,
+  setIsCreatingAd,
+}) {
   const [company, setCompany] = useState("");
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
@@ -85,42 +92,68 @@ export default function AdForm({ onAdCreated, currentUser, error, setError, setF
     <div>
       <form onSubmit={handleSubmit}>
         <h3>Create a new Ad</h3>
-        <div>
+        <div style={{ marginTop: "15px" }}>
           <label htmlFor="company">Ad Company:</label>
-          <input
-            type="text"
-            onChange={(e) => setCompany(e.target.value)}
-            id="company"
-            name="company"
-            value={company}
-            required
-          />
+          <div>
+            <input
+              type="text"
+              onChange={(e) => setCompany(e.target.value)}
+              id="company"
+              name="company"
+              value={company}
+              required
+              style={{
+                textAlign: "center",
+                width: "150px",
+                height: "25px",
+                marginTop: "7px",
+              }}
+            />
+          </div>
         </div>
-        <div>
+        <div style={{ marginTop: "15px" }}>
           <label htmlFor="text">Ad Text:</label>
-          <textarea
-            type="text"
-            onChange={(e) => setText(e.target.value)}
-            id="text"
-            name="text"
-            value={text}
-            required
-          ></textarea>
+          <div>
+            <textarea
+              type="text"
+              onChange={(e) => setText(e.target.value)}
+              id="text"
+              name="text"
+              value={text}
+              required
+              style={{
+                textAlign: "center",
+                width: "150px",
+                height: "75px",
+                marginTop: "7px",
+              }}
+            ></textarea>
+          </div>
         </div>
-        <div>
+        <div style={{ marginTop: "15px" }}>
           <label htmlFor="image">Ad Image:</label>
-          <input
-            type="file"
-            multiple
-            ref={fileInputRef} // For clearing the chosen images after creating a new ad
-            onChange={(e) => setImages(e.target.files)}
-            id="image"
-          />
+          <div>
+            <input
+              type="file"
+              multiple
+              ref={fileInputRef} // For clearing the chosen images after creating a new ad
+              onChange={(e) => setImages(e.target.files)}
+              id="image"
+              style={{
+                textAlign: "center",
+                width: "200px",
+                height: "75px",
+                marginTop: "7px",
+              }}
+            />
+          </div>
         </div>
         <button>Create Ad</button>
         {error && <div style={{ color: "red" }}>{error}</div>}
       </form>
-      <button onClick={cancelSubmit}>Cancel</button>
+      <button onClick={cancelSubmit} style={{ marginTop: "15px" }}>
+        Cancel
+      </button>
     </div>
   );
 }

@@ -30,6 +30,8 @@ export default function Navbar({
   isAdEditing,
   isCreatingAd,
   setIsCreatingAd,
+  theme,
+  setTheme,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -99,90 +101,150 @@ export default function Navbar({
       <div>
         <strong>Pejman MERN Wonderland</strong>
       </div>
-      <div>Number of registered users: {userCount}</div>
-      {currentUser && !isLoggingOut && (
-        <div>Welcome, {currentUser.username}!</div>
-      )}
+      <div
+        className="four-buttons-container"
+        style={{ marginTop: "10px", marginBottom: "10px" }}
+      >
+        {currentUser && !isLoggingOut && (
+          <div>Welcome, {currentUser.username}!</div>
+        )}
+        <div>Number of registered users: {userCount}</div>
+        {!gameUrls.includes(location.pathname) &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && (
+            <div>
+              {`Theme: `}
+              <select
+                value={theme}
+                onChange={(e) => setTheme(e.target.value)}
+                style={{
+                  textAlign: "center",
+                  width: "80px",
+                  height: "20px",
+                }}
+              >
+                <option disabled selected></option>
+                <option value="Blue">Blue</option>
+                <option value="Red">Red</option>
+                <option value="Green">Green</option>
+              </select>
+            </div>
+          )}
+      </div>
       {/* "location.pathname" is the path of the current page */}
-      {location.pathname !== "/" &&
-        !gameUrls.includes(location.pathname) &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && <button onClick={() => navigate("/")}>Home Page</button>}
-      {currentUser &&
-        location.pathname !== "/profile" &&
-        !gameUrls.includes(location.pathname) &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && (
-          <button onClick={() => navigate("/profile")}>My Profile</button>
-        )}
-      {currentUser &&
-        !gameUrls.includes(location.pathname) &&
-        currentUser.role === "Admin" &&
-        location.pathname !== "/users" &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && <button onClick={() => navigate("/users")}>All users</button>}
-      {currentUser &&
-        !gameUrls.includes(location.pathname) &&
-        currentUser.role === "Admin" &&
-        location.pathname !== "/newAd" &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && <button onClick={renderCreateAdPage}>Create new Ad</button>}
-      {location.pathname !== "/about-wonderland" &&
-        !gameUrls.includes(location.pathname) &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && (
-          <button onClick={() => navigate("/about-wonderland")}>
-            About Wonderland
-          </button>
-        )}
-      {!currentUser &&
-        !gameUrls.includes(location.pathname) &&
-        location.pathname !== "/register" &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && (
-          <button onClick={() => navigate("/register")}>Register</button>
-        )}
-      {!currentUser &&
-        !gameUrls.includes(location.pathname) &&
-        location.pathname !== "/login" &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && <button onClick={() => navigate("/login")}>Login</button>}
-      {currentUser &&
-        !gameUrls.includes(location.pathname) &&
-        !isLoggingOut &&
-        !isDeleting &&
-        !isProfileEditing &&
-        !isAdEditing &&
-        !isCreatingAd &&
-        !error && <button onClick={handleLogout}>Logout</button>}
+      <div className="four-buttons-container">
+        {location.pathname !== "/" &&
+          !gameUrls.includes(location.pathname) &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && <button onClick={() => navigate("/")}>Home Page</button>}
+        {/* {!gameUrls.includes(location.pathname) &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error &&
+          <div>
+        {`Theme: `}
+        <select
+          value={theme}
+          onChange={(e) => setTheme(e.target.value)}
+          style={{
+            marginTop: "10px",
+            textAlign: "center",
+            width: "80px",
+            height: "25px",
+          }}
+        >
+          <option value="Blue">Blue</option>
+          <option value="Red">Red</option>
+          <option value="Green">Green</option>
+        </select>
+      </div>
+        } */}
+
+        {currentUser &&
+          location.pathname !== "/profile" &&
+          !gameUrls.includes(location.pathname) &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && (
+            <button onClick={() => navigate("/profile")}>My Profile</button>
+          )}
+        {currentUser &&
+          !gameUrls.includes(location.pathname) &&
+          currentUser.role === "Admin" &&
+          location.pathname !== "/users" &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && (
+            <button onClick={() => navigate("/users")}>All users</button>
+          )}
+        {currentUser &&
+          !gameUrls.includes(location.pathname) &&
+          currentUser.role === "Admin" &&
+          location.pathname !== "/newAd" &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && <button onClick={renderCreateAdPage}>Create new Ad</button>}
+        {location.pathname !== "/about-wonderland" &&
+          !gameUrls.includes(location.pathname) &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && (
+            <button onClick={() => navigate("/about-wonderland")}>
+              About Wonderland
+            </button>
+          )}
+        {!currentUser &&
+          !gameUrls.includes(location.pathname) &&
+          location.pathname !== "/register" &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && (
+            <button onClick={() => navigate("/register")}>Register</button>
+          )}
+        {!currentUser &&
+          !gameUrls.includes(location.pathname) &&
+          location.pathname !== "/login" &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && <button onClick={() => navigate("/login")}>Login</button>}
+        {currentUser &&
+          !gameUrls.includes(location.pathname) &&
+          !isLoggingOut &&
+          !isDeleting &&
+          !isProfileEditing &&
+          !isAdEditing &&
+          !isCreatingAd &&
+          !error && <button onClick={handleLogout}>Logout</button>}
+      </div>
       {isLoggingOut && !gameUrls.includes(location.pathname) && (
         <div>
           <div>Are you sure you want to logout?</div>

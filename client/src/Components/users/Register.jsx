@@ -124,30 +124,48 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
   return (
     <form onSubmit={handleSubmit}>
       <h3>Sign Up!</h3>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          onChange={(e) => setUsername(e.target.value)}
-          id="username"
-          name="username"
-          value={username}
-          required
-        />
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            id="username"
+            name="username"
+            value={username}
+            required
+            style={{
+              textAlign: "center",
+              width: "150px",
+              height: "25px",
+              marginTop: "7px",
+            }}
+          />
+        </div>
       </div>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          id="password"
-          name="password"
-          value={password}
-          required
-        />
+        <div>
+          <input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            name="password"
+            value={password}
+            required
+            style={{
+              textAlign: "center",
+              width: "150px",
+              height: "25px",
+              marginTop: "7px",
+            }}
+          />
+        </div>
       </div>
-      <div>
-        <div style={{ color: passwordStrenghtStatus.length ? "black" : "gray" }}>
+      <div style={{ marginTop: "10px" }}>
+        <div
+          style={{ color: passwordStrenghtStatus.length ? "black" : "gray" }}
+        >
           {passwordStrenghtStatus.length ? "✔" : "✖"} at least 8 characters
         </div>
         <div style={{ color: passwordStrenghtStatus.upper ? "black" : "gray" }}>
@@ -156,40 +174,68 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
         <div style={{ color: passwordStrenghtStatus.lower ? "black" : "gray" }}>
           {passwordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
         </div>
-        <div style={{ color: passwordStrenghtStatus.number ? "black" : "gray" }}>
+        <div
+          style={{ color: passwordStrenghtStatus.number ? "black" : "gray" }}
+        >
           {passwordStrenghtStatus.number ? "✔" : "✖"} one number
         </div>
       </div>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input
-          type="password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          id="confirmPassword"
-          name="confirmPassword"
-          value={confirmPassword}
-          required
-        />
+        <div>
+          <input
+            type="password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            id="confirmPassword"
+            name="confirmPassword"
+            value={confirmPassword}
+            required
+            style={{
+              textAlign: "center",
+              width: "150px",
+              height: "25px",
+              marginTop: "7px",
+            }}
+          />
+        </div>
       </div>
-      <div>
+      <div style={{ marginTop: "15px" }}>
         <label htmlFor="message">Message:</label>
-        <textarea
-          type="text"
-          onChange={(e) => setMessage(e.target.value)}
-          id="message"
-          name="message"
-          value={message}
-          required
-        ></textarea>
+        <div>
+          <textarea
+            type="text"
+            onChange={(e) => setMessage(e.target.value)}
+            id="message"
+            name="message"
+            value={message}
+            required
+            style={{
+              textAlign: "center",
+              width: "150px",
+              height: "75px",
+              marginTop: "7px",
+            }}
+          ></textarea>
+        </div>
       </div>
       <br />
       <div>If you're an employer, please:</div>
-      <div>- Signup as an "admin" (the Admin secret is <strong>PejmanFSD</strong>).</div>
-      <div>- Read the "For employers" section.</div>
+      <div>
+        - Signup as an "admin" (the Admin secret is <strong>PejmanFSD</strong>).
+      </div>
       <br />
       <div>
-        Signup as:
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <div>Signup as:</div>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          style={{
+            marginTop: "10px",
+            textAlign: "center",
+            width: "80px",
+            height: "25px",
+          }}
+        >
           <option value="Player">Player</option>
           <option value="Admin">Admin</option>
         </select>
@@ -202,7 +248,17 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
           />
         )}
       </div>
-      <button disabled={password !== confirmPassword || username === "" || password === "" || message === ""}>Sign Up</button>
+      <button
+        disabled={
+          password !== confirmPassword ||
+          username === "" ||
+          password === "" ||
+          message === ""
+        }
+        style={{ marginTop: "15px" }}
+      >
+        Sign Up
+      </button>
       {password && confirmPassword && password !== confirmPassword && (
         <p style={{ color: "gray" }}>✖ Passwords do not match</p>
       )}

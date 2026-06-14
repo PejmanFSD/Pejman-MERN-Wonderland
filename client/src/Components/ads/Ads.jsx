@@ -52,9 +52,9 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEd
         error={error}
       />
       {ads.length > 1 &&
-        <div>
-        <button onClick={handlePrevious} disabled={error}>&#8592;</button>
-        <button onClick={handleNext} disabled={error}>&#8594;</button>
+        <div style={{marginTop: "4px"}}>
+        <button onClick={handlePrevious} disabled={error} style={{marginRight: "5px", width: "40px"}}>&#8592;</button>
+        <button onClick={handleNext} disabled={error} style={{marginLeft: "5px", width: "40px"}}>&#8594;</button>
       </div>
       }
     </div>

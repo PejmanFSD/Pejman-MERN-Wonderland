@@ -52,6 +52,7 @@ function App() {
   const [flash, setFlash] = useState(null);
   const [rankedUsers, setRankedUsers] = useState([]);
   const [totalPoint, setTotalPoint] = useState(0);
+  const [theme, setTheme] = useState(null);
 
   const updateTotalPoint = async (i) => {
     const newTotal = totalPoint + i;
@@ -130,6 +131,8 @@ function App() {
           isAdEditing={isAdEditing}
           isCreatingAd={isCreatingAd}
           setIsCreatingAd={setIsCreatingAd}
+          theme={theme}
+          setTheme={setTheme}
         />
         <Ads
           ads={ads}

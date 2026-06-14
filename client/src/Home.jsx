@@ -247,7 +247,7 @@ export default function Home({
   return (
     <div>
       <div>
-        <div>The top 10 users with highest stars</div>
+        <div style={{marginTop: "10px"}}>The top 10 users with highest stars</div>
       <table border="2" cellPadding="5" style={{position: "relative", top: "5px"}}>
         <thead style={{height: "5px"}}>
           <tr>
@@ -270,7 +270,7 @@ export default function Home({
       </table>
       </div>
       <div>
-        <div>
+        <div style={{margin: "10px"}}>
           {currentUser &&
             currentUser?.totalPoint === 0 &&
             "You don't have any stars, play the interesting games and win some!"}
@@ -325,6 +325,7 @@ export default function Home({
           </div>
         )}
       </div>
+      <div style={{margin: "10px"}}><strong>The 21 fascinating games of Pejman MERN Wonderland</strong></div>
       {showRockScissorsPaper ? (
         <RockScissorsPaperPage
           updateTotalPoint={updateTotalPoint}

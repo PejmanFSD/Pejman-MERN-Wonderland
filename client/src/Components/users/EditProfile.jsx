@@ -182,97 +182,153 @@ export default function EditProfile({
       {!error && !passwordError && (
         <div>
           <form onSubmit={handleProfileUpdate}>
-            <div>
+            <div style={{ marginTop: "15px" }}>
               <label>Username:</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
+              <div>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  style={{
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "7px",
+                  }}
+                />
+              </div>
             </div>
-            <div>
+            <div style={{ marginTop: "15px" }}>
               <label>Message:</label>
-              <textarea
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-              ></textarea>
+              <div>
+                <textarea
+                  type="text"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  style={{
+                    textAlign: "center",
+                    width: "150px",
+                    height: "75px",
+                    marginTop: "7px",
+                  }}
+                ></textarea>
+              </div>
             </div>
-            <label>Password:</label>
-            <input
-              type="password"
-              placeholder="Current Password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="New Password"
-              value={newPassword}
-              onChange={(e) => {
-                const value = e.target.value;
-                setNewPassword(value);
-                checkPasswordMatch(value, confirmNewPassword);
-              }}
-            />
-            <input
-              type="password"
-              placeholder="Confirm New Password"
-              value={confirmNewPassword}
-              onChange={(e) => {
-                const value = e.target.value;
-                setConfirmNewPassword(value);
-                checkPasswordMatch(newPassword, value);
-              }}
-            />
+            <div style={{ marginTop: "15px" }}>
+              <label>Current Password:</label>
+              <div>
+                <input
+                  type="password"
+                  placeholder="Current Password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  style={{
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "7px",
+                  }}
+                />
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
+              <label>New Password:</label>
+              <div>
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setNewPassword(value);
+                    checkPasswordMatch(value, confirmNewPassword);
+                  }}
+                  style={{
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "7px",
+                  }}
+                />
+              </div>
+            </div>
+            <div style={{ marginTop: "15px" }}>
+              <label>Confirm New Password:</label>
+              <div>
+                <input
+                  type="password"
+                  placeholder="Confirm New Password"
+                  value={confirmNewPassword}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setConfirmNewPassword(value);
+                    checkPasswordMatch(newPassword, value);
+                  }}
+                  style={{
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "7px",
+                  }}
+                />
+              </div>
+            </div>
             <br />
             <button type="submit">Save Changes</button>
           </form>
-          <button type="submit" onClick={cancelSubmit}>
+          <button
+            type="submit"
+            onClick={cancelSubmit}
+            style={{ marginTop: "15px" }}
+          >
             Cancel
           </button>
-          {(newPassword || confirmNewPassword) &&
-
+          {(newPassword || confirmNewPassword) && (
             <div>
-            <div
-              style={{
-                color: newPasswordStrenghtStatus.length ? "black" : "gray",
-              }}
-            >
-              {newPasswordStrenghtStatus.length ? "✔" : "✖"} at least 8
-              characters
-            </div>
-            <div
-              style={{
-                color: newPasswordStrenghtStatus.upper ? "black" : "gray",
-              }}
+              <div
+                style={{
+                  color: newPasswordStrenghtStatus.length ? "black" : "gray",
+                }}
               >
-              {newPasswordStrenghtStatus.upper ? "✔" : "✖"} one uppercase letter
-            </div>
-            <div
-              style={{
-                color: newPasswordStrenghtStatus.lower ? "black" : "gray",
-              }}
+                {newPasswordStrenghtStatus.length ? "✔" : "✖"} at least 8
+                characters
+              </div>
+              <div
+                style={{
+                  color: newPasswordStrenghtStatus.upper ? "black" : "gray",
+                }}
               >
-              {newPasswordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
-            </div>
-            <div
-              style={{
-                color: newPasswordStrenghtStatus.number ? "black" : "gray",
-              }}
+                {newPasswordStrenghtStatus.upper ? "✔" : "✖"} one uppercase
+                letter
+              </div>
+              <div
+                style={{
+                  color: newPasswordStrenghtStatus.lower ? "black" : "gray",
+                }}
               >
-              {newPasswordStrenghtStatus.number ? "✔" : "✖"} one number
+                {newPasswordStrenghtStatus.lower ? "✔" : "✖"} one lowercase
+                letter
+              </div>
+              <div
+                style={{
+                  color: newPasswordStrenghtStatus.number ? "black" : "gray",
+                }}
+              >
+                {newPasswordStrenghtStatus.number ? "✔" : "✖"} one number
+              </div>
             </div>
-          </div>
-            }
-
+          )}
           {newPassword && confirmNewPassword && passwordMatch === true && (
-            <p style={{ color: "black" }}><strong>✔ New passwords match</strong></p>
+            <p style={{ color: "black" }}>
+              <strong>✔ New passwords match</strong>
+            </p>
           )}
           {newPassword && confirmNewPassword && passwordMatch === false && (
-            <p style={{ color: "gray" }}><strong>✖ New passwords do not match</strong></p>
+            <p style={{ color: "gray" }}>
+              <strong>✖ New passwords do not match</strong>
+            </p>
           )}
         </div>
       )}
