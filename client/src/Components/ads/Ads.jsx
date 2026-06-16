@@ -1,8 +1,18 @@
 import "../../App.css";
 import { useState, useEffect } from "react";
-import Ad from './Ad';
+import Ad from "./Ad";
 
-export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEditing, isDeleting, isCreatingAd, isAdEditing, error}) {
+export default function Ads({
+  ads,
+  setAds,
+  currentUser,
+  isLoggingOut,
+  isProfileEditing,
+  isDeleting,
+  isCreatingAd,
+  isAdEditing,
+  error,
+}) {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const fetchAds = async () => {
@@ -25,14 +35,10 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEd
     return;
   }
   const handleNext = () => {
-    setIdx((currAd) =>
-      currAd === ads.length - 1 ? 0 : currAd + 1
-    );
+    setIdx((currAd) => (currAd === ads.length - 1 ? 0 : currAd + 1));
   };
   const handlePrevious = () => {
-    setIdx((currAd) =>
-      currAd === 0 ? ads.length - 1 : currAd - 1
-    );
+    setIdx((currAd) => (currAd === 0 ? ads.length - 1 : currAd - 1));
   };
   const currentAd = ads[idx];
   return (
@@ -51,12 +57,26 @@ export default function Ads({ads, setAds, currentUser, isLoggingOut, isProfileEd
         isAdEditing={isAdEditing}
         error={error}
       />
-      {ads.length > 1 &&
-        <div style={{marginTop: "4px"}}>
-        <button onClick={handlePrevious} disabled={error} style={{marginRight: "5px", width: "40px"}}>&#8592;</button>
-        <button onClick={handleNext} disabled={error} style={{marginLeft: "5px", width: "40px"}}>&#8594;</button>
-      </div>
-      }
+      {ads.length > 1 && (
+        <div style={{ marginTop: "4px" }}>
+          <button
+            onClick={handlePrevious}
+            disabled={error}
+            className="btn2"
+            style={{ marginRight: "5px", width: "40px" }}
+          >
+            &#8592;
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={error}
+            className="btn2"
+            style={{ marginLeft: "5px", width: "40px" }}
+          >
+            &#8594;
+          </button>
+        </div>
+      )}
     </div>
   );
 }

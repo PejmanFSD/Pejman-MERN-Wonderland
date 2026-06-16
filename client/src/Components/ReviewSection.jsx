@@ -55,7 +55,7 @@ export default function ReviewSection({ game, currentUser }) {
         credentials: "include", // For sessions and cookies
         body: JSON.stringify({
           body,
-          rating : newRating,
+          rating: newRating,
           game, // Saving the specific game
         }),
       });
@@ -117,18 +117,18 @@ export default function ReviewSection({ game, currentUser }) {
       setEditingReviewId(null);
       setIsReviewEditing(false);
       fetchReviews();
-      } catch (err) {
+    } catch (err) {
       setError("Network error. Please try again.");
     }
   };
   const confirmDelete = (id) => {
     setIsDeleting(true);
     setDeletingReview(id);
-  }
+  };
   const toggleDeleteCancel = () => {
     setIsDeleting(false);
     setDeletingReview(null);
-  }
+  };
   const toggleDeleteYes = async (id) => {
     try {
       const res = await fetch(`/reviews/${id}`, {
@@ -178,8 +178,8 @@ export default function ReviewSection({ game, currentUser }) {
       >
         {reviews.map((r) => {
           const userId = currentUser?._id || currentUser?.id;
-const isAuthor =
-  userId && r.author?._id && String(userId) === String(r.author._id);
+          const isAuthor =
+            userId && r.author?._id && String(userId) === String(r.author._id);
           const isAdmin = currentUser?.role?.toLowerCase() === "admin";
           return (
             <div
@@ -192,18 +192,21 @@ const isAuthor =
             >
               {editingReviewId === r._id ? (
                 <form
-  onSubmit={(e) => {
-    e.preventDefault();
-    handleUpdate(r._id);
-  }}
->
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleUpdate(r._id);
+                  }}
+                >
                   <textarea
                     value={editBody}
                     onChange={(e) => setEditBody(e.target.value)}
                   />
                   <StarRating rating={editRating} setRating={setEditRating} />
                   <button type="submit">Save</button>
-                  <button type="button" onClick={() => setEditingReviewId(null)}>
+                  <button
+                    type="button"
+                    onClick={() => setEditingReviewId(null)}
+                  >
                     Cancel
                   </button>
                 </form>
@@ -221,13 +224,13 @@ const isAuthor =
                   <button onClick={() => confirmDelete(r._id)}>Delete</button>
                 </div>
               )}
-              {isDeleting && deletingReview === r._id &&
+              {isDeleting && deletingReview === r._id && (
                 <ConfirmationBox
-                question="Are you sure you want to delete this review?"
-                toggleYes={() => toggleDeleteYes(r._id)}
-                toggleCancel={toggleDeleteCancel}
+                  question="Are you sure you want to delete this review?"
+                  toggleYes={() => toggleDeleteYes(r._id)}
+                  toggleCancel={toggleDeleteCancel}
                 />
-              }
+              )}
             </div>
           );
         })}

@@ -122,150 +122,184 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
     checkPassword(password);
   }, [password]);
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Sign Up!</h3>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="username">Username:</label>
-        <div>
-          <input
-            type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            id="username"
-            name="username"
-            value={username}
-            required
-            style={{
-              textAlign: "center",
-              width: "150px",
-              height: "25px",
-              marginTop: "7px",
-            }}
-          />
+    <div className="cause" style={{ fontSize: "15px" }}>
+      <div className="container mt-3">
+        <div className="row justify-content-center">
+          <div className="col-md-5">
+            <form className="card p-4 shadow mt-3" onSubmit={handleSubmit}>
+              <h1 className="eater" style={{ fontSize: "40px" }}>
+                Sign Up!
+              </h1>
+              <div class="form-group" style={{ marginTop: "5px" }}>
+                <label htmlFor="username">Username:</label>
+                <input
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  id="username"
+                  name="username"
+                  value={username}
+                  required
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "5px",
+                  }}
+                />
+              </div>
+              <div class="form-group" style={{ marginTop: "10px" }}>
+                <label htmlFor="password">Password:</label>
+                <input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  id="password"
+                  name="password"
+                  value={password}
+                  required
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "5px",
+                  }}
+                />
+              </div>
+              <div style={{ marginTop: "5px" }}>
+                <div
+                  style={{
+                    color: passwordStrenghtStatus.length ? "black" : "gray",
+                  }}
+                >
+                  {passwordStrenghtStatus.length ? "✔" : "✖"} at least 8
+                  characters
+                </div>
+                <div
+                  style={{
+                    color: passwordStrenghtStatus.upper ? "black" : "gray",
+                  }}
+                >
+                  {passwordStrenghtStatus.upper ? "✔" : "✖"} one uppercase
+                  letter
+                </div>
+                <div
+                  style={{
+                    color: passwordStrenghtStatus.lower ? "black" : "gray",
+                  }}
+                >
+                  {passwordStrenghtStatus.lower ? "✔" : "✖"} one lowercase
+                  letter
+                </div>
+                <div
+                  style={{
+                    color: passwordStrenghtStatus.number ? "black" : "gray",
+                  }}
+                >
+                  {passwordStrenghtStatus.number ? "✔" : "✖"} one number
+                </div>
+              </div>
+              <div class="form-group" style={{ marginTop: "10px" }}>
+                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <input
+                  type="password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  required
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "150px",
+                    height: "25px",
+                    marginTop: "5px",
+                  }}
+                />
+              </div>
+              <div class="form-group" style={{ marginTop: "10px" }}>
+                <label htmlFor="message">Message:</label>
+                <div>
+                  <textarea
+                    type="text"
+                    onChange={(e) => setMessage(e.target.value)}
+                    id="message"
+                    name="message"
+                    value={message}
+                    required
+                    class="form-control"
+                    style={{
+                      margin: "auto",
+                      textAlign: "center",
+                      width: "150px",
+                      height: "75px",
+                      marginTop: "7px",
+                    }}
+                  ></textarea>
+                </div>
+              </div>
+              <div style={{ marginTop: "5px" }}>
+                If you're an employer, please:
+              </div>
+              <div>
+                - Signup as an "admin" (the Admin secret is{" "}
+                <strong>PejmanFSD</strong>).
+              </div>
+              <div style={{ marginTop: "8px" }}>
+                <div>Signup as:</div>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  style={{
+                    borderRadius: "5px",
+                    marginTop: "5px",
+                    textAlign: "center",
+                    width: "80px",
+                    height: "25px",
+                  }}
+                >
+                  <option value="Player" style={{ fontSize: "13px" }}>
+                    Player
+                  </option>
+                  <option value="Admin" style={{ fontSize: "13px" }}>
+                    Admin
+                  </option>
+                </select>
+                {role === "Admin" && (
+                  <input
+                    type="password"
+                    placeholder="Enter Admin Secret"
+                    value={adminSecret}
+                    onChange={(e) => setAdminSecret(e.target.value)}
+                  />
+                )}
+              </div>
+              <button
+                disabled={
+                  password !== confirmPassword ||
+                  username === "" ||
+                  password === "" ||
+                  message === ""
+                }
+                className="btn1 align-self-center mb-3"
+                style={{ marginTop: "15px" }}
+              >
+                Sign Up
+              </button>
+              {password && confirmPassword && password !== confirmPassword && (
+                <p style={{ color: "gray" }}>✖ Passwords do not match</p>
+              )}
+              {password && confirmPassword && password === confirmPassword && (
+                <p style={{ color: "black" }}>✔ Passwords match</p>
+              )}
+              {error && <p style={{ color: "red" }}>{error}</p>}
+            </form>
+          </div>
         </div>
       </div>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="password">Password:</label>
-        <div>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            id="password"
-            name="password"
-            value={password}
-            required
-            style={{
-              textAlign: "center",
-              width: "150px",
-              height: "25px",
-              marginTop: "7px",
-            }}
-          />
-        </div>
-      </div>
-      <div style={{ marginTop: "10px" }}>
-        <div
-          style={{ color: passwordStrenghtStatus.length ? "black" : "gray" }}
-        >
-          {passwordStrenghtStatus.length ? "✔" : "✖"} at least 8 characters
-        </div>
-        <div style={{ color: passwordStrenghtStatus.upper ? "black" : "gray" }}>
-          {passwordStrenghtStatus.upper ? "✔" : "✖"} one uppercase letter
-        </div>
-        <div style={{ color: passwordStrenghtStatus.lower ? "black" : "gray" }}>
-          {passwordStrenghtStatus.lower ? "✔" : "✖"} one lowercase letter
-        </div>
-        <div
-          style={{ color: passwordStrenghtStatus.number ? "black" : "gray" }}
-        >
-          {passwordStrenghtStatus.number ? "✔" : "✖"} one number
-        </div>
-      </div>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="confirmPassword">Confirm Password:</label>
-        <div>
-          <input
-            type="password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            id="confirmPassword"
-            name="confirmPassword"
-            value={confirmPassword}
-            required
-            style={{
-              textAlign: "center",
-              width: "150px",
-              height: "25px",
-              marginTop: "7px",
-            }}
-          />
-        </div>
-      </div>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="message">Message:</label>
-        <div>
-          <textarea
-            type="text"
-            onChange={(e) => setMessage(e.target.value)}
-            id="message"
-            name="message"
-            value={message}
-            required
-            style={{
-              textAlign: "center",
-              width: "150px",
-              height: "75px",
-              marginTop: "7px",
-            }}
-          ></textarea>
-        </div>
-      </div>
-      <br />
-      <div>If you're an employer, please:</div>
-      <div>
-        - Signup as an "admin" (the Admin secret is <strong>PejmanFSD</strong>).
-      </div>
-      <br />
-      <div>
-        <div>Signup as:</div>
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          style={{
-            marginTop: "10px",
-            textAlign: "center",
-            width: "80px",
-            height: "25px",
-          }}
-        >
-          <option value="Player">Player</option>
-          <option value="Admin">Admin</option>
-        </select>
-        {role === "Admin" && (
-          <input
-            type="password"
-            placeholder="Enter Admin Secret"
-            value={adminSecret}
-            onChange={(e) => setAdminSecret(e.target.value)}
-          />
-        )}
-      </div>
-      <button
-        disabled={
-          password !== confirmPassword ||
-          username === "" ||
-          password === "" ||
-          message === ""
-        }
-        style={{ marginTop: "15px" }}
-      >
-        Sign Up
-      </button>
-      {password && confirmPassword && password !== confirmPassword && (
-        <p style={{ color: "gray" }}>✖ Passwords do not match</p>
-      )}
-      {password && confirmPassword && password === confirmPassword && (
-        <p style={{ color: "black" }}>✔ Passwords match</p>
-      )}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    </div>
   );
 }

@@ -1,26 +1,55 @@
 import {
   useNavigate,
-  useLocation // For hiding the button of the current page
+  useLocation, // For hiding the button of the current page
 } from "react-router-dom";
 
-export default function Profile({ currentUser, setIsProfileEditing, isLoggingOut }) {
+export default function Profile({
+  currentUser,
+  setIsProfileEditing,
+  isLoggingOut,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   const handleEditMyProfile = () => {
     navigate("/edit-profile");
     setIsProfileEditing(true);
-  }
+  };
   return (
-    <div>
+    <div className="cause" style={{ fontSize: "20px" }}>
+      <h1 className="eater" style={{ fontSize: "40px" }}>
+        My Profile
+      </h1>
       {currentUser && !isLoggingOut && (
-        <div>
-          <div>Username: {currentUser.username}</div>
-          <div>Role: {currentUser.role}</div>
-          <div>Message: {currentUser.message}</div>
-          <div>Number of stars: {currentUser.totalPoint}</div>
-          <button onClick={handleEditMyProfile} style={{marginTop: "7px"}}>
-            Edit My Profile
-          </button>
+        <div className="container mt-3">
+          <div className="row justify-content-center">
+            <div className="col-md-4">
+              <div className="card mx-1 p-3 shadow mt-3">
+                <div class="form-group" style={{ marginTop: "15px" }}>
+                  <strong>Username: </strong>
+                  {currentUser.username}
+                </div>
+                <div class="form-group" style={{ marginTop: "15px" }}>
+                  <strong>Role: </strong>
+                  {currentUser.role}
+                </div>
+                <div class="form-group" style={{ marginTop: "15px" }}>
+                  <strong>Message: </strong>
+                  {currentUser.message}
+                </div>
+                <div class="form-group" style={{ marginTop: "15px" }}>
+                  <strong>Number of stars: </strong>
+                  {currentUser.totalPoint}
+                </div>
+                <button
+                  onClick={handleEditMyProfile}
+                  className="btn1 align-self-center mb-4 mt-4"
+                  style={{ marginTop: "7px", fontSize: "17px" }}
+                >
+                  Edit My Profile
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

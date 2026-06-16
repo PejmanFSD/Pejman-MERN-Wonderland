@@ -87,71 +87,89 @@ export default function AdForm({
     setIsCreatingAd(false);
     navigate("/");
   };
-
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h3>Create a new Ad</h3>
-        <div style={{ marginTop: "15px" }}>
-          <label htmlFor="company">Ad Company:</label>
-          <div>
-            <input
-              type="text"
-              onChange={(e) => setCompany(e.target.value)}
-              id="company"
-              name="company"
-              value={company}
-              required
-              style={{
-                textAlign: "center",
-                width: "150px",
-                height: "25px",
-                marginTop: "7px",
-              }}
-            />
+    <div className="cause" style={{ fontSize: "15px" }}>
+      <div className="container mt-3">
+        <div className="row justify-content-center">
+          <div className="col-md-4">
+            <h1 className="eater" style={{ fontSize: "40px" }}>
+              Create a new Ad
+            </h1>
+            <form className="card p-4 shadow mt-3" onSubmit={handleSubmit}>
+              <div class="form-group" style={{ marginTop: "15px" }}>
+                <label htmlFor="company">
+                  <strong>Ad Company:</strong>
+                </label>
+                <input
+                  type="text"
+                  onChange={(e) => setCompany(e.target.value)}
+                  id="company"
+                  name="company"
+                  value={company}
+                  required
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "250px",
+                    height: "40px",
+                    marginTop: "10px",
+                  }}
+                />
+              </div>
+              <div class="form-group" style={{ marginTop: "15px" }}>
+                <label htmlFor="text">
+                  <strong>Ad Text:</strong>
+                </label>
+                <textarea
+                  type="text"
+                  onChange={(e) => setText(e.target.value)}
+                  id="text"
+                  name="text"
+                  value={text}
+                  required
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "250px",
+                    height: "95px",
+                    marginTop: "10px",
+                  }}
+                ></textarea>
+              </div>
+              <div className="mb-3" style={{ marginTop: "15px" }}>
+                <label htmlFor="image" className="form-label">
+                  <strong>Ad Image:</strong>
+                </label>
+                <input
+                  type="file"
+                  multiple
+                  ref={fileInputRef} // For clearing the chosen images after creating a new ad
+                  onChange={(e) => setImages(e.target.files)}
+                  id="image"
+                  className="form-control form-control-sm"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "250px",
+                    marginTop: "10px",
+                  }}
+                />
+              </div>
+              <button className="btn1 align-self-center mb-3 mt-2">
+                Create Ad
+              </button>
+              {error && <div style={{ color: "red" }}>{error}</div>}
+            </form>
           </div>
         </div>
-        <div style={{ marginTop: "15px" }}>
-          <label htmlFor="text">Ad Text:</label>
-          <div>
-            <textarea
-              type="text"
-              onChange={(e) => setText(e.target.value)}
-              id="text"
-              name="text"
-              value={text}
-              required
-              style={{
-                textAlign: "center",
-                width: "150px",
-                height: "75px",
-                marginTop: "7px",
-              }}
-            ></textarea>
-          </div>
-        </div>
-        <div style={{ marginTop: "15px" }}>
-          <label htmlFor="image">Ad Image:</label>
-          <div>
-            <input
-              type="file"
-              multiple
-              ref={fileInputRef} // For clearing the chosen images after creating a new ad
-              onChange={(e) => setImages(e.target.files)}
-              id="image"
-              style={{
-                textAlign: "center",
-                width: "200px",
-                height: "75px",
-                marginTop: "7px",
-              }}
-            />
-          </div>
-        </div>
-        <button>Create Ad</button>
-        {error && <div style={{ color: "red" }}>{error}</div>}
-      </form>
-      <button onClick={cancelSubmit} style={{ marginTop: "15px" }}>
+      </div>
+      <button
+        onClick={cancelSubmit}
+        className="btn1 align-self-center mt-5"
+        style={{ marginTop: "15px", marginBottom: "35px" }}
+      >
         Cancel
       </button>
     </div>

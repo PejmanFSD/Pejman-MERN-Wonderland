@@ -178,110 +178,133 @@ export default function EditProfile({
     setPasswordError(null);
   };
   return (
-    <div>
+    <div className="cause" style={{ fontSize: "15px" }}>
       {!error && !passwordError && (
         <div>
-          <form onSubmit={handleProfileUpdate}>
-            <div style={{ marginTop: "15px" }}>
-              <label>Username:</label>
-              <div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  style={{
-                    textAlign: "center",
-                    width: "150px",
-                    height: "25px",
-                    marginTop: "7px",
-                  }}
-                />
+          <div className="container mt-3">
+            <div className="row justify-content-center">
+              <div className="col-md-4">
+                <form
+                  className="card p-4 shadow mt-3"
+                  onSubmit={handleProfileUpdate}
+                >
+                  <div class="form-group" style={{ marginTop: "15px" }}>
+                    <label>
+                      <strong>Username:</strong>
+                    </label>
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                      class="form-control"
+                      style={{
+                        margin: "auto",
+                        textAlign: "center",
+                        width: "250px",
+                        height: "40px",
+                        marginTop: "10px",
+                      }}
+                    />
+                  </div>
+                  <div class="form-group" style={{ marginTop: "15px" }}>
+                    <label>
+                      <strong>Message:</strong>
+                    </label>
+                    <textarea
+                      type="text"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      required
+                      class="form-control"
+                      style={{
+                        margin: "auto",
+                        textAlign: "center",
+                        width: "250px",
+                        height: "95px",
+                        marginTop: "10px",
+                      }}
+                    ></textarea>
+                  </div>
+                  <div class="form-group" style={{ marginTop: "15px" }}>
+                    <label>
+                      <strong>Current Password:</strong>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Current Password"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      class="form-control"
+                      style={{
+                        margin: "auto",
+                        textAlign: "center",
+                        width: "250px",
+                        height: "40px",
+                        marginTop: "10px",
+                      }}
+                    />
+                  </div>
+                  <div class="form-group" style={{ marginTop: "15px" }}>
+                    <label>
+                      <strong>New Password:</strong>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="New Password"
+                      value={newPassword}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setNewPassword(value);
+                        checkPasswordMatch(value, confirmNewPassword);
+                      }}
+                      class="form-control"
+                      style={{
+                        margin: "auto",
+                        textAlign: "center",
+                        width: "250px",
+                        height: "40px",
+                        marginTop: "10px",
+                      }}
+                    />
+                  </div>
+                  <div class="form-group" style={{ marginTop: "15px" }}>
+                    <label>
+                      <strong>Confirm New Password:</strong>
+                    </label>
+                    <div>
+                      <input
+                        type="password"
+                        placeholder="Confirm New Password"
+                        value={confirmNewPassword}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setConfirmNewPassword(value);
+                          checkPasswordMatch(newPassword, value);
+                        }}
+                        class="form-control"
+                        style={{
+                          margin: "auto",
+                          textAlign: "center",
+                          width: "250px",
+                          height: "40px",
+                          marginTop: "10px",
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <button type="submit" className="btn1 align-self-center mb-3">
+                    Save Changes
+                  </button>
+                </form>
               </div>
             </div>
-            <div style={{ marginTop: "15px" }}>
-              <label>Message:</label>
-              <div>
-                <textarea
-                  type="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  required
-                  style={{
-                    textAlign: "center",
-                    width: "150px",
-                    height: "75px",
-                    marginTop: "7px",
-                  }}
-                ></textarea>
-              </div>
-            </div>
-            <div style={{ marginTop: "15px" }}>
-              <label>Current Password:</label>
-              <div>
-                <input
-                  type="password"
-                  placeholder="Current Password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  style={{
-                    textAlign: "center",
-                    width: "150px",
-                    height: "25px",
-                    marginTop: "7px",
-                  }}
-                />
-              </div>
-            </div>
-            <div style={{ marginTop: "15px" }}>
-              <label>New Password:</label>
-              <div>
-                <input
-                  type="password"
-                  placeholder="New Password"
-                  value={newPassword}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setNewPassword(value);
-                    checkPasswordMatch(value, confirmNewPassword);
-                  }}
-                  style={{
-                    textAlign: "center",
-                    width: "150px",
-                    height: "25px",
-                    marginTop: "7px",
-                  }}
-                />
-              </div>
-            </div>
-            <div style={{ marginTop: "15px" }}>
-              <label>Confirm New Password:</label>
-              <div>
-                <input
-                  type="password"
-                  placeholder="Confirm New Password"
-                  value={confirmNewPassword}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setConfirmNewPassword(value);
-                    checkPasswordMatch(newPassword, value);
-                  }}
-                  style={{
-                    textAlign: "center",
-                    width: "150px",
-                    height: "25px",
-                    marginTop: "7px",
-                  }}
-                />
-              </div>
-            </div>
-            <br />
-            <button type="submit">Save Changes</button>
-          </form>
+          </div>
           <button
             type="submit"
             onClick={cancelSubmit}
-            style={{ marginTop: "15px" }}
+            className="btn1 align-self-center mt-5"
           >
             Cancel
           </button>
@@ -336,7 +359,7 @@ export default function EditProfile({
         <div>
           {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
           {error && <p style={{ color: "red" }}>{error}</p>}
-          <button type="submit" onClick={handleError}>
+          <button type="submit" onClick={handleError} className="btn2">
             Ok
           </button>
         </div>

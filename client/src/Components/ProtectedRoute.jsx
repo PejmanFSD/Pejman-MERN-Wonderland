@@ -1,6 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-export default function ProtectedRoute({ currentUser, isAuthChecked, children  }) {
+export default function ProtectedRoute({
+  currentUser,
+  isAuthChecked,
+  children,
+}) {
   const location = useLocation();
   // We don't want the user to be redirected to the "Login" page
   // whenever they refresh the page:

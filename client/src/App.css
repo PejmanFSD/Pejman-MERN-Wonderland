@@ -1,5 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Eater&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cause:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Faster+One&display=swap");
+
 .App {
   text-align: center;
+}
+
+:root {
+  --primary: #0d6efd;
+  --secondary: #6ea8fe;
+  --background: #f8f9fa;
+  --text: #212529;
+}
+
+table {
+  width: 70%;
+  border-collapse: collapse;
+  margin: auto;
+}
+
+.btn1 {
+  border: 1px solid black;
+  border-radius: 15px;
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn1:hover {
+  transform: translateY(-2px);
+}
+
+.btn2 {
+  border: 1px solid black;
+  border-radius: 25px;
+  height: 30px;
+  width: 60px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn2:hover {
+  transform: translateY(-2px);
+}
+
+.eater {
+  font-family: "Eater", cursive;
+}
+
+.fasterOne {
+  font-family: "Faster One", cursive;
+}
+
+* {
+  font-family: "Cause", cursive;
+}
+
+body {
+  background-image: url("../public/images/Background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.wonderland-card {
+  width: 170px;
+  border: 1px solid black;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.wonderland-card:hover {
+  transform: translateY(-5px);
+}
+
+.wonderland-card .card-img-top {
+  height: 170px;
+  object-fit: cover;
+}
+
+.wonderland-card .card-body {
+  text-align: center;
+}
+
+.wonderland-card .card-title {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.collapse .d-flex {
+  align-items: flex-start;
+}
+
+.collapse .btn1 {
+  width: fit-content;
 }
 
 .App-header {
@@ -17,26 +118,46 @@
   color: #61dafb;
 }
 
-table {
-  width: 70%;
-  border-collapse: collapse;
-  margin: auto;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 4px;
-  text-align: center;
-}
-
-th {
-  background-color: #f4f4f4;
-}
-
 .four-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.custom-btn {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.custom-card {
+  background-color: var(--secondary);
+}
+
+.flash-message {
+  position: fixed;
+  top: 20px;
+  left: 7%;
+  transform: translateX(-50%);
+  background-color: #000000;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }

@@ -56,7 +56,9 @@ export default function Users({
     return (
       <div>
         <p>{error}</p>
-        <button onClick={handleOk}>Ok</button>
+        <button onClick={handleOk} className="btn2">
+          Ok
+        </button>
       </div>
     );
   }
@@ -81,10 +83,14 @@ export default function Users({
   return (
     <div>
       <br />
+      <h1 className="eater" style={{ fontSize: "40px" }}>
+        All the registered users
+      </h1>
       <div className="four-buttons-container">
         {!isDeleting && !isLoggingOut && (
           <div>
             <input
+              className="cause"
               type="text"
               placeholder="Search user..."
               value={search}
@@ -92,60 +98,93 @@ export default function Users({
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              style={{height: "25px"}}
+              class="form-control"
+              style={{
+                height: "25px",
+                borderRadius: "5px",
+                textAlign: "center",
+              }}
             />
           </div>
         )}
         {!isDeleting && !isLoggingOut && (
-          <div>
+          <div className="cause">
             {`Sort by: `}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              style={{ textAlign: "center", width: "120px", height: "30px" }}
+              style={{
+                textAlign: "center",
+                width: "120px",
+                height: "25px",
+                borderRadius: "5px",
+                fontSize: "14px",
+              }}
             >
-              <option value="Username">Username</option>
-              <option value="Stars">Stars</option>
+              <option value="Username" style={{ fontSize: "13px" }}>
+                Username
+              </option>
+              <option value="Stars" style={{ fontSize: "13px" }}>
+                Stars
+              </option>
             </select>
           </div>
         )}
       </div>
       <br />
       {(!users || (users && users.length === 0)) && !isLoggingOut ? (
-        <div>No users available</div>
+        <div className="cause">No users available</div>
       ) : (
         !isLoggingOut && (
-          <table border="1" cellPadding="10" style={{ width: "90%" }}>
+          <table
+            border="1"
+            cellPadding="10"
+            style={{ width: "90%" }}
+            className="cause"
+            style={{ border: "2px solid black" }}
+          >
             <thead>
-              <tr style={{height: "40px"}}>
-                <th style={{ width: "15%" }}>Username</th>
-                <th style={{ width: "7%" }}>Role</th>
-                <th style={{ width: "9%" }}>Number of Stars</th>
-                <th style={{ width: "44%" }}>Message</th>
-                <th style={{ width: "15%" }}>Actions</th>
+              <tr style={{ height: "55px", backgroundColor: "#c8c8c8" }}>
+                <th style={{ width: "17%", border: "1px solid black" }}>
+                  Username
+                </th>
+                <th style={{ width: "9%", border: "1px solid black" }}>Role</th>
+                <th style={{ width: "12%", border: "1px solid black" }}>
+                  Number of Stars
+                </th>
+                <th style={{ width: "46%", border: "1px solid black" }}>
+                  Message
+                </th>
+                <th style={{ width: "16%", border: "1px solid black" }}>
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id} style={{height: "40px"}}>
-                  <td>{user.username}</td>
-                  <td>
+                <tr
+                  key={user._id}
+                  style={{ height: "55px", backgroundColor: "#f7f7f7" }}
+                >
+                  <td style={{ border: "1px solid black" }}>{user.username}</td>
+                  <td style={{ border: "1px solid black" }}>
                     {user.username === "Pejman" ? "The Boss!" : user.role}
                   </td>
-                  <td>
+                  <td style={{ border: "1px solid black" }}>
                     {user.username === "Pejman" ? (
                       <div>&#128526;</div>
                     ) : (
                       user.totalPoint
                     )}
                   </td>
-                  <td>{user.message}</td>
-                  <td>
+                  <td style={{ border: "1px solid black" }}>{user.message}</td>
+                  <td style={{ border: "1px solid black" }}>
                     {user.username === "Pejman" && !isDeleting ? (
                       <div>No Action for Pejman &#128526;</div>
                     ) : currentUser.username === "Pejman" && !isDeleting ? (
                       <button
                         onClick={() => handleDelete(user._id)}
+                        className="btn1"
                       >
                         Delete
                       </button>
@@ -155,7 +194,8 @@ export default function Users({
                       !isDeleting && (
                         <button
                           onClick={() => handleDelete(user._id)}
-                          style={{ display: "inline" }}
+                          className="btn1"
+                          style={{ display: "inline", height: "30px" }}
                         >
                           Delete
                         </button>
@@ -169,22 +209,32 @@ export default function Users({
         )
       )}
       {isDeleting && deletingUser && (
-        <div style={{ marginTop: "15px" }}>
+        <div style={{ marginTop: "15px" }} className="cause">
           {`Are you sure you want to delete ${users.find((u) => u._id === deletingUser).username}?`}
           <button
             onClick={() => handleDeleteYes(deletingUser)}
-            style={{ marginLeft: "10px", width: "40px", height: "25px" }}
+            className="btn2"
+            style={{ marginLeft: "10px", width: "40px", height: "35px" }}
           >
             Yes
           </button>
-          <button onClick={handleDeleteNo} style={{ marginLeft: "7px", width: "40px", height: "25px" }}>
-            No
+          <button
+            onClick={handleDeleteNo}
+            className="btn2"
+            style={{ marginLeft: "7px", width: "70px", height: "35px" }}
+          >
+            Cancel
           </button>
         </div>
       )}
       {!isDeleting && users && users.length > 0 && !isLoggingOut && (
-        <div style={{ marginTop: "20px" }}>
-          <button disabled={page === 1} onClick={() => setPage(page - 1)} style={{ width: "80px", height: "25px" }}>
+        <div style={{ marginTop: "20px" }} className="cause">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+            className="btn1"
+            style={{ width: "100px", height: "35px" }}
+          >
             Previous
           </button>
           <span style={{ margin: "0 10px" }}>
@@ -193,7 +243,8 @@ export default function Users({
           <button
             disabled={page === totalPages}
             onClick={() => setPage(page + 1)}
-            style={{ width: "80px", height: "25px" }}
+            className="btn1"
+            style={{ width: "100px", height: "35px" }}
           >
             Next
           </button>

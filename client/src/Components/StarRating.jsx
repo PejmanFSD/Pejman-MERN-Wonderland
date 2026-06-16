@@ -1,14 +1,19 @@
-import {useState} from "react";
+import { useState } from "react";
 
 export default function StarRating({ rating, setRating }) {
   const [hover, setHover] = useState(null);
   return (
-    <div style={{ display: "flex", gap: "5px", cursor: "pointer", justifyContent: "center" }}>
-    {/* Rendering the stars: */}
+    <div
+      style={{
+        display: "flex",
+        gap: "5px",
+        cursor: "pointer",
+        justifyContent: "center",
+      }}
+    >
+      {/* Rendering the stars: */}
       {[1, 2, 3, 4, 5].map((star) => {
-        const isActive = hover !== null
-          ? star <= hover
-          : star <= rating;
+        const isActive = hover !== null ? star <= hover : star <= rating;
         // For each star, return the following <span />:
         return (
           <span
@@ -19,7 +24,7 @@ export default function StarRating({ rating, setRating }) {
             style={{
               fontSize: "24px",
               color: isActive ? "gold" : "lightgray",
-              transition: "color 0.2s"
+              transition: "color 0.2s",
             }}
           >
             ★
@@ -28,4 +33,4 @@ export default function StarRating({ rating, setRating }) {
       })}
     </div>
   );
-};
+}

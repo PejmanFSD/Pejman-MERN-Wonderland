@@ -1,7 +1,14 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function AdDetails({error, setError, isDeleting, setIsDeleting, setFlash, setIsAdEditing}) {
+export default function AdDetails({
+  error,
+  setError,
+  isDeleting,
+  setIsDeleting,
+  setFlash,
+  setIsAdEditing,
+}) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
   const navigate = useNavigate();
@@ -25,13 +32,15 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting, s
   const handleOk = () => {
     navigate(-1);
     setError(null);
-  }
+  };
   // Specifically for the "isAuthor" and "isAdmin" middlewares:
   if (error) {
     return (
       <div>
         <p>{error}</p>
-        <button onClick={handleOk}>Ok</button>
+        <button onClick={handleOk} className="btn2">
+          Ok
+        </button>
       </div>
     );
   }
@@ -45,7 +54,7 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting, s
   const handleEdit = () => {
     setIsAdEditing(true);
     navigate(`/ads/${ad._id}/edit`);
-  }
+  };
   const handleDeleteYes = async () => {
     setError(null);
     try {
@@ -69,7 +78,7 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting, s
     setIsDeleting(false);
   };
   return (
-    <div>
+    <div className="cause" style={{ fontSize: "15px", marginTop: "20px" }}>
       <h2>{ad.company}</h2>
       <p>{ad.text}</p>
       {ad.images &&
@@ -77,18 +86,40 @@ export default function AdDetails({error, setError, isDeleting, setIsDeleting, s
           <img key={img._id} src={img.url} alt="" height="70px" />
         ))}
       <br></br>
-      {!isDeleting && <button onClick={handleEdit}>Edit</button>}
+      {!isDeleting && (
+        <button onClick={handleEdit} className="btn1" style={{ margin: "5px" }}>
+          Edit
+        </button>
+      )}
       <br></br>
       {/* For Delete, we don't use <Link /> because <Link /> only sends the GET request */}
-      {!isDeleting && <button onClick={handleDelete}>
-        Delete
-      </button>}
+      {!isDeleting && (
+        <button
+          onClick={handleDelete}
+          className="btn1"
+          style={{ margin: "5px" }}
+        >
+          Delete
+        </button>
+      )}
       <br></br>
       {isDeleting && (
         <div>
           <div>Are you sure you want to delete the ad?</div>
-          <button onClick={handleDeleteYes}>Yes</button>
-          <button onClick={handleDeleteNo}>No</button>
+          <button
+            onClick={handleDeleteYes}
+            className="btn2"
+            style={{ margin: "5px" }}
+          >
+            Yes
+          </button>
+          <button
+            onClick={handleDeleteNo}
+            className="btn2"
+            style={{ margin: "5px", width: "80px" }}
+          >
+            Cancel
+          </button>
         </div>
       )}
     </div>

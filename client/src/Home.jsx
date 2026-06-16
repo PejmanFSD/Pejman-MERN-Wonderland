@@ -2,6 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Star from "./Games/Star.png";
+import GameCard from "./Components/GameCard";
 import RockScissorsPaperPage from "./Games/RockScissorsPaper/RockScissorsPaper";
 import GuessNumberPage from "./Games/GuessNumber/GuessNumber";
 import CapitalsPage from "./Games/Capitals/Capitals";
@@ -23,6 +24,27 @@ import BirdHunterPage from "./Games/BirdHunter/BirdHunter";
 import ReversiPage from "./Games/Reversi/Reversi";
 import SnakePage from "./Games/Snake/Snake";
 import BlackJackPage from "./Games/BlackJack/BlackJack";
+import BingoImg from "./Images/Bingo.jpg";
+import BirdHunterImg from "./Images/BirdHunter.jpg";
+import BlackJackImg from "./Images/BlackJack.jpg";
+import CapitalsImg from "./Images/Capitals.jpg";
+import CounterImg from "./Images/Counter.jpg";
+import Crazy100Img from "./Images/Crazy100.jpg";
+import CryptogramImg from "./Images/Cryptogram.jpg";
+import GuessNumberImg from "./Images/GuessNumber.jpg";
+import HappyFlowerImg from "./Images/HappyFlower.jpg";
+import KukuKubeImg from "./Images/KukuKube.jpg";
+import MazeImg from "./Images/Maze.jpg";
+import MemoryImg from "./Images/Memory.jpg";
+import NimImg from "./Images/Nim.jpg";
+import PidokuImg from "./Images/Pidoku.jpg";
+import PuzzleImg from "./Images/Puzzle.jpg";
+import ReversiImg from "./Images/Reversi.jpg";
+import RSPImg from "./Images/RSP.jpg";
+import SnakeImg from "./Images/Snake.jpg";
+import TripleEmojiMatchImg from "./Images/TripleEmojiMatch.jpg";
+import TugOfWarImg from "./Images/TugOfWar.jpg";
+import XOImg from "./Images/XO.jpg";
 
 export default function Home({
   currentUser,
@@ -36,7 +58,7 @@ export default function Home({
   setRankedUsers,
   totalPoint,
   setTotalPoint,
-  updateTotalPoint
+  updateTotalPoint,
 }) {
   const [showAllStars, setShowAllStars] = useState(false);
   const [showRockScissorsPaper, setShowRockScissorsPaper] = useState(false);
@@ -242,46 +264,100 @@ export default function Home({
     navigate("/blackJack");
   };
   useEffect(() => {
-        document.title = "Pejman MERN Wonderland";
-    }, []);
+    document.title = "Pejman MERN Wonderland";
+  }, []);
   return (
     <div>
       <div>
-        <div style={{marginTop: "10px"}}>The top 10 users with highest stars</div>
-      <table border="2" cellPadding="5" style={{position: "relative", top: "5px"}}>
-        <thead style={{height: "5px"}}>
-          <tr>
-            <th style={{ width: "5%", fontSize: "13px" }}>Ranking</th>
-            <th style={{ width: "10%", fontSize: "13px" }}>Username</th>
-            <th style={{ width: "10%", fontSize: "13px" }}>Number of Stars</th>
-            <th style={{ width: "45%", fontSize: "13px" }}>Message</th>
-          </tr>
-        </thead>
-        <tbody>
-        {rankedUsers.map((user, i) => (
-          <tr key={user._id}>
-            <td style={{fontSize: "13px"}}>{i + 1}</td>
-            <td style={{fontSize: "13px"}}>{user.username}</td>
-            <td style={{fontSize: "13px"}}>{user.totalPoint}</td>
-            <td style={{fontSize: "13px"}}>{user.message}</td>
-          </tr>
-        ))}
-        </tbody>
-      </table>
+        <div style={{ marginTop: "10px", fontSize: "20px" }}>
+          <strong>The top 10 users with highest stars</strong>
+        </div>
+        <table
+          border="2"
+          cellPadding="5"
+          style={{
+            position: "relative",
+            top: "5px",
+            border: "2px solid black",
+          }}
+        >
+          <thead style={{ height: "5px" }}>
+            <tr style={{ backgroundColor: "#c8c8c8" }}>
+              <th
+                style={{
+                  width: "5%",
+                  fontSize: "13px",
+                  border: "1px solid black",
+                }}
+              >
+                Ranking
+              </th>
+              <th
+                style={{
+                  width: "10%",
+                  fontSize: "13px",
+                  border: "1px solid black",
+                }}
+              >
+                Username
+              </th>
+              <th
+                style={{
+                  width: "10%",
+                  fontSize: "13px",
+                  border: "1px solid black",
+                }}
+              >
+                Number of Stars
+              </th>
+              <th
+                style={{
+                  width: "45%",
+                  fontSize: "13px",
+                  border: "1px solid black",
+                }}
+              >
+                Message
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {rankedUsers.map((user, i) => (
+              <tr key={user._id} style={{ backgroundColor: "#f7f7f7" }}>
+                <td style={{ fontSize: "13px", border: "1px solid black" }}>
+                  {i + 1}
+                </td>
+                <td style={{ fontSize: "13px", border: "1px solid black" }}>
+                  {user.username}
+                </td>
+                <td style={{ fontSize: "13px", border: "1px solid black" }}>
+                  {user.totalPoint}
+                </td>
+                <td style={{ fontSize: "13px", border: "1px solid black" }}>
+                  {user.message}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       <div>
-        <div style={{margin: "10px"}}>
-          {currentUser &&
-            currentUser?.totalPoint === 0 &&
-            "You don't have any stars, play the interesting games and win some!"}
+        <div style={{ margin: "10px" }}>
+          <strong>
+            {currentUser &&
+              currentUser?.totalPoint === 0 &&
+              "You don't have any stars, play the interesting games and win some!"}
+          </strong>
         </div>
-        <div style={{position: "relative", top: "5px"}}>
-          {currentUser &&
-            currentUser?.totalPoint > 0 &&
-            `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
+        <div style={{ position: "relative", top: "5px" }}>
+          <strong>
+            {currentUser &&
+              currentUser?.totalPoint > 0 &&
+              `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
+          </strong>
         </div>
         {currentUser?.totalPoint <= 5 && (
-          <div style={{position: "relative", top: "5px"}}>
+          <div style={{ position: "relative", top: "5px" }}>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
                 src={Star}
@@ -294,7 +370,7 @@ export default function Home({
           </div>
         )}
         {!showAllStars && currentUser?.totalPoint > 5 && (
-          <div style={{position: "relative", top: "5px"}}>
+          <div style={{ position: "relative", top: "5px" }}>
             {new Array(5).fill(null).map((i) => (
               <img
                 src={Star}
@@ -306,11 +382,17 @@ export default function Home({
             ))}
             <div style={{ display: "inline" }}>...</div>
             <br />
-            <button onClick={handleShowAllStars}>Show all stars</button>
+            <button
+              onClick={handleShowAllStars}
+              className="cause btn1"
+              style={{ marginTop: "7px" }}
+            >
+              Show all stars
+            </button>
           </div>
         )}
         {showAllStars && currentUser?.totalPoint > 5 && (
-          <div style={{position: "relative", top: "5px"}}>
+          <div style={{ position: "relative", top: "5px" }}>
             {new Array(currentUser?.totalPoint).fill(null).map((i) => (
               <img
                 src={Star}
@@ -321,242 +403,378 @@ export default function Home({
               />
             ))}
             <br />
-            <button onClick={handleShowAllStars}>Minimize stars</button>
+            <button
+              onClick={handleShowAllStars}
+              className="cause btn1"
+              style={{ marginTop: "7px" }}
+            >
+              Minimize stars
+            </button>
           </div>
         )}
       </div>
-      <div style={{margin: "10px"}}><strong>The 21 fascinating games of Pejman MERN Wonderland</strong></div>
-      {showRockScissorsPaper ? (
-        <RockScissorsPaperPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showRockScissorsPaper &&
-        (
-          <button onClick={() => toggleRockScissorsPaper()} style={{position: "relative", top: "5px"}}>
-            R - S - P
-          </button>
-        )
-      )}
-      {showGuessNumber ? (
-        <GuessNumberPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showGuessNumber &&
-        (
-          <button onClick={() => toggleGuessNumber()} style={{position: "relative", top: "5px"}}>Guess Number</button>
-        )
-      )}
-      {showCapitals ? (
-        <CapitalsPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showCapitals &&
-        (
-          <button onClick={() => toggleCapitals()} style={{position: "relative", top: "5px"}}>Capitals</button>
-        )
-      )}
-      {showCryptogram ? (
-        <CryptogramPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showCryptogram &&
-        (
-          <button onClick={() => toggleCryptogram()} style={{position: "relative", top: "5px"}}>Cryptogram</button>
-        )
-      )}
-      {showCrazy100 ? (
-        <Crazy100Page
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showCrazy100 &&
-        (
-          <button onClick={() => toggleCrazy100()} style={{position: "relative", top: "5px"}}>Crazy-100</button>
-        )
-      )}
-      {showMemoryCards ? (
-        <MemoryCardsPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showMemoryCards &&
-        (
-          <button onClick={() => toggleMemoryCards()} style={{position: "relative", top: "5px"}}>Memory Cards</button>
-        )
-      )}
-      {showNim ? (
-        <NimPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showNim &&
-        <button onClick={() => toggleNim()} style={{position: "relative", top: "5px"}}>Nim</button>
-      )}
-      {showHappyFlower ? (
-        <HappyFlowerPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showHappyFlower &&
-        (
-          <button onClick={() => toggleHappyFlower()} style={{position: "relative", top: "5px"}}>Happy Flower</button>
-        )
-      )}
-      {showXO ? (
-        <XOPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showXO &&
-        <button onClick={() => toggleXO()} style={{position: "relative", top: "5px"}}>X-O</button>
-      )}
-      {showKukuKube ? (
-        <KukuKubePage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showKukuKube &&
-        (
-          <button onClick={() => toggleKukuKube()} style={{position: "relative", top: "5px"}}>Kuku Kube</button>
-        )
-      )}
-      {showTripleEmojiMatch ? (
-        <TripleEmojiMatchPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showTripleEmojiMatch &&
-        (
-          <button onClick={() => toggleTripleEmojiMatch()} style={{position: "relative", top: "5px"}}>
-            Triple Emoji Match
-          </button>
-        )
-      )}
-      {showPidoku ? (
-        <PidokuPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showPidoku &&
-        (
-          <button onClick={() => togglePidoku()} style={{position: "relative", top: "5px"}}>Pidoku</button>
-        )
-      )}
-      {showCounter ? (
-        <CounterPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showCounter &&
-        (
-          <button onClick={() => toggleCounter()} style={{position: "relative", top: "5px"}}>Counter</button>
-        )
-      )}
-      {showPuzzle ? (
-        <PuzzlePage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showPuzzle &&
-        (
-          <button onClick={() => togglePuzzle()} style={{position: "relative", top: "5px"}}>Puzzle</button>
-        )
-      )}
-      {showBingo ? (
-        <BingoPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showBingo &&
-        (
-          <button onClick={() => toggleBingo()} style={{position: "relative", top: "5px"}}>Bingo</button>
-        )
-      )}
-      {showTugOfWar ? (
-        <TugOfWarPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showTugOfWar &&
-        (
-          <button onClick={() => toggleTugOfWar()} style={{position: "relative", top: "5px"}}>Tug of War</button>
-        )
-      )}
-      {showMaze ? (
-        <MazePage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showMaze &&
-        (
-          <button onClick={() => toggleMaze()} style={{position: "relative", top: "5px"}}>Maze</button>
-        )
-      )}
-      {showBirdHunter ? (
-        <BirdHunterPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showBirdHunter &&
-        (
-          <button onClick={() => toggleBirdHunter()} style={{position: "relative", top: "5px"}}>Bird Hunter</button>
-        )
-      )}
-      {showReversi ? (
-        <ReversiPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showReversi &&
-        (
-          <button onClick={() => toggleReversi()} style={{position: "relative", top: "5px"}}>Reversi</button>
-        )
-      )}
-      {showSnake ? (
-        <SnakePage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showSnake &&
-        (
-          <button onClick={() => toggleSnake()} style={{position: "relative", top: "5px"}}>Snake</button>
-        )
-      )}
-      {showBlackJack ? (
-        <BlackJackPage
-          updateTotalPoint={updateTotalPoint}
-          currentUser={currentUser}
-        />
-      ) : (
-        !showBlackJack &&
-        (
-          <button onClick={() => toggleBlackJack()} style={{position: "relative", top: "5px"}}>BlackJack</button>
-        )
-      )}
+      <div className="fasterOne" style={{ fontSize: "30px" }}>
+        The
+        <span className="fasterOne" style={{ fontSize: "50px" }}>
+          21
+        </span>
+        fascinating games of
+        <span className="fasterOne" style={{ fontSize: "50px" }}>
+          Pejman MERN Wonderland
+        </span>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-xl-2 col-md-4">
+            {showNim ? (
+              <NimPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showNim && (
+                <GameCard
+                  imageSrc={NimImg}
+                  title="Nim"
+                  onClickFunction={() => toggleNim()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showMemoryCards ? (
+              <MemoryCardsPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showMemoryCards && (
+                <GameCard
+                  imageSrc={MemoryImg}
+                  title="Memory Cards"
+                  onClickFunction={() => toggleMemoryCards()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showSnake ? (
+              <SnakePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showSnake && (
+                <GameCard
+                  imageSrc={SnakeImg}
+                  title="Snake"
+                  onClickFunction={() => toggleSnake()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showKukuKube ? (
+              <KukuKubePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showKukuKube && (
+                <GameCard
+                  imageSrc={KukuKubeImg}
+                  title="Kuku Kube"
+                  onClickFunction={() => toggleKukuKube()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showPuzzle ? (
+              <PuzzlePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showPuzzle && (
+                <GameCard
+                  imageSrc={PuzzleImg}
+                  title="Puzzle"
+                  onClickFunction={() => togglePuzzle()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showMaze ? (
+              <MazePage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showMaze && (
+                <GameCard
+                  imageSrc={MazeImg}
+                  title="Maze"
+                  onClickFunction={() => toggleMaze()}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-xl-2 col-md-4">
+            {showReversi ? (
+              <ReversiPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showReversi && (
+                <GameCard
+                  imageSrc={ReversiImg}
+                  title="Reversi"
+                  onClickFunction={() => toggleReversi()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showCrazy100 ? (
+              <Crazy100Page
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showCrazy100 && (
+                <GameCard
+                  imageSrc={Crazy100Img}
+                  title="Crazy-100"
+                  onClickFunction={() => toggleCrazy100()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showCapitals ? (
+              <CapitalsPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showCapitals && (
+                <GameCard
+                  imageSrc={CapitalsImg}
+                  title="Capitals"
+                  onClickFunction={() => toggleCapitals()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showGuessNumber ? (
+              <GuessNumberPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showGuessNumber && (
+                <GameCard
+                  imageSrc={GuessNumberImg}
+                  title="Guess Number"
+                  onClickFunction={() => toggleGuessNumber()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showTripleEmojiMatch ? (
+              <TripleEmojiMatchPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showTripleEmojiMatch && (
+                <GameCard
+                  imageSrc={TripleEmojiMatchImg}
+                  title="Triple Emoji Match"
+                  onClickFunction={() => toggleTripleEmojiMatch()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showHappyFlower ? (
+              <HappyFlowerPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showHappyFlower && (
+                <GameCard
+                  imageSrc={HappyFlowerImg}
+                  title="Happy Flower"
+                  onClickFunction={() => toggleHappyFlower()}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-xl-2 col-md-4">
+            {showBirdHunter ? (
+              <BirdHunterPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showBirdHunter && (
+                <GameCard
+                  imageSrc={BirdHunterImg}
+                  title="Bird Hunter"
+                  onClickFunction={() => toggleBirdHunter()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showCryptogram ? (
+              <CryptogramPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showCryptogram && (
+                <GameCard
+                  imageSrc={CryptogramImg}
+                  title="Cryptogram"
+                  onClickFunction={() => toggleCryptogram()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showTugOfWar ? (
+              <TugOfWarPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showTugOfWar && (
+                <GameCard
+                  imageSrc={TugOfWarImg}
+                  title="Tug of War"
+                  onClickFunction={() => toggleTugOfWar()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showBingo ? (
+              <BingoPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showBingo && (
+                <GameCard
+                  imageSrc={BingoImg}
+                  title="Bingo"
+                  onClickFunction={() => toggleBingo()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showCounter ? (
+              <CounterPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showCounter && (
+                <GameCard
+                  imageSrc={CounterImg}
+                  title="Counter"
+                  onClickFunction={() => toggleCounter()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showXO ? (
+              <XOPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showXO && (
+                <GameCard
+                  imageSrc={XOImg}
+                  title="X-O"
+                  onClickFunction={() => toggleXO()}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-xl-2 col-md-4 offset-xl-3">
+            {showPidoku ? (
+              <PidokuPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showPidoku && (
+                <GameCard
+                  imageSrc={PidokuImg}
+                  title="Pidoku"
+                  onClickFunction={() => togglePidoku()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showBlackJack ? (
+              <BlackJackPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showBlackJack && (
+                <GameCard
+                  imageSrc={BlackJackImg}
+                  title="BlackJack"
+                  onClickFunction={() => toggleBlackJack()}
+                />
+              )
+            )}
+          </div>
+          <div className="col-xl-2 col-md-4">
+            {showRockScissorsPaper ? (
+              <RockScissorsPaperPage
+                updateTotalPoint={updateTotalPoint}
+                currentUser={currentUser}
+              />
+            ) : (
+              !showRockScissorsPaper && (
+                <GameCard
+                  imageSrc={RSPImg}
+                  title="R - S - P"
+                  onClickFunction={() => toggleRockScissorsPaper()}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

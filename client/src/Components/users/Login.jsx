@@ -45,49 +45,67 @@ export default function Login({
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Login</h3>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="username">Username:</label>
-        <div>
-          <input
-            type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            id="username"
-            name="username"
-            value={username}
-            required
-            style={{
-              textAlign: "center",
-              width: "150px",
-              height: "25px",
-              marginTop: "7px",
-            }}
-          />
+    <div className="cause" style={{ fontSize: "15px" }}>
+      <div className="container mt-3">
+        <div className="row justify-content-center">
+          <div className="col-md-4">
+            <form className="card p-4 shadow mt-3" onSubmit={handleSubmit}>
+              <h1 className="eater" style={{ fontSize: "40px" }}>
+                Login
+              </h1>
+              <div class="form-group" style={{ marginTop: "15px" }}>
+                <label htmlFor="username">
+                  <strong>Username:</strong>
+                </label>
+                <input
+                  type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  id="username"
+                  name="username"
+                  value={username}
+                  required
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    textAlign: "center",
+                    width: "250px",
+                    height: "40px",
+                    marginTop: "10px",
+                  }}
+                />
+              </div>
+              <div class="form-group" style={{ marginTop: "15px" }}>
+                <label htmlFor="password">
+                  <strong>Password:</strong>
+                </label>
+                <div>
+                  <input
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password"
+                    name="password"
+                    value={password}
+                    required
+                    class="form-control"
+                    style={{
+                      margin: "auto",
+                      textAlign: "center",
+                      width: "250px",
+                      height: "40px",
+                      marginTop: "10px",
+                    }}
+                  />
+                </div>
+              </div>
+              <br />
+              <button className="btn1 align-self-center mb-3 mt-3">
+                Login
+              </button>
+              {error && <p style={{ color: "red" }}>{error}</p>}
+            </form>
+          </div>
         </div>
       </div>
-      <div style={{ marginTop: "15px" }}>
-        <label htmlFor="password">Password:</label>
-        <div>
-          <input
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            id="password"
-            name="password"
-            value={password}
-            required
-            style={{
-              textAlign: "center",
-              width: "150px",
-              height: "25px",
-              marginTop: "7px",
-            }}
-          />
-        </div>
-      </div>
-      <br />
-      <button>Login</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    </div>
   );
 }

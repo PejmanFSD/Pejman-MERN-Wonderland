@@ -106,9 +106,28 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, [flash]);
+  // Themes:
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "Blue") {
+      root.style.setProperty("--primary", "#0d6efd");
+      root.style.setProperty("--secondary", "#6ea8fe");
+      root.style.setProperty("--background", "#f8f9fa");
+    }
+    if (theme === "Red") {
+      root.style.setProperty("--primary", "#dc3545");
+      root.style.setProperty("--secondary", "#f199a1");
+      root.style.setProperty("--background", "#fff5f5");
+    }
+    if (theme === "Green") {
+      root.style.setProperty("--primary", "#198754");
+      root.style.setProperty("--secondary", "#75b798");
+      root.style.setProperty("--background", "#f0fff4");
+    }
+  }, [theme]);
   return (
     <div className="App">
-      {flash && <div>{flash}</div>}
+      {flash && <div className={`flash-message ${flash.type}`}>{flash}</div>}
       <BrowserRouter>
         <Navbar
           currentUser={currentUser}

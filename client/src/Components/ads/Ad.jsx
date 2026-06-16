@@ -39,7 +39,7 @@ export default function Ad({
     "/blackJack",
   ];
   return (
-    <div>
+    <div className="cause" style={{ fontSize: "15px" }}>
       {currentUser &&
         currentUser.role === "Admin" &&
         !isLoggingOut &&
@@ -55,7 +55,16 @@ export default function Ad({
             </div>
           </Link>
         )}
-      {adImages && adImages.map((i) => <img src={i.url} height="70px" alt="" key={adImages.indexOf(i)} style={{margin: "2px"}} />)}
+      {adImages &&
+        adImages.map((i) => (
+          <img
+            src={i.url}
+            height={location.pathname === "/" ? "100px" : "60px"}
+            alt=""
+            key={adImages.indexOf(i)}
+            className="my-2 mx-2"
+          />
+        ))}
       {currentUser &&
         currentUser.role === "Admin" &&
         !isLoggingOut &&
