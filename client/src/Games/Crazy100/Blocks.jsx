@@ -15,13 +15,14 @@ export default function Blocks({
           <button
             style={{
               border: "1px solid black",
+              borderRadius: "12px",
               padding: "5px",
-              width: "30px",
+              width: "40px",
               display: "inline",
               position: "relative",
               top: "20px",
               background: chosenExtraNums[t]?.clicked && "gray",
-              margin: "3px",
+              margin: "5px",
             }}
             onClick={handleClickChosenExtraNum}
             disabled={isWin !== "" || seconds < 1}
@@ -33,8 +34,9 @@ export default function Blocks({
           <button
             style={{
               border: "1px solid black",
+              borderRadius: "12px",
               padding: "5px",
-              width: "30px",
+              width: "40px",
               display: "inline",
               position: "relative",
               top: "20px",
@@ -44,7 +46,7 @@ export default function Blocks({
                   ? "gray"
                   : isWin === false && "lightblue",
               // color: "red",
-              margin: "3px",
+              margin: "5px",
             }}
             onClick={handleClickNum}
             disabled={isWin !== "" || seconds < 1}

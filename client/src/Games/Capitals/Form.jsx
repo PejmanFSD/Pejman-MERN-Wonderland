@@ -22,8 +22,9 @@ export default function Form({
             id={`input${i + 1}`}
             disabled={isInputEmpty}
             style={{
+              borderRadius: "8px",
               width: "480px",
-              height: "22px",
+              height: "30px",
               textAlign: "center",
               marginTop: "7px",
               marginBottom: "7px",
@@ -39,7 +40,9 @@ export default function Form({
         </div>
       ))}
       {isWin === "" && seconds > 0 && !isInputEmpty && (
-        <button style={{ marginTop: "12px" }}>Done</button>
+        <button className="btn1" style={{ marginTop: "12px" }}>
+          Done
+        </button>
       )}
     </form>
   );

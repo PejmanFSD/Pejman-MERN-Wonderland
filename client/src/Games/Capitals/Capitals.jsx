@@ -207,10 +207,14 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutCapitals setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Capitals</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Capitals
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Capitals</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About Capitals
+              </button>
             )}
             {isGameStarted &&
               (easyMode || normalMode) &&
@@ -218,7 +222,10 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage &&
               !isInputEmpty && (
-                <button onClick={() => toggleLevel()}>{`Switch to ${
+                <button
+                  className="btn1"
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${
                   easyMode ? "Normal Mode" : "Easy Mode"
                 }`}</button>
               )}
@@ -231,13 +238,15 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               !isInputEmpty &&
               isWin === "" &&
               seconds > 0 && (
-                <button onClick={() => toggleReset()}>Reset the game</button>
+                <button className="btn1" onClick={() => toggleReset()}>
+                  Reset the game
+                </button>
               )}
             {!isTogglingReset &&
               !isTogglingHomePage &&
               !isTogglingLevel &&
               !isInputEmpty && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -300,14 +309,19 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             (easyMode || normalMode) &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <button onClick={() => handleStart()}>Start the Game</button>
+              <button className="btn1 my-2" onClick={() => handleStart()}>
+                Start the Game
+              </button>
             )}
           {isWin === true &&
             seconds > 0 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h1>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
+              <h1
+                className="fasterOne"
+                style={{ fontSize: "40px" }}
+              >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
             )}
           {isGameStarted &&
             // show &&
@@ -317,17 +331,27 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isInputEmpty &&
             isWin === true && (
-              <button onClick={() => toggleResetYes()}>Play Again</button>
+              <button className="btn1 my-3" onClick={() => toggleResetYes()}>
+                Play Again
+              </button>
             )}
           {isWin === false &&
             seconds > 0 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            !isTogglingLevel && <h1>You Lose</h1>}
+            !isTogglingLevel && (
+              <h1 className="fasterOne" style={{ fontSize: "40px" }}>
+                You Lose
+              </h1>
+            )}
           {seconds < 1 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
-            !isTogglingLevel && <h1>Time's up!</h1>}
+            !isTogglingLevel && (
+              <h1 className="fasterOne" style={{ fontSize: "40px" }}>
+                Time's up!
+              </h1>
+            )}
           {isGameStarted &&
             // show &&
             (easyMode || normalMode) &&
@@ -336,7 +360,9 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isInputEmpty &&
             (isWin === false || seconds < 1) && (
-              <button onClick={() => toggleResetYes()}>Try Again</button>
+              <button className="btn1 my-3" onClick={() => toggleResetYes()}>
+                Try Again
+              </button>
             )}
           {/*<h3>Answer:</h3>
             {answer.map((el) => (
@@ -376,7 +402,9 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                   7 countries are chosen for you, guess their capitals correctly
                   and win the game
                 </h4>
-                <button onClick={() => handleShow()}>Ok</button>
+                <button className="btn2" onClick={() => handleShow()}>
+                  Ok
+                </button>
               </div>
             )}
           {isGameStarted &&
@@ -399,8 +427,10 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             )}
           {isInputEmpty && (
             <div>
-              <p>You shouldn't leave any dropdown unselected!</p>
-              <button onClick={handleIsInputEmpty}>OK</button>
+              <div>You shouldn't leave any dropdown unselected!</div>
+              <button className="btn2" onClick={handleIsInputEmpty}>
+                OK
+              </button>
             </div>
           )}
           {(isWin !== "" || seconds < 1) &&
@@ -428,7 +458,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button className="btn1" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}
