@@ -174,10 +174,14 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutCryptogram setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Cryptogram</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Cryptogram
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Cryptogram</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About Cryptogram
+              </button>
             )}
             {isGameStarted &&
               !isTogglingReset &&
@@ -187,7 +191,11 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               !isInputEmpty &&
               isOneChar &&
               !isAlreadyExist && (
-                <button onClick={() => toggleReset()} disabled={isLoading}>
+                <button
+                  className="btn1"
+                  onClick={() => toggleReset()}
+                  disabled={isLoading}
+                >
                   Reset the Game
                 </button>
               )}
@@ -197,13 +205,15 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               !isInputEmpty &&
               isOneChar &&
               !isAlreadyExist && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
           </div>
           {!isGameStarted && isWin === "" && !isTogglingHomePage && (
-            <button onClick={getAdvice}>Start</button>
+            <button className="btn1 my-3" onClick={getAdvice}>
+              Start
+            </button>
           )}
           {isTogglingReset && (
             <ConfirmationBox
@@ -235,7 +245,6 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
             isTogglingHomePage={isTogglingHomePage}
             acceptedAsRepetition={acceptedAsRepetition}
           />
-
           {!isTogglingReset && !isTogglingHomePage && (
             <Form
               handleChange={handleChange}
@@ -261,19 +270,25 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               setAcceptedAsRepetition={setAcceptedAsRepetition}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+              isTogglingReset={isTogglingReset}
+              isTogglingHomePage={isTogglingHomePage}
             />
           )}
           {!isGameStarted &&
             !isTogglingReset &&
             isWin === true &&
             !isTogglingHomePage && (
-              <button onClick={toggleResetYes}>Play Again</button>
+              <button className="btn1 my-2" onClick={toggleResetYes}>
+                Play Again
+              </button>
             )}
           {!isGameStarted &&
             !isTogglingReset &&
             isWin === false &&
             !isTogglingHomePage && (
-              <button onClick={toggleResetYes}>Try Again</button>
+              <button className="btn1 my-2" onClick={toggleResetYes}>
+                Try Again
+              </button>
             )}
           {/* <div>
             {Object.values(inputs).map((value, index) => (
@@ -289,9 +304,8 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               </div>
             ))}
           </div> */}
-          <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <button onClick={handleReviewSection}>
+            <button className="btn1" onClick={handleReviewSection}>
               {showReviews
                 ? "Hide the Reviews Section"
                 : "Show the Reviews Section"}

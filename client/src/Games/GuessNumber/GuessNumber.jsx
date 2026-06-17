@@ -203,10 +203,13 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutGuessNumber setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Guess Number</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Guess Number
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
               <button
+                className="btn1"
                 onClick={handleAboutPage}
                 disabled={
                   isFirstDigitZero ||
@@ -229,6 +232,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage && (
                 <button
+                  className="btn1"
                   onClick={() => toggleLevel()}
                   disabled={
                     isFirstDigitZero ||
@@ -251,6 +255,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage && (
                 <button
+                  className="btn1"
                   onClick={() => toggleReset()}
                   disabled={
                     isTogglingLevel ||
@@ -272,6 +277,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage && (
                 <button
+                  className="btn1"
                   onClick={() => toggleHomePage()}
                   disabled={
                     isFirstDigitZero ||
@@ -326,7 +332,9 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage && (
-              <button onClick={() => generateRandNum()}>Start the Game</button>
+              <button className="btn1 my-3" onClick={() => generateRandNum()}>
+                Start the Game
+              </button>
             )}
           {/* <div>num: {num}</div> */}
           {isGameStarted &&
@@ -410,7 +418,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button className="btn1" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}

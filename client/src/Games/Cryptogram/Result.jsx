@@ -11,23 +11,27 @@ export default function Result({
   return (
     <div>
       {!isTogglingReset && !isTogglingHomePage && isWin === true && (
-        <h1>You Win</h1>
+        <h1 className="fasterOne" style={{ fontSize: "40px" }}>
+          You Win
+        </h1>
       )}
       {!isTogglingReset && !isTogglingHomePage && isWin === false && (
-        <h1>You Lose</h1>
+        <h1 className="fasterOne" style={{ fontSize: "40px" }}>
+          You Lose
+        </h1>
       )}
       {!isTogglingReset &&
         !isTogglingHomePage &&
         resultMessageStatus.map((r, idx) =>
           r === true ? (
-            <h3 key={idx}>{`For code ${idx + 1}, you chose ${
+            <h3 key={idx}>{`For code ${idx + 1}, you chose "${
               Object.values(inputs)[idx]
-            } ✔`}</h3>
+            }" ✔`}</h3>
           ) : (
             <div key={idx}>
-              <h3>{`For code ${idx + 1}, you chose ${
+              <h3>{`For code ${idx + 1}, you chose "${
                 Object.values(inputs)[idx]
-              } ✖ ➜ The correct answer is: ${Object.keys(resultObj)[idx]}`}</h3>
+              }" ✖ ➜ The correct answer is: "${Object.keys(resultObj)[idx]}"`}</h3>
               {acceptedAsRepetition.includes(Object.values(inputs)[idx]) && (
                 <div>
                   <p style={{ display: "inline" }}>
@@ -49,6 +53,9 @@ export default function Result({
             </div>
           ),
         )}
+      {!isTogglingReset && !isTogglingHomePage && isWin === false && (
+        <div>The correct answer:</div>
+      )}
       {!isTogglingReset && !isTogglingHomePage && isWin !== "" && (
         <div>
           {adviceArray.map((a, i) => (
@@ -61,7 +68,7 @@ export default function Result({
               }}
               key={i}
             >
-              {a}
+              <strong>{a}</strong>
             </h2>
           ))}
         </div>

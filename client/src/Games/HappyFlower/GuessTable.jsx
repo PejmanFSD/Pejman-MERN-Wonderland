@@ -31,254 +31,289 @@ export default function GuessTable({
   };
   return (
     <div style={{ marginTop: "10px" }}>
-      <div>
-        {new Array(word.length).fill(null).map((letter, idx) => (
-          <div
-            style={{
-              width: "35px",
-              display: "inline",
-              border: word[idx] !== " " && "1px solid black",
-              padding: "15px",
-              position: "relative",
-              top: "25px",
-              margin: "5px",
-            }}
-            key={idx}
-          >
-            {(userGuess.includes(word[idx]) ||
-              userGuess.includes(word[idx].toLowerCase())) &&
-              word[idx]}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 offset-md-2 align-self-center">
+            <div>
+              {new Array(word.length).fill(null).map((letter, idx) => (
+                <div
+                  className="px-3 py-3"
+                  style={{
+                    borderRadius: "10px",
+                    width: "35px",
+                    display: "inline",
+                    border: word[idx] !== " " && "1px solid black",
+                    position: "relative",
+                    top: "20px",
+                    margin: "5px",
+                  }}
+                  key={idx}
+                >
+                  {(userGuess.includes(word[idx]) ||
+                    userGuess.includes(word[idx].toLowerCase())) &&
+                    word[idx]}
+                </div>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 109 - 97 + 1 },
+                (_, index) => index + 97,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 122 - 110 + 1 },
+                (_, index) => index + 110,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 57 - 48 + 1 },
+                (_, index) => index + 48,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 47 - 33 + 1 },
+                (_, index) => index + 33,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 126 - 123 + 1 },
+                (_, index) => index + 123,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 64 - 58 + 1 },
+                (_, index) => index + 58,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {Array.from(
+                { length: 96 - 91 + 1 },
+                (_, index) => index + 91,
+              ).map((b, i) => (
+                <button
+                  onClick={addChar}
+                  name={String.fromCharCode(b)}
+                  value={String.fromCharCode(b)}
+                  style={{
+                    borderRadius: isWin === "" ? "6px" : "4px",
+                    textAlign: "center",
+                    fontSize: isWin === "" ? "15px" : "12px",
+                    position: "relative",
+                    top: "50px",
+                    width: isWin === "" ? "30px" : "25px",
+                    height: isWin === "" ? "30px" : "25px",
+                    margin: "3px",
+                  }}
+                  disabled={
+                    userGuess.includes(String.fromCharCode(b)) ||
+                    userMistakes.includes(String.fromCharCode(b)) ||
+                    isWin !== ""
+                  }
+                  key={i}
+                >
+                  {String.fromCharCode(b)}
+                </button>
+              ))}
+            </div>
+            <div>
+              {new Array(5).fill(null).map((letter, idx) => (
+                <div
+                  className="px-4 py-3"
+                  style={{
+                    borderRadius: "10px",
+                    width: "35px",
+                    margin: "5px",
+                    display: "inline",
+                    border: "1px solid black",
+                    position: "relative",
+                    top: "80px",
+                    color: "red",
+                  }}
+                  key={idx}
+                >
+                  {userMistakes && userMistakes[idx]}
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      <div>
-        {Array.from({ length: 109 - 97 + 1 }, (_, index) => index + 97).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
+          <div className="col-md-2 align-self-center">
+            <img
               style={{
                 position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
+                top: "70px",
+                width: "220px",
               }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
+              src={
+                isWin === true
+                  ? Flower7
+                  : seconds < 1
+                    ? Clock
+                    : userMistakes.length === 0
+                      ? Flower1
+                      : userMistakes.length === 1
+                        ? Flower2
+                        : userMistakes.length === 2
+                          ? Flower3
+                          : userMistakes.length === 3
+                            ? Flower4
+                            : userMistakes.length === 4
+                              ? Flower5
+                              : userMistakes.length === 5 && Flower6
               }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {Array.from({ length: 122 - 110 + 1 }, (_, index) => index + 110).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
-              style={{
-                position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
-              }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
-              }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {Array.from({ length: 57 - 48 + 1 }, (_, index) => index + 48).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
-              style={{
-                position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
-              }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
-              }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {Array.from({ length: 47 - 33 + 1 }, (_, index) => index + 33).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
-              style={{
-                position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
-              }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
-              }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {Array.from({ length: 126 - 123 + 1 }, (_, index) => index + 123).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
-              style={{
-                position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
-              }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
-              }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {Array.from({ length: 64 - 58 + 1 }, (_, index) => index + 58).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
-              style={{
-                position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
-              }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
-              }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {Array.from({ length: 96 - 91 + 1 }, (_, index) => index + 91).map(
-          (b, i) => (
-            <button
-              onClick={addChar}
-              name={String.fromCharCode(b)}
-              value={String.fromCharCode(b)}
-              style={{
-                position: "relative",
-                top: "50px",
-                width: isWin === "" ? "30px" : "25px",
-                height: isWin === "" ? "30px" : "25px",
-                margin: "3px",
-              }}
-              disabled={
-                userGuess.includes(String.fromCharCode(b)) ||
-                userMistakes.includes(String.fromCharCode(b)) ||
-                isWin !== ""
-              }
-              key={i}
-            >
-              {String.fromCharCode(b)}
-            </button>
-          ),
-        )}
-      </div>
-      <div>
-        {new Array(5).fill(null).map((letter, idx) => (
-          <div
-            style={{
-              width: "35px",
-              margin: "5px",
-              width: "25px",
-              display: "inline",
-              border: "1px solid black",
-              padding: "15px",
-              position: "relative",
-              top: "80px",
-              color: "red",
-            }}
-            key={idx}
-          >
-            {userMistakes && userMistakes[idx]}
+              alt=""
+            />
           </div>
-        ))}
-      </div>
-      <div>
-        <img
-          style={{
-            position: "relative",
-            top: "110px",
-            width: "200px",
-          }}
-          src={
-            isWin === true
-              ? Flower7
-              : seconds < 1
-                ? Clock
-                : userMistakes.length === 0
-                  ? Flower1
-                  : userMistakes.length === 1
-                    ? Flower2
-                    : userMistakes.length === 2
-                      ? Flower3
-                      : userMistakes.length === 3
-                        ? Flower4
-                        : userMistakes.length === 4
-                          ? Flower5
-                          : userMistakes.length === 5 && Flower6
-          }
-          alt=""
-        />
+        </div>
       </div>
     </div>
   );

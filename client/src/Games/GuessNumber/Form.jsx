@@ -234,7 +234,13 @@ export default function Form({
               id="input1"
               value={inputs.input1}
               onChange={handleChange}
-              style={{ width: "90px", textAlign: "center", margin: "7px" }}
+              style={{
+                borderRadius: "8px",
+                width: "110px",
+                borderColor: "black",
+                textAlign: "center",
+                margin: "7px",
+              }}
             />
             <label htmlFor="input2"></label>
             <input
@@ -264,7 +270,13 @@ export default function Form({
               id="input2"
               value={inputs.input2}
               onChange={handleChange}
-              style={{ width: "90px", textAlign: "center", margin: "7px" }}
+              style={{
+                borderRadius: "8px",
+                width: "110px",
+                borderColor: "black",
+                textAlign: "center",
+                margin: "7px",
+              }}
             />
             <label htmlFor="input3"></label>
             <input
@@ -294,7 +306,13 @@ export default function Form({
               id="input3"
               value={inputs.input3}
               onChange={handleChange}
-              style={{ width: "90px", textAlign: "center", margin: "7px" }}
+              style={{
+                borderRadius: "8px",
+                width: "110px",
+                borderColor: "black",
+                textAlign: "center",
+                margin: "7px",
+              }}
             />
             <label htmlFor="input4"></label>
             <input
@@ -324,10 +342,17 @@ export default function Form({
               id="input4"
               value={inputs.input4}
               onChange={handleChange}
-              style={{ width: "90px", textAlign: "center", margin: "7px" }}
+              style={{
+                borderRadius: "8px",
+                width: "110px",
+                borderColor: "black",
+                textAlign: "center",
+                margin: "7px",
+              }}
             />
             <br />
             <button
+              className="btn1 my-2"
               disabled={
                 isFirstDigitZero ||
                 !isOneDigit ||
@@ -345,50 +370,66 @@ export default function Form({
         )}
       {isFirstDigitZero && (
         <div>
-          <p>The first digit can't be 0!</p>
-          <button onClick={handleIsFirstDigitZero}>OK</button>
+          <div>The first digit can't be 0!</div>
+          <button className="btn2 my-2" onClick={handleIsFirstDigitZero}>
+            OK
+          </button>
         </div>
       )}
       {!isOneDigit && (
         <div>
-          <p>None of the digits can be greater than 9!</p>
-          <button onClick={handleIsOneDigit}>OK</button>
+          <div>None of the digits can be greater than 9!</div>
+          <button className="btn2 my-2" onClick={handleIsOneDigit}>
+            OK
+          </button>
         </div>
       )}
       {isDigitNegative && (
         <div>
-          <p>None of the digits can be negative!</p>
-          <button onClick={handleIsDigitNegative}>OK</button>
+          <div>None of the digits can be negative!</div>
+          <button className="btn2 my-2" onClick={handleIsDigitNegative}>
+            OK
+          </button>
         </div>
       )}
       {isDigitDecimal && (
         <div>
-          <p>None of the digits can be decimal!</p>
-          <button onClick={handleIsDigitDecimal}>OK</button>
+          <div>None of the digits can be decimal!</div>
+          <button className="btn2 my-2" onClick={handleIsDigitDecimal}>
+            OK
+          </button>
         </div>
       )}
       {isDigitRepetitive && (
         <div>
-          <p>The digits can't be repetitive!</p>
-          <button onClick={handleIsDigitRepetitive}>OK</button>
+          <div>The digits can't be repetitive!</div>
+          <button className="btn2 my-2" onClick={handleIsDigitRepetitive}>
+            OK
+          </button>
         </div>
       )}
       {!isInt && (
         <div>
-          <p>You should enter only a number!</p>
-          <button onClick={handleIsInt}>OK</button>
+          <div>You should enter only a number!</div>
+          <button className="btn2 my-2" onClick={handleIsInt}>
+            OK
+          </button>
         </div>
       )}
       {isAlreadyGuessed && (
         <div>
-          <p>You've already tried this number!</p>
-          <button onClick={handleIsAlreadyGuessed}>OK</button>
+          <div>You've already tried this number!</div>
+          <button className="btn2 my-2" onClick={handleIsAlreadyGuessed}>
+            OK
+          </button>
         </div>
       )}
       {isInputEmpty && (
         <div>
-          <p>You shouldn't leave any box empty!</p>
-          <button onClick={handleIsInputEmpty}>OK</button>
+          <div>You shouldn't leave any box empty!</div>
+          <button className="btn2 my-2" onClick={handleIsInputEmpty}>
+            OK
+          </button>
         </div>
       )}
     </div>

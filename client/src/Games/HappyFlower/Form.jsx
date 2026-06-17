@@ -45,7 +45,12 @@ export default function Form({
     <form onSubmit={handleSubmit}>
       <select
         onChange={handleChange}
-        style={{ textAlign: "center", width: "200px", height: "25px" }}
+        style={{
+          borderRadius: "8px",
+          textAlign: "center",
+          width: "200px",
+          height: "30px",
+        }}
       >
         <option disabled selected>
           Select one of the titles
@@ -54,7 +59,13 @@ export default function Form({
           <option key={i}>{t}</option>
         ))}
       </select>
-      <div>{title && <button style={{ marginTop: "15px" }}>Done</button>}</div>
+      <div>
+        {title && (
+          <button className="btn2" style={{ marginTop: "15px" }}>
+            Done
+          </button>
+        )}
+      </div>
     </form>
   );
 }

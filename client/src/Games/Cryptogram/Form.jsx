@@ -21,11 +21,10 @@ export default function Form({
   setAcceptedAsRepetition,
   isLoading,
   setIsLoading,
+  isTogglingReset,
+  isTogglingHomePage,
 }) {
   const handleChange = (e) => {
-    // if (e.target.value.length === 0) {
-    //   return;
-    // }
     const { name, value } = e.target;
     if (evaluateRepetitive(name, value)) {
       setIsCharRepetitive(true);
@@ -159,6 +158,9 @@ export default function Form({
   };
   return (
     <div>
+      {!isTogglingReset && !isTogglingHomePage && isWin === false && (
+        <div>Your answer:</div>
+      )}
       {isLoading ? (
         <h3 style={{ color: "gray" }}>Loading ...</h3>
       ) : (
@@ -184,12 +186,14 @@ export default function Form({
                       isAlreadyExist
                     }
                     style={{
+                      borderRadius: "5px",
+                      borderColor: "black",
                       textAlign: "center",
-                      width: "15px",
-                      height: "17px",
+                      width: "25px",
+                      height: "25px",
                       margin: "2px",
                       position: "relative",
-                      top: "-3px",
+                      top: "-6px",
                     }}
                   />
                 </div>
@@ -213,12 +217,14 @@ export default function Form({
                       isAlreadyExist
                     }
                     style={{
+                      borderRadius: "5px",
+                      borderColor: "black",
                       textAlign: "center",
-                      width: "15px",
-                      height: "17px",
+                      width: "25px",
+                      height: "25px",
                       margin: "2px",
                       position: "relative",
-                      top: "-3px",
+                      top: "-6px",
                     }}
                   />
                 </div>
@@ -242,12 +248,14 @@ export default function Form({
                       isAlreadyExist
                     }
                     style={{
+                      borderRadius: "5px",
+                      borderColor: "black",
                       textAlign: "center",
-                      width: "15px",
-                      height: "17px",
+                      width: "25px",
+                      height: "25px",
                       margin: "2px",
                       position: "relative",
-                      top: "-3px",
+                      top: "-6px",
                     }}
                   />
                 </div>
@@ -271,12 +279,14 @@ export default function Form({
                         isAlreadyExist
                       }
                       style={{
+                        borderRadius: "5px",
+                        borderColor: "black",
                         textAlign: "center",
-                        width: "15px",
-                        height: "17px",
+                        width: "25px",
+                        height: "25px",
                         margin: "2px",
                         position: "relative",
-                        top: "-3px",
+                        top: "-6px",
                       }}
                     />
                   </div>
@@ -293,44 +303,69 @@ export default function Form({
             isOneChar &&
             !isAlreadyExist && (
               <div>
-                <button>Done</button>
+                <button className="btn1 my-3">Done</button>
               </div>
             )}
         </form>
       )}
       {isCharRepetitive && (
         <div>
-          <p>The values can't be repetitive!</p>
-          <button onClick={handleIsCharRepetitive}>OK</button>
+          <div>
+            <strong>The values can't be repetitive!</strong>
+          </div>
+          <button className="btn2 my-2" onClick={handleIsCharRepetitive}>
+            OK
+          </button>
         </div>
       )}
       {isInputEmpty && (
         <div>
-          <p>You shouldn't leave any box empty!</p>
-          <button onClick={handleIsInputEmpty}>OK</button>
+          <div>
+            <strong>You shouldn't leave any box empty!</strong>
+          </div>
+          <button className="btn2 my-2" onClick={handleIsInputEmpty}>
+            OK
+          </button>
         </div>
       )}
       {!isOneChar && (
         <div>
-          <p>Each box should have only one character!</p>
-          <button onClick={handleIsOneChar}>OK</button>
+          <div>
+            <strong>Each box should have only one character!</strong>
+          </div>
+          <button className="btn2 my-2" onClick={handleIsOneChar}>
+            OK
+          </button>
         </div>
       )}
       {isAlreadyExist && !isCharRepetitive && (
         <div style={{ margin: "10px" }}>
-          <div>The visible letters are not the ones that you should guess!</div>
           <div>
-            Are you sure you want to guess the letter that is already visible?
+            <strong>
+              The visible letters are not the ones that you should guess!
+            </strong>
+          </div>
+          <div>
+            <strong>
+              Are you sure you want to guess the letter that is already visible?
+            </strong>
           </div>
           <button
+            className="btn2 my-2"
             onClick={handleIsAlreadyExistYes}
             style={{ marginTop: "10px", marginLeft: "4px", marginRight: "4px" }}
           >
             Yes
           </button>
           <button
+            className="btn2 my-2"
             onClick={handleIsAlreadyExistCancel}
-            style={{ marginTop: "10px", marginLeft: "4px", marginRight: "4px" }}
+            style={{
+              width: "80px",
+              marginTop: "10px",
+              marginLeft: "5px",
+              marginRight: "5px",
+            }}
           >
             Cancel
           </button>

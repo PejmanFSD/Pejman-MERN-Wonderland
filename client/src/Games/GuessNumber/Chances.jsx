@@ -31,9 +31,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div>
+          <h4>
             <strong>You have 10 chances to find the number</strong>
-          </div>
+          </h4>
         )}
       {chancesNum === 5 &&
         !isWin &&
@@ -41,9 +41,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div>
+          <h4>
             <strong>You have 5 chances to find the number</strong>
-          </div>
+          </h4>
         )}
       {chancesNum > 1 &&
         chancesNum < 10 &&
@@ -52,9 +52,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div>
+          <h4>
             <strong>{`You have ${chancesNum} chances left`}</strong>
-          </div>
+          </h4>
         )}
       {chancesNum > 1 &&
         chancesNum < 5 &&
@@ -63,18 +63,18 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div>
+          <h4>
             <strong>{`You have ${chancesNum} chances left`}</strong>
-          </div>
+          </h4>
         )}
       {chancesNum === 1 &&
         !isWin &&
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <div style={{ color: "red" }}>
+          <h4 style={{ color: "red" }}>
             <strong>Warning! You only have one chance left!</strong>
-          </div>
+          </h4>
         )}
       {chancesNum === 0 &&
         !isWin &&
@@ -82,19 +82,27 @@ export default function Chances({
         !isTogglingReset &&
         !isTogglingHomePage && (
           <div>
-            <h3>You Lose!</h3>
+            <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+              You Lose!
+            </h3>
             <h3>{`The number was: ${num.toString().replaceAll(",", "")}`}</h3>
-            <button onClick={() => reset()}>Try again</button>
+            <button className="btn1" onClick={() => reset()}>
+              Try again
+            </button>
           </div>
         )}
       {isWin && (
         <div>
-          <h3>You Win!</h3>
-          <h3>
+          <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+            You Win!
+          </h3>
+          {/* <h3>
             Your total point increases by{" "}
             {easyMode ? "one" : normalMode && "five"}.
-          </h3>
-          <button onClick={() => handleOk()}>Ok</button>
+          </h3> */}
+          <button className="btn1" onClick={() => handleOk()}>
+            Play again
+          </button>
         </div>
       )}
     </div>
