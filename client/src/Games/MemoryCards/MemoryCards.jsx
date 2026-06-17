@@ -309,10 +309,14 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutMemoryCards setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Memory Cards</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Memory Cards
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Memory Cards</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About Memory Cards
+              </button>
             )}
             {showBoard &&
               isWin === "" &&
@@ -320,10 +324,12 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               (easyMode || normalMode || hardMode) &&
               seconds > 0 && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage && !isTogglingReset && (
-              <button onClick={() => toggleHomePage()}>
+              <button className="btn1" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}
@@ -348,13 +354,19 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
           )}
           <div className="four-buttons-container" style={{ marginTop: "15px" }}>
             {!isGameStarted && !isTogglingHomePage && (
-              <button onClick={handleEasyMode}>Easy</button>
+              <button className="btn1" onClick={handleEasyMode}>
+                Easy
+              </button>
             )}
             {!isGameStarted && !isTogglingHomePage && (
-              <button onClick={handleNormalMode}>Normal</button>
+              <button className="btn1" onClick={handleNormalMode}>
+                Normal
+              </button>
             )}
             {!isGameStarted && !isTogglingHomePage && (
-              <button onClick={handleHardMode}>Hard</button>
+              <button className="btn1" onClick={handleHardMode}>
+                Hard
+              </button>
             )}
           </div>
           {isGameStarted &&
@@ -372,9 +384,10 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                   id="images"
                   disabled={isImagesGroupChosen}
                   style={{
+                    borderRadius: "8px",
                     margin: "10px",
                     width: "200px",
-                    height: "25px",
+                    height: "30px",
                     textAlign: "center",
                   }}
                 >
@@ -388,27 +401,50 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               </div>
             )}
           {isTimerRunning && (normalMode || hardMode) && isWin === "" && (
-            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            <h3
+              className="my-2"
+              style={seconds > 9 ? { color: "green" } : { color: "red" }}
+            >
               {seconds}
             </h3>
           )}
           {!isTogglingHomePage &&
             !isTogglingReset &&
             isWin === true &&
-            easyMode && <h2>You Win but you don't get any stars!</h2>}
+            easyMode && (
+              <h2
+                className="fasterOne"
+                style={{ fontSize: "40px" }}
+                style={{ fontSize: "40px" }}
+              >
+                You Win but you don't get any stars!
+              </h2>
+            )}
           {!isTogglingHomePage &&
             !isTogglingReset &&
             isWin === true &&
-            (normalMode || hardMode) && <h2>You Win!</h2>}
+            (normalMode || hardMode) && (
+              <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                You Win!
+              </h2>
+            )}
           {!isTogglingHomePage && !isTogglingReset && (
-            <h2>{isWin === false && "Time's Up!"}</h2>
+            <h2
+              className="fasterOne"
+              style={{ fontSize: "40px" }}
+              style={{ fontSize: "40px" }}
+            >
+              {isWin === false && "Time's Up!"}
+            </h2>
           )}
           {isWin &&
             !isTogglingReset &&
             !isTogglingHomePage &&
             (easyMode || normalMode || hardMode) && (
               <div>
-                <button onClick={toggleResetYes}>Play Again</button>
+                <button className="btn1" onClick={toggleResetYes}>
+                  Play Again
+                </button>
               </div>
             )}
           {seconds < 1 &&
@@ -416,7 +452,9 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage && (
               <div>
-                <button onClick={toggleResetYes}>Try Again</button>
+                <button className="btn1" onClick={toggleResetYes}>
+                  Try Again
+                </button>
               </div>
             )}
           <div className="four-buttons-container">
@@ -425,7 +463,11 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               isTimerRunning &&
               !isTogglingHomePage &&
               !isTogglingReset && (
-                <button onClick={add15Seconds} disabled={!addSecondsChance}>
+                <button
+                  className="btn1"
+                  onClick={add15Seconds}
+                  disabled={!addSecondsChance}
+                >
                   Add 15 seconds
                 </button>
               )}
@@ -435,6 +477,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingReset && (
                 <button
+                  className="btn1"
                   onClick={seeAllCards}
                   disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}
                 >
@@ -447,6 +490,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingReset && (
                 <button
+                  className="btn1"
                   onClick={findMatch1}
                   disabled={!findMatchChance1 || visibleCards.length !== 1}
                 >
@@ -459,6 +503,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingReset && (
                 <button
+                  className="btn1"
                   onClick={findMatch2}
                   disabled={!findMatchChance2 || visibleCards.length !== 1}
                 >
@@ -497,7 +542,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
           )}
           <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <button onClick={handleReviewSection}>
+            <button className="btn1" onClick={handleReviewSection}>
               {showReviews
                 ? "Hide the Reviews Section"
                 : "Show the Reviews Section"}
@@ -511,6 +556,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <div style={{ marginTop: "50px" }}></div>
     </div>
   );
 }

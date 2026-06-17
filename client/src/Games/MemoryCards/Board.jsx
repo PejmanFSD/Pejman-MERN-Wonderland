@@ -59,7 +59,7 @@ export default function Board({
           const randomIndex = getRandArr(copyImageIndexes);
           const randomElement = copyImageIndexes.splice(
             copyImageIndexes.indexOf(randomIndex),
-            1
+            1,
           )[0];
           copyShuffledIndexes.push(randomElement);
         }
@@ -67,7 +67,7 @@ export default function Board({
       }
       pickIndexes();
     },
-    [images]
+    [images],
   );
   return (
     <div>
@@ -136,11 +136,13 @@ export default function Board({
               }
               <br></br>
             </div>
-          )
-        )
+          ),
+        ),
       )}
       {isImagesGroupChosen && !showBoard && !isTogglingHomePage && (
-        <button onClick={generateBoard}>Start</button>
+        <button className="btn1" onClick={generateBoard}>
+          Start
+        </button>
       )}
     </div>
   );

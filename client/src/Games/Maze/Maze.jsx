@@ -441,20 +441,24 @@ export default function Maze({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutMaze setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Maze</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Maze
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               !isGameStarted && (
-                <button onClick={handleAboutPage}>About Maze</button>
+                <button className="btn1" onClick={handleAboutPage}>
+                  About Maze
+                </button>
               )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
               !isTogglingHomePage &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button onClick={() => toggleLevel()}>
+                <button className="btn1" onClick={() => toggleLevel()}>
                   {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
                 </button>
               )}
@@ -464,13 +468,15 @@ export default function Maze({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -513,26 +519,42 @@ export default function Maze({ updateTotalPoint, currentUser }) {
                 className="four-buttons-container"
                 style={{ marginTop: "15px" }}
               >
-                <button onClick={handleEasyMode}>Easy Mode</button>
-                <button onClick={handleNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={handleEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={handleNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "15px" }}
+              >
                 Start the Game
               </button>
             )}
-          {finalMessage && !isTogglingHomePage && <h2>{finalMessage}</h2>}
+          {finalMessage && !isTogglingHomePage && (
+            <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+              {finalMessage}
+            </h2>
+          )}
           {finalMessage === "Time's Up!" && !isTogglingHomePage && (
             <img src={Clock} width="50px" alt="" />
           )}
           {hasWon && !isTogglingHomePage && (
             <div>
               <div>Play Again?</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+              <button
+                className="btn2"
+                onClick={handlePlayAgain}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
@@ -540,13 +562,20 @@ export default function Maze({ updateTotalPoint, currentUser }) {
           {seconds < 1 && !isTogglingHomePage && (
             <div>
               <div>Try Again?</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+              <button
+                className="btn2"
+                onClick={handlePlayAgain}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
           )}
           {isGameStarted && normalMode && (
-            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            <h3
+              className="my-2"
+              style={seconds > 9 ? { color: "green" } : { color: "red" }}
+            >
               {seconds}
             </h3>
           )}
@@ -558,6 +587,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted && (
               <button
+                className="btn1 my-3"
                 onClick={handleReviewSection}
                 style={{ position: "relative", top: "25px" }}
               >
@@ -573,6 +603,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
             showReviews && (
               <ReviewSection game="Maze" currentUser={currentUser} />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>

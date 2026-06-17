@@ -148,13 +148,17 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutKukuKube setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Kuku Kube</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Kuku Kube
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button onClick={handleAboutPage}>About Kuku Kube</button>
+                <button className="btn1" onClick={handleAboutPage}>
+                  About Kuku Kube
+                </button>
               )}
             {isGameStarted &&
               (easyMode || normalMode) &&
@@ -163,6 +167,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               isGameStarted && (
                 <button
+                  className="btn1"
                   onClick={() => toggleLevel()}
                 >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
               )}
@@ -172,13 +177,15 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               (easyMode || normalMode) &&
               isGameStarted && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               isGameStarted && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -218,8 +225,12 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !normalMode &&
             !isTogglingHomePage && (
               <div className="four-buttons-container">
-                <button onClick={runEasyMode}>Easy Mode</button>
-                <button onClick={runNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={runEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={runNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {!isGameStarted &&
@@ -233,9 +244,10 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                   name="color"
                   id="color"
                   style={{
+                    borderRadius: "8px",
                     textAlign: "center",
                     width: "140px",
-                    height: "25px",
+                    height: "30px",
                   }}
                 >
                   <option value={color} disabled selected>
@@ -252,7 +264,11 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             isColorChosen &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "15px" }}
+              >
                 Start the Game
               </button>
             )}
@@ -312,8 +328,6 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
               <img
                 style={{
                   height: "19px",
-                  position: "relative",
-                  top: "30px",
                   margin: "2px",
                 }}
                 src={
@@ -342,8 +356,8 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <button
+                className="btn1 my-2"
                 onClick={submitUserChoice}
-                style={{ position: "relative", top: "30px", margin: "10px" }}
                 disabled={!userChoice || isStepPassed !== null}
               >
                 Submit
@@ -357,12 +371,11 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <div
-                style={{ position: "relative", top: "30px", margin: "10px" }}
-              >
+              <div>
                 Well Done! You guessed correctly!
                 <div>
                   <button
+                    className="btn1"
                     onClick={handleNextStep}
                     style={{ margin: "10px" }}
                   >{`Go to Step ${step + 1}`}</button>
@@ -376,11 +389,18 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <div style={{ position: "relative", top: "60px" }}>
-                <h3>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
+              <div>
+                <h3
+                  className="fasterOne"
+                  style={{ fontSize: "40px" }}
+                >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
                 <div>
                   <div>Play Again?</div>
-                  <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                  <button
+                    className="btn2"
+                    onClick={handleReset}
+                    style={{ marginTop: "10px" }}
+                  >
                     Ok
                   </button>
                 </div>
@@ -392,11 +412,17 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <div style={{ position: "relative", top: "60px" }}>
-                <h3>Sorry! You didn't guess correctly! You Lose!</h3>
+              <div>
+                <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                  Sorry! You didn't guess correctly! You Lose!
+                </h3>
                 <div>
                   <div>Try Again?</div>
-                  <button onClick={handleReset} style={{ marginTop: "10px" }}>
+                  <button
+                    className="btn2"
+                    onClick={handleReset}
+                    style={{ marginTop: "10px" }}
+                  >
                     Ok
                   </button>
                 </div>
@@ -407,10 +433,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button
-                onClick={handleReviewSection}
-                style={{ position: "relative", top: "65px" }}
-              >
+              <button className="btn1 my-2" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}
@@ -421,7 +444,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted &&
             showReviews && (
-              <div style={{ position: "relative", top: "40px" }}>
+              <div>
                 <ReviewSection game="KukuKube" currentUser={currentUser} />
               </div>
             )}

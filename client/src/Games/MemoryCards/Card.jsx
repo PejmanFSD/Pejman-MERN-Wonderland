@@ -63,9 +63,9 @@ export default function Card({
             (card[0] === x && card[1] === y) ||
             (card[0] === visibleCards[0][0] && card[1] === visibleCards[0][1])
               ? [...card.slice(0, -1), 1]
-              : card
-          )
-        )
+              : card,
+          ),
+        ),
       );
       setPair((pair) => pair + 2);
       setVisibleCards([]);
@@ -102,12 +102,12 @@ export default function Card({
         status === 2
           ? BlueTick
           : !seeAllCardsChanceTemp && !seeAllCardsChancePer && status === 0
-          ? images[imageIndex]
-          : status === 1
-          ? Tick
-          : visibleCards.some((pair) => pair[0] === x && pair[1] === y)
-          ? images[imageIndex]
-          : Pejman
+            ? images[imageIndex]
+            : status === 1
+              ? Tick
+              : visibleCards.some((pair) => pair[0] === x && pair[1] === y)
+                ? images[imageIndex]
+                : Pejman
       }
       style={{
         width: easyMode ? "150px" : normalMode ? "75px" : "60px",
