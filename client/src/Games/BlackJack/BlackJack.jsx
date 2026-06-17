@@ -184,7 +184,6 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     let tempPejmanChipsNum = pejmanChipsNum;
     const tempBet = bet;
     let tempRoundMessage;
-
     if (userPoint === 22 && userHand.length === 2) {
       tempUserChipsNum = userChipsNum + 2 * tempBet;
       if (tempPejmanChipsNum !== 0) {
@@ -410,10 +409,14 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutBlackJack setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>BlackJack</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            BlackJack
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About BlackJack</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About BlackJack
+              </button>
             )}
             {isGameStarted &&
               (easyMode || normalMode) &&
@@ -422,6 +425,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" && (
                 <button
+                  className="btn1"
                   style={{
                     display: "inline",
                   }}
@@ -434,13 +438,15 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -483,8 +489,12 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 className="four-buttons-container"
                 style={{ marginTop: "15px" }}
               >
-                <button onClick={handleEasyMode}>Easy Mode</button>
-                <button onClick={handleNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={handleEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={handleNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {!isGameStarted &&
@@ -492,7 +502,11 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                <button onClick={handleStart} style={{ marginTop: "15px" }}>
+                <button
+                  className="btn1"
+                  onClick={handleStart}
+                  style={{ marginTop: "15px" }}
+                >
                   Start the Game
                 </button>
                 <br />
@@ -504,103 +518,9 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 />
               </div>
             )}
-          {/* {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
-        <div>Deck:</div>
-      )} */}
-          {/* {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage &&
-        deck.map((c, i) => <img src={deck[i].imgSrc} height="65px" />)} */}
-          {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            deck.map((c, i) =>
-              (i + 1) % 13 !== 0 ? (
-                <div style={{ display: "inline" }} key={i}>
-                  <img
-                    src={Back}
-                    height="55px"
-                    style={{ margin: "2px" }}
-                    alt=""
-                  />
-                </div>
-              ) : (
-                <div style={{ display: "inline" }}>
-                  <img
-                    src={Back}
-                    height="55px"
-                    style={{ margin: "2px" }}
-                    alt=""
-                  />
-                  <br />
-                </div>
-              ),
-            )}
-          {/* {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            deck.map((c, i) => (
-              <div style={{ display: "inline" }} key={i}>
-                {deck[i].point} -{" "}
-              </div>
-            ))} */}
-          <br />
-          {!isTogglingReset && !isTogglingLevel && !isTogglingHomePage && (
-            <div>-----</div>
-          )}
-          {/* {isGameStarted &&
-        !isTogglingReset &&
-        !isTogglingLevel &&
-        !isTogglingHomePage &&
-        usedCards.map((c, i) => (
-          <img src={usedCards[i].imgSrc} height="65px" />
-        ))} */}
-          {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            usedCards.map((c, i) =>
-              !userHand.includes(c) &&
-              !pejmanHand.includes(c) &&
-              (i + 1) % 13 !== 0 ? (
-                <div style={{ display: "inline" }} key={i}>
-                  <img
-                    src={Back}
-                    height="55px"
-                    style={{ margin: "2px" }}
-                    alt=""
-                  />
-                </div>
-              ) : (
-                !userHand.includes(c) &&
-                !pejmanHand.includes(c) && (
-                  <div style={{ display: "inline" }}>
-                    <img
-                      src={Back}
-                      height="55px"
-                      style={{ margin: "2px" }}
-                      alt=""
-                    />
-                    <br />
-                  </div>
-                )
-              ),
-            )}
-          <br />
-          {/* {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            usedCards.map((c, i) => (
-              <div style={{ display: "inline" }} key={i}>
-                {usedCards[i].point} -{" "}
-              </div>
-            ))} */}
           {isGameStarted &&
             finalMessage === "" &&
+            roundMessage === "" &&
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
@@ -608,543 +528,692 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 <strong>Round {roundNum}</strong>
               </div>
             )}
-          {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ marginBottom: "15px" }}>
-                <strong>bet: {bet}</strong>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-3">
+                {/* Deck */}
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage &&
+                  deck.map((c, i) =>
+                    (i + 1) % 6 !== 0 ? (
+                      <div style={{ display: "inline" }} key={i}>
+                        <img
+                          src={Back}
+                          height="55px"
+                          style={{ margin: "2px" }}
+                          alt=""
+                        />
+                      </div>
+                    ) : (
+                      <div style={{ display: "inline" }}>
+                        <img
+                          src={Back}
+                          height="55px"
+                          style={{ margin: "2px" }}
+                          alt=""
+                        />
+                        <br />
+                      </div>
+                    ),
+                  )}
               </div>
-            )}
-          {/* {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <strong>raise: {raise}</strong>
-            )} */}
-          {/* Pejman's chips */}
-          {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ marginBottom: "10px" }}>
-                {new Array(pejmanChipsNum).fill(null).map((c, i) => (
-                  <img
-                    src={chips[1]}
-                    height="50px"
-                    style={{ margin: "2px" }}
-                    alt=""
-                    key={i}
-                  />
-                ))}
-              </div>
-            )}
-          {isGameStarted &&
-            pejmanHand.length > 0 &&
-            finalMessage === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ marginBottom: "10px" }}>
-                The value of Pejman's hand: {pejmanPoint}
-              </div>
-            )}
-          {/* Pejman's hand */}
-          {isGameStarted &&
-            finalMessage === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                {new Array(pejmanHand.length).fill(null).map((c, i) => (
-                  <img
-                    src={pejmanHand[i].imgSrc}
-                    height="120px"
-                    style={{ margin: "2px" }}
-                    alt=""
-                    key={i}
-                  />
-                ))}
-              </div>
-            )}
-          <br />
-          {/* Bet */}
-          {isGameStarted &&
-            isBetMade &&
-            finalMessage === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ marginBottom: "20px" }}>
-                {new Array(2 * bet).fill(null).map((c, i) => (
-                  <img src={chips[0]} height="50px" alt="" key={i} />
-                ))}
-              </div>
-            )}
-          {/* Round Message */}
-          {finalMessage !== "" &&
-          roundMessage &&
-          roundNum > 2 &&
-          !isTogglingReset &&
-          !isTogglingLevel &&
-          !isTogglingHomePage ? (
-            <h4>The result of the final round:</h4>
-          ) : (
-            finalMessage !== "" &&
-            roundMessage &&
-            roundNum === 2 &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <h4>The game had only one round with the following result:</h4>
-            )
-          )}
-          {roundMessage &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && <h4>{roundMessage}</h4>}
-          {finalMessage !== "" && !isTogglingHomePage && (
-            <h3>{finalMessage}</h3>
-          )}
-          {finalMessage &&
-            finalMessage === "You win the game!" &&
-            !isTogglingHomePage && (
-              <div>
-                <div>Play Again?</div>
-                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
-                  Ok
-                </button>
-              </div>
-            )}
-          {finalMessage &&
-            finalMessage === "Pejman wins the game!" &&
-            !isTogglingHomePage && (
-              <div>
-                <div>Try Again?</div>
-                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
-                  Ok
-                </button>
-              </div>
-            )}
-          {/* User's hand */}
-          {isGameStarted &&
-            finalMessage === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            new Array(userHand.length)
-              .fill(null)
-              .map((c, i) => (
-                <img
-                  src={userHand[i].imgSrc}
-                  height="120px"
-                  style={{ margin: "2px" }}
-                  alt=""
-                  key={i}
-                />
-              ))}
-          <br />
-          {isGameStarted &&
-            userHand.length > 0 &&
-            finalMessage === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ marginBottom: "15px" }}>
-                The value of your hand: {userPoint}
-              </div>
-            )}
-          {/* User's chips */}
-          {isGameStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                {new Array(userChipsNum).fill(null).map((c, i) => (
-                  <img
-                    src={chips[1]}
-                    height="50px"
-                    style={{ margin: "2px" }}
-                    alt=""
-                    key={i}
-                  />
-                ))}
-              </div>
-            )}
-          {/* New round's button / Final button */}
-          {isGameStarted &&
-            isUserTurn &&
-            userHand.length === 0 &&
-            finalMessage === "" &&
-            !isAce &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <button onClick={getNewCardForUser} style={{ marginTop: "15px" }}>
-                {userChipsNum === 0 || pejmanChipsNum === 0
-                  ? "Show the final result of the game"
-                  : `Start round ${roundNum}`}
-              </button>
-            )}
-          {/* First bet form */}
-          {isGameStarted &&
-            isUserTurn &&
-            userHand.length === 1 &&
-            !isBetMade &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <form onSubmit={submitBet}>
-                <div>
-                  <label htmlFor="bet">{`Make your bet `}</label>
-                  <select
-                    onChange={handleBet}
-                    style={{ textAlign: "center", width: "40px" }}
-                    name="bet"
-                    id="bet"
-                  >
-                    <option value={bet} disabled selected>
-                      🔽
-                    </option>
-                    {Array.from(
-                      { length: Math.min(userChipsNum, pejmanChipsNum) },
-                      (_, i) => i + 1,
-                    ).map((i, idx) => (
-                      <option key={idx}>{i}</option>
-                    ))}
-                  </select>
-                </div>
-                {bet > 0 && (
-                  <button style={{ marginTop: "10px" }}>Submit your bet</button>
-                )}
-              </form>
-            )}
-          {/* The 3 buttons */}
-          <div className="four-buttons-container">
-            {isGameStarted &&
-              isUserTurn &&
-              !isRoundOver &&
-              userHand.length >= 1 &&
-              isBetMade &&
-              !isRaising &&
-              finalMessage === "" &&
-              !isAce &&
-              !isDeckFinished &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              !isTogglingHomePage && (
-                <button onClick={getNewCardForUser}>Hit</button>
-              )}
-            {isGameStarted &&
-              isUserTurn &&
-              !isRoundOver &&
-              userHand.length >= 1 &&
-              isBetMade &&
-              !isRaising &&
-              finalMessage === "" &&
-              !isAce &&
-              !isDeckFinished &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              !isTogglingHomePage && (
-                <button
-                  onClick={renderRaisingForm}
-                  disabled={userChipsNum === 0 || pejmanChipsNum === 0}
-                >
-                  Raise
-                </button>
-              )}
-            {isGameStarted &&
-              isUserTurn &&
-              !isRoundOver &&
-              userHand.length >= 1 &&
-              isBetMade &&
-              !isRaising &&
-              finalMessage === "" &&
-              !isAce &&
-              !isDeckFinished &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              !isTogglingHomePage && (
-                <button onClick={handleStand} disabled={!allowStand}>
-                  Stand
-                </button>
-              )}
-          </div>
-          {isAce &&
-            isUserTurn &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                <div>
-                  {`${userPoint === 0 ? "You're first card" : "You're next card"} is an Ace, do you want it to have the value of 1 or 11?`}
-                </div>
-                <button onClick={() => handleAce(1)}>1</button>
-                <button onClick={() => handleAce(11)}>11</button>
-              </div>
-            )}
-          {isAce &&
-            !isUserTurn &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                <div>
-                  {`${pejmanPoint === 0 ? "Pejman's first card" : "Pejman's next card"} is an Ace, and he wants it to have the value of ${deck[0].point}`}
-                </div>
-                <button onClick={handleAllowPejman}>Ok</button>
-              </div>
-            )}
-          {isGameStarted &&
-            isUserTurn &&
-            !isRoundOver &&
-            userHand.length >= 1 &&
-            isBetMade &&
-            !isRaising &&
-            finalMessage === "" &&
-            userChipsNum === 0 &&
-            pejmanChipsNum > 0 &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ fontSize: "15px" }}>
-                You can't raise anymore because you don't have any gambling
-                chips!
-              </div>
-            )}
-          {isGameStarted &&
-            isUserTurn &&
-            !isRoundOver &&
-            userHand.length >= 1 &&
-            isBetMade &&
-            !isRaising &&
-            finalMessage === "" &&
-            pejmanChipsNum === 0 &&
-            userChipsNum > 0 &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ fontSize: "15px" }}>
-                You can't raise anymore because Pejman doesn't have any gambling
-                chips!
-              </div>
-            )}
-          {isGameStarted &&
-            isUserTurn &&
-            !isRoundOver &&
-            userHand.length >= 1 &&
-            isBetMade &&
-            !isRaising &&
-            finalMessage === "" &&
-            pejmanChipsNum === 0 &&
-            userChipsNum === 0 &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ fontSize: "15px" }}>
-                You can't raise anymore because neither you nor Pejman don't
-                have any gambling chips!
-              </div>
-            )}
-          {!allowStand &&
-            finalMessage === "" &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div style={{ fontSize: "15px" }}>
-                You can't stand right after raising!
-              </div>
-            )}
-          {/* Raising form */}
-          {isRaising &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                <form onSubmit={submitRaise}>
-                  <div>
-                    <label htmlFor="raise">
-                      {`How much do you want to raise? `}
-                    </label>
-                    <select
-                      onChange={handleRaise}
-                      style={{ textAlign: "center", width: "40px" }}
-                      name="raise"
-                      id="raise"
-                    >
-                      <option value={raise} disabled selected>
-                        🔽
-                      </option>
-                      {Array.from(
-                        { length: Math.min(userChipsNum, pejmanChipsNum) },
-                        (_, i) => i + 1,
-                      ).map((i, idx) => (
-                        <option key={idx}>{i}</option>
+              <div className="col-md-6">
+                {/* Pejman's chips */}
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div style={{ marginBottom: "10px" }}>
+                      {new Array(pejmanChipsNum).fill(null).map((c, i) => (
+                        <img
+                          src={chips[1]}
+                          height="45px"
+                          style={{ margin: "2px" }}
+                          alt=""
+                          key={i}
+                        />
                       ))}
-                    </select>
-                  </div>
-                  <button disabled={raise === 0} style={{ margin: "5px" }}>
-                    Update the raise
-                  </button>
-                </form>
-                <button onClick={cancelRaising} style={{ margin: "5px" }}>
-                  Cancel the raise
-                </button>
-              </div>
-            )}
-          {/* Allow Pejman button */}
-          {isGameStarted &&
-            !isUserTurn &&
-            !isRoundOver &&
-            finalMessage === "" &&
-            !isAce &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                <div>
-                  {pejmanHand.length === 0
-                    ? "Allow Pejman to start his turn"
-                    : "Allow Pejman To make his next move"}
+                    </div>
+                  )}
+                {isGameStarted &&
+                  pejmanHand.length > 0 &&
+                  finalMessage === "" &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div className="my-2">
+                      The value of Pejman's hand: <strong>{pejmanPoint}</strong>
+                    </div>
+                  )}
+                {/* Pejman's hand */}
+                {isGameStarted &&
+                  finalMessage === "" &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      {new Array(pejmanHand.length).fill(null).map((c, i) => (
+                        <img
+                          src={pejmanHand[i].imgSrc}
+                          height="110px"
+                          style={{ margin: "2px" }}
+                          alt=""
+                          key={i}
+                        />
+                      ))}
+                    </div>
+                  )}
+                {/* Bet */}
+                {isGameStarted &&
+                  isBetMade &&
+                  finalMessage === "" &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div style={{ marginBottom: "20px" }}>
+                      {new Array(2 * bet).fill(null).map((c, i) => (
+                        <img
+                          src={chips[0]}
+                          style={{ marginTop: "16px" }}
+                          height="45px"
+                          alt=""
+                          key={i}
+                        />
+                      ))}
+                    </div>
+                  )}
+                {/* Round Message */}
+                {finalMessage !== "" &&
+                roundMessage &&
+                roundNum > 2 &&
+                !isTogglingReset &&
+                !isTogglingLevel &&
+                !isTogglingHomePage ? (
+                  <h4>The result of the final round:</h4>
+                ) : (
+                  finalMessage !== "" &&
+                  roundMessage &&
+                  roundNum === 2 &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <h4>
+                      The game had only one round with the following result:
+                    </h4>
+                  )
+                )}
+                {roundMessage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && <h4>{roundMessage}</h4>}
+                {finalMessage !== "" && !isTogglingHomePage && (
+                  <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                    {finalMessage}
+                  </h3>
+                )}
+                {finalMessage &&
+                  finalMessage === "You win the game!" &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <div>Play Again?</div>
+                      <button
+                        className="btn2"
+                        onClick={handlePlayAgain}
+                        style={{ marginTop: "10px", marginBottom: "10px" }}
+                      >
+                        Ok
+                      </button>
+                    </div>
+                  )}
+                {finalMessage &&
+                  finalMessage === "Pejman wins the game!" &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <div>Try Again?</div>
+                      <button
+                        className="btn2"
+                        onClick={handlePlayAgain}
+                        style={{ marginTop: "10px", marginBottom: "10px" }}
+                      >
+                        Ok
+                      </button>
+                    </div>
+                  )}
+                {/* User's hand */}
+                {isGameStarted &&
+                  finalMessage === "" &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage &&
+                  new Array(userHand.length)
+                    .fill(null)
+                    .map((c, i) => (
+                      <img
+                        src={userHand[i].imgSrc}
+                        height="110px"
+                        style={{ margin: "2px" }}
+                        alt=""
+                        key={i}
+                      />
+                    ))}
+                {isGameStarted &&
+                  userHand.length > 0 &&
+                  finalMessage === "" &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div className="my-2">
+                      The value of your hand: <strong>{userPoint}</strong>
+                    </div>
+                  )}
+                {/* User's chips */}
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      {new Array(userChipsNum).fill(null).map((c, i) => (
+                        <img
+                          src={chips[1]}
+                          height="45px"
+                          style={{ margin: "2px" }}
+                          alt=""
+                          key={i}
+                        />
+                      ))}
+                    </div>
+                  )}
+                {/* New round's button / Final button */}
+                {isGameStarted &&
+                  isUserTurn &&
+                  userHand.length === 0 &&
+                  finalMessage === "" &&
+                  !isAce &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <button
+                      className="btn1"
+                      onClick={getNewCardForUser}
+                      style={{ marginTop: "15px" }}
+                    >
+                      {userChipsNum === 0 || pejmanChipsNum === 0
+                        ? "Show the final result of the game"
+                        : `Start round ${roundNum}`}
+                    </button>
+                  )}
+                {/* First bet form */}
+                {isGameStarted &&
+                  isUserTurn &&
+                  userHand.length === 1 &&
+                  !isBetMade &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <form onSubmit={submitBet}>
+                      <div>
+                        <label htmlFor="bet">{`Make your bet `}</label>
+                        <select
+                          onChange={handleBet}
+                          style={{
+                            textAlign: "center",
+                            width: "40px",
+                            borderRadius: "8px",
+                            height: "25px",
+                            marginLeft: "5px",
+                            marginTop: "5px",
+                            position: "relative",
+                            top: "3px",
+                          }}
+                          name="bet"
+                          id="bet"
+                        >
+                          <option value={bet} disabled selected></option>
+                          {Array.from(
+                            { length: Math.min(userChipsNum, pejmanChipsNum) },
+                            (_, i) => i + 1,
+                          ).map((i, idx) => (
+                            <option style={{ fontSize: "13px" }} key={idx}>
+                              {i}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      {bet > 0 && (
+                        <button className="btn1" style={{ marginTop: "10px" }}>
+                          Submit your bet
+                        </button>
+                      )}
+                    </form>
+                  )}
+                {/* The 3 buttons */}
+                <div className="four-buttons-container">
+                  {isGameStarted &&
+                    isUserTurn &&
+                    !isRoundOver &&
+                    userHand.length >= 1 &&
+                    isBetMade &&
+                    !isRaising &&
+                    finalMessage === "" &&
+                    !isAce &&
+                    !isDeckFinished &&
+                    !isTogglingReset &&
+                    !isTogglingLevel &&
+                    !isTogglingHomePage && (
+                      <button className="btn1" onClick={getNewCardForUser}>
+                        Hit
+                      </button>
+                    )}
+                  {isGameStarted &&
+                    isUserTurn &&
+                    !isRoundOver &&
+                    userHand.length >= 1 &&
+                    isBetMade &&
+                    !isRaising &&
+                    finalMessage === "" &&
+                    !isAce &&
+                    !isDeckFinished &&
+                    !isTogglingReset &&
+                    !isTogglingLevel &&
+                    !isTogglingHomePage && (
+                      <button
+                        className="btn1"
+                        onClick={renderRaisingForm}
+                        disabled={userChipsNum === 0 || pejmanChipsNum === 0}
+                      >
+                        Raise
+                      </button>
+                    )}
+                  {isGameStarted &&
+                    isUserTurn &&
+                    !isRoundOver &&
+                    userHand.length >= 1 &&
+                    isBetMade &&
+                    !isRaising &&
+                    finalMessage === "" &&
+                    !isAce &&
+                    !isDeckFinished &&
+                    !isTogglingReset &&
+                    !isTogglingLevel &&
+                    !isTogglingHomePage && (
+                      <button
+                        className="btn1"
+                        onClick={handleStand}
+                        disabled={!allowStand}
+                      >
+                        Stand
+                      </button>
+                    )}
                 </div>
-                <button
-                  onClick={handleAllowPejman}
-                  style={{ marginTop: "15px" }}
-                >
-                  Ok
-                </button>
-              </div>
-            )}
-          {isRoundOver &&
-          userPoint < 21 &&
-          pejmanPoint < 21 &&
-          finalMessage === "" &&
-          (userHand.length > 0 || pejmanHand.length > 0) &&
-          (userChipsNum === 0 || pejmanChipsNum === 0) &&
-          !isDeckFinished &&
-          !isTogglingReset &&
-          !isTogglingLevel &&
-          !isTogglingHomePage ? (
-            <div>Pejman is done hitting.</div>
-          ) : isRoundOver &&
-            userPoint < 21 &&
-            pejmanPoint < 21 &&
-            finalMessage === "" &&
-            (userHand.length > 0 || pejmanHand.length > 0) &&
-            userChipsNum > 0 &&
-            pejmanChipsNum > 0 &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage ? (
-            <div>
-              Pejman is done hitting. let's see who is the winner of this round.
-            </div>
-          ) : isRoundOver &&
-            userPoint > 21 &&
-            pejmanPoint < 21 &&
-            finalMessage === "" &&
-            userHand.length > 2 &&
-            (userHand.length > 0 || pejmanHand.length > 0) &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage ? (
-            <div>You busted!</div>
-          ) : ((isRoundOver &&
-              userPoint === 21 &&
-              pejmanPoint < 21 &&
-              finalMessage === "" &&
-              (userHand.length > 0 || pejmanHand.length > 0)) ||
-              (isRoundOver &&
-                userPoint === 22 &&
-                userHand.length === 2 &&
+                {isAce &&
+                  isUserTurn &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <div>
+                        {`${userPoint === 0 ? "You're first card" : "You're next card"} is an Ace, do you want it to have the value of 1 or 11?`}
+                      </div>
+                      <button
+                        className="btn2"
+                        style={{ width: "40px", marginRight: "5px" }}
+                        onClick={() => handleAce(1)}
+                      >
+                        1
+                      </button>
+                      <button
+                        className="btn2"
+                        style={{ width: "40px", marginLeft: "5px" }}
+                        onClick={() => handleAce(11)}
+                      >
+                        11
+                      </button>
+                    </div>
+                  )}
+                {isAce &&
+                  !isUserTurn &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <div>
+                        {`${pejmanPoint === 0 ? "Pejman's first card" : "Pejman's next card"} is an Ace, and he wants it to have the value of ${deck[0].point}`}
+                      </div>
+                      <button className="btn2" onClick={handleAllowPejman}>
+                        Ok
+                      </button>
+                    </div>
+                  )}
+                {isGameStarted &&
+                  isUserTurn &&
+                  !isRoundOver &&
+                  userHand.length >= 1 &&
+                  isBetMade &&
+                  !isRaising &&
+                  finalMessage === "" &&
+                  userChipsNum === 0 &&
+                  pejmanChipsNum > 0 &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div style={{ fontSize: "15px" }}>
+                      <strong>
+                        You can't raise anymore because you don't have any
+                        gambling chips!
+                      </strong>
+                    </div>
+                  )}
+                {isGameStarted &&
+                  isUserTurn &&
+                  !isRoundOver &&
+                  userHand.length >= 1 &&
+                  isBetMade &&
+                  !isRaising &&
+                  finalMessage === "" &&
+                  pejmanChipsNum === 0 &&
+                  userChipsNum > 0 &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div style={{ fontSize: "15px" }}>
+                      <strong>
+                        You can't raise anymore because Pejman doesn't have any
+                        gambling chips!
+                      </strong>
+                    </div>
+                  )}
+                {isGameStarted &&
+                  isUserTurn &&
+                  !isRoundOver &&
+                  userHand.length >= 1 &&
+                  isBetMade &&
+                  !isRaising &&
+                  finalMessage === "" &&
+                  pejmanChipsNum === 0 &&
+                  userChipsNum === 0 &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div style={{ fontSize: "15px" }}>
+                      <strong>
+                        You can't raise anymore because neither you nor Pejman
+                        don't have any gambling chips!
+                      </strong>
+                    </div>
+                  )}
+                {!allowStand &&
+                  finalMessage === "" &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div style={{ fontSize: "15px" }}>
+                      <strong>You can't stand right after raising!</strong>
+                    </div>
+                  )}
+                {/* Raising form */}
+                {isRaising &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <form onSubmit={submitRaise}>
+                        <div>
+                          <label htmlFor="raise">
+                            {`How much do you want to raise? `}
+                          </label>
+                          <select
+                            onChange={handleRaise}
+                            style={{
+                              textAlign: "center",
+                              width: "40px",
+                              borderRadius: "8px",
+                              height: "25px",
+                              marginLeft: "5px",
+                              marginTop: "5px",
+                              position: "relative",
+                              top: "3px",
+                            }}
+                            name="raise"
+                            id="raise"
+                          >
+                            <option value={raise} disabled selected></option>
+                            {Array.from(
+                              {
+                                length: Math.min(userChipsNum, pejmanChipsNum),
+                              },
+                              (_, i) => i + 1,
+                            ).map((i, idx) => (
+                              <option style={{ fontSize: "13px" }} key={idx}>
+                                {i}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <button
+                          className="btn1"
+                          disabled={raise === 0}
+                          style={{ margin: "5px" }}
+                        >
+                          Update the raise
+                        </button>
+                      </form>
+                      <button
+                        className="btn1"
+                        onClick={cancelRaising}
+                        style={{ margin: "5px" }}
+                      >
+                        Cancel the raise
+                      </button>
+                    </div>
+                  )}
+                {/* Allow Pejman button */}
+                {isGameStarted &&
+                  !isUserTurn &&
+                  !isRoundOver &&
+                  finalMessage === "" &&
+                  !isAce &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <div>
+                        {pejmanHand.length === 0
+                          ? "Allow Pejman to start his turn"
+                          : "Allow Pejman To make his next move"}
+                      </div>
+                      <button
+                        className="btn2"
+                        onClick={handleAllowPejman}
+                        style={{ marginTop: "15px" }}
+                      >
+                        Ok
+                      </button>
+                    </div>
+                  )}
+                {isRoundOver &&
+                userPoint < 21 &&
+                pejmanPoint < 21 &&
                 finalMessage === "" &&
                 (userHand.length > 0 || pejmanHand.length > 0) &&
-                !isDeckFinished)) &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage ? (
-            <div>Well done! BlackJack! &#128512;</div>
-          ) : isRoundOver &&
-            pejmanPoint > 21 &&
-            userPoint < 21 &&
-            finalMessage === "" &&
-            pejmanHand.length > 2 &&
-            (userHand.length > 0 || pejmanHand.length > 0) &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage ? (
-            <div>Pejman is busted!</div>
-          ) : (
-            ((isRoundOver &&
-              pejmanPoint === 21 &&
-              userPoint < 21 &&
-              finalMessage === "" &&
-              (userHand.length > 0 || pejmanHand.length > 0)) ||
-              (isRoundOver &&
-                pejmanPoint === 22 &&
-                pejmanHand.length === 2 &&
-                finalMessage === "" &&
-                (userHand.length > 0 || pejmanHand.length > 0))) &&
-            !isDeckFinished &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && <div>Pejman is BlackJack!</div>
-          )}
-          {((userChipsNum === 0 &&
-            userPoint < pejmanPoint &&
-            pejmanPoint < 22) ||
-            (userChipsNum === 0 && userPoint > 21) ||
-            (pejmanChipsNum === 0 &&
-              pejmanPoint < userPoint &&
-              userPoint < 22) ||
-            (pejmanChipsNum === 0 && pejmanPoint > 21) ||
-            (userChipsNum === 0 && userPoint === pejmanPoint && normalMode) ||
-            (pejmanChipsNum === 0 && pejmanPoint === userPoint && easyMode)) &&
-            isRoundOver &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>And the game is over, let's see who is the winner.</div>
-            )}
-          {isRoundOver &&
-            (userHand.length > 0 || pejmanHand.length > 0) &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <button onClick={handleRoundOver} style={{ marginTop: "10px" }}>
-                Ok
-              </button>
-            )}
-          {isDeckFinished &&
-            userChipsNum > 0 &&
-            pejmanChipsNum > 0 &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div>
-                <div>There's no card left!</div>
-                <button onClick={ShuffleCardsAndContinue}>
-                  Shuffle the cards and continue the game
-                </button>
+                (userChipsNum === 0 || pejmanChipsNum === 0) &&
+                !isDeckFinished &&
+                !isTogglingReset &&
+                !isTogglingLevel &&
+                !isTogglingHomePage ? (
+                  <div>Pejman is done hitting.</div>
+                ) : isRoundOver &&
+                  userPoint < 21 &&
+                  pejmanPoint < 21 &&
+                  finalMessage === "" &&
+                  (userHand.length > 0 || pejmanHand.length > 0) &&
+                  userChipsNum > 0 &&
+                  pejmanChipsNum > 0 &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage ? (
+                  <div>
+                    Pejman is done hitting. let's see who is the winner of this
+                    round.
+                  </div>
+                ) : isRoundOver &&
+                  userPoint > 21 &&
+                  pejmanPoint < 21 &&
+                  finalMessage === "" &&
+                  userHand.length > 2 &&
+                  (userHand.length > 0 || pejmanHand.length > 0) &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage ? (
+                  <div>You busted!</div>
+                ) : ((isRoundOver &&
+                    userPoint === 21 &&
+                    pejmanPoint < 21 &&
+                    finalMessage === "" &&
+                    (userHand.length > 0 || pejmanHand.length > 0)) ||
+                    (isRoundOver &&
+                      userPoint === 22 &&
+                      userHand.length === 2 &&
+                      finalMessage === "" &&
+                      (userHand.length > 0 || pejmanHand.length > 0) &&
+                      !isDeckFinished)) &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage ? (
+                  <div>Well done! BlackJack! &#128512;</div>
+                ) : isRoundOver &&
+                  pejmanPoint > 21 &&
+                  userPoint < 21 &&
+                  finalMessage === "" &&
+                  pejmanHand.length > 2 &&
+                  (userHand.length > 0 || pejmanHand.length > 0) &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage ? (
+                  <div>Pejman is busted!</div>
+                ) : (
+                  ((isRoundOver &&
+                    pejmanPoint === 21 &&
+                    userPoint < 21 &&
+                    finalMessage === "" &&
+                    (userHand.length > 0 || pejmanHand.length > 0)) ||
+                    (isRoundOver &&
+                      pejmanPoint === 22 &&
+                      pejmanHand.length === 2 &&
+                      finalMessage === "" &&
+                      (userHand.length > 0 || pejmanHand.length > 0))) &&
+                  !isDeckFinished &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && <div>Pejman is BlackJack!</div>
+                )}
+                {((userChipsNum === 0 &&
+                  userPoint < pejmanPoint &&
+                  pejmanPoint < 22) ||
+                  (userChipsNum === 0 && userPoint > 21) ||
+                  (pejmanChipsNum === 0 &&
+                    pejmanPoint < userPoint &&
+                    userPoint < 22) ||
+                  (pejmanChipsNum === 0 && pejmanPoint > 21) ||
+                  (userChipsNum === 0 &&
+                    userPoint === pejmanPoint &&
+                    normalMode) ||
+                  (pejmanChipsNum === 0 &&
+                    pejmanPoint === userPoint &&
+                    easyMode)) &&
+                  isRoundOver &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      And the game is over, let's see who is the winner.
+                    </div>
+                  )}
+                {isRoundOver &&
+                  (userHand.length > 0 || pejmanHand.length > 0) &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <button
+                      className="btn2"
+                      onClick={handleRoundOver}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Ok
+                    </button>
+                  )}
+                {isDeckFinished &&
+                  userChipsNum > 0 &&
+                  pejmanChipsNum > 0 &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div>
+                      <div>There's no card left!</div>
+                      <button
+                        className="btn1"
+                        onClick={ShuffleCardsAndContinue}
+                      >
+                        Shuffle the cards and continue the game
+                      </button>
+                    </div>
+                  )}
               </div>
-            )}
-          <br />
-          <br />
+              <div className="col-md-3">
+                {/* Used Cards */}
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage &&
+                  usedCards.map((c, i) =>
+                    !userHand.includes(c) &&
+                    !pejmanHand.includes(c) &&
+                    (i + 1) % 6 !== 0 ? (
+                      <div style={{ display: "inline" }} key={i}>
+                        <img
+                          src={Back}
+                          height="55px"
+                          style={{ margin: "2px" }}
+                          alt=""
+                        />
+                      </div>
+                    ) : (
+                      !userHand.includes(c) &&
+                      !pejmanHand.includes(c) && (
+                        <div style={{ display: "inline" }}>
+                          <img
+                            src={Back}
+                            height="55px"
+                            style={{ margin: "2px" }}
+                            alt=""
+                          />
+                          <br />
+                        </div>
+                      )
+                    ),
+                  )}
+              </div>
+            </div>
+          </div>
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button
+                className="btn1"
+                style={{ marginBottom: "30px", marginTop: "20px" }}
+                onClick={handleReviewSection}
+              >
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}

@@ -3,78 +3,94 @@ export default function AboutMemoryCards({ setIsAboutPage }) {
     setIsAboutPage(false);
   };
   return (
-    <div>
-      <h2>About Memory Cards</h2>
-      <h4>How to Play</h4>
-      <div>
-        In this game, a set of cards is placed face down. Click on a card to
-        reveal its picture and try to find its matching pair.
-        <br />
-        You can reveal up to 2 cards at a time:
-        <br />
-        If the two revealed cards match, they are marked as completed.
-        <br />
-        If they do not match, they are hidden again.
-        <br />
-        Match all the cards to win the game.
+    <div className="container mt-3 mb-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8">
+          <div className="cause" style={{ fontSize: "15px" }}>
+            <div className="card">
+              <div className="card-body m-3">
+                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                  About Memory Cards
+                </h2>
+                <h4>How to Play</h4>
+                <div>
+                  In this game, a set of cards is placed face down. Click on a
+                  card to reveal its picture and try to find its matching pair.
+                  <br />
+                  You can reveal up to 2 cards at a time:
+                  <br />
+                  If the two revealed cards match, they are marked as completed.
+                  <br />
+                  If they do not match, they are hidden again.
+                  <br />
+                  Match all the cards to win the game.
+                </div>
+                <h4>Picture Categories</h4>
+                <div>
+                  You can choose from several fun categories for the card
+                  images:
+                  <br />
+                  - Animals
+                  <br />
+                  - Fruits
+                  <br />
+                  - Cars
+                  <br />
+                  - Emojis
+                  <br />
+                  - Movie Characters
+                  <br />- Animation Characters
+                </div>
+                <h4>Game Modes</h4>
+                <strong>- Easy Mode:</strong>
+                <br />
+                16 cards
+                <br />
+                No time limit
+                <br />
+                Winning does not award any stars
+                <br />
+                <strong>- Normal Mode:</strong>
+                <br />
+                64 cards
+                <br />
+                You have 180 seconds to match all cards
+                <br />
+                Win the game to earn 2 stars
+                <br />
+                <strong>- Hard Mode:</strong>
+                <br />
+                100 cards
+                <br />
+                You have 270 seconds to match all cards
+                <br />
+                Win the game to earn 5 stars
+                <br />
+                <h4>Help Buttons</h4>
+                The game also includes several helpful features:
+                <br />
+                - Extra Time
+                <br />
+                Adds 15 seconds to your timer (Not available in Easy Mode).
+                <br />
+                - Reveal All Cards
+                <br />
+                Shows the pictures of all cards for 3 seconds.
+                <br />
+                - Matching Card Finder
+                <br />
+                These buttons reveal the matching card for a card you have
+                already selected (To use these buttons, one card must already be
+                revealed).
+                <h4>Please rate the game and leave a comment 🙂 </h4>
+                <button className="btn1" onClick={handleGamePage}>
+                  Back to the Game
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <h4>Picture Categories</h4>
-      <div>
-        You can choose from several fun categories for the card images:
-        <br />
-        - Animals
-        <br />
-        - Fruits
-        <br />
-        - Cars
-        <br />
-        - Emojis
-        <br />
-        - Movie Characters
-        <br />- Animation Characters
-      </div>
-      <h4>Game Modes</h4>
-      <strong>- Easy Mode:</strong>
-      <br />
-      16 cards
-      <br />
-      No time limit
-      <br />
-      Winning does not award any stars
-      <br />
-      <strong>- Normal Mode:</strong>
-      <br />
-      64 cards
-      <br />
-      You have 180 seconds to match all cards
-      <br />
-      Win the game to earn 2 stars
-      <br />
-      <strong>- Hard Mode:</strong>
-      <br />
-      100 cards
-      <br />
-      You have 270 seconds to match all cards
-      <br />
-      Win the game to earn 5 stars
-      <br />
-      <h4>Help Buttons</h4>
-      The game also includes several helpful features:
-      <br />
-      - Extra Time
-      <br />
-      Adds 15 seconds to your timer (Not available in Easy Mode).
-      <br />
-      - Reveal All Cards
-      <br />
-      Shows the pictures of all cards for 3 seconds.
-      <br />
-      - Matching Card Finder
-      <br />
-      These buttons reveal the matching card for a card you have already
-      selected (To use these buttons, one card must already be revealed).
-      <h4>Please rate the game and leave a comment 🙂 </h4>
-      <button onClick={handleGamePage}>Back to the Game</button>
     </div>
   );
 }

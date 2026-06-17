@@ -23,7 +23,7 @@ export default function StarRating({ rating, setRating }) {
             onMouseLeave={() => setHover(null)}
             style={{
               fontSize: "24px",
-              color: isActive ? "gold" : "lightgray",
+              color: isActive ? "red" : "gray",
               transition: "color 0.2s",
             }}
           >

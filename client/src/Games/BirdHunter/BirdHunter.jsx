@@ -76,13 +76,13 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutBirdHunter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Bird Hunter</h2>
+          <h2 className="fasterOne" style={{fontSize: "45px"}}>Bird Hunter</h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isGameStarted && (
-              <button onClick={handleAboutPage}>About Bird Hunter</button>
+              <button className="btn1" onClick={handleAboutPage}>About Bird Hunter</button>
             )}
             {!isTogglingHomePage && (
-              <button onClick={() => toggleHomePage()}>
+              <button className="btn1" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}
@@ -182,6 +182,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           )}
           {grounds.length === 16 && !isTogglingHomePage && (
             <button
+              className="btn1"
               style={{ position: "relative", top: "5px" }}
               onClick={handleStart}
               disabled={isRunning}
@@ -193,35 +194,38 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingHomePage && (
               <button
-                style={{ position: "relative", top: "5px" }}
+                className="btn1"
+                style={{ position: "relative", top: "5px", marginTop: "20px" }}
                 onClick={handleAnnouncingTheGameResult}
               >
                 See the Game Result
               </button>
             )}
-          <h2>{finalMessage && !isTogglingHomePage && finalMessage}</h2>
+          <h2 className="fasterOne" style={{fontSize: "40px"}}>{finalMessage && !isTogglingHomePage && finalMessage}</h2>
           <div>
             {finalMessage &&
               userScore === 16 &&
               !isTogglingHomePage &&
-              "Wow! You didn't miss a single bird!"}
+              <strong>Wow! You didn't miss a single bird!</strong>}
           </div>
           <div>
             {finalMessage &&
               userScore === 15 &&
               !isTogglingHomePage &&
-              "You missed a bird!"}
+              <strong>You missed a bird!</strong>}
           </div>
           <div>
             {finalMessage &&
               userScore < 15 &&
               !isTogglingHomePage &&
-              `You missed ${16 - userScore} birds!`}
+              <strong>
+              {`You missed ${16 - userScore} birds!`}
+              </strong>}
           </div>
           {finalMessage === "You Win!" && !isTogglingHomePage && (
             <div>
               <div>Play Again!</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+              <button onClick={handlePlayAgain} className="btn2" style={{ marginTop: "10px" }}>
                 Ok
               </button>
             </div>
@@ -229,13 +233,13 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           {finalMessage === "You Lose!" && !isTogglingHomePage && (
             <div>
               <div>Try Again!</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+              <button onClick={handlePlayAgain} className="btn2" style={{ marginTop: "10px" }}>
                 Ok
               </button>
             </div>
           )}
           {!isTogglingHomePage && isGameStarted && (
-            <button onClick={handleReviewSection}>
+            <button className="btn1" style={{marginTop: "20px", marginBottom: "30px"}} onClick={handleReviewSection}>
               {showReviews
                 ? "Hide the Reviews Section"
                 : "Show the Reviews Section"}

@@ -150,8 +150,12 @@ export default function ReviewSection({ game, currentUser }) {
   };
 
   return (
-    <div style={{ marginTop: "30px" }}>
-      <strong>Leave your comment</strong>
+    <div style={{ marginTop: "20px", margin: "auto" }}>
+      <div style={{ marginTop: "15px" }}>
+        <strong style={{ fontSize: "25px" }}>
+          Rate the game and leave your comment
+        </strong>
+      </div>
       <form onSubmit={handleSubmit}>
         <StarRating rating={newRating} setRating={setNewRating} />
         <textarea
@@ -159,91 +163,136 @@ export default function ReviewSection({ game, currentUser }) {
           rows="5"
           cols="25"
           value={body}
+          className="form-control"
+          style={{
+            border: "2px solid #ccc",
+            borderRadius: "8px",
+            margin: "auto",
+            textAlign: "center",
+            width: "400px",
+            height: "150px",
+            marginTop: "7px",
+          }}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Write your comment..."
           required
         />
-        <br />
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="btn1 align-self-center mb-3"
+          style={{ marginTop: "15px" }}
+          disabled={editingReviewId || deletingReview}
+        >
+          Submit
+        </button>
       </form>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "15px",
-          marginTop: "20px",
-        }}
-      >
-        {reviews.map((r) => {
-          const userId = currentUser?._id || currentUser?.id;
-          const isAuthor =
-            userId && r.author?._id && String(userId) === String(r.author._id);
-          const isAdmin = currentUser?.role?.toLowerCase() === "admin";
-          return (
-            <div
-              key={r._id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "10px",
-                borderRadius: "8px",
-              }}
-            >
-              {editingReviewId === r._id ? (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    handleUpdate(r._id);
-                  }}
-                >
-                  <textarea
-                    value={editBody}
-                    onChange={(e) => setEditBody(e.target.value)}
-                  />
-                  <StarRating rating={editRating} setRating={setEditRating} />
-                  <button type="submit">Save</button>
-                  <button
-                    type="button"
-                    onClick={() => setEditingReviewId(null)}
+      <div className="container">
+        <div className="row justify-content-center gap-3">
+          {reviews.map((r) => {
+            const userId = currentUser?._id || currentUser?.id;
+            const isAuthor =
+              userId &&
+              r.author?._id &&
+              String(userId) === String(r.author._id);
+            const isAdmin = currentUser?.role?.toLowerCase() === "admin";
+            return (
+              <div
+                key={r._id}
+                className="form-control"
+                style={{
+                  border: "2px solid #ccc",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  textAlign: "center",
+                  width: "400px",
+                  height: "220px",
+                  paddingTop: "20px",
+                }}
+              >
+                {editingReviewId === r._id ? (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleUpdate(r._id);
+                    }}
                   >
-                    Cancel
-                  </button>
-                </form>
-              ) : (
-                <>
-                  <div>{r.body}</div>
-                  <small>⭐ {r.rating}</small>
-                  <br />
-                </>
-              )}
-              <small>By: {r.author?.username}</small>
-              {(isAuthor || isAdmin) && !isDeleting && !editingReviewId && (
-                <div style={{ marginTop: "10px" }}>
-                  <button onClick={() => handleEdit(r)}>Edit</button>
-                  <button onClick={() => confirmDelete(r._id)}>Delete</button>
+                    <textarea
+                      className="form-control"
+                      style={{
+                        margin: "auto",
+                        textAlign: "center",
+                        width: "350px",
+                        height: "85px",
+                        marginTop: "7px",
+                      }}
+                      value={editBody}
+                      onChange={(e) => setEditBody(e.target.value)}
+                    />
+                    <StarRating rating={editRating} setRating={setEditRating} />
+                    <button className="btn2 mx-1" type="submit">
+                      Save
+                    </button>
+                    <button
+                      className="btn2 mx-1"
+                      style={{ width: "70px" }}
+                      type="button"
+                      onClick={() => setEditingReviewId(null)}
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                ) : (
+                  <>
+                    <div>{r.body}</div>
+                    <small>⭐ {r.rating}</small>
+                    <br />
+                  </>
+                )}
+                <div style={{ marginTop: "7px" }}>
+                  <small>By: {r.author?.username}</small>
                 </div>
-              )}
-              {isDeleting && deletingReview === r._id && (
-                <ConfirmationBox
-                  question="Are you sure you want to delete this review?"
-                  toggleYes={() => toggleDeleteYes(r._id)}
-                  toggleCancel={toggleDeleteCancel}
-                />
-              )}
-            </div>
-          );
-        })}
+                {(isAuthor || isAdmin) && !isDeleting && !editingReviewId && (
+                  <div style={{ marginTop: "10px" }}>
+                    <button className="btn2 mx-1" onClick={() => handleEdit(r)}>
+                      Edit
+                    </button>
+                    <button
+                      className="btn2 mx-1"
+                      style={{ width: "70px" }}
+                      onClick={() => confirmDelete(r._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+                {isDeleting && deletingReview === r._id && (
+                  <ConfirmationBox
+                    question="Are you sure you want to delete this review?"
+                    toggleYes={() => toggleDeleteYes(r._id)}
+                    toggleCancel={toggleDeleteCancel}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div style={{ marginTop: "20px" }}>
-        <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+      <div style={{ marginTop: "20px", marginBottom: "15px" }}>
+        <button
+          className="btn2"
+          disabled={page === 1 || editingReviewId || deletingReview}
+          onClick={() => setPage((p) => p - 1)}
+        >
           &#8592;
         </button>
         <span style={{ margin: "0 10px" }}>
           Page {page} of {totalPages}
         </span>
         <button
-          disabled={page === totalPages}
+          className="btn2"
+          disabled={page === totalPages || editingReviewId || deletingReview}
           onClick={() => setPage((p) => p + 1)}
         >
           &#8594;
