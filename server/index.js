@@ -24,14 +24,13 @@ const {handleUserErrors} = require("./middleware.js"); // In order to
 // have one central middleware to validate everything related to the users
 // including registration or editting profile.
 
-mongoose.connect('mongodb://127.0.0.1:27017/pejman-mern-wonderland')
-    .then(() => {
-        console.log("MONGODB CONNECTION OPEN!");
-    })
-    .catch(err => {
-        console.log("MONGODB CONNECTION ERROR!");
-        console.log(err);
-    })
+mongoose.connect(process.env.DB_URL)
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch(err => console.error(err));
+
+mongoose.connection.once("open", () => {
+    console.log("Connected to database:", mongoose.connection.name);
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');

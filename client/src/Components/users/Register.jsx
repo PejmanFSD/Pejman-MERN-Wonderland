@@ -258,7 +258,7 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
                     marginTop: "5px",
                     textAlign: "center",
                     width: "80px",
-                    height: "25px",
+                    height: "30px",
                   }}
                 >
                   <option value="Player" style={{ fontSize: "13px" }}>
@@ -270,6 +270,7 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
                 </select>
                 {role === "Admin" && (
                   <input
+                  style={{ textAlign: "center", borderRadius: "8px", marginLeft: "10px", height: "30px"}}
                     type="password"
                     placeholder="Enter Admin Secret"
                     value={adminSecret}

@@ -149,17 +149,17 @@ export default function Users({
           >
             <thead>
               <tr style={{ height: "55px", backgroundColor: "var(--primary)" }}>
-                <th style={{ width: "17%", border: "1px solid black" }}>
+                <th style={{ width: "15%", border: "1px solid black" }}>
                   Username
                 </th>
                 <th style={{ width: "9%", border: "1px solid black" }}>Role</th>
                 <th style={{ width: "12%", border: "1px solid black" }}>
                   Number of Stars
                 </th>
-                <th style={{ width: "46%", border: "1px solid black" }}>
+                <th style={{ width: "44%", border: "1px solid black" }}>
                   Message
                 </th>
-                <th style={{ width: "16%", border: "1px solid black" }}>
+                <th style={{ width: "20%", border: "1px solid black" }}>
                   Actions
                 </th>
               </tr>
