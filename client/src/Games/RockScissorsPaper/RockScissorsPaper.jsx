@@ -174,7 +174,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Rock - Scissors - Paper
               </button>
             )}
@@ -185,7 +185,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
               showImages &&
               !isTogglingReset && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleLevel()}
                 >{`Switch to ${
                   extremelySuperDifficultMode
@@ -200,7 +200,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
               (normalMode || extremelySuperDifficultMode) &&
               !isTogglingLevel &&
               score !== 0 && (
-                <button className="btn1" onClick={() => toggleReset()}>
+                <button className="btn3" onClick={() => toggleReset()}>
                   Reset the Game
                 </button>
               )}
@@ -208,7 +208,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               showImages &&
               !isTogglingLevel && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

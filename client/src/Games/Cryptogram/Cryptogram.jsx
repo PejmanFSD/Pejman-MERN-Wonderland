@@ -179,7 +179,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Cryptogram
               </button>
             )}
@@ -192,7 +192,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               isOneChar &&
               !isAlreadyExist && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleReset()}
                   disabled={isLoading}
                 >
@@ -205,7 +205,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
               !isInputEmpty &&
               isOneChar &&
               !isAlreadyExist && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

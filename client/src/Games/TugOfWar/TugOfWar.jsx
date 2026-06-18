@@ -2119,7 +2119,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button className="btn1" onClick={handleAboutPage}>
+                <button className="btn3" onClick={handleAboutPage}>
                   About Tug of War
                 </button>
               )}
@@ -2130,7 +2130,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               isGameStarted && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   style={{
                     display: "inline",
                   }}
@@ -2146,7 +2146,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               (easyMode || normalMode) &&
               isGameStarted && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={toggleReset}
                   disabled={dice === 0}
                 >
@@ -2159,7 +2159,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               isGameStarted && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleHomePage()}
                   disabled={dice === 0}
                 >

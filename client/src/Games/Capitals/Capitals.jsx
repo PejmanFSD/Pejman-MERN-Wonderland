@@ -212,7 +212,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Capitals
               </button>
             )}
@@ -223,7 +223,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isInputEmpty && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleLevel()}
                 >{`Switch to ${
                   easyMode ? "Normal Mode" : "Easy Mode"
@@ -238,7 +238,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               !isInputEmpty &&
               isWin === "" &&
               seconds > 0 && (
-                <button className="btn1" onClick={() => toggleReset()}>
+                <button className="btn3" onClick={() => toggleReset()}>
                   Reset the game
                 </button>
               )}
@@ -246,7 +246,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               !isInputEmpty && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

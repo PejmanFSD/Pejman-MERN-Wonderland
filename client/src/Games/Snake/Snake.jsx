@@ -348,7 +348,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button className="btn1" onClick={handleAboutPage}>
+                <button className="btn3" onClick={handleAboutPage}>
                   About Snake
                 </button>
               )}
@@ -360,7 +360,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button className="btn1" onClick={() => toggleLevel()}>
+                <button className="btn3" onClick={() => toggleLevel()}>
                   {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
                 </button>
               )}
@@ -372,7 +372,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               (easyMode || normalMode) &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
@@ -381,7 +381,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

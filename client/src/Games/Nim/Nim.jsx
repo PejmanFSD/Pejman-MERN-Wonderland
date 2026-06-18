@@ -149,7 +149,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && !isGameStarted && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Nim
               </button>
             )}
@@ -159,12 +159,12 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               isWin === "" &&
               !isTogglingReset &&
               !isTogglingHomePage && (
-                <button className="btn1" onClick={() => toggleReset()}>
+                <button className="btn3" onClick={() => toggleReset()}>
                   Reset the Game
                 </button>
               )}
             {!isTogglingReset && !isTogglingHomePage && (
-              <button className="btn1" onClick={() => toggleHomePage()}>
+              <button className="btn3" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}

@@ -314,7 +314,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Memory Cards
               </button>
             )}
@@ -324,12 +324,12 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               (easyMode || normalMode || hardMode) &&
               seconds > 0 && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
             {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn1" onClick={() => toggleHomePage()}>
+              <button className="btn3" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}

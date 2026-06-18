@@ -1588,7 +1588,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Bingo
               </button>
             )}
@@ -1597,12 +1597,12 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               userColor !== "" &&
               !isTogglingHomePage && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
             {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn1" onClick={() => toggleHomePage()}>
+              <button className="btn3" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}

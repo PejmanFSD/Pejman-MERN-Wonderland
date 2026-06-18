@@ -639,7 +639,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button className="btn1" onClick={handleAboutPage}>
+                <button className="btn3" onClick={handleAboutPage}>
                   About Pidoku
                 </button>
               )}
@@ -649,7 +649,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               isGameStarted && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   style={{
                     display: "inline",
                   }}
@@ -663,7 +663,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               (easyMode || normalMode) &&
               isGameStarted && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
@@ -671,7 +671,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

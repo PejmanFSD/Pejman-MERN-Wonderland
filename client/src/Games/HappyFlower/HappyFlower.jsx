@@ -164,7 +164,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About Happy Flower
               </button>
             )}
@@ -174,7 +174,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleLevel()}
                 >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
               )}
@@ -183,12 +183,12 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage &&
               !isTogglingLevel && (
-                <button className="btn1" onClick={() => toggleReset()}>
+                <button className="btn3" onClick={() => toggleReset()}>
                   Reset the Game
                 </button>
               )}
             {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
-              <button className="btn1" onClick={() => toggleHomePage()}>
+              <button className="btn3" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}

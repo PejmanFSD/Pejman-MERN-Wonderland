@@ -414,7 +414,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About BlackJack
               </button>
             )}
@@ -425,7 +425,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   style={{
                     display: "inline",
                   }}
@@ -438,7 +438,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
@@ -446,7 +446,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

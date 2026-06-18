@@ -209,7 +209,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
               <button
-                className="btn1"
+                className="btn3"
                 onClick={handleAboutPage}
                 disabled={
                   isFirstDigitZero ||
@@ -232,7 +232,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleLevel()}
                   disabled={
                     isFirstDigitZero ||
@@ -255,7 +255,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleReset()}
                   disabled={
                     isTogglingLevel ||
@@ -277,7 +277,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingHomePage && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   onClick={() => toggleHomePage()}
                   disabled={
                     isFirstDigitZero ||

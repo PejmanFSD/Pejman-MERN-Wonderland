@@ -895,7 +895,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
           </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>
+              <button className="btn3" onClick={handleAboutPage}>
                 About X-O
               </button>
             )}
@@ -906,7 +906,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel && (
                 <button
-                  className="btn1"
+                  className="btn3"
                   style={{
                     display: "inline",
                   }}
@@ -920,12 +920,12 @@ export default function XO({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               (easyMode || normalMode) &&
               userSign !== "" && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
             {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-              <button className="btn1" onClick={() => toggleHomePage()}>
+              <button className="btn3" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}

@@ -449,7 +449,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               !isGameStarted && (
-                <button className="btn1" onClick={handleAboutPage}>
+                <button className="btn3" onClick={handleAboutPage}>
                   About Maze
                 </button>
               )}
@@ -458,7 +458,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button className="btn1" onClick={() => toggleLevel()}>
+                <button className="btn3" onClick={() => toggleLevel()}>
                   {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
                 </button>
               )}
@@ -468,7 +468,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
@@ -476,7 +476,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
               !isTogglingReset &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

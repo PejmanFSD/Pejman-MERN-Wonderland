@@ -1463,7 +1463,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button className="btn1" onClick={handleAboutPage}>
+                <button className="btn3" onClick={handleAboutPage}>
                   About Reversi
                 </button>
               )}
@@ -1474,7 +1474,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" &&
               !isIdenticalColor && (
-                <button className="btn1" onClick={() => toggleLevel()}>
+                <button className="btn3" onClick={() => toggleLevel()}>
                   {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
                 </button>
               )}
@@ -1485,7 +1485,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               (easyMode || normalMode) &&
               !isIdenticalColor && (
-                <button className="btn1" onClick={toggleReset}>
+                <button className="btn3" onClick={toggleReset}>
                   Reset the Game
                 </button>
               )}
@@ -1495,7 +1495,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" &&
               !isIdenticalColor && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}

@@ -214,10 +214,14 @@ export default function Counter({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutCounter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2 className="fasterOne" style={{fontSize: "45px"}}>Counter</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Counter
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn1" onClick={handleAboutPage}>About Counter</button>
+              <button className="btn3" onClick={handleAboutPage}>
+                About Counter
+              </button>
             )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
@@ -225,7 +229,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" && (
                 <button
-                className="btn1"
+                  className="btn3"
                   style={{
                     display: "inline",
                   }}
@@ -238,13 +242,15 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button className="btn1" onClick={toggleReset}>Reset the Game</button>
+                <button className="btn3" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button className="btn1" onClick={() => toggleHomePage()}>
+                <button className="btn3" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -283,16 +289,29 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
-              <div className="four-buttons-container" style={{marginTop: "15px"}}>
-                <button className="btn1 mx-1 my-2" onClick={handleEasyMode}>Easy Mode</button>
-                <button className="btn1 mx-1 my-2" onClick={handleNormalMode}>Normal Mode</button>
+              <div
+                className="four-buttons-container"
+                style={{ marginTop: "15px" }}
+              >
+                <button className="btn1 mx-1 my-2" onClick={handleEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1 mx-1 my-2" onClick={handleNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button className="btn1" onClick={handleStart} style={{marginTop: "10px"}}>Start the Game</button>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "10px" }}
+              >
+                Start the Game
+              </button>
             )}
           <div>
             {isGameStarted && isSlideShowStarted && countdown > 0 && (
@@ -318,27 +337,27 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 />
               )}
           </div>
-<div style={{marginTop: "20px"}}>
-          {isGameStarted &&
-            !isSlideShowStarted &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage &&
-            quizArray.map((i, idx) => (
-              <div style={{ display: "inline" }}>
-                <img
-                  src={i.image}
-                  style={{
-                    width: "60px",
-                    border: "1px solid black",
-                    margin: "4px",
-                  }}
-                  alt=""
-                  key={idx}
-                />
-              </div>
-            ))}
-</div>
+          <div style={{ marginTop: "20px" }}>
+            {isGameStarted &&
+              !isSlideShowStarted &&
+              !isTogglingReset &&
+              !isTogglingLevel &&
+              !isTogglingHomePage &&
+              quizArray.map((i, idx) => (
+                <div style={{ display: "inline" }}>
+                  <img
+                    src={i.image}
+                    style={{
+                      width: "60px",
+                      border: "1px solid black",
+                      margin: "4px",
+                    }}
+                    alt=""
+                    key={idx}
+                  />
+                </div>
+              ))}
+          </div>
           {isGameStarted &&
             !isSlideShowStarted &&
             !isTogglingReset &&
@@ -346,14 +365,26 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <form onSubmit={handleSubmit}>
                 <div className="my-3">
-                  <label htmlFor="question1" style={{marginRight: "7px"}}>{`How many ${quizArray[0].name} did you see? `}</label>
+                  <label
+                    htmlFor="question1"
+                    style={{ marginRight: "7px" }}
+                  >{`How many ${quizArray[0].name} did you see? `}</label>
                   <select
                     onChange={handleQuestion1}
                     name="question1"
                     id="question1"
-                    style={{borderRadius: "8px", textAlign: "center", width: "50px", height: "25px"}}
+                    style={{
+                      borderRadius: "8px",
+                      textAlign: "center",
+                      width: "50px",
+                      height: "25px",
+                    }}
                   >
-                    <option value={userAnswers.answer1} disabled selected></option>
+                    <option
+                      value={userAnswers.answer1}
+                      disabled
+                      selected
+                    ></option>
                     {[1, 2, 3].map((i, idx) => (
                       <option disabled={isResult} key={idx}>
                         {i}
@@ -362,14 +393,26 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                   </select>
                 </div>
                 <div className="my-3">
-                  <label htmlFor="question2" style={{marginRight: "7px"}}>{`How many ${quizArray[1].name} did you see? `}</label>
+                  <label
+                    htmlFor="question2"
+                    style={{ marginRight: "7px" }}
+                  >{`How many ${quizArray[1].name} did you see? `}</label>
                   <select
                     onChange={handleQuestion2}
                     name="question2"
                     id="question2"
-                    style={{borderRadius: "8px", textAlign: "center", width: "50px", height: "25px"}}
+                    style={{
+                      borderRadius: "8px",
+                      textAlign: "center",
+                      width: "50px",
+                      height: "25px",
+                    }}
                   >
-                    <option value={userAnswers.answer2} disabled selected></option>
+                    <option
+                      value={userAnswers.answer2}
+                      disabled
+                      selected
+                    ></option>
                     {[1, 2, 3].map((i, idx) => (
                       <option disabled={isResult} key={idx}>
                         {i}
@@ -378,14 +421,26 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                   </select>
                 </div>
                 <div className="my-3">
-                  <label htmlFor="question3" style={{marginRight: "7px"}}>{`How many ${quizArray[2].name} did you see? `}</label>
+                  <label
+                    htmlFor="question3"
+                    style={{ marginRight: "7px" }}
+                  >{`How many ${quizArray[2].name} did you see? `}</label>
                   <select
                     onChange={handleQuestion3}
                     name="question3"
                     id="question3"
-                    style={{borderRadius: "8px", textAlign: "center", width: "50px", height: "25px"}}
+                    style={{
+                      borderRadius: "8px",
+                      textAlign: "center",
+                      width: "50px",
+                      height: "25px",
+                    }}
                   >
-                    <option value={userAnswers.answer3} disabled selected></option>
+                    <option
+                      value={userAnswers.answer3}
+                      disabled
+                      selected
+                    ></option>
                     {[1, 2, 3].map((i, idx) => (
                       <option disabled={isResult} key={idx}>
                         {i}
@@ -393,46 +448,64 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     ))}
                   </select>
                 </div>
-                {!isResult && <button className="btn1" style={{marginTop: "10px"}}>Submit</button>}
+                {!isResult && (
+                  <button className="btn1" style={{ marginTop: "10px" }}>
+                    Submit
+                  </button>
+                )}
               </form>
             )}
           {isResult &&
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div style={{marginTop: "30px"}}>
+              <div style={{ marginTop: "30px" }}>
                 <div className="my-1">
                   <strong>
-                  {parseInt(userAnswers.answer1) === quizArray[0].repetition
-                    ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed correctly! ✔`
-                    : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed wrong! ✖`}
-                    </strong>
+                    {parseInt(userAnswers.answer1) === quizArray[0].repetition
+                      ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed correctly! ✔`
+                      : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed wrong! ✖`}
+                  </strong>
                 </div>
                 <div className="my-1">
                   <strong>
-                  {parseInt(userAnswers.answer2) === quizArray[1].repetition
-                    ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed correctly! ✔`
-                    : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed wrong! ✖`}
-                    </strong>
+                    {parseInt(userAnswers.answer2) === quizArray[1].repetition
+                      ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed correctly! ✔`
+                      : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed wrong! ✖`}
+                  </strong>
                 </div>
                 <div className="my-1">
                   <strong>
-                  {parseInt(userAnswers.answer3) === quizArray[2].repetition
-                    ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed correctly! ✔`
-                    : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed wrong! ✖`}
-                    </strong>
+                    {parseInt(userAnswers.answer3) === quizArray[2].repetition
+                      ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed correctly! ✔`
+                      : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed wrong! ✖`}
+                  </strong>
                 </div>
-                <h2 className="fasterOne" style={{fontSize: "40px"}}>{finalMessage}</h2>
+                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                  {finalMessage}
+                </h2>
                 {finalMessage === "You Lose!" && (
                   <div>
                     <div>Try Again?</div>
-                    <button className="btn2" onClick={handlePlayAgain} style={{marginTop: "10px"}}>Ok</button>
+                    <button
+                      className="btn2"
+                      onClick={handlePlayAgain}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Ok
+                    </button>
                   </div>
                 )}
                 {finalMessage && finalMessage === "You Win!" && (
                   <div>
                     <div>Play Again?</div>
-                    <button className="btn2" onClick={handlePlayAgain} style={{marginTop: "10px"}}>Ok</button>
+                    <button
+                      className="btn2"
+                      onClick={handlePlayAgain}
+                      style={{ marginTop: "10px" }}
+                    >
+                      Ok
+                    </button>
                   </div>
                 )}
               </div>
@@ -440,7 +513,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
           {!isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&
-            isGameStarted && !isSlideShowStarted && (
+            isGameStarted &&
+            !isSlideShowStarted && (
               <button className="btn1 my-3" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
@@ -451,7 +525,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage &&
             isGameStarted &&
-            showReviews && !isSlideShowStarted && (
+            showReviews &&
+            !isSlideShowStarted && (
               <ReviewSection game="Counter" currentUser={currentUser} />
             )}
         </div>

@@ -79,10 +79,10 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{fontSize: "45px"}}>Bird Hunter</h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isGameStarted && (
-              <button className="btn1" onClick={handleAboutPage}>About Bird Hunter</button>
+              <button className="btn3" onClick={handleAboutPage}>About Bird Hunter</button>
             )}
             {!isTogglingHomePage && (
-              <button className="btn1" onClick={() => toggleHomePage()}>
+              <button className="btn3" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}
