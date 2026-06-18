@@ -890,10 +890,14 @@ export default function XO({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutXO setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>X-O</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            X-O
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About X-O</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About X-O
+              </button>
             )}
             {isGameStarted &&
               isWin === "" &&
@@ -902,6 +906,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel && (
                 <button
+                  className="btn1"
                   style={{
                     display: "inline",
                   }}
@@ -915,10 +920,12 @@ export default function XO({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               (easyMode || normalMode) &&
               userSign !== "" && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-              <button onClick={() => toggleHomePage()}>
+              <button className="btn1" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}
@@ -958,8 +965,12 @@ export default function XO({ updateTotalPoint, currentUser }) {
               className="four-buttons-container"
               style={{ marginTop: "15px" }}
             >
-              <button onClick={handleEasyMode}>Easy</button>
-              <button onClick={handleNormalMode}>Normal</button>
+              <button className="btn1" onClick={handleEasyMode}>
+                Easy
+              </button>
+              <button className="btn1" onClick={handleNormalMode}>
+                Normal
+              </button>
             </div>
           )}
           {userSign === "" &&
@@ -971,8 +982,12 @@ export default function XO({ updateTotalPoint, currentUser }) {
                   className="four-buttons-container"
                   style={{ marginTop: "10px" }}
                 >
-                  <button onClick={userX}>X</button>
-                  <button onClick={userO}>O</button>
+                  <button className="btn2" onClick={userX}>
+                    X
+                  </button>
+                  <button className="btn2" onClick={userO}>
+                    O
+                  </button>
                 </div>
               </div>
             )}
@@ -980,7 +995,11 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isGameStarted &&
             isWin === "" &&
             !isTogglingHomePage && (
-              <button onClick={handleStart} style={{ marginTop: "10px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "10px" }}
+              >
                 Start the Game
               </button>
             )}
@@ -996,7 +1015,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                   marginTop: "10px",
                 }}
               >
-                Your Point: {userPoint}
+                Your Point: <strong>{userPoint}</strong>
               </div>
             )}
           {isWin === "" &&
@@ -1011,32 +1030,45 @@ export default function XO({ updateTotalPoint, currentUser }) {
                   marginTop: "5px",
                 }}
               >
-                Pejman's Point: {pejmanPoint}
+                Pejman's Point: <strong>{pejmanPoint}</strong>
               </div>
             )}
           {isWin === true && !isTogglingHomePage && (
             <div>
-              <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-              <h2>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
+              <h3>{`Your total point: ${userPoint}`}</h3>
+              <h3>{`Pejman's total point: ${pejmanPoint}`}</h3>
+              <h2
+                className="fasterOne"
+                style={{ fontSize: "40px" }}
+              >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
               <div>Play Again?</div>
-              <button onClick={handleReset} style={{ marginTop: "10px" }}>
+              <button
+                className="btn2"
+                onClick={handleReset}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
           )}
           {isWin === false && !isTogglingHomePage && (
             <div>
-              <h3>{`Your total point: ${userPoint} - Pejman's total point: ${pejmanPoint}`}</h3>
-              <h2>Pejman Wins!</h2>
+              <h3>{`Your total point: ${userPoint}`}</h3>
+              <h3>{`Pejman's total point: ${pejmanPoint}`}</h3>
+              <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                Pejman Wins!
+              </h2>
               <div>Try Again?</div>
-              <button onClick={handleReset}>Ok</button>
+              <button className="btn2" onClick={handleReset}>
+                Ok
+              </button>
             </div>
           )}
           <br />
           {isGameStarted &&
             new Array(25).fill(null).map((square, idx) =>
               (idx + 1) % 5 !== 0 ? (
-                <div style={{ display: "inline", margin: "2px" }}>
+                <div style={{ display: "inline" }}>
                   {
                     <Square
                       imgSrc={squares[idx].imgSrc}
@@ -1060,7 +1092,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                   }
                 </div>
               ) : (
-                <div style={{ display: "inline", margin: "2px" }}>
+                <div style={{ display: "inline" }}>
                   {
                     <Square
                       imgSrc={squares[idx].imgSrc}
@@ -1097,7 +1129,11 @@ export default function XO({ updateTotalPoint, currentUser }) {
                     ? "start the game"
                     : "make his move"
                 }`}</div>
-                <button onClick={allowPejman} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn2"
+                  onClick={allowPejman}
+                  style={{ marginTop: "10px" }}
+                >
                   Ok
                 </button>
               </div>
@@ -1105,6 +1141,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
               <div>
                 <div>The game is finished. Let's see who is the winner.</div>
                 <button
+                  className="btn2"
                   onClick={handleFinalPlayerPoints}
                   style={{ marginTop: "10px" }}
                 >
@@ -1121,7 +1158,9 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 <div>The game is finished. Let's see who is the winner.</div>
-                <button onClick={handleFinalPlayerPoints}>Ok</button>
+                <button className="btn2" onClick={handleFinalPlayerPoints}>
+                  Ok
+                </button>
               </div>
             )}
           {userPoint > 0 &&
@@ -1162,7 +1201,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                               filledSquaresByUser[i + 2],
                             ]}
                             color="green"
-                            style={{ color: "lightblue" }}
+                            // style={{ color: "lightblue" }}
                           />
                         </div>
                       </div>
@@ -1209,7 +1248,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
                               filledSquaresByPejman[i + 2],
                             ]}
                             color="brown"
-                            style={{ color: "lightblue" }}
+                            // style={{ color: "lightblue" }}
                           />
                         </div>
                       </div>
@@ -1222,7 +1261,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button className="btn1 my-2" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}
@@ -1235,6 +1274,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
             showReviews && (
               <ReviewSection game="XO" currentUser={currentUser} />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>

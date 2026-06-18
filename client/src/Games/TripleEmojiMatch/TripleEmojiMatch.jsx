@@ -249,10 +249,12 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutTripleEmojiMatch setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Triple Emoji Match</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Triple Emoji Match
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>
+              <button className="btn1" onClick={handleAboutPage}>
                 About Triple Emoji Match
               </button>
             )}
@@ -262,6 +264,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               isWin === "" && (
                 <button
+                  className="btn1"
                   style={{
                     display: "inline",
                   }}
@@ -274,13 +277,15 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               isWin === "" && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -323,8 +328,12 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 className="four-buttons-container"
                 style={{ marginTop: "15px" }}
               >
-                <button onClick={runEasyMode}>Easy Mode</button>
-                <button onClick={runNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={runEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={runNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {isTimerRunning && isWin === "" && normalMode && (
@@ -338,7 +347,11 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               isWin === "" && (
-                <button onClick={add30Seconds} disabled={!addTimeChanse}>
+                <button
+                  className="btn1"
+                  onClick={add30Seconds}
+                  disabled={!addTimeChanse}
+                >
                   add 30 seconds
                 </button>
               )}
@@ -348,7 +361,11 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               isWin === "" &&
               !tripleMatch && (
-                <button onClick={showPair1} disabled={!pair1Chance}>
+                <button
+                  className="btn1"
+                  onClick={showPair1}
+                  disabled={!pair1Chance}
+                >
                   Show me a triple match
                 </button>
               )}
@@ -358,25 +375,41 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               isWin === "" &&
               !tripleMatch && (
-                <button onClick={showPair2} disabled={!pair2Chance}>
+                <button
+                  className="btn1"
+                  onClick={showPair2}
+                  disabled={!pair2Chance}
+                >
                   Show me a triple match
                 </button>
               )}
           </div>
           {isWin === false && (
             <div>
-              <h2>{seconds < 1 && normalMode ? "Time's Up!" : "You Lose!"}</h2>
+              <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                {seconds < 1 && normalMode ? "Time's Up!" : "You Lose!"}
+              </h2>
               <div>Try Again?</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "15px" }}>
+              <button
+                className="btn2"
+                onClick={handlePlayAgain}
+                style={{ marginTop: "15px" }}
+              >
                 Ok
               </button>
             </div>
           )}
           {isWin === true && (
             <div>
-              <h2>You Win!</h2>
+              <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                You Win!
+              </h2>
               <div>Play Again?</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "15px" }}>
+              <button
+                className="btn2"
+                onClick={handlePlayAgain}
+                style={{ marginTop: "15px" }}
+              >
                 Ok
               </button>
             </div>
@@ -431,7 +464,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                             top: "7px",
                             width: "60px",
                             margin: "3px",
-                            border: "1px solid red",
+                            border: "2px solid black",
                           }}
                           alt=""
                           key={i}
@@ -440,6 +473,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                   )}
                 </div>
                 <button
+                  className="btn2 my-2"
                   onClick={handleTripleMatch}
                   style={{ position: "relative", top: "7px" }}
                 >
@@ -485,6 +519,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted && (
               <button
+                className="btn1 my-3"
                 onClick={handleReviewSection}
                 style={{ position: "relative", top: "25px" }}
               >
@@ -503,6 +538,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 currentUser={currentUser}
               />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>

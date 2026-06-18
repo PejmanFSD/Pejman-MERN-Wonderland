@@ -12,13 +12,13 @@ export default function Square({
   setAvailableSquares,
   isTogglingReset,
   isTogglingHomePage,
-  isTogglingLevel
+  isTogglingLevel,
 }) {
   const handleClickSquare = () => {
     setSquares((currSquares) =>
       currSquares.map((s) =>
-        s.id === idx ? { ...s, imgSrc: userSign, owner: "User" } : s
-      )
+        s.id === idx ? { ...s, imgSrc: userSign, owner: "User" } : s,
+      ),
     );
     setAvailableSquares(squares.filter((s) => s.owner === ""));
     setIsUserTurn(false);
@@ -29,6 +29,7 @@ export default function Square({
       width={isUserTurn && availableSquares.length !== 0 ? "50px" : "10px"}
       alt="Square"
       style={{
+        margin: "2px",
         display: "inline",
         pointerEvents:
           (!isUserTurn ||

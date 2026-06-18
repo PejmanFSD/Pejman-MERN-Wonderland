@@ -2111,13 +2111,17 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutTugOfWar setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Tug of War</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Tug of War
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button onClick={handleAboutPage}>About Tug of War</button>
+                <button className="btn1" onClick={handleAboutPage}>
+                  About Tug of War
+                </button>
               )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
@@ -2126,6 +2130,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               isGameStarted && (
                 <button
+                  className="btn1"
                   style={{
                     display: "inline",
                   }}
@@ -2140,7 +2145,11 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               (easyMode || normalMode) &&
               isGameStarted && (
-                <button onClick={toggleReset} disabled={dice === 0}>
+                <button
+                  className="btn1"
+                  onClick={toggleReset}
+                  disabled={dice === 0}
+                >
                   Reset the Game
                 </button>
               )}
@@ -2149,7 +2158,11 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" &&
               isGameStarted && (
-                <button onClick={() => toggleHomePage()} disabled={dice === 0}>
+                <button
+                  className="btn1"
+                  onClick={() => toggleHomePage()}
+                  disabled={dice === 0}
+                >
                   Back to home page
                 </button>
               )}
@@ -2184,23 +2197,33 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               />
             </div>
           )}
-
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
             !isTogglingHomePage && (
               <div className="four-buttons-container">
-                <button onClick={handleEasyMode}>Easy Mode</button>
-                <button onClick={handleNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={handleEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={handleNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {finalMessage &&
             finalMessage === "You Win!" &&
             !isTogglingHomePage && (
               <div>
-                <h3>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
+                <h3
+                  className="fasterOne"
+                  style={{ fontSize: "40px" }}
+                >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
                 <div>Play Again?</div>
-                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn1"
+                  onClick={handlePlayAgain}
+                  style={{ marginTop: "10px" }}
+                >
                   Ok
                 </button>
               </div>
@@ -2209,9 +2232,15 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             finalMessage === "Pejman Wins!" &&
             !isTogglingHomePage && (
               <div>
-                <h3>Pejman Wins!</h3>
+                <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                  Pejman Wins!
+                </h3>
                 <div>Try Again?</div>
-                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn1"
+                  onClick={handlePlayAgain}
+                  style={{ marginTop: "10px" }}
+                >
                   Ok
                 </button>
               </div>
@@ -2221,12 +2250,20 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div style={{ margin: "15px" }}>
-                <div style={{ color: "blue", display: "inline" }}>
-                  <strong>{`Your Point: ${userScore}`}</strong>
-                </div>
-                <div style={{ color: "red", display: "inline" }}>
-                  <strong>{`Pejman's Point: ${pejmanScore}`}</strong>
+              <div className="container">
+                <div className="row">
+                  <div
+                    className="col-md-2 offset-md-3"
+                    style={{ color: "blue" }}
+                  >
+                    <strong>{`Your Point: ${userScore}`}</strong>
+                  </div>
+                  <div
+                    className="col-md-2 offset-md-2"
+                    style={{ color: "red" }}
+                  >
+                    <strong>{`Pejman's Point: ${pejmanScore}`}</strong>
+                  </div>
                 </div>
               </div>
             )}
@@ -2235,12 +2272,20 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div style={{ margin: "15px" }}>
-                <div style={{ color: "blue", display: "inline" }}>
-                  <strong>{`Pejman's Point: ${pejmanScore}`}</strong>
-                </div>
-                <div style={{ color: "red", display: "inline" }}>
-                  <strong>{`Your Point: ${userScore}`}</strong>
+              <div className="container">
+                <div className="row">
+                  <div
+                    className="col-md-2 offset-md-3"
+                    style={{ color: "blue" }}
+                  >
+                    <strong>{`Pejman's Point: ${pejmanScore}`}</strong>
+                  </div>
+                  <div
+                    className="col-md-2 offset-md-2"
+                    style={{ color: "red" }}
+                  >
+                    <strong>{`Your Point: ${userScore}`}</strong>
+                  </div>
                 </div>
               </div>
             )}
@@ -2306,15 +2351,14 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
                   name="userColor"
                   id="userColor"
                   style={{
+                    borderRadius: "8px",
                     textAlign: "center",
                     width: "90px",
-                    height: "25px",
+                    height: "30px",
                     marginTop: "10px",
                   }}
                 >
-                  <option value={userColor} disabled selected>
-                    🔽🔽🔽
-                  </option>
+                  <option value={userColor} disabled selected></option>
                   {["Red", "Blue"].map((c, i) => (
                     <option key={i}>{c}</option>
                   ))}
@@ -2327,7 +2371,11 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart} style={{ marginTop: "10px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "10px" }}
+              >
                 Start the game
               </button>
             )}
@@ -2339,6 +2387,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <button
+                className="btn1"
                 style={{ position: "relative", top: "15px" }}
                 onClick={rollDice}
                 style={{ marginTop: "30px" }}
@@ -2356,7 +2405,11 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div style={{ position: "relative", top: "15px" }}>
                 <div>Allow Pejman to roll the dice</div>
-                <button onClick={rollDice} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn2"
+                  onClick={rollDice}
+                  style={{ marginTop: "10px" }}
+                >
                   Ok
                 </button>
               </div>
@@ -2399,6 +2452,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <button
+                className="btn1 my-2"
                 onClick={userAct}
                 style={{ position: "relative", top: "20px" }}
               >
@@ -2417,6 +2471,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
               <div style={{ position: "relative", top: "20px" }}>
                 <div>Allow Pejman to make his move</div>
                 <button
+                  className="btn1"
                   onClick={pejmanAct}
                   style={{ position: "relative", top: "5px", marginTop: "5px" }}
                 >
@@ -2430,6 +2485,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted && (
               <button
+                className="btn1 my-3"
                 onClick={handleReviewSection}
                 style={{ position: "relative", top: "25px" }}
               >
@@ -2445,6 +2501,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             showReviews && (
               <ReviewSection game="TugOfWar" currentUser={currentUser} />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>
