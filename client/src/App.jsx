@@ -52,7 +52,7 @@ function App() {
   const [flash, setFlash] = useState(null);
   const [rankedUsers, setRankedUsers] = useState([]);
   const [totalPoint, setTotalPoint] = useState(0);
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState("Blue");
 
   const updateTotalPoint = async (i) => {
     const newTotal = totalPoint + i;
@@ -110,19 +110,19 @@ function App() {
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "Blue") {
-      root.style.setProperty("--primary", "#0d6efd");
-      root.style.setProperty("--secondary", "#6ea8fe");
-      root.style.setProperty("--background", "#f8f9fa");
+      root.style.setProperty("--primary", "#52bcfd");
+      root.style.setProperty("--secondary", "#3a6296");
+      root.style.setProperty("--background", "#e2fbff");
     }
     if (theme === "Red") {
-      root.style.setProperty("--primary", "#dc3545");
-      root.style.setProperty("--secondary", "#f199a1");
-      root.style.setProperty("--background", "#fff5f5");
+      root.style.setProperty("--primary", "#ff8989");
+      root.style.setProperty("--secondary", "#c34751");
+      root.style.setProperty("--background", "#ffeaea");
     }
     if (theme === "Green") {
-      root.style.setProperty("--primary", "#198754");
-      root.style.setProperty("--secondary", "#75b798");
-      root.style.setProperty("--background", "#f0fff4");
+      root.style.setProperty("--primary", "#30e791");
+      root.style.setProperty("--secondary", "#317e5a");
+      root.style.setProperty("--background", "#dbffe5");
     }
   }, [theme]);
   return (

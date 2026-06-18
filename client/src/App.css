@@ -7,9 +7,9 @@
 }
 
 :root {
-  --primary: #0d6efd;
-  --secondary: #6ea8fe;
-  --background: #f8f9fa;
+  --primary: #52bcfd;
+  --secondary: #3a6296;
+  --background: #e2fbff;
   --text: #212529;
 }
 
@@ -20,6 +20,7 @@ table {
 }
 
 .btn1 {
+  background-color: var(--primary);
   border: 1px solid black;
   border-radius: 15px;
   height: 30px;
@@ -35,6 +36,7 @@ table {
 }
 
 .btn2 {
+  background-color: var(--primary);
   border: 1px solid black;
   border-radius: 25px;
   height: 30px;
@@ -45,6 +47,23 @@ table {
 }
 
 .btn2:hover {
+  transform: translateY(-2px);
+}
+
+.btn3 {
+  background-color: var(--secondary);
+  color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn3:hover {
   transform: translateY(-2px);
 }
 
