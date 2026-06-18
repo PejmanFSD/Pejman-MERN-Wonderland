@@ -159,13 +159,14 @@ export default function ReviewSection({ game, currentUser }) {
       <form onSubmit={handleSubmit}>
         <StarRating rating={newRating} setRating={setNewRating} />
         <textarea
-          style={{ marginTop: "10px" }}
+          // style={{ , marginTop: "10px" }}
           rows="5"
           cols="25"
           value={body}
           className="form-control"
           style={{
-            border: "2px solid #ccc",
+            backgroundColor: "var(--background)",
+            border: "2px solid var(--secondary)",
             borderRadius: "8px",
             margin: "auto",
             textAlign: "center",
@@ -202,7 +203,8 @@ export default function ReviewSection({ game, currentUser }) {
                 key={r._id}
                 className="form-control"
                 style={{
-                  border: "2px solid #ccc",
+                  backgroundColor: "var(--background)",
+                  border: "2px solid var(--secondary)",
                   padding: "10px",
                   borderRadius: "10px",
                   textAlign: "center",

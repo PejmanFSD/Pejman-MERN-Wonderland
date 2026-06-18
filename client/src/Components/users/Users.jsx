@@ -100,6 +100,8 @@ export default function Users({
               }}
               class="form-control"
               style={{
+                border: "1px solid black",
+                backgroundColor: "var(--background)",
                 height: "25px",
                 borderRadius: "5px",
                 textAlign: "center",
@@ -114,6 +116,8 @@ export default function Users({
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               style={{
+                border: "1px solid black",
+                backgroundColor: "var(--background)",
                 textAlign: "center",
                 width: "120px",
                 height: "25px",
@@ -144,7 +148,7 @@ export default function Users({
             style={{ border: "2px solid black" }}
           >
             <thead>
-              <tr style={{ height: "55px", backgroundColor: "#c8c8c8" }}>
+              <tr style={{ height: "55px", backgroundColor: "var(--primary)" }}>
                 <th style={{ width: "17%", border: "1px solid black" }}>
                   Username
                 </th>
@@ -164,7 +168,7 @@ export default function Users({
               {users.map((user) => (
                 <tr
                   key={user._id}
-                  style={{ height: "55px", backgroundColor: "#f7f7f7" }}
+                  style={{ height: "55px", backgroundColor: "var(--background)" }}
                 >
                   <td style={{ border: "1px solid black" }}>{user.username}</td>
                   <td style={{ border: "1px solid black" }}>

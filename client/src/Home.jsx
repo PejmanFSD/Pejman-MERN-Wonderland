@@ -282,7 +282,7 @@ export default function Home({
           }}
         >
           <thead style={{ height: "5px" }}>
-            <tr style={{ backgroundColor: "#c8c8c8" }}>
+            <tr style={{ backgroundColor: "var(--primary)" }}>
               <th
                 style={{
                   width: "5%",
@@ -323,7 +323,7 @@ export default function Home({
           </thead>
           <tbody>
             {rankedUsers.map((user, i) => (
-              <tr key={user._id} style={{ backgroundColor: "#f7f7f7" }}>
+              <tr key={user._id} style={{ backgroundColor: "var(--background)" }}>
                 <td style={{ fontSize: "13px", border: "1px solid black" }}>
                   {i + 1}
                 </td>

@@ -4,7 +4,7 @@ export default function AboutWonderland() {
       <div className="row justify-content-center">
         <div className="col-md-8">
           <div className="cause" style={{ fontSize: "15px" }}>
-            <div className="card">
+            <div className="card" style={{backgroundColor: "var(--background)"}}>
               <div className="card-body m-3">
                 <h2 className="eater">❤️ Pejman-MERN-Wonderland ❤️</h2>
                 Welcome to Pejman MERN Wonderland 🫡 <br />

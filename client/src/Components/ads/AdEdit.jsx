@@ -107,7 +107,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
             <h1 className="eater" style={{ fontSize: "40px" }}>
               Edit Ad
             </h1>
-            <form className="card p-4 shadow mt-3" onSubmit={handleSubmit}>
+            <form className="card p-4 shadow mt-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
               <div class="form-group" style={{ marginTop: "10px" }}>
                 <label>
                   <strong>Company name:</strong>
@@ -119,6 +119,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
                   required
                   class="form-control"
                   style={{
+                    border: "1px solid black",
                     margin: "auto",
                     textAlign: "center",
                     width: "250px",
@@ -138,6 +139,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
                     required
                     class="form-control"
                     style={{
+                      border: "1px solid black",
                       margin: "auto",
                       textAlign: "center",
                       width: "250px",
@@ -158,6 +160,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
                     ref={fileInputRef}
                     className="form-control form-control-sm"
                     style={{
+                      border: "1px solid black",
                       margin: "auto",
                       textAlign: "center",
                       width: "220px",

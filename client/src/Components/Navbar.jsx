@@ -100,8 +100,13 @@ export default function Navbar({
     <header>
       <h1 className="eater">{`Pejman-MERN-Wonderland`}</h1>
       <div
-        className="four-buttons-container justify-content-around"
-        style={{ marginTop: "10px", marginBottom: "10px" }}
+        className="four-buttons-container justify-content-around py-3"
+        style={{
+          marginTop: "10px",
+          marginBottom: "10px",
+          backgroundColor: "var(--background)",
+          border: "2px solid var(--secondary)",
+        }}
       >
         {!gameUrls.includes(location.pathname) &&
           !isLoggingOut &&
@@ -132,6 +137,7 @@ export default function Navbar({
                 value={theme}
                 onChange={(e) => setTheme(e.target.value)}
                 style={{
+                  backgroundColor: "var(--background)",
                   textAlign: "center",
                   width: "180px",
                   height: "25px",
@@ -204,6 +210,10 @@ export default function Navbar({
               )}
             <button
               className="navbar-toggler mx-2"
+              style={{
+                backgroundColor: "var(--primary)",
+                border: "2px solid black",
+              }}
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#mainNavbar"

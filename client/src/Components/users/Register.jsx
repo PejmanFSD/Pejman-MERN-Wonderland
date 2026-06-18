@@ -126,7 +126,7 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-5">
-            <form className="card p-4 shadow mt-3" onSubmit={handleSubmit}>
+            <form className="card p-4 shadow mt-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
               <h1 className="eater" style={{ fontSize: "40px" }}>
                 Sign Up!
               </h1>

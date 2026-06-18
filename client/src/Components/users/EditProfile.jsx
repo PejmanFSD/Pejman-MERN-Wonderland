@@ -186,6 +186,7 @@ export default function EditProfile({
               <div className="col-md-4">
                 <form
                   className="card p-4 shadow mt-3"
+                  style={{backgroundColor: "var(--background)"}}
                   onSubmit={handleProfileUpdate}
                 >
                   <div class="form-group" style={{ marginTop: "15px" }}>
@@ -199,6 +200,7 @@ export default function EditProfile({
                       required
                       class="form-control"
                       style={{
+                        border: "1px solid black",
                         margin: "auto",
                         textAlign: "center",
                         width: "250px",
@@ -218,6 +220,7 @@ export default function EditProfile({
                       required
                       class="form-control"
                       style={{
+                        border: "1px solid black",
                         margin: "auto",
                         textAlign: "center",
                         width: "250px",
@@ -237,6 +240,7 @@ export default function EditProfile({
                       onChange={(e) => setCurrentPassword(e.target.value)}
                       class="form-control"
                       style={{
+                        border: "1px solid black",
                         margin: "auto",
                         textAlign: "center",
                         width: "250px",
@@ -260,6 +264,7 @@ export default function EditProfile({
                       }}
                       class="form-control"
                       style={{
+                        border: "1px solid black",
                         margin: "auto",
                         textAlign: "center",
                         width: "250px",
@@ -284,6 +289,7 @@ export default function EditProfile({
                         }}
                         class="form-control"
                         style={{
+                          border: "1px solid black",
                           margin: "auto",
                           textAlign: "center",
                           width: "250px",

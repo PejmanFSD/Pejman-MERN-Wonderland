@@ -95,7 +95,7 @@ export default function AdForm({
             <h1 className="eater" style={{ fontSize: "40px" }}>
               Create a new Ad
             </h1>
-            <form className="card p-4 shadow mt-3" onSubmit={handleSubmit}>
+            <form className="card p-4 shadow mt-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
               <div class="form-group" style={{ marginTop: "15px" }}>
                 <label htmlFor="company">
                   <strong>Ad Company:</strong>
@@ -109,6 +109,7 @@ export default function AdForm({
                   required
                   class="form-control"
                   style={{
+                    border: "1px solid black",
                     margin: "auto",
                     textAlign: "center",
                     width: "250px",
@@ -130,6 +131,7 @@ export default function AdForm({
                   required
                   class="form-control"
                   style={{
+                    border: "1px solid black",
                     margin: "auto",
                     textAlign: "center",
                     width: "250px",
@@ -150,6 +152,7 @@ export default function AdForm({
                   id="image"
                   className="form-control form-control-sm"
                   style={{
+                    border: "1px solid black",
                     margin: "auto",
                     textAlign: "center",
                     width: "250px",
