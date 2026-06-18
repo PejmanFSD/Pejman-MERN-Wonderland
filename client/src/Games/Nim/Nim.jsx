@@ -144,10 +144,14 @@ export default function Nim({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutNim setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Nim</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Nim
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingReset && !isGameStarted && (
-              <button onClick={handleAboutPage}>About Nim</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About Nim
+              </button>
             )}
             {isFillingTheBowlsByUserFinished &&
               (easyMode || normalMode) &&
@@ -155,10 +159,12 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               isWin === "" &&
               !isTogglingReset &&
               !isTogglingHomePage && (
-                <button onClick={() => toggleReset()}>Reset the Game</button>
+                <button className="btn1" onClick={() => toggleReset()}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingReset && !isTogglingHomePage && (
-              <button onClick={() => toggleHomePage()}>
+              <button className="btn1" onClick={() => toggleHomePage()}>
                 Back to home page
               </button>
             )}
@@ -183,8 +189,12 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               className="four-buttons-container"
               style={{ marginTop: "15px" }}
             >
-              <button onClick={handleStandeardNim}>Standeard Nim</button>
-              <button onClick={handleMisereNim}>Misère Nim</button>
+              <button className="btn1" onClick={handleStandeardNim}>
+                Standeard Nim
+              </button>
+              <button className="btn1" onClick={handleMisereNim}>
+                Misère Nim
+              </button>
             </div>
           )}
           {(standard || misere) &&
@@ -195,14 +205,19 @@ export default function Nim({ updateTotalPoint, currentUser }) {
                 className="four-buttons-container"
                 style={{ marginTop: "15px" }}
               >
-                <button onClick={handleEasy}>Easy</button>
-                <button onClick={handleNormal}>Normal</button>
+                <button className="btn1" onClick={handleEasy}>
+                  Easy
+                </button>
+                <button className="btn1" onClick={handleNormal}>
+                  Normal
+                </button>
               </div>
             )}
           {!isFillingTheBowlsByUserStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage && (
               <button
+                className="btn1"
                 onClick={startFillingUserBowls}
                 style={{ marginTop: "15px" }}
               >
@@ -214,8 +229,50 @@ export default function Nim({ updateTotalPoint, currentUser }) {
             !isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <button onClick={startTheGame}>Start the Game</button>
+              <button className="btn1" onClick={startTheGame}>
+                Start the Game
+              </button>
             )}
+          {isWin === true && !isTogglingHomePage && (
+            <div>
+              <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                You Win!
+              </h2>
+              <h3>{`Because ${standard ? "you" : "Pejman"} picked the last ball`}</h3>
+            </div>
+          )}
+          {isWin === false && !isTogglingHomePage && (
+            <div>
+              <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                Pejman Wins!
+              </h2>
+              <h3>{`Because ${standard ? "Pejman" : "you"} picked the last ball`}</h3>
+            </div>
+          )}
+          {isWin === true && !isTogglingHomePage && (
+            <div>
+              <div>Play again?</div>
+              <button
+                className="btn2"
+                onClick={handleReset}
+                style={{ marginTop: "10px" }}
+              >
+                Ok
+              </button>
+            </div>
+          )}
+          {isWin === false && !isTogglingHomePage && (
+            <div>
+              <div>Try again?</div>
+              <button
+                className="btn2"
+                onClick={handleReset}
+                style={{ marginTop: "10px" }}
+              >
+                Ok
+              </button>
+            </div>
+          )}
           {isFillingTheBowlsByUserStarted && (
             <Bowls
               isFillingTheBowlsByUserFinished={isFillingTheBowlsByUserFinished}
@@ -274,37 +331,9 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               setIsWin={setIsWin}
             />
           )}
-          {isWin === true && !isTogglingHomePage && (
-            <div>
-              <h2>You Win!</h2>
-              <h3>{`Because ${standard ? "you" : "Pejman"} picked the last ball`}</h3>
-            </div>
-          )}
-          {isWin === false && !isTogglingHomePage && (
-            <div>
-              <h2>Pejman Wins!</h2>
-              <h3>{`Because ${standard ? "Pejman" : "you"} picked the last ball`}</h3>
-            </div>
-          )}
-          {isWin === true && !isTogglingHomePage && (
-            <div>
-              <div>Play again?</div>
-              <button onClick={handleReset} style={{ marginTop: "10px" }}>
-                Ok
-              </button>
-            </div>
-          )}
-          {isWin === false && !isTogglingHomePage && (
-            <div>
-              <div>Try again?</div>
-              <button onClick={handleReset} style={{ marginTop: "10px" }}>
-                Ok
-              </button>
-            </div>
-          )}
           <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
-            <button onClick={handleReviewSection}>
+            <button className="btn1" onClick={handleReviewSection}>
               {showReviews
                 ? "Hide the Reviews Section"
                 : "Show the Reviews Section"}
@@ -316,6 +345,7 @@ export default function Nim({ updateTotalPoint, currentUser }) {
             showReviews && (
               <ReviewSection game="Nim" currentUser={currentUser} />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>

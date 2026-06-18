@@ -665,175 +665,206 @@ export default function Bowls({
   }, [allBallsNum]);
   return (
     <div>
-      {isFillingTheBowlsByUserFinished &&
-        !isFillingTheBowlsByPejmanFinished &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <button onClick={startFillingPejmanBowls}>
-            Allow Pejman to fill his bowls
-          </button>
-        )}
-      {!isFillingTheBowlsByUserFinished && !isTogglingHomePage && (
-        <form onSubmit={handleSubmit}>
-          {Array(5)
-            .fill(null)
-            .map((bowl, idx) => (
-              <div key={idx}>
-                <label htmlFor={`bowl${idx + 1}`}></label>
-                {`Select the number of balls for bowl ${idx + 1} `}
-                <select
-                  onChange={handleChange}
-                  name={`bowl${idx + 1}`}
-                  id={`bowl${idx + 1}`}
-                  style={{ textAlign: "center", width: "80px" }}
-                >
-                  <option value={bowls[idx].ballsNum} disabled selected>
-                    {`bowl ${idx + 1}`}
-                  </option>
-                  {Array.from({ length: 7 }, (_, i) => i + 1).map((o, i) => (
-                    <option key={i}>{o}</option>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-8">
+            {isFillingTheBowlsByUserFinished &&
+              !isFillingTheBowlsByPejmanFinished &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <button className="btn1" onClick={startFillingPejmanBowls}>
+                  Allow Pejman to fill his bowls
+                </button>
+              )}
+            {!isFillingTheBowlsByUserFinished && !isTogglingHomePage && (
+              <form onSubmit={handleSubmit}>
+                {Array(5)
+                  .fill(null)
+                  .map((bowl, idx) => (
+                    <div key={idx} className="my-2">
+                      <label htmlFor={`bowl${idx + 1}`}></label>
+                      {`Select the number of balls for bowl ${idx + 1} `}
+                      <select
+                        onChange={handleChange}
+                        name={`bowl${idx + 1}`}
+                        id={`bowl${idx + 1}`}
+                        style={{
+                          marginLeft: "7px",
+                          borderRadius: "8px",
+                          textAlign: "center",
+                          width: "80px",
+                          height: "25px",
+                        }}
+                      >
+                        <option value={bowls[idx].ballsNum} disabled selected>
+                          {`bowl ${idx + 1}`}
+                        </option>
+                        {Array.from({ length: 7 }, (_, i) => i + 1).map(
+                          (o, i) => (
+                            <option key={i}>{o}</option>
+                          ),
+                        )}
+                      </select>
+                    </div>
                   ))}
-                </select>
-              </div>
-            ))}
-          <button
-            disabled={
-              bowls[0].ballsNum === 0 ||
-              bowls[1].ballsNum === 0 ||
-              bowls[2].ballsNum === 0 ||
-              bowls[3].ballsNum === 0 ||
-              bowls[4].ballsNum === 0
-            }
-            style={{ marginTop: "10px" }}
-          >
-            Done
-          </button>
-        </form>
-      )}
-      <div>
-        {bowls.map(
-          (bowl, idx) =>
-            idx < 5 && (
-              <Bowl
-                bowlId={bowl.bowlId}
-                bowlName={bowl.bowlName}
-                ballsNum={bowl.ballsNum}
-                isBowlSelected={bowl.isBowlSelected}
-                isGameStarted={isGameStarted}
-                setBowls={setBowls}
-                selectedUserBowl={selectedUserBowl}
-                setSelectedUserBowl={setSelectedUserBowl}
-                isUserTurn={isUserTurn}
-                isTogglingReset={isTogglingReset}
-                setIsTogglingReset={setIsTogglingReset}
-                isTogglingHomePage={isTogglingHomePage}
-                isWin={isWin}
-                key={idx}
-              />
-            ),
-        )}
-      </div>
-      <div>
-        {bowls.map(
-          (bowl, idx) =>
-            idx >= 5 &&
-            isFillingTheBowlsByPejmanFinished && (
-              <Bowl
-                bowlId={bowl.bowlId}
-                bowlName={bowl.bowlName}
-                ballsNum={bowl.ballsNum}
-                isBowlSelected={bowl.isBowlSelected}
-                isGameStarted={isGameStarted}
-                setBowls={setBowls}
-                selectedUserBowl={selectedUserBowl}
-                setSelectedUserBowl={setSelectedUserBowl}
-                isUserTurn={isUserTurn}
-                isTogglingReset={isTogglingReset}
-                setIsTogglingReset={setIsTogglingReset}
-                isTogglingHomePage={isTogglingHomePage}
-                isWin={isWin}
-                key={idx}
-              />
-            ),
-        )}
-      </div>
-      {selectedUserBowl !== 0 &&
-        isUserTurn &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <form onSubmit={handleUserMove}>
-            <label htmlFor={selectedUserBowl.toString()}></label>
-            {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it? `}
-            <select
-              onChange={handleChangeSelectedUserBowl}
-              name={selectedUserBowl.toString()}
-              id={selectedUserBowl.toString()}
-              style={{ textAlign: "center", width: "40px" }}
-            >
-              <option
-                value={
-                  bowls.find((bowl) => bowl.bowlId === selectedUserBowl)
-                    .ballsNum
-                }
-                disabled
-                selected
-                style={{ textAlign: "center" }}
-              >
-                ⬇️
-              </option>
-              {Array.from(
-                {
-                  length: bowls.find((bowl) => bowl.bowlId === selectedUserBowl)
-                    .ballsNum,
-                },
-                (_, i) => i + 1,
-              ).map((o, i) => (
-                <option
-                  value={o > 1 ? o : 1}
-                  key={i}
-                  style={{ textAlign: "center" }}
+                <button
+                  className="btn1"
+                  disabled={
+                    bowls[0].ballsNum === 0 ||
+                    bowls[1].ballsNum === 0 ||
+                    bowls[2].ballsNum === 0 ||
+                    bowls[3].ballsNum === 0 ||
+                    bowls[4].ballsNum === 0
+                  }
+                  style={{ marginTop: "10px" }}
                 >
-                  {o}
-                </option>
-              ))}
-            </select>
-            <br></br>
-            {isUserTurn && userPickNum > 0 && (
-              <button style={{ marginTop: "10px" }}>Done</button>
+                  Done
+                </button>
+              </form>
             )}
-          </form>
-        )}
-      {!selectedUserBowl &&
-        isGameStarted &&
-        isUserTurn &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <div>Choose one of the un-empty bowls and pick ball(s) from it</div>
-        )}
-      {isGameStarted &&
-        !isUserTurn &&
-        isWin === "" &&
-        !isTogglingReset &&
-        !isTogglingHomePage && (
-          <div>
-            <div>Allow Pejman to make his move</div>
-            <button onClick={handlePejmanMove} style={{ marginTop: "10px" }}>
-              Ok
-            </button>
-          </div>
-        )}
-      {!isTogglingReset && !isTogglingHomePage && (
-        <div>
-          {allTurns.map((b, i) => (
-            <div key={i} style={{ marginTop: "10px" }}>
-              {`Move ${allTurns.indexOf(b) + 1}: `}
-              {b.side === "User" ? "You" : "Pejman"}
-              {` took ${b.ballsNum} ball${b.ballsNum > 1 ? "s" : ""} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}
+            <div>
+              {bowls.map(
+                (bowl, idx) =>
+                  idx < 5 && (
+                    <Bowl
+                      bowlId={bowl.bowlId}
+                      bowlName={bowl.bowlName}
+                      ballsNum={bowl.ballsNum}
+                      isBowlSelected={bowl.isBowlSelected}
+                      isGameStarted={isGameStarted}
+                      setBowls={setBowls}
+                      selectedUserBowl={selectedUserBowl}
+                      setSelectedUserBowl={setSelectedUserBowl}
+                      isUserTurn={isUserTurn}
+                      isTogglingReset={isTogglingReset}
+                      setIsTogglingReset={setIsTogglingReset}
+                      isTogglingHomePage={isTogglingHomePage}
+                      isWin={isWin}
+                      key={idx}
+                    />
+                  ),
+              )}
             </div>
-          ))}
+            <div>
+              {bowls.map(
+                (bowl, idx) =>
+                  idx >= 5 &&
+                  isFillingTheBowlsByPejmanFinished && (
+                    <Bowl
+                      bowlId={bowl.bowlId}
+                      bowlName={bowl.bowlName}
+                      ballsNum={bowl.ballsNum}
+                      isBowlSelected={bowl.isBowlSelected}
+                      isGameStarted={isGameStarted}
+                      setBowls={setBowls}
+                      selectedUserBowl={selectedUserBowl}
+                      setSelectedUserBowl={setSelectedUserBowl}
+                      isUserTurn={isUserTurn}
+                      isTogglingReset={isTogglingReset}
+                      setIsTogglingReset={setIsTogglingReset}
+                      isTogglingHomePage={isTogglingHomePage}
+                      isWin={isWin}
+                      key={idx}
+                    />
+                  ),
+              )}
+            </div>
+            {selectedUserBowl !== 0 &&
+              isUserTurn &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <form onSubmit={handleUserMove}>
+                  <label htmlFor={selectedUserBowl.toString()}></label>
+                  {`You chose bowl ${selectedUserBowl}, How many balls do you want to pick from it? `}
+                  <select
+                    onChange={handleChangeSelectedUserBowl}
+                    name={selectedUserBowl.toString()}
+                    id={selectedUserBowl.toString()}
+                    style={{
+                      borderRadius: "8px",
+                      textAlign: "center",
+                      width: "40px",
+                      height: "30px",
+                    }}
+                  >
+                    <option
+                      value={
+                        bowls.find((bowl) => bowl.bowlId === selectedUserBowl)
+                          .ballsNum
+                      }
+                      disabled
+                      selected
+                      style={{ textAlign: "center" }}
+                    ></option>
+                    {Array.from(
+                      {
+                        length: bowls.find(
+                          (bowl) => bowl.bowlId === selectedUserBowl,
+                        ).ballsNum,
+                      },
+                      (_, i) => i + 1,
+                    ).map((o, i) => (
+                      <option
+                        value={o > 1 ? o : 1}
+                        key={i}
+                        style={{ textAlign: "center" }}
+                      >
+                        {o}
+                      </option>
+                    ))}
+                  </select>
+                  <br></br>
+                  {isUserTurn && userPickNum > 0 && (
+                    <button className="btn1" style={{ marginTop: "10px" }}>
+                      Done
+                    </button>
+                  )}
+                </form>
+              )}
+            {!selectedUserBowl &&
+              isGameStarted &&
+              isUserTurn &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <div>
+                  Choose one of the un-empty bowls and pick ball(s) from it
+                </div>
+              )}
+            {isGameStarted &&
+              !isUserTurn &&
+              isWin === "" &&
+              !isTogglingReset &&
+              !isTogglingHomePage && (
+                <div>
+                  <div>Allow Pejman to make his move</div>
+                  <button
+                    className="btn2"
+                    onClick={handlePejmanMove}
+                    style={{ marginTop: "10px" }}
+                  >
+                    Ok
+                  </button>
+                </div>
+              )}
+          </div>
+          <div className="col-lg-3 d-none d-lg-block">
+            {!isTogglingReset && !isTogglingHomePage && (
+              <div style={{ fontSize: isWin === "" ? "20px" : "15px" }}>
+                {allTurns.map((b, i) => (
+                  <div key={i} style={{ marginTop: "10px" }}>
+                    <div>
+                      <strong>{`Move ${allTurns.indexOf(b) + 1}: `}</strong>
+                    </div>
+                    {b.side === "User" ? "You" : "Pejman"}
+                    {` took ${b.ballsNum} ball${b.ballsNum > 1 ? "s" : ""} from bowl ${b.side === "User" ? b.bowlNum : b.bowlNum + 1}`}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

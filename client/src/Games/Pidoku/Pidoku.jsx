@@ -631,13 +631,17 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutPidoku setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Pidoku</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Pidoku
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button onClick={handleAboutPage}>About Pidoku</button>
+                <button className="btn1" onClick={handleAboutPage}>
+                  About Pidoku
+                </button>
               )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
@@ -645,6 +649,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               isGameStarted && (
                 <button
+                  className="btn1"
                   style={{
                     display: "inline",
                   }}
@@ -658,13 +663,15 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               (easyMode || normalMode) &&
               isGameStarted && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -704,8 +711,12 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !normalMode &&
             !isTogglingHomePage && (
               <div className="four-buttons-container">
-                <button onClick={runEasyMode}>Easy Mode</button>
-                <button onClick={runNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={runEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={runNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {!isGameStarted &&
@@ -724,21 +735,19 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     name="userColor"
                     id="userColor"
                     style={{
+                      borderRadius: "8px",
                       textAlign: "center",
                       width: "100px",
                       height: "25px",
                       margin: "5px",
                     }}
                   >
-                    <option value={userColor} disabled selected>
-                      🔽🔽🔽
-                    </option>
+                    <option value={userColor} disabled selected></option>
                     {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
                       <option key={i}>{c}</option>
                     ))}
                   </select>
                 </div>
-                <br />
                 <div>
                   <label htmlFor="pejmanColor">
                     Select a Color for Pejman{" "}
@@ -749,15 +758,14 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                     name="pejmanColor"
                     id="pejmanColor"
                     style={{
+                      borderRadius: "8px",
                       textAlign: "center",
                       width: "100px",
                       height: "25px",
                       margin: "5px",
                     }}
                   >
-                    <option value={pejmanColor} disabled selected>
-                      🔽🔽🔽
-                    </option>
+                    <option value={pejmanColor} disabled selected></option>
                     {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
                       <option key={i}>{c}</option>
                     ))}
@@ -772,14 +780,22 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isIdenticalColor &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <button onClick={handleStart} style={{ marginTop: "20px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "20px" }}
+              >
                 Start the Game
               </button>
             )}
           {isIdenticalColor && !isTogglingHomePage && !isTogglingLevel && (
             <div>
               <div>You can't choose an identical color for both players</div>
-              <button onClick={handleOk} style={{ marginTop: "10px" }}>
+              <button
+                className="btn1"
+                onClick={handleOk}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
@@ -838,6 +854,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
               <div>
                 <div>Allow Pejman to make his move</div>
                 <button
+                  className="btn2"
                   onClick={handleAllowPejman}
                   style={{ marginTop: "10px" }}
                 >
@@ -855,7 +872,11 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                   All 24 squares are selected, the result of the game relies on
                   the squares around the last empty one
                 </div>
-                <button onClick={handleShowTime} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn1"
+                  onClick={handleShowTime}
+                  style={{ marginTop: "10px" }}
+                >
                   Show the decisive squares
                 </button>
               </div>
@@ -865,7 +886,9 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <button onClick={handleGameResult}>Show the Game Result</button>
+              <button className="btn1" onClick={handleGameResult}>
+                Show the Game Result
+              </button>
             )}
           <br />
           {isGameResult &&
@@ -873,7 +896,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h3>Your totoal Point: {userPoint}</h3>
+                <h3 className="my-3">Your totoal Point: {userPoint}</h3>
                 <div style={{ display: "inline", margin: "10px" }}>
                   {userPoint !== 0 && "("}
                 </div>
@@ -903,7 +926,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                 <div style={{ display: "inline", margin: "10px" }}>
                   {userPoint !== 0 && ")"}
                 </div>
-                <h3>Pejman's totoal Point: {pejmanPoint}</h3>
+                <h3 className="my-3">Pejman's totoal Point: {pejmanPoint}</h3>
                 <div style={{ display: "inline", margin: "10px" }}>
                   {pejmanPoint !== 0 && "("}
                 </div>
@@ -941,8 +964,13 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h2>{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
-                <button onClick={handlePlayAgain}>Play Again</button>
+                <h2
+                  className="fasterOne my-3"
+                  style={{ fontSize: "40px" }}
+                >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
+                <button className="btn1" onClick={handlePlayAgain}>
+                  Play Again
+                </button>
               </div>
             )}
           {isGameResult &&
@@ -951,8 +979,12 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h2>No Winner!</h2>
-                <button onClick={handlePlayAgain}>Play Again</button>
+                <h2 className="fasterOne my-3" style={{ fontSize: "40px" }}>
+                  No Winner!
+                </h2>
+                <button className="btn1" onClick={handlePlayAgain}>
+                  Play Again
+                </button>
               </div>
             )}
           {isGameResult &&
@@ -961,8 +993,12 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h2>Pejman Wins!</h2>
-                <button onClick={handlePlayAgain}>Try Again</button>
+                <h2 className="fasterOne my-3" style={{ fontSize: "40px" }}>
+                  Pejman Wins!
+                </h2>
+                <button className="btn1" onClick={handlePlayAgain}>
+                  Try Again
+                </button>
               </div>
             )}
           <br />
@@ -971,6 +1007,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted && (
               <button
+                className="btn1"
                 onClick={handleReviewSection}
                 style={{ position: "relative", top: "10px" }}
               >
@@ -986,6 +1023,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             showReviews && (
               <ReviewSection game="Pidoku" currentUser={currentUser} />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>

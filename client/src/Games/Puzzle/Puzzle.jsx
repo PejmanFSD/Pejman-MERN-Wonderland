@@ -391,10 +391,14 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutPuzzle setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Puzzle</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Puzzle
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>About Puzzle</button>
+              <button className="btn1" onClick={handleAboutPage}>
+                About Puzzle
+              </button>
             )}
             {(easyMode || normalMode) &&
               !isTogglingReset &&
@@ -402,6 +406,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" && (
                 <button
+                  className="btn1"
                   onClick={() => toggleLevel()}
                 >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
               )}
@@ -411,13 +416,15 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               !isTogglingLevel &&
               (easyMode || normalMode) && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               finalMessage === "" && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -460,15 +467,27 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                 className="four-buttons-container"
                 style={{ marginTop: "15px" }}
               >
-                <button onClick={handleEasyMode}>Easy Mode</button>
-                <button onClick={handleNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={handleEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={handleNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
-          {finalMessage && <h2>{finalMessage}</h2>}
+          {finalMessage && (
+            <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+              {finalMessage}
+            </h2>
+          )}
           {finalMessage === "You Win!" && (
             <div>
               <div>Play again?</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+              <button
+                className="btn2"
+                onClick={handlePlayAgain}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
@@ -476,7 +495,11 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
           {finalMessage === "Time's Up!" && (
             <div>
               <div>Try again?</div>
-              <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+              <button
+                className="btn2"
+                onClick={handlePlayAgain}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
@@ -499,9 +522,10 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                   name="imageGroup"
                   id="imageGroup"
                   style={{
+                    borderRadius: "8px",
                     textAlign: "center",
-                    width: "170px",
-                    height: "25px",
+                    width: "220px",
+                    height: "30px",
                   }}
                 >
                   <option value={imageGroup} disabled selected>
@@ -525,59 +549,71 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "15px" }}
+              >
                 Start the Game
               </button>
             )}
-          {isGameStarted &&
-            isImageGroupChosen &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <img
-                src={mainImage}
-                style={{
-                  width: "150px",
-                  border: "1px solid black",
-                  position: "relative",
-                  top: "5px",
-                  display: "inline",
-                  opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
-                }}
-                alt=""
-              />
-            )}
-          {isGameStarted &&
-            isImageGroupChosen &&
-            !isTogglingReset &&
-            !isTogglingLevel &&
-            !isTogglingHomePage && (
-              <div
-                style={{
-                  position: "relative",
-                  top: "5px",
-                  display: "grid",
-                  gridTemplateColumns: "repeat(5, auto)",
-                  justifyContent: "center",
-                }}
-              >
-                {imageGroup.map((cell, idx) => (
-                  <Cell
-                    imageSrc={cell.image}
-                    setIsActiveUpButton={setIsActiveUpButton}
-                    setIsActiveLeftButton={setIsActiveLeftButton}
-                    setIsActiveDownButton={setIsActiveDownButton}
-                    setIsActiveRightButton={setIsActiveRightButton}
-                    imageGroup={imageGroup}
-                    setImageGroup={setImageGroup}
-                    isAnImageClicked={isAnImageClicked}
-                    setIsAnImageClicked={setIsAnImageClicked}
-                    finalMessage={finalMessage}
-                    key={idx}
-                  />
-                ))}
+          <div className="container">
+            <div className="row">
+              <div className="col-md-3 offset-3">
+                {isGameStarted &&
+                  isImageGroupChosen &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <img
+                      src={mainImage}
+                      style={{
+                        width: "260px",
+                        border: "1px solid black",
+                        position: "relative",
+                        top: "5px",
+                        display: "inline",
+                        opacity: finalMessage === "Time's Up!" ? 0.3 : 1,
+                      }}
+                      alt=""
+                    />
+                  )}
               </div>
-            )}
+              <div className="col-md-3">
+                {isGameStarted &&
+                  isImageGroupChosen &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  !isTogglingHomePage && (
+                    <div
+                      style={{
+                        position: "relative",
+                        top: "5px",
+                        display: "grid",
+                        gridTemplateColumns: "repeat(5, auto)",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {imageGroup.map((cell, idx) => (
+                        <Cell
+                          imageSrc={cell.image}
+                          setIsActiveUpButton={setIsActiveUpButton}
+                          setIsActiveLeftButton={setIsActiveLeftButton}
+                          setIsActiveDownButton={setIsActiveDownButton}
+                          setIsActiveRightButton={setIsActiveRightButton}
+                          imageGroup={imageGroup}
+                          setImageGroup={setImageGroup}
+                          isAnImageClicked={isAnImageClicked}
+                          setIsAnImageClicked={setIsAnImageClicked}
+                          finalMessage={finalMessage}
+                          key={idx}
+                        />
+                      ))}
+                    </div>
+                  )}
+              </div>
+            </div>
+          </div>
           {isGameStarted &&
             finalMessage === "" &&
             !isTogglingReset &&
@@ -653,6 +689,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted && (
               <button
+                className="btn1 my-4"
                 onClick={handleReviewSection}
                 style={{ position: "relative", top: "25px" }}
               >
