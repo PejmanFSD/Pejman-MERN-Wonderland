@@ -1455,13 +1455,17 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutReversi setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Reversi</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Reversi
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               isGameStarted && (
-                <button onClick={handleAboutPage}>About Reversi</button>
+                <button className="btn1" onClick={handleAboutPage}>
+                  About Reversi
+                </button>
               )}
             {isGameStarted &&
               (easyMode || normalMode) &&
@@ -1470,7 +1474,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" &&
               !isIdenticalColor && (
-                <button onClick={() => toggleLevel()}>
+                <button className="btn1" onClick={() => toggleLevel()}>
                   {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
                 </button>
               )}
@@ -1481,7 +1485,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               (easyMode || normalMode) &&
               !isIdenticalColor && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {isGameStarted &&
               !isTogglingHomePage &&
@@ -1489,7 +1495,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               !isTogglingLevel &&
               finalMessage === "" &&
               !isIdenticalColor && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -1526,8 +1532,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           )}
           {!isGameStarted && !easyMode && !normalMode && (
             <div className="four-buttons-container">
-              <button onClick={handleEasyMode}>Easy Mode</button>
-              <button onClick={handleNormalMode}>Normal Mode</button>
+              <button className="btn1" onClick={handleEasyMode}>
+                Easy Mode
+              </button>
+              <button className="btn1" onClick={handleNormalMode}>
+                Normal Mode
+              </button>
             </div>
           )}
           {!isGameStarted && !isIdenticalColor && (easyMode || normalMode) && (
@@ -1540,15 +1550,14 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   name="userColor"
                   id="userColor"
                   style={{
+                    borderRadius: "8px",
                     margin: "10px",
                     textAlign: "center",
                     width: "90px",
-                    height: "25px",
+                    height: "30px",
                   }}
                 >
-                  <option value={userColor} disabled selected>
-                    🔽🔽🔽
-                  </option>
+                  <option value={userColor} disabled selected></option>
                   {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
                     <option key={i}>{c}</option>
                   ))}
@@ -1562,15 +1571,14 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   name="pejmanColor"
                   id="pejmanColor"
                   style={{
+                    borderRadius: "8px",
                     margin: "10px",
                     textAlign: "center",
                     width: "90px",
-                    height: "25px",
+                    height: "30px",
                   }}
                 >
-                  <option value={pejmanColor} disabled selected>
-                    🔽🔽🔽
-                  </option>
+                  <option value={pejmanColor} disabled selected></option>
                   {["Red", "Green", "Blue", "Yellow"].map((c, i) => (
                     <option key={i}>{c}</option>
                   ))}
@@ -1584,14 +1592,22 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             pejmanColor &&
             !isTogglingLevel &&
             !isIdenticalColor && (
-              <button onClick={handleStart} style={{ marginTop: "10px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "10px" }}
+              >
                 Start the Game
               </button>
             )}
           {isIdenticalColor && !isTogglingReset && !isTogglingLevel && (
             <div>
               <div>You can't choose an identical color for both players</div>
-              <button onClick={handleOk} style={{ marginTop: "10px" }}>
+              <button
+                className="btn2"
+                onClick={handleOk}
+                style={{ marginTop: "10px" }}
+              >
                 Ok
               </button>
             </div>
@@ -1604,6 +1620,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <div>{selectionErrorMessage}</div>
                 <button
+                  className="btn2"
                   onClick={handleSelectionErrorMessage}
                   style={{ marginTop: "10px" }}
                 >
@@ -1700,7 +1717,8 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             freeCellsIds.length < 48 &&
             !isTogglingReset &&
             !isTogglingLevel &&
-            !isTogglingHomePage && (
+            !isTogglingHomePage &&
+            finalMessage === "" && (
               <div>
                 <div>Choose the path you wan to conquer</div>
                 <br />
@@ -1848,6 +1866,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <div>Allow Pejman to make his move</div>
                 <button
+                  className="btn2"
                   onClick={handleAllowPejman}
                   style={{ marginTop: "10px" }}
                 >
@@ -1866,6 +1885,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <div>Allow Pejman to start the game</div>
                 <button
+                  className="btn2"
                   onClick={handleAllowPejman}
                   style={{ marginTop: "10px" }}
                 >
@@ -1882,6 +1902,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
                 <button
+                  className="btn2"
                   onClick={handlePejmanDirectionChoice}
                   style={{ marginTop: "10px" }}
                 >
@@ -1897,6 +1918,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               <div>
                 <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
                 <button
+                  className="btn2"
                   onClick={handlePejmanDirectionChoice}
                   style={{ marginTop: "10px" }}
                 >
@@ -1914,6 +1936,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                   All the squares are taken, let's see who is the winner
                 </div>
                 <button
+                  className="btn2"
                   onClick={handleGameResult}
                   style={{ marginTop: "10px" }}
                 >
@@ -1935,9 +1958,15 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
               finalMessage === "You Win, but you don't get any stars!") &&
             !isTogglingHomePage && (
               <div>
-                <h3>You Win!</h3>
+                <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                  {finalMessage}
+                </h3>
                 <div>Play Again?</div>
-                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn2"
+                  onClick={handlePlayAgain}
+                  style={{ marginTop: "10px" }}
+                >
                   Ok
                 </button>
               </div>
@@ -1948,9 +1977,15 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 "The square you just chose can't change the color of even one of the Pejman's squares, so ... Pejman wins!") &&
             !isTogglingHomePage && (
               <div>
-                <h3>{finalMessage}</h3>
+                <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                  {finalMessage}
+                </h3>
                 <div>Try Again?</div>
-                <button onClick={handlePlayAgain} style={{ marginTop: "10px" }}>
+                <button
+                  className="btn2"
+                  onClick={handlePlayAgain}
+                  style={{ marginTop: "10px" }}
+                >
                   Ok
                 </button>
               </div>
@@ -1960,7 +1995,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button className="btn1" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}
@@ -1975,6 +2010,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <div style={{ marginTop: "50px" }}></div>
     </div>
   );
 }

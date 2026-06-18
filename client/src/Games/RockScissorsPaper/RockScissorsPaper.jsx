@@ -169,10 +169,12 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
       )}
       {!isAboutPage && (
         <div>
-          <h2>Rock - Scissors - Paper</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Rock - Scissors - Paper
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button onClick={handleAboutPage}>
+              <button className="btn1" onClick={handleAboutPage}>
                 About Rock - Scissors - Paper
               </button>
             )}
@@ -182,7 +184,10 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
               !isTogglingHomePage &&
               showImages &&
               !isTogglingReset && (
-                <button onClick={() => toggleLevel()}>{`Switch to ${
+                <button
+                  className="btn1"
+                  onClick={() => toggleLevel()}
+                >{`Switch to ${
                   extremelySuperDifficultMode
                     ? "Normal Mode"
                     : "extremely-Super-Difficult Mode"
@@ -195,13 +200,15 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
               (normalMode || extremelySuperDifficultMode) &&
               !isTogglingLevel &&
               score !== 0 && (
-                <button onClick={() => toggleReset()}>Reset the Game</button>
+                <button className="btn1" onClick={() => toggleReset()}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               showImages &&
               !isTogglingLevel && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -244,7 +251,15 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             )}
           {!isGameStarted &&
             (normalMode || extremelySuperDifficultMode) &&
-            !isTogglingHomePage && <button onClick={handleStart} style={{marginTop: "10px"}}>Start</button>}
+            !isTogglingHomePage && (
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "10px" }}
+              >
+                Start
+              </button>
+            )}
           {isGameStarted &&
             !isTogglingHomePage &&
             !isTogglingReset &&
@@ -257,21 +272,21 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
                   width="150px"
                   alt="Rock"
                   onClick={() => handleUserChoice("Rock")}
-                  style={{margin: "15px"}}
+                  style={{ margin: "15px" }}
                 />
                 <img
                   src={Scissors}
                   width="150px"
                   alt="Scissors"
                   onClick={() => handleUserChoice("Scissors")}
-                  style={{margin: "15px"}}
+                  style={{ margin: "15px" }}
                 />
                 <img
                   src={Paper}
                   width="150px"
                   alt="Paper"
                   onClick={() => handleUserChoice("Paper")}
-                  style={{margin: "15px"}}
+                  style={{ margin: "15px" }}
                 />
               </div>
             )}
@@ -291,9 +306,13 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           !isTogglingLevel &&
           (normalMode || extremelySuperDifficultMode) ? (
             <div>
-              <h3>Excellent! You just beat Pejman three times in a row</h3>
+              <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                Excellent! You just beat Pejman three times in a row
+              </h3>
               <h3>Your total point increases by one</h3>
-              <button onClick={() => handleOk()}>OK</button>
+              <button className="btn2" onClick={() => handleOk()}>
+                OK
+              </button>
             </div>
           ) : (
             isGameStarted &&
@@ -302,9 +321,19 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             (normalMode || extremelySuperDifficultMode) && (
               <div>
-                <div>{userChoice && <p>Your choice: {userChoice}</p>}</div>
                 <div>
-                  {pejmanChoice && <p>Pejman's choice: {pejmanChoice}</p>}
+                  {userChoice && (
+                    <div>
+                      Your choice: <strong>{userChoice}</strong>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  {pejmanChoice && (
+                    <div>
+                      Pejman's choice: <strong>{pejmanChoice}</strong>
+                    </div>
+                  )}
                 </div>
                 <h2>{gameResult}</h2>
                 <h2>Your score: {score}</h2>
@@ -326,7 +355,11 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection} style={{marginTop: "25px"}}>
+              <button
+                className="btn1"
+                onClick={handleReviewSection}
+                style={{ marginTop: "25px" }}
+              >
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}

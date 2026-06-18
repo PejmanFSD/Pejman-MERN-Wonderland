@@ -339,14 +339,18 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutSnake setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2>Snake</h2>
+          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+            Snake
+          </h2>
           <div className="four-buttons-container">
             {!isTogglingHomePage &&
               !isTogglingLevel &&
               !isTogglingReset &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button onClick={handleAboutPage}>About Snake</button>
+                <button className="btn1" onClick={handleAboutPage}>
+                  About Snake
+                </button>
               )}
             {isGameStarted &&
               (easyMode || normalMode) &&
@@ -356,7 +360,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               finalMessage === "" &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button onClick={() => toggleLevel()}>
+                <button className="btn1" onClick={() => toggleLevel()}>
                   {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
                 </button>
               )}
@@ -368,14 +372,16 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               (easyMode || normalMode) &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button onClick={toggleReset}>Reset the Game</button>
+                <button className="btn1" onClick={toggleReset}>
+                  Reset the Game
+                </button>
               )}
             {!isTogglingHomePage &&
               !isTogglingReset &&
               !isTogglingLevel &&
               direction.x === 0 &&
               direction.y === 0 && (
-                <button onClick={() => toggleHomePage()}>
+                <button className="btn1" onClick={() => toggleHomePage()}>
                   Back to home page
                 </button>
               )}
@@ -418,15 +424,23 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                 className="four-buttons-container"
                 style={{ marginTop: "15px" }}
               >
-                <button onClick={handleEasyMode}>Easy Mode</button>
-                <button onClick={handleNormalMode}>Normal Mode</button>
+                <button className="btn1" onClick={handleEasyMode}>
+                  Easy Mode
+                </button>
+                <button className="btn1" onClick={handleNormalMode}>
+                  Normal Mode
+                </button>
               </div>
             )}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <button onClick={handleStart} style={{ marginTop: "15px" }}>
+              <button
+                className="btn1"
+                onClick={handleStart}
+                style={{ marginTop: "15px" }}
+              >
                 Start the Game
               </button>
             )}
@@ -443,9 +457,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   finalMessage === "You Win, but you don't get any stars!") &&
                 !isTogglingHomePage && (
                   <div>
-                    <h3>{finalMessage}</h3>
+                    <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                      {finalMessage}
+                    </h3>
                     <div>Play Again?</div>
                     <button
+                      className="btn2"
                       onClick={handlePlayAgain}
                       style={{ marginTop: "10px" }}
                     >
@@ -457,9 +474,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                 finalMessage === "You Lose!" &&
                 !isTogglingHomePage && (
                   <div>
-                    <h3>{finalMessage}</h3>
+                    <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                      {finalMessage}
+                    </h3>
                     <div>Try Again?</div>
                     <button
+                      className="btn2"
                       onClick={handlePlayAgain}
                       style={{ marginTop: "10px" }}
                     >
@@ -536,7 +556,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
-              <button onClick={handleReviewSection}>
+              <button className="btn1" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
                   : "Show the Reviews Section"}
@@ -549,6 +569,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
             showReviews && (
               <ReviewSection game="Snake" currentUser={currentUser} />
             )}
+          <div style={{ marginTop: "50px" }}></div>
         </div>
       )}
     </div>
