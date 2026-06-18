@@ -105,5 +105,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(process.env.PORT, () => {
-    console.log("SERVING YOUR APP! - 4000");
+    console.log(`SERVING YOUR APP ON PORT ${process.env.PORT}`);
 })
