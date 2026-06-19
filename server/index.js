@@ -32,14 +32,14 @@ mongoose.connection.once("open", () => {
     console.log("Connected to database:", mongoose.connection.name);
 });
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
-app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+// app.set('views', 'views');
+// app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For parcing the request
 app.use(methodOverride('_method'));
 app.use(session({
-  secret: "mySecret",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -84,13 +84,19 @@ app.use('/reviews', reviewRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-    res.render('home');
-})
+// app.get('/', (req, res) => {
+//     res.render('home');
+// })
 
-app.get('/secret', isLoggedIn, (req, res) => {
-    res.render('secret');
-})
+// app.get('/secret', isLoggedIn, (req, res) => {
+//     res.render('secret');
+// })
+
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+});
 
 app.all(/(.*)/, (req, res, next) => {
     next(new ExpressError('Page Not Found', 404));
@@ -99,11 +105,16 @@ app.all(/(.*)/, (req, res, next) => {
 // If an error is caught, the "next" attribute
 // sends it to the following middleware:
 app.use((err, req, res, next) => {
-    const {statusCode = 500} = err;
-    if (!err.message) err.message = 'Somethignwent wrong!'
-    res.status(statusCode).render('error', {err});
-})
+    const { statusCode = 500 } = err;
 
-app.listen(process.env.PORT, () => {
-    console.log(`SERVING YOUR APP ON PORT ${process.env.PORT}`);
-})
+    res.status(statusCode).json({
+        success: false,
+        message: err.message || "Something went wrong!"
+    });
+});
+
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+    console.log(`SERVING YOUR APP ON PORT ${PORT}`);
+});

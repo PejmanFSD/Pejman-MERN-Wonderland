@@ -3,8 +3,6 @@
 # dependencies
 /client/node_modules
 /server/node_modules
-/.pnp
-.pnp.js
 
 # testing
 /coverage
@@ -25,5 +23,3 @@ yarn-debug.log*
 yarn-error.log*
 
 .vscode
-.vercel
-.vercelignore

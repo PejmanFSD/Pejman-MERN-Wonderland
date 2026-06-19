@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,14 +17,15 @@
     "connect-flash": "^0.1.1",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
-    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-session": "^1.18.2",
     "joi": "^18.0.2",
     "method-override": "^3.0.0",
     "mongoose": "^9.1.4",
     "multer": "^2.0.2",
-    "multer-storage-cloudinary": "^4.0.0",
-    "nodemon": "^3.1.11"
+    "multer-storage-cloudinary": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
