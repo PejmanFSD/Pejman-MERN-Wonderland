@@ -42,7 +42,7 @@ export default function Ads({
   };
   const currentAd = ads[idx];
   return (
-    <div style={{position: "relative", top: "-20px"}}>
+    <div>
       <Ad
         adKey={currentAd._id}
         adCompany={currentAd.company}

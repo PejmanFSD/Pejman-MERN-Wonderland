@@ -15,7 +15,7 @@ export default function Profile({
     setIsProfileEditing(true);
   };
   return (
-    <div className="cause" style={{ fontSize: "20px" }}>
+    <div className="cause" style={{ fontSize: "20px", marginTop: "25px" }}>
       <h1 className="eater" style={{ fontSize: "40px" }}>
         My Profile
       </h1>

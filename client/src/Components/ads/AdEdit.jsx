@@ -97,9 +97,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
     setIsAdEditing(false);
     navigate(`/ads/${id}`);
   };
-
-  if (!company) return <div>Loading...</div>;
-
+  // if (!company) return <div>Loading...</div>;
   return (
     <div className="cause" style={{ fontSize: "15px" }}>
       <div className="container mt-3">
@@ -193,7 +191,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
                 type="submit"
                 className="btn1 align-self-center mb-3 mt-2"
                 style={{ margin: "7px" }}
-                disabled={error}
+                disabled={error || !company || !text || images.length === 0}
               >
                 Update Ad
               </button>

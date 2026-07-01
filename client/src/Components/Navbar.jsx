@@ -110,6 +110,7 @@ export default function Navbar({
   }, []);
   return (
     <header>
+      <div className="fixed-top">
       <h1
         className="eater py-3"
         style={{
@@ -228,15 +229,11 @@ export default function Navbar({
             </div>
           )}
       </div>
+</div>
       {/* "location.pathname" is the path of the current page */}
       <nav
-        className="navbar navbar-expand-md navbar-light navbar-light py-3"
-        style={{
-          // backgroundColor: "var(--primary)",
-          // border: "2px solid black",
-          position: "relative",
-          top: "-20px",
-        }}
+        className="navbar navbar-expand-md navbar-light navbar-light"
+        style={{paddingTop: "165px"}}
       >
         <div className="container-fluid justify-content-center">
           <div className="d-none d-md-flex flex-fill"></div>
@@ -435,7 +432,7 @@ export default function Navbar({
         </div>
       </nav>
       {isLoggingOut && !gameUrls.includes(location.pathname) && (
-        <div style={{position: "relative", top: "-35px"}}>
+        <div style={{paddingTop: "25px"}}>
           <div>Are you sure you want to logout?</div>
           <div>
             <button

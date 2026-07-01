@@ -98,7 +98,7 @@ export default function Login({
                 </div>
               </div>
               <br />
-              <button className="btn1 align-self-center mb-3 mt-3">
+              <button className="btn1 align-self-center mb-3 mt-3" disabled={!username || !password}>
                 Login
               </button>
               {error && <p style={{ color: "red" }}>{error}</p>}

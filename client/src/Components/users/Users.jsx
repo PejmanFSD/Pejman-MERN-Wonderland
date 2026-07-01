@@ -81,11 +81,11 @@ export default function Users({
     setIsDeleting(false);
   };
   return (
-    <div style={{marginBottom: "20px"}}>
-      <h1 className="eater" style={{ fontSize: "40px" }}>
+    <div style={{marginBottom: "20px", marginTop: "20px"}}>
+      <h1 className="eater" style={{ fontSize: "40px", marginBottom: "15px" }}>
         All the registered users
       </h1>
-      <div className="four-buttons-container">
+      <div className="four-buttons-container my-2">
         {!isDeleting && !isLoggingOut && (
           <div>
             <input

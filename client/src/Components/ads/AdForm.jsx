@@ -93,7 +93,7 @@ export default function AdForm({
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-4">
-            <h1 className="eater" style={{ fontSize: "40px" }}>
+            <h1 className="eater my-1" style={{ fontSize: "40px" }}>
               Create a new Ad
             </h1>
             <form className="card p-4 shadow mt-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
@@ -161,7 +161,9 @@ export default function AdForm({
                   }}
                 />
               </div>
-              <button className="btn1 align-self-center mb-3 mt-2" disabled={error}>
+              <button className="btn1 align-self-center mb-3 mt-2"
+              disabled={error || !company || !text || images.length === 0}
+              >
                 Create Ad
               </button>
               {error && <div style={{ color: "red" }}>{error}</div>}

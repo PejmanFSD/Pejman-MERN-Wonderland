@@ -37,8 +37,8 @@ export default function AdDetails({
   if (error) {
     return (
       <div>
-        <p>{error}</p>
-        <button onClick={handleOk} className="btn2">
+        <p className="my-3">{error}</p>
+        <button onClick={handleOk} className="btn2 my-1">
           Ok
         </button>
       </div>
@@ -91,7 +91,6 @@ export default function AdDetails({
           Edit
         </button>
       )}
-      <br></br>
       {/* For Delete, we don't use <Link /> because <Link /> only sends the GET request */}
       {!isDeleting && (
         <button
@@ -102,7 +101,6 @@ export default function AdDetails({
           Delete
         </button>
       )}
-      <br></br>
       {isDeleting && (
         <div>
           <div>Are you sure you want to delete the ad?</div>

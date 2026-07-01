@@ -346,7 +346,9 @@ export default function EditProfile({
               <strong>✖ New passwords do not match</strong>
             </div>
           )}
-                  <button type="submit" className="btn1 align-self-center my-4">
+                  <button type="submit" className="btn1 align-self-center my-4"
+                  disabled={!username || !message || !currentPassword || !newPassword || !confirmNewPassword}
+                  >
                     Save Changes
                   </button>
                 </form>
