@@ -172,46 +172,71 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Rock - Scissors - Paper
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Rock - Scissors - Paper
-              </button>
-            )}
-            {isGameStarted &&
-              !isTogglingLevel &&
-              (normalMode || extremelySuperDifficultMode) &&
-              !isTogglingHomePage &&
-              showImages &&
-              !isTogglingReset && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${
-                  extremelySuperDifficultMode
-                    ? "Normal Mode"
-                    : "extremely-Super-Difficult Mode"
-                }`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingHomePage &&
-              !isTogglingReset &&
-              showImages &&
-              (normalMode || extremelySuperDifficultMode) &&
-              !isTogglingLevel &&
-              score !== 0 && (
-                <button className="btn3" onClick={() => toggleReset()}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              showImages &&
-              !isTogglingLevel && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "240px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Rock - Scissors - Paper
+                    </button>
+                  )}
+              </div>
+              <div className="col-xl-3 align-self-center">
+                {!isTogglingLevel &&
+                  !isTogglingHomePage &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "340px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        !isGameStarted ||
+                        (!normalMode && !extremelySuperDifficultMode) ||
+                        !showImages
+                      }
+                    >{`${normalMode ? "Switch to Extremely-Super-Difficult Mode" : extremelySuperDifficultMode ? "Switch to Normal Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-xl-2 offset-xl-1 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "150px" }}
+                      onClick={() => toggleReset()}
+                      disabled={
+                        !isGameStarted ||
+                        !showImages ||
+                        (!normalMode && !extremelySuperDifficultMode) ||
+                        score === 0
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-xl-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "170px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={!showImages}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && (
             <ConfirmationBox
@@ -377,6 +402,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

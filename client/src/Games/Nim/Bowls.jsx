@@ -667,7 +667,7 @@ export default function Bowls({
     <div>
       <div className="container">
         <div className="row">
-          <div className="col-lg-8 offset-2">
+          <div className="col-lg-8 offset-lg-2">
             {isFillingTheBowlsByUserFinished &&
               !isFillingTheBowlsByPejmanFinished &&
               !isTogglingReset &&
@@ -850,9 +850,9 @@ export default function Bowls({
           </div>
           <div className="col-lg-2 d-none d-lg-block">
             {!isTogglingReset && !isTogglingHomePage && (
-              <div style={{ fontSize: isWin === "" ? "20px" : "15px" }}>
+              <div style={{ fontSize: isWin === "" ? "15px" : "12px" }}>
                 {allTurns.map((b, i) => (
-                  <div key={i} style={{ marginTop: "10px" }}>
+                  <div key={i}>
                     <div>
                       <strong>{`Move ${allTurns.indexOf(b) + 1}: `}</strong>
                     </div>

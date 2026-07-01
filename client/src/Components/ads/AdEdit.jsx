@@ -93,6 +93,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
   };
 
   const cancelSubmit = () => {
+    setError(null);
     setIsAdEditing(false);
     navigate(`/ads/${id}`);
   };
@@ -192,6 +193,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
                 type="submit"
                 className="btn1 align-self-center mb-3 mt-2"
                 style={{ margin: "7px" }}
+                disabled={error}
               >
                 Update Ad
               </button>

@@ -83,7 +83,7 @@ export default function AdDetails({
       <p>{ad.text}</p>
       {ad.images &&
         ad.images.map((img) => (
-          <img key={img._id} src={img.url} alt="" height="70px" />
+          <img key={img._id} src={img.url} alt="" height="70px" style={{margin:"10px"}} />
         ))}
       <br></br>
       {!isDeleting && (

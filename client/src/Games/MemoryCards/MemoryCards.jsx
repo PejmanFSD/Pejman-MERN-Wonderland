@@ -312,27 +312,48 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Memory Cards
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Memory Cards
-              </button>
-            )}
-            {showBoard &&
-              isWin === "" &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              (easyMode || normalMode || hardMode) &&
-              seconds > 0 && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn3" onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-md-4 align-self-center">
+                {!isTogglingHomePage && !isTogglingReset && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={handleAboutPage}
+                  >
+                    About Memory Cards
+                  </button>
+                )}
+              </div>
+              <div className="col-md-4 align-self-center">
+                {!isTogglingReset && !isTogglingHomePage && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={toggleReset}
+                    disabled={
+                      !showBoard ||
+                      isWin !== "" ||
+                      (!easyMode && !normalMode && !hardMode) ||
+                      seconds < 1
+                    }
+                  >
+                    Reset the Game
+                  </button>
+                )}
+              </div>
+              <div className="col-md-4 align-self-center">
+                {!isTogglingHomePage && !isTogglingReset && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={() => toggleHomePage()}
+                  >
+                    Back to home page
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           {isTogglingReset && (
             <div>
@@ -457,59 +478,78 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          {isGameStarted &&
+            isWin === "" &&
+            isTimerRunning &&
+            !isTogglingHomePage &&
+            !isTogglingReset && (
+              <button
+                className="btn1 my-1"
+                onClick={add15Seconds}
+                disabled={!addSecondsChance}
+                style={{ position: "relative", top: "10px" }}
+              >
+                Add 15 seconds
+              </button>
+            )}
           <div className="four-buttons-container">
-            {isGameStarted &&
-              isWin === "" &&
-              isTimerRunning &&
-              !isTogglingHomePage &&
-              !isTogglingReset && (
-                <button
-                  className="btn1"
-                  onClick={add15Seconds}
-                  disabled={!addSecondsChance}
-                >
-                  Add 15 seconds
-                </button>
-              )}
-            {isGameStarted &&
-              isWin === "" &&
-              showBoard &&
-              !isTogglingHomePage &&
-              !isTogglingReset && (
-                <button
-                  className="btn1"
-                  onClick={seeAllCards}
-                  disabled={!seeAllCardsChanceTemp || !seeAllCardsChancePer}
-                >
-                  See all cards for 3 seconds
-                </button>
-              )}
-            {isGameStarted &&
-              isWin === "" &&
-              showBoard &&
-              !isTogglingHomePage &&
-              !isTogglingReset && (
-                <button
-                  className="btn1"
-                  onClick={findMatch1}
-                  disabled={!findMatchChance1 || visibleCards.length !== 1}
-                >
-                  Reveal the identical card
-                </button>
-              )}
-            {isGameStarted &&
-              isWin === "" &&
-              showBoard &&
-              !isTogglingHomePage &&
-              !isTogglingReset && (
-                <button
-                  className="btn1"
-                  onClick={findMatch2}
-                  disabled={!findMatchChance2 || visibleCards.length !== 1}
-                >
-                  Reveal the identical card
-                </button>
-              )}
+            <div className="four-buttons-container">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-4 align-self-center">
+                    {isGameStarted &&
+                      isWin === "" &&
+                      showBoard &&
+                      !isTogglingHomePage &&
+                      !isTogglingReset && (
+                        <button
+                          className="btn1 my-1"
+                          onClick={seeAllCards}
+                          disabled={
+                            !seeAllCardsChanceTemp || !seeAllCardsChancePer
+                          }
+                        >
+                          See all cards for 3 seconds
+                        </button>
+                      )}
+                  </div>
+                  <div className="col-md-4 align-self-center">
+                    {isGameStarted &&
+                      isWin === "" &&
+                      showBoard &&
+                      !isTogglingHomePage &&
+                      !isTogglingReset && (
+                        <button
+                          className="btn1 my-1"
+                          onClick={findMatch1}
+                          disabled={
+                            !findMatchChance1 || visibleCards.length !== 1
+                          }
+                        >
+                          Reveal the identical card
+                        </button>
+                      )}
+                  </div>
+                  <div className="col-md-4 align-self-center">
+                    {isGameStarted &&
+                      isWin === "" &&
+                      showBoard &&
+                      !isTogglingHomePage &&
+                      !isTogglingReset && (
+                        <button
+                          className="btn1 my-1"
+                          onClick={findMatch2}
+                          disabled={
+                            !findMatchChance2 || visibleCards.length !== 1
+                          }
+                        >
+                          Reveal the identical card
+                        </button>
+                      )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           {isGameStarted && (
             <Board

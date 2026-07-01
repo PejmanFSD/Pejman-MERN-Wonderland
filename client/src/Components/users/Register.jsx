@@ -122,11 +122,11 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
     checkPassword(password);
   }, [password]);
   return (
-    <div className="cause" style={{ fontSize: "15px" }}>
+    <div className="cause" style={{ fontSize: "15px", marginBottom: "20px" }}>
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-5">
-            <form className="card p-4 shadow mt-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
+            <form className="card p-4 shadow mt-3 mb-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
               <h1 className="eater" style={{ fontSize: "40px" }}>
                 Sign Up!
               </h1>
@@ -220,7 +220,13 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
                   }}
                 />
               </div>
-              <div class="form-group" style={{ marginTop: "10px" }}>
+              {password && confirmPassword && password !== confirmPassword && (
+                <div style={{ color: "gray", marginTop: "10px" }}>✖ Passwords do not match</div>
+              )}
+              {password && confirmPassword && password === confirmPassword && (
+                <div style={{ color: "black", marginTop: "10px" }}>✔ Passwords match</div>
+              )}
+              <div class="form-group" style={{ marginTop: "5px" }}>
                 <label htmlFor="message">Message:</label>
                 <div>
                   <textarea
@@ -285,17 +291,11 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
                   password === "" ||
                   message === ""
                 }
-                className="btn1 align-self-center mb-3"
-                style={{ marginTop: "15px" }}
+                className="btn1 align-self-center my-2 mt-4"
+                // style={{ marginTop: "25px" }}
               >
                 Sign Up
               </button>
-              {password && confirmPassword && password !== confirmPassword && (
-                <p style={{ color: "gray" }}>✖ Passwords do not match</p>
-              )}
-              {password && confirmPassword && password === confirmPassword && (
-                <p style={{ color: "black" }}>✔ Passwords match</p>
-              )}
               {error && <p style={{ color: "red" }}>{error}</p>}
             </form>
           </div>

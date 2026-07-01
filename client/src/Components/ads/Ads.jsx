@@ -42,7 +42,7 @@ export default function Ads({
   };
   const currentAd = ads[idx];
   return (
-    <div>
+    <div style={{position: "relative", top: "-20px"}}>
       <Ad
         adKey={currentAd._id}
         adCompany={currentAd.company}
@@ -58,14 +58,14 @@ export default function Ads({
         error={error}
       />
       {ads.length > 1 && (
-        <div style={{ marginTop: "4px" }}>
+        <div style={{ marginTop: "10px" }}>
           <button
             onClick={handlePrevious}
             disabled={error}
             className="btn2"
             style={{ marginRight: "5px", width: "40px" }}
           >
-            &#8592;
+            {"<"}
           </button>
           <button
             onClick={handleNext}
@@ -73,7 +73,7 @@ export default function Ads({
             className="btn2"
             style={{ marginLeft: "5px", width: "40px" }}
           >
-            &#8594;
+            {">"}
           </button>
         </div>
       )}

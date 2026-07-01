@@ -210,47 +210,51 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Capitals
           </h2>
-          <div className="four-buttons-container">
+<div className="container">
+<div className="row">
+<div className="col-lg-3 align-self-center">
             {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
+              <button className="btn3 my-1" style={{width: "200px"}} onClick={handleAboutPage}>
                 About Capitals
               </button>
             )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isTogglingLevel &&
+</div>
+<div className="col-lg-3 align-self-center">
+            {!isTogglingLevel &&
               !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isInputEmpty && (
+              !isTogglingHomePage && (
                 <button
-                  className="btn3"
+                  className="btn3 my-1"
+                  style={{width: "200px"}}
                   onClick={() => toggleLevel()}
-                >{`Switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }`}</button>
+                  disabled={!isGameStarted || (!easyMode && !normalMode) || isInputEmpty}
+                >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
               )}
-            {isGameStarted &&
-              show &&
-              (easyMode || normalMode) &&
-              !isTogglingReset &&
+</div>
+<div className="col-lg-3 align-self-center">
+            {!isTogglingReset &&
               !isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isInputEmpty &&
-              isWin === "" &&
-              seconds > 0 && (
-                <button className="btn3" onClick={() => toggleReset()}>
+              !isTogglingLevel && (
+                <button className="btn3 my-1" style={{width: "200px"}} onClick={() => toggleReset()}
+                disabled={!isGameStarted || (!easyMode && !normalMode) || isInputEmpty || isWin !== "" || seconds < 1 || !show}
+                >
                   Reset the game
                 </button>
               )}
+</div>
+<div className="col-lg-3 align-self-center">
             {!isTogglingReset &&
               !isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isInputEmpty && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
+              !isTogglingLevel &&(
+                <button className="btn3 my-1" style={{width: "200px"}} onClick={() => toggleHomePage()}
+                disabled={isInputEmpty}
+                >
                   Back to home page
                 </button>
               )}
-          </div>
+</div>
+</div>
+</div>
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
             <ConfirmationBox
               question={`Are you sure you want to switch to ${
@@ -473,6 +477,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

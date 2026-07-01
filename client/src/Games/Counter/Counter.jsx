@@ -217,43 +217,68 @@ export default function Counter({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Counter
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Counter
-              </button>
-            )}
-            {(easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button
-                  className="btn3"
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Counter
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        (!easyMode && !normalMode) || finalMessage !== ""
+                      }
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={
+                        !isGameStarted ||
+                        finalMessage !== "" ||
+                        (!easyMode && !normalMode)
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={finalMessage !== ""}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
             <div>

@@ -1458,47 +1458,72 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Reversi
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              isGameStarted && (
-                <button className="btn3" onClick={handleAboutPage}>
-                  About Reversi
-                </button>
-              )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" &&
-              !isIdenticalColor && (
-                <button className="btn3" onClick={() => toggleLevel()}>
-                  {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
-                </button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) &&
-              !isIdenticalColor && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {isGameStarted &&
-              !isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              finalMessage === "" &&
-              !isIdenticalColor && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingHomePage &&
+                  finalMessage === "" &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Reversi
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  finalMessage === "" && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={(!easyMode && !normalMode) || isIdenticalColor}
+                    >
+                      {`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  finalMessage === "" &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={(!easyMode && !normalMode) || isIdenticalColor}
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  finalMessage === "" && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={isIdenticalColor}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
             <div>

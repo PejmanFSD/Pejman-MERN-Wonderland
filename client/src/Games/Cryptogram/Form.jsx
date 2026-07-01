@@ -164,7 +164,7 @@ export default function Form({
       {isLoading ? (
         <h3 style={{ color: "gray" }}>Loading ...</h3>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{marginTop: "15px"}}>
           {adviceArray.map((a) =>
             Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
               Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===

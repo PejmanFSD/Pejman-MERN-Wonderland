@@ -394,40 +394,70 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Puzzle
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Puzzle
-              </button>
-            )}
-            {(easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Puzzle
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        !isGameStarted ||
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== ""
+                      }
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={
+                        !isGameStarted ||
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== ""
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={finalMessage !== ""}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
             <div>
@@ -559,13 +589,14 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             )}
           <div className="container">
             <div className="row">
-              <div className="col-md-3 offset-3">
+              <div className="col-xl-3 offset-xl-3">
                 {isGameStarted &&
                   isImageGroupChosen &&
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage && (
                     <img
+                      // className="my-3"
                       src={mainImage}
                       style={{
                         width: "260px",
@@ -579,7 +610,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     />
                   )}
               </div>
-              <div className="col-md-3">
+              <div className="col-xl-3">
                 {isGameStarted &&
                   isImageGroupChosen &&
                   !isTogglingReset &&
@@ -707,6 +738,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

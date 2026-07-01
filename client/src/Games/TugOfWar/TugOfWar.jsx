@@ -2114,58 +2114,78 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Tug of War
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              isGameStarted && (
-                <button className="btn3" onClick={handleAboutPage}>
-                  About Tug of War
-                </button>
-              )}
-            {(easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" &&
-              isGameStarted && (
-                <button
-                  className="btn3"
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                  disabled={dice === 0}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) &&
-              isGameStarted && (
-                <button
-                  className="btn3"
-                  onClick={toggleReset}
-                  disabled={dice === 0}
-                >
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              finalMessage === "" &&
-              isGameStarted && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleHomePage()}
-                  disabled={dice === 0}
-                >
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset &&
+                  isGameStarted && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Tug of War
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  isGameStarted && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        dice === 0 ||
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== ""
+                      }
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={
+                        dice === 0 ||
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== ""
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  isGameStarted && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={
+                        dice === 0 ||
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== ""
+                      }
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
             <div>

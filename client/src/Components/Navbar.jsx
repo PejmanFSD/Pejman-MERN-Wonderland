@@ -87,6 +87,18 @@ export default function Navbar({
     setIsCreatingAd(true);
     navigate("/newAd");
   };
+  const handleHomePage = () => {
+    setError(null);
+    navigate("/");
+  };
+  const handleAboutWonderland = () => {
+    setError(null);
+    navigate("/about-wonderland");
+  };
+  const handleLogin = () => {
+    setError(null);
+    navigate("/login");
+  }
   // Fetching the total number of the registered users:
   useEffect(() => {
     const fetchUserCount = async () => {
@@ -98,14 +110,23 @@ export default function Navbar({
   }, []);
   return (
     <header>
-      <h1 className="eater">{`Pejman-MERN-Wonderland`}</h1>
+      <h1
+        className="eater py-3"
+        style={{
+          color: "black",
+          backgroundColor: "var(--primary)",
+          border: "2px solid black",
+        }}
+      >{`Pejman-MERN-Wonderland`}</h1>
       <div
         className="four-buttons-container justify-content-around py-3"
         style={{
           marginTop: "10px",
           marginBottom: "10px",
           backgroundColor: "var(--background)",
-          border: "2px solid var(--secondary)",
+          border: "2px solid black",
+          position: "relative",
+          top: "-12px",
         }}
       >
         {!gameUrls.includes(location.pathname) &&
@@ -115,13 +136,57 @@ export default function Navbar({
           !isAdEditing &&
           !isCreatingAd &&
           !error && (
-            <div className="cause d-none d-md-block">
+            <div
+              className="cause d-none d-md-block"
+              style={{ position: "relative", top: "3px" }}
+            >
               Number of registered users: <strong>{userCount}</strong>
             </div>
           )}
-        {currentUser && !isLoggingOut && !error && (
-          <div className="cause" style={{ fontSize: "20px" }}>
-            Welcome, <strong>{currentUser.username}</strong>!
+        {currentUser &&
+          !isLoggingOut &&
+          !error &&
+          !gameUrls.includes(location.pathname) && (
+            <div
+              className="cause"
+              style={{ fontSize: "20px", position: "relative", top: "-2px" }}
+            >
+              Welcome, <strong>{currentUser.username}</strong>!
+            </div>
+          )}
+        {currentUser &&
+          !isLoggingOut &&
+          !error &&
+          gameUrls.includes(location.pathname) && (
+            <div
+              className="cause"
+              style={{ fontSize: "20px", position: "relative", top: "-2px" }}
+            >
+              You can win this game <strong>{currentUser.username}</strong>!
+            </div>
+          )}
+        {!currentUser && !isLoggingOut && !error && (
+          <div
+            className="cause"
+            style={{ fontSize: "20px", position: "relative", top: "-2px" }}
+          >
+            Welcome!
+          </div>
+        )}
+        {isLoggingOut && (
+          <div
+            className="cause"
+            style={{ fontSize: "40px", position: "relative", top: "-2px" }}
+          >
+            &#128533;
+          </div>
+        )}
+        {error && (
+          <div
+            className="cause"
+            style={{ fontSize: "40px", position: "relative", top: "-2px" }}
+          >
+            &#128533;
           </div>
         )}
         {!gameUrls.includes(location.pathname) &&
@@ -131,7 +196,10 @@ export default function Navbar({
           !isAdEditing &&
           !isCreatingAd &&
           !error && (
-            <div className="cause d-none d-md-block">
+            <div
+              className="cause d-none d-md-block"
+              style={{ position: "relative", top: "1px" }}
+            >
               {`Theme: `}
               <select
                 value={theme}
@@ -139,7 +207,7 @@ export default function Navbar({
                 style={{
                   backgroundColor: "var(--background)",
                   textAlign: "center",
-                  width: "180px",
+                  width: "130px",
                   height: "25px",
                   borderRadius: "5px",
                 }}
@@ -161,7 +229,15 @@ export default function Navbar({
           )}
       </div>
       {/* "location.pathname" is the path of the current page */}
-      <nav className="navbar navbar-expand-md navbar-light navbar-light">
+      <nav
+        className="navbar navbar-expand-md navbar-light navbar-light py-3"
+        style={{
+          // backgroundColor: "var(--primary)",
+          // border: "2px solid black",
+          position: "relative",
+          top: "-20px",
+        }}
+      >
         <div className="container-fluid justify-content-center">
           <div className="d-none d-md-flex flex-fill"></div>
           <div className="d-flex flex-row align-items-center justify-content-center gap-2 flex-wrap">
@@ -173,7 +249,14 @@ export default function Navbar({
               !isAdEditing &&
               !isCreatingAd &&
               !error && (
-                <button onClick={() => navigate("/")} className="cause btn1">
+                <button
+                  onClick={handleHomePage}
+                  className="cause btn1"
+                  style={{
+                    color: "var(--background)",
+                    backgroundColor: "var(--secondary)",
+                  }}
+                >
                   Home Page
                 </button>
               )}
@@ -189,6 +272,10 @@ export default function Navbar({
                 <button
                   onClick={() => navigate("/profile")}
                   className="cause btn1"
+                  style={{
+                    color: "var(--background)",
+                    backgroundColor: "var(--secondary)",
+                  }}
                 >
                   My Profile
                 </button>
@@ -202,27 +289,39 @@ export default function Navbar({
               !isCreatingAd &&
               !error && (
                 <button
-                  onClick={() => navigate("/about-wonderland")}
+                  onClick={handleAboutWonderland}
                   className="cause btn1"
+                  style={{
+                    color: "var(--background)",
+                    backgroundColor: "var(--secondary)",
+                  }}
                 >
                   About Wonderland
                 </button>
               )}
-            <button
-              className="navbar-toggler mx-2"
-              style={{
-                backgroundColor: "var(--primary)",
-                border: "2px solid black",
-              }}
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#mainNavbar"
-            >
-              <span
-                className="navbar-toggler-icon"
-                style={{ fontSize: "12px" }}
-              ></span>
-            </button>
+            {!gameUrls.includes(location.pathname) &&
+              !isLoggingOut &&
+              !isDeleting &&
+              !isProfileEditing &&
+              !isAdEditing &&
+              !isCreatingAd &&
+              !error && (
+                <button
+                  className="navbar-toggler mx-2"
+                  style={{
+                    backgroundColor: "var(--primary)",
+                    border: "2px solid black",
+                  }}
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#mainNavbar"
+                >
+                  <span
+                    className="navbar-toggler-icon"
+                    style={{ fontSize: "12px" }}
+                  ></span>
+                </button>
+              )}
             <div
               className="collapse navbar-collapse justify-content-center"
               id="mainNavbar"
@@ -241,6 +340,10 @@ export default function Navbar({
                     <button
                       onClick={() => navigate("/users")}
                       className="cause btn1"
+                      style={{
+                        color: "var(--background)",
+                        backgroundColor: "var(--secondary)",
+                      }}
                     >
                       All users
                     </button>
@@ -255,7 +358,14 @@ export default function Navbar({
                   !isAdEditing &&
                   !isCreatingAd &&
                   !error && (
-                    <button onClick={renderCreateAdPage} className="cause btn1">
+                    <button
+                      onClick={renderCreateAdPage}
+                      className="cause btn1"
+                      style={{
+                        color: "var(--background)",
+                        backgroundColor: "var(--secondary)",
+                      }}
+                    >
                       Create new Ad
                     </button>
                   )}
@@ -271,6 +381,10 @@ export default function Navbar({
                     <button
                       onClick={() => navigate("/register")}
                       className="cause btn1"
+                      style={{
+                        color: "var(--background)",
+                        backgroundColor: "var(--secondary)",
+                      }}
                     >
                       Register
                     </button>
@@ -287,6 +401,10 @@ export default function Navbar({
                     <button
                       onClick={() => navigate("/login")}
                       className="cause btn1"
+                      style={{
+                        color: "var(--background)",
+                        backgroundColor: "var(--secondary)",
+                      }}
                     >
                       Login
                     </button>
@@ -299,7 +417,14 @@ export default function Navbar({
                   !isAdEditing &&
                   !isCreatingAd &&
                   !error && (
-                    <button onClick={handleLogout} className="cause btn1">
+                    <button
+                      onClick={handleLogout}
+                      className="cause btn1"
+                      style={{
+                        color: "var(--background)",
+                        backgroundColor: "var(--secondary)",
+                      }}
+                    >
                       Logout
                     </button>
                   )}
@@ -310,20 +435,20 @@ export default function Navbar({
         </div>
       </nav>
       {isLoggingOut && !gameUrls.includes(location.pathname) && (
-        <div>
+        <div style={{position: "relative", top: "-35px"}}>
           <div>Are you sure you want to logout?</div>
           <div>
             <button
               onClick={handleLogoutYes}
               style={{ margin: "3px" }}
-              className="cause btn2"
+              className="cause btn2 mt-2"
             >
               Yes
             </button>
             <button
               onClick={handleLogoutNo}
               style={{ margin: "3px" }}
-              className="cause btn2"
+              className="cause btn2 mt-2"
             >
               No
             </button>

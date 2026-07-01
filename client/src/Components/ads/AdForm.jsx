@@ -84,6 +84,7 @@ export default function AdForm({
   };
 
   const cancelSubmit = () => {
+    setError(null);
     setIsCreatingAd(false);
     navigate("/");
   };
@@ -160,7 +161,7 @@ export default function AdForm({
                   }}
                 />
               </div>
-              <button className="btn1 align-self-center mb-3 mt-2">
+              <button className="btn1 align-self-center mb-3 mt-2" disabled={error}>
                 Create Ad
               </button>
               {error && <div style={{ color: "red" }}>{error}</div>}
@@ -171,7 +172,7 @@ export default function AdForm({
       <button
         onClick={cancelSubmit}
         className="btn1 align-self-center mt-5"
-        style={{ marginTop: "15px", marginBottom: "35px" }}
+        style={{ marginTop: "10px", marginBottom: "35px" }}
       >
         Cancel
       </button>

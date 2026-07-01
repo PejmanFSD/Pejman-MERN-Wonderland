@@ -67,6 +67,18 @@ table {
   transform: translateY(-2px);
 }
 
+.btn3:disabled,
+.btn3[disabled] {
+  background-color: var(--background);
+  color: var(--secondary);
+  border-color: #000000;
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 .eater {
   font-family: "Eater", cursive;
 }
@@ -157,7 +169,7 @@ body {
 .flash-message {
   position: fixed;
   top: 20px;
-  left: 7%;
+  left: 25%;
   transform: translateX(-50%);
   background-color: var(--secondary);
   color: white;

@@ -342,50 +342,71 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Snake
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              direction.x === 0 &&
-              direction.y === 0 && (
-                <button className="btn3" onClick={handleAboutPage}>
-                  About Snake
-                </button>
-              )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" &&
-              direction.x === 0 &&
-              direction.y === 0 && (
-                <button className="btn3" onClick={() => toggleLevel()}>
-                  {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
-                </button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) &&
-              direction.x === 0 &&
-              direction.y === 0 && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              direction.x === 0 &&
-              direction.y === 0 && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset &&
+                  direction.x === 0 &&
+                  direction.y === 0 && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Snake
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  direction.x === 0 &&
+                  direction.y === 0 && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={!isGameStarted || (!easyMode && !normalMode) || finalMessage !== ""}
+                    >
+                      {`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={!isGameStarted || (!easyMode && !normalMode) || finalMessage !== ""}
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  direction.x === 0 &&
+                  direction.y === 0 && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
+
           {isTogglingLevel && finalMessage === "" && (
             <div>
               <ConfirmationBox
@@ -494,7 +515,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   gap: "4px",
                 }}
               >
-                {new Array(20)
+                {new Array(10)
                   .fill(null)
                   .map((s, i) =>
                     i < userPoint ? (
@@ -510,10 +531,42 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   gap: "4px",
                 }}
               >
-                {new Array(20)
+                {new Array(10)
+                  .fill(null)
+                  .map((s, i) =>
+                    i + 10 < userPoint ? (
+                      <div key={i}>⚫</div>
+                    ) : (
+                      <div key={i}>⚪</div>
+                    ),
+                  )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                }}
+              >
+                {new Array(10)
                   .fill(null)
                   .map((s, i) =>
                     i + 20 < userPoint ? (
+                      <div key={i}>⚫</div>
+                    ) : (
+                      <div key={i}>⚪</div>
+                    ),
+                  )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "4px",
+                }}
+              >
+                {new Array(10)
+                  .fill(null)
+                  .map((s, i) =>
+                    i + 30 < userPoint ? (
                       <div key={i}>⚫</div>
                     ) : (
                       <div key={i}>⚪</div>

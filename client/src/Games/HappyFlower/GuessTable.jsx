@@ -15,6 +15,12 @@ export default function GuessTable({
   setUserMistakes,
   isWin,
   seconds,
+  normalMode,
+  isTogglingReset,
+  isTogglingHomePage,
+  isTogglingLevel,
+  title,
+  handleReset,
 }) {
   const addChar = (e) => {
     if (
@@ -33,18 +39,18 @@ export default function GuessTable({
     <div style={{ marginTop: "10px" }}>
       <div className="container">
         <div className="row">
-          <div className="col-md-6 offset-md-2 align-self-center">
+          <div className="col-md-5 offset-md-2 align-self-center">
             <div>
               {new Array(word.length).fill(null).map((letter, idx) => (
                 <div
-                  className="px-3 py-3"
+                  className="px-3 py-2"
                   style={{
                     borderRadius: "10px",
                     width: "35px",
                     display: "inline",
                     border: word[idx] !== " " && "1px solid black",
                     position: "relative",
-                    top: "20px",
+                    top: "-15px",
                     margin: "5px",
                   }}
                   key={idx}
@@ -68,8 +74,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -98,8 +104,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -128,8 +134,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -158,8 +164,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -188,8 +194,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -218,8 +224,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -248,8 +254,8 @@ export default function GuessTable({
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    position: "relative",
-                    top: "50px",
+                    // position: "relative",
+                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -268,7 +274,7 @@ export default function GuessTable({
             <div>
               {new Array(5).fill(null).map((letter, idx) => (
                 <div
-                  className="px-4 py-3"
+                  className="px-4 py-2"
                   style={{
                     borderRadius: "10px",
                     width: "35px",
@@ -276,7 +282,7 @@ export default function GuessTable({
                     display: "inline",
                     border: "1px solid black",
                     position: "relative",
-                    top: "80px",
+                    top: "15px",
                     color: "red",
                   }}
                   key={idx}
@@ -286,12 +292,57 @@ export default function GuessTable({
               ))}
             </div>
           </div>
-          <div className="col-md-2 align-self-center">
+          <div
+            className="col-md-4 align-self-center"
+            style={{ position: "relative", top: "30px" }}
+          >
+            <div>
+              {normalMode &&
+                seconds < 1 &&
+                !isTogglingReset &&
+                !isTogglingHomePage &&
+                !isTogglingLevel && (
+                  <h2 className="fasterOne" style={{ fontSize: "25px" }}>
+                    Time's Up!
+                  </h2>
+                )}
+              {isWin === false && !isTogglingHomePage && (
+                <div>
+                  <h2 className="fasterOne" style={{ fontSize: "30px" }}>
+                    You Lose!
+                  </h2>
+                  <h4>{`The name of the ${title} is "${word}"`}</h4>
+                  <div>Try again?</div>
+                  <button
+                    className="btn2"
+                    onClick={handleReset}
+                    style={{ marginTop: "10px" }}
+                  >
+                    Ok
+                  </button>
+                </div>
+              )}
+              {isWin === true && !isTogglingHomePage && (
+                <div>
+                  <h2 className="fasterOne" style={{ fontSize: "30px" }}>
+                    You Win!
+                  </h2>
+                  <div>Play again?</div>
+                  <button
+                    className="btn2"
+                    onClick={handleReset}
+                    style={{ marginTop: "10px" }}
+                  >
+                    Ok
+                  </button>
+                </div>
+              )}
+            </div>
             <img
               style={{
                 position: "relative",
-                top: "70px",
-                width: "220px",
+                top: "5px",
+                width: isWin === "" ? "250px" : "110px",
               }}
               src={
                 isWin === true

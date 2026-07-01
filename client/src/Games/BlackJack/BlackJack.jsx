@@ -412,44 +412,70 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             BlackJack
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About BlackJack
-              </button>
-            )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button
-                  className="btn3"
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About BlackJack
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        !isGameStarted ||
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== ""
+                      }
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={
+                        !isGameStarted ||
+                        finalMessage !== "" ||
+                        (!easyMode && !normalMode)
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={finalMessage !== ""}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingReset && finalMessage === "" && (
             <div>
@@ -513,7 +539,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 <img
                   src={StartDeck}
                   style={{ marginTop: "15px" }}
-                  height="400px"
+                  height="390px"
                   alt=""
                 />
               </div>
@@ -530,7 +556,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             )}
           <div className="container">
             <div className="row">
-              <div className="col-md-3">
+              <div className="col-lg-3 d-none d-lg-block">
                 {/* Deck */}
                 {isGameStarted &&
                   !isTogglingReset &&
@@ -559,7 +585,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     ),
                   )}
               </div>
-              <div className="col-md-6">
+              <div className="col-lg-6">
                 {/* Pejman's chips */}
                 {isGameStarted &&
                   !isTogglingReset &&
@@ -612,11 +638,24 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage && (
-                    <div style={{ marginBottom: "20px" }}>
+                    <div
+                      className="my-1"
+                      style={{
+                        margin: "auto",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                        backgroundColor: "var(--background)",
+                        border: "1px solid black",
+                        height: "110px",
+                        width: "420px",
+                      }}
+                    >
                       {new Array(2 * bet).fill(null).map((c, i) => (
                         <img
                           src={chips[0]}
-                          style={{ marginTop: "16px" }}
+                          style={{ paddingLeft: "2px", paddingRight: "2px" }}
                           height="45px"
                           alt=""
                           key={i}
@@ -1161,7 +1200,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div>
                       <div>There's no card left!</div>
                       <button
-                        className="btn1"
+                        className="btn1 my-2"
                         onClick={ShuffleCardsAndContinue}
                       >
                         Shuffle the cards and continue the game
@@ -1169,7 +1208,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     </div>
                   )}
               </div>
-              <div className="col-md-3">
+              <div className="col-lg-3 d-none d-lg-block">
+                {/* <div className="col-sm-3 d-none d-sm-block"> */}
                 {/* Used Cards */}
                 {isGameStarted &&
                   !isTogglingReset &&

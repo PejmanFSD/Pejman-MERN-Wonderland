@@ -162,36 +162,61 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Happy Flower
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingReset && !isTogglingLevel && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Happy Flower
-              </button>
-            )}
-            {(easyMode || normalMode) &&
-              isWin === "" &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {(easyMode || normalMode) &&
-              isWin === "" &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <button className="btn3" onClick={() => toggleReset()}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingReset && !isTogglingHomePage && !isTogglingLevel && (
-              <button className="btn3" onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Happy Flower
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={(!easyMode && !normalMode) || isWin !== ""}
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleReset()}
+                      disabled={(!easyMode && !normalMode) || isWin !== ""}
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && !isTogglingHomePage && (
             <ConfirmationBox
@@ -256,54 +281,16 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
             {title} - {word} - {word.length} - {wordWithNoSpace} - {userGuess} -{" "}
             {isWin ? "T" : "F"}
           </div> */}
-          <div>
-            {normalMode &&
-              seconds < 1 &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel && (
-                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-                  Time's Up!
-                </h2>
-              )}
-            {isWin === false && !isTogglingHomePage && (
-              <div>
-                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-                  You Lose!
-                </h2>
-                <h3>{`The name of the ${title} is "${word}"`}</h3>
-                <div>Try again?</div>
-                <button
-                  className="btn2"
-                  onClick={handleReset}
-                  style={{ marginTop: "10px" }}
-                >
-                  Ok
-                </button>
-              </div>
-            )}
-            {isWin === true && !isTogglingHomePage && (
-              <div>
-                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-                  You Win!
-                </h2>
-                <div>Play again?</div>
-                <button
-                  className="btn2"
-                  onClick={handleReset}
-                  style={{ marginTop: "10px" }}
-                >
-                  Ok
-                </button>
-              </div>
-            )}
-          </div>
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                {isWin === "" && <div>{`Guess the name of the ${title}`}</div>}
+                {isWin === "" && (
+                  <div
+                    style={{ position: "relative", top: "-20px" }}
+                  >{`Guess the name of the ${title}`}</div>
+                )}
                 <GuessTable
                   word={word}
                   userGuess={userGuess}
@@ -312,6 +299,12 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
                   setUserMistakes={setUserMistakes}
                   isWin={isWin}
                   seconds={seconds}
+                  normalMode={normalMode}
+                  isTogglingReset={isTogglingReset}
+                  isTogglingHomePage={isTogglingHomePage}
+                  isTogglingLevel={isTogglingLevel}
+                  title={title}
+                  handleReset={handleReset}
                 />
               </div>
             )}
@@ -322,7 +315,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
               <button
                 className="btn1"
                 onClick={handleReviewSection}
-                style={{ position: "relative", top: "120px" }}
+                style={{ position: "relative", top: "40px" }}
               >
                 {showReviews
                   ? "Hide the Reviews Section"
@@ -334,12 +327,14 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted &&
             showReviews && (
-              <div style={{ position: "relative", top: "120px" }}>
+              <div style={{ position: "relative", top: "20px" }}>
                 <ReviewSection game="HappyFlower" currentUser={currentUser} />
               </div>
             )}
         </div>
       )}
+      <br />
+      <br />
     </div>
   );
 }

@@ -206,93 +206,107 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Guess Number
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button
-                className="btn3"
-                onClick={handleAboutPage}
-                disabled={
-                  isFirstDigitZero ||
-                  !isOneDigit ||
-                  isDigitNegative ||
-                  isDigitDecimal ||
-                  isDigitRepetitive ||
-                  !isInt ||
-                  isAlreadyGuessed ||
-                  isInputEmpty
-                }
-              >
-                About Guess Number
-              </button>
-            )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isWin &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              !isTogglingHomePage && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleLevel()}
-                  disabled={
-                    isFirstDigitZero ||
-                    !isOneDigit ||
-                    isDigitNegative ||
-                    isDigitDecimal ||
-                    isDigitRepetitive ||
-                    !isInt ||
-                    isAlreadyGuessed ||
-                    isInputEmpty
-                  }
-                >{`Switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }`}</button>
-              )}
-            {!isWin &&
-              userGuess[0] &&
-              chancesNum !== 0 &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              !isTogglingHomePage && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleReset()}
-                  disabled={
-                    isTogglingLevel ||
-                    isFirstDigitZero ||
-                    !isOneDigit ||
-                    isDigitNegative ||
-                    isDigitDecimal ||
-                    isDigitRepetitive ||
-                    !isInt ||
-                    isAlreadyGuessed ||
-                    isInputEmpty
-                  }
-                >
-                  Reset the Game
-                </button>
-              )}
-            {!isWin &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              !isTogglingHomePage && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleHomePage()}
-                  disabled={
-                    isFirstDigitZero ||
-                    !isOneDigit ||
-                    isDigitNegative ||
-                    isDigitDecimal ||
-                    isDigitRepetitive ||
-                    !isInt ||
-                    isAlreadyGuessed ||
-                    isInputEmpty
-                  }
-                >
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                      disabled={
+                        isFirstDigitZero ||
+                        !isOneDigit ||
+                        isDigitNegative ||
+                        isDigitDecimal ||
+                        isDigitRepetitive ||
+                        !isInt ||
+                        isAlreadyGuessed ||
+                        isInputEmpty
+                      }
+                    >
+                      About Guess Number
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingLevel &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        isFirstDigitZero ||
+                        !isOneDigit ||
+                        isDigitNegative ||
+                        isDigitDecimal ||
+                        isDigitRepetitive ||
+                        !isInt ||
+                        isAlreadyGuessed ||
+                        isInputEmpty ||
+                        !isGameStarted ||
+                        (!easyMode && !normalMode) ||
+                        isWin
+                      }
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingLevel &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleReset()}
+                      disabled={
+                        isTogglingLevel ||
+                        isFirstDigitZero ||
+                        !isOneDigit ||
+                        isDigitNegative ||
+                        isDigitDecimal ||
+                        isDigitRepetitive ||
+                        !isInt ||
+                        isAlreadyGuessed ||
+                        isInputEmpty ||
+                        isWin ||
+                        !userGuess[0] ||
+                        chancesNum === 0
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingLevel &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={
+                        isFirstDigitZero ||
+                        !isOneDigit ||
+                        isDigitNegative ||
+                        isDigitDecimal ||
+                        isDigitRepetitive ||
+                        !isInt ||
+                        isAlreadyGuessed ||
+                        isInputEmpty ||
+                        isWin
+                      }
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
             <ConfirmationBox

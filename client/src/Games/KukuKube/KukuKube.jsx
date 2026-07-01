@@ -151,44 +151,63 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Kuku Kube
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              isGameStarted && (
-                <button className="btn3" onClick={handleAboutPage}>
-                  About Kuku Kube
-                </button>
-              )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              isGameStarted && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) &&
-              isGameStarted && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              isGameStarted && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset &&
+                  isGameStarted && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Kuku Kube
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                    >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {isGameStarted &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel &&
+                  isGameStarted && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {(easyMode || normalMode) && isTogglingLevel && (
             <div>

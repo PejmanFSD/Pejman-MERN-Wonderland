@@ -4,6 +4,7 @@ import Home from "./Home";
 import Ads from "./Components/ads/Ads";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 import Register from "./Components/users/Register";
 import Login from "./Components/users/Login";
 import AdDetails from "./Components/ads/AdDetails";
@@ -126,7 +127,7 @@ function App() {
     }
   }, [theme]);
   return (
-    <div className="App">
+    <div className="App d-flex flex-column min-vh-100">
       {flash && <div className={`flash-message ${flash.type}`}>{flash}</div>}
       <BrowserRouter>
         <Navbar
@@ -517,6 +518,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Footer className="mt-auto" />
     </div>
   );
 }

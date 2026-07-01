@@ -110,7 +110,7 @@ export default function Card({
                 : Pejman
       }
       style={{
-        width: easyMode ? "150px" : normalMode ? "75px" : "60px",
+        width: easyMode ? "100px" : normalMode ? "95px" : "75px",
         border: "2px solid black",
         margin: "3px",
         pointerEvents:

@@ -444,42 +444,71 @@ export default function Maze({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Maze
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage &&
-              !isTogglingLevel &&
-              !isTogglingReset &&
-              !isGameStarted && (
-                <button className="btn3" onClick={handleAboutPage}>
-                  About Maze
-                </button>
-              )}
-            {(easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button className="btn3" onClick={() => toggleLevel()}>
-                  {`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}
-                </button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              finalMessage === "" && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                      disabled={isGameStarted}
+                    >
+                      About Maze
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={finalMessage !== ""}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        finalMessage !== "" || (!easyMode && !normalMode)
+                      }
+                    >
+                      {`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={
+                        finalMessage !== "" ||
+                        (!easyMode && !normalMode) ||
+                        !isGameStarted
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
             <div>
@@ -532,7 +561,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <button
-                className="btn1"
+                className="btn1 my-1"
                 onClick={handleStart}
                 style={{ marginTop: "15px" }}
               >

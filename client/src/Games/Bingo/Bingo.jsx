@@ -1586,26 +1586,45 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Bingo
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Bingo
-              </button>
-            )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              finalMessage === "" &&
-              userColor !== "" &&
-              !isTogglingHomePage && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn3" onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-4 align-self-center">
+                {!isTogglingHomePage && !isTogglingReset && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={handleAboutPage}
+                  >
+                    About Bingo
+                  </button>
+                )}
+              </div>
+              <div className="col-lg-4 align-self-center">
+                {!isTogglingReset && !isTogglingHomePage && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={toggleReset}
+                    disabled={
+                      !isGameStarted || finalMessage !== "" || userColor === ""
+                    }
+                  >
+                    Reset the Game
+                  </button>
+                )}
+              </div>
+              <div className="col-lg-4 align-self-center">
+                {!isTogglingHomePage && !isTogglingReset && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={() => toggleHomePage()}
+                  >
+                    Back to home page
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           {isTogglingReset && (
             <div>
@@ -1637,8 +1656,8 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 <div>Play again?</div>
                 <button
                   onClick={handlePlayAgain}
-                  className="btn2"
-                  style={{ margin: "7px" }}
+                  className="btn2 my-3"
+                  // style={{ margin: "7px" }}
                 >
                   Ok
                 </button>
@@ -1651,8 +1670,8 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 <div>Try again?</div>
                 <button
                   onClick={handlePlayAgain}
-                  className="btn2"
-                  style={{ margin: "7px" }}
+                  className="btn2 my-3"
+                  // style={{ margin: "7px" }}
                 >
                   Ok
                 </button>
@@ -1726,7 +1745,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 position: "relative",
                 top: "10px",
                 display: "grid",
-                gridTemplateColumns: "repeat(15, auto)",
+                gridTemplateColumns: "repeat(10, auto)",
                 justifyContent: "center",
                 marginTop: "15px",
               }}
@@ -1763,6 +1782,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               >
                 <strong>Pejman's boards:</strong>
               </div>
+              {/* <div className="container">
+        <div className="row">
+<div className="col-md-5 offset-md-2 align-self-center"> */}
               <div
                 style={{
                   display: "flex",
@@ -1772,28 +1794,41 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                   top: "5px",
                 }}
               >
-                {isGameStarted && (
-                  <PejmanBoard
-                    nums={pejman1Nums}
-                    selectedNums={selectedNums}
-                    finalMessage={finalMessage}
-                  />
-                )}
-                {isGameStarted && (
-                  <PejmanBoard
-                    nums={pejman2Nums}
-                    selectedNums={selectedNums}
-                    finalMessage={finalMessage}
-                  />
-                )}
-                {isGameStarted && (
-                  <PejmanBoard
-                    nums={pejman3Nums}
-                    selectedNums={selectedNums}
-                    finalMessage={finalMessage}
-                  />
-                )}
+                <div className="container">
+                  <div className="row">
+                    <div className="col-xl-2 offset-xl-3 col-sm-4 align-self-center my-2">
+                      {isGameStarted && (
+                        <PejmanBoard
+                          nums={pejman1Nums}
+                          selectedNums={selectedNums}
+                          finalMessage={finalMessage}
+                        />
+                      )}
+                    </div>
+                    <div className="col-xl-2 col-sm-4 align-self-center my-2">
+                      {isGameStarted && (
+                        <PejmanBoard
+                          nums={pejman2Nums}
+                          selectedNums={selectedNums}
+                          finalMessage={finalMessage}
+                        />
+                      )}
+                    </div>
+                    <div className="col-xl-2 col-sm-4 align-self-center my-2">
+                      {isGameStarted && (
+                        <PejmanBoard
+                          nums={pejman3Nums}
+                          selectedNums={selectedNums}
+                          finalMessage={finalMessage}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
+              {/* </div>
+</div>
+</div> */}
             </div>
           )}
           {youMissedMessage === true &&
@@ -1869,51 +1904,63 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                   top: "5px",
                 }}
               >
-                {isGameStarted && (
-                  <UserBoard
-                    nums={user1Nums}
-                    color={userColor}
-                    selectedNums={selectedNums}
-                    user1Nums={user1Nums}
-                    user2Nums={user2Nums}
-                    user3Nums={user3Nums}
-                    setUser1Nums={setUser1Nums}
-                    setUser2Nums={setUser2Nums}
-                    setUser3Nums={setUser3Nums}
-                    setYouMissedMessage={setYouMissedMessage}
-                    finalMessage={finalMessage}
-                  />
-                )}
-                {isGameStarted && (
-                  <UserBoard
-                    nums={user2Nums}
-                    color={userColor}
-                    selectedNums={selectedNums}
-                    user1Nums={user1Nums}
-                    user2Nums={user2Nums}
-                    user3Nums={user3Nums}
-                    setUser1Nums={setUser1Nums}
-                    setUser2Nums={setUser2Nums}
-                    setUser3Nums={setUser3Nums}
-                    setYouMissedMessage={setYouMissedMessage}
-                    finalMessage={finalMessage}
-                  />
-                )}
-                {isGameStarted && (
-                  <UserBoard
-                    nums={user3Nums}
-                    color={userColor}
-                    selectedNums={selectedNums}
-                    user1Nums={user1Nums}
-                    user2Nums={user2Nums}
-                    user3Nums={user3Nums}
-                    setUser1Nums={setUser1Nums}
-                    setUser2Nums={setUser2Nums}
-                    setUser3Nums={setUser3Nums}
-                    setYouMissedMessage={setYouMissedMessage}
-                    finalMessage={finalMessage}
-                  />
-                )}
+                <div className="container">
+                  <div className="row">
+                    <div className="col-xl-2 offset-xl-3 col-sm-4 align-self-center my-2">
+                      {isGameStarted && (
+                        <UserBoard
+                          nums={user1Nums}
+                          color={userColor}
+                          selectedNums={selectedNums}
+                          user1Nums={user1Nums}
+                          user2Nums={user2Nums}
+                          user3Nums={user3Nums}
+                          setUser1Nums={setUser1Nums}
+                          setUser2Nums={setUser2Nums}
+                          setUser3Nums={setUser3Nums}
+                          setYouMissedMessage={setYouMissedMessage}
+                          finalMessage={finalMessage}
+                        />
+                      )}
+                    </div>
+
+                    <div className="col-xl-2 col-sm-4 align-self-center my-2">
+                      {isGameStarted && (
+                        <UserBoard
+                          nums={user2Nums}
+                          color={userColor}
+                          selectedNums={selectedNums}
+                          user1Nums={user1Nums}
+                          user2Nums={user2Nums}
+                          user3Nums={user3Nums}
+                          setUser1Nums={setUser1Nums}
+                          setUser2Nums={setUser2Nums}
+                          setUser3Nums={setUser3Nums}
+                          setYouMissedMessage={setYouMissedMessage}
+                          finalMessage={finalMessage}
+                        />
+                      )}
+                    </div>
+
+                    <div className="col-xl-2 col-sm-4 align-self-center my-2">
+                      {isGameStarted && (
+                        <UserBoard
+                          nums={user3Nums}
+                          color={userColor}
+                          selectedNums={selectedNums}
+                          user1Nums={user1Nums}
+                          user2Nums={user2Nums}
+                          user3Nums={user3Nums}
+                          setUser1Nums={setUser1Nums}
+                          setUser2Nums={setUser2Nums}
+                          setUser3Nums={setUser3Nums}
+                          setYouMissedMessage={setYouMissedMessage}
+                          finalMessage={finalMessage}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -1940,6 +1987,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

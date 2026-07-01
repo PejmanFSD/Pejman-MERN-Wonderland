@@ -252,43 +252,66 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Triple Emoji Match
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Triple Emoji Match
-              </button>
-            )}
-            {(easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              isWin === "" && (
-                <button
-                  className="btn3"
-                  style={{
-                    display: "inline",
-                  }}
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              isWin === "" &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              (easyMode || normalMode) && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingHomePage &&
-              !isTogglingReset &&
-              !isTogglingLevel &&
-              isWin === "" && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "207px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Triple Emoji Match
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={(!easyMode && !normalMode) || isWin !== ""}
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      disabled={
+                        !isGameStarted ||
+                        isWin !== "" ||
+                        (!easyMode && !normalMode)
+                      }
+                      onClick={toggleReset}
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={isWin !== ""}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isTogglingLevel && isWin === "" && (
             <div>
@@ -341,20 +364,21 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
+
+          {normalMode &&
+            !isTogglingReset &&
+            !isTogglingHomePage &&
+            !isTogglingLevel &&
+            isWin === "" && (
+              <button
+                className="btn1"
+                onClick={add30Seconds}
+                disabled={!addTimeChanse}
+              >
+                add 30 seconds
+              </button>
+            )}
           <div className="four-buttons-container" style={{ marginTop: "15px" }}>
-            {normalMode &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              isWin === "" && (
-                <button
-                  className="btn1"
-                  onClick={add30Seconds}
-                  disabled={!addTimeChanse}
-                >
-                  add 30 seconds
-                </button>
-              )}
             {(normalMode || easyMode) &&
               !isTogglingReset &&
               !isTogglingHomePage &&
@@ -490,7 +514,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                   position: "relative",
                   top: "25px",
                   display: "grid",
-                  gridTemplateColumns: "repeat(21, auto)",
+                  gridTemplateColumns: "repeat(14, auto)",
                   justifyContent: "center",
                 }}
               >

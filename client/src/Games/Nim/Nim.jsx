@@ -147,27 +147,49 @@ export default function Nim({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Nim
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingReset && !isGameStarted && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Nim
-              </button>
-            )}
-            {isFillingTheBowlsByUserFinished &&
-              (easyMode || normalMode) &&
-              (standard || misere) &&
-              isWin === "" &&
-              !isTogglingReset &&
-              !isTogglingHomePage && (
-                <button className="btn3" onClick={() => toggleReset()}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingReset && !isTogglingHomePage && (
-              <button className="btn3" onClick={() => toggleHomePage()}>
-                Back to home page
-              </button>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-md-4 align-self-center">
+                {!isTogglingHomePage && !isTogglingReset && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={handleAboutPage}
+                    disabled={isFillingTheBowlsByUserStarted}
+                  >
+                    About Nim
+                  </button>
+                )}
+              </div>
+              <div className="col-md-4 align-self-center">
+                {!isTogglingReset && !isTogglingHomePage && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={() => toggleReset()}
+                    disabled={
+                      !isFillingTheBowlsByUserFinished ||
+                      (!easyMode && !normalMode) ||
+                      (!standard && !misere) ||
+                      isWin !== ""
+                    }
+                  >
+                    Reset the Game
+                  </button>
+                )}
+              </div>
+              <div className="col-md-4 align-self-center">
+                {!isTogglingReset && !isTogglingHomePage && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={() => toggleHomePage()}
+                  >
+                    Back to home page
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           {isTogglingReset && (
             <ConfirmationBox
@@ -185,16 +207,17 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               />
             )}
           {!standard && !misere && !isTogglingHomePage && (
-            <div
-              className="four-buttons-container"
-              style={{ marginTop: "15px" }}
-            >
-              <button className="btn1" onClick={handleStandeardNim}>
-                Standeard Nim
-              </button>
-              <button className="btn1" onClick={handleMisereNim}>
-                Misère Nim
-              </button>
+            <div>
+              <div style={{ marginTop: "10px" }}>
+                <button className="btn1" onClick={handleStandeardNim}>
+                  Standeard Nim
+                </button>
+              </div>
+              <div style={{ marginTop: "10px" }}>
+                <button className="btn1" onClick={handleMisereNim}>
+                  Misère Nim
+                </button>
+              </div>
             </div>
           )}
           {(standard || misere) &&

@@ -169,6 +169,7 @@ export default function EditProfile({
     }
   };
   const cancelSubmit = () => {
+    setError(null);
     setIsProfileEditing(false);
     navigate("/profile");
   };
@@ -299,23 +300,9 @@ export default function EditProfile({
                       />
                     </div>
                   </div>
-                  <br />
-                  <button type="submit" className="btn1 align-self-center mb-3">
-                    Save Changes
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-          <button
-            type="submit"
-            onClick={cancelSubmit}
-            className="btn1 align-self-center mt-5"
-          >
-            Cancel
-          </button>
-          {(newPassword || confirmNewPassword) && (
-            <div>
+                  {/* <br /> */}
+                  {(newPassword || confirmNewPassword) && (
+            <div className="my-3">
               <div
                 style={{
                   color: newPasswordStrenghtStatus.length ? "black" : "gray",
@@ -350,15 +337,29 @@ export default function EditProfile({
             </div>
           )}
           {newPassword && confirmNewPassword && passwordMatch === true && (
-            <p style={{ color: "black" }}>
+            <div style={{ color: "black" }}>
               <strong>✔ New passwords match</strong>
-            </p>
+            </div>
           )}
           {newPassword && confirmNewPassword && passwordMatch === false && (
-            <p style={{ color: "gray" }}>
+            <div style={{ color: "gray" }}>
               <strong>✖ New passwords do not match</strong>
-            </p>
+            </div>
           )}
+                  <button type="submit" className="btn1 align-self-center my-4">
+                    Save Changes
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <button
+            type="submit"
+            onClick={cancelSubmit}
+            className="btn1 align-self-center my-4"
+          >
+            Cancel
+          </button>
         </div>
       )}
       {(error || passwordError) && (

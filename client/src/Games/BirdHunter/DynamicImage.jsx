@@ -40,7 +40,7 @@ export default function DynamicImage({
       key={index}
       src={src}
       alt={`img-${index}`}
-      height={isTogglingHomePage ? "30px" : "55px"}
+      height={isTogglingHomePage ? "30px" : "40px"}
       style={{
         pointerEvents: src === B1 || src === B2 ? "" : "none",
       }}

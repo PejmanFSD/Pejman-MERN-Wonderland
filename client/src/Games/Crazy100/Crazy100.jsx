@@ -271,43 +271,72 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Crazy-100
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingLevel && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Crazy-100
-              </button>
-            )}
-            {isGameStarted &&
-              (easyMode || normalMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              is4Blocks && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleLevel()}
-                >{`Switch to ${easyMode ? "Normal Mode" : "Easy Mode"}`}</button>
-              )}
-            {isGameStarted &&
-              isWin === "" &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              (easyMode || normalMode) &&
-              !isTogglingLevel &&
-              seconds > 0 &&
-              is4Blocks && (
-                <button className="btn3" onClick={toggleReset}>
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              is4Blocks && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  !isTogglingReset && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={handleAboutPage}
+                    >
+                      About Crazy-100
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleLevel()}
+                      disabled={
+                        !isGameStarted ||
+                        (!easyMode && !normalMode) ||
+                        !is4Blocks
+                      }
+                    >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={toggleReset}
+                      disabled={
+                        !isGameStarted ||
+                        !is4Blocks ||
+                        seconds < 1 ||
+                        (!easyMode && !normalMode) ||
+                        isWin !== ""
+                      }
+                    >
+                      Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={!is4Blocks}
+                    >
+                      Back to home page
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
             <div>
@@ -492,7 +521,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               <button
                 onClick={handleReviewSection}
                 className="btn1 my-3"
-                style={{ position: "relative", top: "40px" }}
+                style={{ position: "relative", top: "30px" }}
               >
                 {showReviews
                   ? "Hide the Reviews Section"
@@ -510,6 +539,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

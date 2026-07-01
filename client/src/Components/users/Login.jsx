@@ -49,7 +49,7 @@ export default function Login({
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-4">
-            <form className="card p-4 shadow mt-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
+            <form className="card p-4 shadow mt-3 mb-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
               <h1 className="eater" style={{ fontSize: "40px" }}>
                 Login
               </h1>

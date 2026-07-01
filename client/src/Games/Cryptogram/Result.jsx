@@ -47,7 +47,7 @@ export default function Result({
                   >
                     {Object.values(inputs)[idx]}
                   </span>
-                  <p style={{ display: "inline" }}> is a visible letter!)</p>
+                  <p style={{ display: "inline" }}> had been already used in the phrase!)</p>
                 </div>
               )}
             </div>

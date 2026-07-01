@@ -42,7 +42,7 @@ export default function Emoji({
       <img
         src={imgSrc}
         style={{
-          width: "35px",
+          width: "32px",
           border:
             pair1ChoseEmoji && imgSrc === pair1ChoseEmoji.image
               ? "5px solid black"
@@ -50,7 +50,7 @@ export default function Emoji({
                 ? "5px dashed black"
                 : "1px solid black",
           boxSizing: "border-box",
-          margin: "3px",
+          margin: "1px",
           pointerEvents:
             imgSrc === E00 || tripleMatch || isWin !== "" || isSelected
               ? "none"

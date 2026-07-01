@@ -269,7 +269,7 @@ export default function Home({
   return (
     <div>
       <div>
-        <div style={{ marginTop: "10px", fontSize: "20px" }}>
+        <div style={{ fontSize: "20px"}}>
           <strong>The top 10 users with highest stars</strong>
         </div>
         <table
@@ -342,7 +342,7 @@ export default function Home({
         </table>
       </div>
       <div>
-        <div style={{ margin: "10px" }}>
+        <div style={{ margin: "20px" }}>
           <strong>
             {currentUser &&
               currentUser?.totalPoint === 0 &&
@@ -425,7 +425,7 @@ export default function Home({
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showNim ? (
               <NimPage
                 updateTotalPoint={updateTotalPoint}
@@ -441,7 +441,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showMemoryCards ? (
               <MemoryCardsPage
                 updateTotalPoint={updateTotalPoint}
@@ -457,7 +457,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showSnake ? (
               <SnakePage
                 updateTotalPoint={updateTotalPoint}
@@ -473,7 +473,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showKukuKube ? (
               <KukuKubePage
                 updateTotalPoint={updateTotalPoint}
@@ -489,7 +489,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showPuzzle ? (
               <PuzzlePage
                 updateTotalPoint={updateTotalPoint}
@@ -505,7 +505,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showMaze ? (
               <MazePage
                 updateTotalPoint={updateTotalPoint}
@@ -525,7 +525,7 @@ export default function Home({
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showReversi ? (
               <ReversiPage
                 updateTotalPoint={updateTotalPoint}
@@ -541,7 +541,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showCrazy100 ? (
               <Crazy100Page
                 updateTotalPoint={updateTotalPoint}
@@ -557,7 +557,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showCapitals ? (
               <CapitalsPage
                 updateTotalPoint={updateTotalPoint}
@@ -573,7 +573,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showGuessNumber ? (
               <GuessNumberPage
                 updateTotalPoint={updateTotalPoint}
@@ -589,7 +589,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showTripleEmojiMatch ? (
               <TripleEmojiMatchPage
                 updateTotalPoint={updateTotalPoint}
@@ -605,7 +605,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showHappyFlower ? (
               <HappyFlowerPage
                 updateTotalPoint={updateTotalPoint}
@@ -625,7 +625,7 @@ export default function Home({
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showBirdHunter ? (
               <BirdHunterPage
                 updateTotalPoint={updateTotalPoint}
@@ -641,7 +641,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showCryptogram ? (
               <CryptogramPage
                 updateTotalPoint={updateTotalPoint}
@@ -657,7 +657,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showTugOfWar ? (
               <TugOfWarPage
                 updateTotalPoint={updateTotalPoint}
@@ -673,7 +673,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showBingo ? (
               <BingoPage
                 updateTotalPoint={updateTotalPoint}
@@ -689,7 +689,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showCounter ? (
               <CounterPage
                 updateTotalPoint={updateTotalPoint}
@@ -705,7 +705,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showXO ? (
               <XOPage
                 updateTotalPoint={updateTotalPoint}
@@ -724,8 +724,8 @@ export default function Home({
         </div>
       </div>
       <div className="container">
-        <div className="row">
-          <div className="col-xl-2 col-md-4 offset-xl-3">
+        <div className="row" style={{marginBottom: "20px"}}>
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center offset-xl-3">
             {showPidoku ? (
               <PidokuPage
                 updateTotalPoint={updateTotalPoint}
@@ -741,7 +741,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showBlackJack ? (
               <BlackJackPage
                 updateTotalPoint={updateTotalPoint}
@@ -757,7 +757,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-xl-2 col-md-4">
+          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
             {showRockScissorsPaper ? (
               <RockScissorsPaperPage
                 updateTotalPoint={updateTotalPoint}

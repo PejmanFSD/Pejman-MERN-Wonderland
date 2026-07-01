@@ -81,8 +81,7 @@ export default function Users({
     setIsDeleting(false);
   };
   return (
-    <div>
-      <br />
+    <div style={{marginBottom: "20px"}}>
       <h1 className="eater" style={{ fontSize: "40px" }}>
         All the registered users
       </h1>
@@ -105,12 +104,14 @@ export default function Users({
                 height: "25px",
                 borderRadius: "5px",
                 textAlign: "center",
+                position: "relative",
+                top: "10px"
               }}
             />
           </div>
         )}
         {!isDeleting && !isLoggingOut && (
-          <div className="cause">
+          <div className="cause" style={{position: "relative", top: "10px"}}>
             {`Sort by: `}
             <select
               value={sortBy}

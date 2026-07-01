@@ -177,38 +177,58 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Cryptogram
           </h2>
-          <div className="four-buttons-container">
-            {!isTogglingHomePage && !isTogglingReset && (
-              <button className="btn3" onClick={handleAboutPage}>
-                About Cryptogram
-              </button>
-            )}
-            {isGameStarted &&
-              !isTogglingReset &&
-              isWin === "" &&
-              !isTogglingHomePage &&
-              !isCharRepetitive &&
-              !isInputEmpty &&
-              isOneChar &&
-              !isAlreadyExist && (
-                <button
-                  className="btn3"
-                  onClick={() => toggleReset()}
-                  disabled={isLoading}
-                >
-                  Reset the Game
-                </button>
-              )}
-            {!isTogglingReset &&
-              !isTogglingHomePage &&
-              !isCharRepetitive &&
-              !isInputEmpty &&
-              isOneChar &&
-              !isAlreadyExist && (
-                <button className="btn3" onClick={() => toggleHomePage()}>
-                  Back to home page
-                </button>
-              )}
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-4 align-self-center">
+                {!isTogglingHomePage && !isTogglingReset && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={handleAboutPage}
+                  >
+                    About Cryptogram
+                  </button>
+                )}
+              </div>
+              <div className="col-lg-4 align-self-center">
+                {!isTogglingReset && !isTogglingHomePage && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={() => toggleReset()}
+                    disabled={
+                      isLoading ||
+                      !isGameStarted ||
+                      isWin !== "" ||
+                      isCharRepetitive ||
+                      isInputEmpty ||
+                      !isOneChar ||
+                      isAlreadyExist
+                    }
+                  >
+                    Reset the Game
+                  </button>
+                )}
+              </div>
+              <div className="col-lg-4 align-self-center">
+                {!isTogglingReset && !isTogglingHomePage && (
+                  <button
+                    className="btn3 my-1"
+                    style={{ width: "200px" }}
+                    onClick={() => toggleHomePage()}
+                    disabled={
+                      isLoading ||
+                      isCharRepetitive ||
+                      isInputEmpty ||
+                      !isOneChar ||
+                      isAlreadyExist
+                    }
+                  >
+                    Back to home page
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           {!isGameStarted && isWin === "" && !isTogglingHomePage && (
             <button className="btn1 my-3" onClick={getAdvice}>
