@@ -289,6 +289,7 @@ function App() {
                   currentUser={currentUser}
                   setFlash={setFlash}
                   setIsAdEditing={setIsAdEditing}
+                  isLoggingOut={isLoggingOut}
                 />
               </ProtectedRoute>
             }

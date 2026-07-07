@@ -8,6 +8,7 @@ export default function AdDetails({
   setIsDeleting,
   setFlash,
   setIsAdEditing,
+  isLoggingOut,
 }) {
   const { id } = useParams(); // "useParams" is used for extracting the "id"
   const [ad, setAd] = useState(null);
@@ -45,7 +46,7 @@ export default function AdDetails({
     );
   }
   if (!ad) {
-    return <div>Loading...</div>;
+    return <div style={{ marginTop: "20px" }}>Loading...</div>;
   }
 
   const handleDelete = () => {
@@ -79,41 +80,52 @@ export default function AdDetails({
   };
   return (
     <div className="cause" style={{ fontSize: "15px", marginTop: "20px" }}>
-      <h2>{ad.company}</h2>
-      <p>{ad.text}</p>
+      {!isLoggingOut && <h2>{ad.company}</h2>}
+      {!isLoggingOut && <p>{ad.text}</p>}
       {ad.images &&
+        !isLoggingOut &&
         ad.images.map((img) => (
-          <img key={img._id} src={img.url} alt="" height="70px" style={{margin:"10px"}} />
+          <img
+            key={img._id}
+            src={img.url}
+            alt=""
+            height="70px"
+            style={{ margin: "10px" }}
+          />
         ))}
       <br></br>
-      {!isDeleting && (
-        <button onClick={handleEdit} className="btn1" style={{ margin: "5px" }}>
+      {!isDeleting && !isLoggingOut && (
+        <button
+          onClick={handleEdit}
+          className="btn1 my-3"
+          style={{ margin: "5px" }}
+        >
           Edit
         </button>
       )}
       {/* For Delete, we don't use <Link /> because <Link /> only sends the GET request */}
-      {!isDeleting && (
+      {!isDeleting && !isLoggingOut && (
         <button
           onClick={handleDelete}
-          className="btn1"
+          className="btn1 my-3"
           style={{ margin: "5px" }}
         >
           Delete
         </button>
       )}
-      {isDeleting && (
+      {isDeleting && !isLoggingOut && (
         <div>
           <div>Are you sure you want to delete the ad?</div>
           <button
             onClick={handleDeleteYes}
-            className="btn2"
+            className="btn2 my-3"
             style={{ margin: "5px" }}
           >
             Yes
           </button>
           <button
             onClick={handleDeleteNo}
-            className="btn2"
+            className="btn2 my-3"
             style={{ margin: "5px", width: "80px" }}
           >
             Cancel

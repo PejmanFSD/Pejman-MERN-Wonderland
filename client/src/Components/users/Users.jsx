@@ -81,60 +81,85 @@ export default function Users({
     setIsDeleting(false);
   };
   return (
-    <div style={{marginBottom: "20px", marginTop: "20px"}}>
-      <h1 className="eater" style={{ fontSize: "40px", marginBottom: "15px" }}>
-        All the registered users
-      </h1>
-      <div className="four-buttons-container my-2">
-        {!isDeleting && !isLoggingOut && (
-          <div>
-            <input
-              className="cause"
-              type="text"
-              placeholder="Search user..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-              class="form-control"
-              style={{
-                border: "1px solid black",
-                backgroundColor: "var(--background)",
-                height: "25px",
-                borderRadius: "5px",
-                textAlign: "center",
-                position: "relative",
-                top: "10px"
-              }}
-            />
+    <div style={{ marginBottom: "20px", marginTop: "20px" }}>
+      {currentUser && !isLoggingOut && (
+        <h1
+          className="eater"
+          style={{ fontSize: "40px", marginBottom: "15px" }}
+        >
+          All the registered users
+        </h1>
+      )}
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-4 offset-sm-2 justify-content-center my-2">
+            {!isDeleting && !isLoggingOut && (
+              <div>
+                <input
+                  className="cause"
+                  type="text"
+                  placeholder={sortBy === "Stars" ? "" : "Search user..."}
+                  value={sortBy === "Stars" ? "" : search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setPage(1);
+                  }}
+                  disabled={sortBy === "Stars"}
+                  class="form-control"
+                  style={{
+                    margin: "auto",
+                    width: "180px",
+                    border: "1px solid black",
+                    backgroundColor:
+                      sortBy === "Stars" ? "lightgray" : "var(--background)",
+                    height: "25px",
+                    borderRadius: "5px",
+                    textAlign: "center",
+                    position: "relative",
+                    top: "10px",
+                  }}
+                />
+              </div>
+            )}
           </div>
-        )}
-        {!isDeleting && !isLoggingOut && (
-          <div className="cause" style={{position: "relative", top: "10px"}}>
-            {`Sort by: `}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              style={{
-                border: "1px solid black",
-                backgroundColor: "var(--background)",
-                textAlign: "center",
-                width: "120px",
-                height: "25px",
-                borderRadius: "5px",
-                fontSize: "14px",
-              }}
-            >
-              <option value="Username" style={{ fontSize: "13px" }}>
-                Username
-              </option>
-              <option value="Stars" style={{ fontSize: "13px" }}>
-                Stars
-              </option>
-            </select>
+          <div className="col-sm-4 justify-content-center my-2">
+            {!isDeleting && !isLoggingOut && (
+              <div
+                className="cause"
+                style={{ position: "relative", top: "10px" }}
+              >
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  style={{
+                    border: "1px solid black",
+                    backgroundColor: "var(--background)",
+                    textAlign: "center",
+                    width: "120px",
+                    height: "25px",
+                    borderRadius: "5px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <option
+                    value="Username"
+                    style={{ fontSize: "13px" }}
+                    disabled
+                    selected
+                  >
+                    Sort by:
+                  </option>
+                  <option value="Username" style={{ fontSize: "13px" }}>
+                    Username
+                  </option>
+                  <option value="Stars" style={{ fontSize: "13px" }}>
+                    Stars
+                  </option>
+                </select>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
       <br />
       {(!users || (users && users.length === 0)) && !isLoggingOut ? (
@@ -169,7 +194,10 @@ export default function Users({
               {users.map((user) => (
                 <tr
                   key={user._id}
-                  style={{ height: "55px", backgroundColor: "var(--background)" }}
+                  style={{
+                    height: "55px",
+                    backgroundColor: "var(--background)",
+                  }}
                 >
                   <td style={{ border: "1px solid black" }}>{user.username}</td>
                   <td style={{ border: "1px solid black" }}>
@@ -216,16 +244,17 @@ export default function Users({
       {isDeleting && deletingUser && (
         <div style={{ marginTop: "15px" }} className="cause">
           {`Are you sure you want to delete ${users.find((u) => u._id === deletingUser).username}?`}
+          <br />
           <button
             onClick={() => handleDeleteYes(deletingUser)}
-            className="btn2"
+            className="btn2 my-2"
             style={{ marginLeft: "10px", width: "40px", height: "35px" }}
           >
             Yes
           </button>
           <button
             onClick={handleDeleteNo}
-            className="btn2"
+            className="btn2 my-2"
             style={{ marginLeft: "7px", width: "70px", height: "35px" }}
           >
             Cancel

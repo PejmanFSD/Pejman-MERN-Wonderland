@@ -347,7 +347,7 @@ export default function EditProfile({
             </div>
           )}
                   <button type="submit" className="btn1 align-self-center my-4"
-                  disabled={!username || !message || !currentPassword || !newPassword || !confirmNewPassword}
+                  disabled={!username || !message}
                   >
                     Save Changes
                   </button>

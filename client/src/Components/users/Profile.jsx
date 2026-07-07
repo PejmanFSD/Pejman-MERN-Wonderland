@@ -16,14 +16,19 @@ export default function Profile({
   };
   return (
     <div className="cause" style={{ fontSize: "20px", marginTop: "25px" }}>
-      <h1 className="eater" style={{ fontSize: "40px" }}>
-        My Profile
-      </h1>
+      {currentUser && !isLoggingOut && (
+        <h1 className="eater" style={{ fontSize: "40px" }}>
+          My Profile
+        </h1>
+      )}
       {currentUser && !isLoggingOut && (
         <div className="container mt-3">
           <div className="row justify-content-center">
             <div className="col-md-4">
-              <div className="card mx-1 p-3 shadow mt-3" style={{backgroundColor: "var(--background)"}}>
+              <div
+                className="card mx-1 p-3 shadow mt-3"
+                style={{ backgroundColor: "var(--background)" }}
+              >
                 <div class="form-group" style={{ marginTop: "15px" }}>
                   <strong>Username: </strong>
                   {currentUser.username}
@@ -52,6 +57,7 @@ export default function Profile({
           </div>
         </div>
       )}
+      <br />
     </div>
   );
 }
