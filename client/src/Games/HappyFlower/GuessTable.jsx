@@ -41,52 +41,46 @@ export default function GuessTable({
         <div className="row">
           <div className="col-md-5 offset-md-2 align-self-center">
             <div>
-              {new Array(word.length).fill(null).map((letter, idx) => (
-word[idx] !== " " ?
-
-(
-                <div
-                  className="product-happyFlower-image px-3 py-2"
-                  style={{
-                    borderRadius: "10px",
-                    // width: "35px",
-                    display: "inline",
-                    border: word[idx] !== " " && "1px solid black",
-                    position: "relative",
-                    top: "-15px",
-                    // margin: "5px",
-                  }}
-                  key={idx}
-                >
-                  {(userGuess.includes(word[idx]) ||
-                    userGuess.includes(word[idx].toLowerCase())) &&
-                    word[idx]}
-                </div>
-              )
- :
-(
-<div>
- <div
-                  className="product-happyFlower-image px-3 py-2"
-                  style={{
-                    borderRadius: "10px",
-                    // width: "35px",
-                    display: "inline",
-                    border: word[idx] !== " " && "1px solid black",
-                    position: "relative",
-                    top: "-15px",
-                    // margin: "5px",
-                  }}
-                  key={idx}
-                >
-                  {(userGuess.includes(word[idx]) ||
-                    userGuess.includes(word[idx].toLowerCase())) &&
-                    word[idx]}
-                </div>
-                <br />
-</div>
-)
-              ))}
+              {new Array(word.length).fill(null).map((letter, idx) =>
+                word[idx] !== " " ? (
+                  <div
+                    className="product-happyFlower-image py-2"
+                    style={{
+                      backgroundColor:  word[idx] !== " " && "var(--background)",
+                      borderRadius: "10px",
+                      display: "inline",
+                      border: word[idx] !== " " && "2px solid black",
+                      position: "relative",
+                      top: "-15px",
+                    }}
+                    key={idx}
+                  >
+                    {(userGuess.includes(word[idx]) ||
+                      userGuess.includes(word[idx].toLowerCase())) &&
+                      word[idx]}
+                  </div>
+                ) : (
+                  <div>
+                    <div
+                      className="product-happyFlower-image py-2"
+                      style={{
+                        backgroundColor:  word[idx] !== " " && "var(--background)",
+                        borderRadius: "10px",
+                        display: "inline",
+                        border: word[idx] !== " " && "2px solid black",
+                        position: "relative",
+                        top: "-15px",
+                      }}
+                      key={idx}
+                    >
+                      {(userGuess.includes(word[idx]) ||
+                        userGuess.includes(word[idx].toLowerCase())) &&
+                        word[idx]}
+                    </div>
+                    <br />
+                  </div>
+                ),
+              )}
             </div>
             <div>
               {Array.from(
@@ -101,8 +95,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -131,8 +123,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -161,8 +151,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -191,8 +179,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -221,8 +207,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -251,8 +235,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -281,8 +263,6 @@ word[idx] !== " " ?
                     borderRadius: isWin === "" ? "6px" : "4px",
                     textAlign: "center",
                     fontSize: isWin === "" ? "15px" : "12px",
-                    // position: "relative",
-                    // top: "5px",
                     width: isWin === "" ? "30px" : "25px",
                     height: isWin === "" ? "30px" : "25px",
                     margin: "3px",
@@ -343,7 +323,7 @@ word[idx] !== " " ?
                   <button
                     className="btn2"
                     onClick={handleReset}
-                    style={{ marginTop: "10px" }}
+                    style={{ margin: "5px" }}
                   >
                     Ok
                   </button>
@@ -358,7 +338,7 @@ word[idx] !== " " ?
                   <button
                     className="btn2"
                     onClick={handleReset}
-                    style={{ marginTop: "10px" }}
+                    style={{ margin: "5px" }}
                   >
                     Ok
                   </button>
@@ -367,9 +347,7 @@ word[idx] !== " " ?
             </div>
             <img
               style={{
-                position: "relative",
-                top: "5px",
-                width: isWin === "" ? "250px" : "110px",
+                width: isWin === "" ? "250px" : "200px",
               }}
               src={
                 isWin === true

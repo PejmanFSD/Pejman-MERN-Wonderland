@@ -54,7 +54,7 @@ export default function Form({
     }
     let misMatch = 0;
     for (let i = 0; i < 4; i++) {
-      if (Object.values(inputs)[i] === Object.keys(resultObj)[i]) {
+      if (Object.values(inputs)[i].toLowerCase() === Object.keys(resultObj)[i].toLowerCase()) {
         setResultMessageStatus((currResultMessageStatus) => [
           ...currResultMessageStatus,
           true,

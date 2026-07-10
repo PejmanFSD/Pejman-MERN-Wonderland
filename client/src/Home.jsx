@@ -505,7 +505,7 @@ export default function Home({
               )
             )}
           </div>
-          <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center">
+          <div className="col-12 col-md-4 col-xl-2 d-none d-sm-flex justify-content-center">
             {showMaze ? (
               <MazePage
                 updateTotalPoint={updateTotalPoint}

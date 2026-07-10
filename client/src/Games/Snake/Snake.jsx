@@ -417,8 +417,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         <div
           key={`${x}-${y}`}
           style={{
-            width: "17px",
-            height: "17px",
+            width: "15px",
+            height: "15px",
             background:
               isSnake && finalMessage === "You Lose!"
                 ? "gray"
@@ -724,8 +724,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(20, 17px)",
-                  gridTemplateRows: "repeat(20, 17px)",
+                  gridTemplateColumns: "repeat(20, 15px)",
+                  gridTemplateRows: "repeat(20, 15px)",
                   gap: "1px",
                   background: "#333",
                   padding: "5px",
@@ -761,13 +761,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                 >
                   &#8592;
                 </button>
-
                 <button
                   onClick={handlePause}
                   className="btnSnake"
                   disabled={finalMessage !== "" || directions.length === 0}
                 >
-                  {direction.x === 0 && direction.y === 0 ? "▶" : "⏸"}
+                  {direction.x === 0 && direction.y === 0 ? "▶" : "| |"}
                 </button>
                 <button
                   onClick={handleRight}

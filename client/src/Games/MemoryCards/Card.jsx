@@ -98,7 +98,8 @@ export default function Card({
   };
   return (
     <img
-    className="product-memory-image"
+    // className="product-memory-image"
+    className={easyMode ? "product-memory-image-easy" : normalMode ? "product-memory-image-normal" : "product-memory-image-hard"}
       src={
         status === 2
           ? BlueTick
