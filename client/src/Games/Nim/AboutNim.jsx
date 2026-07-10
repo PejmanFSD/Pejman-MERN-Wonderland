@@ -56,7 +56,7 @@ export default function AboutNim({ setIsAboutPage }) {
                 Pejman uses a strategy to decide which bowl to choose and how
                 many balls to remove.
                 <br />
-                Win the game to earn 4 stars.
+                Win the game to earn 6 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

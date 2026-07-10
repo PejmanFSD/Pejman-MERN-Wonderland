@@ -461,20 +461,6 @@ export default function Maze({ updateTotalPoint, currentUser }) {
                   )}
               </div>
               <div className="col-lg-3 align-self-center">
-                {!isTogglingHomePage &&
-                  !isTogglingReset &&
-                  !isTogglingLevel && (
-                    <button
-                      className="btn3 my-1"
-                      style={{ width: "200px" }}
-                      onClick={() => toggleHomePage()}
-                      disabled={finalMessage !== ""}
-                    >
-                      Back to home page
-                    </button>
-                  )}
-              </div>
-              <div className="col-lg-3 align-self-center">
                 {!isTogglingReset &&
                   !isTogglingHomePage &&
                   !isTogglingLevel && (
@@ -505,6 +491,20 @@ export default function Maze({ updateTotalPoint, currentUser }) {
                       }
                     >
                       Reset the Game
+                    </button>
+                  )}
+              </div>
+              <div className="col-lg-3 align-self-center">
+                {!isTogglingHomePage &&
+                  !isTogglingReset &&
+                  !isTogglingLevel && (
+                    <button
+                      className="btn3 my-1"
+                      style={{ width: "200px" }}
+                      onClick={() => toggleHomePage()}
+                      disabled={finalMessage !== ""}
+                    >
+                      Back to home page
                     </button>
                   )}
               </div>

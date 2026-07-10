@@ -239,29 +239,47 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && (
-            <ConfirmationBox
-              question={`Are you sure you want to switch to ${
-                extremelySuperDifficultMode
-                  ? "Normal Mode"
-                  : "extremely-Super-Difficult Mode"
-              }?`}
-              toggleYes={toggleLevelYes}
-              toggleCancel={toggleLevelCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      extremelySuperDifficultMode
+                        ? "Normal Mode"
+                        : "extremely-Super-Difficult Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {isTogglingReset && (
-            <ConfirmationBox
-              question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {isTogglingHomePage && (
-            <ConfirmationBox
-              question="Are you sure you want to go back to Home Page?"
-              toggleYes={toggleHomePageYes}
-              toggleCancel={toggleHomePageCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {!normalMode &&
             !extremelySuperDifficultMode &&
@@ -294,24 +312,21 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
               <div>
                 <img
                   src={Rock}
-                  width="150px"
+                  className="product-RSP-image"
                   alt="Rock"
                   onClick={() => handleUserChoice("Rock")}
-                  style={{ margin: "15px" }}
                 />
                 <img
                   src={Scissors}
-                  width="150px"
+                  className="product-RSP-image"
                   alt="Scissors"
                   onClick={() => handleUserChoice("Scissors")}
-                  style={{ margin: "15px" }}
                 />
                 <img
                   src={Paper}
-                  width="150px"
+                  className="product-RSP-image"
                   alt="Paper"
                   onClick={() => handleUserChoice("Paper")}
-                  style={{ margin: "15px" }}
                 />
               </div>
             )}
@@ -330,14 +345,18 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           !isTogglingReset &&
           !isTogglingLevel &&
           (normalMode || extremelySuperDifficultMode) ? (
-            <div>
-              <h3 className="fasterOne" style={{ fontSize: "40px" }}>
-                Excellent! You just beat Pejman three times in a row
-              </h3>
-              <h3>Your total point increases by one</h3>
-              <button className="btn2" onClick={() => handleOk()}>
-                OK
-              </button>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                  <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                    Excellent! You just beat Pejman three times in a row
+                  </h3>
+                  <h3>Your total point increases by one</h3>
+                  <button className="btn2" onClick={() => handleOk()}>
+                    OK
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
             isGameStarted &&
@@ -360,7 +379,13 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
                     </div>
                   )}
                 </div>
-                <h2>{gameResult}</h2>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                      <h2>{gameResult}</h2>
+                    </div>
+                  </div>
+                </div>
                 <h2>Your score: {score}</h2>
               </div>
             )

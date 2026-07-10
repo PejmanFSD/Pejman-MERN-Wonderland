@@ -1572,7 +1572,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   }, [pejman3Nums]);
   useEffect(() => {
     if (finalMessage === "You Win!") {
-      updateTotalPoint(1);
+      updateTotalPoint(3);
     }
   }, [finalMessage]);
   useEffect(() => {
@@ -1710,7 +1710,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             </button>
           )}
           {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
-            <div>
+            <div className="my-3">
               {selectedNums.length > 0 && (
                 <div
                   style={{
@@ -1718,6 +1718,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                     backgroundColor: "orange",
                     width: "80px",
                     border: "1px solid black",
+                    borderRadius: "10px",
                     paddingTop: "2px",
                     paddingBottom: "2px",
                     marginTop: "25px",
@@ -1752,18 +1753,13 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             >
               {selectedNums.map((n) => (
                 <div
+                  className="product-bingoSelectedNums-image"
                   style={{
                     textAlign: "center",
-                    fontSize: finalMessage === "" ? "15px" : "10px",
                     backgroundColor: "orange",
-                    paddingLeft: "8px",
-                    paddingRight: "8px",
                     paddingTop: "2px",
                     paddingBottom: "2px",
-                    margin: "3px",
                     border: "1px solid black",
-                    width: "35px",
-                    height: "30px",
                     opacity: finalMessage === "" ? 1 : 0.3,
                   }}
                   key={selectedNums.indexOf(n)}
@@ -1836,18 +1832,15 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <div
-                style={{
-                  position: "relative",
-                  top: "20px",
-                  marginTop: "5px",
-                  fontSize: "20px",
-                }}
-              >
-                <strong>
-                  {`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}{" "}
-                  &#128533;
-                </strong>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-10 offset-md-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                    <strong>
+                      {`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}{" "}
+                      &#128533;
+                    </strong>
+                  </div>
+                </div>
               </div>
             )}
           {youMissedMessage === true &&
@@ -1855,18 +1848,15 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <div
-                style={{
-                  position: "relative",
-                  top: "20px",
-                  marginTop: "5px",
-                  fontSize: "20px",
-                }}
-              >
-                <strong>
-                  {`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}{" "}
-                  &#128533;
-                </strong>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-10 offset-md-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                    <strong>
+                      {`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}{" "}
+                      &#128533;
+                    </strong>
+                  </div>
+                </div>
               </div>
             )}
           {youMissedMessage === true &&
@@ -1874,18 +1864,15 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             finalMessage === "" &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <div
-                style={{
-                  position: "relative",
-                  top: "20px",
-                  marginTop: "5px",
-                  fontSize: "20px",
-                }}
-              >
-                <strong>
-                  {`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}{" "}
-                  &#128533;
-                </strong>
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-10 offset-md-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                    <strong>
+                      {`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}{" "}
+                      &#128533;
+                    </strong>
+                  </div>
+                </div>
               </div>
             )}
           {isGameStarted && !isTogglingReset && !isTogglingHomePage && (

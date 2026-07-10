@@ -42,16 +42,19 @@ export default function GuessTable({
           <div className="col-md-5 offset-md-2 align-self-center">
             <div>
               {new Array(word.length).fill(null).map((letter, idx) => (
+word[idx] !== " " ?
+
+(
                 <div
-                  className="px-3 py-2"
+                  className="product-happyFlower-image px-3 py-2"
                   style={{
                     borderRadius: "10px",
-                    width: "35px",
+                    // width: "35px",
                     display: "inline",
                     border: word[idx] !== " " && "1px solid black",
                     position: "relative",
                     top: "-15px",
-                    margin: "5px",
+                    // margin: "5px",
                   }}
                   key={idx}
                 >
@@ -59,6 +62,30 @@ export default function GuessTable({
                     userGuess.includes(word[idx].toLowerCase())) &&
                     word[idx]}
                 </div>
+              )
+ :
+(
+<div>
+ <div
+                  className="product-happyFlower-image px-3 py-2"
+                  style={{
+                    borderRadius: "10px",
+                    // width: "35px",
+                    display: "inline",
+                    border: word[idx] !== " " && "1px solid black",
+                    position: "relative",
+                    top: "-15px",
+                    // margin: "5px",
+                  }}
+                  key={idx}
+                >
+                  {(userGuess.includes(word[idx]) ||
+                    userGuess.includes(word[idx].toLowerCase())) &&
+                    word[idx]}
+                </div>
+                <br />
+</div>
+)
               ))}
             </div>
             <div>

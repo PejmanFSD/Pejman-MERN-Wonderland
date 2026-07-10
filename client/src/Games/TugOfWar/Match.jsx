@@ -50,7 +50,8 @@ export default function Match({
         dice > 0 &&
         finalMessage === "" && (
           <input
-            style={{ marginRight: "10px" }}
+            className="product-tugOfWar-checkBox"
+            // style={{ marginRight: "10px" }}
             type="checkbox"
             checked={theMatch.isMatchSelected}
             onChange={() => chooseMatch(theMatch.matchName)}
@@ -63,8 +64,8 @@ export default function Match({
         )}
       {theMatch.matchValue.map((m, idx) => (
         <img
+        className="product-tugOfWar-image"
           src={theMatch.matchValue[idx]}
-          height="80px"
           style={{
             position: "relative",
             top: "15px",
@@ -76,7 +77,8 @@ export default function Match({
       ))}
       {userColor === "Red" && isUserTurn && dice > 0 && finalMessage === "" && (
         <input
-          style={{ marginLeft: "10px" }}
+          className="product-tugOfWar-checkBox"
+          // style={{ marginLeft: "10px" }}
           type="checkbox"
           checked={theMatch.isMatchSelected}
           onChange={() => chooseMatch(theMatch.matchName)}

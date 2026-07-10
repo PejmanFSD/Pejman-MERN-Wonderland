@@ -37,7 +37,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
     setIsGameStarted(false);
     if (userScore > 13) {
       setFinalMessage("You Win!");
-      updateTotalPoint(2);
+      updateTotalPoint(4);
     } else {
       setFinalMessage("You Lose!");
     }
@@ -247,7 +247,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             )}
           </div>
           {finalMessage === "You Win!" && !isTogglingHomePage && (
-            <div>
+            <div className="my-3">
               <div>Play Again!</div>
               <button
                 onClick={handlePlayAgain}
@@ -259,7 +259,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {finalMessage === "You Lose!" && !isTogglingHomePage && (
-            <div>
+            <div className="my-3">
               <div>Try Again!</div>
               <button
                 onClick={handlePlayAgain}

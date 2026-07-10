@@ -232,7 +232,7 @@ export default function Navbar({
 </div>
       {/* "location.pathname" is the path of the current page */}
       <nav
-        className="navbar navbar-expand-md navbar-light navbar-light"
+        className="navbar navbar-expand-md navbar-light navbar-light mt-2"
         style={{paddingTop: "165px"}}
       >
         <div className="container-fluid justify-content-center">

@@ -270,9 +270,9 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
     if (pair === images.length && seconds > 0 && pair !== 0) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(2);
+        updateTotalPoint(4);
       } else if (hardMode) {
-        updateTotalPoint(5);
+        updateTotalPoint(8);
       }
       handleStopTimer();
     }

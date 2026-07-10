@@ -46,8 +46,8 @@ export default function Bowl({
     >
       Bowl {bowlId}
       <img
+      className="product-nim-image"
         style={{
-          width: isWin === "" ? "100px" : "50px",
           border: "2px solid black",
           opacity: (selectedUserBowl && selectedUserBowl !== bowlId) || isTogglingReset || isWin !== "" || isTogglingHomePage ? 0.3 : 1
         }}
@@ -80,7 +80,7 @@ export default function Bowl({
       {isGameStarted && isUserTurn && (
         <input
           type="checkbox"
-          style={{width: "25px", height: "25px"}}
+          style={{width: "20px", height: "20px"}}
           value={isBowlSelected}
           onChange={() => toggleBowl(bowlId)}
           disabled={

@@ -121,6 +121,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
       input4: "",
     });
     setResultMessageStatus([]);
+    setAcceptedAsRepetition([]);
     setIsWin("");
     setIsTogglingReset(false);
     setShowReviews(true);
@@ -339,6 +340,7 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

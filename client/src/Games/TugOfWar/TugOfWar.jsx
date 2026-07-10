@@ -2094,7 +2094,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
     if (userScore === 2) {
       setFinalMessage("You Win!");
       if (normalMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(2);
       }
     }
   }, [userScore]);
@@ -2233,7 +2233,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
           {finalMessage &&
             finalMessage === "You Win!" &&
             !isTogglingHomePage && (
-              <div>
+              <div className="my-3">
                 <h3
                   className="fasterOne"
                   style={{ fontSize: "40px" }}
@@ -2251,7 +2251,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
           {finalMessage &&
             finalMessage === "Pejman Wins!" &&
             !isTogglingHomePage && (
-              <div>
+              <div className="my-3">
                 <h3 className="fasterOne" style={{ fontSize: "40px" }}>
                   Pejman Wins!
                 </h3>

@@ -41,7 +41,7 @@ export default function AboutBirdHunter({ setIsAboutPage }) {
                 The game ends after all 16 landscapes have featured a bird
                 flight and to win you must successfully shoot at least 14 birds.
                 <br />
-                Win the game to earn 1 star.
+                Win the game to earn 4 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

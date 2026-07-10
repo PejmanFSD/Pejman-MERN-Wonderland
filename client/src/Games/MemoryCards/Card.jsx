@@ -89,15 +89,16 @@ export default function Card({
     if (pair === images.length) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(2);
+        updateTotalPoint(4);
       } else if (hardMode) {
-        updateTotalPoint(5);
+        updateTotalPoint(8);
       }
       handleStopTimer();
     }
   };
   return (
     <img
+    className="product-memory-image"
       src={
         status === 2
           ? BlueTick
@@ -110,7 +111,6 @@ export default function Card({
                 : Pejman
       }
       style={{
-        width: easyMode ? "100px" : normalMode ? "95px" : "75px",
         border: "2px solid black",
         margin: "3px",
         pointerEvents:

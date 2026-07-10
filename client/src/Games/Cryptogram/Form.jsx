@@ -164,149 +164,159 @@ export default function Form({
       {isLoading ? (
         <h3 style={{ color: "gray" }}>Loading ...</h3>
       ) : (
-        <form onSubmit={handleSubmit} style={{marginTop: "15px"}}>
-          {adviceArray.map((a) =>
-            Object.keys(resultObj).slice(0, 4).includes(a.toLowerCase()) ? (
-              Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-              0 ? (
-                <div style={{ display: "inline" }}>
-                  <label htmlFor="input1"></label>
-                  <input
-                    type="text"
-                    placeholder={!isCharRepetitive && "1"}
-                    name="input1"
-                    id="input1"
-                    value={inputs.input1}
-                    onChange={handleChange}
-                    disabled={
-                      !isGameStarted ||
-                      isCharRepetitive ||
-                      isInputEmpty ||
-                      !isOneChar ||
-                      isAlreadyExist
-                    }
-                    style={{
-                      borderRadius: "5px",
-                      borderColor: "black",
-                      textAlign: "center",
-                      width: "25px",
-                      height: "25px",
-                      margin: "2px",
-                      position: "relative",
-                      top: "-6px",
-                    }}
-                  />
-                </div>
-              ) : Object.keys(resultObj)
-                  .slice(0, 4)
-                  .indexOf(a.toLowerCase()) === 1 ? (
-                <div style={{ display: "inline" }}>
-                  <label htmlFor="input2"></label>
-                  <input
-                    type="text"
-                    placeholder={!isCharRepetitive && "2"}
-                    name="input2"
-                    id="input2"
-                    value={inputs.input2}
-                    onChange={handleChange}
-                    disabled={
-                      !isGameStarted ||
-                      isCharRepetitive ||
-                      isInputEmpty ||
-                      !isOneChar ||
-                      isAlreadyExist
-                    }
-                    style={{
-                      borderRadius: "5px",
-                      borderColor: "black",
-                      textAlign: "center",
-                      width: "25px",
-                      height: "25px",
-                      margin: "2px",
-                      position: "relative",
-                      top: "-6px",
-                    }}
-                  />
-                </div>
-              ) : Object.keys(resultObj)
-                  .slice(0, 4)
-                  .indexOf(a.toLowerCase()) === 2 ? (
-                <div style={{ display: "inline" }}>
-                  <label htmlFor="input3"></label>
-                  <input
-                    type="text"
-                    placeholder={!isCharRepetitive && "3"}
-                    name="input3"
-                    id="input3"
-                    value={inputs.input3}
-                    onChange={handleChange}
-                    disabled={
-                      !isGameStarted ||
-                      isCharRepetitive ||
-                      isInputEmpty ||
-                      !isOneChar ||
-                      isAlreadyExist
-                    }
-                    style={{
-                      borderRadius: "5px",
-                      borderColor: "black",
-                      textAlign: "center",
-                      width: "25px",
-                      height: "25px",
-                      margin: "2px",
-                      position: "relative",
-                      top: "-6px",
-                    }}
-                  />
-                </div>
-              ) : (
-                Object.keys(resultObj).slice(0, 4).indexOf(a.toLowerCase()) ===
-                  3 && (
-                  <div style={{ display: "inline" }}>
-                    <label htmlFor="input4"></label>
-                    <input
-                      type="text"
-                      placeholder={!isCharRepetitive && "4"}
-                      name="input4"
-                      id="input4"
-                      value={inputs.input4}
-                      onChange={handleChange}
-                      disabled={
-                        !isGameStarted ||
-                        isCharRepetitive ||
-                        isInputEmpty ||
-                        !isOneChar ||
-                        isAlreadyExist
-                      }
-                      style={{
-                        borderRadius: "5px",
-                        borderColor: "black",
-                        textAlign: "center",
-                        width: "25px",
-                        height: "25px",
-                        margin: "2px",
-                        position: "relative",
-                        top: "-6px",
-                      }}
-                    />
-                  </div>
-                )
-              )
-            ) : (
-              <h2 style={{ display: "inline", margin: "2px" }}>{a}</h2>
-            ),
-          )}
-          {isGameStarted &&
-            isWin === "" &&
-            !isCharRepetitive &&
-            !isInputEmpty &&
-            isOneChar &&
-            !isAlreadyExist && (
-              <div>
-                <button className="btn1 my-3">Done</button>
-              </div>
-            )}
-        </form>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+              <form onSubmit={handleSubmit} style={{ marginTop: "15px" }}>
+                {adviceArray.map((a) =>
+                  Object.keys(resultObj)
+                    .slice(0, 4)
+                    .includes(a.toLowerCase()) ? (
+                    Object.keys(resultObj)
+                      .slice(0, 4)
+                      .indexOf(a.toLowerCase()) === 0 ? (
+                      <div style={{ display: "inline" }}>
+                        <label htmlFor="input1"></label>
+                        <input
+                          type="text"
+                          placeholder={!isCharRepetitive && "1"}
+                          name="input1"
+                          id="input1"
+                          value={inputs.input1}
+                          onChange={handleChange}
+                          disabled={
+                            !isGameStarted ||
+                            isCharRepetitive ||
+                            isInputEmpty ||
+                            !isOneChar ||
+                            isAlreadyExist
+                          }
+                          style={{
+                            borderRadius: "5px",
+                            borderColor: "black",
+                            textAlign: "center",
+                            width: "25px",
+                            height: "25px",
+                            margin: "2px",
+                            position: "relative",
+                            top: "-6px",
+                          }}
+                        />
+                      </div>
+                    ) : Object.keys(resultObj)
+                        .slice(0, 4)
+                        .indexOf(a.toLowerCase()) === 1 ? (
+                      <div style={{ display: "inline" }}>
+                        <label htmlFor="input2"></label>
+                        <input
+                          type="text"
+                          placeholder={!isCharRepetitive && "2"}
+                          name="input2"
+                          id="input2"
+                          value={inputs.input2}
+                          onChange={handleChange}
+                          disabled={
+                            !isGameStarted ||
+                            isCharRepetitive ||
+                            isInputEmpty ||
+                            !isOneChar ||
+                            isAlreadyExist
+                          }
+                          style={{
+                            borderRadius: "5px",
+                            borderColor: "black",
+                            textAlign: "center",
+                            width: "25px",
+                            height: "25px",
+                            margin: "2px",
+                            position: "relative",
+                            top: "-6px",
+                          }}
+                        />
+                      </div>
+                    ) : Object.keys(resultObj)
+                        .slice(0, 4)
+                        .indexOf(a.toLowerCase()) === 2 ? (
+                      <div style={{ display: "inline" }}>
+                        <label htmlFor="input3"></label>
+                        <input
+                          type="text"
+                          placeholder={!isCharRepetitive && "3"}
+                          name="input3"
+                          id="input3"
+                          value={inputs.input3}
+                          onChange={handleChange}
+                          disabled={
+                            !isGameStarted ||
+                            isCharRepetitive ||
+                            isInputEmpty ||
+                            !isOneChar ||
+                            isAlreadyExist
+                          }
+                          style={{
+                            borderRadius: "5px",
+                            borderColor: "black",
+                            textAlign: "center",
+                            width: "25px",
+                            height: "25px",
+                            margin: "2px",
+                            position: "relative",
+                            top: "-6px",
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      Object.keys(resultObj)
+                        .slice(0, 4)
+                        .indexOf(a.toLowerCase()) === 3 && (
+                        <div style={{ display: "inline" }}>
+                          <label htmlFor="input4"></label>
+                          <input
+                            type="text"
+                            placeholder={!isCharRepetitive && "4"}
+                            name="input4"
+                            id="input4"
+                            value={inputs.input4}
+                            onChange={handleChange}
+                            disabled={
+                              !isGameStarted ||
+                              isCharRepetitive ||
+                              isInputEmpty ||
+                              !isOneChar ||
+                              isAlreadyExist
+                            }
+                            style={{
+                              borderRadius: "5px",
+                              borderColor: "black",
+                              textAlign: "center",
+                              width: "25px",
+                              height: "25px",
+                              margin: "2px",
+                              position: "relative",
+                              top: "-6px",
+                            }}
+                          />
+                        </div>
+                      )
+                    )
+                  ) : (
+                    <h2 style={{ display: "inline", margin: "2px" }}>{a}</h2>
+                  ),
+                )}
+                {isGameStarted &&
+                  isWin === "" &&
+                  !isCharRepetitive &&
+                  !isInputEmpty &&
+                  isOneChar &&
+                  !isAlreadyExist && (
+                    <div>
+                      <button className="btn1 my-3">Done</button>
+                    </div>
+                  )}
+              </form>
+            </div>
+          </div>
+        </div>
       )}
       {isCharRepetitive && (
         <div>

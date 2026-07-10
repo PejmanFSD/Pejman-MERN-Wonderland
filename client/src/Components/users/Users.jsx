@@ -90,9 +90,9 @@ export default function Users({
           All the registered users
         </h1>
       )}
-      <div className="container">
+      <div className="container my-3">
         <div className="row">
-          <div className="col-sm-4 offset-sm-2 justify-content-center my-2">
+          <div className="col-sm-4 offset-sm-2 justify-content-center">
             {!isDeleting && !isLoggingOut && (
               <div>
                 <input
@@ -122,7 +122,7 @@ export default function Users({
               </div>
             )}
           </div>
-          <div className="col-sm-4 justify-content-center my-2">
+          <div className="col-sm-4 justify-content-center">
             {!isDeleting && !isLoggingOut && (
               <div
                 className="cause"
@@ -161,7 +161,19 @@ export default function Users({
           </div>
         </div>
       </div>
-      <br />
+      {sortBy === "Stars" && (
+        <div className="container">
+          <div className="row">
+            <div
+              className="col-md-10 offset-md-1 d-flex justify-content-center my-2"
+              style={{ fontSize: "12px" }}
+            >
+              For searching the users, you should have the list sorted based on
+              their usernames, not the number of their stars!
+            </div>
+          </div>
+        </div>
+      )}
       {(!users || (users && users.length === 0)) && !isLoggingOut ? (
         <div className="cause">No users available</div>
       ) : (

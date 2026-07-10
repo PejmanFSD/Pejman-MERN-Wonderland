@@ -181,7 +181,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             .replaceAll(",", ""),
         ]);
         if (
-          chancesNum > 0 &&
+          chancesNum >= 0 &&
           userGuess.length !== 0 &&
           userGuess
             .slice(userGuessStatus.length - 4, userGuessStatus.length4)
@@ -189,6 +189,11 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             .replaceAll(",", "") === convertArrayToString(num)
         ) {
           setIsWin(true);
+          if (easyMode) {
+          updateTotalPoint(1);
+        } else if (normalMode) {
+          updateTotalPoint(5);
+        }
         }
       };
       handleWin();
@@ -250,7 +255,8 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
                         isInputEmpty ||
                         !isGameStarted ||
                         (!easyMode && !normalMode) ||
-                        isWin
+                        isWin ||
+                        chancesNum === 0
                       }
                     >{`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}</button>
                   )}
@@ -298,8 +304,8 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
                         isDigitRepetitive ||
                         !isInt ||
                         isAlreadyGuessed ||
-                        isInputEmpty ||
-                        isWin
+                        isInputEmpty
+                        // isWin
                       }
                     >
                       Back to home page
@@ -398,12 +404,15 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               setIsAlreadyGuessed={setIsAlreadyGuessed}
               isInputEmpty={isInputEmpty}
               setIsInputEmpty={setIsInputEmpty}
+              easyMode={easyMode}
+              normalMode={normalMode}
+              updateTotalPoint={updateTotalPoint}
             />
           )}
           {isGameStarted && (
             <Chances
               chancesNum={chancesNum}
-              setChancesNum={setChancesNum}
+              // setChancesNum={setChancesNum}
               num={num}
               setNum={setNum}
               setInputs={setInputs}
@@ -414,10 +423,10 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               reset={reset}
               isWin={isWin}
               userGuess={userGuess}
-              setIsWin={setIsWin}
+              // setIsWin={setIsWin}
               easyMode={easyMode}
               normalMode={normalMode}
-              updateTotalPoint={updateTotalPoint}
+              // updateTotalPoint={updateTotalPoint}
               isGameStarted={isGameStarted}
               toggleResetYes={toggleResetYes}
               toggleResetCancel={toggleResetCancel}
@@ -447,6 +456,7 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             )}
         </div>
       )}
+      <br />
     </div>
   );
 }

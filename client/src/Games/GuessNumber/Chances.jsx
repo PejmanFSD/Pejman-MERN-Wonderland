@@ -5,7 +5,7 @@ export default function Chances({
   reset,
   easyMode,
   normalMode,
-  updateTotalPoint,
+  // updateTotalPoint,
   isGameStarted,
   userGuess,
   isTogglingLevel,
@@ -16,11 +16,11 @@ export default function Chances({
   isTogglingHomePage,
 }) {
   const handleOk = () => {
-    if (easyMode) {
-      updateTotalPoint(1);
-    } else if (normalMode) {
-      updateTotalPoint(5);
-    }
+    // if (easyMode) {
+    //   updateTotalPoint(1);
+    // } else if (normalMode) {
+    //   updateTotalPoint(5);
+    // }
     reset();
   };
   return (
@@ -31,7 +31,7 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4>
+          <h4 className="my-2">
             <strong>You have 10 chances to find the number</strong>
           </h4>
         )}
@@ -41,7 +41,7 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4>
+          <h4 className="my-2">
             <strong>You have 5 chances to find the number</strong>
           </h4>
         )}
@@ -52,7 +52,7 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4>
+          <h4 className="my-2">
             <strong>{`You have ${chancesNum} chances left`}</strong>
           </h4>
         )}
@@ -63,7 +63,7 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4>
+          <h4 className="my-2">
             <strong>{`You have ${chancesNum} chances left`}</strong>
           </h4>
         )}
@@ -72,7 +72,7 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4 style={{ color: "red" }}>
+          <h4 className="my-2" style={{ color: "red" }}>
             <strong>Warning! You only have one chance left!</strong>
           </h4>
         )}
@@ -91,7 +91,7 @@ export default function Chances({
             </button>
           </div>
         )}
-      {isWin && (
+      {isWin && !isTogglingHomePage && (
         <div>
           <h3 className="fasterOne" style={{ fontSize: "40px" }}>
             You Win!

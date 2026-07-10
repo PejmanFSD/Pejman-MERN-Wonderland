@@ -87,9 +87,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
     ) {
       setFinalMessage("You Win!");
       if (normalMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(2);
       } else if (easyMode) {
-        updateTotalPoint(4);
+        updateTotalPoint(6);
       }
     } else {
       setFinalMessage("You Lose!");
@@ -222,7 +222,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingHomePage &&
                   !isTogglingLevel &&
-                  !isTogglingReset && (
+                  !isTogglingReset &&
+                  !isSlideShowStarted && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
@@ -235,7 +236,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingReset &&
                   !isTogglingHomePage &&
-                  !isTogglingLevel && (
+                  !isTogglingLevel &&
+                  !isSlideShowStarted && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
@@ -249,7 +251,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingReset &&
                   !isTogglingHomePage &&
-                  !isTogglingLevel && (
+                  !isTogglingLevel &&
+                  !isSlideShowStarted && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
@@ -267,7 +270,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingHomePage &&
                   !isTogglingReset &&
-                  !isTogglingLevel && (
+                  !isTogglingLevel &&
+                  !isSlideShowStarted && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
@@ -352,13 +356,8 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               finalGameArray[currentIndex] && (
                 <img
                   src={finalGameArray[currentIndex].image}
-                  style={{
-                    width: "80px",
-                    border: "1px solid black",
-                    margin: "5px",
-                  }}
+                  className="product-counter-image1"
                   alt=""
-                  width="80px"
                 />
               )}
           </div>
@@ -372,11 +371,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 <div style={{ display: "inline" }}>
                   <img
                     src={i.image}
-                    style={{
-                      width: "60px",
-                      border: "1px solid black",
-                      margin: "4px",
-                    }}
+                    className="product-counter-image2"
                     alt=""
                     key={idx}
                   />
@@ -389,89 +384,98 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <form onSubmit={handleSubmit}>
-                <div className="my-3">
-                  <label
-                    htmlFor="question1"
-                    style={{ marginRight: "7px" }}
-                  >{`How many ${quizArray[0].name} did you see? `}</label>
-                  <select
-                    onChange={handleQuestion1}
-                    name="question1"
-                    id="question1"
-                    style={{
-                      borderRadius: "8px",
-                      textAlign: "center",
-                      width: "50px",
-                      height: "25px",
-                    }}
-                  >
-                    <option
-                      value={userAnswers.answer1}
-                      disabled
-                      selected
-                    ></option>
-                    {[1, 2, 3].map((i, idx) => (
-                      <option disabled={isResult} key={idx}>
-                        {i}
-                      </option>
-                    ))}
-                  </select>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      <label
+                        htmlFor="question1"
+                        style={{ marginRight: "7px" }}
+                      >{`How many ${quizArray[0].name} did you see? `}</label>
+                      <select
+                        onChange={handleQuestion1}
+                        name="question1"
+                        id="question1"
+                        disabled={isResult}
+                        style={{
+                          borderRadius: "8px",
+                          textAlign: "center",
+                          width: "50px",
+                          height: "25px",
+                        }}
+                      >
+                        <option
+                          value={userAnswers.answer1}
+                          disabled
+                          selected
+                        ></option>
+                        {[1, 2, 3].map((i, idx) => (
+                          <option key={idx}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div className="my-3">
-                  <label
-                    htmlFor="question2"
-                    style={{ marginRight: "7px" }}
-                  >{`How many ${quizArray[1].name} did you see? `}</label>
-                  <select
-                    onChange={handleQuestion2}
-                    name="question2"
-                    id="question2"
-                    style={{
-                      borderRadius: "8px",
-                      textAlign: "center",
-                      width: "50px",
-                      height: "25px",
-                    }}
-                  >
-                    <option
-                      value={userAnswers.answer2}
-                      disabled
-                      selected
-                    ></option>
-                    {[1, 2, 3].map((i, idx) => (
-                      <option disabled={isResult} key={idx}>
-                        {i}
-                      </option>
-                    ))}
-                  </select>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      <label
+                        htmlFor="question2"
+                        style={{ marginRight: "7px" }}
+                      >{`How many ${quizArray[1].name} did you see? `}</label>
+                      <select
+                        onChange={handleQuestion2}
+                        name="question2"
+                        id="question2"
+                        disabled={isResult}
+                        style={{
+                          borderRadius: "8px",
+                          textAlign: "center",
+                          width: "50px",
+                          height: "25px",
+                        }}
+                      >
+                        <option
+                          value={userAnswers.answer2}
+                          disabled
+                          selected
+                        ></option>
+                        {[1, 2, 3].map((i, idx) => (
+                          <option key={idx}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div className="my-3">
-                  <label
-                    htmlFor="question3"
-                    style={{ marginRight: "7px" }}
-                  >{`How many ${quizArray[2].name} did you see? `}</label>
-                  <select
-                    onChange={handleQuestion3}
-                    name="question3"
-                    id="question3"
-                    style={{
-                      borderRadius: "8px",
-                      textAlign: "center",
-                      width: "50px",
-                      height: "25px",
-                    }}
-                  >
-                    <option
-                      value={userAnswers.answer3}
-                      disabled
-                      selected
-                    ></option>
-                    {[1, 2, 3].map((i, idx) => (
-                      <option disabled={isResult} key={idx}>
-                        {i}
-                      </option>
-                    ))}
-                  </select>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      <label
+                        htmlFor="question3"
+                        style={{ marginRight: "7px" }}
+                      >{`How many ${quizArray[2].name} did you see? `}</label>
+                      <select
+                        onChange={handleQuestion3}
+                        name="question3"
+                        id="question3"
+                        disabled={isResult}
+                        style={{
+                          borderRadius: "8px",
+                          textAlign: "center",
+                          width: "50px",
+                          height: "25px",
+                        }}
+                      >
+                        <option
+                          value={userAnswers.answer3}
+                          disabled
+                          selected
+                        ></option>
+                        {[1, 2, 3].map((i, idx) => (
+                          <option key={idx}>{i}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 {!isResult && (
                   <button className="btn1" style={{ marginTop: "10px" }}>
@@ -485,26 +489,41 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div style={{ marginTop: "30px" }}>
-                <div className="my-1">
-                  <strong>
-                    {parseInt(userAnswers.answer1) === quizArray[0].repetition
-                      ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed correctly! ✔`
-                      : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed wrong! ✖`}
-                  </strong>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      <strong>
+                        {parseInt(userAnswers.answer1) ===
+                        quizArray[0].repetition
+                          ? `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed correctly! ✔`
+                          : `The nember of ${quizArray[0].name}: ${quizArray[0].repetition} ➜ You guessed wrong! ✖`}
+                      </strong>
+                    </div>
+                  </div>
                 </div>
-                <div className="my-1">
-                  <strong>
-                    {parseInt(userAnswers.answer2) === quizArray[1].repetition
-                      ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed correctly! ✔`
-                      : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed wrong! ✖`}
-                  </strong>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      <strong>
+                        {parseInt(userAnswers.answer2) ===
+                        quizArray[1].repetition
+                          ? `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed correctly! ✔`
+                          : `The nember of ${quizArray[1].name}: ${quizArray[1].repetition} ➜ You guessed wrong! ✖`}
+                      </strong>
+                    </div>
+                  </div>
                 </div>
-                <div className="my-1">
-                  <strong>
-                    {parseInt(userAnswers.answer3) === quizArray[2].repetition
-                      ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed correctly! ✔`
-                      : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed wrong! ✖`}
-                  </strong>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      <strong>
+                        {parseInt(userAnswers.answer3) ===
+                        quizArray[2].repetition
+                          ? `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed correctly! ✔`
+                          : `The nember of ${quizArray[2].name}: ${quizArray[2].repetition} ➜ You guessed wrong! ✖`}
+                      </strong>
+                    </div>
+                  </div>
                 </div>
                 <h2 className="fasterOne" style={{ fontSize: "40px" }}>
                   {finalMessage}

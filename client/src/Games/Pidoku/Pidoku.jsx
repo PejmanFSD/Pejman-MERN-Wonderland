@@ -619,7 +619,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
   useEffect(() => {
     if (normalMode && (userPoint > 0 || pejmanPoint > 0) && isGameResult) {
       if (userPoint > pejmanPoint) {
-        updateTotalPoint(1);
+        updateTotalPoint(2);
       }
     }
   }, [userPoint, pejmanPoint]);
@@ -887,7 +887,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingLevel && (
               <div>
                 <div>
-                  All 24 squares are selected, the result of the game relies on
+                  All the 24 squares are selected, the result of the game relies on
                   the squares around the last empty one
                 </div>
                 <button
@@ -908,7 +908,6 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                 Show the Game Result
               </button>
             )}
-          <br />
           {isGameResult &&
             !isTogglingReset &&
             !isTogglingHomePage &&

@@ -277,10 +277,10 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
                 handleStartTimer={handleStartTimer}
               />
             )}
-          {/* <div style={{ color: "gray" }}>
+          <div style={{ color: "gray" }}>
             {title} - {word} - {word.length} - {wordWithNoSpace} - {userGuess} -{" "}
             {isWin ? "T" : "F"}
-          </div> */}
+          </div>
           {isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&

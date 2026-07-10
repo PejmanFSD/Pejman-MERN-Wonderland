@@ -21,13 +21,12 @@ export default function Form({
             name={`input${i + 1}`}
             id={`input${i + 1}`}
             disabled={isInputEmpty}
+            className="my-2"
             style={{
               borderRadius: "8px",
-              width: "480px",
+              width: "360px",
               height: "30px",
               textAlign: "center",
-              marginTop: "7px",
-              marginBottom: "7px",
             }}
           >
             <option value={Object.values(inputs)[i]} disabled selected>

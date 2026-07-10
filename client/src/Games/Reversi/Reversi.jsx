@@ -1390,7 +1390,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     if (up > pp) {
       if (normalMode) {
         setFinalMessage("You Win!");
-        updateTotalPoint(3);
+        updateTotalPoint(4);
       } else {
         setFinalMessage("You Win, but you don't get any stars!");
       }
@@ -1736,7 +1736,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 </div>
               ),
             )}
-          <br />
+
           {chooseArrowMessage &&
             isUserTurn &&
             freeCellsIds.length < 48 &&
@@ -1744,10 +1744,9 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage &&
             finalMessage === "" && (
-              <div>
+              <div className="mt-2">
                 <div>Choose the path you wan to conquer</div>
-                <br />
-                <div>
+                <div className="mt-2">
                   <button
                     style={{
                       width: "30px",
@@ -1888,7 +1887,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div className="mt-2">
                 <div>Allow Pejman to make his move</div>
                 <button
                   className="btn2"
@@ -1924,7 +1923,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div className="mt-2">
                 <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
                 <button
                   className="btn2"
@@ -1956,7 +1955,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div className="mt-2">
                 <div>
                   All the squares are taken, let's see who is the winner
                 </div>
@@ -1973,7 +1972,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div className="mt-2">
                 <div>{`You conquered ${userPoint} squares`}</div>
                 <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
               </div>

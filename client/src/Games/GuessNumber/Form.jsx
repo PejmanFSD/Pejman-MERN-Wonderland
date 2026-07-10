@@ -30,6 +30,9 @@ export default function Form({
   setIsAlreadyGuessed,
   isInputEmpty,
   setIsInputEmpty,
+  easyMode,
+  normalMode,
+  updateTotalPoint
 }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,6 +77,11 @@ export default function Form({
           .replaceAll(",", "") === convertArrayToString(num)
       ) {
         setIsWin(true);
+        if (easyMode) {
+          updateTotalPoint(1);
+        } else if (normalMode) {
+          updateTotalPoint(5);
+        }
       }
       setChancesNum((currChanceNum) => currChanceNum - 1);
       for (let i = 0; i < 4; i++) {
@@ -201,7 +209,7 @@ export default function Form({
     setIsInputEmpty(false);
   };
   return (
-    <div>
+    <div className="mt-3">
       {!isWin &&
         !isTogglingLevel &&
         !isTogglingReset &&
@@ -228,7 +236,7 @@ export default function Form({
                 isInt &&
                 !isAlreadyGuessed &&
                 !isInputEmpty &&
-                "First Digit"
+                "Digit 1"
               }
               name="input1"
               id="input1"
@@ -236,10 +244,10 @@ export default function Form({
               onChange={handleChange}
               style={{
                 borderRadius: "8px",
-                width: "110px",
+                width: "60px",
                 borderColor: "black",
                 textAlign: "center",
-                margin: "7px",
+                margin: "5px",
               }}
             />
             <label htmlFor="input2"></label>
@@ -264,7 +272,7 @@ export default function Form({
                 isInt &&
                 !isAlreadyGuessed &&
                 !isInputEmpty &&
-                "Second Digit"
+                "Digit 2"
               }
               name="input2"
               id="input2"
@@ -272,10 +280,10 @@ export default function Form({
               onChange={handleChange}
               style={{
                 borderRadius: "8px",
-                width: "110px",
+                width: "60px",
                 borderColor: "black",
                 textAlign: "center",
-                margin: "7px",
+                margin: "5px",
               }}
             />
             <label htmlFor="input3"></label>
@@ -300,7 +308,7 @@ export default function Form({
                 isInt &&
                 !isAlreadyGuessed &&
                 !isInputEmpty &&
-                "Third Digit"
+                "Digit 3"
               }
               name="input3"
               id="input3"
@@ -308,10 +316,10 @@ export default function Form({
               onChange={handleChange}
               style={{
                 borderRadius: "8px",
-                width: "110px",
+                width: "60px",
                 borderColor: "black",
                 textAlign: "center",
-                margin: "7px",
+                margin: "5px",
               }}
             />
             <label htmlFor="input4"></label>
@@ -336,7 +344,7 @@ export default function Form({
                 isInt &&
                 !isAlreadyGuessed &&
                 !isInputEmpty &&
-                "Fourth Digit"
+                "Digit 4"
               }
               name="input4"
               id="input4"
@@ -344,10 +352,10 @@ export default function Form({
               onChange={handleChange}
               style={{
                 borderRadius: "8px",
-                width: "110px",
+                width: "60px",
                 borderColor: "black",
                 textAlign: "center",
-                margin: "7px",
+                margin: "5px"
               }}
             />
             <br />

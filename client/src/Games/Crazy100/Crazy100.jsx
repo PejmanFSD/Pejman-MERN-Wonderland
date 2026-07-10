@@ -51,6 +51,33 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
         newNum = copyAllNums[Math.floor(Math.random() * copyAllNums.length)];
       }
       if (i === 3) {
+        if (
+          100 -
+            pickedNums[0].number -
+            pickedNums[1].number -
+            pickedNums[2].number ===
+            pickedNums[0].number ||
+          100 -
+            pickedNums[0].number -
+            pickedNums[1].number -
+            pickedNums[2].number ===
+            pickedNums[1].number ||
+          100 -
+            pickedNums[0].number -
+            pickedNums[1].number -
+            pickedNums[2].number ===
+            pickedNums[2].number
+        ) {
+          console.log(
+            "Bad Error: ",
+            pickedNums[0].number,
+            pickedNums[1].number,
+            pickedNums[2].number,
+          );
+          pickedNums[0].number = 23;
+          pickedNums[1].number = 24;
+          pickedNums[2].number = 25;
+        }
         newNum =
           100 -
           pickedNums[0].number -
@@ -265,6 +292,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   }, []);
   return (
     <div>
+      {/* {nums?.map(n => <div>{n.number} - {n.blockNum}</div>)} */}
       {isAboutPage && <AboutCrazy100 setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
@@ -384,7 +412,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h3>
+              <h3 className="mt-3">
                 Among the 16 numbers, choose 4 of them whose sum equals 100.
               </h3>
             )}
@@ -508,7 +536,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 answer.length > 1 ? "s" : ""
               }, you should choose only 4 numbers, no more no less!`}
               <div>
-                <button className="btn2" onClick={handle4Blocks}>
+                <button className="btn2 mt-2" onClick={handle4Blocks}>
                   Ok
                 </button>
               </div>

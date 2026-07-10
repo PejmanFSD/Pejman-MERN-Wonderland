@@ -170,7 +170,7 @@ export default function ReviewSection({ game, currentUser }) {
             borderRadius: "8px",
             margin: "auto",
             textAlign: "center",
-            width: "400px",
+            width: "340px",
             height: "150px",
             marginTop: "7px",
           }}
@@ -208,7 +208,7 @@ export default function ReviewSection({ game, currentUser }) {
                   padding: "10px",
                   borderRadius: "10px",
                   textAlign: "center",
-                  width: "400px",
+                  width: "340px",
                   height: "220px",
                   paddingTop: "20px",
                 }}
@@ -225,7 +225,7 @@ export default function ReviewSection({ game, currentUser }) {
                       style={{
                         margin: "auto",
                         textAlign: "center",
-                        width: "350px",
+                        width: "300px",
                         height: "85px",
                         marginTop: "7px",
                       }}

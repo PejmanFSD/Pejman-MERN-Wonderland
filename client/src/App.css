@@ -91,6 +91,29 @@ table {
   pointer-events: none;
 }
 
+.btnSnake {
+  margin: 2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 10px;
+  background-color: var(--secondary);
+  color: var(--background);
+  border-color: #000000;
+}
+
+.btnSnake:disabled,
+.btnSnake[disabled] {
+  background-color: var(--background);
+  color: var(--secondary);
+  border-color: #000000;
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 .eater {
   font-family: "Eater", cursive;
 }
@@ -203,4 +226,209 @@ body {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+}
+
+.product-nim-image {
+    width: 100px;
+}
+
+@media (max-width: 768px) {
+    .product-nim-image {
+        width: 40px;
+    }
+}
+
+.product-memory-image {
+    width: 80px;
+}
+
+@media (max-width: 768px) {
+    .product-memory-image {
+        width: 30px;
+    }
+}
+
+.product-tripleEmoji-image {
+    width: 40px;
+    margin: 2px;
+}
+
+@media (max-width: 768px) {
+    .product-tripleEmoji-image {
+        width: 23px;
+        margin: 1px;
+    }
+}
+
+.product-happyFlower-image {
+    width: 35px;
+    height: 20px;
+    margin: 3px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .product-happyFlower-image {
+        width: 25px;
+        height: 10px;
+        margin: 1px;
+        font-size: 10px;
+    }
+}
+
+.product-birdHunter-image {
+    height: 40px;
+}
+
+@media (max-width: 768px) {
+    .product-birdHunter-image {
+        height: 15px;
+        margin: 1px;
+    }
+}
+
+.product-tugOfWar-image {
+    height: 90px;
+}
+
+@media (max-width: 768px) {
+    .product-tugOfWar-image {
+        height: 56px;
+    }
+}
+
+.product-tugOfWar-checkBox {
+    width: 20px;
+    margin: 10px;
+    position: relative;
+    top: 15px;
+}
+
+@media (max-width: 768px) {
+    .product-tugOfWar-checkBox {
+      width: 10px;
+        margin: 5px;
+        position: relative;
+    top: 15px;
+    }
+}
+
+.product-bingoSelectedNums-image {
+    font-size: 15px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 3px;
+    width: 35px;
+    height: 30px;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .product-bingoSelectedNums-image {
+      font-size: 13px;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin: 2px;
+      width: 30px;
+      height: 25px;
+      border-radius: 7px;
+    }
+}
+
+.product-bingoMissedMessage-text {
+  position: relative;
+  top: 20px;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .product-bingoMissedMessage-text {
+      position: relative;
+      top: 20px;
+      margin-top: 5px;
+      font-size: 15px;
+    }
+}
+
+.product-counter-image1 {
+  width: 100px;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+@media (max-width: 768px) {
+    .product-counter-image1 {
+      width: 75px;
+      border: 1px solid black;
+      margin: 3px;
+    }
+}
+
+.product-counter-image2 {
+  width: 80px;
+  border: 1px solid black;
+  margin: 5px;
+}
+
+@media (max-width: 768px) {
+    .product-counter-image2 {
+      width: 60px;
+      border: 1px solid black;
+      margin: 2px;
+    }
+}
+
+.product-blackJack-deckImage {
+  height: 400px;
+}
+
+@media (max-width: 768px) {
+    .product-blackJack-deckImage {
+      height: 250px;
+    }
+}
+
+.product-blackJack-chipsImage {
+  height: 45px;
+}
+
+@media (max-width: 768px) {
+    .product-blackJack-chipsImage {
+      height: 35px;
+    }
+}
+
+.product-blackJack-table {
+  height: 110px;
+  width: 420px;
+}
+
+@media (max-width: 768px) {
+    .product-blackJack-table {
+      height: 90px;
+      width: 340px;
+    }
+}
+
+.product-blackJack-hand {
+  height: 110px;
+}
+
+@media (max-width: 768px) {
+    .product-blackJack-hand {
+      height: 80px;
+    }
+}
+
+.product-RSP-image {
+  width: 130px;
+  margin: 15px;
+}
+
+@media (max-width: 768px) {
+    .product-RSP-image {
+      width: 90px;
+      margin: 7px;
+    }
 }

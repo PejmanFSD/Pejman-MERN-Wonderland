@@ -36,11 +36,11 @@ export default function DynamicImage({
   };
   return (
     <img
+    className="product-birdHunter-image"
       onClick={handleClickImage}
       key={index}
       src={src}
       alt={`img-${index}`}
-      height={isTogglingHomePage ? "30px" : "40px"}
       style={{
         pointerEvents: src === B1 || src === B2 ? "" : "none",
       }}

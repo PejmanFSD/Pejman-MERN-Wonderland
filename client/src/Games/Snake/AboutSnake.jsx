@@ -13,7 +13,7 @@ export default function AboutSnake({ setIsAboutPage }) {
                   About Snake
                 </h2>
                 In this game, you control a snake moving across a board made up
-                of 400 grids (20 × 20) using the arrow keys on your keyboard.
+                of 400 grids (20 × 20) using the arrow keys on your keyboard or the ones below the board.
                 <br />
                 At the beginning of the game the snake consists of a single
                 green square and a randomly generated red food appears somewhere
@@ -54,7 +54,7 @@ export default function AboutSnake({ setIsAboutPage }) {
                 <strong>- Normal Mode:</strong>
                 <br />
                 - The snake becomes faster after each food collected
-                <br />- Win the game to earn 3 stars
+                <br />- Win the game to earn 4 stars
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

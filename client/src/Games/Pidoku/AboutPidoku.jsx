@@ -64,7 +64,7 @@ export default function AboutPidoku({ setIsAboutPage }) {
                 <strong>- Normal Mode:</strong>
                 <br />
                 - Pejman uses a strategy to choose his moves.
-                <br />- Win the game to earn 1 star.
+                <br />- Win the game to earn 2 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

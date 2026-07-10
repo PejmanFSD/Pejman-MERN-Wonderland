@@ -648,7 +648,7 @@ export default function Bowls({
         if (standard) {
           if (allTurns[allTurns.length - 1].side === "User") {
             setIsWin(true);
-            updateTotalPoint(4);
+            updateTotalPoint(6);
           } else {
             setIsWin(false);
           }
@@ -657,7 +657,7 @@ export default function Bowls({
             setIsWin(false);
           } else {
             setIsWin(true);
-            updateTotalPoint(4);
+            updateTotalPoint(6);
           }
         }
       }
@@ -848,7 +848,7 @@ export default function Bowls({
                 </div>
               )}
           </div>
-          <div className="col-lg-2 d-none d-lg-block">
+          <div className="col-lg-2 mt-3">
             {!isTogglingReset && !isTogglingHomePage && (
               <div style={{ fontSize: isWin === "" ? "15px" : "12px" }}>
                 {allTurns.map((b, i) => (

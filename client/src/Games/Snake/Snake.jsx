@@ -45,7 +45,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setIsGameStarted(false);
     setSnake([{ x: 0, y: 0 }]);
     setDirection({ x: 0, y: 0 });
-    setDirections((currDirections) => [...currDirections, "None"]);
+    setDirections([]);
+    // setDirections((currDirections) => [...currDirections, "None"]);
     setFood(generateFood());
     setDelay(145);
     setUserPoint(0);
@@ -169,10 +170,112 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  const handleUp = () => {
+    if (
+      isTogglingReset ||
+      isTogglingLevel ||
+      isTogglingHomePage ||
+      finalMessage !== ""
+    ) {
+      setDirection({ x: 0, y: 0 });
+      setDirections((currDirections) => [...currDirections, "None"]);
+    } else {
+      if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
+      setDirection({ x: 0, y: -1 });
+      setDirections((currDirections) => [...currDirections, "Up"]);
+    }
+  };
+  const handleLeft = () => {
+    if (
+      isTogglingReset ||
+      isTogglingLevel ||
+      isTogglingHomePage ||
+      finalMessage !== ""
+    ) {
+      setDirection({ x: 0, y: 0 });
+      setDirections((currDirections) => [...currDirections, "None"]);
+    } else {
+      if (direction.x === 1) return; // Don't kill the snake if it shifts to the opposite direction
+      setDirection({ x: -1, y: 0 });
+      setDirections((currDirections) => [...currDirections, "Left"]);
+    }
+  };
+  const handleRight = () => {
+    if (
+      isTogglingReset ||
+      isTogglingLevel ||
+      isTogglingHomePage ||
+      finalMessage !== ""
+    ) {
+      setDirection({ x: 0, y: 0 });
+      setDirections((currDirections) => [...currDirections, "None"]);
+    } else {
+      if (direction.x === -1) return; // Don't kill the snake if it shifts to the opposite direction
+      setDirection({ x: 1, y: 0 });
+      setDirections((currDirections) => [...currDirections, "Right"]);
+    }
+  };
+  const handleDown = () => {
+    if (
+      isTogglingReset ||
+      isTogglingLevel ||
+      isTogglingHomePage ||
+      finalMessage !== ""
+    ) {
+      setDirection({ x: 0, y: 0 });
+      setDirections((currDirections) => [...currDirections, "None"]);
+    } else {
+      if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
+      setDirection({ x: 0, y: 1 });
+      setDirections((currDirections) => [...currDirections, "Down"]);
+    }
+  };
+  const handlePause = () => {
+    if (directions.length > 0 && directions[directions.length - 1] === "None") {
+      for (let i = directions.length - 1; i >= 0; i--) {
+        if (directions[i] !== "None") {
+          if (directions[i] === "Up") {
+            setDirection({ x: 0, y: -1 });
+            setDirections((currDirections) => [...currDirections, "Up"]);
+            break;
+          }
+        }
+
+        if (directions[i] !== "None") {
+          if (directions[i] === "Down") {
+            setDirection({ x: 0, y: 1 });
+            setDirections((currDirections) => [...currDirections, "Down"]);
+            break;
+          }
+        }
+
+        if (directions[i] !== "None") {
+          if (directions[i] === "Left") {
+            setDirection({ x: -1, y: 0 });
+            setDirections((currDirections) => [...currDirections, "Left"]);
+            break;
+          }
+        }
+
+        if (directions[i] !== "None") {
+          if (directions[i] === "Right") {
+            setDirection({ x: 1, y: 0 });
+            setDirections((currDirections) => [...currDirections, "Right"]);
+            break;
+          }
+        }
+      }
+    } else {
+      setDirection({ x: 0, y: 0 });
+      setDirections((currDirections) => [...currDirections, "None"]);
+    }
+  };
   // Game loop:
   useEffect(() => {
     if (!isGameStarted) return;
-    else {
+    else if (direction === { x: 0, y: 0 }) {
+      return;
+    } else {
       const interval = setInterval(() => {
         moveSnake();
       }, delay);
@@ -237,6 +340,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         } else {
           if (e.key === " ") {
             e.preventDefault();
+            if (directions.length === 0) {
+              setFinalMessage("You Lose!");
+            }
             setDirection({ x: 0, y: 0 });
             setDirections((currDirections) => [...currDirections, "None"]);
           } else if (e.key === "ArrowUp") {
@@ -295,7 +401,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
-        updateTotalPoint(3);
+        updateTotalPoint(4);
       }
     }
   }, [userPoint]);
@@ -311,8 +417,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         <div
           key={`${x}-${y}`}
           style={{
-            width: "20px",
-            height: "20px",
+            width: "17px",
+            height: "17px",
             background:
               isSnake && finalMessage === "You Lose!"
                 ? "gray"
@@ -347,13 +453,14 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingHomePage &&
                   !isTogglingLevel &&
-                  !isTogglingReset &&
-                  direction.x === 0 &&
-                  direction.y === 0 && (
+                  !isTogglingReset && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
                       onClick={handleAboutPage}
+                      disabled={
+                        direction.x === 0 && direction.y === 0 && isGameStarted
+                      }
                     >
                       About Snake
                     </button>
@@ -362,14 +469,18 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingReset &&
                   !isTogglingHomePage &&
-                  !isTogglingLevel &&
-                  direction.x === 0 &&
-                  direction.y === 0 && (
+                  !isTogglingLevel && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
                       onClick={() => toggleLevel()}
-                      disabled={!isGameStarted || (!easyMode && !normalMode) || finalMessage !== ""}
+                      disabled={
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== "" ||
+                        (direction.x === 0 &&
+                          direction.y === 0 &&
+                          isGameStarted)
+                      }
                     >
                       {`${easyMode ? "Switch to Normal Mode" : normalMode ? "Switch to Easy Mode" : "Switch level"}`}
                     </button>
@@ -383,7 +494,13 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                       className="btn3 my-1"
                       style={{ width: "200px" }}
                       onClick={toggleReset}
-                      disabled={!isGameStarted || (!easyMode && !normalMode) || finalMessage !== ""}
+                      disabled={
+                        (!easyMode && !normalMode) ||
+                        finalMessage !== "" ||
+                        (direction.x === 0 &&
+                          direction.y === 0 &&
+                          isGameStarted)
+                      }
                     >
                       Reset the Game
                     </button>
@@ -392,13 +509,14 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               <div className="col-lg-3 align-self-center">
                 {!isTogglingHomePage &&
                   !isTogglingReset &&
-                  !isTogglingLevel &&
-                  direction.x === 0 &&
-                  direction.y === 0 && (
+                  !isTogglingLevel && (
                     <button
                       className="btn3 my-1"
                       style={{ width: "200px" }}
                       onClick={() => toggleHomePage()}
+                      disabled={
+                        direction.x === 0 && direction.y === 0 && isGameStarted
+                      }
                     >
                       Back to home page
                     </button>
@@ -456,7 +574,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
-            !isTogglingHomePage && (
+            !isTogglingHomePage &&
+            !isTogglingReset && (
               <button
                 className="btn1"
                 onClick={handleStart}
@@ -508,99 +627,175 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                     </button>
                   </div>
                 )}
-              <br />
-              <div
-                style={{
-                  display: "flex",
-                  gap: "4px",
-                }}
-              >
-                {new Array(10)
-                  .fill(null)
-                  .map((s, i) =>
-                    i < userPoint ? (
-                      <div key={i}>⚫</div>
-                    ) : (
-                      <div key={i}>⚪</div>
-                    ),
-                  )}
+              <div className="my-2">
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                  }}
+                >
+                  {new Array(10)
+                    .fill(null)
+                    .map((s, i) =>
+                      i < userPoint ? (
+                        <div key={i}>⚫</div>
+                      ) : (
+                        <div key={i}>⚪</div>
+                      ),
+                    )}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                  }}
+                >
+                  {new Array(10)
+                    .fill(null)
+                    .map((s, i) =>
+                      i + 10 < userPoint ? (
+                        <div key={i}>⚫</div>
+                      ) : (
+                        <div key={i}>⚪</div>
+                      ),
+                    )}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                  }}
+                >
+                  {new Array(10)
+                    .fill(null)
+                    .map((s, i) =>
+                      i + 20 < userPoint ? (
+                        <div key={i}>⚫</div>
+                      ) : (
+                        <div key={i}>⚪</div>
+                      ),
+                    )}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                  }}
+                >
+                  {new Array(10)
+                    .fill(null)
+                    .map((s, i) =>
+                      i + 30 < userPoint ? (
+                        <div key={i}>⚫</div>
+                      ) : (
+                        <div key={i}>⚪</div>
+                      ),
+                    )}
+                </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "4px",
-                }}
-              >
-                {new Array(10)
-                  .fill(null)
-                  .map((s, i) =>
-                    i + 10 < userPoint ? (
-                      <div key={i}>⚫</div>
-                    ) : (
-                      <div key={i}>⚪</div>
-                    ),
-                  )}
+              <div className="container">
+                <div className="row">
+                  <div className="d-none d-sm-block d-flex justify-content-center">
+                    <div className="my-2">
+                      <strong>
+                        Pause / Resume the game with the "Space" key
+                      </strong>
+                      <div>
+                        {direction.x === 0 && direction.y === 0 ? (
+                          <img
+                            src={Play}
+                            width="40px"
+                            style={{ margin: "10px" }}
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            src={Pause}
+                            width="40px"
+                            style={{ margin: "10px" }}
+                            alt=""
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "4px",
-                }}
-              >
-                {new Array(10)
-                  .fill(null)
-                  .map((s, i) =>
-                    i + 20 < userPoint ? (
-                      <div key={i}>⚫</div>
-                    ) : (
-                      <div key={i}>⚪</div>
-                    ),
-                  )}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "4px",
-                }}
-              >
-                {new Array(10)
-                  .fill(null)
-                  .map((s, i) =>
-                    i + 30 < userPoint ? (
-                      <div key={i}>⚫</div>
-                    ) : (
-                      <div key={i}>⚪</div>
-                    ),
-                  )}
-              </div>
-              <br />
-              <strong>Pause / Resume the game with the "Space" key</strong>
-              {direction.x === 0 && direction.y === 0 ? (
-                <img
-                  src={Pause}
-                  width="40px"
-                  style={{ margin: "10px" }}
-                  alt=""
-                />
-              ) : (
-                <img
-                  src={Play}
-                  width="40px"
-                  style={{ margin: "10px" }}
-                  alt=""
-                />
-              )}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(20, 20px)",
-                  gridTemplateRows: "repeat(20, 20px)",
+                  gridTemplateColumns: "repeat(20, 17px)",
+                  gridTemplateRows: "repeat(20, 17px)",
                   gap: "1px",
                   background: "#333",
                   padding: "5px",
                 }}
               >
                 {cells}
+              </div>
+              <div>
+                <button
+                  onClick={handleUp}
+                  className="btnSnake mt-1"
+                  disabled={
+                    finalMessage !== "" ||
+                    (direction.x === 0 &&
+                      direction.y === 0 &&
+                      directions.length > 0) ||
+                    (direction.x === 0 && direction.y === 1)
+                  }
+                >
+                  &#8593;
+                </button>
+                <br />
+                <button
+                  onClick={handleLeft}
+                  className="btnSnake"
+                  disabled={
+                    finalMessage !== "" ||
+                    (direction.x === 0 &&
+                      direction.y === 0 &&
+                      directions.length > 0) ||
+                    (direction.x === 1 && direction.y === 0)
+                  }
+                >
+                  &#8592;
+                </button>
+
+                <button
+                  onClick={handlePause}
+                  className="btnSnake"
+                  disabled={finalMessage !== "" || directions.length === 0}
+                >
+                  {direction.x === 0 && direction.y === 0 ? "▶" : "⏸"}
+                </button>
+                <button
+                  onClick={handleRight}
+                  className="btnSnake"
+                  disabled={
+                    finalMessage !== "" ||
+                    (direction.x === 0 &&
+                      direction.y === 0 &&
+                      directions.length > 0) ||
+                    (direction.x === -1 && direction.y === 0)
+                  }
+                >
+                  &#8594;
+                </button>
+                <br />
+                <button
+                  onClick={handleDown}
+                  className="btnSnake"
+                  disabled={
+                    finalMessage !== "" ||
+                    (direction.x === 0 &&
+                      direction.y === 0 &&
+                      directions.length > 0) ||
+                    (direction.x === 0 && direction.y === -1)
+                  }
+                >
+                  &#8595;
+                </button>
               </div>
             </div>
           )}

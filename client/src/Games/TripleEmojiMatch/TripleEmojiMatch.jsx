@@ -200,9 +200,9 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
       setIsWin(true);
       setIsTimerRunning(false);
       if (easyMode) {
-        updateTotalPoint(2);
+        updateTotalPoint(10);
       } else if (normalMode) {
-        updateTotalPoint(5);
+        updateTotalPoint(20);
       }
     }
   }, [emojis]);
@@ -364,7 +364,6 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
-
           {normalMode &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -378,35 +377,41 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 add 30 seconds
               </button>
             )}
-          <div className="four-buttons-container" style={{ marginTop: "15px" }}>
-            {(normalMode || easyMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              isWin === "" &&
-              !tripleMatch && (
-                <button
-                  className="btn1"
-                  onClick={showPair1}
-                  disabled={!pair1Chance}
-                >
-                  Show me a triple match
-                </button>
-              )}
-            {(normalMode || easyMode) &&
-              !isTogglingReset &&
-              !isTogglingHomePage &&
-              !isTogglingLevel &&
-              isWin === "" &&
-              !tripleMatch && (
-                <button
-                  className="btn1"
-                  onClick={showPair2}
-                  disabled={!pair2Chance}
-                >
-                  Show me a triple match
-                </button>
-              )}
+          <div className="container mt-2">
+            <div className="row">
+              <div className="col-md-4 offset-md-2 d-flex justify-content-center my-1">
+                {(normalMode || easyMode) &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  isWin === "" &&
+                  !tripleMatch && (
+                    <button
+                      className="btn1"
+                      onClick={showPair1}
+                      disabled={!pair1Chance}
+                    >
+                      Show me a triple match
+                    </button>
+                  )}
+              </div>
+              <div className="col-md-4 d-flex justify-content-center my-1">
+                {(normalMode || easyMode) &&
+                  !isTogglingReset &&
+                  !isTogglingHomePage &&
+                  !isTogglingLevel &&
+                  isWin === "" &&
+                  !tripleMatch && (
+                    <button
+                      className="btn1"
+                      onClick={showPair2}
+                      disabled={!pair2Chance}
+                    >
+                      Show me a triple match
+                    </button>
+                  )}
+              </div>
+            </div>
           </div>
           {isWin === false && (
             <div>

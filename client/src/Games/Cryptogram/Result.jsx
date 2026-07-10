@@ -24,32 +24,43 @@ export default function Result({
         !isTogglingHomePage &&
         resultMessageStatus.map((r, idx) =>
           r === true ? (
-            <h3 key={idx}>{`For code ${idx + 1}, you chose "${
+            <h5 key={idx}>{`For code ${idx + 1}, you chose "${
               Object.values(inputs)[idx]
-            }" ✔`}</h3>
+            }" ✔`}</h5>
           ) : (
-            <div key={idx}>
-              <h3>{`For code ${idx + 1}, you chose "${
-                Object.values(inputs)[idx]
-              }" ✖ ➜ The correct answer is: "${Object.keys(resultObj)[idx]}"`}</h3>
-              {acceptedAsRepetition.includes(Object.values(inputs)[idx]) && (
-                <div>
-                  <p style={{ display: "inline" }}>
-                    (You had been informed that{" "}
-                  </p>
-                  <span
-                    style={{
-                      display: "inline",
-                      color: "red",
-                      fontWeight: "bold",
-                      textDecoration: "red underline",
-                    }}
-                  >
-                    {Object.values(inputs)[idx]}
-                  </span>
-                  <p style={{ display: "inline" }}> had been already used in the phrase!)</p>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                  <div key={idx}>
+                    <h5>{`For code ${idx + 1}, you chose "${
+                      Object.values(inputs)[idx]
+                    }" ✖ ➜ The correct answer is: "${Object.keys(resultObj)[idx]}"`}</h5>
+                    {acceptedAsRepetition.includes(
+                      Object.values(inputs)[idx],
+                    ) && (
+                      <div>
+                        <p style={{ display: "inline" }}>
+                          (You had been informed that{" "}
+                        </p>
+                        <span
+                          style={{
+                            display: "inline",
+                            color: "red",
+                            fontWeight: "bold",
+                            textDecoration: "red underline",
+                          }}
+                        >
+                          {Object.values(inputs)[idx]}
+                        </span>
+                        <p style={{ display: "inline" }}>
+                          {" "}
+                          had been already used in the phrase!)
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           ),
         )}
@@ -57,20 +68,26 @@ export default function Result({
         <div>The correct answer:</div>
       )}
       {!isTogglingReset && !isTogglingHomePage && isWin !== "" && (
-        <div>
-          {adviceArray.map((a, i) => (
-            <h2
-              style={{
-                display: "inline",
-                color: acceptedAsRepetition.includes(a) && "red",
-                textDecoration:
-                  acceptedAsRepetition.includes(a) && "red underline",
-              }}
-              key={i}
-            >
-              <strong>{a}</strong>
-            </h2>
-          ))}
+        <div className="container">
+          <div className="row">
+            <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+              <div>
+                {adviceArray.map((a, i) => (
+                  <h2
+                    style={{
+                      display: "inline",
+                      color: acceptedAsRepetition.includes(a) && "red",
+                      textDecoration:
+                        acceptedAsRepetition.includes(a) && "red underline",
+                    }}
+                    key={i}
+                  >
+                    <strong>{a}</strong>
+                  </h2>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
