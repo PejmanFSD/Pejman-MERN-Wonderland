@@ -29,6 +29,7 @@ export default function Square({
       width={isUserTurn && availableSquares.length !== 0 ? "50px" : "10px"}
       alt="Square"
       style={{
+        cursor: "pointer",
         margin: "2px",
         display: "inline",
         pointerEvents:

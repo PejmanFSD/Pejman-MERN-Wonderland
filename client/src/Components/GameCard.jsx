@@ -4,7 +4,7 @@ export default function GameCard({ imageSrc, title, onClickFunction }) {
       <img
         src={imageSrc}
         className="card-img-top img-fluid"
-        style={{ border: "2px solid black" }}
+        style={{ border: "2px solid black", cursor: "pointer" }}
         alt={title}
         onClick={onClickFunction}
       />

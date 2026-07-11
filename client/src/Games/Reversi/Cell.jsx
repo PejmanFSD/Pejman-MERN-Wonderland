@@ -89,6 +89,7 @@ export default function Cell({
               : "1px solid black"
       }
       style={{
+        cursor: "pointer",
         margin: "2px",
         boxSizing: "border-box",
         pointerEvents:

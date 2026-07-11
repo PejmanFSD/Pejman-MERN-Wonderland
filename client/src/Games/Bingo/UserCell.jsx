@@ -36,6 +36,7 @@ export default function UserCell({
         <div
             onClick={handleClickCell}
             style={{
+                cursor: "pointer",
                 pointerEvents: (!selectedNums.includes(value) || owner === "Pejman" || (isSelected && !isClicked)) && "none",
                 backgroundColor:
                     (selectedNums.includes(value) && isSelected === true && isClicked === true) ? color :

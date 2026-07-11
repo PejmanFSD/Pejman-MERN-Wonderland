@@ -43,7 +43,7 @@ export default function Emoji({
         src={imgSrc}
         className="product-tripleEmoji-image"
         style={{
-          // width: "32px",
+          cursor: "pointer",
           border:
             pair1ChoseEmoji && imgSrc === pair1ChoseEmoji.image
               ? "5px solid black"
@@ -51,7 +51,6 @@ export default function Emoji({
                 ? "5px dashed black"
                 : "1px solid black",
           boxSizing: "border-box",
-          // margin: "1px",
           pointerEvents:
             imgSrc === E00 || tripleMatch || isWin !== "" || isSelected
               ? "none"

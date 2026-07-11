@@ -98,7 +98,6 @@ export default function Card({
   };
   return (
     <img
-    // className="product-memory-image"
     className={easyMode ? "product-memory-image-easy" : normalMode ? "product-memory-image-normal" : "product-memory-image-hard"}
       src={
         status === 2
@@ -112,6 +111,7 @@ export default function Card({
                 : Pejman
       }
       style={{
+        cursor: "pointer",
         border: "2px solid black",
         margin: "3px",
         pointerEvents:

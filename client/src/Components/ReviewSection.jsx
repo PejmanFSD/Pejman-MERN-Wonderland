@@ -151,15 +151,15 @@ export default function ReviewSection({ game, currentUser }) {
 
   return (
     <div style={{ marginTop: "20px", margin: "auto" }}>
-      <div style={{ marginTop: "15px" }}>
+      <div className="container"><div className="row"><div style={{ marginTop: "15px" }} className="col-10 offset-1 d-flex justify-content-center">
         <strong style={{ fontSize: "25px" }}>
           Rate the game and leave your comment
         </strong>
-      </div>
+      </div></div></div>
+      <div className="container"><div className="row"><div className="col-10 offset-1 d-flex justify-content-center">
       <form onSubmit={handleSubmit}>
         <StarRating rating={newRating} setRating={setNewRating} />
         <textarea
-          // style={{ , marginTop: "10px" }}
           rows="5"
           cols="25"
           value={body}
@@ -187,6 +187,7 @@ export default function ReviewSection({ game, currentUser }) {
           Submit
         </button>
       </form>
+</div></div></div>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="container">

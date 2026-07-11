@@ -169,9 +169,15 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
       )}
       {!isAboutPage && (
         <div>
-          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
-            Rock - Scissors - Paper
-          </h2>
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+                  Rock - Scissors - Paper
+                </h2>
+              </div>
+            </div>
+          </div>
           <div className="container">
             <div className="row">
               <div className="col-xl-3 align-self-center">
@@ -241,7 +247,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           {isTogglingLevel && (
             <div className="container">
               <div className="row">
-                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                <div className="col-10 offset-1 d-flex justify-content-center">
                   <ConfirmationBox
                     question={`Are you sure you want to switch to ${
                       extremelySuperDifficultMode
@@ -258,7 +264,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           {isTogglingReset && (
             <div className="container">
               <div className="row">
-                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                <div className="col-10 offset-1 d-flex justify-content-center">
                   <ConfirmationBox
                     question="Are you sure you want to reset the game? By reseting the game, your score will be reset to zero!"
                     toggleYes={toggleResetYes}
@@ -271,7 +277,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           {isTogglingHomePage && (
             <div className="container">
               <div className="row">
-                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                <div className="col-10 offset-1 d-flex justify-content-center">
                   <ConfirmationBox
                     question="Are you sure you want to go back to Home Page?"
                     toggleYes={toggleHomePageYes}
@@ -309,25 +315,32 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             showImages &&
             (normalMode || extremelySuperDifficultMode) && (
-              <div>
-                <img
-                  src={Rock}
-                  className="product-RSP-image"
-                  alt="Rock"
-                  onClick={() => handleUserChoice("Rock")}
-                />
-                <img
-                  src={Scissors}
-                  className="product-RSP-image"
-                  alt="Scissors"
-                  onClick={() => handleUserChoice("Scissors")}
-                />
-                <img
-                  src={Paper}
-                  className="product-RSP-image"
-                  alt="Paper"
-                  onClick={() => handleUserChoice("Paper")}
-                />
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <img
+                      src={Rock}
+                      className="product-RSP-image"
+                      style={{ cursor: "pointer" }}
+                      alt="Rock"
+                      onClick={() => handleUserChoice("Rock")}
+                    />
+                    <img
+                      src={Scissors}
+                      className="product-RSP-image"
+                      style={{ cursor: "pointer" }}
+                      alt="Scissors"
+                      onClick={() => handleUserChoice("Scissors")}
+                    />
+                    <img
+                      src={Paper}
+                      style={{ cursor: "pointer" }}
+                      className="product-RSP-image"
+                      alt="Paper"
+                      onClick={() => handleUserChoice("Paper")}
+                    />
+                  </div>
+                </div>
               </div>
             )}
           {!isTogglingHomePage &&
@@ -347,11 +360,13 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
           (normalMode || extremelySuperDifficultMode) ? (
             <div className="container">
               <div className="row">
-                <div className="col-md-10 offset-md-1 d-flex justify-content-center">
-                  <h3 className="fasterOne" style={{ fontSize: "40px" }}>
-                    Excellent! You just beat Pejman three times in a row
-                  </h3>
-                  <h3>Your total point increases by one</h3>
+                <h4 className="col-10 offset-1 d-flex justify-content-center fasterOne">
+                  Excellent! You just beat Pejman three times in a row.
+                </h4>
+                <h4 className="col-10 offset-1 d-flex justify-content-center fasterOne">
+                  Your total point increases by one.
+                </h4>
+                <div className="col-10 offset-1 d-flex justify-content-center my-2">
                   <button className="btn2" onClick={() => handleOk()}>
                     OK
                   </button>
@@ -381,7 +396,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
                 </div>
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
                       <h2>{gameResult}</h2>
                     </div>
                   </div>

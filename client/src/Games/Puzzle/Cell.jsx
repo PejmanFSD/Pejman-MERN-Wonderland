@@ -365,6 +365,7 @@ export default function Cell({
     <img
       onClick={handleClickCell}
       style={{
+        cursor: "pointer",
         width: "45px",
         border: imageGroup.find((i) => i.image === imageSrc).isClicked
           ? "5px solid red"
