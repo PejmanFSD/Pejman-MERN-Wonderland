@@ -689,11 +689,12 @@ export default function Bowls({
                         name={`bowl${idx + 1}`}
                         id={`bowl${idx + 1}`}
                         style={{
-                          marginLeft: "7px",
+                          marginLeft: "5px",
                           borderRadius: "8px",
                           textAlign: "center",
-                          width: "80px",
-                          height: "25px",
+                          width: "70px",
+                          height: "20px",
+                          fontSize: "14px"
                         }}
                       >
                         <option value={bowls[idx].ballsNum} disabled selected>

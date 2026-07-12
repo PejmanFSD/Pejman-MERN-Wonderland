@@ -460,33 +460,45 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -506,9 +518,15 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
               </div>
             )}
           {finalMessage && (
-            <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-              {finalMessage}
-            </h2>
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                    {finalMessage}
+                  </h2>
+                </div>
+              </div>
+            </div>
           )}
           {finalMessage === "You Win!" && (
             <div>
@@ -535,11 +553,13 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {isGameStarted && normalMode && (
-            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            <h3
+              className="my-3"
+              style={seconds > 9 ? { color: "green" } : { color: "red" }}
+            >
               {seconds}
             </h3>
           )}
-          <br />
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingReset &&

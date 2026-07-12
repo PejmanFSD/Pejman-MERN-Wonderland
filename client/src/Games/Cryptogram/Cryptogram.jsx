@@ -237,63 +237,87 @@ export default function Cryptogram({ updateTotalPoint, currentUser }) {
             </button>
           )}
           {isTogglingReset && (
-            <ConfirmationBox
-              question={
-                isGameStarted
-                  ? "Are you sure you want to reset the game?"
-                  : isWin === true
-                    ? "Play again?"
-                    : "Try again?"
-              }
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={
+                      isGameStarted
+                        ? "Are you sure you want to reset the game?"
+                        : isWin === true
+                          ? "Play again?"
+                          : "Try again?"
+                    }
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {isTogglingHomePage && (
-            <ConfirmationBox
-              question="Are you sure you want to go back to Home Page?"
-              toggleYes={toggleHomePageYes}
-              toggleCancel={toggleHomePageCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
-          <Result
-            adviceArray={adviceArray}
-            inputs={inputs}
-            resultObj={resultObj}
-            resultMessageStatus={resultMessageStatus}
-            isWin={isWin}
-            isTogglingReset={isTogglingReset}
-            isTogglingHomePage={isTogglingHomePage}
-            acceptedAsRepetition={acceptedAsRepetition}
-          />
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                <Result
+                  adviceArray={adviceArray}
+                  inputs={inputs}
+                  resultObj={resultObj}
+                  resultMessageStatus={resultMessageStatus}
+                  isWin={isWin}
+                  isTogglingReset={isTogglingReset}
+                  isTogglingHomePage={isTogglingHomePage}
+                  acceptedAsRepetition={acceptedAsRepetition}
+                />
+              </div>
+            </div>
+          </div>
           {!isTogglingReset && !isTogglingHomePage && (
-            <Form
-              handleChange={handleChange}
-              isGameStarted={isGameStarted}
-              setIsGameStarted={setIsGameStarted}
-              isWin={isWin}
-              setIsWin={setIsWin}
-              adviceArray={adviceArray}
-              resultObj={resultObj}
-              setResultMessageStatus={setResultMessageStatus}
-              inputs={inputs}
-              setInputs={setInputs}
-              isCharRepetitive={isCharRepetitive}
-              setIsCharRepetitive={setIsCharRepetitive}
-              isInputEmpty={isInputEmpty}
-              setIsInputEmpty={setIsInputEmpty}
-              updateTotalPoint={updateTotalPoint}
-              isOneChar={isOneChar}
-              setIsOneChar={setIsOneChar}
-              isAlreadyExist={isAlreadyExist}
-              setIsAlreadyExist={setIsAlreadyExist}
-              acceptedAsRepetition={acceptedAsRepetition}
-              setAcceptedAsRepetition={setAcceptedAsRepetition}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-              isTogglingReset={isTogglingReset}
-              isTogglingHomePage={isTogglingHomePage}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <Form
+                    handleChange={handleChange}
+                    isGameStarted={isGameStarted}
+                    setIsGameStarted={setIsGameStarted}
+                    isWin={isWin}
+                    setIsWin={setIsWin}
+                    adviceArray={adviceArray}
+                    resultObj={resultObj}
+                    setResultMessageStatus={setResultMessageStatus}
+                    inputs={inputs}
+                    setInputs={setInputs}
+                    isCharRepetitive={isCharRepetitive}
+                    setIsCharRepetitive={setIsCharRepetitive}
+                    isInputEmpty={isInputEmpty}
+                    setIsInputEmpty={setIsInputEmpty}
+                    updateTotalPoint={updateTotalPoint}
+                    isOneChar={isOneChar}
+                    setIsOneChar={setIsOneChar}
+                    isAlreadyExist={isAlreadyExist}
+                    setIsAlreadyExist={setIsAlreadyExist}
+                    acceptedAsRepetition={acceptedAsRepetition}
+                    setAcceptedAsRepetition={setAcceptedAsRepetition}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    isTogglingReset={isTogglingReset}
+                    isTogglingHomePage={isTogglingHomePage}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {!isGameStarted &&
             !isTogglingReset &&

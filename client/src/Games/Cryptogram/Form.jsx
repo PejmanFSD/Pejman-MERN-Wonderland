@@ -35,7 +35,7 @@ export default function Form({
     if (
       Object.keys(resultObj)
         .slice(4, Object.values(resultObj).indexOf(0))
-        .includes(value)
+        .includes(value.toLowerCase())
     ) {
       setIsAlreadyExist(true);
     }
@@ -77,13 +77,13 @@ export default function Form({
     setIsGameStarted(false);
   };
   const evaluateRepetitive = (name, value) => {
-    if (value && value === inputs.input1 && name !== "input1") {
+    if (value && value.toLowerCase() === inputs.input1.toLowerCase() && name !== "input1") {
       return true;
-    } else if (value && value === inputs.input2 && name !== "input2") {
+    } else if (value && value.toLowerCase() === inputs.input2.toLowerCase() && name !== "input2") {
       return true;
-    } else if (value && value === inputs.input3 && name !== "input3") {
+    } else if (value && value.toLowerCase() === inputs.input3.toLowerCase() && name !== "input3") {
       return true;
-    } else if (value && value === inputs.input4 && name !== "input4") {
+    } else if (value && value.toLowerCase() === inputs.input4.toLowerCase() && name !== "input4") {
       return true;
     } else {
       return false;
@@ -126,14 +126,22 @@ export default function Form({
   const handleIsAlreadyExistYes = () => {
     for (let i = 0; i < 4; i++) {
       if (
-        Object.keys(resultObj)
+        (Object.keys(resultObj)
           .slice(4, Object.values(resultObj).indexOf(0))
-          .includes(Object.values(inputs)[i]) &&
+          .includes(Object.values(inputs)[i].toLowerCase())
+          ||
+          Object.keys(resultObj)
+          .slice(4, Object.values(resultObj).indexOf(0))
+          .includes(Object.values(inputs)[i].toUpperCase())
+          
+      )
+          &&
         !acceptedAsRepetition.includes(Object.values(inputs)[i])
       ) {
         setAcceptedAsRepetition((currAcceptedAsRepetition) => [
           ...currAcceptedAsRepetition,
-          Object.values(inputs)[i],
+          Object.values(inputs)[i].toLowerCase(),
+          Object.values(inputs)[i].toUpperCase()
         ]);
       }
     }
@@ -144,8 +152,8 @@ export default function Form({
       const updatedInputs = Object.fromEntries(
         Object.entries(currInputs).map(([key, value]) => {
           if (
-            Object.keys(resultObj).slice(4).includes(value) &&
-            !acceptedAsRepetition.includes(value)
+            Object.keys(resultObj).slice(4).includes(value.toLowerCase()) &&
+            !acceptedAsRepetition.includes(value.toLowerCase())
           ) {
             return [key, ""];
           }

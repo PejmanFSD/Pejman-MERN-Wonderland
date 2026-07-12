@@ -279,13 +279,19 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-            <ConfirmationBox
-              question={`Are you sure you want to switch to ${
-                easyMode ? "Normal Mode" : "Easy Mode"
-              }?`}
-              toggleYes={toggleLevelYes}
-              toggleCancel={toggleLevelCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {isGameStarted &&
             (easyMode || normalMode) &&
@@ -294,20 +300,32 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isWin === "" &&
             seconds > 0 && (
-              <ConfirmationBox
-                question={"Are you sure you want to reset the game?"}
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <ConfirmationBox
+                      question={"Are you sure you want to reset the game?"}
+                      toggleYes={toggleResetYes}
+                      toggleCancel={toggleResetCancel}
+                    />
+                  </div>
+                </div>
+              </div>
             )}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
             !isTogglingLevel &&
             isTogglingHomePage && (
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <ConfirmationBox
+                      question="Are you sure you want to go back to Home Page?"
+                      toggleYes={toggleHomePageYes}
+                      toggleCancel={toggleHomePageCancel}
+                    />
+                  </div>
+                </div>
+              </div>
             )}
           {isGameStarted &&
             show &&
@@ -315,7 +333,10 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+              <h3
+                className="mt-3"
+                style={seconds > 9 ? { color: "green" } : { color: "red" }}
+              >
                 {seconds}
               </h3>
             )}
@@ -345,10 +366,16 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h1
-                className="fasterOne"
-                style={{ fontSize: "40px" }}
-              >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <h1
+                      className="fasterOne"
+                      style={{ fontSize: "40px" }}
+                    >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
+                  </div>
+                </div>
+              </div>
             )}
           {isGameStarted &&
             // show &&
@@ -402,15 +429,13 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isWin === "" &&
             seconds > 0 && (
-              <div className="my-2">
+              <div className="mt-3">
                 <h3>Countries</h3>
                 {questionCountries.map((qc, i) => (
                   <div
                     key={i}
                     style={{
-                      display: "inline",
-                      marginLeft: "10px",
-                      marginRight: "10px",
+                      color: "var(--secondary)",
                     }}
                   >
                     {qc}
@@ -425,10 +450,16 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h4 className="my-2">
-                  7 countries are chosen for you, guess their capitals correctly
-                  and win the game
-                </h4>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center my-2">
+                      <h4 className="my-2">
+                        7 countries are chosen for you, guess their capitals
+                        correctly and win the game
+                      </h4>
+                    </div>
+                  </div>
+                </div>
                 <button className="btn2 my-2" onClick={() => handleShow()}>
                   Ok
                 </button>
@@ -454,7 +485,13 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             )}
           {isInputEmpty && (
             <div>
-              <div>You shouldn't leave any dropdown unselected!</div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    You shouldn't leave any dropdown unselected!
+                  </div>
+                </div>
+              </div>
               <button className="btn2 mt-2" onClick={handleIsInputEmpty}>
                 OK
               </button>
@@ -466,18 +503,30 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             questionCountries.map((c, i) =>
               Object.values(inputs)[i] ? (
-                <h6 key={i}>
-                  {`You chose ${Object.values(inputs)[i]} as the capital of ${
-                    questionCountries[i]
-                  }`}{" "}
-                  {Object.values(inputs)[i] === answer[i]
-                    ? "✔"
-                    : `✖ ➜ The correct answer is: ${answer[i]}`}
-                </h6>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h6 key={i}>
+                        {`You chose ${Object.values(inputs)[i]} as the capital of ${
+                          questionCountries[i]
+                        }`}{" "}
+                        {Object.values(inputs)[i] === answer[i]
+                          ? "✔"
+                          : `✖ ➜ The correct answer is: ${answer[i]}`}
+                      </h6>
+                    </div>
+                  </div>
+                </div>
               ) : (
-                <h6
-                  key={i}
-                >{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h6>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h6
+                        key={i}
+                      >{`You didn't choose any answer for the capital of ${questionCountries[i]} ❗`}</h6>
+                    </div>
+                  </div>
+                </div>
               ),
             )}
           <br />

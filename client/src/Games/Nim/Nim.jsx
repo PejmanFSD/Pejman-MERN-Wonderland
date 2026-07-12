@@ -192,19 +192,31 @@ export default function Nim({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingReset && (
-            <ConfirmationBox
-              question="Are you sure you want to reset the game?"
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
             isTogglingHomePage && (
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <ConfirmationBox
+                      question="Are you sure you want to go back to Home Page?"
+                      toggleYes={toggleHomePageYes}
+                      toggleCancel={toggleHomePageCancel}
+                    />
+                  </div>
+                </div>
+              </div>
             )}
           {!standard && !misere && !isTogglingHomePage && (
             <div>
@@ -261,7 +273,13 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               <h2 className="fasterOne" style={{ fontSize: "40px" }}>
                 You Win!
               </h2>
-              <h3>{`Because ${standard ? "you" : "Pejman"} picked the last ball`}</h3>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <h3>{`Because ${standard ? "you" : "Pejman"} picked the last ball`}</h3>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
           {isWin === false && !isTogglingHomePage && (
@@ -269,7 +287,13 @@ export default function Nim({ updateTotalPoint, currentUser }) {
               <h2 className="fasterOne" style={{ fontSize: "40px" }}>
                 Pejman Wins!
               </h2>
-              <h3>{`Because ${standard ? "Pejman" : "you"} picked the last ball`}</h3>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <h3>{`Because ${standard ? "Pejman" : "you"} picked the last ball`}</h3>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
           {isWin === true && !isTogglingHomePage && (

@@ -249,9 +249,15 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutTripleEmojiMatch setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
-            Triple Emoji Match
-          </h2>
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+                  Triple Emoji Match
+                </h2>
+              </div>
+            </div>
+          </div>
           <div className="container">
             <div className="row">
               <div className="col-lg-3 align-self-center">
@@ -314,33 +320,45 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && isWin === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && isWin === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && isWin === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -360,7 +378,10 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               </div>
             )}
           {isTimerRunning && isWin === "" && normalMode && (
-            <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+            <h3
+              className="my-3"
+              style={seconds > 9 ? { color: "green" } : { color: "red" }}
+            >
               {seconds}
             </h3>
           )}

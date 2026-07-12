@@ -285,33 +285,45 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -491,7 +503,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               <div style={{ marginTop: "30px" }}>
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                    <div className="col-10 offset-1 d-flex justify-content-center my-1">
                       <strong>
                         {parseInt(userAnswers.answer1) ===
                         quizArray[0].repetition
@@ -503,7 +515,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 </div>
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                    <div className="col-10 offset-1 d-flex justify-content-center my-1">
                       <strong>
                         {parseInt(userAnswers.answer2) ===
                         quizArray[1].repetition
@@ -515,7 +527,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 </div>
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                    <div className="col-10 offset-1 d-flex justify-content-center my-1">
                       <strong>
                         {parseInt(userAnswers.answer3) ===
                         quizArray[2].repetition
@@ -525,9 +537,15 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     </div>
                   </div>
                 </div>
-                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-                  {finalMessage}
-                </h2>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                        {finalMessage}
+                      </h2>
+                    </div>
+                  </div>
+                </div>
                 {finalMessage === "You Lose!" && (
                   <div>
                     <div>Try Again?</div>

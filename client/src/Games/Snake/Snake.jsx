@@ -20,7 +20,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   const [direction, setDirection] = useState({ x: 0, y: 0 });
   // Even the initial location of the food is a random location:
   const [food, setFood] = useState(generateFood());
-  const [delay, setDelay] = useState(145);
+  const [delay, setDelay] = useState(130);
   const [userPoint, setUserPoint] = useState(0);
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
@@ -48,7 +48,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
     setDirections([]);
     // setDirections((currDirections) => [...currDirections, "None"]);
     setFood(generateFood());
-    setDelay(145);
+    setDelay(130);
     setUserPoint(0);
     setFinalMessage("");
     setIsTogglingReset(false);
@@ -150,7 +150,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
       }
       setUserPoint((currUserPoint) => currUserPoint + 1);
       if (normalMode) {
-        setDelay((currDelay) => currDelay - 3);
+        setDelay((currDelay) => currDelay - 2);
       }
     } else {
       // If the snake doesn't get the food, remove the last element of the array:
@@ -526,33 +526,45 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           </div>
 
           {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -597,9 +609,18 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   finalMessage === "You Win, but you don't get any stars!") &&
                 !isTogglingHomePage && (
                   <div>
-                    <h3 className="fasterOne" style={{ fontSize: "40px" }}>
-                      {finalMessage}
-                    </h3>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-10 offset-1 d-flex justify-content-center">
+                          <h3
+                            className="fasterOne"
+                            style={{ fontSize: "40px" }}
+                          >
+                            {finalMessage}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
                     <div>Play Again?</div>
                     <button
                       className="btn2"
@@ -614,9 +635,18 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                 finalMessage === "You Lose!" &&
                 !isTogglingHomePage && (
                   <div>
-                    <h3 className="fasterOne" style={{ fontSize: "40px" }}>
-                      {finalMessage}
-                    </h3>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-10 offset-1 d-flex justify-content-center">
+                          <h3
+                            className="fasterOne"
+                            style={{ fontSize: "40px" }}
+                          >
+                            {finalMessage}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
                     <div>Try Again?</div>
                     <button
                       className="btn2"

@@ -457,3 +457,17 @@ body {
       margin: 7px;
     }
 }
+
+.product-capitals-form {
+  width: 360px;
+  height: 30px;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+    .product-capitals-form {
+      width: 320px;
+      height: 25px;
+      font-size: 13px;
+    }
+}

@@ -44,7 +44,7 @@ export default function Blocks({
                 nums.find((obj) => obj.blockNum === t)?.clicked &&
                 (isWin === "" || isWin === true)
                   ? "gray"
-                  : isWin === false && "var(--primary)",
+                  : (isWin === false || seconds < 1) && "var(--primary)",
               // color: "red",
               margin: "5px",
             }}

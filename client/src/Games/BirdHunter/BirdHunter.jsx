@@ -76,9 +76,15 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutBirdHunter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
-            Bird Hunter
-          </h2>
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+                  Bird Hunter
+                </h2>
+              </div>
+            </div>
+          </div>
           <div className="container">
             <div className="row">
               <div className="col-lg-3 offset-lg-3 align-self-center">
@@ -107,12 +113,16 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isGameStarted && (
@@ -228,23 +238,41 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                 See the Game Result
               </button>
             )}
-          <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-            {finalMessage && !isTogglingHomePage && finalMessage}
-          </h2>
-          <div>
-            {finalMessage && userScore === 16 && !isTogglingHomePage && (
-              <strong>Wow! You didn't miss a single bird!</strong>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                  {finalMessage && !isTogglingHomePage && finalMessage}
+                </h2>
+              </div>
+            </div>
           </div>
-          <div>
-            {finalMessage && userScore === 15 && !isTogglingHomePage && (
-              <strong>You missed a bird!</strong>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                {finalMessage && userScore === 16 && !isTogglingHomePage && (
+                  <strong>Wow! You didn't miss a single bird!</strong>
+                )}
+              </div>
+            </div>
           </div>
-          <div>
-            {finalMessage && userScore < 15 && !isTogglingHomePage && (
-              <strong>{`You missed ${16 - userScore} birds!`}</strong>
-            )}
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                {finalMessage && userScore === 15 && !isTogglingHomePage && (
+                  <strong>You missed a bird!</strong>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                {finalMessage && userScore < 15 && !isTogglingHomePage && (
+                  <strong>{`You missed ${16 - userScore} birds!`}</strong>
+                )}
+              </div>
+            </div>
           </div>
           {finalMessage === "You Win!" && !isTogglingHomePage && (
             <div className="my-3">

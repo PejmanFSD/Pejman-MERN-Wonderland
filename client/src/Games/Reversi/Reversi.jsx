@@ -1526,33 +1526,45 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted && !easyMode && !normalMode && (
@@ -1627,7 +1639,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             )}
           {isIdenticalColor && !isTogglingReset && !isTogglingLevel && (
             <div>
-              <div>You can't choose an identical color for both players</div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    You can't choose an identical color for both players
+                  </div>
+                </div>
+              </div>
               <button
                 className="btn2"
                 onClick={handleOk}
@@ -1643,7 +1661,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                <div>{selectionErrorMessage}</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {selectionErrorMessage}
+                    </div>
+                  </div>
+                </div>
                 <button
                   className="btn2"
                   onClick={handleSelectionErrorMessage}
@@ -1745,7 +1769,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             finalMessage === "" && (
               <div className="mt-2">
-                <div>Choose the path you wan to conquer</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      Choose the path you wan to conquer
+                    </div>
+                  </div>
+                </div>
                 <div className="mt-2">
                   <button
                     style={{
@@ -1924,7 +1954,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div className="mt-2">
-                <div>{`Pejman is choosing square number ${pejmanChoice + 1}`}</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`Pejman is choosing square number ${pejmanChoice + 1}`}
+                    </div>
+                  </div>
+                </div>
                 <button
                   className="btn2"
                   onClick={handlePejmanDirectionChoice}
@@ -1940,7 +1976,13 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                <div>{`As the first move, Pejman chose square number ${pejmanChoice + 1}`}</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`As the first move, Pejman chose square number ${pejmanChoice + 1}`}
+                    </div>
+                  </div>
+                </div>
                 <button
                   className="btn2"
                   onClick={handlePejmanDirectionChoice}
@@ -1956,8 +1998,12 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div className="mt-2">
-                <div>
-                  All the squares are taken, let's see who is the winner
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      All the squares are taken, let's see who is the winner
+                    </div>
+                  </div>
                 </div>
                 <button
                   className="btn2"
@@ -1973,8 +2019,20 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div className="mt-2">
-                <div>{`You conquered ${userPoint} squares`}</div>
-                <div>{`Pejman conquered ${pejmanPoint} squares`}</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`You conquered ${userPoint} squares`}
+                    </div>
+                  </div>
+                </div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`Pejman conquered ${pejmanPoint} squares`}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           {finalMessage &&
@@ -2001,9 +2059,15 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                 "The square you just chose can't change the color of even one of the Pejman's squares, so ... Pejman wins!") &&
             !isTogglingHomePage && (
               <div>
-                <h3 className="fasterOne" style={{ fontSize: "40px" }}>
-                  {finalMessage}
-                </h3>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                        {finalMessage}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
                 <div>Try Again?</div>
                 <button
                   className="btn2"

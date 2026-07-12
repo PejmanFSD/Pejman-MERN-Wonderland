@@ -2111,9 +2111,15 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
       {isAboutPage && <AboutTugOfWar setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
-          <h2 className="fasterOne" style={{ fontSize: "45px" }}>
-            Tug of War
-          </h2>
+          <div className="container">
+            <div className="row">
+              <div className="col-10 offset-1 d-flex justify-content-center">
+                <h2 className="fasterOne" style={{ fontSize: "45px" }}>
+                  Tug of War
+                </h2>
+              </div>
+            </div>
+          </div>
           <div className="container">
             <div className="row">
               <div className="col-lg-3 align-self-center">
@@ -2188,33 +2194,45 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -2234,10 +2252,16 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             finalMessage === "You Win!" &&
             !isTogglingHomePage && (
               <div className="my-3">
-                <h3
-                  className="fasterOne"
-                  style={{ fontSize: "40px" }}
-                >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h3
+                        className="fasterOne"
+                        style={{ fontSize: "40px" }}
+                      >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
+                    </div>
+                  </div>
+                </div>
                 <div>Play Again?</div>
                 <button
                   className="btn1"
@@ -2424,7 +2448,13 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div style={{ position: "relative", top: "15px" }}>
-                <div>Allow Pejman to roll the dice</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      Allow Pejman to roll the dice
+                    </div>
+                  </div>
+                </div>
                 <button
                   className="btn2"
                   onClick={rollDice}
@@ -2489,7 +2519,13 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div style={{ position: "relative", top: "20px" }}>
-                <div>Allow Pejman to make his move</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      Allow Pejman to make his move
+                    </div>
+                  </div>
+                </div>
                 <button
                   className="btn1"
                   onClick={pejmanAct}

@@ -269,7 +269,7 @@ export default function Home({
   return (
     <div>
       <div>
-        <div style={{ fontSize: "20px"}}>
+        <div className="mt-2" style={{ fontSize: "20px"}}>
           <strong>The top 10 users with highest stars</strong>
         </div>
         <table

@@ -356,21 +356,29 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           <div className="four-buttons-container" style={{ marginTop: "15px" }}>
@@ -433,13 +441,19 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             isWin === true &&
             easyMode && (
-              <h2
-                className="fasterOne"
-                style={{ fontSize: "40px" }}
-                style={{ fontSize: "40px" }}
-              >
-                You Win but you don't get any stars!
-              </h2>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <h2
+                      className="fasterOne"
+                      style={{ fontSize: "40px" }}
+                      style={{ fontSize: "40px" }}
+                    >
+                      You Win but you don't get any stars!
+                    </h2>
+                  </div>
+                </div>
+              </div>
             )}
           {!isTogglingHomePage &&
             !isTogglingReset &&

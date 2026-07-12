@@ -210,33 +210,45 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {(easyMode || normalMode) && isTogglingLevel && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -409,10 +421,15 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h3
-                  className="fasterOne"
-                  style={{ fontSize: "40px" }}
-                >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h3>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                        {`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <div>Play Again?</div>
                   <button
@@ -432,9 +449,15 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h3 className="fasterOne" style={{ fontSize: "40px" }}>
-                  Sorry! You didn't guess correctly! You Lose!
-                </h3>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h3 className="fasterOne" style={{ fontSize: "40px" }}>
+                        Sorry! You didn't guess correctly! You Lose!
+                      </h3>
+                    </div>
+                  </div>
+                </div>
                 <div>
                   <div>Try Again?</div>
                   <button

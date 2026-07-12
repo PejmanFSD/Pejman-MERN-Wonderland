@@ -695,33 +695,45 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {(easyMode || normalMode) && isTogglingLevel && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -808,7 +820,13 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             )}
           {isIdenticalColor && !isTogglingHomePage && !isTogglingLevel && (
             <div>
-              <div>You can't choose an identical color for both players</div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    You can't choose an identical color for both players
+                  </div>
+                </div>
+              </div>
               <button
                 className="btn1"
                 onClick={handleOk}
@@ -886,9 +904,13 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <div>
-                  All the 24 squares are selected, the result of the game relies on
-                  the squares around the last empty one
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      All the 24 squares are selected, the result of the game
+                      relies on the squares around the last empty one
+                    </div>
+                  </div>
                 </div>
                 <button
                   className="btn1"
@@ -981,10 +1003,16 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <div>
-                <h2
-                  className="fasterOne my-3"
-                  style={{ fontSize: "40px" }}
-                >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      <h2
+                        className="fasterOne my-3"
+                        style={{ fontSize: "40px" }}
+                      >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
+                    </div>
+                  </div>
+                </div>
                 <button className="btn1" onClick={handlePlayAgain}>
                   Play Again
                 </button>

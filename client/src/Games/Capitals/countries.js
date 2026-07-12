@@ -132,7 +132,6 @@ const countries = [
   { country: "Oman", capital: "Muscat" },
   { country: "Pakistan", capital: "Islamabad" },
   { country: "Palau", capital: "Ngerulmud" },
-  { country: "Palestine", capital: "Ramallah / East Jerusalem" },
   { country: "Panama", capital: "Panama City" },
   { country: "Papua New Guinea", capital: "Port Moresby" },
   { country: "Paraguay", capital: "Asunción" },

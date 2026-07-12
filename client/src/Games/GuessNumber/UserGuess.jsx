@@ -5,7 +5,7 @@ export default function UserGuess({
   normalMode,
 }) {
   return (
-    <div>
+    <div className="my-3">
       {new Array(easyMode ? 5 : 10).fill(null).map((el, i) => (
         <div key={i}>
           <p style={{ display: "inline" }}>

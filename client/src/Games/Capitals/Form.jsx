@@ -21,11 +21,9 @@ export default function Form({
             name={`input${i + 1}`}
             id={`input${i + 1}`}
             disabled={isInputEmpty}
-            className="my-2"
+            className="product-capitals-form my-2"
             style={{
               borderRadius: "8px",
-              width: "360px",
-              height: "30px",
               textAlign: "center",
             }}
           >

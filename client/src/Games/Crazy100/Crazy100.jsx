@@ -367,33 +367,45 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
@@ -412,16 +424,26 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h3 className="mt-3">
-                Among the 16 numbers, choose 4 of them whose sum equals 100.
-              </h3>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center mt-3">
+                    <h3>
+                      Among the 16 numbers, choose 4 of them whose sum equals
+                      100.
+                    </h3>
+                  </div>
+                </div>
+              </div>
             )}
           {isGameStarted &&
             normalMode &&
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h3 style={seconds > 9 ? { color: "green" } : { color: "red" }}>
+              <h3
+                className="mt-3"
+                style={seconds > 9 ? { color: "green" } : { color: "red" }}
+              >
                 {seconds}
               </h3>
             )}
@@ -430,10 +452,16 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
-              <h1
-                className="fasterOne"
-                style={{ fontSize: "40px" }}
-              >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center mt-3">
+                    <h1
+                      className="fasterOne"
+                      style={{ fontSize: "40px" }}
+                    >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
+                  </div>
+                </div>
+              </div>
             )}
           {isWin === false &&
             seconds > 0 &&
@@ -467,15 +495,21 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingReset &&
             !isTogglingHomePage && (
-              <Blocks
-                nums={nums}
-                chosenExtraNums={chosenExtraNums}
-                blockNums={blockNums}
-                isWin={isWin}
-                seconds={seconds}
-                handleClickNum={handleClickNum}
-                handleClickChosenExtraNum={handleClickChosenExtraNum}
-              />
+              <div className="container">
+                <div className="row">
+                  <div className="col-8 offset-2 d-flex justify-content-center">
+                    <Blocks
+                      nums={nums}
+                      chosenExtraNums={chosenExtraNums}
+                      blockNums={blockNums}
+                      isWin={isWin}
+                      seconds={seconds}
+                      handleClickNum={handleClickNum}
+                      handleClickChosenExtraNum={handleClickChosenExtraNum}
+                    />
+                  </div>
+                </div>
+              </div>
             )}
           {isGameStarted &&
             isWin === "" &&

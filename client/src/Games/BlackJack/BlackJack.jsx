@@ -478,33 +478,45 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingReset && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingLevel && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && finalMessage === "" && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!isGameStarted &&
@@ -609,8 +621,13 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage && (
-                    <div className="my-2">
-                      The value of Pejman's hand: <strong>{pejmanPoint}</strong>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-10 offset-1 d-flex justify-content-center my-2">
+                          The value of Pejman's hand:{" "}
+                          <strong>{pejmanPoint}</strong>
+                        </div>
+                      </div>
                     </div>
                   )}
                 {/* Pejman's hand */}
@@ -670,7 +687,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 !isTogglingHomePage ? (
                   <div className="container">
                     <div className="row">
-                      <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                      <div className="col-10 offset-1 d-flex justify-content-center">
                         <h4>The result of the final round:</h4>
                       </div>
                     </div>
@@ -684,7 +701,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingHomePage && (
                     <div className="container">
                       <div className="row">
-                        <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                        <div className="col-10 offset-1 d-flex justify-content-center">
                           <h4>
                             The game had only one round with the following
                             result:
@@ -700,7 +717,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingHomePage && (
                     <div className="container">
                       <div className="row">
-                        <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                        <div className="col-10 offset-1 d-flex justify-content-center">
                           <h4>{roundMessage}</h4>
                         </div>
                       </div>
@@ -709,7 +726,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 {finalMessage !== "" && !isTogglingHomePage && (
                   <div className="container">
                     <div className="row">
-                      <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                      <div className="col-10 offset-1 d-flex justify-content-center">
                         <h3 className="fasterOne" style={{ fontSize: "40px" }}>
                           {finalMessage}
                         </h3>
@@ -768,8 +785,12 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage && (
-                    <div className="my-2">
-                      The value of your hand: <strong>{userPoint}</strong>
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-10 offset-1 d-flex justify-content-center my-2">
+                          The value of your hand: <strong>{userPoint}</strong>
+                        </div>
+                      </div>
                     </div>
                   )}
                 {/* User's chips */}
@@ -922,7 +943,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div>
                       <div className="container">
                         <div className="row">
-                          <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                          <div className="col-10 offset-1 d-flex justify-content-center">
                             {`${userPoint === 0 ? "You're first card" : "You're next card"} is an Ace, do you want it to have the value of 1 or 11?`}
                           </div>
                         </div>
@@ -952,7 +973,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div>
                       <div className="container">
                         <div className="row">
-                          <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                          <div className="col-10 offset-1 d-flex justify-content-center">
                             {`${pejmanPoint === 0 ? "Pejman's first card" : "Pejman's next card"} is an Ace, and he wants it to have the value of ${deck[0].point}`}
                           </div>
                         </div>
@@ -977,7 +998,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div className="container">
                       <div className="row">
                         <div
-                          className="col-md-10 offset-md-1 d-flex justify-content-center"
+                          className="col-10 offset-1 d-flex justify-content-center"
                           style={{ fontSize: "15px" }}
                         >
                           <strong>
@@ -1003,7 +1024,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div className="container">
                       <div className="row">
                         <div
-                          className="col-md-10 offset-md-1 d-flex justify-content-center"
+                          className="col-10 offset-1 d-flex justify-content-center"
                           style={{ fontSize: "15px" }}
                         >
                           <strong>
@@ -1029,7 +1050,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div className="container">
                       <div className="row">
                         <div
-                          className="col-md-10 offset-md-1 d-flex justify-content-center"
+                          className="col-10 offset-1 d-flex justify-content-center"
                           style={{ fontSize: "15px" }}
                         >
                           <strong>
@@ -1048,7 +1069,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div className="container">
                       <div className="row">
                         <div
-                          className="col-md-10 offset-md-1 d-flex justify-content-center"
+                          className="col-10 offset-1 d-flex justify-content-center"
                           style={{ fontSize: "15px" }}
                         >
                           <strong>You can't stand right after raising!</strong>
@@ -1167,7 +1188,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingHomePage ? (
                   <div className="container">
                     <div className="row">
-                      <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                      <div className="col-10 offset-1 d-flex justify-content-center">
                         Pejman is done hitting. let's see who is the winner of
                         this round.
                       </div>
@@ -1273,7 +1294,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   !isTogglingHomePage && (
                     <div className="container">
                       <div className="row">
-                        <div className="col-md-10 offset-md-1 d-flex justify-content-center">
+                        <div className="col-10 offset-1 d-flex justify-content-center">
                           And the game is over, let's see who is the winner.
                         </div>
                       </div>

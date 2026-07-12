@@ -959,33 +959,45 @@ export default function XO({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingLevel && (
-            <div>
-              <ConfirmationBox
-                question={`Are you sure you want to switch to ${
-                  easyMode ? "Normal Mode" : "Easy Mode"
-                }?`}
-                toggleYes={toggleLevelYes}
-                toggleCancel={toggleLevelCancel}
-                easyMode={easyMode}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
@@ -1063,15 +1075,33 @@ export default function XO({ updateTotalPoint, currentUser }) {
             )}
           {isWin === true && !isTogglingHomePage && (
             <div>
-              <h3>{`Your total point: ${userPoint}`}</h3>
-              <h3>{`Pejman's total point: ${pejmanPoint}`}</h3>
-              <h2
-                className="fasterOne"
-                style={{ fontSize: "40px" }}
-              >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center my-1 mt-3">
+                    <h3>{`Your total point: ${userPoint}`}</h3>
+                  </div>
+                </div>
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center my-1">
+                    <h3>{`Pejman's total point: ${pejmanPoint}`}</h3>
+                  </div>
+                </div>
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <h2
+                      className="fasterOne"
+                      style={{ fontSize: "40px" }}
+                    >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h2>
+                  </div>
+                </div>
+              </div>
               <div>Play Again?</div>
               <button
-                className="btn2"
+                className="btn2 my-2"
                 onClick={handleReset}
                 style={{ marginTop: "10px" }}
               >
@@ -1081,13 +1111,25 @@ export default function XO({ updateTotalPoint, currentUser }) {
           )}
           {isWin === false && !isTogglingHomePage && (
             <div>
-              <h3>{`Your total point: ${userPoint}`}</h3>
-              <h3>{`Pejman's total point: ${pejmanPoint}`}</h3>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center my-1 mt-3">
+                    <h3>{`Your total point: ${userPoint}`}</h3>
+                  </div>
+                </div>
+              </div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center my-1">
+                    <h3>{`Pejman's total point: ${pejmanPoint}`}</h3>
+                  </div>
+                </div>
+              </div>
               <h2 className="fasterOne" style={{ fontSize: "40px" }}>
                 Pejman Wins!
               </h2>
               <div>Try Again?</div>
-              <button className="btn2" onClick={handleReset}>
+              <button className="btn2 my-2" onClick={handleReset}>
                 Ok
               </button>
             </div>
@@ -1152,13 +1194,19 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             (availableSquares.length !== 0 ? (
               <div>
-                <div>{`Allow Pejman to ${
-                  normalMode && pejmanChoices.length === 0
-                    ? "start the game"
-                    : "make his move"
-                }`}</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`Allow Pejman to ${
+                        normalMode && pejmanChoices.length === 0
+                          ? "start the game"
+                          : "make his move"
+                      }`}
+                    </div>
+                  </div>
+                </div>
                 <button
-                  className="btn2"
+                  className="btn2 my-2"
                   onClick={allowPejman}
                   style={{ marginTop: "10px" }}
                 >
@@ -1167,9 +1215,15 @@ export default function XO({ updateTotalPoint, currentUser }) {
               </div>
             ) : (
               <div>
-                <div>The game is finished. Let's see who is the winner.</div>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      The game is finished. Let's see who is the winner.
+                    </div>
+                  </div>
+                </div>
                 <button
-                  className="btn2"
+                  className="btn2 my-2"
                   onClick={handleFinalPlayerPoints}
                   style={{ marginTop: "10px" }}
                 >
@@ -1185,8 +1239,14 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                <div>The game is finished. Let's see who is the winner.</div>
-                <button className="btn2" onClick={handleFinalPlayerPoints}>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      The game is finished. Let's see who is the winner.
+                    </div>
+                  </div>
+                </div>
+                <button className="btn2 my-2" onClick={handleFinalPlayerPoints}>
                   Ok
                 </button>
               </div>
@@ -1196,10 +1256,14 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                <div>
-                  {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
-                    userPoint > 1 ? "s" : ""
-                  } for having the following match${userPoint > 1 ? "es" : ""}: `}
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`You ${isWin === "" ? "have " : "got "}${userPoint} point${
+                        userPoint > 1 ? "s" : ""
+                      } for having the following match${userPoint > 1 ? "es" : ""}: `}
+                    </div>
+                  </div>
                 </div>
                 <br />
                 {filledSquaresByUser.map(
@@ -1243,10 +1307,14 @@ export default function XO({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage && (
               <div>
-                <div>
-                  {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
-                    pejmanPoint > 1 ? "s" : ""
-                  } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
+                <div className="container">
+                  <div className="row">
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      {`Pejman ${isWin === "" ? "has " : "got "}${pejmanPoint} point${
+                        pejmanPoint > 1 ? "s" : ""
+                      } for having the following match${pejmanPoint > 1 ? "es" : ""}: `}
+                    </div>
+                  </div>
                 </div>
                 <br />
                 {filledSquaresByPejman.map(

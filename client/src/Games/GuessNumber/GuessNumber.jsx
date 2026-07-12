@@ -190,10 +190,10 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
         ) {
           setIsWin(true);
           if (easyMode) {
-          updateTotalPoint(1);
-        } else if (normalMode) {
-          updateTotalPoint(5);
-        }
+            updateTotalPoint(1);
+          } else if (normalMode) {
+            updateTotalPoint(5);
+          }
         }
       };
       handleWin();
@@ -315,29 +315,47 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
-            <ConfirmationBox
-              question={`Are you sure you want to switch to ${
-                easyMode ? "Normal Mode" : "Easy Mode"
-              }?`}
-              toggleYes={toggleLevelYes}
-              toggleCancel={toggleLevelCancel}
-              easyMode={easyMode}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question={`Are you sure you want to switch to ${
+                      easyMode ? "Normal Mode" : "Easy Mode"
+                    }?`}
+                    toggleYes={toggleLevelYes}
+                    toggleCancel={toggleLevelCancel}
+                    easyMode={easyMode}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {isGameStarted && (easyMode || normalMode) && isTogglingReset && (
-            <ConfirmationBox
-              question="Are you sure you want to reset the game?"
-              toggleYes={toggleResetYes}
-              toggleCancel={toggleResetCancel}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
             isTogglingHomePage && (
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center">
+                    <ConfirmationBox
+                      question="Are you sure you want to go back to Home Page?"
+                      toggleYes={toggleHomePageYes}
+                      toggleCancel={toggleHomePageCancel}
+                    />
+                  </div>
+                </div>
+              </div>
             )}
           {!easyMode && !normalMode && !isTogglingHomePage && (
             <GameLevel
@@ -369,72 +387,84 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               />
             )}
           {isGameStarted && chancesNum > 0 && (
-            <Form
-              inputs={inputs}
-              setInputs={setInputs}
-              chancesNum={chancesNum}
-              setChancesNum={setChancesNum}
-              setUserGuess={setUserGuess}
-              updateUserGuess={updateUserGuess}
-              updateUserGuessStatus={updateUserGuessStatus}
-              userGuess={userGuess}
-              userGuessStatus={userGuessStatus}
-              num={num}
-              convertArrayToString={convertArrayToString}
-              setIsWin={setIsWin}
-              isWin={isWin}
-              allUserGuesses={allUserGuesses}
-              setAllUserGuesses={setAllUserGuesses}
-              isTogglingLevel={isTogglingLevel}
-              isTogglingReset={isTogglingReset}
-              isTogglingHomePage={isTogglingHomePage}
-              isFirstDigitZero={isFirstDigitZero}
-              setIsFirstDigitZero={setIsFirstDigitZero}
-              isOneDigit={isOneDigit}
-              setIsOneDigit={setIsOneDigit}
-              isDigitNegative={isDigitNegative}
-              setIsDigitNegative={setIsDigitNegative}
-              isDigitDecimal={isDigitDecimal}
-              setIsDigitDecimal={setIsDigitDecimal}
-              isDigitRepetitive={isDigitRepetitive}
-              setIsDigitRepetitive={setIsDigitRepetitive}
-              isInt={isInt}
-              setIsInt={setIsInt}
-              isAlreadyGuessed={isAlreadyGuessed}
-              setIsAlreadyGuessed={setIsAlreadyGuessed}
-              isInputEmpty={isInputEmpty}
-              setIsInputEmpty={setIsInputEmpty}
-              easyMode={easyMode}
-              normalMode={normalMode}
-              updateTotalPoint={updateTotalPoint}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <Form
+                    inputs={inputs}
+                    setInputs={setInputs}
+                    chancesNum={chancesNum}
+                    setChancesNum={setChancesNum}
+                    setUserGuess={setUserGuess}
+                    updateUserGuess={updateUserGuess}
+                    updateUserGuessStatus={updateUserGuessStatus}
+                    userGuess={userGuess}
+                    userGuessStatus={userGuessStatus}
+                    num={num}
+                    convertArrayToString={convertArrayToString}
+                    setIsWin={setIsWin}
+                    isWin={isWin}
+                    allUserGuesses={allUserGuesses}
+                    setAllUserGuesses={setAllUserGuesses}
+                    isTogglingLevel={isTogglingLevel}
+                    isTogglingReset={isTogglingReset}
+                    isTogglingHomePage={isTogglingHomePage}
+                    isFirstDigitZero={isFirstDigitZero}
+                    setIsFirstDigitZero={setIsFirstDigitZero}
+                    isOneDigit={isOneDigit}
+                    setIsOneDigit={setIsOneDigit}
+                    isDigitNegative={isDigitNegative}
+                    setIsDigitNegative={setIsDigitNegative}
+                    isDigitDecimal={isDigitDecimal}
+                    setIsDigitDecimal={setIsDigitDecimal}
+                    isDigitRepetitive={isDigitRepetitive}
+                    setIsDigitRepetitive={setIsDigitRepetitive}
+                    isInt={isInt}
+                    setIsInt={setIsInt}
+                    isAlreadyGuessed={isAlreadyGuessed}
+                    setIsAlreadyGuessed={setIsAlreadyGuessed}
+                    isInputEmpty={isInputEmpty}
+                    setIsInputEmpty={setIsInputEmpty}
+                    easyMode={easyMode}
+                    normalMode={normalMode}
+                    updateTotalPoint={updateTotalPoint}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           {isGameStarted && (
-            <Chances
-              chancesNum={chancesNum}
-              // setChancesNum={setChancesNum}
-              num={num}
-              setNum={setNum}
-              setInputs={setInputs}
-              setUserGuess={setUserGuess}
-              setUserGuessStatus={setUserGuessStatus}
-              setAllUserGuesses={setAllUserGuesses}
-              generateRandNum={generateRandNum}
-              reset={reset}
-              isWin={isWin}
-              userGuess={userGuess}
-              // setIsWin={setIsWin}
-              easyMode={easyMode}
-              normalMode={normalMode}
-              // updateTotalPoint={updateTotalPoint}
-              isGameStarted={isGameStarted}
-              toggleResetYes={toggleResetYes}
-              toggleResetCancel={toggleResetCancel}
-              isTogglingLevel={isTogglingLevel}
-              isTogglingReset={isTogglingReset}
-              setIsTogglingReset={setIsTogglingReset}
-              isTogglingHomePage={isTogglingHomePage}
-            />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <Chances
+                    chancesNum={chancesNum}
+                    // setChancesNum={setChancesNum}
+                    num={num}
+                    setNum={setNum}
+                    setInputs={setInputs}
+                    setUserGuess={setUserGuess}
+                    setUserGuessStatus={setUserGuessStatus}
+                    setAllUserGuesses={setAllUserGuesses}
+                    generateRandNum={generateRandNum}
+                    reset={reset}
+                    isWin={isWin}
+                    userGuess={userGuess}
+                    // setIsWin={setIsWin}
+                    easyMode={easyMode}
+                    normalMode={normalMode}
+                    // updateTotalPoint={updateTotalPoint}
+                    isGameStarted={isGameStarted}
+                    toggleResetYes={toggleResetYes}
+                    toggleResetCancel={toggleResetCancel}
+                    isTogglingLevel={isTogglingLevel}
+                    isTogglingReset={isTogglingReset}
+                    setIsTogglingReset={setIsTogglingReset}
+                    isTogglingHomePage={isTogglingHomePage}
+                  />
+                </div>
+              </div>
+            </div>
           )}
           <br />
           {!isTogglingReset &&

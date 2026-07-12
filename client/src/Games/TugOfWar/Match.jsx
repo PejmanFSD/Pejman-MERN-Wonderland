@@ -44,7 +44,7 @@ export default function Match({
     }
   };
   return (
-    <div className="my-2">
+    <div className="my-1">
       {userColor === "Blue" &&
         isUserTurn &&
         dice > 0 &&
@@ -64,7 +64,7 @@ export default function Match({
         )}
       {theMatch.matchValue.map((m, idx) => (
         <img
-        className="product-tugOfWar-image"
+          className="product-tugOfWar-image"
           src={theMatch.matchValue[idx]}
           style={{
             position: "relative",
@@ -92,16 +92,20 @@ export default function Match({
       {selectedMatch === matchName &&
         isUserTurn &&
         availableMatches.length > 1 && (
-          <div
-            className="my-2"
-            style={{
-              fontSize: "12px",
-              position: "relative",
-              top: "10px",
-            }}
-          >
-            You can change the chosen match, but first you should de-select the
-            one you chose.
+          <div className="container">
+            <div className="row">
+              <div
+                className="col-10 offset-1 d-flex justify-content-center my-2"
+                style={{
+                  fontSize: "12px",
+                  position: "relative",
+                  top: "10px",
+                }}
+              >
+                You can change the chosen match, but first you should de-select
+                the one you chose.
+              </div>
+            </div>
           </div>
         )}
     </div>

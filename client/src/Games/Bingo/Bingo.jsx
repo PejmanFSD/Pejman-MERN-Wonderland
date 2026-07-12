@@ -1627,38 +1627,48 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             </div>
           </div>
           {isTogglingReset && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to reset the game?"
-                toggleYes={toggleResetYes}
-                toggleCancel={toggleResetCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to reset the game?"
+                    toggleYes={toggleResetYes}
+                    toggleCancel={toggleResetCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {isTogglingHomePage && (
-            <div>
-              <ConfirmationBox
-                question="Are you sure you want to go back to Home Page?"
-                toggleYes={toggleHomePageYes}
-                toggleCancel={toggleHomePageCancel}
-              />
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <ConfirmationBox
+                    question="Are you sure you want to go back to Home Page?"
+                    toggleYes={toggleHomePageYes}
+                    toggleCancel={toggleHomePageCancel}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {finalMessage !== "" && isGameStarted && !isTogglingHomePage && (
-            <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-              {finalMessage}
-            </h2>
+            <div className="container">
+              <div className="row">
+                <div className="col-10 offset-1 d-flex justify-content-center">
+                  <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                    {finalMessage}
+                  </h2>
+                </div>
+              </div>
+            </div>
           )}
           {finalMessage === "You Win!" &&
             isGameStarted &&
             !isTogglingHomePage && (
               <div>
                 <div>Play again?</div>
-                <button
-                  onClick={handlePlayAgain}
-                  className="btn2 my-3"
-                  // style={{ margin: "7px" }}
-                >
+                <button onClick={handlePlayAgain} className="btn2 my-3">
                   Ok
                 </button>
               </div>
@@ -1668,11 +1678,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div>
                 <div>Try again?</div>
-                <button
-                  onClick={handlePlayAgain}
-                  className="btn2 my-3"
-                  // style={{ margin: "7px" }}
-                >
+                <button onClick={handlePlayAgain} className="btn2 my-3">
                   Ok
                 </button>
               </div>
@@ -1778,9 +1784,6 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               >
                 <strong>Pejman's boards:</strong>
               </div>
-              {/* <div className="container">
-        <div className="row">
-<div className="col-md-5 offset-md-2 align-self-center"> */}
               <div
                 style={{
                   display: "flex",
@@ -1822,9 +1825,6 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                   </div>
                 </div>
               </div>
-              {/* </div>
-</div>
-</div> */}
             </div>
           )}
           {youMissedMessage === true &&
@@ -1834,7 +1834,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div className="container">
                 <div className="row">
-                  <div className="col-md-10 offset-md-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                  <div className="col-10 offset-1 d-flex justify-content-center product-bingoMissedMessage-text">
                     <strong>
                       {`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}{" "}
                       &#128533;
@@ -1850,7 +1850,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div className="container">
                 <div className="row">
-                  <div className="col-md-10 offset-md-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                  <div className="col-10 offset-1 d-flex justify-content-center product-bingoMissedMessage-text">
                     <strong>
                       {`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}{" "}
                       &#128533;
@@ -1866,7 +1866,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <div className="container">
                 <div className="row">
-                  <div className="col-md-10 offset-md-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                  <div className="col-10 offset-1 d-flex justify-content-center product-bingoMissedMessage-text">
                     <strong>
                       {`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}{" "}
                       &#128533;
@@ -1956,7 +1956,6 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             <button
               onClick={handleReviewSection}
               className="btn1"
-              // style={{ position: "relative", top: "25px" }}
               style={{ marginTop: "20px" }}
             >
               {showReviews

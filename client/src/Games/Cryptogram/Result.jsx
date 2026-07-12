@@ -25,7 +25,7 @@ export default function Result({
         resultMessageStatus.map((r, idx) =>
           r === true ? (
             <h5 key={idx}>{`For code ${idx + 1}, you chose "${
-              Object.values(inputs)[idx]
+              Object.values(inputs)[idx].toLowerCase()
             }" ✔`}</h5>
           ) : (
             <div className="container">
@@ -33,10 +33,10 @@ export default function Result({
                 <div className="col-md-10 offset-md-1 d-flex justify-content-center">
                   <div key={idx}>
                     <h5>{`For code ${idx + 1}, you chose "${
-                      Object.values(inputs)[idx]
+                      Object.values(inputs)[idx].toLowerCase()
                     }" ✖ ➜ The correct answer is: "${Object.keys(resultObj)[idx]}"`}</h5>
                     {acceptedAsRepetition.includes(
-                      Object.values(inputs)[idx],
+                      Object.values(inputs)[idx]
                     ) && (
                       <div>
                         <p style={{ display: "inline" }}>
@@ -50,7 +50,7 @@ export default function Result({
                             textDecoration: "red underline",
                           }}
                         >
-                          {Object.values(inputs)[idx]}
+                          {Object.values(inputs)[idx].toLowerCase()}
                         </span>
                         <p style={{ display: "inline" }}>
                           {" "}
