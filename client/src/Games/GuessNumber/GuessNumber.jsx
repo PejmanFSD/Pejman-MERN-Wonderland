@@ -387,9 +387,6 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               />
             )}
           {isGameStarted && chancesNum > 0 && (
-            <div className="container">
-              <div className="row">
-                <div className="col-10 offset-1 d-flex justify-content-center">
                   <Form
                     inputs={inputs}
                     setInputs={setInputs}
@@ -429,9 +426,6 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
                     normalMode={normalMode}
                     updateTotalPoint={updateTotalPoint}
                   />
-                </div>
-              </div>
-            </div>
           )}
           {isGameStarted && (
             <div className="container">

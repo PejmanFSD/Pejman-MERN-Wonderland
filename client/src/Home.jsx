@@ -269,19 +269,19 @@ export default function Home({
   return (
     <div>
       <div>
-        <div className="mt-2" style={{ fontSize: "20px"}}>
+        <div className="mt-2" style={{ fontSize: "20px" }}>
           <strong>The top 10 users with highest stars</strong>
         </div>
         <table
           border="2"
           cellPadding="5"
           style={{
-            position: "relative",
-            top: "5px",
+            // position: "relative",
+            // top: "5px",
             border: "2px solid black",
           }}
         >
-          <thead style={{ height: "5px" }}>
+          <thead>
             <tr style={{ backgroundColor: "var(--primary)" }}>
               <th
                 style={{
@@ -323,7 +323,10 @@ export default function Home({
           </thead>
           <tbody>
             {rankedUsers.map((user, i) => (
-              <tr key={user._id} style={{ backgroundColor: "var(--background)" }}>
+              <tr
+                key={user._id}
+                style={{ backgroundColor: "var(--background)" }}
+              >
                 <td style={{ fontSize: "13px", border: "1px solid black" }}>
                   {i + 1}
                 </td>
@@ -413,15 +416,15 @@ export default function Home({
           </div>
         )}
       </div>
-      <div className="fasterOne" style={{ fontSize: "30px" }}>
-        The
-        <span className="fasterOne" style={{ fontSize: "50px" }}>
-          21
-        </span>
-        fascinating games of
-        <span className="fasterOne" style={{ fontSize: "50px" }}>
-          Pejman MERN Wonderland
-        </span>
+      <div className="container">
+        <div className="row">
+          <div
+            className="fasterOne col-10 offset-1 d-flex justify-content-center mt-3"
+            style={{ fontSize: "30px" }}
+          >
+            The 21 fascinating games of Pejman MERN Wonderland
+          </div>
+        </div>
       </div>
       <div className="container">
         <div className="row">
@@ -724,7 +727,7 @@ export default function Home({
         </div>
       </div>
       <div className="container">
-        <div className="row" style={{marginBottom: "20px"}}>
+        <div className="row" style={{ marginBottom: "20px" }}>
           <div className="col-12 col-md-4 col-xl-2 d-flex justify-content-center offset-xl-3">
             {showPidoku ? (
               <PidokuPage

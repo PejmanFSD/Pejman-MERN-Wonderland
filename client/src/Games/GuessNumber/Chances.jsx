@@ -16,11 +16,6 @@ export default function Chances({
   isTogglingHomePage,
 }) {
   const handleOk = () => {
-    // if (easyMode) {
-    //   updateTotalPoint(1);
-    // } else if (normalMode) {
-    //   updateTotalPoint(5);
-    // }
     reset();
   };
   return (
@@ -31,9 +26,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4 className="my-2">
+          <h5 className="my-2">
             <strong>You have 10 chances to find the number</strong>
-          </h4>
+          </h5>
         )}
       {chancesNum === 5 &&
         !isWin &&
@@ -41,9 +36,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4 className="my-2">
+          <h5 className="my-2">
             <strong>You have 5 chances to find the number</strong>
-          </h4>
+          </h5>
         )}
       {chancesNum > 1 &&
         chancesNum < 10 &&
@@ -52,9 +47,9 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4 className="my-2">
+          <h5 className="my-2">
             <strong>{`You have ${chancesNum} chances left`}</strong>
-          </h4>
+          </h5>
         )}
       {chancesNum > 1 &&
         chancesNum < 5 &&
@@ -63,18 +58,18 @@ export default function Chances({
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4 className="my-2">
+          <h5 className="my-2">
             <strong>{`You have ${chancesNum} chances left`}</strong>
-          </h4>
+          </h5>
         )}
       {chancesNum === 1 &&
         !isWin &&
         !isTogglingLevel &&
         !isTogglingReset &&
         !isTogglingHomePage && (
-          <h4 className="my-2" style={{ color: "red" }}>
+          <h5 className="my-2" style={{ color: "red" }}>
             <strong>Warning! You only have one chance left!</strong>
-          </h4>
+          </h5>
         )}
       {chancesNum === 0 &&
         !isWin &&

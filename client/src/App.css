@@ -471,3 +471,21 @@ body {
       font-size: 13px;
     }
 }
+
+.product-guessNumber-form {
+  border-radius: "8px";
+  width: "60px";
+  border-color: "black";
+  text-align: "center";
+  margin: "5px";
+}
+
+@media (max-width: 768px) {
+    .product-guessNumber-form {
+      border-radius: "6px";
+      width: "50px";
+      border-color: "black";
+      text-align: "center";
+      margin: "4px";
+    }
+}

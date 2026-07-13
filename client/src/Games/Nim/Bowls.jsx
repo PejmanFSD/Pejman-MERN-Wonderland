@@ -664,7 +664,6 @@ export default function Bowls({
     }
   }, [allBallsNum]);
   return (
-    <div>
       <div className="container">
         <div className="row">
           <div className="col-lg-8 offset-lg-2">
@@ -681,10 +680,14 @@ export default function Bowls({
                 {Array(5)
                   .fill(null)
                   .map((bowl, idx) => (
-                    <div key={idx} className="my-2">
-                      <label htmlFor={`bowl${idx + 1}`}></label>
+                    <div key={idx} className="mt-2">
+                      <div>
+                      <label htmlFor={`bowl${idx + 1}`}>
                       {`Select the number of balls for bowl ${idx + 1} `}
+                      </label>
+                      </div>
                       <select
+                      className="mt-2"
                         onChange={handleChange}
                         name={`bowl${idx + 1}`}
                         id={`bowl${idx + 1}`}
@@ -693,7 +696,7 @@ export default function Bowls({
                           borderRadius: "8px",
                           textAlign: "center",
                           width: "70px",
-                          height: "20px",
+                          height: "25px",
                           fontSize: "14px"
                         }}
                       >
@@ -709,7 +712,7 @@ export default function Bowls({
                     </div>
                   ))}
                 <button
-                  className="btn1"
+                  className="btn1 mt-4"
                   disabled={
                     bowls[0].ballsNum === 0 ||
                     bowls[1].ballsNum === 0 ||
@@ -866,6 +869,5 @@ export default function Bowls({
           </div>
         </div>
       </div>
-    </div>
   );
 }

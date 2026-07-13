@@ -92,7 +92,7 @@ export default function Users({
       )}
       <div className="container my-3">
         <div className="row">
-          <div className="col-sm-4 offset-sm-2 justify-content-center">
+          <div className="col-sm-4 offset-sm-2 justify-content-center my-2">
             {!isDeleting && !isLoggingOut && (
               <div>
                 <input
@@ -122,7 +122,7 @@ export default function Users({
               </div>
             )}
           </div>
-          <div className="col-sm-4 justify-content-center">
+          <div className="col-sm-4 justify-content-center my-2">
             {!isDeleting && !isLoggingOut && (
               <div
                 className="cause"
@@ -181,23 +181,53 @@ export default function Users({
           <table
             border="1"
             cellPadding="10"
-            style={{ width: "90%" }}
-            className="cause"
-            style={{ border: "2px solid black" }}
+            style={{ width: "80%", border: "2px solid black" }}
           >
             <thead>
-              <tr style={{ height: "55px", backgroundColor: "var(--primary)" }}>
-                <th style={{ width: "15%", border: "1px solid black" }}>
+              <tr style={{ backgroundColor: "var(--primary)" }}>
+                <th
+                  style={{
+                    width: "15%",
+                    fontSize: "15px",
+                    border: "1px solid black",
+                  }}
+                >
                   Username
                 </th>
-                <th style={{ width: "9%", border: "1px solid black" }}>Role</th>
-                <th style={{ width: "12%", border: "1px solid black" }}>
+                <th
+                  style={{
+                    width: "10%",
+                    fontSize: "15px",
+                    border: "1px solid black",
+                  }}
+                >
+                  Role
+                </th>
+                <th
+                  style={{
+                    width: "15%",
+                    fontSize: "15px",
+                    border: "1px solid black",
+                  }}
+                >
                   Number of Stars
                 </th>
-                <th style={{ width: "44%", border: "1px solid black" }}>
+                <th
+                  style={{
+                    width: "40%",
+                    fontSize: "15px",
+                    border: "1px solid black",
+                  }}
+                >
                   Message
                 </th>
-                <th style={{ width: "20%", border: "1px solid black" }}>
+                <th
+                  style={{
+                    width: "20%",
+                    fontSize: "15px",
+                    border: "1px solid black",
+                  }}
+                >
                   Actions
                 </th>
               </tr>
@@ -207,23 +237,27 @@ export default function Users({
                 <tr
                   key={user._id}
                   style={{
-                    height: "55px",
+                    // height: "55px",
                     backgroundColor: "var(--background)",
                   }}
                 >
-                  <td style={{ border: "1px solid black" }}>{user.username}</td>
-                  <td style={{ border: "1px solid black" }}>
+                  <td style={{ fontSize: "15px", border: "1px solid black" }}>
+                    {user.username}
+                  </td>
+                  <td style={{ fontSize: "15px", border: "1px solid black" }}>
                     {user.username === "Pejman" ? "The Boss!" : user.role}
                   </td>
-                  <td style={{ border: "1px solid black" }}>
+                  <td style={{ fontSize: "15px", border: "1px solid black" }}>
                     {user.username === "Pejman" ? (
                       <div>&#128526;</div>
                     ) : (
                       user.totalPoint
                     )}
                   </td>
-                  <td style={{ border: "1px solid black" }}>{user.message}</td>
-                  <td style={{ border: "1px solid black" }}>
+                  <td style={{ fontSize: "15px", border: "1px solid black" }}>
+                    {user.message}
+                  </td>
+                  <td style={{ fontSize: "15px", border: "1px solid black" }}>
                     {user.username === "Pejman" && !isDeleting ? (
                       <div>No Action for Pejman &#128526;</div>
                     ) : currentUser.username === "Pejman" && !isDeleting ? (
@@ -240,7 +274,7 @@ export default function Users({
                         <button
                           onClick={() => handleDelete(user._id)}
                           className="btn1"
-                          style={{ display: "inline", height: "30px" }}
+                          style={{ display: "inline", height: "25px" }}
                         >
                           Delete
                         </button>

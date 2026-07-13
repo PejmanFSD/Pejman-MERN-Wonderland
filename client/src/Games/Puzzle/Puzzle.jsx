@@ -565,7 +565,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingLevel &&
             !isTogglingHomePage && (
-              <div>
+              <div className="my-3">
                 <label htmlFor="imageGroup"></label>
                 <select
                   onChange={handleImageGroup}

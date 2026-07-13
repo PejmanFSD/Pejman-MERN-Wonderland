@@ -560,15 +560,16 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               </div>
             )}
           {!is4Blocks && (
-            <div
-              style={{
-                position: "relative",
-                top: "30px",
-              }}
-            >
-              {`You chose ${answer.length} number${
-                answer.length > 1 ? "s" : ""
-              }, you should choose only 4 numbers, no more no less!`}
+            <div>
+              <div className="container">
+                <div className="row">
+                  <div className="col-10 offset-1 d-flex justify-content-center mt-4">
+                    {`You chose ${answer.length} number${
+                      answer.length > 1 ? "s" : ""
+                    }, you should choose only 4 numbers, no more no less!`}
+                  </div>
+                </div>
+              </div>
               <div>
                 <button className="btn2 mt-2" onClick={handle4Blocks}>
                   Ok

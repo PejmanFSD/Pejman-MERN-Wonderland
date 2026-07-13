@@ -32,7 +32,7 @@ export default function Form({
   setIsInputEmpty,
   easyMode,
   normalMode,
-  updateTotalPoint
+  updateTotalPoint,
 }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -355,7 +355,7 @@ export default function Form({
                 width: "60px",
                 borderColor: "black",
                 textAlign: "center",
-                margin: "5px"
+                margin: "5px",
               }}
             />
             <br />
@@ -378,7 +378,13 @@ export default function Form({
         )}
       {isFirstDigitZero && (
         <div>
-          <div>The first digit can't be 0!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                The first digit can't be 0!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsFirstDigitZero}>
             OK
           </button>
@@ -386,7 +392,13 @@ export default function Form({
       )}
       {!isOneDigit && (
         <div>
-          <div>None of the digits can be greater than 9!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                None of the digits can be greater than 9!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsOneDigit}>
             OK
           </button>
@@ -394,7 +406,13 @@ export default function Form({
       )}
       {isDigitNegative && (
         <div>
-          <div>None of the digits can be negative!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                None of the digits can be negative!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsDigitNegative}>
             OK
           </button>
@@ -402,7 +420,13 @@ export default function Form({
       )}
       {isDigitDecimal && (
         <div>
-          <div>None of the digits can be decimal!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                None of the digits can be decimal!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsDigitDecimal}>
             OK
           </button>
@@ -410,7 +434,13 @@ export default function Form({
       )}
       {isDigitRepetitive && (
         <div>
-          <div>The digits can't be repetitive!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                The digits can't be repetitive!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsDigitRepetitive}>
             OK
           </button>
@@ -418,7 +448,13 @@ export default function Form({
       )}
       {!isInt && (
         <div>
-          <div>You should enter only a number!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                You should enter only a number!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsInt}>
             OK
           </button>
@@ -426,7 +462,13 @@ export default function Form({
       )}
       {isAlreadyGuessed && (
         <div>
-          <div>You've already tried this number!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                You've already tried this number!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsAlreadyGuessed}>
             OK
           </button>
@@ -434,7 +476,13 @@ export default function Form({
       )}
       {isInputEmpty && (
         <div>
-          <div>You shouldn't leave any box empty!</div>
+          <div className="container">
+            <div className="row">
+              <div className="col-8 offset-2 d-flex justify-content-center">
+                You shouldn't leave any box empty!
+              </div>
+            </div>
+          </div>
           <button className="btn2 my-2" onClick={handleIsInputEmpty}>
             OK
           </button>
