@@ -697,7 +697,8 @@ export default function Bowls({
                           textAlign: "center",
                           width: "70px",
                           height: "25px",
-                          fontSize: "14px"
+                          fontSize: "14px",
+                          backgroundColor: "var(--background)"
                         }}
                       >
                         <option value={bowls[idx].ballsNum} disabled selected>
@@ -789,6 +790,7 @@ export default function Bowls({
                       textAlign: "center",
                       width: "40px",
                       height: "30px",
+                      backgroundColor: "var(--background)"
                     }}
                   >
                     <option

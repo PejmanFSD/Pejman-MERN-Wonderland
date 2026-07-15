@@ -208,6 +208,7 @@ export default function Form({
                             margin: "2px",
                             position: "relative",
                             top: "-6px",
+                            backgroundColor: "var(--background)"
                           }}
                         />
                       </div>
@@ -239,6 +240,7 @@ export default function Form({
                             margin: "2px",
                             position: "relative",
                             top: "-6px",
+                            backgroundColor: "var(--background)"
                           }}
                         />
                       </div>
@@ -270,6 +272,7 @@ export default function Form({
                             margin: "2px",
                             position: "relative",
                             top: "-6px",
+                            backgroundColor: "var(--background)"
                           }}
                         />
                       </div>
@@ -302,6 +305,7 @@ export default function Form({
                               margin: "2px",
                               position: "relative",
                               top: "-6px",
+                              backgroundColor: "var(--background)"
                             }}
                           />
                         </div>

@@ -80,7 +80,7 @@ export default function Bowl({
       {isGameStarted && isUserTurn && (
         <input
           type="checkbox"
-          style={{width: "20px", height: "20px"}}
+          style={{width: "17px", height: "17px"}}
           value={isBowlSelected}
           onChange={() => toggleBowl(bowlId)}
           disabled={

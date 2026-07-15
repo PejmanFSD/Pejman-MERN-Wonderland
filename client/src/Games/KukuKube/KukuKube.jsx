@@ -279,6 +279,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
                     textAlign: "center",
                     width: "140px",
                     height: "30px",
+                    backgroundColor: "var(--background)"
                   }}
                 >
                   <option value={color} disabled selected>

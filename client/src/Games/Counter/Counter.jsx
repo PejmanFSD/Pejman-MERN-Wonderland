@@ -413,6 +413,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                           textAlign: "center",
                           width: "50px",
                           height: "25px",
+                          backgroundColor: "var(--background)"
                         }}
                       >
                         <option
@@ -444,6 +445,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                           textAlign: "center",
                           width: "50px",
                           height: "25px",
+                          backgroundColor: "var(--background)"
                         }}
                       >
                         <option
@@ -475,6 +477,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                           textAlign: "center",
                           width: "50px",
                           height: "25px",
+                          backgroundColor: "var(--background)"
                         }}
                       >
                         <option

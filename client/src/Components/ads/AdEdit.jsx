@@ -191,7 +191,7 @@ export default function AdEdit({ error, setError, setFlash, setIsAdEditing }) {
                 type="submit"
                 className="btn1 align-self-center mb-3 mt-2"
                 style={{ margin: "7px" }}
-                disabled={error || !company || !text || images.length === 0}
+                disabled={error || !company || !text}
               >
                 Update Ad
               </button>

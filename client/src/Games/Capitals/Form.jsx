@@ -25,6 +25,7 @@ export default function Form({
             style={{
               borderRadius: "8px",
               textAlign: "center",
+              backgroundColor: "var(--background)"
             }}
           >
             <option value={Object.values(inputs)[i]} disabled selected>

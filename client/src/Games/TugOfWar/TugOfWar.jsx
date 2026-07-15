@@ -2400,6 +2400,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
                     width: "90px",
                     height: "30px",
                     marginTop: "10px",
+                    backgroundColor: "var(--background)"
                   }}
                 >
                   <option value={userColor} disabled selected></option>

@@ -1592,6 +1592,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                     textAlign: "center",
                     width: "90px",
                     height: "30px",
+                    backgroundColor: "var(--background)"
                   }}
                 >
                   <option value={userColor} disabled selected></option>
@@ -1613,6 +1614,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                     textAlign: "center",
                     width: "90px",
                     height: "30px",
+                    backgroundColor: "var(--background)"
                   }}
                 >
                   <option value={pejmanColor} disabled selected></option>
@@ -1786,6 +1788,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       justifyContent: "center",
                       alignItems: "center",
                       paddingBottom: "4px",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinUpLeftCells(userColor)}
                     disabled={upLeftNeighborsId.length === 0}
@@ -1800,6 +1803,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       display: "inline",
                       justifyContent: "center",
                       alignItems: "center",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinUpCells(userColor)}
                     disabled={upNeighborsId.length === 0}
@@ -1815,6 +1819,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       justifyContent: "center",
                       alignItems: "center",
                       paddingBottom: "4px",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinUpRightCells(userColor)}
                     disabled={upRightNeighborsId.length === 0}
@@ -1831,6 +1836,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       display: "inline",
                       justifyContent: "center",
                       alignItems: "center",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinLeftCells(userColor)}
                     disabled={leftNeighborsId.length === 0}
@@ -1846,6 +1852,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       justifyContent: "center",
                       alignItems: "center",
                       paddingBottom: "9px",
+                      backgroundColor: "var(--background)"
                     }}
                     disabled
                   ></button>
@@ -1857,6 +1864,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       display: "inline",
                       justifyContent: "center",
                       alignItems: "center",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinRightCells(userColor)}
                     disabled={rightNeighborsId.length === 0}
@@ -1874,6 +1882,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       justifyContent: "center",
                       alignItems: "center",
                       paddingBottom: "4px",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinDownLeftCells(userColor)}
                     disabled={downLeftNeighborsId.length === 0}
@@ -1888,6 +1897,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       display: "inline",
                       justifyContent: "center",
                       alignItems: "center",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinDownCells(userColor)}
                     disabled={downNeighborsId.length === 0}
@@ -1903,6 +1913,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
                       justifyContent: "center",
                       alignItems: "center",
                       paddingBottom: "4px",
+                      backgroundColor: "var(--background)"
                     }}
                     onClick={() => handleWinDownRightCells(userColor)}
                     disabled={downRightNeighborsId.length === 0}

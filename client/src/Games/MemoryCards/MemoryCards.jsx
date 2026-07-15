@@ -418,10 +418,11 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                     width: "200px",
                     height: "30px",
                     textAlign: "center",
+                    backgroundColor: "var(--background)"
                   }}
                 >
                   <option value="" disabled selected>
-                    Select the images Group
+                    images Groups
                   </option>
                   {imagesGroup.map((group, i) => (
                     <option key={i}>{group}</option>

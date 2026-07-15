@@ -248,6 +248,7 @@ export default function Form({
                 borderColor: "black",
                 textAlign: "center",
                 margin: "5px",
+                backgroundColor: "var(--background)"
               }}
             />
             <label htmlFor="input2"></label>
@@ -284,6 +285,7 @@ export default function Form({
                 borderColor: "black",
                 textAlign: "center",
                 margin: "5px",
+                backgroundColor: "var(--background)"
               }}
             />
             <label htmlFor="input3"></label>
@@ -320,6 +322,7 @@ export default function Form({
                 borderColor: "black",
                 textAlign: "center",
                 margin: "5px",
+                backgroundColor: "var(--background)"
               }}
             />
             <label htmlFor="input4"></label>
@@ -356,6 +359,7 @@ export default function Form({
                 borderColor: "black",
                 textAlign: "center",
                 margin: "5px",
+                backgroundColor: "var(--background)"
               }}
             />
             <br />

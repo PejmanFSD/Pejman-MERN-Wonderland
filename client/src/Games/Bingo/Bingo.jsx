@@ -1697,6 +1697,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                   width: "100px",
                   height: "30px",
                   marginTop: "10px",
+                  backgroundColor: "var(--background)"
                 }}
               >
                 <option value={userColor} disabled selected></option>

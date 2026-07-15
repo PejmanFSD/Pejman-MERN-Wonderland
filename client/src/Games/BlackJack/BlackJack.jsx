@@ -853,6 +853,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                             marginTop: "5px",
                             position: "relative",
                             top: "3px",
+                            backgroundColor: "var(--background)"
                           }}
                           name="bet"
                           id="bet"
@@ -1002,7 +1003,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           style={{ fontSize: "15px" }}
                         >
                           <strong>
-                            You can't raise anymore because you don't have any
+                            - You can't raise anymore because you don't have any
                             gambling chips!
                           </strong>
                         </div>
@@ -1028,7 +1029,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           style={{ fontSize: "15px" }}
                         >
                           <strong>
-                            You can't raise anymore because Pejman doesn't have
+                            - You can't raise anymore because Pejman doesn't have
                             any gambling chips!
                           </strong>
                         </div>
@@ -1054,7 +1055,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           style={{ fontSize: "15px" }}
                         >
                           <strong>
-                            You can't raise anymore because neither you nor
+                            - You can't raise anymore because neither you nor
                             Pejman don't have any gambling chips!
                           </strong>
                         </div>
@@ -1072,7 +1073,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           className="col-10 offset-1 d-flex justify-content-center"
                           style={{ fontSize: "15px" }}
                         >
-                          <strong>You can't stand right after raising!</strong>
+                          <strong>- You can't stand right after raising!</strong>
                         </div>
                       </div>
                     </div>
@@ -1099,6 +1100,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                               marginTop: "5px",
                               position: "relative",
                               top: "3px",
+                              backgroundColor: "var(--background)"
                             }}
                             name="raise"
                             id="raise"

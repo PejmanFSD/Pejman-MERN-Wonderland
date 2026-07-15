@@ -576,6 +576,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     textAlign: "center",
                     width: "220px",
                     height: "30px",
+                    backgroundColor: "var(--background)"
                   }}
                 >
                   <option value={imageGroup} disabled selected>
@@ -679,6 +680,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     margin: "3px",
                     width: "35px",
                     height: "35px",
+                    backgroundColor: "var(--background)"
                   }}
                   disabled={
                     isActiveUpButton === false || isAnImageClicked === false
@@ -695,6 +697,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     margin: "3px",
                     width: "35px",
                     height: "35px",
+                    backgroundColor: "var(--background)"
                   }}
                   disabled={
                     isActiveLeftButton === false || isAnImageClicked === false
@@ -710,6 +713,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     margin: "3px",
                     width: "35px",
                     height: "35px",
+                    backgroundColor: "var(--background)"
                   }}
                   disabled={
                     isActiveDownButton === false || isAnImageClicked === false
@@ -725,6 +729,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
                     margin: "3px",
                     width: "35px",
                     height: "35px",
+                    backgroundColor: "var(--background)"
                   }}
                   disabled={
                     isActiveRightButton === false || isAnImageClicked === false

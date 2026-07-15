@@ -770,6 +770,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                       width: "100px",
                       height: "25px",
                       margin: "5px",
+                      backgroundColor: "var(--background)"
                     }}
                   >
                     <option value={userColor} disabled selected></option>
@@ -793,6 +794,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
                       width: "100px",
                       height: "25px",
                       margin: "5px",
+                      backgroundColor: "var(--background)"
                     }}
                   >
                     <option value={pejmanColor} disabled selected></option>
