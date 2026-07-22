@@ -69,7 +69,7 @@ export default function Form({
     }
     if (misMatch === 0) {
       setIsWin(true);
-      updateTotalPoint(1);
+      updateTotalPoint(2);
     }
     if (misMatch !== 0) {
       setIsWin(false);

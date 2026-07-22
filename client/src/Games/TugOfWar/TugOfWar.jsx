@@ -2094,7 +2094,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
     if (userScore === 2) {
       setFinalMessage("You Win!");
       if (normalMode) {
-        updateTotalPoint(2);
+        updateTotalPoint(14);
       }
     }
   }, [userScore]);

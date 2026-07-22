@@ -49,12 +49,12 @@ export default function AboutSnake({ setIsAboutPage }) {
                 <br />
                 - The snake’s speed remains constant
                 <br />
-                - Winning does not award any stars
+                - Win the game to earn 3 stars
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 - The snake becomes faster after each food collected
-                <br />- Win the game to earn 4 stars
+                <br />- Win the game to earn 12 stars
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

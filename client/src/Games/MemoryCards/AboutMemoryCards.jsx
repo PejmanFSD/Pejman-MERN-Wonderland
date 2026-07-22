@@ -56,7 +56,7 @@ export default function AboutMemoryCards({ setIsAboutPage }) {
                 <br />
                 You have 180 seconds to match all cards
                 <br />
-                Win the game to earn 4 stars
+                Win the game to earn 12 stars
                 <br />
                 <strong>- Hard Mode:</strong>
                 <br />
@@ -64,7 +64,7 @@ export default function AboutMemoryCards({ setIsAboutPage }) {
                 <br />
                 You have 270 seconds to match all cards
                 <br />
-                Win the game to earn 8 stars
+                Win the game to earn 18 stars
                 <br />
                 <h4>Help Buttons</h4>
                 The game also includes several helpful features:

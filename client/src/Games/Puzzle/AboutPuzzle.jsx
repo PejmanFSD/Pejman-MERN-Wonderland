@@ -56,13 +56,13 @@ export default function AboutPuzzle({ setIsAboutPage }) {
                 <br />
                 - No time limit.
                 <br />
-                - Win the game to earn 8 stars.
+                - Win the game to earn 30 stars.
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 - You have 400 seconds to solve the puzzle.
                 <br />
-                - Win the game to earn 12 stars.
+                - Win the game to earn 35 stars.
                 <br />
                 <em>
                   (If you are an employer, try the “Numbers” puzzle, it is the

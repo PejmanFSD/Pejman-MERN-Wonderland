@@ -73,12 +73,12 @@ export default function AboutHappyFlower({ setIsAboutPage }) {
                 <br />
                 - No time limit.
                 <br />
-                - Win the game to earn 1 star.
+                - Win the game to earn 10 stars.
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 - You have 60 seconds to guess the word.
-                <br />- Win the game to earn 3 stars.
+                <br />- Win the game to earn 22 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

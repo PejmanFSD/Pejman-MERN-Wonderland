@@ -1572,7 +1572,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   }, [pejman3Nums]);
   useEffect(() => {
     if (finalMessage === "You Win!") {
-      updateTotalPoint(3);
+      updateTotalPoint(12);
     }
   }, [finalMessage]);
   useEffect(() => {

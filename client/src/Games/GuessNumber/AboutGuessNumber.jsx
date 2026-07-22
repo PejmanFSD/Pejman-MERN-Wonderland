@@ -35,7 +35,7 @@ export default function AboutGuessNumber({ setIsAboutPage }) {
                   <br />
                   You have 5 chances to guess the number.
                   <br />
-                  If you guess correctly, you earn 1 star.
+                  If you guess correctly, you earn 4 stars.
                   <br />
                   The feedback circles appear in the same order as your digits.
                   <br />
@@ -55,7 +55,7 @@ export default function AboutGuessNumber({ setIsAboutPage }) {
                   <br />
                   You have 10 chances to guess the number.
                   <br />
-                  If you guess correctly, you earn 5 stars.
+                  If you guess correctly, you earn 20 stars.
                   <br />
                   The feedback circles are sorted by color:
                   <br />

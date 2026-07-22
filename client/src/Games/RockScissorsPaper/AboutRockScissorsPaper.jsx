@@ -35,7 +35,7 @@ export default function AboutRockScissorsPaper({ setIsAboutPage }) {
                 <div>
                   <strong>- Normal Mode:</strong>
                   <br />
-                  Defeat Pejman 3 times in a row to earn 1 star.
+                  Defeat Pejman 3 times in a row to earn 10 stars.
                 </div>
                 <div>
                   <strong>- Extremely-Super-Difficult Mode:</strong>

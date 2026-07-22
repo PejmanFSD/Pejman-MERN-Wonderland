@@ -190,9 +190,9 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
         ) {
           setIsWin(true);
           if (easyMode) {
-            updateTotalPoint(1);
+            updateTotalPoint(4);
           } else if (normalMode) {
-            updateTotalPoint(5);
+            updateTotalPoint(20);
           }
         }
       };
@@ -314,6 +314,31 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {isGameStarted &&
+            normalMode &&
+            !isTogglingLevel &&
+            !isTogglingReset &&
+            !isTogglingHomePage && (
+              <div className="container mt-3">
+                <div className="row">
+                  <strong>
+                    <div className="col-10 offset-1 d-flex justify-content-center">
+                      BE CAREFUL! It's "NORMAL" mode!
+                      <br />
+                      The feedback circles DON'T appear in the same order as
+                      your digits!
+                      <br />
+                      They are always sorted by color:
+                      <br />
+                      - 🟢 Green circles appear first
+                      <br />
+                      - 🟡 Yellow circles appear second
+                      <br />- 🔴 Red circles appear last
+                    </div>
+                  </strong>
+                </div>
+              </div>
+            )}
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
             <div className="container">
               <div className="row">
@@ -387,45 +412,45 @@ export default function GuessNumber({ updateTotalPoint, currentUser }) {
               />
             )}
           {isGameStarted && chancesNum > 0 && (
-                  <Form
-                    inputs={inputs}
-                    setInputs={setInputs}
-                    chancesNum={chancesNum}
-                    setChancesNum={setChancesNum}
-                    setUserGuess={setUserGuess}
-                    updateUserGuess={updateUserGuess}
-                    updateUserGuessStatus={updateUserGuessStatus}
-                    userGuess={userGuess}
-                    userGuessStatus={userGuessStatus}
-                    num={num}
-                    convertArrayToString={convertArrayToString}
-                    setIsWin={setIsWin}
-                    isWin={isWin}
-                    allUserGuesses={allUserGuesses}
-                    setAllUserGuesses={setAllUserGuesses}
-                    isTogglingLevel={isTogglingLevel}
-                    isTogglingReset={isTogglingReset}
-                    isTogglingHomePage={isTogglingHomePage}
-                    isFirstDigitZero={isFirstDigitZero}
-                    setIsFirstDigitZero={setIsFirstDigitZero}
-                    isOneDigit={isOneDigit}
-                    setIsOneDigit={setIsOneDigit}
-                    isDigitNegative={isDigitNegative}
-                    setIsDigitNegative={setIsDigitNegative}
-                    isDigitDecimal={isDigitDecimal}
-                    setIsDigitDecimal={setIsDigitDecimal}
-                    isDigitRepetitive={isDigitRepetitive}
-                    setIsDigitRepetitive={setIsDigitRepetitive}
-                    isInt={isInt}
-                    setIsInt={setIsInt}
-                    isAlreadyGuessed={isAlreadyGuessed}
-                    setIsAlreadyGuessed={setIsAlreadyGuessed}
-                    isInputEmpty={isInputEmpty}
-                    setIsInputEmpty={setIsInputEmpty}
-                    easyMode={easyMode}
-                    normalMode={normalMode}
-                    updateTotalPoint={updateTotalPoint}
-                  />
+            <Form
+              inputs={inputs}
+              setInputs={setInputs}
+              chancesNum={chancesNum}
+              setChancesNum={setChancesNum}
+              setUserGuess={setUserGuess}
+              updateUserGuess={updateUserGuess}
+              updateUserGuessStatus={updateUserGuessStatus}
+              userGuess={userGuess}
+              userGuessStatus={userGuessStatus}
+              num={num}
+              convertArrayToString={convertArrayToString}
+              setIsWin={setIsWin}
+              isWin={isWin}
+              allUserGuesses={allUserGuesses}
+              setAllUserGuesses={setAllUserGuesses}
+              isTogglingLevel={isTogglingLevel}
+              isTogglingReset={isTogglingReset}
+              isTogglingHomePage={isTogglingHomePage}
+              isFirstDigitZero={isFirstDigitZero}
+              setIsFirstDigitZero={setIsFirstDigitZero}
+              isOneDigit={isOneDigit}
+              setIsOneDigit={setIsOneDigit}
+              isDigitNegative={isDigitNegative}
+              setIsDigitNegative={setIsDigitNegative}
+              isDigitDecimal={isDigitDecimal}
+              setIsDigitDecimal={setIsDigitDecimal}
+              isDigitRepetitive={isDigitRepetitive}
+              setIsDigitRepetitive={setIsDigitRepetitive}
+              isInt={isInt}
+              setIsInt={setIsInt}
+              isAlreadyGuessed={isAlreadyGuessed}
+              setIsAlreadyGuessed={setIsAlreadyGuessed}
+              isInputEmpty={isInputEmpty}
+              setIsInputEmpty={setIsInputEmpty}
+              easyMode={easyMode}
+              normalMode={normalMode}
+              updateTotalPoint={updateTotalPoint}
+            />
           )}
           {isGameStarted && (
             <div className="container">

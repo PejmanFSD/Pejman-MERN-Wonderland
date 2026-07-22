@@ -35,7 +35,7 @@ export default function AboutCrazy100({ setIsAboutPage }) {
                 <br />
                 You have 120 seconds to find the correct 4 numbers.
                 <br />
-                Win the game to earn 4 stars.
+                Win the game to earn 2 stars.
                 <br />
                 <strong>Important Rule</strong>
                 <br />

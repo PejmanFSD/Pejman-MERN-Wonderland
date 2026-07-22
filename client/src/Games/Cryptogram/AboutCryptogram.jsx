@@ -32,7 +32,7 @@ export default function AboutCryptogram({ setIsAboutPage }) {
                 Once all inputs are completed, If every hidden letter is guessed
                 correctly, you win the game.
                 <br />
-                Winning the game rewards you with 1 star.
+                Winning the game rewards you with 2 stars.
                 <br />
                 <h4>Input Rules</h4>
                 - No input box can be left empty.

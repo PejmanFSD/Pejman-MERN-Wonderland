@@ -44,12 +44,12 @@ export default function AboutTripleEmojiMatch({ setIsAboutPage }) {
                 <br />
                 - No time limit.
                 <br />
-                - Win the game to earn 10 stars.
+                - Win the game to earn 48 stars.
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 - You have 720 seconds to clear all emojis.
-                <br />- Win the game to earn 20 stars.
+                <br />- Win the game to earn 60 stars.
                 <h4>Help Buttons</h4>
                 The game also includes helpful features to assist you during
                 gameplay.

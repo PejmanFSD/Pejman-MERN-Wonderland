@@ -375,11 +375,11 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
       if (easyMode) {
         handleStopTimer();
         setFinalMessage("You Win!");
-        updateTotalPoint(8);
+        updateTotalPoint(30);
       } else if (normalMode) {
         handleStopTimer();
         setFinalMessage("You Win!");
-        updateTotalPoint(12);
+        updateTotalPoint(35);
       }
     }
   }, [imageGroup]);

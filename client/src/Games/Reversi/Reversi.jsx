@@ -1390,7 +1390,7 @@ export default function Reversi({ updateTotalPoint, currentUser }) {
     if (up > pp) {
       if (normalMode) {
         setFinalMessage("You Win!");
-        updateTotalPoint(4);
+        updateTotalPoint(14);
       } else {
         setFinalMessage("You Win, but you don't get any stars!");
       }

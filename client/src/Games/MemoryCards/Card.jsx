@@ -89,9 +89,9 @@ export default function Card({
     if (pair === images.length) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(4);
+        updateTotalPoint(12);
       } else if (hardMode) {
-        updateTotalPoint(8);
+        updateTotalPoint(18);
       }
       handleStopTimer();
     }

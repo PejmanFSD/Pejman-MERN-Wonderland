@@ -111,7 +111,7 @@ export default function AboutBlackJack({ setIsAboutPage }) {
                 <br />
                 - If both hands have equal value, you win the round.
                 <br />
-                - Win the game to earn 1 star.
+                - Win the game to earn 32 stars.
                 <br />
                 <strong>Normal Mode:</strong>
                 <br />
@@ -119,7 +119,7 @@ export default function AboutBlackJack({ setIsAboutPage }) {
                 not know upcoming cards).
                 <br />
                 - If both hands have equal value, Pejman wins the round.
-                <br />- Win the game to earn 3 stars.
+                <br />- Win the game to earn 45 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

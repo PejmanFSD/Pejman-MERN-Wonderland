@@ -49,14 +49,14 @@ export default function AboutNim({ setIsAboutPage }) {
                 <br />
                 Pejman chooses bowls and removes balls randomly during his turn.
                 <br />
-                Win the game to earn 1 star.
+                Win the game to earn 5 stars.
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 Pejman uses a strategy to decide which bowl to choose and how
                 many balls to remove.
                 <br />
-                Win the game to earn 6 stars.
+                Win the game to earn 28 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

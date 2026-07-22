@@ -85,7 +85,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
     }
   };
   const handleOk = () => {
-    updateTotalPoint(1);
+    updateTotalPoint(10);
     setTripleScore(0);
     setUserChoice("");
     setPejmanChoice("");
@@ -364,7 +364,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
                   Excellent! You just beat Pejman three times in a row.
                 </h4>
                 <h4 className="col-10 offset-1 d-flex justify-content-center fasterOne">
-                  Your total point increases by one.
+                  The number of your stars increases by ten.
                 </h4>
                 <div className="col-10 offset-1 d-flex justify-content-center my-2">
                   <button className="btn2" onClick={() => handleOk()}>

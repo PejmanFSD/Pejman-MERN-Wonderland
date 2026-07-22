@@ -37,7 +37,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
     setIsGameStarted(false);
     if (userScore > 13) {
       setFinalMessage("You Win!");
-      updateTotalPoint(4);
+      updateTotalPoint(5);
     } else {
       setFinalMessage("You Lose!");
     }

@@ -87,7 +87,7 @@ export default function KukuKube({ updateTotalPoint, currentUser }) {
     if (userChoice === uniqueSquare) {
       setIsStepPassed(true);
       if (step === 12 && normalMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(3);
       }
     } else if (userChoice !== uniqueSquare) {
       setIsStepPassed(false);

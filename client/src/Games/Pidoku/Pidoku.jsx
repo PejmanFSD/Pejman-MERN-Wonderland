@@ -619,7 +619,7 @@ export default function Pidoku({ updateTotalPoint, currentUser }) {
   useEffect(() => {
     if (normalMode && (userPoint > 0 || pejmanPoint > 0) && isGameResult) {
       if (userPoint > pejmanPoint) {
-        updateTotalPoint(2);
+        updateTotalPoint(7);
       }
     }
   }, [userPoint, pejmanPoint]);

@@ -200,9 +200,9 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
       setIsWin(true);
       setIsTimerRunning(false);
       if (easyMode) {
-        updateTotalPoint(10);
+        updateTotalPoint(48);
       } else if (normalMode) {
-        updateTotalPoint(20);
+        updateTotalPoint(60);
       }
     }
   }, [emojis]);

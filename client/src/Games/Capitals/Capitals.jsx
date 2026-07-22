@@ -61,7 +61,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     if (misMatch === 0) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(3);
+        updateTotalPoint(12);
       }
     } else {
       setIsWin(false);

@@ -293,8 +293,9 @@ export default function Snake({ updateTotalPoint, currentUser }) {
           if (e.key === " ") {
             e.preventDefault();
             for (let i = directions.length - 1; i >= 0; i--) {
-              if (directions[i] !== "None") {
+              if (isGameStarted && directions[i] !== "None") {
                 if (directions[i] === "Up") {
+                  e.preventDefault();
                   setDirection({ x: 0, y: -1 });
                   setDirections((currDirections) => [...currDirections, "Up"]);
                   break;
@@ -303,6 +304,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
 
               if (directions[i] !== "None") {
                 if (directions[i] === "Down") {
+                  e.preventDefault();
                   setDirection({ x: 0, y: 1 });
                   setDirections((currDirections) => [
                     ...currDirections,
@@ -345,20 +347,24 @@ export default function Snake({ updateTotalPoint, currentUser }) {
             }
             setDirection({ x: 0, y: 0 });
             setDirections((currDirections) => [...currDirections, "None"]);
-          } else if (e.key === "ArrowUp") {
+          } else if (e.key === "ArrowUp" && isGameStarted) {
             if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+              e.preventDefault();
               setDirection({ x: 0, y: 0 });
               setDirections((currDirections) => [...currDirections, "None"]);
             } else {
+              e.preventDefault();
               if (direction.y === 1) return; // Don't kill the snake if it shifts to the opposite direction
               setDirection({ x: 0, y: -1 });
               setDirections((currDirections) => [...currDirections, "Up"]);
             }
           } else if (e.key === "ArrowDown") {
             if (isTogglingReset || isTogglingLevel || isTogglingHomePage) {
+              e.preventDefault();
               setDirection({ x: 0, y: 0 });
               setDirections((currDirections) => [...currDirections, "None"]);
             } else {
+              e.preventDefault();
               if (direction.y === -1) return; // Don't kill the snake if it shifts to the opposite direction
               setDirection({ x: 0, y: 1 });
               setDirections((currDirections) => [...currDirections, "Down"]);
@@ -394,14 +400,15 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   useEffect(() => {
     if (userPoint === 40) {
       if (easyMode) {
-        setFinalMessage("You Win, but you don't get any stars!");
+        setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
+        updateTotalPoint(3);
       } else if (normalMode) {
         setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
-        updateTotalPoint(4);
+        updateTotalPoint(12);
       }
     }
   }, [userPoint]);
@@ -426,9 +433,6 @@ export default function Snake({ updateTotalPoint, currentUser }) {
                   ? "lime"
                   : isSnake && finalMessage === "You Win!"
                     ? "Yellow"
-                    : isSnake &&
-                        finalMessage === "You Win, but you don't get any stars!"
-                      ? "Yellow"
                       : isFood
                         ? "red"
                         : "#1e1e1e",
@@ -605,8 +609,7 @@ export default function Snake({ updateTotalPoint, currentUser }) {
               }}
             >
               {finalMessage &&
-                (finalMessage === "You Win!" ||
-                  finalMessage === "You Win, but you don't get any stars!") &&
+                finalMessage === "You Win!" &&
                 !isTogglingHomePage && (
                   <div>
                     <div className="container">

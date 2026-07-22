@@ -632,7 +632,7 @@ export default function Bowls({
         if (standard) {
           if (allTurns[allTurns.length - 1].side === "User") {
             setIsWin(true);
-            updateTotalPoint(1);
+            updateTotalPoint(5);
           } else {
             setIsWin(false);
           }
@@ -641,14 +641,14 @@ export default function Bowls({
             setIsWin(false);
           } else {
             setIsWin(true);
-            updateTotalPoint(1);
+            updateTotalPoint(5);
           }
         }
       } else if (normalMode) {
         if (standard) {
           if (allTurns[allTurns.length - 1].side === "User") {
             setIsWin(true);
-            updateTotalPoint(6);
+            updateTotalPoint(28);
           } else {
             setIsWin(false);
           }
@@ -657,7 +657,7 @@ export default function Bowls({
             setIsWin(false);
           } else {
             setIsWin(true);
-            updateTotalPoint(6);
+            updateTotalPoint(28);
           }
         }
       }

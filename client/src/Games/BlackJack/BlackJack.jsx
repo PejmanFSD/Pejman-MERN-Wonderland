@@ -374,9 +374,9 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     } else if (pejmanChipsNum === 0 && !isBetMade) {
       setFinalMessage("You win the game!");
       if (easyMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(32);
       } else {
-        updateTotalPoint(3);
+        updateTotalPoint(45);
       }
     }
   }, [userChipsNum, pejmanChipsNum]);

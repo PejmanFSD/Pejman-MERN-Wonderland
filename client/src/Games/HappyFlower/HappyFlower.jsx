@@ -145,9 +145,9 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
       setIsWin(true);
       handleStopTimer();
       if (easyMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(10);
       } else if (normalMode) {
-        updateTotalPoint(3);
+        updateTotalPoint(22);
       }
     }
   }, [userGuess]);

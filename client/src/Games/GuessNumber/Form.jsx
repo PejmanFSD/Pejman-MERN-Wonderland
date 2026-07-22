@@ -78,9 +78,9 @@ export default function Form({
       ) {
         setIsWin(true);
         if (easyMode) {
-          updateTotalPoint(1);
+          updateTotalPoint(4);
         } else if (normalMode) {
-          updateTotalPoint(5);
+          updateTotalPoint(20);
         }
       }
       setChancesNum((currChanceNum) => currChanceNum - 1);

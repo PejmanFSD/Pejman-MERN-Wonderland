@@ -369,9 +369,11 @@ export default function Maze({ updateTotalPoint, currentUser }) {
       let { x, y } = ball.position; // The ball's position
       let nextPosition = { x, y }; // The ball's updated position after each keydown
       // Moving the ball:
-      if (event.key === "ArrowUp") {
+      if (isGameStarted && event.key === "ArrowUp") {
+        event.preventDefault();
         nextPosition.y -= step;
-      } else if (event.key === "ArrowDown") {
+      } else if (isGameStarted && event.key === "ArrowDown") {
+        event.preventDefault();
         nextPosition.y += step;
       } else if (event.key === "ArrowLeft") {
         nextPosition.x -= step;
@@ -397,7 +399,7 @@ export default function Maze({ updateTotalPoint, currentUser }) {
         } else if (normalMode) {
           handleStopTimer();
           setFinalMessage("You Win!");
-          updateTotalPoint(1);
+          updateTotalPoint(10);
         }
         // decreasing the opacity of the elements if we win:
         world.bodies.forEach((body) => {
