@@ -26,31 +26,32 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [userColor, setUserColor] = useState("");
-  const [allNums, setAllNums] = useState(allNumsArray);
-  const [selectedNums, setSelectedNums] = useState([]);
-  const [numCounter, setNumCounter] = useState(1);
-  const [userTens1, setUserTens1] = useState([]);
-  const [userTens2, setUserTens2] = useState([]);
-  const [userTens3, setUserTens3] = useState([]);
-  const [pejmanTens1, setPejmanTens1] = useState([]);
-  const [pejmanTens2, setPejmanTens2] = useState([]);
-  const [pejmanTens3, setPejmanTens3] = useState([]);
-  const [user1Nums, setUser1Nums] = useState([]);
-  const [user2Nums, setUser2Nums] = useState([]);
-  const [user3Nums, setUser3Nums] = useState([]);
-  const [pejman1Nums, setPejman1Nums] = useState([]);
-  const [pejman2Nums, setPejman2Nums] = useState([]);
-  const [pejman3Nums, setPejman3Nums] = useState([]);
-  const [youMissedMessage, setYouMissedMessage] = useState(false);
-  const [missedNumOnBoard1, setMissedNumOnBoard1] = useState(null);
-  const [missedNumOnBoard2, setMissedNumOnBoard2] = useState(null);
-  const [missedNumOnBoard3, setMissedNumOnBoard3] = useState(null);
+  const [allNums, setAllNums] = useState(allNumsArray); // All the numbers from 1 to 99
+  const [selectedNums, setSelectedNums] = useState([]); // Each number that is randomly selected from "allNums" will be added to this array
+  const [numCounter, setNumCounter] = useState(1); // The number of the randomly selected numbers from the "allNums" array
+  const [userTens1, setUserTens1] = useState([]); // User's Tens for their first board
+  const [userTens2, setUserTens2] = useState([]); // User's Tens for their second board
+  const [userTens3, setUserTens3] = useState([]); // User's Tens for their third board
+  const [pejmanTens1, setPejmanTens1] = useState([]); // Pejman's Tens for his first board
+  const [pejmanTens2, setPejmanTens2] = useState([]); // Pejman's Tens for his second board
+  const [pejmanTens3, setPejmanTens3] = useState([]); // Pejman's Tens for his third board
+  const [user1Nums, setUser1Nums] = useState([]); // User's numbers of their first board
+  const [user2Nums, setUser2Nums] = useState([]); // User's numbers of their second board
+  const [user3Nums, setUser3Nums] = useState([]); // User's numbers of their third board
+  const [pejman1Nums, setPejman1Nums] = useState([]); // Pejman's numbers of his first board
+  const [pejman2Nums, setPejman2Nums] = useState([]); // Pejman's numbers of his second board
+  const [pejman3Nums, setPejman3Nums] = useState([]); // Pejman's numbers of his third board
+  const [youMissedMessage, setYouMissedMessage] = useState(false); // If the user misses a number of their board, this variable changes to "true"
+  const [missedNumOnBoard1, setMissedNumOnBoard1] = useState(null); // The number that the user misses on their first board
+  const [missedNumOnBoard2, setMissedNumOnBoard2] = useState(null); // The number that the user misses on their second board
+  const [missedNumOnBoard3, setMissedNumOnBoard3] = useState(null); // The number that the user misses on their third board
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
+  // The function for choosing the user's color:
   const handleUserColor = (e) => {
     if (e.target.value === "Red") {
       setUserColor("red");
@@ -59,6 +60,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
     } else if (e.target.value === "Blue") {
       setUserColor("blue");
     }
+    // Reseting some of the state variables:
     setIsGameStarted(false);
     setFinalMessage("");
     updateTensArray(setUserTens1);
@@ -68,17 +70,23 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
     updateTensArray(setPejmanTens2);
     updateTensArray(setPejmanTens3);
   };
+  // Selecting randomly 5 Tens for each board:
   const updateTensArray = (arr) => {
     const shuffled = [...initialTens].sort(() => Math.random() - 0.5);
     arr(shuffled.slice(0, 5).sort());
   };
+  // The function for shuffling a Tens array, picking 5 of them, sort the 5 randomly
+  // chosen numbers, assigning them to a row of a board of one of the players -> the "updateFunc"
+  // variable indicates the board and the "player" variable indicates the player
   const updateNumsArray = (arr, updateFunc, player) => {
     const shuffledArr = [...arr]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 5)
-      .sort();
+      .sort(() => Math.random() - 0.5) // Shuffling the Tens array
+      .slice(0, 5) // Picking the first 5 shuffled numbers
+      .sort(); // Sorting the first 5 shuffled numbers
+      // Assigning the randomly chosen numbers to each cell of the board
     updateFunc((curr) => [
       ...curr,
+      // The first cell of the row:
       {
         num: shuffledArr[0],
         isSelected: false,
@@ -86,6 +94,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         owner: player,
         isWinnerCell: false,
       },
+      // The second cell of the row:
       {
         num: shuffledArr[1],
         isSelected: false,
@@ -93,6 +102,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         owner: player,
         isWinnerCell: false,
       },
+      // The third cell of the row:
       {
         num: shuffledArr[2],
         isSelected: false,
@@ -100,6 +110,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         owner: player,
         isWinnerCell: false,
       },
+      // The fourth cell of the row:
       {
         num: shuffledArr[3],
         isSelected: false,
@@ -107,6 +118,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         owner: player,
         isWinnerCell: false,
       },
+      // The fifth cell of the row:
       {
         num: shuffledArr[4],
         isSelected: false,
@@ -116,8 +128,10 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       },
     ]);
   };
+  // The function that starts the game:
   const handleStart = () => {
     setIsGameStarted(true);
+    // Filling the user's first board (userTens1 contains the 5 randomly chosen Tens for the user's first board):
     for (const ut1 of userTens1) {
       if (ut1 === 0) {
         updateNumsArray(array1To9, setUser1Nums, "User");
@@ -150,6 +164,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         updateNumsArray(array90To99, setUser1Nums, "User");
       }
     }
+    // Filling the user's second board (userTens2 contains the 5 randomly chosen Tens for the user's second board):
     for (const ut2 of userTens2) {
       if (ut2 === 0) {
         updateNumsArray(array1To9, setUser2Nums, "User");
@@ -182,6 +197,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         updateNumsArray(array90To99, setUser2Nums, "User");
       }
     }
+    // Filling the user's third board (userTens3 contains the 5 randomly chosen Tens for the user's third board):
     for (const ut3 of userTens3) {
       if (ut3 === 0) {
         updateNumsArray(array1To9, setUser3Nums, "User");
@@ -214,7 +230,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         updateNumsArray(array90To99, setUser3Nums, "User");
       }
     }
-
+    // Filling Pejman's first board (pejmanTens1 contains the 5 randomly chosen Tens for Pejman's first board):
     for (const pt1 of pejmanTens1) {
       if (pt1 === 0) {
         updateNumsArray(array1To9, setPejman1Nums, "Pejman");
@@ -247,6 +263,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         updateNumsArray(array90To99, setPejman1Nums, "Pejman");
       }
     }
+    // Filling Pejman's second board (pejmanTens2 contains the 5 randomly chosen Tens for Pejman's second board):
     for (const pt2 of pejmanTens2) {
       if (pt2 === 0) {
         updateNumsArray(array1To9, setPejman2Nums, "Pejman");
@@ -279,6 +296,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
         updateNumsArray(array90To99, setPejman2Nums, "Pejman");
       }
     }
+    // Filling Pejman's third board (pejmanTens3 contains the 5 randomly chosen Tens for Pejman's third board):
     for (const pt3 of pejmanTens3) {
       if (pt3 === 0) {
         updateNumsArray(array1To9, setPejman3Nums, "Pejman");
