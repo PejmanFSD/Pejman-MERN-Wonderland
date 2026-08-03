@@ -330,28 +330,40 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       }
     }
   };
+  // The function for choosing a random number from 1 to 99
   const pickRandomNumber = () => {
+    // Resetting the appropriate state variables; if the user has missed
+    // clicking on a selected number on their board, with revealing a new
+    // random number, the "You missed ..." message should disappear:
     setYouMissedMessage(false);
     setMissedNumOnBoard1(null);
     setMissedNumOnBoard2(null);
     setMissedNumOnBoard3(null);
+    // Checking if any of the randomly selected numbers are in the user's
+    // first board or not, if there is, change the color of the cell:
     setUser1Nums((currUser1Nums) =>
       currUser1Nums.map((n) =>
         selectedNums.includes(n.num) ? { ...n, isSelected: true } : n,
       ),
     );
+    // Checking if any of the randomly selected numbers are in the user's
+    // second board or not, if there is, change the color of the cell:
     setUser2Nums((currUser2Nums) =>
       currUser2Nums.map((n) =>
         selectedNums.includes(n.num) ? { ...n, isSelected: true } : n,
       ),
     );
+    // Checking if any of the randomly selected numbers are in the user's
+    // third board or not, if there is, change the color of the cell:
     setUser3Nums((currUser3Nums) =>
       currUser3Nums.map((n) =>
         selectedNums.includes(n.num) ? { ...n, isSelected: true } : n,
       ),
     );
     if (allNums.length === 0) return;
+    // Choosing a randoom index:
     const randomIndex = Math.floor(Math.random() * allNums.length);
+    // Choosing the random number by the randomly chosen index:
     const selectedNumber = allNums[randomIndex];
     // Remove number from allNums:
     const newAllNums = allNums.filter((_, i) => i !== randomIndex);
@@ -360,6 +372,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
     setSelectedNums((prev) => [...prev, selectedNumber]);
     setNumCounter((currNumCounter) => currNumCounter + 1);
   };
+  // The function for reseting the game (reseting all the appropriate state variables):
   const handlePlayAgain = () => {
     setFinalMessage("");
     setIsGameStarted(false);
@@ -387,6 +400,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
     setIsTogglingHomePage(false);
     setShowReviews(true);
   };
+  // The functions for reseting the game:
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
@@ -396,6 +410,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  // The functions for returning to the home page:
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
@@ -405,55 +420,70 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  // The function of the "About the game" page:
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  // The function of the "reviews" page:
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  // Changing if the randomly chosen number is in one of the Pejman's boards
+  // and if there is, changing the color of the cell that has the number:
   useEffect(() => {
+    // Checking Pejman's first board:
     setPejman1Nums((currPejman1Nums) =>
       currPejman1Nums.map((n) =>
         selectedNums.includes(n.num) ? { ...n, isSelected: true } : n,
       ),
     );
+    // Checking Pejman's second board:
     setPejman2Nums((currPejman2Nums) =>
       currPejman2Nums.map((n) =>
         selectedNums.includes(n.num) ? { ...n, isSelected: true } : n,
       ),
     );
+    // Checking Pejman's third board:
     setPejman3Nums((currPejman3Nums) =>
       currPejman3Nums.map((n) =>
         selectedNums.includes(n.num) ? { ...n, isSelected: true } : n,
       ),
     );
   }, [allNums, selectedNums]);
+  // showing the "You missed ..." message for the user if they don't click
+  // their cell(s) that have/has the last randomly chosen number
   useEffect(() => {
+    // Checking the user's first board:
     for (const un1 of user1Nums) {
       if (
-        un1.isSelected &&
-        !un1.isClicked &&
-        selectedNums.indexOf(un1.num) === selectedNums.length - 2
+        un1.isSelected && // Confirming that the cell has one of the randomly chosen numbers
+        !un1.isClicked && // Confirming that the ceel hasn't been clicked by the user
+        selectedNums.indexOf(un1.num) === selectedNums.length - 2 // Confirming that the cell
+        // that hasn't been clicked by the user is one number before the last randomly chosen number
       ) {
         setYouMissedMessage(true);
         setMissedNumOnBoard1(un1.num);
       }
     }
+    // Checking the user's second board:
     for (const un2 of user2Nums) {
       if (
-        un2.isSelected &&
-        !un2.isClicked &&
-        selectedNums.indexOf(un2.num) === selectedNums.length - 2
+        un2.isSelected && // Confirming that the cell has one of the randomly chosen numbers
+        !un2.isClicked && // Confirming that the ceel hasn't been clicked by the user
+        selectedNums.indexOf(un2.num) === selectedNums.length - 2 // Confirming that the cell
+        // that hasn't been clicked by the user is one number before the last randomly chosen number
       ) {
         setYouMissedMessage(true);
         setMissedNumOnBoard2(un2.num);
       }
     }
+    // Checking the user's third board:
     for (const un3 of user3Nums) {
       if (
-        un3.isSelected &&
-        !un3.isClicked &&
-        selectedNums.indexOf(un3.num) === selectedNums.length - 2
+        un3.isSelected && // Confirming that the cell has one of the randomly chosen numbers
+        !un3.isClicked && // Confirming that the ceel hasn't been clicked by the user
+        selectedNums.indexOf(un3.num) === selectedNums.length - 2 // Confirming that the cell
+        // that hasn't been clicked by the user is one number before the last randomly chosen number
       ) {
         setYouMissedMessage(true);
         setMissedNumOnBoard3(un3.num);
