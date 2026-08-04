@@ -490,7 +490,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       }
     }
   }, [user1Nums, user2Nums, user3Nums]);
+  // The winning condition of user's first board:
   useEffect(() => {
+    // All the cells of the first row of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[0].isClicked &&
@@ -506,6 +508,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the second row of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[5].isClicked &&
@@ -521,6 +524,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the third row of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[10].isClicked &&
@@ -538,6 +542,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fourth row of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[15].isClicked &&
@@ -555,6 +560,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fifth row of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[20].isClicked &&
@@ -572,6 +578,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the first column of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[0].isClicked &&
@@ -587,6 +594,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the second column of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[1].isClicked &&
@@ -602,6 +610,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the third column of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[2].isClicked &&
@@ -617,6 +626,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fourth column of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[3].isClicked &&
@@ -632,6 +642,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fifth column of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[4].isClicked &&
@@ -647,6 +658,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the back-slash diagonal cells of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[0].isClicked &&
@@ -662,6 +674,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the slash diagonal cells of user's first board are clicked: 
     if (
       user1Nums.length > 0 &&
       user1Nums[4].isClicked &&
@@ -678,7 +691,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       setFinalMessage("You Win!");
     }
   }, [user1Nums]);
+  // The winning condition of user's second board:
   useEffect(() => {
+    // All the cells of the first row of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[0].isClicked &&
@@ -694,6 +709,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the second row of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[5].isClicked &&
@@ -709,6 +725,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the third row of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[10].isClicked &&
@@ -726,6 +743,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fourth row of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[15].isClicked &&
@@ -743,6 +761,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fifth row of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[20].isClicked &&
@@ -760,6 +779,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the first column of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[0].isClicked &&
@@ -775,6 +795,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the second column of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[1].isClicked &&
@@ -790,6 +811,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the third column of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[2].isClicked &&
@@ -805,6 +827,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fourth column of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[3].isClicked &&
@@ -820,6 +843,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fifth column of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[4].isClicked &&
@@ -835,6 +859,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the back-slash diagonal cells of user's second board are clicked: 
     if (
       user2Nums.length > 0 &&
       user2Nums[0].isClicked &&
@@ -850,6 +875,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the slash diagonal cells of user's second board are clicked:
     if (
       user2Nums.length > 0 &&
       user2Nums[4].isClicked &&
@@ -866,7 +892,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       setFinalMessage("You Win!");
     }
   }, [user2Nums]);
+  // The winning condition of user's third board:
   useEffect(() => {
+    // All the cells of the first row of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[0].isClicked &&
@@ -882,6 +910,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+  // All the cells of the second row of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[5].isClicked &&
@@ -897,6 +926,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the third row of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[10].isClicked &&
@@ -914,6 +944,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fourth row of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[15].isClicked &&
@@ -931,6 +962,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fifth row of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[20].isClicked &&
@@ -948,6 +980,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the first column of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[0].isClicked &&
@@ -963,6 +996,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the second column of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[1].isClicked &&
@@ -978,6 +1012,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the third column of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[2].isClicked &&
@@ -993,6 +1028,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fourth column of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[3].isClicked &&
@@ -1008,6 +1044,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the cells of the fifth column of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[4].isClicked &&
@@ -1023,6 +1060,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the back-slash diagonal cells of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[0].isClicked &&
@@ -1038,6 +1076,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("You Win!");
     }
+    // All the slash diagonal cells of user's third board are clicked: 
     if (
       user3Nums.length > 0 &&
       user3Nums[4].isClicked &&
@@ -1054,7 +1093,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       setFinalMessage("You Win!");
     }
   }, [user3Nums]);
+  // The winning condition of Pejman's first board:
   useEffect(() => {
+    // All the cells of the first row of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[0].isSelected &&
@@ -1070,6 +1111,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the second row of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[5].isSelected &&
@@ -1085,6 +1127,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the third row of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[10].isSelected &&
@@ -1102,6 +1145,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fourth row of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[15].isSelected &&
@@ -1119,6 +1163,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fifth row of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[20].isSelected &&
@@ -1136,6 +1181,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the first column of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[0].isSelected &&
@@ -1151,6 +1197,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the second column of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[1].isSelected &&
@@ -1166,6 +1213,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the third column of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[2].isSelected &&
@@ -1181,6 +1229,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fourth column of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[3].isSelected &&
@@ -1196,6 +1245,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fifth column of Pejman's first board are clicked:
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[4].isSelected &&
@@ -1211,6 +1261,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the back-slash diagonal cells of Pejman's first board are clicked: 
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[0].isSelected &&
@@ -1226,6 +1277,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the slash diagonal cells of Pejman's first board are clicked: 
     if (
       pejman1Nums.length > 0 &&
       pejman1Nums[4].isSelected &&
@@ -1242,7 +1294,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       setFinalMessage("Pejman Wins!");
     }
   }, [pejman1Nums]);
+  // The winning condition of Pejman's second board:
   useEffect(() => {
+    // All the cells of the first row of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[0].isSelected &&
@@ -1258,6 +1312,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the second row of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[5].isSelected &&
@@ -1273,6 +1328,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the third row of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[10].isSelected &&
@@ -1290,6 +1346,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fourth row of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[15].isSelected &&
@@ -1307,6 +1364,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fifth row of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[20].isSelected &&
@@ -1324,6 +1382,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the first column of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[0].isSelected &&
@@ -1339,6 +1398,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the second column of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[1].isSelected &&
@@ -1354,6 +1414,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the third column of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[2].isSelected &&
@@ -1369,6 +1430,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fourth column of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[3].isSelected &&
@@ -1384,6 +1446,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fifth column of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[4].isSelected &&
@@ -1399,6 +1462,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the back-slash diagonal cells of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[0].isSelected &&
@@ -1414,6 +1478,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the slash diagonal cells of Pejman's second board are clicked: 
     if (
       pejman2Nums.length > 0 &&
       pejman2Nums[4].isSelected &&
@@ -1430,7 +1495,9 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       setFinalMessage("Pejman Wins!");
     }
   }, [pejman2Nums]);
+  // The winning condition of Pejman's third board:
   useEffect(() => {
+    // All the cells of the first row of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[0].isSelected &&
@@ -1446,6 +1513,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the second row of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[5].isSelected &&
@@ -1461,6 +1529,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the third row of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[10].isSelected &&
@@ -1478,6 +1547,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fourth row of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[15].isSelected &&
@@ -1495,6 +1565,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fifth row of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[20].isSelected &&
@@ -1512,6 +1583,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the first column of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[0].isSelected &&
@@ -1527,6 +1599,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the second column of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[1].isSelected &&
@@ -1542,6 +1615,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the third column of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[2].isSelected &&
@@ -1557,6 +1631,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fourth column of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[3].isSelected &&
@@ -1572,6 +1647,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the cells of the fifth column of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[4].isSelected &&
@@ -1587,6 +1663,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the back-slash diagonal cells of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[0].isSelected &&
@@ -1602,6 +1679,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       );
       setFinalMessage("Pejman Wins!");
     }
+    // All the slash diagonal cells of Pejman's third board are clicked:
     if (
       pejman3Nums.length > 0 &&
       pejman3Nums[4].isSelected &&
@@ -1618,11 +1696,13 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
       setFinalMessage("Pejman Wins!");
     }
   }, [pejman3Nums]);
+  // Increasing the user's total point if they win:
   useEffect(() => {
     if (finalMessage === "You Win!") {
       updateTotalPoint(12);
     }
   }, [finalMessage]);
+  // Changing the title of the browser when the user enters the game:
   useEffect(() => {
     document.title = "Bingo";
   }, []);
