@@ -13,12 +13,14 @@ export default function PejmanBoard({ nums, selectedNums, finalMessage }) {
             justifyContent: "center",
           }}
         >
+          {/* Rendering 25 cells (5 x 5) of <PejmanCell /> components */}
           {new Array(25).fill(null).map((cell, idx) => (
+            // idxth cell
             <PejmanCell
-                value={nums[idx].num}
-                owner={nums[idx].owner}
-                isWinnerCell={nums[idx].isWinnerCell}
-                isSelected={nums[idx].isSelected}
+                value={nums[idx].num} // The value of the idxth element of the "nums" array
+                owner={nums[idx].owner} // The owner of the cell (Pejman)
+                isWinnerCell={nums[idx].isWinnerCell} // The winning status of the cell
+                isSelected={nums[idx].isSelected} // The selection(clicked) status of the cell
                 finalMessage={finalMessage}
                 key={idx}
             />

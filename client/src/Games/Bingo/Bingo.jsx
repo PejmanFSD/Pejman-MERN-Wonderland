@@ -1708,12 +1708,15 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
   }, []);
   return (
     <div>
+      {/* Rendering the "About the game" section */}
       {isAboutPage && <AboutBingo setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
+          {/* Game title */}
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Bingo
           </h2>
+          {/* The fix buttons of the game: "About The game", "Reset the Game" and "Back to home page" in one container: */}
           <div className="container">
             <div className="row">
               <div className="col-lg-4 align-self-center">
@@ -1754,6 +1757,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {/* Confirming the "Reset the game" functionality */}
           {isTogglingReset && (
             <div className="container">
               <div className="row">
@@ -1767,6 +1771,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Back to Home Page" functionality */}
           {isTogglingHomePage && (
             <div className="container">
               <div className="row">
@@ -1780,6 +1785,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Rendering the "Final Message" of the game (You Win / Pejman Wins) */}
           {finalMessage !== "" && isGameStarted && !isTogglingHomePage && (
             <div className="container">
               <div className="row">
@@ -1791,6 +1797,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Asking the user if they want to play again if they win */}
           {finalMessage === "You Win!" &&
             isGameStarted &&
             !isTogglingHomePage && (
@@ -1801,6 +1808,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+            {/* Asking the user if they want to try again if they lose */}
           {finalMessage === "Pejman Wins!" &&
             isGameStarted &&
             !isTogglingHomePage && (
@@ -1811,6 +1819,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+            {/* User selects a color for themselves before starting the game */}
           {!isGameStarted && userColor === "" && !isTogglingHomePage && (
             <div style={{ marginTop: "15px" }}>
               <label htmlFor="userColor">Select a Color</label>
@@ -1829,12 +1838,14 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 }}
               >
                 <option value={userColor} disabled selected></option>
+                {/* mainColors = [Blue, Red, Green] */}
                 {mainColors.map((c) => (
                   <option key={mainColors.indexOf(c)}>{c}</option>
                 ))}
               </select>
             </div>
           )}
+          {/* The "Start the game" button */}
           {!isGameStarted && userColor !== "" && !isTogglingHomePage && (
             <button
               onClick={handleStart}
@@ -1861,9 +1872,11 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                     opacity: finalMessage === "" ? 1 : 0.3,
                   }}
                 >
+                  {/* Rendering only the last randomly chosen number */}
                   {selectedNums[selectedNums.length - 1]}
                 </div>
               )}
+              {/* The buttin for choosing the new random number */}
               {finalMessage === "" && (
                 <button
                   onClick={pickRandomNumber}
@@ -1875,6 +1888,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               )}
             </div>
           )}
+
           {isGameStarted && !isTogglingReset && !isTogglingHomePage && (
             <div
               style={{
@@ -1886,6 +1900,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                 marginTop: "15px",
               }}
             >
+              {/* Rendering all the randomly choosen numbers */}
               {selectedNums.map((n) => (
                 <div
                   className="product-bingoSelectedNums-image"
@@ -1922,10 +1937,12 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                   top: "5px",
                 }}
               >
+                {/* Rendering all the 3 boards of Pejman inside one container */}
                 <div className="container">
                   <div className="row">
                     <div className="col-xl-2 offset-xl-3 col-sm-4 align-self-center my-2">
                       {isGameStarted && (
+                        // Pejman's first board
                         <PejmanBoard
                           nums={pejman1Nums}
                           selectedNums={selectedNums}
@@ -1935,6 +1952,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                     </div>
                     <div className="col-xl-2 col-sm-4 align-self-center my-2">
                       {isGameStarted && (
+                        // Pejman's second board
                         <PejmanBoard
                           nums={pejman2Nums}
                           selectedNums={selectedNums}
@@ -1944,6 +1962,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                     </div>
                     <div className="col-xl-2 col-sm-4 align-self-center my-2">
                       {isGameStarted && (
+                        // Pejman's third board
                         <PejmanBoard
                           nums={pejman3Nums}
                           selectedNums={selectedNums}
@@ -1956,6 +1975,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Rendering the "You missed ..." messages if the user doesn't click on the cell that has the last randomly chosen number */}
           {youMissedMessage === true &&
             missedNumOnBoard1 &&
             finalMessage === "" &&
@@ -1964,6 +1984,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               <div className="container">
                 <div className="row">
                   <div className="col-10 offset-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                    {/* Rendering the "You missed ..." message for the user's first board */}
                     <strong>
                       {`You missed ${selectedNums[selectedNums.length - 2]} on your first board!`}{" "}
                       &#128533;
@@ -1980,6 +2001,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               <div className="container">
                 <div className="row">
                   <div className="col-10 offset-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                    {/* Rendering the "You missed ..." message for the user's second board */}
                     <strong>
                       {`You missed ${selectedNums[selectedNums.length - 2]} on your second board!`}{" "}
                       &#128533;
@@ -1996,6 +2018,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
               <div className="container">
                 <div className="row">
                   <div className="col-10 offset-1 d-flex justify-content-center product-bingoMissedMessage-text">
+                    {/* Rendering the "You missed ..." message for the user's third board */}
                     <strong>
                       {`You missed ${selectedNums[selectedNums.length - 2]} on your third board!`}{" "}
                       &#128533;
@@ -2020,10 +2043,12 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
                   top: "5px",
                 }}
               >
+                {/* Rendering the user's 3 boards inside one container */}
                 <div className="container">
                   <div className="row">
                     <div className="col-xl-2 offset-xl-3 col-sm-4 align-self-center my-2">
                       {isGameStarted && (
+                        // User's first board
                         <UserBoard
                           nums={user1Nums}
                           color={userColor}
@@ -2042,6 +2067,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
 
                     <div className="col-xl-2 col-sm-4 align-self-center my-2">
                       {isGameStarted && (
+                        // User's second board
                         <UserBoard
                           nums={user2Nums}
                           color={userColor}
@@ -2060,6 +2086,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
 
                     <div className="col-xl-2 col-sm-4 align-self-center my-2">
                       {isGameStarted && (
+                        // User's third board
                         <UserBoard
                           nums={user3Nums}
                           color={userColor}
@@ -2082,6 +2109,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
           )}
           <br />
           {!isTogglingReset && !isTogglingHomePage && isGameStarted && (
+            // The button for showing/hiding the "Reviews Section"
             <button
               onClick={handleReviewSection}
               className="btn1"
@@ -2096,6 +2124,7 @@ export default function Bingo({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             showReviews && (
+              // Rendering the <ReviewSection /> component
               <div style={{ position: "relative", top: "10px" }}>
                 <ReviewSection game="Bingo" currentUser={currentUser} />
               </div>
