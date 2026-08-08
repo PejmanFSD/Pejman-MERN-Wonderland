@@ -18,6 +18,7 @@ export default function HuntingGround({
   setUserScore,
   isTogglingHomePage
 }) {
+  // Creating the 7 blank images of each hunting ground:
   const [images, setImages] = useState(
     Array(7).fill({ imgSrc: A, status: "blank" }),
   );
@@ -30,15 +31,21 @@ export default function HuntingGround({
   // and passes in a function as the first argument.
   useEffect(() => {
     const runningTheChosenGround = async () => {
+      // Checking if the chosen hunting ground is the current hunting ground
+      // groundNum = el -> el = the number of the hunting ground from
+      // either the [1, 2, 3, 4, 5, 6, 7, 8] array or the [9, 10, 11, 12, 13, 14, 15, 16] array:
       if (chosenGround === groundNum) {
         if (isRunning) return; // Preventing double clicks
         setIsRunning(true);
+        // Updating the "delayMilliSec" state variable the moment the bird starts flying in the hunting ground:
         setDelayMilliSec((currDelayMilliSec) => currDelayMilliSec - 55);
+        // Updating each of the images of the hunting ground:
         for (let i = 0; i < images.length; i++) {
           if (stopRef.current) break; // Stop checking
           // Turn current image to B
           setImages((currImages) =>
             currImages.map((img, idx) =>
+              // The image of the bird in even images and in odd images are different:
               idx === i && i % 2 === 0
                 ? { imgSrc: B1, status: "blank" }
                 : idx === i && i % 2 !== 0

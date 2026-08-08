@@ -11,38 +11,48 @@ import AboutBirdHunter from "./AboutBirdHunter";
 export default function BirdHunter({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  // There're 16 hunting grounds in the game:
   const [grounds, setGrounds] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
   ]);
-  const [chosenGround, setChosenGround] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [delayMilliSec, setDelayMilliSec] = useState(1000);
-  const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0);
-  const [userScore, setUserScore] = useState(0);
+  const [chosenGround, setChosenGround] = useState(0); // The randomly chosen ground that the bird flies in it
+  const [isRunning, setIsRunning] = useState(false); // A boolean state variable that indicates if a bird is flying in a hunting ground
+  const [delayMilliSec, setDelayMilliSec] = useState(1000); // The time between the appearance of the bird in 2 consecutive images
+  const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0); // The number of the grounds that either the bird is killed or scaped
+  const [userScore, setUserScore] = useState(0); // The number of the birds that have been killed by the user
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
+  // The function that starts the game:
   const handleStart = () => {
     setIsGameStarted(true);
     handleChooseGround();
   };
+  // The function that chooses a hunting ground randomly among the remaining grounds,
+  // assigning it to the "chosenGround" state variable and removing it from the remaining grounds:
   const handleChooseGround = () => {
     const c = getRandArr(grounds);
-    setChosenGround(c);
-    setGrounds((currGrounds) => currGrounds.filter((g) => g !== c));
+    setChosenGround(c);// Assigning the randomly chosen ground to the "chosenGround" state variable
+    setGrounds((currGrounds) => currGrounds.filter((g) => g !== c)); // Removing the randomly chosen ground from the remaining grounds
   };
+  // The function that renders the final message on UI:
   const handleAnnouncingTheGameResult = () => {
     setIsGameStarted(false);
+    // The user wins if they kill at least 14 birds:
     if (userScore > 13) {
       setFinalMessage("You Win!");
-      updateTotalPoint(5);
-    } else {
+      updateTotalPoint(5); // If the user wins, they win 5 stars
+    }
+    // The user loses if they kill less than 14 birds:
+    else {
       setFinalMessage("You Lose!");
     }
   };
+  // The function that runs the game again when the game is over:
   const handlePlayAgain = () => {
+    // Reseting the appropriate state variables:
     setGrounds([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     setChosenGround(0);
     setIsRunning(false);
@@ -53,6 +63,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
     setIsTogglingHomePage(false);
     setShowReviews(true);
   };
+  // The functions related to the "returning to the home page" functionality:
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
@@ -62,12 +73,15 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  // The function for rendering the "About the game" page:
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  // The function for rendering the "reviews" section:
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  // Changing the title of the browser to the name of the game:
   useEffect(() => {
     document.title = "Bird Hunter";
   }, []);
