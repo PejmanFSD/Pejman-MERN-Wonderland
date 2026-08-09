@@ -16,21 +16,24 @@ export default function DynamicImage({
   setUserScore,
   isTogglingHomePage
 }) {
+  // The function that is executed when the user clicks on the image:
   const handleClickImage = () => {
     setImages((currImages) =>
       currImages.map((img, idx) =>
         idx === index
-          ? { imgSrc: C, status: "bingo" }
-          : { imgSrc: A, status: "blank" },
+          ? { imgSrc: C, status: "bingo" } // If the image is the image of the bird, it status changes to "bingo"
+          : { imgSrc: A, status: "blank" }, // If the image is blank, it status doesn't change
       ),
     );
-    setUserScore(currUserScore => currUserScore + 1);
-    setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1);
+    setUserScore(currUserScore => currUserScore + 1); // Increase the user's score by 1
+    setNumOfDoneGrounds(currNumOfDoneGrounds => currNumOfDoneGrounds + 1); // Increase the numOfDoneGrounds by 1
     stopRef.current = true; // Triggering stop
-    setIsRunning(false);
-    if (grounds.length > 0) {
+    setIsRunning(false); // No bird is flying
+    if (grounds.length > 0) { // If there're hunting grounds that are not handled
+      // choose one randomly:
       handleChooseGround();
-    } else if (grounds.length === 0) {
+    } else if (grounds.length === 0) { // If all the hunting grounds are handled
+      // return the "chosenGround" state variable to 0 (its initial value)
       setChosenGround(0);
     }
   };

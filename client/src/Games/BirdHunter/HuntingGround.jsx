@@ -42,7 +42,7 @@ export default function HuntingGround({
         // Updating each of the images of the hunting ground:
         for (let i = 0; i < images.length; i++) {
           if (stopRef.current) break; // Stop checking
-          // Turn current image to B
+          // Turn current image to B1 or B2
           setImages((currImages) =>
             currImages.map((img, idx) =>
               // The image of the bird in even images and in odd images are different:
@@ -55,24 +55,27 @@ export default function HuntingGround({
           );
           await delay(delayMilliSec);
           if (stopRef.current) break; // Stop checking again
+          // The last image of the hunting ground:
           if (i === images.length - 1) {
+            // For the last image of the hunting ground, the "numOfDoneGrounds" increases by 1:
             setNumOfDoneGrounds(
               (currNumOfDoneGrounds) => currNumOfDoneGrounds + 1,
             );
+            // When the last image of the hunting ground is handled, another hunting ground will be chosen randomly:
             handleChooseGround();
           }
-          // Turn it back to A
+          // For the new randomly chosen hunting ground, turn all the images back to A:
           setImages((currImages) =>
             currImages.map((img, idx) =>
               idx === i ? { imgSrc: A, status: "blank" } : img,
             ),
           );
         }
-        setIsRunning(false);
+        setIsRunning(false); // No bird is flying
       }
     };
     runningTheChosenGround();
-  }, [chosenGround]);
+  }, [chosenGround]); // Whenever a new hunting ground for rendering the bird to fly is chosen, execute the "runningTheChosenGround" function
 
   return (
     <div>
