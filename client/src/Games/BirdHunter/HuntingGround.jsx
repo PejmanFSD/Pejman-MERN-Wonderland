@@ -79,18 +79,23 @@ export default function HuntingGround({
 
   return (
     <div>
+      {/* "images" = 7 blank images of the hunting ground */}
       {images.map((img, index) => (
         <DynamicImage
-          grounds={grounds}
-          index={index}
-          src={img.imgSrc}
-          setImages={setImages}
-          setIsRunning={setIsRunning}
-          stopRef={stopRef}
-          handleChooseGround={handleChooseGround}
-          setChosenGround={setChosenGround}
-          setNumOfDoneGrounds={setNumOfDoneGrounds}
-          setUserScore={setUserScore}
+          grounds={grounds} // All the 16 hunting grounds
+          index={index} // The index of the image (from 0 to 6)
+          src={img.imgSrc} // The source of the image (A, B1, B2 or C)
+          setImages={setImages} // The function for the "images" state variable
+          setIsRunning={setIsRunning} // The function of the "isRunning" state variable
+          stopRef={stopRef} // control flag
+          handleChooseGround={handleChooseGround} // The function that chooses a hunting ground randomly among the
+          // remaining grounds, assigning it to the "chosenGround" state variable and removing it from the remaining grounds
+          setChosenGround={setChosenGround} // The function for the state variable that randomly choses ground where the
+          // bird flies in it
+          setNumOfDoneGrounds={setNumOfDoneGrounds} // The function for the state variable that indicates the number of
+          // the grounds where either the bird is killed or scaped
+          setUserScore={setUserScore} // The function for the state variable that indicates the number of the birds that
+          // have been killed by the user
           isTogglingHomePage={isTogglingHomePage}
           key={index}
         />

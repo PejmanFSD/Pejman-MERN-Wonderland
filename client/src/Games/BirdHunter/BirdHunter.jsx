@@ -15,10 +15,10 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
   const [grounds, setGrounds] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
   ]);
-  const [chosenGround, setChosenGround] = useState(0); // The randomly chosen ground that the bird flies in it
+  const [chosenGround, setChosenGround] = useState(0); // The randomly chosen ground where the bird flies in it
   const [isRunning, setIsRunning] = useState(false); // A boolean state variable that indicates if a bird is flying in a hunting ground
   const [delayMilliSec, setDelayMilliSec] = useState(1000); // The time between the appearance of the bird in 2 consecutive images
-  const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0); // The number of the grounds that either the bird is killed or scaped
+  const [numOfDoneGrounds, setNumOfDoneGrounds] = useState(0); // The number of the grounds where either the bird is killed or scaped
   const [userScore, setUserScore] = useState(0); // The number of the birds that have been killed by the user
   const [finalMessage, setFinalMessage] = useState("");
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
@@ -87,18 +87,21 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
   }, []);
   return (
     <div>
+      {/* Rendering the "About the game" section */}
       {isAboutPage && <AboutBirdHunter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
           <div className="container">
             <div className="row">
               <div className="col-10 offset-1 d-flex justify-content-center">
+                {/* Game title */}
                 <h2 className="fasterOne" style={{ fontSize: "45px" }}>
                   Bird Hunter
                 </h2>
               </div>
             </div>
           </div>
+          {/* The fix buttons of the game: "About The game" and "Back to home page" in one container: */}
           <div className="container">
             <div className="row">
               <div className="col-lg-3 offset-lg-3 align-self-center">
@@ -126,6 +129,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {/* Confirming the "Back to Home Page" functionality */}
           {isTogglingHomePage && (
             <div className="container">
               <div className="row">
@@ -146,6 +150,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                   <div className="row">
                     <div className="col-12 col-xl-6 d-flex justify-content-center">
                       <div style={{ display: "inline" }}>
+                        {/* Rendering the first column of the hunting grounds (from hunting ground 1 to hunting ground 8) */}
                         {[1, 2, 3, 4, 5, 6, 7, 8].map((el, idx) => (
                           <div
                             style={{
@@ -157,25 +162,32 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                             }}
                             key={idx}
                           >
+                            {/* Rendering the image of trees on the left side */}
                             <img
                               src={T1}
                               height={isTogglingHomePage ? "30px" : "40px"}
                               alt=""
                             />
+                            {/* Rendering the <HuntingGround /> component that contains 7 images between the trees */}
                             <HuntingGround
-                              grounds={grounds}
-                              groundNum={el}
-                              chosenGround={chosenGround}
-                              isRunning={isRunning}
-                              setIsRunning={setIsRunning}
-                              delayMilliSec={delayMilliSec}
-                              setDelayMilliSec={setDelayMilliSec}
-                              handleChooseGround={handleChooseGround}
-                              setChosenGround={setChosenGround}
-                              setNumOfDoneGrounds={setNumOfDoneGrounds}
-                              setUserScore={setUserScore}
+                              grounds={grounds} // All the 16 hunting grounds
+                              groundNum={el} // Each hunting ground has its own specific number
+                              chosenGround={chosenGround} // The randomly chosen ground that the bird flies in it
+                              isRunning={isRunning} // A boolean state variable that indicates if a bird is flying in a hunting ground
+                              setIsRunning={setIsRunning} // The function of the "isRunning" state variable
+                              delayMilliSec={delayMilliSec} // The time between the appearance of the bird in 2 consecutive images
+                              setDelayMilliSec={setDelayMilliSec} // The function of the "delayMilliSec" state variable
+                              handleChooseGround={handleChooseGround} // The function that chooses a hunting ground randomly among the
+                              // remaining grounds, assigning it to the "chosenGround" state variable and removing it from the remaining grounds
+                              setChosenGround={setChosenGround} // The function for the state variable that randomly choses ground where the
+                              // bird flies in it
+                              setNumOfDoneGrounds={setNumOfDoneGrounds} // The function for the state variable that indicates the number of
+                              // the grounds where either the bird is killed or scaped
+                              setUserScore={setUserScore} // The function for the state variable that indicates the number of the birds that
+                              // have been killed by the user
                               isTogglingHomePage={isTogglingHomePage}
                             />
+                            {/* Rendering the image of trees on the right side */}
                             <img
                               src={T2}
                               height={isTogglingHomePage ? "30px" : "40px"}
@@ -187,6 +199,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                     </div>
                     <div className="col-12 col-xl-6 d-flex justify-content-center">
                       <div style={{ display: "inline" }}>
+                        {/* Rendering the second column of the hunting grounds (from hunting ground 9 to hunting ground 16) */}
                         {[9, 10, 11, 12, 13, 14, 15, 16].map((el, idx) => (
                           <div
                             style={{
@@ -198,25 +211,31 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
                             }}
                             key={idx}
                           >
+                            {/* Rendering the image of trees on the left side */}
                             <img
                               src={T1}
                               height={isTogglingHomePage ? "30px" : "40px"}
                               alt=""
                             />
                             <HuntingGround
-                              grounds={grounds}
-                              groundNum={el}
-                              chosenGround={chosenGround}
-                              isRunning={isRunning}
-                              setIsRunning={setIsRunning}
-                              delayMilliSec={delayMilliSec}
-                              setDelayMilliSec={setDelayMilliSec}
-                              handleChooseGround={handleChooseGround}
-                              setChosenGround={setChosenGround}
-                              setNumOfDoneGrounds={setNumOfDoneGrounds}
-                              setUserScore={setUserScore}
+                              grounds={grounds} // All the 16 hunting grounds
+                              groundNum={el} // Each hunting ground has its own specific number
+                              chosenGround={chosenGround} // The randomly chosen ground that the bird flies in it
+                              isRunning={isRunning} // A boolean state variable that indicates if a bird is flying in a hunting ground
+                              setIsRunning={setIsRunning} // The function of the "isRunning" state variable
+                              delayMilliSec={delayMilliSec} // The time between the appearance of the bird in 2 consecutive images
+                              setDelayMilliSec={setDelayMilliSec} // The function of the "delayMilliSec" state variable
+                              handleChooseGround={handleChooseGround} // The function that chooses a hunting ground randomly among the
+                              // remaining grounds, assigning it to the "chosenGround" state variable and removing it from the remaining grounds
+                              setChosenGround={setChosenGround} // The function for the state variable that randomly choses ground where the
+                              // bird flies in it
+                              setNumOfDoneGrounds={setNumOfDoneGrounds} // The function for the state variable that indicates the number of
+                              // the grounds where either the bird is killed or scaped
+                              setUserScore={setUserScore} // The function for the state variable that indicates the number of the birds that
+                              // have been killed by the user
                               isTogglingHomePage={isTogglingHomePage}
                             />
+                            {/* Rendering the image of trees on the right side */}
                             <img
                               src={T2}
                               height={isTogglingHomePage ? "30px" : "40px"}
@@ -231,6 +250,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Rendering the "Start the Game" button only if none of the hunting grounds are done (no bird has appeared in any of them) */}
           {grounds.length === 16 && !isTogglingHomePage && (
             <button
               className="btn1"
@@ -241,6 +261,8 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
               Start the Game
             </button>
           )}
+          {/* Rendering the "See the Game Result" button only if all the hunting grounds are done (its bird is either killed or escaped)
+          and the final message has'n appeared yet */}
           {numOfDoneGrounds === 16 &&
             finalMessage === "" &&
             !isTogglingHomePage && (
@@ -256,6 +278,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             <div className="row">
               <div className="col-10 offset-1 d-flex justify-content-center">
                 <h2 className="fasterOne" style={{ fontSize: "40px" }}>
+                  {/* Rendering the final message of the game (the message that announces the winner) */}
                   {finalMessage && !isTogglingHomePage && finalMessage}
                 </h2>
               </div>
@@ -265,6 +288,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             <div className="row">
               <div className="col-10 offset-1 d-flex justify-content-center">
                 {finalMessage && userScore === 16 && !isTogglingHomePage && (
+                  // Rendering the special message where the game is over and the user has shut all the 16 birds:
                   <strong>Wow! You didn't miss a single bird!</strong>
                 )}
               </div>
@@ -274,6 +298,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             <div className="row">
               <div className="col-10 offset-1 d-flex justify-content-center">
                 {finalMessage && userScore === 15 && !isTogglingHomePage && (
+                  // Rendering the special message where the game is over and the user has shut 15 birds out of 16:
                   <strong>You missed a bird!</strong>
                 )}
               </div>
@@ -283,6 +308,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             <div className="row">
               <div className="col-10 offset-1 d-flex justify-content-center">
                 {finalMessage && userScore < 15 && !isTogglingHomePage && (
+                  // Rendering the special message where the game is over and the user has missed more than 1 bird:
                   <strong>{`You missed ${16 - userScore} birds!`}</strong>
                 )}
               </div>
@@ -290,6 +316,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           </div>
           {finalMessage === "You Win!" && !isTogglingHomePage && (
             <div className="my-3">
+              {/* Rendering the "Play Again!" message when the user wins the game */}
               <div>Play Again!</div>
               <button
                 onClick={handlePlayAgain}
@@ -302,6 +329,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
           )}
           {finalMessage === "You Lose!" && !isTogglingHomePage && (
             <div className="my-3">
+              {/* Rendering the "Try Again!" message when the user wins the game */}
               <div>Try Again!</div>
               <button
                 onClick={handlePlayAgain}
@@ -313,6 +341,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             </div>
           )}
           {!isTogglingHomePage && isGameStarted && (
+            // The button for showing/hiding the "Reviews Section"
             <button
               className="btn1"
               style={{ marginTop: "20px", marginBottom: "30px" }}
@@ -324,6 +353,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
             </button>
           )}
           {!isTogglingHomePage && isGameStarted && showReviews && (
+            // Rendering the <ReviewSection /> component
             <ReviewSection game="BirdHunter" currentUser={currentUser} />
           )}
         </div>

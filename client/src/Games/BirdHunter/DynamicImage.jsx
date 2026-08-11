@@ -40,12 +40,12 @@ export default function DynamicImage({
   return (
     <img
     className="product-birdHunter-image"
-      onClick={handleClickImage}
+      onClick={handleClickImage} // The function that is executed when the user clicks on the image
       key={index}
       src={src}
       alt={`img-${index}`}
       style={{
-        pointerEvents: src === B1 || src === B2 ? "" : "none",
+        pointerEvents: src === B1 || src === B2 ? "" : "none", // The image is clickable only if its source is either "B1" or "B2"
       }}
     />
   );
