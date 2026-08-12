@@ -12,41 +12,45 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
-  const [deck, setDeck] = useState(deckArray);
-  const [usedCards, setUsedCards] = useState([]);
+  const [deck, setDeck] = useState(deckArray); // The array represemting the deck of cards, containing 52 cards
+  const [usedCards, setUsedCards] = useState([]); // The cards that have been revealed (used by one of the players)
   const [isUserTurn, setIsUserTurn] = useState(false);
-  const [userChipsNum, setUserChipsNum] = useState(7);
-  const [pejmanChipsNum, setPejmanChipsNum] = useState(7);
-  const [userHand, setUserHand] = useState([]);
-  const [pejmanHand, setPejmanHand] = useState([]);
-  const [userPoint, setUserPoint] = useState(0);
-  const [pejmanPoint, setPejmanPoint] = useState(0);
-  const [bet, setBet] = useState(0);
-  const [isBetMade, setIsBetMade] = useState(false);
-  const [roundNum, setRoundNum] = useState(1);
-  const [isRoundOver, setIsRoundOver] = useState(false);
-  const [isRaising, setIsRaising] = useState(false);
-  const [allowStand, setAllowStand] = useState(true);
-  const [raise, setRaise] = useState(0);
-  const [roundMessage, setRoundMessage] = useState("");
-  const [finalMessage, setFinalMessage] = useState("");
-  const [isAce, setIsAce] = useState(false);
-  const [isDeckFinished, setIsDeckFinished] = useState(false);
+  const [userChipsNum, setUserChipsNum] = useState(7); // The number of the user's gambling chips
+  const [pejmanChipsNum, setPejmanChipsNum] = useState(7); // The number of Pejman's gambling chips
+  const [userHand, setUserHand] = useState([]); // The cards in the user's hand while the game is proceeding
+  const [pejmanHand, setPejmanHand] = useState([]); // The cards in Pejman's hand while the game is proceeding
+  const [userPoint, setUserPoint] = useState(0); // The sum of the values of all the cards in the user's hand 
+  const [pejmanPoint, setPejmanPoint] = useState(0); // The sum of the values of all the cards in Pejman's hand 
+  const [bet, setBet] = useState(0); // The number of gambling chips that the user has assigned for the bet
+  const [isBetMade, setIsBetMade] = useState(false); // The boolean that shows if the bet is made by the user, so that the game can begin
+  const [roundNum, setRoundNum] = useState(1); // The number representing the round of the game
+  const [isRoundOver, setIsRoundOver] = useState(false); // The boolean that shows if the round is over, so that the final message could appear
+  const [isRaising, setIsRaising] = useState(false); // The boolean that shows if the user is raising the bet
+  const [allowStand, setAllowStand] = useState(true); // The boolean that shows if the user is allowed to stand (the user can't stand right after raising)
+  const [raise, setRaise] = useState(0); // The number of the gambling chips as the raise
+  const [roundMessage, setRoundMessage] = useState(""); // The message that indicates who wins the round
+  const [finalMessage, setFinalMessage] = useState(""); // The final message of the game, indicating who is the winner of the game
+  const [isAce, setIsAce] = useState(false); // The boolean that shows if the last picked card by either the user or Pejman is an Ace
+  const [isDeckFinished, setIsDeckFinished] = useState(false); // The boolean that shows if the deck of the cards is finished and should be shuffled
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
+  // The function for assigning the game to easy mode
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
   };
+  // The function for assigning the game to normal mode
   const handleNormalMode = () => {
     setNormalMode(true);
     setEasyMode(false);
   };
+  // The function for starting the game
   const handleStart = () => {
+    // Reseting some of the appropriate state variables:
     setDeck(deckArray);
     setUsedCards([]);
     setPejmanHand([]);
@@ -55,50 +59,55 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsGameStarted(true);
     setPejmanPoint(0);
   };
+  // The function for shuffling an array (the array would be the deck of the cards)
   const shuffleArray = (array) => {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+    const arr = [...array]; // Creating a copy of the input array
+    for (let i = arr.length - 1; i > 0; i--) { // Looping through the elements of the input array
+      const j = Math.floor(Math.random() * (i + 1)); // Choosing randomly a number from 0 to i
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // Exchanging the index of the current index (i) and the randomly chosen number (j)
     }
     return arr;
   };
-  const normalModeRiskManagement = (distance) => {
-    let goodRisk = 0;
-    let badRisk = 0;
-    for (const card of deck) {
-      if (Number(card.point) <= distance) {
+  // The function with which Pejman evaluates the risk of hitting (asking for the next card)
+  const normalModeRiskManagement = (distance) => { // distance = 21 - the value of Pejman's hand
+    let goodRisk = 0; // The indicator number that represents the chance that Pejman will not get busted
+    let badRisk = 0; // The indicator number that represents the chance that Pejman will get busted
+    for (const card of deck) { // Evaluating each card of the remaining of the deck (the cards that haven't been revealed)
+      if (Number(card.point) <= distance) { // If the point of the current card + the value of Pejman's hand is less than 22
         goodRisk++;
-      } else {
+      } else { // If the point of the current card + the value of Pejman's hand is greater than 21
         badRisk++;
       }
     }
-    if (goodRisk >= badRisk) {
+    if (goodRisk >= badRisk) { // Comparing the "goodRisk" and the "badRisk"
       return true;
     } else {
       return false;
     }
   };
+  // The function for the moment the user hits (asks for a new card)
   const getNewCardForUser = () => {
     setRoundMessage("");
-    if (deck[0].point === 0) {
-      setIsAce(true);
-      return;
+    // The next card for the user is the first element of the shuffled deck, which is "deck[0]"
+    if (deck[0].point === 0) { // If the next card for the user is an Ace, the user should chose its value (1 or 11)
+      setIsAce(true); // set the "isAce" state variable to true (for rendering the question: is the ace has the value of 1 or 11?)
+      return; // Exit this function; though we'll return to this function when the user chooses either 1 or 11
     }
-    setUserHand((currUserHand) => [...currUserHand, deck[0]]);
-    setUserPoint((currUserPoint) => currUserPoint + deck[0].point);
-    setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0));
-    setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
-    setAllowStand(true);
+    setUserHand((currUserHand) => [...currUserHand, deck[0]]); // Updating the user's hand state variable by adding the next card to it
+    setUserPoint((currUserPoint) => currUserPoint + deck[0].point); // Updating the value of the user's hand state variable by adding the next card's point to its value
+    setDeck((currDeck) => currDeck.filter((c) => currDeck.indexOf(c) !== 0)); // Updating the deck state variable by removing the next card from it
+    setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]); // Updating the used cards state variable by adding the next card to it
+    setAllowStand(true); // After hitting, the user can stand
   };
-  const handleAce = (i) => {
+  const handleAce = (i) => { // i = the value that the user has chosen for the Ace, either 1 or 11
     setDeck((prevDeck) =>
-      prevDeck.map((card) =>
-        prevDeck.indexOf(card) === 0 ? { ...card, point: Number(i) } : card,
+      prevDeck.map((card) => // Mapping through the deck
+        prevDeck.indexOf(card) === 0 ? { ...card, point: Number(i) } : card, // Updating the point of only the first card (which is the ace)
       ),
     );
-    setIsAce(false);
-    getNewCardForUser();
+    setIsAce(false); // return the "isAce" state variable to false
+    getNewCardForUser(); // Returning to the "" function -> this time we won't hit the return of the "if (deck[0].point === 0)" condition
+    // because deck[0].point isn't 0 anymore; it's either 1 or 11
   };
   const handleBet = (e) => {
     setBet(Number(e.target.value));
