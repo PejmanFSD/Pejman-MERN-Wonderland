@@ -109,72 +109,104 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     getNewCardForUser(); // Returning to the "" function -> this time we won't hit the return of the "if (deck[0].point === 0)" condition
     // because deck[0].point isn't 0 anymore; it's either 1 or 11
   };
+  // The function for handling the dropdown of the bet form:
   const handleBet = (e) => {
-    setBet(Number(e.target.value));
+    setBet(Number(e.target.value)); // Assigning the value of the input to the bet
   };
+  // The function for finalizing the selected value as the bet of the game:
   const submitBet = (e) => {
     e.preventDefault();
-    setIsBetMade(true);
-    setUserChipsNum((currUserChipsNum) => currUserChipsNum - bet);
-    setPejmanChipsNum((currPejmanChipsNum) => currPejmanChipsNum - bet);
+    setIsBetMade(true); // Assuring that the bet is confirmed
+    setUserChipsNum((currUserChipsNum) => currUserChipsNum - bet); // Picking from the user's gambling chips as the amount of the bet
+    setPejmanChipsNum((currPejmanChipsNum) => currPejmanChipsNum - bet); // Picking from Pejman's gambling chips as the amount of the bet
   };
+  // The function for rendering(showing) the raising form:
   const renderRaisingForm = () => {
     setIsRaising(true);
   };
+  // The function for handling the dropdown of the raise form:
   const handleRaise = (e) => {
     setRaise(Number(e.target.value));
   };
+  // The function for finalizing the selected value as the raise:
   const submitRaise = (e) => {
     e.preventDefault();
-    setIsRaising(false);
-    setBet((currBet) => currBet + raise);
-    setUserChipsNum((currUserChipsNum) => currUserChipsNum - raise);
-    setPejmanChipsNum((currPejmanChipsNum) => currPejmanChipsNum - raise);
-    setAllowStand(false);
+    setIsRaising(false); // The raising process is going to finish, so we should return the state variable to false
+    setBet((currBet) => currBet + raise); // Updating the bet based on the new raise:
+    setUserChipsNum((currUserChipsNum) => currUserChipsNum - raise); // Updating the user's gambling chips based on the amount of the raise
+    setPejmanChipsNum((currPejmanChipsNum) => currPejmanChipsNum - raise); // Updating Pejman's gambling chips based on the amount of the raise
+    setAllowStand(false); // The user is not allowed to stand right after raising!
   };
+  // The function for cancling the raise (for the "cancel" button):
   const cancelRaising = () => {
     setIsRaising(false);
   };
+  // The function for handling stand:
   const handleStand = () => {
-    setIsUserTurn(false);
-    setAllowStand(true);
+    setIsUserTurn(false); // When the user stands, it's not their turn anymore
+    setAllowStand(true); // Returning the "allowStand" state variable to its default
   };
+  // The function for Pejman to have his move:
   const handleAllowPejman = () => {
+    // Returning the "isAce" variable to its default value (in case if his last card from the last turn was an ace)
     setIsAce(false);
+    // If Pejman's new card is an ace, he should choose its value; either 1 or 11:
     if (deck[0].point === 0) {
-      setIsAce(true);
+      setIsAce(true); // First update the "isAce" variable to true
+      // Handling the special "Double-Aces-BlackJack" situation;
+      // if Pejman has only an ace in his hand and the next card is another ace, Pejman is "BlackJack"
       if (pejmanHand.length === 1 && pejmanPoint + 11 === 22) {
         setDeck((prevDeck) =>
+          // Updating the deck:
           prevDeck.map((card) =>
+            // Updating the point of the fisrt card of the deck (which is the ace) to 11
             deck.indexOf(card) === 0 ? { ...card, point: 11 } : card,
           ),
         );
-      } else if (pejmanPoint + 11 < 22) {
+      }
+      // If assigning the value of 11 doesn't have the result of busting for Pejman -> choose 11 as the value of the ace:
+      else if (pejmanPoint + 11 < 22) {
+        // Updating the deck:
         setDeck((prevDeck) =>
           prevDeck.map((card) =>
+            // Updating the point of the fisrt card of the deck (which is the ace) to 11
             deck.indexOf(card) === 0 ? { ...card, point: 11 } : card,
           ),
         );
-      } else {
+      }
+      // If assigning the value of 11 has the result of busting for Pejman -> choose 1 as the value of the ace:
+      else {
+        // Updating the deck:
         setDeck((prevDeck) =>
           prevDeck.map((card) =>
+            // Updating the point of the fisrt card of the deck (which is the ace) to 1
             deck.indexOf(card) === 0 ? { ...card, point: 1 } : card,
           ),
         );
       }
       return;
     }
+    // If the game is on "Easy" mode, Pejman's strategy is to hit if the value of his hand is less than 18
+    // and to stand if it's more than 17:
     if (easyMode) {
-      if (pejmanPoint < 18) {
+      if (pejmanPoint < 18) { // If the value of Pejman's hand is less than 18 -> hit
+        // Updating the "pejmanHand" variable by adding the next card to it (hitting):
         setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
+        // Updating the "pejmanPoint" variable by adding the point of the next card to it (hitting):
         setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
+        // Updating the deck:
         setDeck((currDeck) =>
+          // Removing the first card of the deck 
           currDeck.filter((c) => currDeck.indexOf(c) !== 0),
         );
+        // Updating the "usedCards" variable by adding the first card of the deck to it:
         setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
-      } else {
+      }
+      // If the value of Pejman's hand is more than 17 -> stand
+      else {
         setIsRoundOver(true);
       }
+      // If the game is on "Normal" mode, Pejman's strategy is to evaluate the risk of the point of the next card:
     } else if (normalMode) {
       if (normalModeRiskManagement(21 - pejmanPoint)) {
         setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
