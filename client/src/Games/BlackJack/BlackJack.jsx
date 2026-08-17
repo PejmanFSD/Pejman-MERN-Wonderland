@@ -208,125 +208,146 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
       }
       // If the game is on "Normal" mode, Pejman's strategy is to evaluate the risk of the point of the next card:
     } else if (normalMode) {
-      if (normalModeRiskManagement(21 - pejmanPoint)) {
-        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]);
-        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point);
+      // Evaluating the risk of the point of the next card is done by the "normalModeRiskManagement" function that
+      // has been already created. This function returns a boolean.
+      if (normalModeRiskManagement(21 - pejmanPoint)) { // If the "normalModeRiskManagement" function returns true
+        setPejmanHand((currPejmanHand) => [...currPejmanHand, deck[0]]); // Pejman gets the next card
+        setPejmanPoint((currPejmanPoint) => currPejmanPoint + deck[0].point); // The value of Pejman's hand increases by the value of the next card
+        // Updating the deck by removing the next card from it:
         setDeck((currDeck) =>
           currDeck.filter((c) => currDeck.indexOf(c) !== 0),
         );
+        // Updating the "usedCards" state variable by adding the next card to it:
         setUsedCards((currUsedCards) => [...currUsedCards, deck[0]]);
-      } else {
-        setIsRoundOver(true);
+      } else { // If the "normalModeRiskManagement" function returns false
+        setIsRoundOver(true); // Pejman doesn't get the next card
       }
     }
   };
+  // The function that handles everything when the round is finished:
   const handleRoundOver = () => {
-    let tempUserChipsNum = userChipsNum;
-    let tempPejmanChipsNum = pejmanChipsNum;
-    const tempBet = bet;
-    let tempRoundMessage;
+    let tempUserChipsNum = userChipsNum; // The temporary variable for the "userChipsNum" state variable
+    let tempPejmanChipsNum = pejmanChipsNum; // The temporary variable for the "pejmanChipsNum" state variable
+    const tempBet = bet; // The temporary variable for the "bet" state variable
+    let tempRoundMessage; // The temporary variable for the "roundMessage" state variable
+    // The condition of the "Double-Aces-BlackJack" situation for the user:
     if (userPoint === 22 && userHand.length === 2) {
-      tempUserChipsNum = userChipsNum + 2 * tempBet;
-      if (tempPejmanChipsNum !== 0) {
+      tempUserChipsNum = userChipsNum + 2 * tempBet; // Increasing the number of the user's gambling chips number
+      if (tempPejmanChipsNum !== 0) { // If the game isn't going to finish
         tempRoundMessage =
           "Your hand is double-Aces! The value of your hand is NOT 22, it's 21 :) (BlackJack). You win this round!";
-      } else {
+      } else { // If the game is going to finish
         tempRoundMessage = `Your hand is double-Aces! The value of your hand is NOT 22, it's 21 :) (BlackJack). You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
       }
-    } else if (pejmanPoint === 22 && pejmanHand.length === 2) {
-      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-      if (tempUserChipsNum !== 0) {
+    }
+    // The condition of the "Double-Aces-BlackJack" situation for Pejman:
+    else if (pejmanPoint === 22 && pejmanHand.length === 2) {
+      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet; // Increasing the number of Pejman's gambling chips number
+      if (tempUserChipsNum !== 0) { // If the game isn't going to finish
         tempRoundMessage =
           "Pejman's hand is double-Aces! The value of his hand is NOT 22, it's 21 :) (BlackJack). Pejman wins this round!";
-      } else {
+      } else { // If the game is going to finish
         tempRoundMessage = `Pejman's hand is double-Aces! The value of his hand is NOT 22, it's 21 :) (BlackJack). Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
       }
-    } else if (userPoint === 21 && pejmanPoint !== 21) {
-      tempUserChipsNum = userChipsNum + 2 * tempBet;
-      if (tempPejmanChipsNum !== 0) {
+    }
+    // The condition of the "BlackJack" situation for the user:
+    else if (userPoint === 21 && pejmanPoint !== 21) {
+      tempUserChipsNum = userChipsNum + 2 * tempBet; // Increasing the number of the user's gambling chips number
+      if (tempPejmanChipsNum !== 0) { // If the game isn't going to finish
         tempRoundMessage = `The value of your hand is ${userPoint} (BlackJack). You win this round!`;
-      } else {
+      } else { // If the game is going to finish
         tempRoundMessage = `The value of your hand was ${userPoint} (BlackJack). You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
       }
-    } else if (pejmanPoint === 21 && userPoint !== 21) {
-      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-      if (tempUserChipsNum !== 0) {
+    }
+    // The condition of the "BlackJack" situation for Pejman:
+    else if (pejmanPoint === 21 && userPoint !== 21) {
+      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet; // Increasing the number of Pejman's gambling chips number
+      if (tempUserChipsNum !== 0) { // If the game isn't going to finish
         tempRoundMessage = `The value of Pejman's hand is ${pejmanPoint} (BlackJack). Pejman wins this round!`;
-      } else {
+      } else { // If the game is going to finish
         tempRoundMessage = `The value of Pejman's hand was ${pejmanPoint} (BlackJack). Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
       }
-    } else if (userPoint > 21 && pejmanPoint <= 21) {
-      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-      if (tempUserChipsNum !== 0) {
+    }
+    // The condition where the user is busted:
+    else if (userPoint > 21 && pejmanPoint <= 21) {
+      tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet; // Increasing the number of Pejman's gambling chips number
+      if (tempUserChipsNum !== 0) { // If the game isn't going to finish
         tempRoundMessage = `The value of your hand is ${userPoint} (Busted). Pejman wins this round!`;
-      } else {
+      } else { // If the game is going to finish
         tempRoundMessage = `The value of your hand was ${userPoint} (Busted). Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
       }
-    } else if (pejmanPoint > 21 && userPoint <= 21) {
-      tempUserChipsNum = userChipsNum + 2 * tempBet;
-      if (tempPejmanChipsNum !== 0) {
+    }
+    // The condition where Pejman is busted:
+    else if (pejmanPoint > 21 && userPoint <= 21) {
+      tempUserChipsNum = userChipsNum + 2 * tempBet; // Increasing the number of the user's gambling chips number
+      if (tempPejmanChipsNum !== 0) { // If the game isn't going to finish
         tempRoundMessage = `The value of Pejman's hand is ${pejmanPoint} (Busted). You win this round!`;
-      } else {
+      } else { // If the game is going to finish
         tempRoundMessage = `The value of Pejman's hand was ${pejmanPoint} (Busted). You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
       }
-    } else if (userPoint < 21 && pejmanPoint < 21) {
-      if (userPoint > pejmanPoint) {
-        tempUserChipsNum = userChipsNum + 2 * tempBet;
-        if (tempPejmanChipsNum !== 0) {
+    }
+    // The condition where the user and Pejman are neither busted nor BlackJack:
+    else if (userPoint < 21 && pejmanPoint < 21) {
+      if (userPoint > pejmanPoint) { // If the user's point is greater than Pejman's
+        tempUserChipsNum = userChipsNum + 2 * tempBet; // Increasing the number of the user's gambling chips number
+        if (tempPejmanChipsNum !== 0) { // If the game isn't going to finish
           tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint}. You win this round!`;
-        } else {
+        } else { // If the game is going to finish
           tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint}. You won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
         }
-      } else if (userPoint < pejmanPoint) {
-        tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-        if (tempUserChipsNum !== 0) {
+      } else if (userPoint < pejmanPoint) { // If the user's point is less than Pejman's
+        tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet; // Increasing the number of Pejman's gambling chips number
+        if (tempUserChipsNum !== 0) { // If the game isn't going to finish
           tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint}. Pejman wins this round!`;
-        } else {
+        } else { // If the game is going to finish
           tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint}. Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
         }
-      } else if (userPoint === pejmanPoint) {
-        if (easyMode) {
-          tempUserChipsNum = userChipsNum + 2 * tempBet;
-          if (tempPejmanChipsNum !== 0) {
+      } else if (userPoint === pejmanPoint) { // If the user's point and Pejman's point are the same
+        if (easyMode) { // If the game is on "Easy" mode, the user wins
+          tempUserChipsNum = userChipsNum + 2 * tempBet; // Increasing the number of the user's gambling chips number
+          if (tempPejmanChipsNum !== 0) { // If the game isn't going to finish
             tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint} too. It's "Easy Mode", so you win this round!`;
-          } else {
+          } else { // If the game is going to finish
             tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint} too. It was "Easy Mode", so you won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
           }
-        } else {
-          tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet;
-          if (tempUserChipsNum !== 0) {
+        } else { // If the game is on "Normal" mode, Pejman wins
+          tempPejmanChipsNum = pejmanChipsNum + 2 * tempBet; // Increasing the number of Pejman's gambling chips number
+          if (tempUserChipsNum !== 0) { // If the game isn't going to finish
             tempRoundMessage = `The value of your hand is ${userPoint} and the value of Pejman's hand is ${pejmanPoint} too. It's "Normal Mode", so Pejman wins this round!`;
-          } else {
+          } else { // If the game is going to finish
             tempRoundMessage = `The value of your hand was ${userPoint} and the value of Pejman's hand was ${pejmanPoint} too. It was "Normal Mode", so Pejman won the ${roundNum > 2 ? "last" : ""} round, and in conclusion:`;
           }
         }
       }
     }
-    setUserChipsNum(tempUserChipsNum);
-    setPejmanChipsNum(tempPejmanChipsNum);
-    setBet(0);
-    setIsRoundOver(false);
-    setUserHand([]);
-    setPejmanHand([]);
-    setUserPoint(0);
-    setPejmanPoint(0);
-    setRaise(0);
-    setRoundNum((currRoundNum) => currRoundNum + 1);
-    setIsUserTurn(true);
-    setIsBetMade(false);
-    setIsRaising(false);
-    setRoundMessage(tempRoundMessage);
+    // Since the round is over, some of the state variables will reset and some will be updated:
+    setUserChipsNum(tempUserChipsNum); // Updating the number of the user's gambling chips 
+    setPejmanChipsNum(tempPejmanChipsNum); // Updating the number of Pejman's gambling chips 
+    setBet(0); // Reseting the "bet" state variable
+    setIsRoundOver(false); // Reseting the "IsRoundOver" state variable
+    setUserHand([]); // Reseting the "UserHand" state variable
+    setPejmanHand([]); // Reseting the "PejmanHand" state variable
+    setUserPoint(0); // Reseting the "UserPoint" state variable
+    setPejmanPoint(0); // Reseting the "PejmanPoint" state variable
+    setRaise(0); // Reseting the "Raise" state variable
+    setRoundNum((currRoundNum) => currRoundNum + 1); // Updating the "roundNum" state variable
+    setIsUserTurn(true); // Reseting the "IsUserTurn" state variable
+    setIsBetMade(false); // Reseting the "IsBetMade" state variable
+    setIsRaising(false); // Reseting the "IsRaising" state variable
+    setRoundMessage(tempRoundMessage); // Updating the "roundMessage" state variable
   };
+  // The function that shuffles the cards when they're all used
+  // (except the ones that are in the hands of the players) for continuing the game:
   const ShuffleCardsAndContinue = () => {
-    let newDeck = [];
-    for (const card of usedCards) {
-      if (!userHand.includes(card) && !pejmanHand.includes(card)) {
-        newDeck.push(card);
+    let newDeck = []; // The temporary variable for the "deck" state variable
+    for (const card of usedCards) { // Looping through all the cards
+      if (!userHand.includes(card) && !pejmanHand.includes(card)) { // if the card is not in the hand of any of the players
+        newDeck.push(card); // add it to the deck that is going to be shuffled
       }
     }
-    setDeck(shuffleArray(newDeck));
-    setUsedCards([]);
-    setIsDeckFinished(false);
+    setDeck(shuffleArray(newDeck)); // Use the "shuffleArray" function and shuffle the new created deck
+    setUsedCards([]); // Reset the "usedCards" state variable -> because all the used cards are shuufled and are going to be used again
+    setIsDeckFinished(false); // Reset the "isDeckFinished" state variable
   };
   const handlePlayAgain = () => {
     setDeck(shuffleArray(deckArray));
