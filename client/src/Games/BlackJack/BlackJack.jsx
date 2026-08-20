@@ -349,8 +349,10 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setUsedCards([]); // Reset the "usedCards" state variable -> because all the used cards are shuufled and are going to be used again
     setIsDeckFinished(false); // Reset the "isDeckFinished" state variable
   };
+  // The function of reseting the game
   const handlePlayAgain = () => {
-    setDeck(shuffleArray(deckArray));
+    setDeck(shuffleArray(deckArray)); // Shuffling the complete deck and assigning it to the "deck" state variable
+    // Reseting the state variables to their initial values:
     setIsUserTurn(true);
     setUsedCards([]);
     setUserChipsNum(7);
@@ -375,6 +377,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     setIsTogglingHomePage(false);
     setShowReviews(true);
   };
+  // The functions for reseting the game:
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
@@ -384,6 +387,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  // The functions for toggling the game level:
   const toggleLevel = () => {
     setIsTogglingLevel(true);
   };
@@ -400,6 +404,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
+  // The functions for returning to the home page:
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
@@ -409,60 +414,73 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  // The function of the "About the game" page:
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  // The function of the "reviews" page:
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  // Finishing the round if Pejman's point is more than 16 in easy mode:
   useEffect(() => {
     if (easyMode && pejmanPoint >= 17) {
       setIsRoundOver(true);
     }
   }, [pejmanPoint]);
+  // Finishing the round if Pejman can't risk to hit in normal mode
+  // (The "normalModeRiskManagement" function that has been already created manages the risk):
   useEffect(() => {
     if (normalMode && !normalModeRiskManagement(21 - pejmanPoint)) {
       setIsRoundOver(true);
     }
   }, [pejmanPoint]);
+  // Finishing the round if the user is either BlackJack or busted:
   useEffect(() => {
     if (userPoint >= 21) {
       setIsRoundOver(true);
     }
   }, [userHand]);
+  // Finishing the game
   useEffect(() => {
-    if (userChipsNum === 0 && !isBetMade) {
-      setFinalMessage("Pejman wins the game!");
-    } else if (pejmanChipsNum === 0 && !isBetMade) {
-      setFinalMessage("You win the game!");
+    if (userChipsNum === 0 && !isBetMade) { // If the user doesn't have any gambling chips
+      setFinalMessage("Pejman wins the game!"); // Pejman wins the game
+    } else if (pejmanChipsNum === 0 && !isBetMade) { // If Pejman doesn't have any gambling chips
+      setFinalMessage("You win the game!"); // The user wins the game
       if (easyMode) {
-        updateTotalPoint(32);
+        updateTotalPoint(32); // In "Easy" mode, if the user wins, they get 32 stars
       } else {
-        updateTotalPoint(45);
+        updateTotalPoint(45); // In "Normal" mode, if the user wins, they get 45 stars
       }
     }
   }, [userChipsNum, pejmanChipsNum]);
+  // Return the deck to its initial cards when there's no card left and the game isn't finished yet
+  // (The deck won't be shuffled until the user clicks on the "shuffle" button):
   useEffect(() => {
     if (deck.length === 0) {
+      // Usint the state function
       setUsedCards((currUsedCards) =>
-        currUsedCards.map((card) =>
+        currUsedCards.map((card) => // Looping through the cards
+          // if the card is an ace, change its decided value (1 or 11) to 0, otherwise use the same card:
           card.point === 1 || card.point === 11 ? { ...card, point: 0 } : card,
         ),
       );
-      setIsDeckFinished(true);
+      setIsDeckFinished(true); // Reset the "isDeckFinished" state variable
     }
   }, [deck]);
+  // Updating the used cards when we're in the middle of the game:
   useEffect(() => {
-    if (deck.length + usedCards.length !== 52) {
-      let currUsedCards = [];
-      for (const card of deckArray) {
-        if (!deck.map((c) => c.imgSrc).includes(card.imgSrc)) {
-          currUsedCards.push(card);
+    if (deck.length + usedCards.length !== 52) { // If we're in the middle of the game (there're cards in the hands of the players)
+      let currUsedCards = []; // The temporary initial variable of "used cards"
+      for (const card of deckArray) { // Looping through the deck
+        if (!deck.map((c) => c.imgSrc).includes(card.imgSrc)) { // If the card isn't in the hand of any of the users
+          currUsedCards.push(card); // Push it to the temporary variable of "used cards"
         }
       }
-      setUsedCards(currUsedCards);
+      setUsedCards(currUsedCards); // Assign the temporary variable of "used cards" to the "usedCards" state variable
     }
   }, [deck, usedCards]);
+  // Changing the title of the browser when the user enters the game:
   useEffect(() => {
     document.title = "BlackJack";
   }, []);
