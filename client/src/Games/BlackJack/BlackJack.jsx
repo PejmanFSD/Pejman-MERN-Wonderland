@@ -486,12 +486,15 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
   }, []);
   return (
     <div>
+      {/* Rendering the "About the game" section */}
       {isAboutPage && <AboutBlackJack setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
+          {/* Game title */}
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             BlackJack
           </h2>
+          {/* The fix buttons of the game: "About The game", "Reset the Game" and "Back to home page" in one container: */}
           <div className="container">
             <div className="row">
               <div className="col-lg-3 align-self-center">
@@ -557,6 +560,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {/* Confirming the "Reset the game" functionality */}
           {isTogglingReset && finalMessage === "" && (
             <div className="container">
               <div className="row">
@@ -570,6 +574,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Switch the game mode" functionality */}
           {isTogglingLevel && finalMessage === "" && (
             <div className="container">
               <div className="row">
@@ -586,6 +591,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Back to Home Page" functionality */}
           {isTogglingHomePage && finalMessage === "" && (
             <div className="container">
               <div className="row">
@@ -599,6 +605,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* The buttons of the modes of the game */}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
@@ -615,6 +622,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          {/* The "Start the game" button */}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
@@ -636,6 +644,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 />
               </div>
             )}
+          {/* The section that shows the number of the round */}
           {isGameStarted &&
             finalMessage === "" &&
             roundMessage === "" &&
@@ -649,25 +658,26 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
           <div className="container">
             <div className="row">
               <div className="col-lg-3 d-none d-lg-block">
-                {/* Deck */}
+                {/* Rendering the Deck */}
                 {isGameStarted &&
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage &&
+                  // Rendering the cards of the deck
                   deck.map((c, i) =>
-                    (i + 1) % 6 !== 0 ? (
+                    (i + 1) % 6 !== 0 ? ( // In each row 6 cards are rendered
                       <div style={{ display: "inline" }} key={i}>
                         <img
-                          src={Back}
+                          src={Back} // All the cards are faced down
                           height="55px"
                           style={{ margin: "2px" }}
                           alt=""
                         />
                       </div>
-                    ) : (
+                    ) : ( // In each row 6 cards are rendered
                       <div style={{ display: "inline" }}>
                         <img
-                          src={Back}
+                          src={Back} // All the cards are faced down
                           height="55px"
                           style={{ margin: "2px" }}
                           alt=""
@@ -678,12 +688,13 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   )}
               </div>
               <div className="col-lg-6">
-                {/* Pejman's chips */}
+                {/* Rendering Pejman's chips */}
                 {isGameStarted &&
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage && (
                     <div style={{ marginBottom: "10px" }}>
+                      {/* Rendering Pejman's gambling chips */}
                       {new Array(pejmanChipsNum).fill(null).map((c, i) => (
                         <img
                           src={chips[1]}
@@ -695,6 +706,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       ))}
                     </div>
                   )}
+                  {/* Rendering the value of Pejman's hand */}
                 {isGameStarted &&
                   pejmanHand.length > 0 &&
                   finalMessage === "" &&
@@ -710,7 +722,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
-                {/* Pejman's hand */}
+                {/* Rendering Pejman's hand */}
                 {isGameStarted &&
                   finalMessage === "" &&
                   !isTogglingReset &&
@@ -747,6 +759,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                         border: "1px solid black",
                       }}
                     >
+                    {/* Rendering the gambling chips of the bet */}
                       {new Array(2 * bet).fill(null).map((c, i) => (
                         <img
                           src={chips[0]}
@@ -761,13 +774,14 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 {/* Round Message */}
                 {finalMessage !== "" &&
                 roundMessage &&
-                roundNum > 2 &&
+                roundNum > 2 && // If the game had multiple rounds
                 !isTogglingReset &&
                 !isTogglingLevel &&
                 !isTogglingHomePage ? (
                   <div className="container">
                     <div className="row">
                       <div className="col-10 offset-1 d-flex justify-content-center">
+                        {/* If the game had multiple rounds */}
                         <h4>The result of the final round:</h4>
                       </div>
                     </div>
@@ -775,7 +789,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                 ) : (
                   finalMessage !== "" &&
                   roundMessage &&
-                  roundNum === 2 &&
+                  roundNum === 2 && // If the game had only one round
                   !isTogglingReset &&
                   !isTogglingLevel &&
                   !isTogglingHomePage && (
@@ -783,6 +797,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       <div className="row">
                         <div className="col-10 offset-1 d-flex justify-content-center">
                           <h4>
+                            {/* If the game had only one round */}
                             The game had only one round with the following
                             result:
                           </h4>
@@ -791,6 +806,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     </div>
                   )
                 )}
+                {/* Rendering the round message */}
                 {roundMessage &&
                   !isTogglingReset &&
                   !isTogglingLevel &&
@@ -803,6 +819,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
+                {/* Rendering the final message of the game */}
                 {finalMessage !== "" && !isTogglingHomePage && (
                   <div className="container">
                     <div className="row">
@@ -814,6 +831,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     </div>
                   </div>
                 )}
+                {/* The section that allows the user to play/try again */}
                 {finalMessage &&
                   finalMessage === "You win the game!" &&
                   !isTogglingHomePage && (
@@ -842,7 +860,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </button>
                     </div>
                   )}
-                {/* User's hand */}
+                {/* Rendering the user's hand */}
                 {isGameStarted &&
                   finalMessage === "" &&
                   !isTogglingReset &&
@@ -859,6 +877,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                         key={i}
                       />
                     ))}
+                {/* Rendering the value of the user's hand */}
                 {isGameStarted &&
                   userHand.length > 0 &&
                   finalMessage === "" &&
@@ -873,7 +892,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
-                {/* User's chips */}
+                {/* User's gambling chips */}
                 {isGameStarted &&
                   !isTogglingReset &&
                   !isTogglingLevel &&
@@ -906,14 +925,15 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       style={{ marginTop: "15px" }}
                     >
                       {userChipsNum === 0 || pejmanChipsNum === 0
-                        ? "Show the final result of the game"
-                        : `Start round ${roundNum}`}
+                        ? "Show the final result of the game" // Show this message if the game is finished (if one of the players doesn't have any gambling chips)
+                        : `Start round ${roundNum}` // Show this message if the game is not finished (if each player has at least one gambling chip)
+                      }
                     </button>
                   )}
                 {/* First bet form */}
                 {isGameStarted &&
                   isUserTurn &&
-                  userHand.length === 1 &&
+                  userHand.length === 1 && // When the user gets the first card, they should assign the bet before getting the second card
                   !isBetMade &&
                   !isDeckFinished &&
                   !isTogglingReset &&
@@ -940,6 +960,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                         >
                           <option value={bet} disabled selected></option>
                           {Array.from(
+                            // The greatest number that the user can choose for the bet is the minimum of the gambling chips of the two players:
                             { length: Math.min(userChipsNum, pejmanChipsNum) },
                             (_, i) => i + 1,
                           ).map((i, idx) => (
@@ -949,7 +970,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           ))}
                         </select>
                       </div>
-                      {bet > 0 && (
+                      {bet > 0 && ( // The "Submit your bet" button appears only after choosing the bet
                         <button className="btn1" style={{ marginTop: "10px" }}>
                           Submit your bet
                         </button>
@@ -970,6 +991,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     !isTogglingReset &&
                     !isTogglingLevel &&
                     !isTogglingHomePage && (
+                      // The "Hit" button indicates that the user wants another card
                       <button className="btn1" onClick={getNewCardForUser}>
                         Hit
                       </button>
@@ -986,6 +1008,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     !isTogglingReset &&
                     !isTogglingLevel &&
                     !isTogglingHomePage && (
+                      // The "Raise" button indicates that the user wants to increase the bet
                       <button
                         className="btn1"
                         onClick={renderRaisingForm}
@@ -1006,6 +1029,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     !isTogglingReset &&
                     !isTogglingLevel &&
                     !isTogglingHomePage && (
+                      // The "Stand" button indicates that the user doesn't want another card and it's Pejman's turn
                       <button
                         className="btn1"
                         onClick={handleStand}
@@ -1015,6 +1039,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </button>
                     )}
                 </div>
+                {/* The different situations when an ace appears for the user */}
                 {isAce &&
                   isUserTurn &&
                   !isDeckFinished &&
@@ -1029,6 +1054,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           </div>
                         </div>
                       </div>
+                      {/* The button that chooses the value of 1 for the user's ace */}
                       <button
                         className="btn2"
                         style={{ width: "40px", marginRight: "5px" }}
@@ -1036,6 +1062,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       >
                         1
                       </button>
+                      {/* The button that chooses the value of 11 for the user's ace */}
                       <button
                         className="btn2"
                         style={{ width: "40px", marginLeft: "5px" }}
@@ -1045,7 +1072,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </button>
                     </div>
                   )}
-                {isAce &&
+                  {/* The different situations when an ace appears for Pejman */}
+                  {isAce &&
                   !isUserTurn &&
                   !isDeckFinished &&
                   !isTogglingReset &&
@@ -1059,11 +1087,14 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           </div>
                         </div>
                       </div>
+                      {/* The user should allow Pejman to submit the value of the ace */}
                       <button className="btn2 my-1" onClick={handleAllowPejman}>
                         Ok
                       </button>
                     </div>
                   )}
+                  {/* The different situations where the user can't raise anymore */}
+                  {/* When the user doesn't have any gambling chips */}
                 {isGameStarted &&
                   isUserTurn &&
                   !isRoundOver &&
@@ -1090,6 +1121,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
+                  {/* When Pejman doesn't have any gambling chips */}
                 {isGameStarted &&
                   isUserTurn &&
                   !isRoundOver &&
@@ -1116,6 +1148,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
+                  {/* When neither the user nor Pejman don't have any gambling chips (all the gambling chips are on the table as the bet) */}
                 {isGameStarted &&
                   isUserTurn &&
                   !isRoundOver &&
@@ -1142,6 +1175,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
+                  {/* The user shouldn't be able to stand right after raising */}
                 {!allowStand &&
                   finalMessage === "" &&
                   !isTogglingReset &&
@@ -1188,6 +1222,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                             <option value={raise} disabled selected></option>
                             {Array.from(
                               {
+                                // The amount of raising should be the minimum of the gambling chips of the two players
                                 length: Math.min(userChipsNum, pejmanChipsNum),
                               },
                               (_, i) => i + 1,
@@ -1198,6 +1233,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                             ))}
                           </select>
                         </div>
+                        {/* The button for updating the raise */}
                         <button
                           className="btn1"
                           disabled={raise === 0}
@@ -1206,6 +1242,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           Update the raise
                         </button>
                       </form>
+                      {/* The button for canceling the raise */}
                       <button
                         className="btn1"
                         onClick={cancelRaising}
@@ -1228,9 +1265,11 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     <div>
                       <div>
                         {pejmanHand.length === 0
-                          ? "Allow Pejman to start his turn"
-                          : "Allow Pejman To make his next move"}
+                          ? "Allow Pejman to start his turn" // If Pejman doesn't have any cards in his hand
+                          : "Allow Pejman To make his next move" // If Pejmanhas at least one card in his hand
+                        }
                       </div>
+                      {/* The button for allowing Pejman to get the next card */}
                       <button
                         className="btn2 my-1"
                         onClick={handleAllowPejman}
@@ -1240,6 +1279,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </button>
                     </div>
                   )}
+                {/* Different situations for allowing Pejman to finish the round */}
+                {/* When Pejman is done hitting and no one is neither BlackJack nor busted */}
                 {isRoundOver &&
                 userPoint < 21 &&
                 pejmanPoint < 21 &&
@@ -1276,7 +1317,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   </div>
-                ) : isRoundOver &&
+                ) : // When the user is busted
+                isRoundOver &&
                   userPoint > 21 &&
                   pejmanPoint < 21 &&
                   finalMessage === "" &&
@@ -1293,7 +1335,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   </div>
-                ) : ((isRoundOver &&
+                ) : // When the user is BlackJack
+                  ((isRoundOver &&
                     userPoint === 21 &&
                     pejmanPoint < 21 &&
                     finalMessage === "" &&
@@ -1315,7 +1358,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   </div>
-                ) : isRoundOver &&
+                ) : // When Pejman is busted
+                isRoundOver &&
                   pejmanPoint > 21 &&
                   userPoint < 21 &&
                   finalMessage === "" &&
@@ -1332,7 +1376,8 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   </div>
-                ) : (
+                ) : // When Pejman is BlackJack
+                (
                   ((isRoundOver &&
                     pejmanPoint === 21 &&
                     userPoint < 21 &&
@@ -1356,6 +1401,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                     </div>
                   )
                 )}
+                {/* Render the special message for the situation where the round and the game is finished */}
                 {((userChipsNum === 0 &&
                   userPoint < pejmanPoint &&
                   pejmanPoint < 22) ||
@@ -1382,6 +1428,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       </div>
                     </div>
                   )}
+                {/* The button for the user to confirm that the game is over */}
                 {isRoundOver &&
                   (userHand.length > 0 || pejmanHand.length > 0) &&
                   !isTogglingReset &&
@@ -1395,6 +1442,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       Ok
                     </button>
                   )}
+                {/* Render the special message for the situation where all the cards of the deck is finished */}
                 {isDeckFinished &&
                   userChipsNum > 0 &&
                   pejmanChipsNum > 0 &&
@@ -1409,6 +1457,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                           </div>
                         </div>
                       </div>
+                      {/* The button for shuffling the cards for using them again */}
                       <button
                         className="btn1 my-2"
                         onClick={ShuffleCardsAndContinue}
@@ -1427,7 +1476,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                   usedCards.map((c, i) =>
                     !userHand.includes(c) &&
                     !pejmanHand.includes(c) &&
-                    (i + 1) % 6 !== 0 ? (
+                    (i + 1) % 6 !== 0 ? ( // Each row of the used cards should have at most 6 cards
                       <div style={{ display: "inline" }} key={i}>
                         <img
                           src={Back}
@@ -1441,7 +1490,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
                       !pejmanHand.includes(c) && (
                         <div style={{ display: "inline" }}>
                           <img
-                            src={Back}
+                            src={Back} // All the cards are faced down
                             height="55px"
                             style={{ margin: "2px" }}
                             alt=""
@@ -1458,6 +1507,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
+              // The button for showing/hiding the "Reviews Section"
               <button
                 className="btn1"
                 style={{ marginBottom: "30px", marginTop: "20px" }}
@@ -1473,6 +1523,7 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             !isTogglingHomePage &&
             showReviews && (
+              // Rendering the <ReviewSection /> component
               <ReviewSection game="Snake" currentUser={currentUser} />
             )}
         </div>
