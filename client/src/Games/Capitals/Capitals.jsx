@@ -15,10 +15,11 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isWin, setIsWin] = useState("");
-  const [pack, setPack] = useState(countries);
-  const [questionCountries, setQuestionCountries] = useState(countryNames);
-  const [questionCapitals, setQuestionCapitals] = useState(capitalNames);
-  const [answer, setAnswer] = useState([]);
+  const [pack, setPack] = useState(countries); // The state variable of the list of all the countries with their capitals as an array
+  const [questionCountries, setQuestionCountries] = useState(countryNames); // The state variable of the countries
+  const [questionCapitals, setQuestionCapitals] = useState(capitalNames); // The state variable of the capitals of the countries
+  const [answer, setAnswer] = useState([]); // The answer, which is an array of the capitals of the 7 randomly chosen countries
+  // The state variable of the answers of the user:
   const [inputs, setInputs] = useState({
     input1: "",
     input2: "",
@@ -28,9 +29,9 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     input6: "",
     input7: "",
   });
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false); // The state variable of showing the 7 randomly chosen countries
   const [seconds, setSeconds] = useState(45);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(false); // The state variable of showing if the timer has started
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -38,47 +39,59 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
   const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
+  // The function for assigning the game on easy mode
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
   };
+  // The function for assigning the game on normal mode
   const runNormalMode = () => {
     setNormalMode(true);
     setEasyMode(false);
   };
+  // The function for the user to submit their answers:
   const handleSubmit = (e) => {
     e.preventDefault();
-    let misMatch = 0;
-    for (let i = 0; i < 7; i++) {
-      if (Object.values(inputs)[i] === "") {
-        setIsInputEmpty(true);
-        return;
+    let misMatch = 0; // The number of wrong answers
+    for (let i = 0; i < 7; i++) { // Looping through the 7 answers
+      if (Object.values(inputs)[i] === "") { // If the answer hasn't been chosen from the dropdown
+        setIsInputEmpty(true); // Toggle the "isInputEmpty" state variable to true
+        return; // and leave the function
+        // When the "isInputEmpty" state variable is true, the error message appears
+        // saying that the user can't leave any dropdown unselected.
+        // Of course if in normal mode, the time is up and a dropdown isn't been assigned to an answer, the user don't get any error
       }
-      if (Object.values(inputs)[i] !== answer[i]) {
-        misMatch += 1;
+      if (Object.values(inputs)[i] !== answer[i]) { // If the value of the "inputs" state variable is different from the
+      // "answer" state variable
+        misMatch += 1; // The "misMatch" variable will increase by one
       }
     }
-    if (misMatch === 0) {
-      setIsWin(true);
-      if (normalMode) {
-        updateTotalPoint(12);
+    // When looping through the 7 answers is done:
+    if (misMatch === 0) { // If the "misMatch" variable is still zero
+      setIsWin(true); // It means that all the guesses of the user are true, so the user wins the game
+      if (normalMode) { // And if the game is on normal mode
+        updateTotalPoint(12); // The user gets 12 stars
       }
-    } else {
-      setIsWin(false);
+    } else { // If the "misMatch" variable is not zero, it means that the user has a least one mistake
+      setIsWin(false); // So, the user loses
     }
-    handleStopTimer();
+    handleStopTimer(); // In both cases, the game is over and the timer should stop
   };
+  // The function for assigning the chosen answer from each dropdown to the user's answers
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; // De-structuring the "name" and "value" from e.target
+    // Assigning the value of the chosen dropdown to the value of the appropriate key of the "inputs" state variable
     setInputs((currInputs) => {
       currInputs[name] = value;
       return { ...currInputs };
     });
   };
+  // The functions for reseting the game:
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
   const toggleResetYes = () => {
+    // Reseting the appropriate state variables:
     setIsGameStarted(false);
     setIsWin("");
     setPack(countries);
@@ -103,6 +116,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  // The functions for returning to the home page:
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
@@ -112,10 +126,12 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  // The functions for toggling the game mode:
   const toggleLevel = () => {
     setIsTogglingLevel(true);
   };
   const toggleLevelYes = () => {
+    // Reseting the appropriate state variables:
     setIsGameStarted(false);
     setIsWin("");
     setPack(countries);
@@ -132,6 +148,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
       input7: "",
     });
     setShow(false);
+    // Toggling the game mode:
     if (easyMode) {
       setEasyMode(false);
       setNormalMode(true);
@@ -140,13 +157,14 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
       setEasyMode(true);
     }
     handleResetTimer();
-    setPack((currPack) => shuffleArray(currPack));
+    setPack((currPack) => shuffleArray(currPack)); // Shuffling the "pack" state variable
     setIsTogglingLevel(false);
     setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
+  // The function for shuffling the array
   const shuffleArray = (array) => {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -155,16 +173,20 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     }
     return arr;
   };
+  // The function for starting the game:
   const handleStart = () => {
     setIsGameStarted(true);
-    setPack((currPack) => shuffleArray(currPack));
-    setQuestionCountries(pack.map((c) => c.country).slice(1, 8));
-    setQuestionCapitals(pack.map((c) => c.capital).slice(1, 8));
+    setPack((currPack) => shuffleArray(currPack)); // Assigning the shuffled countries to the pack
+    setQuestionCountries(pack.map((c) => c.country).slice(1, 8)); // Slicing the first 7 items of the shuffled countries and assigning them to the countries
+    setQuestionCapitals(pack.map((c) => c.capital).slice(1, 8)); // Slicing the first 7 items of the shuffled capitals and assigning them to the capitals
   };
+  // The function for revealing the 7 randomly chosen countries:
   const handleShow = () => {
+    // Assigning the capitals of the 7 randomly chosen countries to the "questionCapitals" state variable
     setQuestionCapitals((currQuestionCapitals) =>
       shuffleArray(currQuestionCapitals),
     );
+    // Looping through the "questionCapitals" state variable and assigning each to the "answer" state variable
     questionCapitals.map((el) =>
       setAnswer((currAnswer) => [...currAnswer, el]),
     );
@@ -174,9 +196,10 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
       handleStartTimer();
     }
   };
-  const handleStartTimer = () => setIsTimerRunning(true);
-  const handleStopTimer = () => setIsTimerRunning(false);
-  const handleResetTimer = () => {
+  // The functions of handling the timer:
+  const handleStartTimer = () => setIsTimerRunning(true); // Starting the timer
+  const handleStopTimer = () => setIsTimerRunning(false); // Stopping the timer
+  const handleResetTimer = () => { // Reseting the timer
     setSeconds(45);
     setIsTimerRunning(false);
   };
