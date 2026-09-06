@@ -331,190 +331,295 @@ function App() {
           <Route
             path="/rock-scissors-paper"
             element={
-              <RockScissorsPaperPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <RockScissorsPaperPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/guess-number"
             element={
-              <GuessNumberPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <GuessNumberPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/capitals"
             element={
-              <CapitalsPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <CapitalsPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/cryptogram"
             element={
-              <CryptogramPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <CryptogramPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/crazy-100"
             element={
-              <Crazy100Page
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <Crazy100Page
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/memory-cards"
             element={
-              <MemoryCardsPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <MemoryCardsPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/nim"
             element={
-              <NimPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <NimPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/happy-flower"
             element={
-              <HappyFlowerPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <HappyFlowerPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/xo"
             element={
-              <XOPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <XOPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/kuku-kube"
             element={
-              <KukuKubePage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <KukuKubePage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/triple-emoji-match"
             element={
-              <TripleEmojiMatchPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <TripleEmojiMatchPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/pidoku"
             element={
-              <PidokuPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <PidokuPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/counter"
             element={
-              <CounterPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <CounterPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/puzzle"
             element={
-              <PuzzlePage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <PuzzlePage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/bingo"
             element={
-              <BingoPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <BingoPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/reversi"
             element={
-              <ReversiPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <ReversiPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/snake"
             element={
-              <SnakePage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <SnakePage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/tug-of-war"
             element={
-              <TugOfWarPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <TugOfWarPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/maze"
             element={
-              <MazePage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <MazePage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/bird-hunter"
             element={
-              <BirdHunterPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <BirdHunterPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/blackJack"
             element={
-              <BlackJackPage
-                updateTotalPoint={updateTotalPoint}
+              <ProtectedRoute
                 currentUser={currentUser}
-              />
+                isAuthChecked={isAuthChecked}
+              >
+                <BlackJackPage
+                  updateTotalPoint={updateTotalPoint}
+                  currentUser={currentUser}
+                />
+              </ProtectedRoute>
             }
           />
         </Routes>

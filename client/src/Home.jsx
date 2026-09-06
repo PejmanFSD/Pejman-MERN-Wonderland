@@ -96,171 +96,66 @@ export default function Home({
     setShowAllStars((currAllStars) => !currAllStars);
   };
   const toggleRockScissorsPaper = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/rock-scissors-paper");
   };
   const toggleGuessNumber = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/guess-number");
   };
   const toggleCapitals = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/capitals");
   };
   const toggleCryptogram = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/cryptogram");
   };
   const toggleCrazy100 = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/crazy-100");
   };
   const toggleMemoryCards = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/memory-cards");
   };
   const toggleNim = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/nim");
   };
   const toggleHappyFlower = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/happy-flower");
   };
   const toggleXO = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/xo");
   };
   const toggleKukuKube = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/kuku-kube");
   };
   const toggleTripleEmojiMatch = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/triple-emoji-match");
   };
   const togglePidoku = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/pidoku");
   };
   const toggleCounter = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/counter");
   };
   const togglePuzzle = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/puzzle");
   };
   const toggleBingo = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/bingo");
   };
   const toggleTugOfWar = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/tug-of-war");
   };
   const toggleMaze = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/maze");
   };
   const toggleBirdHunter = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/bird-hunter");
   };
   const toggleReversi = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/reversi");
   };
   const toggleSnake = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/snake");
   };
   const toggleBlackJack = () => {
-    if (!currentUser) {
-      setYouShouldLoginMessage(true);
-      navigate("/login");
-      return;
-    }
     navigate("/blackJack");
   };
   useEffect(() => {

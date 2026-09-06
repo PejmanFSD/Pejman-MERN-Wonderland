@@ -32,13 +32,23 @@ export default function Login({
         setFlash(json.error);
         return;
       }
+      // onLogin(json.user);
+      // setUsername("");
+      // setPassword("");
+      // setFlash(json.message);
+      const from = location.state?.from || { pathname: "/" };
       onLogin(json.user);
       setUsername("");
       setPassword("");
       setFlash(json.message);
-      const from = location.state?.from?.pathname || "/"; // Either navigate to "/" or
+      // const from = location.state?.from?.pathname || "/"; // Either navigate to "/" or
       // the page that required login and the user was trying to reach
-      navigate(from, { replace: true });
+      // navigate(from, { replace: true });
+      console.log("REDIRECTING TO:", from);
+      navigate(
+        `${from.pathname}${from.search || ""}${from.hash || ""}`,
+        { replace: true }
+      );
       setYouShouldLoginMessage(false);
     } catch (err) {
       setError(err.message);
@@ -53,7 +63,7 @@ export default function Login({
               <h1 className="eater" style={{ fontSize: "40px" }}>
                 Login
               </h1>
-              <div class="form-group" style={{ marginTop: "15px" }}>
+              <div className="form-group" style={{ marginTop: "15px" }}>
                 <label htmlFor="username">
                   <strong>Username:</strong>
                 </label>
@@ -64,7 +74,7 @@ export default function Login({
                   name="username"
                   value={username}
                   required
-                  class="form-control"
+                  className="form-control"
                   style={{
                     margin: "auto",
                     textAlign: "center",
@@ -74,7 +84,7 @@ export default function Login({
                   }}
                 />
               </div>
-              <div class="form-group" style={{ marginTop: "15px" }}>
+              <div className="form-group" style={{ marginTop: "15px" }}>
                 <label htmlFor="password">
                   <strong>Password:</strong>
                 </label>
@@ -86,7 +96,7 @@ export default function Login({
                     name="password"
                     value={password}
                     required
-                    class="form-control"
+                    className="form-control"
                     style={{
                       margin: "auto",
                       textAlign: "center",
