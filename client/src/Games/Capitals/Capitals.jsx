@@ -203,15 +203,21 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     setSeconds(45);
     setIsTimerRunning(false);
   };
+  // If the user leave a dropdown unselected, they get an error with the "Ok" button
+  // The function to return the user to the situation before submitting is "handleIsInputEmpty"
   const handleIsInputEmpty = () => {
     setIsInputEmpty(false);
   };
+  // The function for rendering the "About the game" page
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  // The function for showing/hiding the "reviews" section
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  // The "useEffect" hook for running the timer; whenever the
+  // "isTimerRunning" state variable changes, the following hook gets executed.
   useEffect(() => {
     setPack((currPack) => shuffleArray(currPack));
     let interval;
@@ -222,17 +228,22 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
     }
     return () => clearInterval(interval);
   }, [isTimerRunning]);
+  // The "useEffect" hook for changing the title of the browser
+  // to the name of the game whenever the page is loaded:
   useEffect(() => {
     document.title = "Capitals";
   }, []);
   return (
     <div>
+      {/* Rendering the "About the game" section */}
       {isAboutPage && <AboutCapitals setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
+          {/* Game title */}
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Capitals
           </h2>
+          {/* The fix buttons of the game: "About The game", "switch the game mode", "Reset the Game" and "Back to home page" in one container: */}
           <div className="container">
             <div className="row">
               <div className="col-lg-3 align-self-center">
@@ -301,6 +312,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {/* Confirming the "Switch the game mode" functionality */}
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
             <div className="container">
               <div className="row">
@@ -316,6 +328,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Reset the game" functionality */}
           {isGameStarted &&
             (easyMode || normalMode) &&
             isTogglingReset &&
@@ -335,6 +348,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 </div>
               </div>
             )}
+          {/* Confirming the "Back to Home Page" functionality */}
           {(isGameStarted || (!isGameStarted && (!easyMode || !normalMode))) &&
             !isTogglingLevel &&
             isTogglingHomePage && (
@@ -350,6 +364,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 </div>
               </div>
             )}
+          {/* Rendering the timer */}
           {isGameStarted &&
             show &&
             normalMode &&
@@ -363,6 +378,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 {seconds}
               </h3>
             )}
+          {/* Rendering the buttons of the game modes ("Easy Mode" and "Normal Mode") */}
           {!easyMode &&
             !normalMode &&
             !isTogglingHomePage &&
@@ -376,6 +392,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 runNormalMode={runNormalMode}
               />
             )}
+          {/* Rendering the "Start the game" button */}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingHomePage &&
@@ -384,6 +401,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 Start the Game
               </button>
             )}
+          {/* Rendering the "Winning" message */}
           {isWin === true &&
             seconds > 0 &&
             !isTogglingReset &&
@@ -400,6 +418,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 </div>
               </div>
             )}
+          {/* Rendering the "Play again" button (if the user wins the game) */}
           {isGameStarted &&
             // show &&
             (easyMode || normalMode) &&
@@ -412,6 +431,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 Play Again
               </button>
             )}
+          {/* Rendering the "Losing" message (If the user's answers are wrong) */}
           {isWin === false &&
             seconds > 0 &&
             !isTogglingReset &&
@@ -421,6 +441,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 You Lose
               </h1>
             )}
+          {/* Rendering the "Losing" message (If the timer is up) */}
           {seconds < 1 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -429,6 +450,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 Time's up!
               </h1>
             )}
+          {/* Rendering the "Try again" button (if the user loses the game) */}
           {isGameStarted &&
             // show &&
             (easyMode || normalMode) &&
@@ -445,6 +467,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             {answer.map((el) => (
             <div>{el}</div>
           ))} */}
+          {/* Rendering the randomly selected countries */}
           {isGameStarted &&
             show &&
             !isTogglingReset &&
@@ -466,6 +489,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 ))}
               </div>
             )}
+          {/* Rendering the initial message of the game, explaining briefly about the game */}
           {isGameStarted &&
             !show &&
             (easyMode || normalMode) &&
@@ -488,6 +512,8 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          {/* Rendering the <Form /> component, which containes the 7 dropdowns,
+          each for one of the randomly selected countries */}
           {isGameStarted &&
             show &&
             !isTogglingReset &&
@@ -506,6 +532,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                 isWin={isWin}
               />
             )}
+          {/* Rendering the message when the user submits the form by leaving at least one of the dropdowns unselected */}
           {isInputEmpty && (
             <div>
               <div className="container">
@@ -520,6 +547,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
               </button>
             </div>
           )}
+          {/* Rendering the results of each answer of the user */}
           {(isWin !== "" || seconds < 1) &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -568,6 +596,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted &&
             showReviews && (
+              // Rendering the <ReviewSection /> component
               <ReviewSection game="Capitals" currentUser={currentUser} />
             )}
         </div>
