@@ -224,7 +224,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
     if (sum === 100) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(2);
+        updateTotalPoint(10);
       }
     }
     if (sum !== 100) {

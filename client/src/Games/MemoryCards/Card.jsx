@@ -91,7 +91,7 @@ export default function Card({
       if (normalMode) {
         updateTotalPoint(12);
       } else if (hardMode) {
-        updateTotalPoint(18);
+        updateTotalPoint(20);
       }
       handleStopTimer();
     }

@@ -147,7 +147,7 @@ export default function HappyFlower({ updateTotalPoint, currentUser }) {
       if (easyMode) {
         updateTotalPoint(10);
       } else if (normalMode) {
-        updateTotalPoint(22);
+        updateTotalPoint(20);
       }
     }
   }, [userGuess]);

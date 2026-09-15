@@ -55,7 +55,7 @@ export default function AboutGuessNumber({ setIsAboutPage }) {
                   <br />
                   You have 10 chances to guess the number.
                   <br />
-                  If you guess correctly, you earn 20 stars.
+                  If you guess correctly, you earn 15 stars.
                   <br />
                   The feedback circles are sorted by color:
                   <br />

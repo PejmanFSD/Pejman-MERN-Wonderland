@@ -273,7 +273,8 @@ export default function Snake({ updateTotalPoint, currentUser }) {
   // Game loop:
   useEffect(() => {
     if (!isGameStarted) return;
-    else if (direction === { x: 0, y: 0 }) {
+    // else if (direction === { x: 0, y: 0 }) {
+    else if (direction.x === 0 && direction.y === 0) {
       return;
     } else {
       const interval = setInterval(() => {
@@ -403,12 +404,12 @@ export default function Snake({ updateTotalPoint, currentUser }) {
         setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
-        updateTotalPoint(3);
+        updateTotalPoint(4);
       } else if (normalMode) {
         setFinalMessage("You Win!");
         setDirection({ x: 0, y: 0 });
         setDirections((currDirections) => [...currDirections, "None"]);
-        updateTotalPoint(12);
+        updateTotalPoint(15);
       }
     }
   }, [userPoint]);

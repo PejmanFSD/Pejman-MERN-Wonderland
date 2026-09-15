@@ -448,9 +448,9 @@ export default function BlackJack({ updateTotalPoint, currentUser }) {
     } else if (pejmanChipsNum === 0 && !isBetMade) { // If Pejman doesn't have any gambling chips
       setFinalMessage("You win the game!"); // The user wins the game
       if (easyMode) {
-        updateTotalPoint(32); // In "Easy" mode, if the user wins, they get 32 stars
+        updateTotalPoint(20); // In "Easy" mode, if the user wins, they get 20 stars
       } else {
-        updateTotalPoint(45); // In "Normal" mode, if the user wins, they get 45 stars
+        updateTotalPoint(32); // In "Normal" mode, if the user wins, they get 32 stars
       }
     }
   }, [userChipsNum, pejmanChipsNum]);

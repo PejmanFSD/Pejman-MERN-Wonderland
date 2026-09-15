@@ -2094,7 +2094,7 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
     if (userScore === 2) {
       setFinalMessage("You Win!");
       if (normalMode) {
-        updateTotalPoint(14);
+        updateTotalPoint(12);
       }
     }
   }, [userScore]);
@@ -2433,9 +2433,8 @@ export default function TugOfWar({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage && (
               <button
                 className="btn1"
-                style={{ position: "relative", top: "15px" }}
+                style={{ position: "relative", top: "15px", marginTop: "30px" }}
                 onClick={rollDice}
-                style={{ marginTop: "30px" }}
               >
                 Roll the Dice
               </button>

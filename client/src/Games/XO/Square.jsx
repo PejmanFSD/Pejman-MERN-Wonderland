@@ -28,6 +28,7 @@ export default function Square({
       src={imgSrc}
       width={isUserTurn && availableSquares.length !== 0 ? "50px" : "10px"}
       alt="Square"
+      onClick={handleClickSquare}
       style={{
         cursor: "pointer",
         margin: "2px",
@@ -49,8 +50,6 @@ export default function Square({
             : 1,
         border: "1px solid black",
       }}
-      alt=""
-      onClick={handleClickSquare}
     />
   );
 }

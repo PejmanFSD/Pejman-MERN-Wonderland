@@ -85,7 +85,7 @@ export default function RockScissorsPaper({ updateTotalPoint, currentUser }) {
     }
   };
   const handleOk = () => {
-    updateTotalPoint(10);
+    updateTotalPoint(8);
     setTripleScore(0);
     setUserChoice("");
     setPejmanChoice("");

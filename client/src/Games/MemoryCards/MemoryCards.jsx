@@ -272,7 +272,7 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
       if (normalMode) {
         updateTotalPoint(12);
       } else if (hardMode) {
-        updateTotalPoint(18);
+        updateTotalPoint(20);
       }
       handleStopTimer();
     }
@@ -448,7 +448,6 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
                     <h2
                       className="fasterOne"
                       style={{ fontSize: "40px" }}
-                      style={{ fontSize: "40px" }}
                     >
                       You Win but you don't get any stars!
                     </h2>
@@ -467,7 +466,6 @@ export default function MemoryCards({ updateTotalPoint, currentUser }) {
           {!isTogglingHomePage && !isTogglingReset && (
             <h2
               className="fasterOne"
-              style={{ fontSize: "40px" }}
               style={{ fontSize: "40px" }}
             >
               {isWin === false && "Time's Up!"}

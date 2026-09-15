@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Emoji from "./Emoji";
 import ConfirmationBox from "../ConfirmationBox";
-import { emojisArray, selectedEmojisArray } from "./emojisArray";
+import { easyEmojisArray, normalEmojisArray, selectedEmojisArray } from "./emojisArray";
 import E00 from "./images/000.jpg";
 import Skull from "./images/Skull.jpg";
 import { getRandArr } from "../utils";
@@ -14,12 +14,12 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [emojis, setEmojis] = useState(emojisArray);
+  const [emojis, setEmojis] = useState(easyEmojisArray);
   const [selectedEmojis, setSelectedEmojis] = useState(selectedEmojisArray);
   const [tripleMatch, setTripleMatch] = useState(false);
   const [isWin, setIsWin] = useState("");
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [seconds, setSeconds] = useState(720);
+  const [seconds, setSeconds] = useState(330);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingHomePage, setIsTogglingHomePage] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -33,10 +33,12 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
 
   const navigate = useNavigate();
   const runEasyMode = () => {
-    setEmojis((currEmojis) => shuffleArray(currEmojis));
+    setSeconds(330);
+    setEmojis(shuffleArray(easyEmojisArray));
     setEasyMode(true);
     setNormalMode(false);
     setIsGameStarted(true);
+    setIsTimerRunning(true);
     for (const emoji of emojis) {
       if (!emoji.isSelected) {
         setAvailableEmojis((currAvailableEmojis) => [
@@ -47,7 +49,8 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
     }
   };
   const runNormalMode = () => {
-    setEmojis((currEmojis) => shuffleArray(currEmojis));
+    setSeconds(720);
+    setEmojis(shuffleArray(normalEmojisArray));
     setNormalMode(true);
     setEasyMode(false);
     setIsGameStarted(true);
@@ -72,11 +75,16 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
     setTripleMatch(false);
   };
   const handlePlayAgain = () => {
-    setEmojis(emojisArray);
+    if (easyMode) {
+      setEmojis(shuffleArray(easyEmojisArray));
+      setSeconds(330);
+    } else if (normalMode) {
+      setEmojis(shuffleArray(normalEmojisArray));
+      setSeconds(720);
+    }
     setEmojis((currEmojis) => shuffleArray(currEmojis));
     setSelectedEmojis(selectedEmojisArray);
     setTripleMatch(false);
-    setSeconds(720);
     setAddTimeChanse(true);
     setAvailableEmojis([]);
     setPair1Chance(true);
@@ -132,12 +140,36 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
     if (easyMode) {
       setEasyMode(false);
       setNormalMode(true);
+setEmojis(shuffleArray(normalEmojisArray));
+      setSeconds(720);
     } else if (normalMode) {
       setNormalMode(false);
       setEasyMode(true);
+setEmojis(shuffleArray(easyEmojisArray));
+      setSeconds(330);
     }
-    handlePlayAgain();
+    setSelectedEmojis(selectedEmojisArray);
+    setTripleMatch(false);
+    setAddTimeChanse(true);
+    setAvailableEmojis([]);
+    setPair1Chance(true);
+    setPair1ChoseEmoji(null);
+    setPair2Chance(true);
+    setPair2ChoseEmoji(null);
+    setIsTimerRunning(true);
+    setIsTogglingReset(false);
+    setIsTogglingHomePage(false);
     setIsTogglingLevel(false);
+    setIsWin("");
+    for (const emoji of emojis) {
+      if (!emoji.isSelected) {
+        setAvailableEmojis((currAvailableEmojis) => [
+          ...currAvailableEmojis,
+          emoji,
+        ]);
+      }
+    }
+    setShowReviews(true);
   };
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
@@ -200,7 +232,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
       setIsWin(true);
       setIsTimerRunning(false);
       if (easyMode) {
-        updateTotalPoint(48);
+        updateTotalPoint(20);
       } else if (normalMode) {
         updateTotalPoint(60);
       }
@@ -228,7 +260,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
   }, [selectedEmojis]);
   useEffect(() => {
     let interval;
-    if (isTimerRunning && normalMode) {
+    if (isTimerRunning) {
       interval = setInterval(() => {
         setSeconds((prev) => prev > 1 && prev - 1);
       }, 1000);
@@ -236,7 +268,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
     return () => clearInterval(interval);
   }, [isTimerRunning]);
   useEffect(() => {
-    if (seconds < 1 && normalMode) {
+    if (seconds < 1) {
       setIsWin(false);
       setIsTimerRunning(false);
     }
@@ -377,7 +409,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
-          {isTimerRunning && isWin === "" && normalMode && (
+          {isTimerRunning && isWin === "" && (
             <h3
               className="my-3"
               style={seconds > 9 ? { color: "green" } : { color: "red" }}
@@ -385,8 +417,9 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
               {seconds}
             </h3>
           )}
-          {normalMode &&
-            !isTogglingReset &&
+          {(easyMode || normalMode) &&
+          isGameStarted &&
+          !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isWin === "" && (
@@ -437,7 +470,7 @@ export default function TripleEmojiMatch({ updateTotalPoint, currentUser }) {
           {isWin === false && (
             <div>
               <h2 className="fasterOne" style={{ fontSize: "40px" }}>
-                {seconds < 1 && normalMode ? "Time's Up!" : "You Lose!"}
+                {seconds < 1 ? "Time's Up!" : "You Lose!"}
               </h2>
               <div>Try Again?</div>
               <button

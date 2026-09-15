@@ -87,9 +87,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
     ) {
       setFinalMessage("You Win!");
       if (normalMode) {
-        updateTotalPoint(25);
+        updateTotalPoint(17);
       } else if (easyMode) {
-        updateTotalPoint(10);
+        updateTotalPoint(8);
       }
     } else {
       setFinalMessage("You Lose!");

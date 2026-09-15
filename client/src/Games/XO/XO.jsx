@@ -160,7 +160,7 @@ export default function XO({ updateTotalPoint, currentUser }) {
     if (userPoint > pejmanPoint) {
       setIsWin(true);
       if (normalMode) {
-        updateTotalPoint(1);
+        updateTotalPoint(4);
       }
     } else {
       setIsWin(false);

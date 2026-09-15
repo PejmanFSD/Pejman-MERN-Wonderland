@@ -80,7 +80,7 @@ export default function Form({
         if (easyMode) {
           updateTotalPoint(4);
         } else if (normalMode) {
-          updateTotalPoint(20);
+          updateTotalPoint(15);
         }
       }
       setChancesNum((currChanceNum) => currChanceNum - 1);

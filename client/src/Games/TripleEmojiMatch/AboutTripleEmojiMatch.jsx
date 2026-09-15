@@ -35,27 +35,29 @@ export default function AboutTripleEmojiMatch({ setIsAboutPage }) {
                 </div>
                 <h4>Winning & Losing</h4>
                 You Win If you successfully remove all 210 emojis from both the
-                board and the slots.
+                board and the slots before your time is up.
                 <br />
-                You Lose If all 7 slots become filled without forming a set of 3
-                matching emojis.
+                You Lose If either all 7 slots become filled without forming a set of 3
+                matching emojis or your time is up and the board still has at least one emoji in it.
                 <h4>Game Modes</h4>
                 <strong>- Easy Mode:</strong>
                 <br />
-                - No time limit.
+                - You have 330 seconds to clear all emojis.
                 <br />
-                - Win the game to earn 48 stars.
+                - Win the game to earn 20 stars.
+                <br />- Emojis from a variety of categories appear on the board.
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 - You have 720 seconds to clear all emojis.
                 <br />- Win the game to earn 60 stars.
+                <br />- Only the face emojis appear on the board.
+                <br />
                 <h4>Help Buttons</h4>
                 The game also includes helpful features to assist you during
                 gameplay.
                 <br />
-                - Extra Time: Adds 30 minutes to your timer (Not available in
-                Easy Mode).
+                - Extra Time: Adds 30 minutes to your timer.
                 <br />- Matching Emoji Finder: These buttons reveal a complete
                 triple match to help you progress through the game.
                 <h4>Please rate the game and leave a comment 🙂 </h4>

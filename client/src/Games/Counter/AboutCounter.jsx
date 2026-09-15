@@ -43,12 +43,12 @@ export default function AboutCounter({ setIsAboutPage }) {
                 <br />
                 - The movie contains 5 objects.
                 <br />
-                - Win the game to earn 10 stars.
+                - Win the game to earn 8 stars.
                 <br />
                 <strong>- Normal Mode:</strong>
                 <br />
                 - The movie contains 16 objects.
-                <br />- Win the game to earn 25 stars.
+                <br />- Win the game to earn 17 stars.
                 <h4>Please rate the game and leave a comment 🙂 </h4>
                 <button className="btn1" onClick={handleGamePage}>
                   Back to the Game

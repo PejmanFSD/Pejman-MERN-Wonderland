@@ -43,7 +43,7 @@ export default function BirdHunter({ updateTotalPoint, currentUser }) {
     // The user wins if they kill at least 14 birds:
     if (userScore > 13) {
       setFinalMessage("You Win!");
-      updateTotalPoint(5); // If the user wins, they win 5 stars
+      updateTotalPoint(8); // If the user wins, they win 8 stars
     }
     // The user loses if they kill less than 14 birds:
     else {

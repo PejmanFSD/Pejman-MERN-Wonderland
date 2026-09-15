@@ -477,6 +477,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             seconds > 0 && (
               <div className="mt-3">
                 <h3>Countries</h3>
+                {/* "questionCountries" is the state variable that holds the 7 randomly selected countries */}
                 {questionCountries.map((qc, i) => (
                   <div
                     key={i}
@@ -552,15 +553,18 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel &&
+            // "questionCountries" is the state variable that holds the 7 randomly selected countries
             questionCountries.map((c, i) =>
-              Object.values(inputs)[i] ? (
+              Object.values(inputs)[i] ? ( // If the user has chosen an answer from the dropdown
                 <div className="container">
                   <div className="row">
                     <div className="col-10 offset-1 d-flex justify-content-center">
                       <h6 key={i}>
+                        {/* Rendering each answer; the values of each pair of the "inputs" state variable are the user's answers */}
                         {`You chose ${Object.values(inputs)[i]} as the capital of ${
                           questionCountries[i]
                         }`}{" "}
+                        {/* The "answer" array is the correct answers that should be checked with the user's answers */}
                         {Object.values(inputs)[i] === answer[i]
                           ? "✔"
                           : `✖ ➜ The correct answer is: ${answer[i]}`}
@@ -568,7 +572,7 @@ export default function Capitals({ updateTotalPoint, currentUser }) {
                     </div>
                   </div>
                 </div>
-              ) : (
+              ) : ( // If the user hasn't chosen any answer from the dropdown
                 <div className="container">
                   <div className="row">
                     <div className="col-10 offset-1 d-flex justify-content-center">
