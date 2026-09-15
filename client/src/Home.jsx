@@ -240,76 +240,82 @@ export default function Home({
         </table>
       </div>
       <div>
-        <div style={{ margin: "20px" }}>
+        <div style={{ margin: "5px" }}>
           <strong>
             {currentUser &&
               currentUser?.totalPoint === 0 &&
               "You don't have any stars, play the interesting games and win some!"}
           </strong>
         </div>
-        <div style={{ position: "relative", top: "5px" }}>
+        <div style={{ margin: "5px" }}>
           <strong>
             {currentUser &&
               currentUser?.totalPoint > 0 &&
               `You have ${currentUser?.totalPoint} star${currentUser?.totalPoint > 1 ? "s" : ""}`}
           </strong>
         </div>
-        {currentUser?.totalPoint <= 5 && (
-          <div style={{ position: "relative", top: "5px" }}>
-            {new Array(currentUser?.totalPoint).fill(null).map((i) => (
-              <img
-                src={Star}
-                width="18px"
-                alt="Star"
-                style={{ margin: "2px" }}
-                key={i}
-              />
-            ))}
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-10 offset-1 d-flex justify-content-center">
+            {currentUser?.totalPoint <= 5 && (
+              <div style={{ position: "relative", top: "5px" }}>
+                {new Array(currentUser?.totalPoint).fill(null).map((i) => (
+                  <img
+                    src={Star}
+                    width="18px"
+                    alt="Star"
+                    style={{ margin: "2px" }}
+                    key={i}
+                  />
+                ))}
+              </div>
+            )}
+            {!showAllStars && currentUser?.totalPoint > 5 && (
+              <div style={{ position: "relative", top: "5px" }}>
+                {new Array(5).fill(null).map((i) => (
+                  <img
+                    src={Star}
+                    width="18px"
+                    alt="Star"
+                    style={{ margin: "2px" }}
+                    key={i}
+                  />
+                ))}
+                <div style={{ display: "inline" }}>...</div>
+                <br />
+                <button
+                  onClick={handleShowAllStars}
+                  className="cause btn1"
+                  style={{ marginTop: "7px" }}
+                >
+                  Show all stars
+                </button>
+              </div>
+            )}
+            {showAllStars && currentUser?.totalPoint > 5 && (
+              <div style={{ position: "relative", top: "5px" }}>
+                {new Array(currentUser?.totalPoint).fill(null).map((i) => (
+                  <img
+                    src={Star}
+                    width="18px"
+                    alt="Star"
+                    style={{ margin: "2px" }}
+                    key={i}
+                  />
+                ))}
+                <br />
+                <button
+                  onClick={handleShowAllStars}
+                  className="cause btn1"
+                  style={{ marginTop: "7px" }}
+                >
+                  Minimize stars
+                </button>
+              </div>
+            )}
           </div>
-        )}
-        {!showAllStars && currentUser?.totalPoint > 5 && (
-          <div style={{ position: "relative", top: "5px" }}>
-            {new Array(5).fill(null).map((i) => (
-              <img
-                src={Star}
-                width="18px"
-                alt="Star"
-                style={{ margin: "2px" }}
-                key={i}
-              />
-            ))}
-            <div style={{ display: "inline" }}>...</div>
-            <br />
-            <button
-              onClick={handleShowAllStars}
-              className="cause btn1"
-              style={{ marginTop: "7px" }}
-            >
-              Show all stars
-            </button>
-          </div>
-        )}
-        {showAllStars && currentUser?.totalPoint > 5 && (
-          <div style={{ position: "relative", top: "5px" }}>
-            {new Array(currentUser?.totalPoint).fill(null).map((i) => (
-              <img
-                src={Star}
-                width="18px"
-                alt="Star"
-                style={{ margin: "2px" }}
-                key={i}
-              />
-            ))}
-            <br />
-            <button
-              onClick={handleShowAllStars}
-              className="cause btn1"
-              style={{ marginTop: "7px" }}
-            >
-              Minimize stars
-            </button>
-          </div>
-        )}
+        </div>
       </div>
       <div className="container">
         <div className="row">
