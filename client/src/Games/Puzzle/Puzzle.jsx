@@ -34,7 +34,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
   const [isActiveRightButton, setIsActiveRightButton] = useState(false);
   const [isAnImageClicked, setIsAnImageClicked] = useState(false);
   const [finalMessage, setFinalMessage] = useState("");
-  const [seconds, setSeconds] = useState(400);
+  const [seconds, setSeconds] = useState(225);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
@@ -277,7 +277,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
     setIsActiveDownButton(false);
     setIsActiveRightButton(false);
     setIsAnImageClicked(false);
-    setSeconds(400);
+    setSeconds(225);
     setIsTimerRunning(false);
     setIsTogglingLevel(false);
     setIsTogglingHomePage(false);
@@ -320,7 +320,7 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
   const handleStartTimer = () => setIsTimerRunning(true);
   const handleStopTimer = () => setIsTimerRunning(false);
   const handleResetTimer = () => {
-    setSeconds(400);
+    setSeconds(225);
     setIsTimerRunning(false);
   };
   const handleAboutPage = () => {
@@ -329,6 +329,34 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+    // Keyboard controls
+  useEffect(() => {
+    if (finalMessage === "" && isAnImageClicked) {
+      const handleKeyDown = (e) => {
+            e.preventDefault();
+                if (e.key === "ArrowUp" && isActiveUpButton) {
+                  e.preventDefault();
+                  handleUp();
+                }
+                else if (e.key === "ArrowDown" && isActiveDownButton) {
+                  e.preventDefault();
+                  handleDown();
+                }
+                else if (e.key === "ArrowLeft" && isActiveLeftButton) {
+                  e.preventDefault();
+                  handleLeft();
+                }
+                else if (e.key === "ArrowRight" && isActiveRightButton) {
+                  e.preventDefault();
+                  handleRight();
+                }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [isAnImageClicked]);
   useEffect(() => {
     let interval;
     if (isTimerRunning) {
@@ -375,11 +403,11 @@ export default function Puzzle({ updateTotalPoint, currentUser }) {
       if (easyMode) {
         handleStopTimer();
         setFinalMessage("You Win!");
-        updateTotalPoint(30);
+        updateTotalPoint(20);
       } else if (normalMode) {
         handleStopTimer();
         setFinalMessage("You Win!");
-        updateTotalPoint(35);
+        updateTotalPoint(25);
       }
     }
   }, [imageGroup]);
