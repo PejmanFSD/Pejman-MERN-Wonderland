@@ -10,16 +10,17 @@ export default function Counter({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
-  const [gameArray, setGameArray] = useState([]);
-  const [finalGameArray, setFinalGameArray] = useState([]);
-  const [quizArray, setQuizArray] = useState([]);
+  const [gameArray, setGameArray] = useState([]); // The array that contains all the images in order
+  const [finalGameArray, setFinalGameArray] = useState([]); // The array that contains some of / all the "shuffled" images of the movie
+  const [quizArray, setQuizArray] = useState([]); // The array that contains the names of the 3 randomly selected images of the "finalGameArray" variable
   const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isSlideShowStarted, setIsSlideShowStarted] = useState(false);
-  const [isResult, setIsResult] = useState(false);
+  const [isSlideShowStarted, setIsSlideShowStarted] = useState(false); // The boolean variable that defines if the movie is started or not
+  const [isResult, setIsResult] = useState(false); // The boolean variable that defines if the result of the game is revealed or not
   // Variables for the timer:
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0); // The variable that represents the index of the currently revealed image of the movie
   const [showImage, setShowImage] = useState(false); // A boolean to show/hide images
   const [countdown, setCountdown] = useState(3); // Just for the first 3 numbers (3, 2, 1)
+  // The object that containes the 3 answers of the user
   const [userAnswers, setUserAnswers] = useState({
     answer1: "",
     answer2: "",
@@ -32,14 +33,17 @@ export default function Counter({ updateTotalPoint, currentUser }) {
   const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
+  // The function that assignes the game mode to easy:
   const handleEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
   };
+  // The function that assignes the game mode to normal:
   const handleNormalMode = () => {
     setNormalMode(true);
     setEasyMode(false);
   };
+  // The function for reseting the game:
   const handleStart = () => {
     setIsGameStarted(true);
     // expanding the gameArray based on the repetition value
@@ -55,8 +59,10 @@ export default function Counter({ updateTotalPoint, currentUser }) {
     // Assigning the new temporary variable (expandedArray) to a
     // permanent variable(finalGameArray):
     setFinalGameArray(shuffled);
+    // Announcing that the movie is started:
     setIsSlideShowStarted(true);
   };
+  // The function for storing the user's first answer:
   const handleQuestion1 = (e) => {
     const value = e.target.value;
     setUserAnswers((currUserAnswers) => ({
@@ -64,6 +70,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
       answer1: value,
     }));
   };
+  // The function for storing the user's second answer:
   const handleQuestion2 = (e) => {
     const value = e.target.value;
     setUserAnswers((currUserAnswers) => ({
@@ -71,6 +78,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
       answer2: value,
     }));
   };
+  // The function for storing the user's third answer:
   const handleQuestion3 = (e) => {
     const value = e.target.value;
     setUserAnswers((currUserAnswers) => ({
@@ -78,25 +86,36 @@ export default function Counter({ updateTotalPoint, currentUser }) {
       answer3: value,
     }));
   };
+  // Evaluating if the user has answered correctly or not:
   const handleSubmit = (e) => {
     e.preventDefault();
+    // If all the 3 questions have been answered correctly:
     if (
       parseInt(userAnswers.answer1) === quizArray[0].repetition &&
       parseInt(userAnswers.answer2) === quizArray[1].repetition &&
       parseInt(userAnswers.answer3) === quizArray[2].repetition
     ) {
+      // Then the user wins the game (and the final message will become "You Win!"):
       setFinalMessage("You Win!");
+      // And they earn ...
       if (normalMode) {
+        // 17 stars if the game is on normal mode
         updateTotalPoint(17);
       } else if (easyMode) {
+        // and 8 stars if the game is on easy mode
         updateTotalPoint(8);
       }
-    } else {
+    }
+    // Otherwise, if even one of the 3 answers is wrong
+    else {
+      // Then the user loses the game (and the final message will become "You Lose!"):
       setFinalMessage("You Lose!");
     }
-    setIsResult(true);
+    setIsResult(true); // Toggling the "isResult" state variable
   };
+  // The function for restarting the game (the onClick function of the "play again" / "try again")
   const handlePlayAgain = () => {
+    // Resetting the appropriate state variables for the new game:
     setGameArray([]);
     setFinalGameArray([]);
     setQuizArray([]);
@@ -117,6 +136,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
     setIsTogglingHomePage(false);
     setShowReviews(true);
   };
+  // The functions for reseting the game:
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
@@ -127,6 +147,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  // The functions for toggling the game modes:
   const toggleLevel = () => {
     setIsTogglingLevel(true);
   };
@@ -144,6 +165,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
+  // The functions for returning to the home page:
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
@@ -153,39 +175,45 @@ export default function Counter({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  // The function of the "About the game" page:
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  // The function of the "reviews" page:
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  // The useEffect hook for implementing the features of the game based on the chosen game mode:
   useEffect(() => {
-    if (easyMode) {
+    if (easyMode) { // If the game is on easy mode:
       setGameArray(
-        imagesArray.slice(0, 5).map((arr) => ({
+        imagesArray.slice(0, 5).map((arr) => ({ // only use the first 5 images for the movie
           ...arr,
-          repetition: getRandNumInRange(1, 3),
+          repetition: getRandNumInRange(1, 3), // And assign a number among 1, 2 and 3 for the number of the repetition of the image
         })),
       );
-    } else if (normalMode) {
+    } else if (normalMode) { // If the game is on normal mode:
       setGameArray(
-        imagesArray.map((arr) => ({
+        imagesArray.map((arr) => ({ // use all the images for the movie
           ...arr,
-          repetition: getRandNumInRange(1, 3),
+          repetition: getRandNumInRange(1, 3), // And assign a number among 1, 2 and 3 for the number of the repetition of the image
         })),
       );
     }
   }, [easyMode, normalMode, isGameStarted]);
+  // The useEffect hook for the movie:
   useEffect(() => {
-    if (isGameStarted && isSlideShowStarted) {
+    if (isGameStarted && isSlideShowStarted) { // Play the movie if the game is started and the "isSlideShowStarted" variable is true
       let step = -1;
+      // Implementing the interval:
       const interval = setInterval(() => {
         step++;
-        if (step === 0) setCountdown(3);
-        if (step === 1) setCountdown(2);
-        if (step === 2) setCountdown(1);
+        if (step === 0) setCountdown(3); // The first image of the movie is the number 3
+        if (step === 1) setCountdown(2); // The second image of the movie is the number 2
+        if (step === 2) setCountdown(1); // The third image of the movie is the number 1
         if (step === 3) setCountdown(-1);
         if (step === 4) setCountdown(0);
+        // After the initial fixed images of the movie, the images of the shuffled array reveal one by one:
         if (step >= 5) {
           setShowImage((prev) => !prev); // Every other second, we see nothing
           // For even seconds we see the images:
@@ -196,16 +224,20 @@ export default function Counter({ updateTotalPoint, currentUser }) {
         // Stop when last image reached
         if (step === 6 + 2 * finalGameArray.length) {
           clearInterval(interval);
-          setIsSlideShowStarted(false);
+          setIsSlideShowStarted(false); // resetting the "isSlideShowStarted" variable to false
           return;
         }
       }, 1000);
+      // Shuffling again for the questions
+      // (We don't want the 3 images of the final quiz of the game to be always the first 3 images of the movie):
       const shuffled = [...gameArray].sort(() => Math.random() - 0.5);
+      // Slicing the first 3 images of the newly shuffled images:
       const selected = shuffled.slice(0, 3);
-      setQuizArray(selected);
+      setQuizArray(selected); // Assigning the 3 images to the "quizArray" state variable
       return () => clearInterval(interval);
     }
   }, [isGameStarted]);
+  // Changing the title of the browser when the user enters the game:
   useEffect(() => {
     document.title = "Counter";
   }, []);
