@@ -243,12 +243,15 @@ export default function Counter({ updateTotalPoint, currentUser }) {
   }, []);
   return (
     <div>
+      {/* Rendering the "About the game" section */}
       {isAboutPage && <AboutCounter setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
+          {/* Game title */}
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Counter
           </h2>
+          {/* The fix buttons of the game: "About The game", "Switch the Game mode" and "Back to home page" in one container: */}
           <div className="container">
             <div className="row">
               <div className="col-lg-3 align-self-center">
@@ -316,6 +319,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {/* Confirming the "Switch the game mode" functionality */}
           {isTogglingLevel && finalMessage === "" && (
             <div className="container">
               <div className="row">
@@ -332,6 +336,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Reset the game" functionality */}
           {isTogglingReset && finalMessage === "" && (
             <div className="container">
               <div className="row">
@@ -345,6 +350,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Back to Home page" functionality */}
           {isTogglingHomePage && finalMessage === "" && (
             <div className="container">
               <div className="row">
@@ -358,6 +364,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* The Game mode buttons */}
           {!isGameStarted &&
             !easyMode &&
             !normalMode &&
@@ -374,6 +381,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          {/* The "Start the Game" button */}
           {!isGameStarted &&
             (easyMode || normalMode) &&
             !isTogglingLevel &&
@@ -386,13 +394,18 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 Start the Game
               </button>
             )}
+          {/* Rendering the Movie */}
           <div>
+            {/* If the "countdown" state variable is a positive number, render it */}
             {isGameStarted && isSlideShowStarted && countdown > 0 && (
               <h1>{countdown}</h1>
             )}
+            {/* If the "countdown" state variable is -1, render "Go" */}
             {isGameStarted && isSlideShowStarted && countdown === -1 && (
               <h1>Go!</h1>
             )}
+            {/* If the "countdown" state variable is 0 and the "isSlideShowStarted" and "showImage" state variables are true
+            Render the image whose index is "currentIndex" (the "currentIndex" state variable changes every second) */}
             {isGameStarted &&
               isSlideShowStarted &&
               countdown === 0 &&
@@ -405,6 +418,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 />
               )}
           </div>
+          {/* Rendering the 3 randomly selected images for the quiz of the game */}
           <div style={{ marginTop: "20px" }}>
             {isGameStarted &&
               !isSlideShowStarted &&
@@ -422,6 +436,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 </div>
               ))}
           </div>
+          {/* Rendering the form of the quiz, where the user should choose the answers */}
           {isGameStarted &&
             !isSlideShowStarted &&
             !isTogglingReset &&
@@ -431,15 +446,18 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 <div className="container">
                   <div className="row">
                     <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      {/* The first question */}
                       <label
                         htmlFor="question1"
                         style={{ marginRight: "7px" }}
                       >{`How many ${quizArray[0].name} did you see? `}</label>
+                      {/* The dropdown of the first quiz */}
                       <select
                         onChange={handleQuestion1}
                         name="question1"
                         id="question1"
-                        disabled={isResult}
+                        disabled={isResult} // If the "isResult" state variable is true (the form is submitted)
+                        // the dropdown should be disabled
                         style={{
                           borderRadius: "8px",
                           textAlign: "center",
@@ -452,7 +470,9 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                           value={userAnswers.answer1}
                           disabled
                           selected
-                        ></option>
+                        >
+                        {/* The options of the first dropdown, containing 1, 2 and 3 */}
+                        </option>
                         {[1, 2, 3].map((i, idx) => (
                           <option key={idx}>{i}</option>
                         ))}
@@ -463,15 +483,18 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 <div className="container">
                   <div className="row">
                     <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      {/* The second question */}
                       <label
                         htmlFor="question2"
                         style={{ marginRight: "7px" }}
                       >{`How many ${quizArray[1].name} did you see? `}</label>
+                      {/* The dropdown of the second quiz */}
                       <select
                         onChange={handleQuestion2}
                         name="question2"
                         id="question2"
-                        disabled={isResult}
+                        disabled={isResult} // If the "isResult" state variable is true (the form is submitted)
+                        // the dropdown should be disabled
                         style={{
                           borderRadius: "8px",
                           textAlign: "center",
@@ -485,6 +508,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                           disabled
                           selected
                         ></option>
+                        {/* The options of the second dropdown, containing 1, 2 and 3 */}
                         {[1, 2, 3].map((i, idx) => (
                           <option key={idx}>{i}</option>
                         ))}
@@ -495,15 +519,18 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 <div className="container">
                   <div className="row">
                     <div className="col-md-10 offset-md-1 d-flex justify-content-center my-1">
+                      {/* The third question */}
                       <label
                         htmlFor="question3"
                         style={{ marginRight: "7px" }}
                       >{`How many ${quizArray[2].name} did you see? `}</label>
+                      {/* The dropdown of the third quiz */}
                       <select
                         onChange={handleQuestion3}
                         name="question3"
                         id="question3"
-                        disabled={isResult}
+                        disabled={isResult} // If the "isResult" state variable is true (the form is submitted)
+                        // the dropdown should be disabled
                         style={{
                           borderRadius: "8px",
                           textAlign: "center",
@@ -517,6 +544,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                           disabled
                           selected
                         ></option>
+                        {/* The options of the third dropdown, containing 1, 2 and 3 */}
                         {[1, 2, 3].map((i, idx) => (
                           <option key={idx}>{i}</option>
                         ))}
@@ -524,6 +552,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     </div>
                   </div>
                 </div>
+                {/* Rendering the "Submit" button of the form */}
                 {!isResult && (
                   <button className="btn1" style={{ marginTop: "10px" }}>
                     Submit
@@ -531,6 +560,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 )}
               </form>
             )}
+          {/* Rendering the results of the user's each answer */}
           {isResult &&
             !isTogglingReset &&
             !isTogglingLevel &&
@@ -538,6 +568,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
               <div style={{ marginTop: "30px" }}>
                 <div className="container">
                   <div className="row">
+                    {/* Rendering the result of the user's first answer */}
                     <div className="col-10 offset-1 d-flex justify-content-center my-1">
                       <strong>
                         {parseInt(userAnswers.answer1) ===
@@ -550,6 +581,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 </div>
                 <div className="container">
                   <div className="row">
+                    {/* Rendering the result of the user's second answer */}
                     <div className="col-10 offset-1 d-flex justify-content-center my-1">
                       <strong>
                         {parseInt(userAnswers.answer2) ===
@@ -562,6 +594,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                 </div>
                 <div className="container">
                   <div className="row">
+                    {/* Rendering the result of the user's third answer */}
                     <div className="col-10 offset-1 d-flex justify-content-center my-1">
                       <strong>
                         {parseInt(userAnswers.answer3) ===
@@ -572,6 +605,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     </div>
                   </div>
                 </div>
+                {/* Rendering the final message of the game */}
                 <div className="container">
                   <div className="row">
                     <div className="col-10 offset-1 d-flex justify-content-center">
@@ -581,6 +615,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     </div>
                   </div>
                 </div>
+                {/* Rendering the "Try Again?" message if the user loses the game */}
                 {finalMessage === "You Lose!" && (
                   <div>
                     <div>Try Again?</div>
@@ -593,6 +628,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
                     </button>
                   </div>
                 )}
+                {/* Rendering the "Play Again?" message if the user wins the game */}
                 {finalMessage && finalMessage === "You Win!" && (
                   <div>
                     <div>Play Again?</div>
@@ -612,6 +648,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted &&
             !isSlideShowStarted && (
+              // The button for showing/hiding the "Reviews Section"
               <button className="btn1 my-3" onClick={handleReviewSection}>
                 {showReviews
                   ? "Hide the Reviews Section"
@@ -624,6 +661,7 @@ export default function Counter({ updateTotalPoint, currentUser }) {
             isGameStarted &&
             showReviews &&
             !isSlideShowStarted && (
+              // Rendering the <ReviewSection /> component
               <ReviewSection game="Counter" currentUser={currentUser} />
             )}
         </div>
