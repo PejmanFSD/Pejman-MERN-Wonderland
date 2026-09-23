@@ -9,23 +9,37 @@ import AboutCrazy100 from "./AboutCrazy100";
 
 export default function Crazy100({ updateTotalPoint, currentUser }) {
   const [isAboutPage, setIsAboutPage] = useState(false);
+  // The 4 numbers that are the answers
+  // Each answer is an object; the value of the "number" key is the actual number
+  // the value of the "blockNum" key is the index of the block that contains the number:
   const [nums, setNums] = useState([
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
     { number: "", blockNum: "" },
   ]);
+  // An array whose elements are all the numbers from 1 to 33;
+  // The first 3 numbers of the final answer will be chosen from this array:
   const [allNums, setAllNums] = useState(
     Array.from({ length: 33 }, (_, i) => i + 1),
   );
+  // An array whose elements are all the numbers from 1 to 99;
+  // The other 12 numbers will be chosen from this array:
   const [extraNums, setExtraNums] = useState(
     Array.from({ length: 99 }, (_, i) => i + 1),
   );
+  // The array that stores the other 12 numbers:
   const [chosenExtraNums, setChosenExtraNums] = useState([]);
+  // An array whose elements are all the numbers from 1 to 16
+  // Each element of this array will be assigned to one of the
+  // blocks that will be rendered on UI:
   const [blockNums, setBlockNums] = useState(
     Array.from({ length: 16 }, (_, i) => i),
   );
+  // The array that stores the numbers that the user will choose as their answer
+  // after clicking on the submit button:
   const [answer, setAnswer] = useState([]);
+  // The state variable that indicates the final status of the game:
   const [isWin, setIsWin] = useState("");
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isTogglingReset, setIsTogglingReset] = useState(false);
@@ -33,8 +47,11 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   const [easyMode, setEasyMode] = useState(false);
   const [normalMode, setNormalMode] = useState(false);
   const [isTogglingLevel, setIsTogglingLevel] = useState(false);
-  const [seconds, setSeconds] = useState(120);
+  const [seconds, setSeconds] = useState(120); // In normal mode, the user should guess the 4 numbers in 120 seconds
+  // The state variable that indicates if the timer is running:
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  // The user should choose only 4 numbers, no more no less.
+  // The "is4Blocks" boolean state variable indicates if 4 numbers are chosen by the user or not
   const [is4Blocks, setIs4Blocks] = useState(true);
   const [showReviews, setShowReviews] = useState(true);
 
