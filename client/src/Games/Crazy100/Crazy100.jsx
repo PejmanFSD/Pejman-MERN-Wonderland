@@ -56,29 +56,39 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   const [showReviews, setShowReviews] = useState(true);
 
   const navigate = useNavigate();
+  // The function that is executed when the game starts:
   const generateNums = () => {
     setIsGameStarted(true);
+    // Creating copies of the appropriate state variables:
     let copyAllNums = [...allNums];
     let copyblockNums = [...blockNums];
     let copyExtraNums = [...extraNums];
     let pickedNums = [];
+    // Creating the 4 random number
     for (let i = 0; i < 4; i++) {
       let newNum;
+      // Each of the first 3 numbers is a randomly chosen number from 1 to 33:
       if (i !== 3) {
         newNum = copyAllNums[Math.floor(Math.random() * copyAllNums.length)];
       }
+      // Creating the fourth number:
       if (i === 3) {
+        // If the fourth number is going to be equal to one of the first randomly
+        // chosen three numbers, it's a bad error!
         if (
+          // The fourth number is going to be equal to the first randomly chosen number:
           100 -
             pickedNums[0].number -
             pickedNums[1].number -
             pickedNums[2].number ===
             pickedNums[0].number ||
+          // The fourth number is going to be equal to the second randomly chosen number:
           100 -
             pickedNums[0].number -
             pickedNums[1].number -
             pickedNums[2].number ===
             pickedNums[1].number ||
+          // The fourth number is going to be equal to the third randomly chosen number:
           100 -
             pickedNums[0].number -
             pickedNums[1].number -
@@ -91,54 +101,81 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             pickedNums[1].number,
             pickedNums[2].number,
           );
+          // If the bad error happens, there will be four pre-defined numbers:
           pickedNums[0].number = 23;
           pickedNums[1].number = 24;
           pickedNums[2].number = 25;
         }
+        // In any case, the fourth number is "100 - first number - second number - third number":
         newNum =
           100 -
           pickedNums[0].number -
           pickedNums[1].number -
           pickedNums[2].number;
       }
+      // Choosing a random number from 1 to 16 for the number of the block of the number:
       const newBlockNums =
         copyblockNums[Math.floor(Math.random() * copyblockNums.length)];
+      // Pushing the new created object into the "pickedNums" array
+      // (This object has 2 pairs: the value of the "number" is the created number and the value of
+      // the "blockNum" is the number of the block that shows the number)
       pickedNums.push({ number: newNum, blockNum: newBlockNums });
+      // Removing the new randomly chosen number form the array that contains all the numbers from 1 to 99
+      // because we don't want the numbers to be repetitive
       copyAllNums = copyAllNums.filter((n) => n !== newNum);
+      // Removing the new randomly chosen block number from the list that contains the numbers from 1 tp 16
+      // because each number should be assigned to the unique block
       copyblockNums = copyblockNums.filter((r) => r !== newBlockNums);
+      // Removing the new randomly chosen number form the array that contains all the numbers from 1 to 99
+      // that contains the numbers for the other 12 numbers
+      // The 4 chosen numbers shouldn't be among the other 12 numbers
       copyExtraNums = copyExtraNums.filter((e) => e !== newNum);
     }
+    // Looping through the 4 randomly chosen numbers and assigning each to the "nums" state variable:
     for (let i = 0; i < 4; i++) {
+      // Pushing the 4 randomly chosen numbers into the "nums" state variable
       setNums((currNums) => {
-        const copyNums = [...currNums];
+        const copyNums = [...currNums]; // De-structuring the "nums" state variable
         copyNums[i] = {
-          ...copyNums[i],
-          number: pickedNums[i].number,
-          blockNum: pickedNums[i].blockNum,
-          clicked: false,
+          ...copyNums[i], // De-structuring the "copyNums" variable
+          number: pickedNums[i].number, // Assigning the randomly chosen number to the value of the "number" key
+          blockNum: pickedNums[i].blockNum, // Assigning the randomly chosen block number to the value of the "blockNum" key
+          clicked: false, // Assigning the false boolean value to the value of the "clicked" key (At first none of the blocks are clicked)
         };
-        return copyNums;
+        return copyNums; // Since we're still inside the "setNums" function, returning everything we just created will be
+        // assigned to the "nums" state variable
       });
     }
+    // Creating the array that contains the other 12 numbers
+    // (that are not the correct answers of the game) in a new random format:
     let pickedChosenExtraNums = [];
     for (let i = 0; i < 16; i++) {
+      // Choosing a random number from the array that contains the other 12 numbers:
       let newNum = getRandArr(copyExtraNums);
+      // Pushing the randomly chosen number from the array that contains the other 12 numbers into
+      // the array that will have them in a new random format:
       pickedChosenExtraNums.push(newNum);
+      // Removing the randomly chosen number from the extraNums array:
       copyExtraNums = copyExtraNums.filter((e) => e !== newNum);
     }
+    // Assigning the temporary array that contains the other 12 numbers
+    // to the "chosenExtraNums" state variable:
     for (let i = 0; i < 16; i++) {
       setChosenExtraNums((currChosenExtraNums) => {
-        const copyChosenExtraNums = [...currChosenExtraNums];
+        const copyChosenExtraNums = [...currChosenExtraNums]; // De-structuring the "copyChosenExtraNums" array
         copyChosenExtraNums[i] = {
-          number: pickedChosenExtraNums[i],
-          clicked: false,
+          number: pickedChosenExtraNums[i], // Assigning the randomly chosen number to the value of the "number" key
+          clicked: false, // Assigning the false boolean value to the value of the "clicked" key
         };
-        return copyChosenExtraNums;
+        return copyChosenExtraNums; // Since we're still inside the "setChosenExtraNums" function, returning everything
+        // we just created will be assigned to the "chosenExtraNums" state variable
       });
     }
+    // Updating the appropriate state variables:
     setAllNums(copyAllNums);
     setBlockNums(copyblockNums);
     setExtraNums(copyExtraNums);
+    // If the game is on "normalMode", start the timer:
     if (normalMode) {
       handleStartTimer();
     }
