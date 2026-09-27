@@ -180,55 +180,76 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
       handleStartTimer();
     }
   };
+  // The function that indicates if the block needs to be clicked:
   const toggleClicked = (el) => {
-    if (el.clicked) {
+    if (el.clicked) { // If the value of the "clicked" key is true
       return false;
-    } else {
+    } else { // If the value of the "clicked" key is false
       return true;
     }
   };
+  // The function that handles the clicking-block process when the chosen block isn't one of the answers:
   const handleClickChosenExtraNum = (e) => {
+    // If the text inside the block is not among the user's answers:
     if (!answer.includes(e.target.innerText)) {
+      // Add it to the user's answers array:
       setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
     } else {
+      // Otherwise, remove it from the user's answers:
       setAnswer(answer.filter((num) => num !== e.target.innerText));
     }
+    // Looping through the other 12 numbers that aren't the answers:
     for (let chosenExtraNum of chosenExtraNums) {
+      // If the number of the block that's been clicked is one of the 12 numbers that aren't the answers:
       if (e.target.innerText.toString() === chosenExtraNum.number.toString()) {
+        // Updating the "chosenExtraNums" array:
         setChosenExtraNums((currChosenExtraNum) =>
+          // Looping through the array by the "map" method in order to find the one that's been clicked:
           currChosenExtraNum.map(
             (chosenNum) =>
+              // If the number of the block is equal to the one that's been clicked:
               chosenNum.number.toString() === e.target.innerText.toString()
-                ? { ...chosenNum, clicked: toggleClicked(chosenExtraNum) } // update only this object
+                ? { ...chosenNum, clicked: toggleClicked(chosenExtraNum) } // update only this object by only toggling the value of the "clicked" key 
                 : chosenNum, // leave the other objects unchanged
           ),
         );
       }
     }
   };
+  // The function that handles the clicking-block process when the chosen block is one of the answers:
   const handleClickNum = (e) => {
+    // If the text inside the block is not among the user's answers:
     if (!answer.includes(e.target.innerText)) {
+      // Add it to the user's answers array:
       setAnswer((currAnswer) => [...currAnswer, e.target.innerText]);
     } else {
+      // Otherwise, remove it from the user's answers:
       setAnswer(answer.filter((num) => num !== e.target.innerText));
     }
+    // Looping through the 4 numbers that are the answers:
     for (let num of nums) {
+      // If the number of the block that's been clicked is one of the 4 numbers that are the answers:
       if (e.target.innerText.toString() === num.number.toString()) {
+        // Updating the "nums" array:
         setNums((currNum) =>
+          // Looping through the array by the "map" method in order to find the one that's been clicked:
           currNum.map(
             (num) =>
+              // If the number of the block is equal to the one that's been clicked:
               num.number.toString() === e.target.innerText.toString()
-                ? { ...num, clicked: toggleClicked(num) } // update only this object
+                ? { ...num, clicked: toggleClicked(num) } // update only this object by only toggling the value of the "clicked" key
                 : num, // leave the other objects unchanged
           ),
         );
       }
     }
   };
+  // The functions for reseting the game:
   const toggleReset = () => {
     setIsTogglingReset(true);
   };
   const toggleResetYes = () => {
+    // Reseting the appropriate state variables:
     setIsGameStarted(false);
     setNums([
       { number: "", blockNum: "" },
@@ -249,6 +270,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   const toggleResetCancel = () => {
     setIsTogglingReset(false);
   };
+  // The functions for returning to the home page:
   const toggleHomePage = () => {
     setIsTogglingHomePage(true);
   };
@@ -258,46 +280,66 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   const toggleHomePageCancel = () => {
     setIsTogglingHomePage(false);
   };
+  // The function for assigning the game to easy mode:
   const runEasyMode = () => {
     setEasyMode(true);
     setNormalMode(false);
   };
+  // The function for assigning the game to normal mode:
   const runNormalMode = () => {
     setNormalMode(true);
     setEasyMode(false);
   };
+  // The function that submits the user's answers:
   const handleSubmit = () => {
+    // If the user has chosen less than / greater than 4 blocks:
     if (answer.length !== 4) {
+      // Toggle the "is4Blocks" state variable (which eventually renders the error):
       setIs4Blocks(false);
-      return;
+      return; // And leave the rest of the function
     }
+    // The temporary "sum" variable
     let sum = 0;
+    // Looping through the 4 chosen blocks that the user has chosen:
     for (let i = 0; i < answer.length; i++) {
+      // Add each of them to the temporary "sum" variable
       sum += Number(answer[i]);
     }
+    // If the temporary "sum" variable is 100
     if (sum === 100) {
+      // Update the "isWin" state variable to true
       setIsWin(true);
+      // And if the game is on normal mode:
       if (normalMode) {
+        // Increase the user's stars by 10:
         updateTotalPoint(10);
       }
     }
+    // If the temporary "sum" variable is not 100
     if (sum !== 100) {
+      // Update the "isWin" state variable to false
       setIsWin(false);
     }
+    // Execute the "handleStopTimer" function:
     handleStopTimer();
   };
+  // The functions for toggling the game mode:
   const toggleLevel = () => {
     setIsTogglingLevel(true);
   };
   const toggleLevelYes = () => {
     setIsGameStarted(false);
+    // If the game is on easy mode, toggle it to normal mode:
     if (easyMode) {
       setEasyMode(false);
       setNormalMode(true);
-    } else if (normalMode) {
+    }
+    // If the game is on normal mode, toggle it to easy mode:
+    else if (normalMode) {
       setNormalMode(false);
       setEasyMode(true);
     }
+    // Reset the appropriate state variables:
     setNums([
       { number: "", blockNum: "" },
       { number: "", blockNum: "" },
@@ -317,30 +359,39 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   const toggleLevelCancel = () => {
     setIsTogglingLevel(false);
   };
-  const handleStartTimer = () => setIsTimerRunning(true);
-  const handleStopTimer = () => setIsTimerRunning(false);
+  // The functions of the timer:
+  const handleStartTimer = () => setIsTimerRunning(true); // Starting the timer
+  const handleStopTimer = () => setIsTimerRunning(false); // Stopping the timer
+  // Reseting the timer
   const handleResetTimer = () => {
     setSeconds(120);
     setIsTimerRunning(false);
   };
+  // The function that handles the error of choosing less than / greater than 4 blocks by the user
   const handle4Blocks = () => {
-    setIs4Blocks(true);
+    setIs4Blocks(true); // Reseting the "is4Blocks" state variable to true
   };
+  // The function of the "About the game" page:
   const handleAboutPage = () => {
     setIsAboutPage(true);
   };
+  // The function of the "reviews" page:
   const handleReviewSection = () => {
     setShowReviews((currShowReviews) => !currShowReviews);
   };
+  // The hook for running the timer
   useEffect(() => {
     let interval;
-    if (isTimerRunning) {
-      interval = setInterval(() => {
+    if (isTimerRunning) { // If the "isTimerRunning" state variable is true
+      interval = setInterval(() => { // Run the interval
+        // Update the "seconds" state variable:
+        // If the "seconds" state variable is greater than 1, decrease it by one
         setSeconds((prev) => prev > 1 && prev - 1);
-      }, 1000);
+      }, 1000); // Repeate the interval after each 1000 milli-seconds
     }
-    return () => clearInterval(interval);
-  }, [isTimerRunning]);
+    return () => clearInterval(interval); // Clearing the interval
+  }, [isTimerRunning]); // Execute this hook whenever the "isTimerRunning" state variable changes
+  // Changing the title of the browser when the user enters the game:
   useEffect(() => {
     document.title = "Crazy-100";
   }, []);
