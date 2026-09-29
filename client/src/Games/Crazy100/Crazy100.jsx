@@ -397,13 +397,15 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   }, []);
   return (
     <div>
-      {/* {nums?.map(n => <div>{n.number} - {n.blockNum}</div>)} */}
+      {/* Rendering the "About the game" section */}
       {isAboutPage && <AboutCrazy100 setIsAboutPage={setIsAboutPage} />}
       {!isAboutPage && (
         <div>
+          {/* Game title */}
           <h2 className="fasterOne" style={{ fontSize: "45px" }}>
             Crazy-100
           </h2>
+          {/* The fix buttons of the game: "About The game", "Switch the game mode", "Reset the Game" and "Back to home page" in one container: */}
           <div className="container">
             <div className="row">
               <div className="col-lg-3 align-self-center">
@@ -471,6 +473,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           </div>
+          {/* Confirming the "Switch the game mode" functionality */}
           {isGameStarted && (easyMode || normalMode) && isTogglingLevel && (
             <div className="container">
               <div className="row">
@@ -487,6 +490,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Reset the game" functionality */}
           {isTogglingReset && (
             <div className="container">
               <div className="row">
@@ -500,6 +504,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Confirming the "Back to Home Page" functionality */}
           {isTogglingHomePage && (
             <div className="container">
               <div className="row">
@@ -513,6 +518,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               </div>
             </div>
           )}
+          {/* Rendering the game level buttons by the <GameLevel /> component */}
           {!easyMode && !normalMode && !isTogglingHomePage && (
             <GameLevel
               mode1="Easy"
@@ -523,6 +529,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
               runNormalMode={runNormalMode}
             />
           )}
+          {/* Rendering the initial explaination of the game */}
           {isGameStarted &&
             isWin === "" &&
             (easyMode || normalMode) &&
@@ -540,20 +547,23 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 </div>
               </div>
             )}
+          {/* Rendering the timer */}
           {isGameStarted &&
-            normalMode &&
+            normalMode && // We have the timer only in "normalMode"
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
               <h3
                 className="mt-3"
+                // When the timer is less than 10, it turns red
                 style={seconds > 9 ? { color: "green" } : { color: "red" }}
               >
                 {seconds}
               </h3>
             )}
-          {isWin === true &&
-            seconds > 0 &&
+          {/* Rendering the winning message */}
+          {isWin === true && // The first condition for winning is that the "isWin" state variable to be true
+            seconds > 0 && // The second condition for winning is that the "seconds" variable to be more than 0 (only for "normal mode")
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
@@ -563,13 +573,15 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                     <h1
                       className="fasterOne"
                       style={{ fontSize: "40px" }}
+                      // Only in "Normal mode" the user gets stars after winning
                     >{`You Win${normalMode ? "!" : ", but you don't get any stars!"}`}</h1>
                   </div>
                 </div>
               </div>
             )}
+          {/* Rendering the losing message */}
           {isWin === false &&
-            seconds > 0 &&
+            seconds > 0 && // There's a separate losing message for the situation where the time is up
             !isTogglingReset &&
             !isTogglingHomePage &&
             !isTogglingLevel && (
@@ -577,6 +589,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 You Lose
               </h1>
             )}
+          {/* Rendering the time's up message */}
           {seconds < 1 &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -585,6 +598,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 Time's up!
               </h1>
             )}
+          {/* Rendering the start button */}
           {!isGameStarted &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -596,6 +610,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          {/* Rendering all the 16 blocks of the game as the <Blocks /> component */}
           {isGameStarted &&
             !isTogglingLevel &&
             !isTogglingReset &&
@@ -604,6 +619,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 <div className="row">
                   <div className="col-8 offset-2 d-flex justify-content-center">
                     <Blocks
+                      // The necessary props for the <Blocks /> component:
                       nums={nums}
                       chosenExtraNums={chosenExtraNums}
                       blockNums={blockNums}
@@ -616,6 +632,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 </div>
               </div>
             )}
+          {/* Rendering the submit button, named as "Done" */}
           {isGameStarted &&
             isWin === "" &&
             !isTogglingReset &&
@@ -628,12 +645,13 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                   onClick={handleSubmit}
                   className="btn1 my-2"
                   style={{ position: "relative", top: "30px" }}
-                  disabled={answer.length === 0}
+                  disabled={answer.length === 0} // The user can't submit if they haven't chosen any blocks
                 >
                   Done
                 </button>
               </div>
             )}
+          {/* Rendering the Play/Try again button when the game is over */}
           {isWin !== "" &&
             !isTogglingReset &&
             !isTogglingHomePage &&
@@ -649,6 +667,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
+          {/* Rendering the Try again button when the time is up */}
           {seconds < 1 &&
             normalMode &&
             !isTogglingReset &&
@@ -664,7 +683,8 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
                 </button>
               </div>
             )}
-          {!is4Blocks && (
+          {/* Rendering the error if the user chooses less than / greater than 4 blocks before submitting */}
+          {!is4Blocks && ( // Only if the "is4Blocks" state variable is false
             <div>
               <div className="container">
                 <div className="row">
@@ -686,6 +706,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             !isTogglingHomePage &&
             !isTogglingLevel &&
             isGameStarted && (
+              // The button for showing/hiding the "Reviews Section"
               <button
                 onClick={handleReviewSection}
                 className="btn1 my-3"
@@ -701,6 +722,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
             !isTogglingLevel &&
             isGameStarted &&
             showReviews && (
+              // Rendering the <ReviewSection /> component
               <div style={{ position: "relative", top: "15px" }}>
                 <ReviewSection game="Crazy100" currentUser={currentUser} />
               </div>
