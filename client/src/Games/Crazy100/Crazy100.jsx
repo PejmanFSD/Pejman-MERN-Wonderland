@@ -30,7 +30,7 @@ export default function Crazy100({ updateTotalPoint, currentUser }) {
   );
   // The array that stores the other 12 numbers:
   const [chosenExtraNums, setChosenExtraNums] = useState([]);
-  // An array whose elements are all the numbers from 1 to 16
+  // An array whose elements are all the numbers from 0 to 15
   // Each element of this array will be assigned to one of the
   // blocks that will be rendered on UI:
   const [blockNums, setBlockNums] = useState(
