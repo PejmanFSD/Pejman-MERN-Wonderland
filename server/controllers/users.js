@@ -184,7 +184,8 @@ module.exports.updatePoints = async (req, res) => {
       { new: true },
     );
     res.json({
-      message: "Your stars are increased!",
+      // message: "Your stars are increased!",
+      message: `You get ${points} stars!`,
       user,
     }); // Sending back the updated user (to Front-End)
   } catch (err) {

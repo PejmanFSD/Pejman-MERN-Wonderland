@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function Login({
   onLogin,
@@ -45,10 +45,9 @@ export default function Login({
       // the page that required login and the user was trying to reach
       // navigate(from, { replace: true });
       console.log("REDIRECTING TO:", from);
-      navigate(
-        `${from.pathname}${from.search || ""}${from.hash || ""}`,
-        { replace: true }
-      );
+      navigate(`${from.pathname}${from.search || ""}${from.hash || ""}`, {
+        replace: true,
+      });
       setYouShouldLoginMessage(false);
     } catch (err) {
       setError(err.message);
@@ -59,7 +58,11 @@ export default function Login({
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-4">
-            <form className="card p-4 shadow mt-3 mb-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
+            <form
+              className="card p-4 shadow mt-3 mb-3"
+              style={{ backgroundColor: "var(--background)" }}
+              onSubmit={handleSubmit}
+            >
               <h1 className="eater" style={{ fontSize: "40px" }}>
                 Login
               </h1>
@@ -108,11 +111,22 @@ export default function Login({
                 </div>
               </div>
               <br />
-              <button className="btn1 align-self-center mb-3 mt-3" disabled={!username || !password}>
+              <button
+                className="btn1 align-self-center mb-3 mt-3"
+                disabled={!username || !password}
+              >
                 Login
               </button>
               {error && <p style={{ color: "red" }}>{error}</p>}
             </form>
+            <div style={{ marginBottom: "12px" }}>
+              <strong>Don't have an account?</strong>
+              {!error && (
+                <Link to="/register" style={{ marginLeft: "7px" }}>
+                  Sign up
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>

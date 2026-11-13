@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Register({ onRegister, setUserCount, setFlash }) {
   const [username, setUsername] = useState("");
@@ -126,7 +126,11 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-5">
-            <form className="card p-4 shadow mt-3 mb-3" style={{backgroundColor: "var(--background)"}} onSubmit={handleSubmit}>
+            <form
+              className="card p-4 shadow mt-3 mb-3"
+              style={{ backgroundColor: "var(--background)" }}
+              onSubmit={handleSubmit}
+            >
               <h1 className="eater" style={{ fontSize: "40px" }}>
                 Sign Up!
               </h1>
@@ -221,10 +225,14 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
                 />
               </div>
               {password && confirmPassword && password !== confirmPassword && (
-                <div style={{ color: "gray", marginTop: "10px" }}>✖ Passwords do not match</div>
+                <div style={{ color: "gray", marginTop: "10px" }}>
+                  ✖ Passwords do not match
+                </div>
               )}
               {password && confirmPassword && password === confirmPassword && (
-                <div style={{ color: "black", marginTop: "10px" }}>✔ Passwords match</div>
+                <div style={{ color: "black", marginTop: "10px" }}>
+                  ✔ Passwords match
+                </div>
               )}
               <div class="form-group" style={{ marginTop: "5px" }}>
                 <label htmlFor="message">Message:</label>
@@ -276,7 +284,12 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
                 </select>
                 {role === "Admin" && (
                   <input
-                  style={{ textAlign: "center", borderRadius: "8px", marginLeft: "10px", height: "30px"}}
+                    style={{
+                      textAlign: "center",
+                      borderRadius: "8px",
+                      marginLeft: "10px",
+                      height: "30px",
+                    }}
                     type="password"
                     placeholder="Enter Admin Secret"
                     value={adminSecret}
@@ -298,6 +311,14 @@ export default function Register({ onRegister, setUserCount, setFlash }) {
               </button>
               {error && <p style={{ color: "red" }}>{error}</p>}
             </form>
+            <div>
+              <strong>Already have an account?</strong>
+              {!error && (
+                <Link to="/login" style={{ marginLeft: "7px" }}>
+                  Login
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
